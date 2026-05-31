@@ -223,6 +223,11 @@ public struct Entity(MDTableType md)
 
     public alias TableType = md;
 
+    public uint getRowID() const
+    {
+        return row.getRowID();
+    }
+
     // public ref const(Row!md) getRow() const
     // {
     //     return row;
@@ -639,7 +644,7 @@ private mixin template constantFieldGettersExtra()
 
 private mixin template customAttributeFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.customAttribute, "Value"); // Blob
+    mixin DeclSimpleField!(MDTableType.customAttribute, "Value"); // Blob - CustomAttributeSig - use value() instead of direct getValue
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.customAttribute, "Parent", HasCustomAttribute); // Primary key

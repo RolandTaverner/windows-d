@@ -73,7 +73,7 @@ public struct TypeSig
     CustomModSig[] customMods;
 
     private TypeValue readTypeValue(const(Database*) db, ref const(ubyte)[] data)
-    {        
+    {
         auto t = readCompressed!ElementType(data);
         switch (t)
         {
@@ -301,6 +301,8 @@ public struct ElementSig
                 value = read!int(data);
             else if(ti.getTypeName() == "CallingConvention" && ti.getTypeNamespace() == "System.Runtime.InteropServices")
                 value = read!int(data);
+            else if(ti.getTypeName() == "Architecture" && ti.getTypeNamespace() == "Windows.Win32.Foundation.Metadata")
+                value = read!uint(data); // TODO: is this correct?
             else
                 throw new Exception(format("Type references (%s.%s) do not provide enough information to read enum values",
                                            ti.getTypeNamespace(), ti.getTypeName()));
@@ -486,9 +488,9 @@ public struct NamedArgSig
 public struct CustomAttributeSig
 {
     public this(const Database* db, ref const(ubyte)[] data, MethodDefSig ctor)
-    {     
+    {
         enforce(asVal!ushort(data) == 0x0001, "Invalid prolog for custom attribute");
-        data = data[2 .. $];    
+        data = data[2 .. $];
         fixed.length = ctor.params.length;
         for(size_t i = 0; i < fixed.length; ++i)
             fixed[i] = FixedArgSig(db, ctor.params[i].typeSig, data);

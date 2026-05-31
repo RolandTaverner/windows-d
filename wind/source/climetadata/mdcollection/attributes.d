@@ -1,5 +1,8 @@
 module climetadata.mdcollection.attributes;
 
+import std.array : join;
+import std.format: format;
+
 public import climetadata.mdcollection.attributeprops;
 
 public struct TypeAttributes
@@ -153,6 +156,26 @@ public struct FieldAttributes
     alias bits this;
 
     public const ushort bits;
+
+    string toString() const
+    {
+        string[] props;
+        props ~= format("%d", cast(uint)(access()));
+
+        if (isStatic()) props ~= "isStatic";
+        if (isInitOnly()) props ~= "isInitOnly";
+        if (isLiteral()) props ~= "isLiteral";
+        if (dontSerialize()) props ~= "dontSerialize";
+        if (hasSpecialName()) props ~= "hasSpecialName";
+        if (pInvokeImplemented()) props ~= "pInvokeImplemented";
+        if (hasRuntimeSpecialName()) props ~= "hasRuntimeSpecialName";
+        if (hasFieldMarshal()) props ~= "hasFieldMarshal";
+        if (hasDefault()) props ~= "hasDefault";
+        if (hasFieldRVA()) props ~= "hasFieldRVA";
+        if (hasDefault()) props ~= "hasDefault";
+
+        return props.join(", ");
+    }
 }
 
 public struct MethodImplAttributes
