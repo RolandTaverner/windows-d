@@ -3,7 +3,6 @@
 module windows.win32.system.diagnostics.debug_.webapp;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
 public import windows.win32.system.com.com : IServiceProvider, IUnknown;
 public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptError;

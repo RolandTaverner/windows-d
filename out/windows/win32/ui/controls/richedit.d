@@ -3,7 +3,6 @@
 module windows.win32.ui.controls.richedit;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, HANDLE,
                                                     HGLOBAL, HRESULT, HWND, LPARAM,
                                                     LRESULT, POINT, PSTR, PWSTR, RECT,
@@ -1775,7 +1774,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea
     struct TEXTRANGEA
     {
@@ -1787,7 +1785,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea
     struct TEXTRANGEA
     {
@@ -1799,7 +1796,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew
     struct TEXTRANGEW
     {
@@ -1811,7 +1807,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew
     struct TEXTRANGEW
     {
@@ -1847,7 +1842,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta
     struct FINDTEXTA
     {
@@ -1859,7 +1853,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta
     struct FINDTEXTA
     {
@@ -1871,7 +1864,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw
     struct FINDTEXTW
     {
@@ -1883,7 +1875,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw
     struct FINDTEXTW
     {
@@ -1895,7 +1886,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa
     struct FINDTEXTEXA
     {
@@ -1908,7 +1898,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa
     struct FINDTEXTEXA
     {
@@ -1921,7 +1910,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw
     struct FINDTEXTEXW
     {
@@ -1934,7 +1922,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw
     struct FINDTEXTEXW
     {
@@ -2458,7 +2445,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformata
 struct CHARFORMATA
@@ -2474,7 +2460,6 @@ struct CHARFORMATA
     CHAR[32]     szFaceName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformatw
 struct CHARFORMATW
@@ -2490,7 +2475,6 @@ struct CHARFORMATW
     wchar[32]    szFaceName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformat2w
 struct CHARFORMAT2W
 {
@@ -2512,7 +2496,6 @@ struct CHARFORMAT2W
     ubyte       bUnderlineColor;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformat2a
 struct CHARFORMAT2A
 {
@@ -2543,7 +2526,6 @@ struct CHARRANGE
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea
     struct TEXTRANGEA
     {
@@ -2554,7 +2536,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew
     struct TEXTRANGEW
     {
@@ -2576,7 +2557,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta
     struct FINDTEXTA
     {
@@ -2587,7 +2567,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw
     struct FINDTEXTW
     {
@@ -2598,7 +2577,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa
     struct FINDTEXTEXA
     {
@@ -2610,7 +2588,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw
     struct FINDTEXTEXW
     {

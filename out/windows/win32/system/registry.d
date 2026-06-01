@@ -1566,7 +1566,6 @@ struct val_context
     void* val_buff_ptr;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PVALUEA
 {
     PSTR  pv_valuename;
@@ -1575,7 +1574,6 @@ struct PVALUEA
     uint  pv_type;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PVALUEW
 {
     PWSTR pv_valuename;
@@ -1594,7 +1592,6 @@ struct REG_PROVIDER
     void*         pi_key_context;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winreg/ns-winreg-valenta
 struct VALENTA
 {
@@ -1604,7 +1601,6 @@ struct VALENTA
     REG_VALUE_TYPE ve_type;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winreg/ns-winreg-valentw
 struct VALENTW
 {
@@ -1663,11 +1659,9 @@ WIN32_ERROR RegConnectRegistryA(const(PSTR) lpMachineName, HKEY hKey, HKEY* phkR
 @DllImport("ADVAPI32.dll")
 WIN32_ERROR RegConnectRegistryW(const(PWSTR) lpMachineName, HKEY hKey, HKEY* phkResult);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 int RegConnectRegistryExA(const(PSTR) lpMachineName, HKEY hKey, uint Flags, HKEY* phkResult);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 int RegConnectRegistryExW(const(PWSTR) lpMachineName, HKEY hKey, uint Flags, HKEY* phkResult);
 

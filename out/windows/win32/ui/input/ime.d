@@ -3,7 +3,6 @@
 module windows.win32.ui.input.ime;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
                                                     LRESULT, POINT, PSTR, PWSTR, RECT,
                                                     WPARAM;
@@ -1278,10 +1277,8 @@ enum : GUID
 // Callbacks
 
 alias IMCENUMPROC = BOOL function(HIMC param0, LPARAM param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias REGISTERWORDENUMPROCA = int function(const(PSTR) lpszReading, uint param1, const(PSTR) lpszString, 
                                            void* param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias REGISTERWORDENUMPROCW = int function(const(PWSTR) lpszReading, uint param1, const(PWSTR) lpszString, 
                                            void* param3);
 alias PFNLOG = BOOL function(IMEDP* param0, HRESULT param1);
@@ -1336,7 +1333,6 @@ struct CANDIDATELIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerworda
 struct REGISTERWORDA
 {
@@ -1344,7 +1340,6 @@ struct REGISTERWORDA
     PSTR lpWord;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerwordw
 struct REGISTERWORDW
 {
@@ -1365,7 +1360,6 @@ struct RECONVERTSTRING
     uint dwTargetStrOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufa
 struct STYLEBUFA
 {
@@ -1373,7 +1367,6 @@ struct STYLEBUFA
     CHAR[32] szDescription;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufw
 struct STYLEBUFW
 {
@@ -1381,7 +1374,6 @@ struct STYLEBUFW
     wchar[32] szDescription;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfoa
 struct IMEMENUITEMINFOA
@@ -1397,7 +1389,6 @@ struct IMEMENUITEMINFOA
     HBITMAP  hbmpItem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfow
 struct IMEMENUITEMINFOW
@@ -2294,7 +2285,6 @@ interface IImePlugInDictDictionaryList : IUnknown
     HRESULT DeleteDictionary(BSTR bstrDictionaryGUID);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("08c03412-f96b-11d0-a475-00aa006bcc59")
 interface IEnumRegisterWordA : IUnknown
 {
@@ -2304,7 +2294,6 @@ interface IEnumRegisterWordA : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("4955dd31-b159-11d0-8fcf-00aa006bcc59")
 interface IEnumRegisterWordW : IUnknown
 {
@@ -2353,7 +2342,6 @@ interface IActiveIMMApp : IUnknown
     HRESULT EnumRegisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szRegister, void* pData, 
                               IEnumRegisterWordW* pEnum);
     HRESULT EscapeA(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     HRESULT EscapeW(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
     HRESULT GetCandidateListA(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
     HRESULT GetCandidateListW(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
@@ -2435,7 +2423,6 @@ interface IActiveIMMIME : IUnknown
     HRESULT EnumRegisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szRegister, void* pData, 
                               IEnumRegisterWordW* pEnum);
     HRESULT EscapeA(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     HRESULT EscapeW(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
     HRESULT GetCandidateListA(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
     HRESULT GetCandidateListW(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);

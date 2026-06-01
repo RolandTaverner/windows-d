@@ -3,7 +3,6 @@
 module windows.win32.security.security;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
                                                     LUID, NTSTATUS, PSTR, PWSTR,
                                                     UNICODE_STRING;
@@ -1259,7 +1258,6 @@ BOOL AccessCheck(PSECURITY_DESCRIPTOR pSecurityDescriptor, HANDLE ClientToken, u
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/PRIVILEGE_SET* PrivilegeSet, 
                  uint* PrivilegeSetLength, uint* GrantedAccess, BOOL* AccessStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL AccessCheckAndAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, PWSTR ObjectTypeName, PWSTR ObjectName, 
                                PSECURITY_DESCRIPTOR SecurityDescriptor, uint DesiredAccess, 
@@ -1282,7 +1280,6 @@ BOOL AccessCheckByTypeResultList(PSECURITY_DESCRIPTOR pSecurityDescriptor, PSID 
                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(8)))])*/PRIVILEGE_SET* PrivilegeSet, 
                                  uint* PrivilegeSetLength, uint* GrantedAccessList, uint* AccessStatusList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL AccessCheckByTypeAndAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, const(PWSTR) ObjectTypeName, 
                                      const(PWSTR) ObjectName, PSECURITY_DESCRIPTOR SecurityDescriptor, 
@@ -1291,7 +1288,6 @@ BOOL AccessCheckByTypeAndAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId,
                                      GENERIC_MAPPING* GenericMapping, BOOL ObjectCreation, uint* GrantedAccess, 
                                      BOOL* AccessStatus, BOOL* pfGenerateOnClose);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL AccessCheckByTypeResultListAndAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, 
                                                const(PWSTR) ObjectTypeName, const(PWSTR) ObjectName, 
@@ -1302,7 +1298,6 @@ BOOL AccessCheckByTypeResultListAndAuditAlarmW(const(PWSTR) SubsystemName, void*
                                                uint* GrantedAccessList, uint* AccessStatusList, 
                                                BOOL* pfGenerateOnClose);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL AccessCheckByTypeResultListAndAuditAlarmByHandleW(const(PWSTR) SubsystemName, void* HandleId, 
                                                        HANDLE ClientToken, const(PWSTR) ObjectTypeName, 
@@ -1522,7 +1517,6 @@ BOOL GetAclInformation(ACL* pAcl,
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pAclInformation, 
                        uint nAclInformationLength, ACL_INFORMATION_CLASS dwAclInformationClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL GetFileSecurityW(const(PWSTR) lpFileName, uint RequestedInformation, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PSECURITY_DESCRIPTOR pSecurityDescriptor, 
@@ -1672,22 +1666,18 @@ BOOL MakeSelfRelativeSD(PSECURITY_DESCRIPTOR pAbsoluteSecurityDescriptor,
 @DllImport("ADVAPI32.dll")
 void MapGenericMask(uint* AccessMask, GENERIC_MAPPING* GenericMapping);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL ObjectCloseAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, BOOL GenerateOnClose);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL ObjectDeleteAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, BOOL GenerateOnClose);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL ObjectOpenAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, PWSTR ObjectTypeName, PWSTR ObjectName, 
                            PSECURITY_DESCRIPTOR pSecurityDescriptor, HANDLE ClientToken, uint DesiredAccess, 
                            uint GrantedAccess, PRIVILEGE_SET* Privileges, BOOL ObjectCreation, BOOL AccessGranted, 
                            BOOL* GenerateOnClose);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL ObjectPrivilegeAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, HANDLE ClientToken, uint DesiredAccess, 
                                 PRIVILEGE_SET* Privileges, BOOL AccessGranted);
@@ -1696,7 +1686,6 @@ BOOL ObjectPrivilegeAuditAlarmW(const(PWSTR) SubsystemName, void* HandleId, HAND
 @DllImport("ADVAPI32.dll")
 BOOL PrivilegeCheck(HANDLE ClientToken, PRIVILEGE_SET* RequiredPrivileges, BOOL* pfResult);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL PrivilegedServiceAuditAlarmW(const(PWSTR) SubsystemName, const(PWSTR) ServiceName, HANDLE ClientToken, 
                                   PRIVILEGE_SET* Privileges, BOOL AccessGranted);
@@ -1715,7 +1704,6 @@ BOOL SetAclInformation(ACL* pAcl,
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pAclInformation, 
                        uint nAclInformationLength, ACL_INFORMATION_CLASS dwAclInformationClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 BOOL SetFileSecurityW(const(PWSTR) lpFileName, OBJECT_SECURITY_INFORMATION SecurityInformation, 
                       PSECURITY_DESCRIPTOR pSecurityDescriptor);

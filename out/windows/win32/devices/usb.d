@@ -3,7 +3,6 @@
 module windows.win32.devices.usb;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PWSTR;
 public import windows.win32.system.io : OVERLAPPED;
 

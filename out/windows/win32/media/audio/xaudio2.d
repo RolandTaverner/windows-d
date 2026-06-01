@@ -3,7 +3,6 @@
 module windows.win32.media.audio.xaudio2;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
 public import windows.win32.media.audio.audio : AUDIO_STREAM_CATEGORY, WAVEFORMATEX;
 public import windows.win32.system.com.com : IUnknown;

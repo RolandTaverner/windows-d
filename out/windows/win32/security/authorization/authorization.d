@@ -3,7 +3,6 @@
 module windows.win32.security.authorization.authorization;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND,
                                                     LUID, PSTR, PWSTR, VARIANT_BOOL,
                                                     WIN32_ERROR;
@@ -832,7 +831,6 @@ struct OBJECTS_AND_SID
     SID* pSid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_name_a
 struct OBJECTS_AND_NAME_A
 {
@@ -843,7 +841,6 @@ struct OBJECTS_AND_NAME_A
     PSTR           ptstrName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_name_w
 struct OBJECTS_AND_NAME_W
 {
@@ -854,7 +851,6 @@ struct OBJECTS_AND_NAME_W
     PWSTR          ptstrName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-trustee_a
 struct TRUSTEE_A
 {
@@ -865,7 +861,6 @@ struct TRUSTEE_A
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ptstrName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-trustee_w
 struct TRUSTEE_W
 {
@@ -876,7 +871,6 @@ struct TRUSTEE_W
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR ptstrName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-explicit_access_a
 struct EXPLICIT_ACCESS_A
 {
@@ -886,7 +880,6 @@ struct EXPLICIT_ACCESS_A
     TRUSTEE_A   Trustee;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-explicit_access_w
 struct EXPLICIT_ACCESS_W
 {
@@ -896,7 +889,6 @@ struct EXPLICIT_ACCESS_W
     TRUSTEE_W   Trustee;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entrya
 struct ACTRL_ACCESS_ENTRYA
 {
@@ -908,7 +900,6 @@ struct ACTRL_ACCESS_ENTRYA
     PSTR      lpInheritProperty;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entryw
 struct ACTRL_ACCESS_ENTRYW
 {
@@ -920,7 +911,6 @@ struct ACTRL_ACCESS_ENTRYW
     PWSTR     lpInheritProperty;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entry_lista
 struct ACTRL_ACCESS_ENTRY_LISTA
 {
@@ -928,7 +918,6 @@ struct ACTRL_ACCESS_ENTRY_LISTA
     ACTRL_ACCESS_ENTRYA* pAccessList;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entry_listw
 struct ACTRL_ACCESS_ENTRY_LISTW
 {
@@ -936,7 +925,6 @@ struct ACTRL_ACCESS_ENTRY_LISTW
     ACTRL_ACCESS_ENTRYW* pAccessList;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_property_entrya
 struct ACTRL_PROPERTY_ENTRYA
 {
@@ -945,7 +933,6 @@ struct ACTRL_PROPERTY_ENTRYA
     uint fListFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_property_entryw
 struct ACTRL_PROPERTY_ENTRYW
 {
@@ -954,7 +941,6 @@ struct ACTRL_PROPERTY_ENTRYW
     uint  fListFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_accessa
 struct ACTRL_ACCESSA
 {
@@ -962,7 +948,6 @@ struct ACTRL_ACCESSA
     ACTRL_PROPERTY_ENTRYA* pPropertyAccessList;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_accessw
 struct ACTRL_ACCESSW
 {
@@ -970,7 +955,6 @@ struct ACTRL_ACCESSW
     ACTRL_PROPERTY_ENTRYW* pPropertyAccessList;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct TRUSTEE_ACCESSA
 {
     PSTR lpProperty;
@@ -979,7 +963,6 @@ struct TRUSTEE_ACCESSA
     uint fReturnedAccess;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct TRUSTEE_ACCESSW
 {
     PWSTR lpProperty;
@@ -999,28 +982,24 @@ struct ACTRL_OVERLAPPED
     HANDLE hEvent;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACTRL_ACCESS_INFOA
 {
     uint fAccessPermission;
     PSTR lpAccessPermissionName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACTRL_ACCESS_INFOW
 {
     uint  fAccessPermission;
     PWSTR lpAccessPermissionName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACTRL_CONTROL_INFOA
 {
     PSTR lpControlId;
     PSTR lpControlName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACTRL_CONTROL_INFOW
 {
     PWSTR lpControlId;
@@ -1032,7 +1011,6 @@ struct FN_OBJECT_MGR_FUNCTS
     uint Placeholder;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-inherited_froma
 struct INHERITED_FROMA
 {
@@ -1040,7 +1018,6 @@ struct INHERITED_FROMA
     PSTR AncestorName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-inherited_fromw
 struct INHERITED_FROMW
 {
@@ -1622,13 +1599,11 @@ void BuildExplicitAccessWithNameA(EXPLICIT_ACCESS_A* pExplicitAccess, PSTR pTrus
 void BuildExplicitAccessWithNameW(EXPLICIT_ACCESS_W* pExplicitAccess, PWSTR pTrusteeName, uint AccessPermissions, 
                                   ACCESS_MODE AccessMode, ACE_FLAGS Inheritance);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 void BuildImpersonateExplicitAccessWithNameA(EXPLICIT_ACCESS_A* pExplicitAccess, PSTR pTrusteeName, 
                                              TRUSTEE_A* pTrustee, uint AccessPermissions, ACCESS_MODE AccessMode, 
                                              uint Inheritance);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 void BuildImpersonateExplicitAccessWithNameW(EXPLICIT_ACCESS_W* pExplicitAccess, PWSTR pTrusteeName, 
                                              TRUSTEE_W* pTrustee, uint AccessPermissions, ACCESS_MODE AccessMode, 
@@ -1642,11 +1617,9 @@ void BuildTrusteeWithNameA(TRUSTEE_A* pTrustee, PSTR pName);
 @DllImport("ADVAPI32.dll")
 void BuildTrusteeWithNameW(TRUSTEE_W* pTrustee, PWSTR pName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 void BuildImpersonateTrusteeA(TRUSTEE_A* pTrustee, TRUSTEE_A* pImpersonateTrustee);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 void BuildImpersonateTrusteeW(TRUSTEE_W* pTrustee, TRUSTEE_W* pImpersonateTrustee);
 
@@ -1702,19 +1675,15 @@ TRUSTEE_FORM GetTrusteeFormA(TRUSTEE_A* pTrustee);
 @DllImport("ADVAPI32.dll")
 TRUSTEE_FORM GetTrusteeFormW(TRUSTEE_W* pTrustee);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 MULTIPLE_TRUSTEE_OPERATION GetMultipleTrusteeOperationA(TRUSTEE_A* pTrustee);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 MULTIPLE_TRUSTEE_OPERATION GetMultipleTrusteeOperationW(TRUSTEE_W* pTrustee);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 TRUSTEE_A* GetMultipleTrusteeA(TRUSTEE_A* pTrustee);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVAPI32.dll")
 TRUSTEE_W* GetMultipleTrusteeW(TRUSTEE_W* pTrustee);
 

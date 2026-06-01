@@ -3,7 +3,6 @@
 module windows.win32.security.credentials;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
                                                     NTSTATUS, PSTR, PWSTR, WIN32_ERROR;
 public import windows.win32.graphics.gdi : HBITMAP;
@@ -500,9 +499,7 @@ enum uint CREDSSP_FLAG_REDIRECT = 0x00000001U;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPOCNCONNPROCA = size_t function(size_t param0, PSTR param1, PSTR param2, void* param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPOCNCONNPROCW = size_t function(size_t param0, PWSTR param1, PWSTR param2, void* param3);
 alias LPOCNCHKPROC = BOOL function(size_t param0, size_t param1, void* param2);
 alias LPOCNDSCPROC = void function(size_t param0, size_t param1, void* param2);
@@ -523,7 +520,6 @@ struct SecHandle
     size_t dwUpper;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_attributea
 struct CREDENTIAL_ATTRIBUTEA
 {
@@ -533,7 +529,6 @@ struct CREDENTIAL_ATTRIBUTEA
     ubyte* Value;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_attributew
 struct CREDENTIAL_ATTRIBUTEW
 {
@@ -543,7 +538,6 @@ struct CREDENTIAL_ATTRIBUTEW
     ubyte* Value;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentiala
 struct CREDENTIALA
 {
@@ -561,7 +555,6 @@ struct CREDENTIALA
     PSTR         UserName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentialw
 struct CREDENTIALW
 {
@@ -579,7 +572,6 @@ struct CREDENTIALW
     PWSTR        UserName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_target_informationa
 struct CREDENTIAL_TARGET_INFORMATIONA
 {
@@ -595,7 +587,6 @@ struct CREDENTIAL_TARGET_INFORMATIONA
     uint* CredTypes;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_target_informationw
 struct CREDENTIAL_TARGET_INFORMATIONW
 {
@@ -631,7 +622,6 @@ struct BINARY_BLOB_CREDENTIAL_INFO
     ubyte* pbBlob;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credui_infoa
 struct CREDUI_INFOA
@@ -643,7 +633,6 @@ struct CREDUI_INFOA
     HBITMAP     hbmBanner;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credui_infow
 struct CREDUI_INFOW
@@ -688,7 +677,6 @@ struct SCARD_T1_REQUEST
     SCARD_IO_REQUEST ioRequest;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_readerstatea
 struct SCARD_READERSTATEA
 {
@@ -700,7 +688,6 @@ struct SCARD_READERSTATEA
     ubyte[36]   rgbAtr;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_readerstatew
 struct SCARD_READERSTATEW
 {
@@ -720,7 +707,6 @@ struct SCARD_ATRMASK
     ubyte[36] rgbMask;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencard_search_criteriaa
 struct OPENCARD_SEARCH_CRITERIAA
 {
@@ -739,7 +725,6 @@ struct OPENCARD_SEARCH_CRITERIAA
     uint           dwPreferredProtocols;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencard_search_criteriaw
 struct OPENCARD_SEARCH_CRITERIAW
 {
@@ -758,7 +743,6 @@ struct OPENCARD_SEARCH_CRITERIAW
     uint           dwPreferredProtocols;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardname_exa
 struct OPENCARDNAME_EXA
 {
@@ -782,7 +766,6 @@ struct OPENCARDNAME_EXA
     size_t         hCardHandle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardname_exw
 struct OPENCARDNAME_EXW
 {
@@ -839,7 +822,6 @@ struct READER_SEL_RESPONSE
     uint cchCardNameLength;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardnamea
 struct OPENCARDNAMEA
 {
@@ -868,7 +850,6 @@ struct OPENCARDNAMEA
     size_t         hCardHandle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardnamew
 struct OPENCARDNAMEW
 {

@@ -612,9 +612,7 @@ enum uint SCEX2_ALT_NETBIOS_NAME = 0x00000001U;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PGET_SYSTEM_WOW64_DIRECTORY_A = uint function(PSTR lpBuffer, uint uSize);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PGET_SYSTEM_WOW64_DIRECTORY_W = uint function(PWSTR lpBuffer, uint uSize);
 
 // Structs
@@ -830,7 +828,6 @@ struct SYSTEM_SUPPORTED_PROCESSOR_ARCHITECTURES_INFORMATION
     /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedZero0)), FixedArgSig(ElementSig(21)), FixedArgSig(ElementSig(11))], [])*/uint _bitfield482;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-osversioninfoa
 struct OSVERSIONINFOA
 {
@@ -842,7 +839,6 @@ struct OSVERSIONINFOA
     CHAR[128] szCSDVersion;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-osversioninfow
 struct OSVERSIONINFOW
 {
@@ -854,7 +850,6 @@ struct OSVERSIONINFOW
     wchar[128] szCSDVersion;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-osversioninfoexa
 struct OSVERSIONINFOEXA
 {
@@ -871,7 +866,6 @@ struct OSVERSIONINFOEXA
     ubyte     wReserved;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-osversioninfoexw
 struct OSVERSIONINFOEXW
 {

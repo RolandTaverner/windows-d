@@ -3,7 +3,6 @@
 module windows.win32.ui.xaml.diagnostics;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR, RECT;
 public import windows.win32.graphics.dxgi.common : DXGI_ALPHA_MODE, DXGI_FORMAT;
 public import windows.win32.system.com.com : IUnknown, SAFEARRAY;

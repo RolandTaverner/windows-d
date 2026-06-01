@@ -3,7 +3,6 @@
 module windows.win32.system.systemservices;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE, LUID, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : LOGPALETTE;
 public import windows.win32.security.security : PSID, SECURITY_IMPERSONATION_LEVEL, SID,
@@ -6083,7 +6082,7 @@ struct MAXVERSIONTESTED_INFO
     ulong MaxVersionTested;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(struct PACKEDEVENTINFO is deprecated and might not work on all platforms. For more info, see MSDN.))], [])
+deprecated("struct PACKEDEVENTINFO is deprecated and might not work on all platforms. For more info, see MSDN.") 
 struct PACKEDEVENTINFO
 {
     uint    ulSize;

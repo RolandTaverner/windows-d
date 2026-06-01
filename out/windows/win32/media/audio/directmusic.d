@@ -3,7 +3,6 @@
 module windows.win32.media.audio.directmusic;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND,
                                                     PSTR, PWSTR;
 public import windows.win32.media.audio.directsound : IDirectSound, IDirectSoundBuffer;
@@ -442,10 +441,8 @@ enum uint SIZE_DVINFO = 0x00000020U;
 
 alias LPFNDIRECTSOUNDDEVICEENUMERATECALLBACK1 = BOOL function(DSPROPERTY_DIRECTSOUNDDEVICE_DESCRIPTION_1_DATA* param0, 
                                                               void* param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPFNDIRECTSOUNDDEVICEENUMERATECALLBACKA = BOOL function(DSPROPERTY_DIRECTSOUNDDEVICE_DESCRIPTION_A_DATA* param0, 
                                                               void* param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPFNDIRECTSOUNDDEVICEENUMERATECALLBACKW = BOOL function(DSPROPERTY_DIRECTSOUNDDEVICE_DESCRIPTION_W_DATA* param0, 
                                                               void* param1);
 

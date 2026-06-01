@@ -3,7 +3,6 @@
 module windows.win32.security.extensibleauthenticationprotocol;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument2, IXMLDOMNode;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, PWSTR;
 public import windows.win32.security.cryptography.cryptography : NCRYPT_KEY_HANDLE;

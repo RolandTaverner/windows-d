@@ -3,7 +3,6 @@
 module windows.win32.system.diagnostics.clrprofiling;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.winrt.metadata : ASSEMBLYMETADATA, COR_FIELD_OFFSET,
@@ -794,7 +793,6 @@ interface ICorProfilerInfo10 : ICorProfilerInfo9
 @GUID("06398876-8987-4154-b621-40a00d6e4d04")
 interface ICorProfilerInfo11 : ICorProfilerInfo10
 {
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT GetEnvironmentVariableA(const(PWSTR) szName, uint cchValue, uint* pcchValue, PWSTR szValue);
     HRESULT SetEnvironmentVariable(const(PWSTR) szName, const(PWSTR) szValue);
 }

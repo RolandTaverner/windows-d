@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.windowsfirewall;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND,
                                                     PWSTR, VARIANT_BOOL;
 public import windows.win32.security.security : PSID, SID, SID_AND_ATTRIBUTES;

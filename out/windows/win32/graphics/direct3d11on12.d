@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct3d11on12;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HRESULT;
 public import windows.win32.graphics.direct3d.direct3d : D3D_FEATURE_LEVEL;
 public import windows.win32.graphics.direct3d11 : ID3D11Device, ID3D11DeviceContext,

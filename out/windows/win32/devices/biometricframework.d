@@ -3,7 +3,6 @@
 module windows.win32.devices.biometricframework;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, HWND,
                                                     POINT, PWSTR, RECT;
 public import windows.win32.system.io : OVERLAPPED;

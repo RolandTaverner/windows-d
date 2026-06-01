@@ -76,17 +76,14 @@ BOOL TransactNamedPipe(HANDLE hNamedPipe,
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* lpOutBuffer, 
                        uint nOutBufferSize, uint* lpBytesRead, OVERLAPPED* lpOverlapped);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreateNamedPipeW(const(PWSTR) lpName, FILE_FLAGS_AND_ATTRIBUTES dwOpenMode, NAMED_PIPE_MODE dwPipeMode, 
                         uint nMaxInstances, uint nOutBufferSize, uint nInBufferSize, uint nDefaultTimeOut, 
                         SECURITY_ATTRIBUTES* lpSecurityAttributes);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WaitNamedPipeW(const(PWSTR) lpNamedPipeName, uint nTimeOut);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL GetNamedPipeClientComputerNameW(HANDLE Pipe, 
                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PWSTR ClientComputerName, 
@@ -101,13 +98,11 @@ BOOL ImpersonateNamedPipeClient(HANDLE hNamedPipe);
 BOOL GetNamedPipeInfo(HANDLE hNamedPipe, NAMED_PIPE_MODE* lpFlags, uint* lpOutBufferSize, uint* lpInBufferSize, 
                       uint* lpMaxInstances);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL GetNamedPipeHandleStateW(HANDLE hNamedPipe, NAMED_PIPE_MODE* lpState, uint* lpCurInstances, 
                               uint* lpMaxCollectionCount, uint* lpCollectDataTimeout, PWSTR lpUserName, 
                               uint nMaxUserNameSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL CallNamedPipeW(const(PWSTR) lpNamedPipeName, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpInBuffer, 

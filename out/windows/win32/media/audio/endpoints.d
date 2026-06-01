@@ -3,7 +3,6 @@
 module windows.win32.media.audio.endpoints;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
 public import windows.win32.media.audio.audio : AUDIO_VOLUME_NOTIFICATION_DATA;
 public import windows.win32.media.audio.apo : APO_CONNECTION_PROPERTY;

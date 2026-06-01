@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.ndis;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE;
 
 extern(Windows) @nogc nothrow:

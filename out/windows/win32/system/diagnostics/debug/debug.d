@@ -3,7 +3,6 @@
 module windows.win32.system.diagnostics.debug_.debug_;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, HANDLE,
                                                     HMODULE, HRESULT, HWND, NTSTATUS,
                                                     PSTR, PWSTR, SYSTEMTIME;
@@ -2330,21 +2329,13 @@ alias PIMAGEHLP_STATUS_ROUTINE32 = BOOL function(IMAGEHLP_STATUS_REASON Reason, 
 alias PIMAGEHLP_STATUS_ROUTINE64 = BOOL function(IMAGEHLP_STATUS_REASON Reason, const(PSTR) ImageName, 
                                                  const(PSTR) DllName, ulong Va, size_t Parameter);
 alias DIGEST_FUNCTION = BOOL function(void* refdata, ubyte* pData, uint dwLength);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFIND_DEBUG_FILE_CALLBACK = BOOL function(HANDLE FileHandle, const(PSTR) FileName, void* CallerData);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFIND_DEBUG_FILE_CALLBACKW = BOOL function(HANDLE FileHandle, const(PWSTR) FileName, void* CallerData);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFINDFILEINPATHCALLBACK = BOOL function(const(PSTR) filename, void* context);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFINDFILEINPATHCALLBACKW = BOOL function(const(PWSTR) filename, void* context);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFIND_EXE_FILE_CALLBACK = BOOL function(HANDLE FileHandle, const(PSTR) FileName, void* CallerData);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFIND_EXE_FILE_CALLBACKW = BOOL function(HANDLE FileHandle, const(PWSTR) FileName, void* CallerData);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PENUMDIRTREE_CALLBACK = BOOL function(const(PSTR) FilePath, void* CallerData);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PENUMDIRTREE_CALLBACKW = BOOL function(const(PWSTR) FilePath, void* CallerData);
 alias PREAD_PROCESS_MEMORY_ROUTINE64 = BOOL function(HANDLE hProcess, ulong qwBaseAddress, 
                                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
@@ -2382,10 +2373,8 @@ alias PENUMLOADED_MODULES_CALLBACK64 = BOOL function(const(PSTR) ModuleName, ulo
                                                      void* UserContext);
 alias PENUMLOADED_MODULES_CALLBACKW64 = BOOL function(const(PWSTR) ModuleName, ulong ModuleBase, uint ModuleSize, 
                                                       void* UserContext);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMSYMBOLS_CALLBACK64 = BOOL function(const(PSTR) SymbolName, ulong SymbolAddress, uint SymbolSize, 
                                                   void* UserContext);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMSYMBOLS_CALLBACK64W = BOOL function(const(PWSTR) SymbolName, ulong SymbolAddress, uint SymbolSize, 
                                                    void* UserContext);
 alias PSYMBOL_REGISTERED_CALLBACK64 = BOOL function(HANDLE hProcess, uint ActionCode, ulong CallbackData, 
@@ -2400,14 +2389,12 @@ version(X86)
 
 version(X86)
 {
-    //DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
     alias PSYM_ENUMSYMBOLS_CALLBACK = BOOL function(const(PSTR) SymbolName, uint SymbolAddress, uint SymbolSize, 
                                                 void* UserContext);
 }
 
 version(X86)
 {
-    //DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     alias PSYM_ENUMSYMBOLS_CALLBACKW = BOOL function(const(PWSTR) SymbolName, uint SymbolAddress, uint SymbolSize, 
                                                  void* UserContext);
 }
@@ -2423,19 +2410,13 @@ version(X86)
     alias PSYMBOL_REGISTERED_CALLBACK = BOOL function(HANDLE hProcess, uint ActionCode, void* CallbackData, 
                                                   void* UserContext);
 }
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMSOURCEFILES_CALLBACK = BOOL function(SOURCEFILE* pSourceFile, void* UserContext);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMSOURCEFILES_CALLBACKW = BOOL function(SOURCEFILEW* pSourceFile, void* UserContext);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMLINES_CALLBACK = BOOL function(SRCCODEINFO* LineInfo, void* UserContext);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMLINES_CALLBACKW = BOOL function(SRCCODEINFOW* LineInfo, void* UserContext);
 alias PENUMSOURCEFILETOKENSCALLBACK = BOOL function(void* token, size_t size);
 alias PSYM_ENUMPROCESSES_CALLBACK = BOOL function(HANDLE hProcess, void* UserContext);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMERATESYMBOLS_CALLBACK = BOOL function(SYMBOL_INFO* pSymInfo, uint SymbolSize, void* UserContext);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMERATESYMBOLS_CALLBACKW = BOOL function(SYMBOL_INFOW* pSymInfo, uint SymbolSize, void* UserContext);
 alias SYMADDSOURCESTREAM = BOOL function(HANDLE param0, ulong param1, const(PSTR) param2, ubyte* param3, 
                                          size_t param4);
@@ -2443,22 +2424,16 @@ alias SYMADDSOURCESTREAMA = BOOL function(HANDLE param0, ulong param1, const(PST
                                           size_t param4);
 alias PDBGHELP_CREATE_USER_DUMP_CALLBACK = BOOL function(uint DataType, void** Data, uint* DataLength, 
                                                          void* UserData);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERPROC = BOOL function(const(PSTR) param0, const(PSTR) param1, void* param2, uint param3, 
                                         uint param4, PSTR param5);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERPROCA = BOOL function(const(PSTR) param0, const(PSTR) param1, void* param2, uint param3, 
                                          uint param4, PSTR param5);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERPROCW = BOOL function(const(PWSTR) param0, const(PWSTR) param1, void* param2, uint param3, 
                                          uint param4, PWSTR param5);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERBYINDEXPROC = BOOL function(const(PSTR) param0, const(PSTR) param1, const(PSTR) param2, 
                                                PSTR param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERBYINDEXPROCA = BOOL function(const(PSTR) param0, const(PSTR) param1, const(PSTR) param2, 
                                                 PSTR param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERBYINDEXPROCW = BOOL function(const(PWSTR) param0, const(PWSTR) param1, const(PWSTR) param2, 
                                                 PWSTR param3);
 alias PSYMBOLSERVEROPENPROC = BOOL function();
@@ -2467,46 +2442,31 @@ alias PSYMBOLSERVERSETOPTIONSPROC = BOOL function(size_t param0, ulong param1);
 alias PSYMBOLSERVERSETOPTIONSWPROC = BOOL function(size_t param0, ulong param1);
 alias PSYMBOLSERVERCALLBACKPROC = BOOL function(size_t action, ulong data, ulong context);
 alias PSYMBOLSERVERGETOPTIONSPROC = size_t function();
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERPINGPROC = BOOL function(const(PSTR) param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERPINGPROCA = BOOL function(const(PSTR) param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERPINGPROCW = BOOL function(const(PWSTR) param0);
 alias PSYMBOLSERVERGETVERSION = BOOL function(API_VERSION* param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERDELTANAME = BOOL function(const(PSTR) param0, void* param1, uint param2, uint param3, 
                                              void* param4, uint param5, uint param6, PSTR param7, size_t param8);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERDELTANAMEW = BOOL function(const(PWSTR) param0, void* param1, uint param2, uint param3, 
                                               void* param4, uint param5, uint param6, PWSTR param7, size_t param8);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERGETSUPPLEMENT = BOOL function(const(PSTR) param0, const(PSTR) param1, const(PSTR) param2, 
                                                  PSTR param3, size_t param4);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERGETSUPPLEMENTW = BOOL function(const(PWSTR) param0, const(PWSTR) param1, const(PWSTR) param2, 
                                                   PWSTR param3, size_t param4);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERSTORESUPPLEMENT = BOOL function(const(PSTR) param0, const(PSTR) param1, const(PSTR) param2, 
                                                    PSTR param3, size_t param4, uint param5);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERSTORESUPPLEMENTW = BOOL function(const(PWSTR) param0, const(PWSTR) param1, const(PWSTR) param2, 
                                                     PWSTR param3, size_t param4, uint param5);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERGETINDEXSTRING = BOOL function(void* param0, uint param1, uint param2, PSTR param3, 
                                                   size_t param4);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERGETINDEXSTRINGW = BOOL function(void* param0, uint param1, uint param2, PWSTR param3, 
                                                    size_t param4);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERSTOREFILE = BOOL function(const(PSTR) param0, const(PSTR) param1, void* param2, uint param3, 
                                              uint param4, PSTR param5, size_t param6, uint param7);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERSTOREFILEW = BOOL function(const(PWSTR) param0, const(PWSTR) param1, void* param2, uint param3, 
                                               uint param4, PWSTR param5, size_t param6, uint param7);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERISSTORE = BOOL function(const(PSTR) param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSYMBOLSERVERISSTOREW = BOOL function(const(PWSTR) param0);
 alias PSYMBOLSERVERVERSION = uint function();
 alias PSYMBOLSERVERMESSAGEPROC = BOOL function(size_t action, ulong data, ulong context);
@@ -5167,7 +5127,6 @@ struct IMAGEHLP_SYMBOLW64_PACKAGE
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbol
     struct IMAGEHLP_SYMBOL
     {
@@ -5191,7 +5150,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct IMAGEHLP_SYMBOLW
     {
         uint SizeOfStruct;
@@ -5286,7 +5244,6 @@ struct IMAGEHLP_MODULEW64_EX
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_module
     struct IMAGEHLP_MODULE
     {
@@ -5305,7 +5262,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct IMAGEHLP_MODULEW
     {
         uint       SizeOfStruct;
@@ -5343,7 +5299,6 @@ struct IMAGEHLP_LINEW64
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_line
     struct IMAGEHLP_LINE
     {
@@ -5357,7 +5312,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct IMAGEHLP_LINEW
     {
         uint  SizeOfStruct;
@@ -5368,7 +5322,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-sourcefile
 struct SOURCEFILE
 {
@@ -5376,7 +5329,6 @@ struct SOURCEFILE
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR FileName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-sourcefilew
 struct SOURCEFILEW
 {
@@ -5393,7 +5345,6 @@ struct IMAGEHLP_CBA_READ_MEMORY
     uint* bytesread;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_event
 struct IMAGEHLP_CBA_EVENT
 {
@@ -5403,7 +5354,6 @@ struct IMAGEHLP_CBA_EVENT
     void* object;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_eventw
 struct IMAGEHLP_CBA_EVENTW
 {
@@ -5489,7 +5439,6 @@ struct OMAP
     uint rvaTo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-srccodeinfo
 struct SRCCODEINFO
 {
@@ -5502,7 +5451,6 @@ struct SRCCODEINFO
     ulong     Address;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-srccodeinfow
 struct SRCCODEINFOW
 {
@@ -5529,7 +5477,6 @@ struct MODULE_TYPE_INFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symbol_info
 struct SYMBOL_INFO
 {
@@ -5550,14 +5497,12 @@ struct SYMBOL_INFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] Name;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct SYMBOL_INFO_PACKAGE
 {
     SYMBOL_INFO si;
     CHAR[2001]  name;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symbol_infow
 struct SYMBOL_INFOW
 {
@@ -5578,7 +5523,6 @@ struct SYMBOL_INFOW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Name;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct SYMBOL_INFO_PACKAGEW
 {
     SYMBOL_INFOW si;
@@ -5644,7 +5588,6 @@ struct IMAGEHLP_GET_TYPE_INFO_PARAMS
     ulong*  ReqsValid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symsrv_index_info
 struct SYMSRV_INDEX_INFO
 {
@@ -5660,7 +5603,6 @@ struct SYMSRV_INDEX_INFO
     uint      age;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symsrv_index_infow
 struct SYMSRV_INDEX_INFOW
 {
@@ -6750,12 +6692,10 @@ BOOL UpdateDebugInfoFile(const(PSTR) ImageFileName, const(PSTR) SymbolPath, PSTR
 BOOL UpdateDebugInfoFileEx(const(PSTR) ImageFileName, const(PSTR) SymbolPath, PSTR DebugFilePath, 
                            IMAGE_NT_HEADERS32* NtHeaders, uint OldCheckSum);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE SymFindDebugInfoFile(HANDLE hProcess, const(PSTR) FileName, PSTR DebugFilePath, 
                             PFIND_DEBUG_FILE_CALLBACK Callback, void* CallerData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE SymFindDebugInfoFileW(HANDLE hProcess, const(PWSTR) FileName, PWSTR DebugFilePath, 
                              PFIND_DEBUG_FILE_CALLBACKW Callback, void* CallerData);
@@ -6764,34 +6704,28 @@ HANDLE SymFindDebugInfoFileW(HANDLE hProcess, const(PWSTR) FileName, PWSTR Debug
 @DllImport("dbghelp.dll")
 HANDLE FindDebugInfoFile(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR DebugFilePath);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE FindDebugInfoFileEx(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR DebugFilePath, 
                            PFIND_DEBUG_FILE_CALLBACK Callback, void* CallerData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE FindDebugInfoFileExW(const(PWSTR) FileName, const(PWSTR) SymbolPath, PWSTR DebugFilePath, 
                             PFIND_DEBUG_FILE_CALLBACKW Callback, void* CallerData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFindFileInPath(HANDLE hprocess, const(PSTR) SearchPathA, const(PSTR) FileName, void* id, uint two, 
                        uint three, SYM_FIND_ID_OPTION flags, PSTR FoundFile, PFINDFILEINPATHCALLBACK callback, 
                        void* context);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFindFileInPathW(HANDLE hprocess, const(PWSTR) SearchPathA, const(PWSTR) FileName, void* id, uint two, 
                         uint three, SYM_FIND_ID_OPTION flags, PWSTR FoundFile, PFINDFILEINPATHCALLBACKW callback, 
                         void* context);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE SymFindExecutableImage(HANDLE hProcess, const(PSTR) FileName, PSTR ImageFilePath, 
                               PFIND_EXE_FILE_CALLBACK Callback, void* CallerData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE SymFindExecutableImageW(HANDLE hProcess, const(PWSTR) FileName, PWSTR ImageFilePath, 
                                PFIND_EXE_FILE_CALLBACKW Callback, void* CallerData);
@@ -6800,12 +6734,10 @@ HANDLE SymFindExecutableImageW(HANDLE hProcess, const(PWSTR) FileName, PWSTR Ima
 @DllImport("dbghelp.dll")
 HANDLE FindExecutableImage(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR ImageFilePath);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE FindExecutableImageEx(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR ImageFilePath, 
                              PFIND_EXE_FILE_CALLBACK Callback, void* CallerData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 HANDLE FindExecutableImageExW(const(PWSTR) FileName, const(PWSTR) SymbolPath, PWSTR ImageFilePath, 
                               PFIND_EXE_FILE_CALLBACKW Callback, void* CallerData);
@@ -6832,20 +6764,16 @@ IMAGE_SECTION_HEADER* ImageRvaToSection(IMAGE_NT_HEADERS32* NtHeaders, void* Bas
 @DllImport("dbghelp.dll")
 void* ImageRvaToVa(IMAGE_NT_HEADERS32* NtHeaders, void* Base, uint Rva, IMAGE_SECTION_HEADER** LastRvaSection);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SearchTreeForFile(const(PSTR) RootPath, const(PSTR) InputPathName, PSTR OutputPathBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SearchTreeForFileW(const(PWSTR) RootPath, const(PWSTR) InputPathName, PWSTR OutputPathBuffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL EnumDirTree(HANDLE hProcess, const(PSTR) RootPath, const(PSTR) InputPathName, PSTR OutputPathBuffer, 
                  PENUMDIRTREE_CALLBACK cb, void* data);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL EnumDirTreeW(HANDLE hProcess, const(PWSTR) RootPath, const(PWSTR) InputPathName, PWSTR OutputPathBuffer, 
                   PENUMDIRTREE_CALLBACKW cb, void* data);
@@ -6854,11 +6782,9 @@ BOOL EnumDirTreeW(HANDLE hProcess, const(PWSTR) RootPath, const(PWSTR) InputPath
 @DllImport("dbghelp.dll")
 BOOL MakeSureDirectoryPathExists(const(PSTR) DirPath);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 uint UnDecorateSymbolName(const(PSTR) name, PSTR outputString, uint maxStringLength, uint flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 uint UnDecorateSymbolNameW(const(PWSTR) name, PWSTR outputString, uint maxStringLength, uint flags);
 
@@ -6910,20 +6836,16 @@ BOOL SymSetParentWindow(HWND hwnd);
 @DllImport("dbghelp.dll")
 BOOL SymGetParentWindow(HWND* pHwnd);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PSTR SymSetHomeDirectory(HANDLE hProcess, const(PSTR) dir);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PWSTR SymSetHomeDirectoryW(HANDLE hProcess, const(PWSTR) dir);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PSTR SymGetHomeDirectory(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IMAGEHLP_HD_TYPE))], [])*/uint type, 
                          PSTR dir, size_t size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PWSTR SymGetHomeDirectoryW(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IMAGEHLP_HD_TYPE))], [])*/uint type, 
                            PWSTR dir, size_t size);
@@ -6953,24 +6875,19 @@ BOOL SymGetExtendedOption(IMAGEHLP_EXTENDED_OPTIONS option);
 @DllImport("dbghelp.dll")
 BOOL SymSetExtendedOption(IMAGEHLP_EXTENDED_OPTIONS option, BOOL value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymMatchString(const(PSTR) string, const(PSTR) expression, BOOL fCase);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymMatchStringA(const(PSTR) string, const(PSTR) expression, BOOL fCase);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymMatchStringW(const(PWSTR) string, const(PWSTR) expression, BOOL fCase);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSourceFiles(HANDLE hProcess, ulong ModBase, const(PSTR) Mask, PSYM_ENUMSOURCEFILES_CALLBACK cbSrcFiles, 
                         void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSourceFilesW(HANDLE hProcess, ulong ModBase, const(PWSTR) Mask, 
                          PSYM_ENUMSOURCEFILES_CALLBACKW cbSrcFiles, void* UserContext);
@@ -6987,12 +6904,10 @@ BOOL SymEnumerateModulesW64(HANDLE hProcess, PSYM_ENUMMODULES_CALLBACKW64 EnumMo
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateModules(HANDLE hProcess, PSYM_ENUMMODULES_CALLBACK EnumModulesCallback, void* UserContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL EnumerateLoadedModulesEx(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACK64 EnumLoadedModulesCallback, 
                               void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL EnumerateLoadedModulesExW(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACKW64 EnumLoadedModulesCallback, 
                                void* UserContext);
@@ -7039,11 +6954,9 @@ BOOL SymGetModuleInfo64(HANDLE hProcess, ulong qwAddr, IMAGEHLP_MODULE64* Module
 @DllImport("dbghelp.dll")
 BOOL SymGetModuleInfoW64(HANDLE hProcess, ulong qwAddr, IMAGEHLP_MODULEW64* ModuleInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetModuleInfo(HANDLE hProcess, uint dwAddr, IMAGEHLP_MODULE* ModuleInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetModuleInfoW(HANDLE hProcess, uint dwAddr, IMAGEHLP_MODULEW* ModuleInfo);
 
@@ -7055,12 +6968,10 @@ ulong SymGetModuleBase64(HANDLE hProcess, ulong qwAddr);
 @DllImport("dbghelp.dll")
 uint SymGetModuleBase(HANDLE hProcess, uint dwAddr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumLines(HANDLE hProcess, ulong Base, const(PSTR) Obj, const(PSTR) File, 
                   PSYM_ENUMLINES_CALLBACK EnumLinesCallback, void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumLinesW(HANDLE hProcess, ulong Base, const(PWSTR) Obj, const(PWSTR) File, 
                    PSYM_ENUMLINES_CALLBACKW EnumLinesCallback, void* UserContext);
@@ -7073,22 +6984,18 @@ BOOL SymGetLineFromAddr64(HANDLE hProcess, ulong qwAddr, uint* pdwDisplacement, 
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromAddrW64(HANDLE hProcess, ulong dwAddr, uint* pdwDisplacement, IMAGEHLP_LINEW64* Line);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromInlineContext(HANDLE hProcess, ulong qwAddr, uint InlineContext, ulong qwModuleBaseAddress, 
                                  uint* pdwDisplacement, IMAGEHLP_LINE64* Line64);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromInlineContextW(HANDLE hProcess, ulong dwAddr, uint InlineContext, ulong qwModuleBaseAddress, 
                                   uint* pdwDisplacement, IMAGEHLP_LINEW64* Line);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSourceLines(HANDLE hProcess, ulong Base, const(PSTR) Obj, const(PSTR) File, uint Line, uint Flags, 
                         PSYM_ENUMLINES_CALLBACK EnumLinesCallback, void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSourceLinesW(HANDLE hProcess, ulong Base, const(PWSTR) Obj, const(PWSTR) File, uint Line, uint Flags, 
                          PSYM_ENUMLINES_CALLBACKW EnumLinesCallback, void* UserContext);
@@ -7107,7 +7014,6 @@ uint SymCompareInlineTrace(HANDLE hProcess, ulong Address1, uint InlineContext1,
 BOOL SymQueryInlineTrace(HANDLE hProcess, ulong StartAddress, uint StartContext, ulong StartRetAddress, 
                          ulong CurAddress, uint* CurContext, uint* CurFrameIndex);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromAddr(HANDLE hProcess, uint dwAddr, uint* pdwDisplacement, IMAGEHLP_LINE* Line);
 
@@ -7134,7 +7040,6 @@ BOOL SymGetLineNext64(HANDLE hProcess, IMAGEHLP_LINE64* Line);
 @DllImport("dbghelp.dll")
 BOOL SymGetLineNextW64(HANDLE hProcess, IMAGEHLP_LINEW64* Line);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetLineNext(HANDLE hProcess, IMAGEHLP_LINE* Line);
 
@@ -7146,7 +7051,6 @@ BOOL SymGetLinePrev64(HANDLE hProcess, IMAGEHLP_LINE64* Line);
 @DllImport("dbghelp.dll")
 BOOL SymGetLinePrevW64(HANDLE hProcess, IMAGEHLP_LINEW64* Line);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetLinePrev(HANDLE hProcess, IMAGEHLP_LINE* Line);
 
@@ -7155,76 +7059,60 @@ BOOL SymGetLinePrev(HANDLE hProcess, IMAGEHLP_LINE* Line);
 uint SymGetFileLineOffsets64(HANDLE hProcess, const(PSTR) ModuleName, const(PSTR) FileName, ulong* Buffer, 
                              uint BufferLines);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymMatchFileName(const(PSTR) FileName, const(PSTR) Match, PSTR* FileNameStop, PSTR* MatchStop);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymMatchFileNameW(const(PWSTR) FileName, const(PWSTR) Match, PWSTR* FileNameStop, PWSTR* MatchStop);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFile(HANDLE hProcess, ulong Base, const(PSTR) Params, const(PSTR) FileSpec, PSTR FilePath, 
                       uint Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileW(HANDLE hProcess, ulong Base, const(PWSTR) Params, const(PWSTR) FileSpec, PWSTR FilePath, 
                        uint Size);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileToken(HANDLE hProcess, ulong Base, const(PSTR) FileSpec, void** Token, uint* Size);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileTokenByTokenName(HANDLE hProcess, ulong Base, const(PSTR) FileSpec, const(PSTR) TokenName, 
                                       const(PSTR) TokenParameters, void** Token, uint* Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileChecksumW(HANDLE hProcess, ulong Base, const(PWSTR) FileSpec, uint* pCheckSumType, 
                                ubyte* pChecksum, uint checksumSize, uint* pActualBytesWritten);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileChecksum(HANDLE hProcess, ulong Base, const(PSTR) FileSpec, uint* pCheckSumType, 
                               ubyte* pChecksum, uint checksumSize, uint* pActualBytesWritten);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileTokenW(HANDLE hProcess, ulong Base, const(PWSTR) FileSpec, void** Token, uint* Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileTokenByTokenNameW(HANDLE hProcess, ulong Base, const(PWSTR) FileSpec, const(PWSTR) TokenName, 
                                        const(PWSTR) TokenParameters, void** Token, uint* Size);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileFromToken(HANDLE hProcess, void* Token, const(PSTR) Params, PSTR FilePath, uint Size);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileFromTokenByTokenName(HANDLE hProcess, void* Token, const(PSTR) TokenName, const(PSTR) Params, 
                                           PSTR FilePath, uint Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileFromTokenW(HANDLE hProcess, void* Token, const(PWSTR) Params, PWSTR FilePath, uint Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceFileFromTokenByTokenNameW(HANDLE hProcess, void* Token, const(PWSTR) TokenName, 
                                            const(PWSTR) Params, PWSTR FilePath, uint Size);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceVarFromToken(HANDLE hProcess, void* Token, const(PSTR) Params, const(PSTR) VarName, PSTR Value, 
                               uint Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSourceVarFromTokenW(HANDLE hProcess, void* Token, const(PWSTR) Params, const(PWSTR) VarName, 
                                PWSTR Value, uint Size);
@@ -7233,36 +7121,28 @@ BOOL SymGetSourceVarFromTokenW(HANDLE hProcess, void* Token, const(PWSTR) Params
 @DllImport("dbghelp.dll")
 BOOL SymEnumSourceFileTokens(HANDLE hProcess, ulong Base, PENUMSOURCEFILETOKENSCALLBACK Callback);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymInitialize(HANDLE hProcess, const(PSTR) UserSearchPath, BOOL fInvadeProcess);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymInitializeW(HANDLE hProcess, const(PWSTR) UserSearchPath, BOOL fInvadeProcess);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSearchPath(HANDLE hProcess, PSTR SearchPathA, uint SearchPathLength);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSearchPathW(HANDLE hProcess, PWSTR SearchPathA, uint SearchPathLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSetSearchPath(HANDLE hProcess, const(PSTR) SearchPathA);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSetSearchPathW(HANDLE hProcess, const(PWSTR) SearchPathA);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 ulong SymLoadModuleEx(HANDLE hProcess, HANDLE hFile, const(PSTR) ImageName, const(PSTR) ModuleName, 
                       ulong BaseOfDll, uint DllSize, MODLOAD_DATA* Data, SYM_LOAD_FLAGS Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 ulong SymLoadModuleExW(HANDLE hProcess, HANDLE hFile, const(PWSTR) ImageName, const(PWSTR) ModuleName, 
                        ulong BaseOfDll, uint DllSize, MODLOAD_DATA* Data, SYM_LOAD_FLAGS Flags);
@@ -7325,109 +7205,85 @@ BOOL SymSetScopeFromIndex(HANDLE hProcess, ulong BaseOfDll, uint Index);
 @DllImport("dbghelp.dll")
 BOOL SymEnumProcesses(PSYM_ENUMPROCESSES_CALLBACK EnumProcessesCallback, void* UserContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromAddr(HANDLE hProcess, ulong Address, ulong* Displacement, SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromAddrW(HANDLE hProcess, ulong Address, ulong* Displacement, SYMBOL_INFOW* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromInlineContext(HANDLE hProcess, ulong Address, uint InlineContext, ulong* Displacement, 
                           SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromInlineContextW(HANDLE hProcess, ulong Address, uint InlineContext, ulong* Displacement, 
                            SYMBOL_INFOW* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromToken(HANDLE hProcess, ulong Base, uint Token, SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromTokenW(HANDLE hProcess, ulong Base, uint Token, SYMBOL_INFOW* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymNext(HANDLE hProcess, SYMBOL_INFO* si);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymNextW(HANDLE hProcess, SYMBOL_INFOW* siw);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymPrev(HANDLE hProcess, SYMBOL_INFO* si);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymPrevW(HANDLE hProcess, SYMBOL_INFOW* siw);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromName(HANDLE hProcess, const(PSTR) Name, SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromNameW(HANDLE hProcess, const(PWSTR) Name, SYMBOL_INFOW* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSymbols(HANDLE hProcess, ulong BaseOfDll, const(PSTR) Mask, 
                     PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, void* UserContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSymbolsEx(HANDLE hProcess, ulong BaseOfDll, const(PSTR) Mask, 
                       PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, void* UserContext, uint Options);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSymbolsW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Mask, 
                      PSYM_ENUMERATESYMBOLS_CALLBACKW EnumSymbolsCallback, void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSymbolsExW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Mask, 
                        PSYM_ENUMERATESYMBOLS_CALLBACKW EnumSymbolsCallback, void* UserContext, uint Options);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSymbolsForAddr(HANDLE hProcess, ulong Address, PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, 
                            void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumSymbolsForAddrW(HANDLE hProcess, ulong Address, PSYM_ENUMERATESYMBOLS_CALLBACKW EnumSymbolsCallback, 
                             void* UserContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSearch(HANDLE hProcess, ulong BaseOfDll, uint Index, uint SymTag, const(PSTR) Mask, ulong Address, 
                PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, void* UserContext, uint Options);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSearchW(HANDLE hProcess, ulong BaseOfDll, uint Index, uint SymTag, const(PWSTR) Mask, ulong Address, 
                 PSYM_ENUMERATESYMBOLS_CALLBACKW EnumSymbolsCallback, void* UserContext, uint Options);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetScope(HANDLE hProcess, ulong BaseOfDll, uint Index, SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetScopeW(HANDLE hProcess, ulong BaseOfDll, uint Index, SYMBOL_INFOW* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromIndex(HANDLE hProcess, ulong BaseOfDll, uint Index, SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymFromIndexW(HANDLE hProcess, ulong BaseOfDll, uint Index, SYMBOL_INFOW* Symbol);
 
@@ -7439,47 +7295,37 @@ BOOL SymGetTypeInfo(HANDLE hProcess, ulong ModBase, uint TypeId, IMAGEHLP_SYMBOL
 @DllImport("dbghelp.dll")
 BOOL SymGetTypeInfoEx(HANDLE hProcess, ulong ModBase, IMAGEHLP_GET_TYPE_INFO_PARAMS* Params);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumTypes(HANDLE hProcess, ulong BaseOfDll, PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, 
                   void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumTypesW(HANDLE hProcess, ulong BaseOfDll, PSYM_ENUMERATESYMBOLS_CALLBACKW EnumSymbolsCallback, 
                    void* UserContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumTypesByName(HANDLE hProcess, ulong BaseOfDll, const(PSTR) mask, 
                         PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, void* UserContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymEnumTypesByNameW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) mask, 
                          PSYM_ENUMERATESYMBOLS_CALLBACKW EnumSymbolsCallback, void* UserContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetTypeFromName(HANDLE hProcess, ulong BaseOfDll, const(PSTR) Name, SYMBOL_INFO* Symbol);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetTypeFromNameW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Name, SYMBOL_INFOW* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymAddSymbol(HANDLE hProcess, ulong BaseOfDll, const(PSTR) Name, ulong Address, uint Size, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymAddSymbolW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Name, ulong Address, uint Size, uint Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymDeleteSymbol(HANDLE hProcess, ulong BaseOfDll, const(PSTR) Name, ulong Address, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymDeleteSymbolW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Name, ulong Address, uint Flags);
 
@@ -7487,109 +7333,86 @@ BOOL SymDeleteSymbolW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Name, ulong
 @DllImport("dbghelp.dll")
 BOOL SymRefreshModuleList(HANDLE hProcess);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymAddSourceStream(HANDLE hProcess, ulong Base, const(PSTR) StreamFile, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* Buffer, 
                         size_t Size);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymAddSourceStreamA(HANDLE hProcess, ulong Base, const(PSTR) StreamFile, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* Buffer, 
                          size_t Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymAddSourceStreamW(HANDLE hProcess, ulong Base, const(PWSTR) FileSpec, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* Buffer, 
                          size_t Size);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvIsStoreW(HANDLE hProcess, const(PWSTR) path);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvIsStore(HANDLE hProcess, const(PSTR) path);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PSTR SymSrvDeltaName(HANDLE hProcess, const(PSTR) SymPath, const(PSTR) Type, const(PSTR) File1, const(PSTR) File2);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PWSTR SymSrvDeltaNameW(HANDLE hProcess, const(PWSTR) SymPath, const(PWSTR) Type, const(PWSTR) File1, 
                        const(PWSTR) File2);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PSTR SymSrvGetSupplement(HANDLE hProcess, const(PSTR) SymPath, const(PSTR) Node, const(PSTR) File);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PWSTR SymSrvGetSupplementW(HANDLE hProcess, const(PWSTR) SymPath, const(PWSTR) Node, const(PWSTR) File);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvGetFileIndexes(const(PSTR) File, GUID* Id, uint* Val1, uint* Val2, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvGetFileIndexesW(const(PWSTR) File, GUID* Id, uint* Val1, uint* Val2, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvGetFileIndexStringW(HANDLE hProcess, const(PWSTR) SrvPath, const(PWSTR) File, PWSTR Index, size_t Size, 
                                uint Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvGetFileIndexString(HANDLE hProcess, const(PSTR) SrvPath, const(PSTR) File, PSTR Index, size_t Size, 
                               uint Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvGetFileIndexInfo(const(PSTR) File, SYMSRV_INDEX_INFO* Info, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymSrvGetFileIndexInfoW(const(PWSTR) File, SYMSRV_INDEX_INFOW* Info, uint Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PSTR SymSrvStoreSupplement(HANDLE hProcess, const(PSTR) SrvPath, const(PSTR) Node, const(PSTR) File, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PWSTR SymSrvStoreSupplementW(HANDLE hProcess, const(PWSTR) SymPath, const(PWSTR) Node, const(PWSTR) File, 
                              uint Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PSTR SymSrvStoreFile(HANDLE hProcess, const(PSTR) SrvPath, const(PSTR) File, SYM_SRV_STORE_FILE_FLAGS Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 PWSTR SymSrvStoreFileW(HANDLE hProcess, const(PWSTR) SrvPath, const(PWSTR) File, SYM_SRV_STORE_FILE_FLAGS Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSymbolFile(HANDLE hProcess, const(PSTR) SymPath, const(PSTR) ImageFile, 
                       /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IMAGEHLP_SF_TYPE))], [])*/uint Type, 
                       PSTR SymbolFile, size_t cSymbolFile, PSTR DbgFile, size_t cDbgFile);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSymbolFileW(HANDLE hProcess, const(PWSTR) SymPath, const(PWSTR) ImageFile, 
                        /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IMAGEHLP_SF_TYPE))], [])*/uint Type, 
                        PWSTR SymbolFile, size_t cSymbolFile, PWSTR DbgFile, size_t cDbgFile);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL DbgHelpCreateUserDump(const(PSTR) FileName, PDBGHELP_CREATE_USER_DUMP_CALLBACK Callback, void* UserData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL DbgHelpCreateUserDumpW(const(PWSTR) FileName, PDBGHELP_CREATE_USER_DUMP_CALLBACK Callback, void* UserData);
 
@@ -7609,37 +7432,37 @@ BOOL SymGetSymFromName64(HANDLE hProcess, const(PSTR) Name, IMAGEHLP_SYMBOL64* S
 @DllImport("dbghelp.dll")
 BOOL SymGetSymFromName(HANDLE hProcess, const(PSTR) Name, IMAGEHLP_SYMBOL* Symbol);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL FindFileInPath(HANDLE hprocess, const(PSTR) SearchPathA, const(PSTR) FileName, void* id, uint two, uint three, 
                     uint flags, PSTR FilePath);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL FindFileInSearchPath(HANDLE hprocess, const(PSTR) SearchPathA, const(PSTR) FileName, uint one, uint two, 
                           uint three, PSTR FilePath);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL SymEnumSym(HANDLE hProcess, ulong BaseOfDll, PSYM_ENUMERATESYMBOLS_CALLBACK EnumSymbolsCallback, 
                 void* UserContext);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateSymbols64(HANDLE hProcess, ulong BaseOfDll, PSYM_ENUMSYMBOLS_CALLBACK64 EnumSymbolsCallback, 
                            void* UserContext);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateSymbolsW64(HANDLE hProcess, ulong BaseOfDll, PSYM_ENUMSYMBOLS_CALLBACK64W EnumSymbolsCallback, 
                             void* UserContext);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateSymbols(HANDLE hProcess, uint BaseOfDll, PSYM_ENUMSYMBOLS_CALLBACK EnumSymbolsCallback, 
                          void* UserContext);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateSymbolsW(HANDLE hProcess, uint BaseOfDll, PSYM_ENUMSYMBOLS_CALLBACKW EnumSymbolsCallback, 
                           void* UserContext);
@@ -7658,7 +7481,6 @@ uint SymLoadModule(HANDLE hProcess, HANDLE hFile, const(PSTR) ImageName, const(P
 @DllImport("dbghelp.dll")
 BOOL SymGetSymNext64(HANDLE hProcess, IMAGEHLP_SYMBOL64* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSymNext(HANDLE hProcess, IMAGEHLP_SYMBOL* Symbol);
 
@@ -7666,7 +7488,6 @@ BOOL SymGetSymNext(HANDLE hProcess, IMAGEHLP_SYMBOL* Symbol);
 @DllImport("dbghelp.dll")
 BOOL SymGetSymPrev64(HANDLE hProcess, IMAGEHLP_SYMBOL64* Symbol);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("dbghelp.dll")
 BOOL SymGetSymPrev(HANDLE hProcess, IMAGEHLP_SYMBOL* Symbol);
 

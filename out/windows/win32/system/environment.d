@@ -292,7 +292,6 @@ align (1):
 
 // Functions
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetEnvironmentStringsW(/*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR NewEnvironment);
 
@@ -344,19 +343,15 @@ uint ExpandEnvironmentStringsA(const(PSTR) lpSrc, PSTR lpDst, uint nSize);
 @DllImport("KERNEL32.dll")
 uint ExpandEnvironmentStringsW(const(PWSTR) lpSrc, PWSTR lpDst, uint nSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetCurrentDirectoryA(const(PSTR) lpPathName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetCurrentDirectoryW(const(PWSTR) lpPathName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetCurrentDirectoryA(uint nBufferLength, PSTR lpBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetCurrentDirectoryW(uint nBufferLength, PWSTR lpBuffer);
 
@@ -409,7 +404,6 @@ BOOL InitializeEnclave(HANDLE hProcess, void* lpAddress,
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* lpEnclaveInformation, 
                        uint dwInfoLength, uint* lpEnclaveError);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("api-ms-win-core-enclave-l1-1-1.dll")
 BOOL LoadEnclaveImageA(void* lpEnclaveAddress, const(PSTR) lpImageName);
 

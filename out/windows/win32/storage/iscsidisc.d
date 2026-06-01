@@ -3,7 +3,6 @@
 module windows.win32.storage.iscsidisc;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, CHAR, PSTR, PWSTR;
 public import windows.win32.system.ioctl : STORAGE_DEVICE_NUMBER;
 
@@ -1410,7 +1409,6 @@ struct SCSI_LUN_LIST
     ulong TargetLUN;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_mappingw
 struct ISCSI_TARGET_MAPPINGW
 {
@@ -1424,7 +1422,6 @@ struct ISCSI_TARGET_MAPPINGW
     SCSI_LUN_LIST* LUNList;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_mappinga
 struct ISCSI_TARGET_MAPPINGA
 {
@@ -1438,7 +1435,6 @@ struct ISCSI_TARGET_MAPPINGA
     SCSI_LUN_LIST* LUNList;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portalw
 struct ISCSI_TARGET_PORTALW
 {
@@ -1447,7 +1443,6 @@ struct ISCSI_TARGET_PORTALW
     ushort     Socket;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portala
 struct ISCSI_TARGET_PORTALA
 {
@@ -1456,7 +1451,6 @@ struct ISCSI_TARGET_PORTALA
     ushort    Socket;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_infow
 struct ISCSI_TARGET_PORTAL_INFOW
 {
@@ -1467,7 +1461,6 @@ struct ISCSI_TARGET_PORTAL_INFOW
     ushort     Socket;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_infoa
 struct ISCSI_TARGET_PORTAL_INFOA
 {
@@ -1478,7 +1471,6 @@ struct ISCSI_TARGET_PORTAL_INFOA
     ushort    Socket;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_info_exw
 struct ISCSI_TARGET_PORTAL_INFO_EXW
 {
@@ -1491,7 +1483,6 @@ struct ISCSI_TARGET_PORTAL_INFO_EXW
     ISCSI_LOGIN_OPTIONS LoginOptions;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_info_exa
 struct ISCSI_TARGET_PORTAL_INFO_EXA
 {
@@ -1504,7 +1495,6 @@ struct ISCSI_TARGET_PORTAL_INFO_EXA
     ISCSI_LOGIN_OPTIONS LoginOptions;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupw
 struct ISCSI_TARGET_PORTAL_GROUPW
 {
@@ -1512,7 +1502,6 @@ struct ISCSI_TARGET_PORTAL_GROUPW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ISCSI_TARGET_PORTALW[1] Portals;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupa
 struct ISCSI_TARGET_PORTAL_GROUPA
 {
@@ -1520,7 +1509,6 @@ struct ISCSI_TARGET_PORTAL_GROUPA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ISCSI_TARGET_PORTALA[1] Portals;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infow
 struct ISCSI_CONNECTION_INFOW
 {
@@ -1532,7 +1520,6 @@ struct ISCSI_CONNECTION_INFOW
     ubyte[2] CID;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_session_infow
 struct ISCSI_SESSION_INFOW
 {
@@ -1546,7 +1533,6 @@ struct ISCSI_SESSION_INFOW
     ISCSI_CONNECTION_INFOW* Connections;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infoa
 struct ISCSI_CONNECTION_INFOA
 {
@@ -1558,7 +1544,6 @@ struct ISCSI_CONNECTION_INFOA
     ubyte[2] CID;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_session_infoa
 struct ISCSI_SESSION_INFOA
 {
@@ -1602,7 +1587,6 @@ struct ISCSI_SESSION_INFO_EX
     ISCSI_CONNECTION_INFO_EX* Connections;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_device_on_sessionw
 struct ISCSI_DEVICE_ON_SESSIONW
 {
@@ -1616,7 +1600,6 @@ struct ISCSI_DEVICE_ON_SESSIONW
     uint         DeviceInstance;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_device_on_sessiona
 struct ISCSI_DEVICE_ON_SESSIONA
 {
@@ -1630,7 +1613,6 @@ struct ISCSI_DEVICE_ON_SESSIONA
     uint         DeviceInstance;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-persistent_iscsi_login_infow
 struct PERSISTENT_ISCSI_LOGIN_INFOW
 {
@@ -1644,7 +1626,6 @@ struct PERSISTENT_ISCSI_LOGIN_INFOW
     ISCSI_LOGIN_OPTIONS  LoginOptions;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-persistent_iscsi_login_infoa
 struct PERSISTENT_ISCSI_LOGIN_INFOA
 {

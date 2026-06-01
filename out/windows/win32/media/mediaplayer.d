@@ -3,7 +3,6 @@
 module windows.win32.media.mediaplayer;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, LPARAM,
                                                     LRESULT, PWSTR, RECT, SIZE,
                                                     SYSTEMTIME, VARIANT_BOOL, WPARAM;

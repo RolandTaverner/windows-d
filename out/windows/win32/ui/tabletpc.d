@@ -3,7 +3,6 @@
 module windows.win32.ui.tabletpc;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HANDLE_PTR,
                                                     HRESULT, HWND, POINT, PWSTR, RECT,
                                                     VARIANT_BOOL;

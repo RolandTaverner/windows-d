@@ -3,7 +3,6 @@
 module windows.win32.globalization;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
                                                     PSTR, PWSTR, RECT, SIZE, SYSTEMTIME;
 public import windows.win32.graphics.gdi : ABC, AXESLISTA, AXESLISTW, ETO_OPTIONS,
@@ -4479,46 +4478,26 @@ enum : int
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LOCALE_ENUMPROCA = BOOL function(PSTR param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LOCALE_ENUMPROCW = BOOL function(PWSTR param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LANGUAGEGROUP_ENUMPROCA = BOOL function(uint param0, PSTR param1, PSTR param2, uint param3, ptrdiff_t param4);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LANGGROUPLOCALE_ENUMPROCA = BOOL function(uint param0, uint param1, PSTR param2, ptrdiff_t param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias UILANGUAGE_ENUMPROCA = BOOL function(PSTR param0, ptrdiff_t param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CODEPAGE_ENUMPROCA = BOOL function(PSTR param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias DATEFMT_ENUMPROCA = BOOL function(PSTR param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias DATEFMT_ENUMPROCEXA = BOOL function(PSTR param0, uint param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias TIMEFMT_ENUMPROCA = BOOL function(PSTR param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CALINFO_ENUMPROCA = BOOL function(PSTR param0);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CALINFO_ENUMPROCEXA = BOOL function(PSTR param0, uint param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LANGUAGEGROUP_ENUMPROCW = BOOL function(uint param0, PWSTR param1, PWSTR param2, uint param3, 
                                               ptrdiff_t param4);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LANGGROUPLOCALE_ENUMPROCW = BOOL function(uint param0, uint param1, PWSTR param2, ptrdiff_t param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias UILANGUAGE_ENUMPROCW = BOOL function(PWSTR param0, ptrdiff_t param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CODEPAGE_ENUMPROCW = BOOL function(PWSTR param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias DATEFMT_ENUMPROCW = BOOL function(PWSTR param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias DATEFMT_ENUMPROCEXW = BOOL function(PWSTR param0, uint param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias TIMEFMT_ENUMPROCW = BOOL function(PWSTR param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CALINFO_ENUMPROCW = BOOL function(PWSTR param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CALINFO_ENUMPROCEXW = BOOL function(PWSTR param0, uint param1);
 alias GEO_ENUMPROC = BOOL function(int param0);
 alias GEO_ENUMNAMEPROC = BOOL function(PWSTR param0, LPARAM param1);
@@ -4826,7 +4805,6 @@ struct LOCALESIGNATURE
     uint[2] lsCsbSupported;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricexa
 struct NEWTEXTMETRICEXA
 {
@@ -4834,7 +4812,6 @@ struct NEWTEXTMETRICEXA
     FONTSIGNATURE  ntmFontSig;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricexw
 struct NEWTEXTMETRICEXW
 {
@@ -4842,7 +4819,6 @@ struct NEWTEXTMETRICEXW
     FONTSIGNATURE  ntmFontSig;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumtextmetrica
 struct ENUMTEXTMETRICA
 {
@@ -4850,7 +4826,6 @@ struct ENUMTEXTMETRICA
     AXESLISTA        etmAxesList;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumtextmetricw
 struct ENUMTEXTMETRICW
 {
@@ -4866,7 +4841,6 @@ struct CPINFO
     ubyte[12] LeadByte;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfoexa
 struct CPINFOEXA
 {
@@ -4878,7 +4852,6 @@ struct CPINFOEXA
     CHAR[260] CodePageName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfoexw
 struct CPINFOEXW
 {
@@ -4890,7 +4863,6 @@ struct CPINFOEXW
     wchar[260] CodePageName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-numberfmta
 struct NUMBERFMTA
 {
@@ -4902,7 +4874,6 @@ struct NUMBERFMTA
     uint NegativeOrder;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-numberfmtw
 struct NUMBERFMTW
 {
@@ -4914,7 +4885,6 @@ struct NUMBERFMTW
     uint  NegativeOrder;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-currencyfmta
 struct CURRENCYFMTA
 {
@@ -4928,7 +4898,6 @@ struct CURRENCYFMTA
     PSTR lpCurrencySymbol;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-currencyfmtw
 struct CURRENCYFMTW
 {
@@ -5829,7 +5798,6 @@ BOOL NotifyUILanguageChange(uint dwFlags, const(PWSTR) pcwstrNewLanguage, const(
                             /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved, 
                             uint* pdwStatusRtrn);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL GetStringTypeExA(uint Locale, uint dwInfoType, const(PSTR) lpSrcStr, int cchSrc, ushort* lpCharType);
 
@@ -9924,7 +9892,6 @@ interface ISpellCheckProviderFactory : IUnknown
     HRESULT CreateSpellCheckProvider(const(PWSTR) languageTag, ISpellCheckProvider* value);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("d24acd21-ba72-11d0-b188-00aa0038c969")
 interface IMLangStringBufW : IUnknown
 {
@@ -9935,7 +9902,6 @@ interface IMLangStringBufW : IUnknown
     HRESULT Delete(int cchOffset, int cchDelete);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("d24acd23-ba72-11d0-b188-00aa0038c969")
 interface IMLangStringBufA : IUnknown
 {

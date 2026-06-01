@@ -3,7 +3,6 @@
 module windows.win32.networking.clustering;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
                                                     HRESULT, NTSTATUS, PWSTR, SYSTEMTIME;
 public import windows.win32.graphics.gdi : HFONT;

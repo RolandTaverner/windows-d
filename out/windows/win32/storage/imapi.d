@@ -3,7 +3,6 @@
 module windows.win32.storage.imapi;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, BSTR, HRESULT, VARIANT_BOOL;
 public import windows.win32.system.addressbook : IMessage, LPALLOCATEBUFFER, LPALLOCATEMORE,
                                                  LPFREEBUFFER, SPropProblemArray,

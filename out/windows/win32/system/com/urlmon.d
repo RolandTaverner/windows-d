@@ -3,7 +3,6 @@
 module windows.win32.system.com.urlmon;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLElement;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HANDLE_PTR, HRESULT,
                                                     HWND, PSTR, PWSTR, SYSTEMTIME,
@@ -1333,48 +1332,38 @@ HRESULT HlinkSimpleNavigateToMoniker(IMoniker pmkTarget, const(PWSTR) szLocation
                                      IUnknown pUnk, IBindCtx pbc, IBindStatusCallback param5, uint grfHLNF, 
                                      uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLOpenStreamA(IUnknown param0, const(PSTR) param1, uint param2, IBindStatusCallback param3);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLOpenStreamW(IUnknown param0, const(PWSTR) param1, uint param2, IBindStatusCallback param3);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLOpenPullStreamA(IUnknown param0, const(PSTR) param1, uint param2, IBindStatusCallback param3);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLOpenPullStreamW(IUnknown param0, const(PWSTR) param1, uint param2, IBindStatusCallback param3);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLDownloadToFileA(IUnknown param0, const(PSTR) param1, const(PSTR) param2, uint param3, 
                            IBindStatusCallback param4);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLDownloadToFileW(IUnknown param0, const(PWSTR) param1, const(PWSTR) param2, uint param3, 
                            IBindStatusCallback param4);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLDownloadToCacheFileA(IUnknown param0, const(PSTR) param1, PSTR param2, uint cchFileName, uint param4, 
                                 IBindStatusCallback param5);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLDownloadToCacheFileW(IUnknown param0, const(PWSTR) param1, PWSTR param2, uint cchFileName, uint param4, 
                                 IBindStatusCallback param5);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLOpenBlockingStreamA(IUnknown param0, const(PSTR) param1, IStream* param2, uint param3, 
                                IBindStatusCallback param4);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 HRESULT URLOpenBlockingStreamW(IUnknown param0, const(PWSTR) param1, IStream* param2, uint param3, 
                                IBindStatusCallback param4);
@@ -1478,11 +1467,9 @@ HRESULT GetSoftwareUpdateInfo(const(PWSTR) szDistUnit, SOFTDISTINFO* psdi);
 HRESULT SetSoftwareUpdateAdvertisementState(const(PWSTR) szDistUnit, uint dwAdState, uint dwAdvertisedVersionMS, 
                                             uint dwAdvertisedVersionLS);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 BOOL IsLoggingEnabledA(const(PSTR) pszUrl);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("urlmon.dll")
 BOOL IsLoggingEnabledW(const(PWSTR) pwszUrl);
 

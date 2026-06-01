@@ -3,7 +3,6 @@
 module windows.win32.system.errorreporting;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
                                                     PSTR, PWSTR;
 public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_POINTERS,
@@ -275,9 +274,7 @@ alias PFN_WER_RUNTIME_EXCEPTION_DEBUGGER_LAUNCH = HRESULT function(void* pContex
                                                                    PWSTR pwszDebuggerLaunch, uint* pchDebuggerLaunch, 
                                                                    BOOL* pbIsDebuggerAutolaunch);
 alias pfn_REPORTFAULT = EFaultRepRetVal function(EXCEPTION_POINTERS* param0, uint param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias pfn_ADDEREXCLUDEDAPPLICATIONA = EFaultRepRetVal function(const(PSTR) param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias pfn_ADDEREXCLUDEDAPPLICATIONW = EFaultRepRetVal function(const(PWSTR) param0);
 
 // Structs

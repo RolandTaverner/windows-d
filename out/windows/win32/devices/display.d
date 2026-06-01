@@ -3,7 +3,6 @@
 module windows.win32.devices.display;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, DEVPROPKEY, HANDLE,
                                                     HRESULT, HWND, LUID, NTSTATUS,
                                                     POINTL, PSTR, PWSTR, RECT, RECTL,

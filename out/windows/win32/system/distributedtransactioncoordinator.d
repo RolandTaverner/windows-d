@@ -3,7 +3,6 @@
 module windows.win32.system.distributedtransactioncoordinator;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, HANDLE, HRESULT,
                                                     PSTR, PWSTR;
 public import windows.win32.system.com.com : IMoniker, IUnknown;
@@ -378,11 +377,9 @@ enum : GUID
 alias DTC_GET_TRANSACTION_MANAGER = HRESULT function(PSTR pszHost, PSTR pszTmName, const(GUID)* rid, 
                                                      uint dwReserved1, ushort wcbReserved2, void* pvReserved2, 
                                                      void** ppvObject);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias DTC_GET_TRANSACTION_MANAGER_EX_A = HRESULT function(PSTR i_pszHost, PSTR i_pszTmName, const(GUID)* i_riid, 
                                                           uint i_grfOptions, void* i_pvConfigParams, 
                                                           void** o_ppvObject);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias DTC_GET_TRANSACTION_MANAGER_EX_W = HRESULT function(PWSTR i_pwszHost, PWSTR i_pwszTmName, 
                                                           const(GUID)* i_riid, uint i_grfOptions, 
                                                           void* i_pvConfigParams, void** o_ppvObject);
@@ -493,12 +490,10 @@ HRESULT DtcGetTransactionManagerC(PSTR i_pszHost, PSTR i_pszTmName, const(GUID)*
                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* i_pvReserved2, 
                                   void** o_ppvObject);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("XOLEHLP.dll")
 HRESULT DtcGetTransactionManagerExA(PSTR i_pszHost, PSTR i_pszTmName, const(GUID)* i_riid, uint i_grfOptions, 
                                     void* i_pvConfigParams, void** o_ppvObject);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("XOLEHLP.dll")
 HRESULT DtcGetTransactionManagerExW(PWSTR i_pwszHost, PWSTR i_pwszTmName, const(GUID)* i_riid, uint i_grfOptions, 
                                     void* i_pvConfigParams, void** o_ppvObject);

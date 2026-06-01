@@ -3,7 +3,6 @@
 module windows.win32.ui.ribbon;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HINSTANCE, HRESULT, HWND, PROPERTYKEY,
                                                     PWSTR;
 public import windows.win32.graphics.gdi : HBITMAP;

@@ -3,7 +3,6 @@
 module windows.win32.web.mshtml;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HGLOBAL, HRESULT, HWND,
                                                     LRESULT, POINT, PWSTR, RECT, SIZE,
                                                     VARIANT_BOOL;

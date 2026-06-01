@@ -3,7 +3,6 @@
 module windows.win32.storage.distributedfilesystem;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : PWSTR;
 public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
 

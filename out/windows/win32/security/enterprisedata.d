@@ -3,7 +3,6 @@
 module windows.win32.security.enterprisedata;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, NTSTATUS,
                                                     PWSTR;
 public import windows.win32.storage.packaging.appx : PACKAGE_ID;

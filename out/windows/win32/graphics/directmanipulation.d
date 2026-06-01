@@ -3,7 +3,6 @@
 module windows.win32.graphics.directmanipulation;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, RECT;
 public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.ui.windowsandmessaging : MSG;

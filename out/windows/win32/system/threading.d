@@ -3,7 +3,6 @@
 module windows.win32.system.threading;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HMODULE,
                                                     HRESULT, HWND, NTSTATUS, PAPCFUNC,
                                                     PSTR, PWSTR, UNICODE_STRING,
@@ -939,7 +938,6 @@ struct PROCESS_INFORMATION
     uint   dwThreadId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfoa
 struct STARTUPINFOA
 {
@@ -963,7 +961,6 @@ struct STARTUPINFOA
     HANDLE             hStdError;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfow
 struct STARTUPINFOW
 {
@@ -1192,7 +1189,6 @@ struct UMS_SYSTEM_THREAD_INFORMATION
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-startupinfoexa
 struct STARTUPINFOEXA
 {
@@ -1200,7 +1196,6 @@ struct STARTUPINFOEXA
     LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-startupinfoexw
 struct STARTUPINFOEXW
 {
@@ -2189,12 +2184,10 @@ BOOL IsWow64Process2(HANDLE hProcess, IMAGE_FILE_MACHINE* pProcessMachine, IMAGE
 @DllImport("KERNEL32.dll")
 uint Wow64SuspendThread(HANDLE hThread);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreatePrivateNamespaceW(SECURITY_ATTRIBUTES* lpPrivateNamespaceAttributes, void* lpBoundaryDescriptor, 
                                const(PWSTR) lpAliasPrefix);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE OpenPrivateNamespaceW(void* lpBoundaryDescriptor, const(PWSTR) lpAliasPrefix);
 
@@ -2202,7 +2195,6 @@ HANDLE OpenPrivateNamespaceW(void* lpBoundaryDescriptor, const(PWSTR) lpAliasPre
 @DllImport("KERNEL32.dll")
 BOOLEAN ClosePrivateNamespace(HANDLE Handle, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreateBoundaryDescriptorW(const(PWSTR) Name, uint Flags);
 
@@ -2592,11 +2584,9 @@ WAIT_EVENT SignalObjectAndWait(HANDLE hObjectToSignal, HANDLE hObjectToWaitOn, u
 HANDLE CreateSemaphoreA(SECURITY_ATTRIBUTES* lpSemaphoreAttributes, int lInitialCount, int lMaximumCount, 
                         const(PSTR) lpName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreateWaitableTimerA(SECURITY_ATTRIBUTES* lpTimerAttributes, BOOL bManualReset, const(PSTR) lpTimerName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE OpenWaitableTimerA(uint dwDesiredAccess, BOOL bInheritHandle, const(PSTR) lpTimerName);
 
@@ -2607,7 +2597,6 @@ HANDLE CreateSemaphoreExA(SECURITY_ATTRIBUTES* lpSemaphoreAttributes, int lIniti
                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwFlags, 
                           uint dwDesiredAccess);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreateWaitableTimerExA(SECURITY_ATTRIBUTES* lpTimerAttributes, const(PSTR) lpTimerName, uint dwFlags, 
                               uint dwDesiredAccess);
@@ -2620,7 +2609,6 @@ BOOL QueryFullProcessImageNameA(HANDLE hProcess, PROCESS_NAME_FORMAT dwFlags, PS
 @DllImport("KERNEL32.dll")
 BOOL QueryFullProcessImageNameW(HANDLE hProcess, PROCESS_NAME_FORMAT dwFlags, PWSTR lpExeName, uint* lpdwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 void GetStartupInfoA(STARTUPINFOA* lpStartupInfo);
 

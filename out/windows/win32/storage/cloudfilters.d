@@ -3,7 +3,6 @@
 module windows.win32.storage.cloudfilters;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, HANDLE, HRESULT, NTSTATUS,
                                                     PWSTR;
 public import windows.win32.storage.filesystem : FILE_BASIC_INFO, FILE_INFO_BY_HANDLE_CLASS,

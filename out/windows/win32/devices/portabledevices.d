@@ -3,7 +3,6 @@
 module windows.win32.devices.portabledevices;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.devices.properties : DEVPROPTYPE;
 public import windows.win32.foundation.foundation : BOOL, BSTR, DEVPROPKEY, HRESULT,
                                                     PROPERTYKEY, PWSTR;

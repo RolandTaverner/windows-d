@@ -3,7 +3,6 @@
 module windows.win32.ui.input.radial;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HRESULT, HWND;
 public import windows.win32.system.winrt.winrt : IInspectable;
 

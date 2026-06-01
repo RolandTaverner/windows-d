@@ -68,7 +68,6 @@ struct HEAPENTRY32
     size_t            th32HeapID;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w
 struct PROCESSENTRY32W
 {
@@ -84,7 +83,6 @@ struct PROCESSENTRY32W
     wchar[260] szExeFile;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32
 struct PROCESSENTRY32
 {
@@ -112,7 +110,6 @@ struct THREADENTRY32
     uint dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-moduleentry32w
 struct MODULEENTRY32W
 {
@@ -128,7 +125,6 @@ struct MODULEENTRY32W
     wchar[260] szExePath;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-moduleentry32
 struct MODULEENTRY32
 {

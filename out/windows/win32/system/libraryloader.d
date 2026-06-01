@@ -64,23 +64,15 @@ enum uint LOAD_LIBRARY_OS_INTEGRITY_CONTINUITY = 0x00008000U;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ENUMRESLANGPROCA = BOOL function(HMODULE hModule, const(PSTR) lpType, const(PSTR) lpName, ushort wLanguage, 
                                        ptrdiff_t lParam);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ENUMRESLANGPROCW = BOOL function(HMODULE hModule, const(PWSTR) lpType, const(PWSTR) lpName, ushort wLanguage, 
                                        ptrdiff_t lParam);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ENUMRESNAMEPROCA = BOOL function(HMODULE hModule, const(PSTR) lpType, PSTR lpName, ptrdiff_t lParam);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ENUMRESNAMEPROCW = BOOL function(HMODULE hModule, const(PWSTR) lpType, PWSTR lpName, ptrdiff_t lParam);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ENUMRESTYPEPROCA = BOOL function(HMODULE hModule, PSTR lpType, ptrdiff_t lParam);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ENUMRESTYPEPROCW = BOOL function(HMODULE hModule, PWSTR lpType, ptrdiff_t lParam);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PGET_MODULE_HANDLE_EXA = BOOL function(uint dwFlags, const(PSTR) lpModuleName, HMODULE* phModule);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PGET_MODULE_HANDLE_EXW = BOOL function(uint dwFlags, const(PWSTR) lpModuleName, HMODULE* phModule);
 
 // Structs
@@ -113,7 +105,6 @@ struct REDIRECTION_DESCRIPTOR
 @DllImport("KERNEL32.dll")
 BOOL DisableThreadLibraryCalls(HMODULE hLibModule);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HRSRC FindResourceExW(HMODULE hModule, const(PWSTR) lpType, const(PWSTR) lpName, ushort wLanguage);
 
@@ -219,7 +210,6 @@ BOOL EnumResourceTypesExA(HMODULE hModule, ENUMRESTYPEPROCA lpEnumFunc, ptrdiff_
 BOOL EnumResourceTypesExW(HMODULE hModule, ENUMRESTYPEPROCW lpEnumFunc, ptrdiff_t lParam, uint dwFlags, 
                           ushort LangId);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HRSRC FindResourceW(HMODULE hModule, const(PWSTR) lpName, const(PWSTR) lpType);
 
@@ -231,7 +221,6 @@ HMODULE LoadLibraryA(const(PSTR) lpLibFileName);
 @DllImport("KERNEL32.dll")
 HMODULE LoadLibraryW(const(PWSTR) lpLibFileName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL EnumResourceNamesW(HMODULE hModule, const(PWSTR) lpType, ENUMRESNAMEPROCW lpEnumFunc, ptrdiff_t lParam);
 

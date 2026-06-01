@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.windowsconnectionmanager;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:

@@ -426,7 +426,6 @@ struct MONCBSTRUCT
     uint[8]     Data;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructa
 struct MONHSZSTRUCTA
 {
@@ -438,7 +437,6 @@ struct MONHSZSTRUCTA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] str;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructw
 struct MONHSZSTRUCTW
 {
@@ -780,11 +778,9 @@ ushort GlobalAddAtomA(const(PSTR) lpString);
 @DllImport("KERNEL32.dll")
 ushort GlobalAddAtomW(const(PWSTR) lpString);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 ushort GlobalAddAtomExA(const(PSTR) lpString, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 ushort GlobalAddAtomExW(const(PWSTR) lpString, uint Flags);
 

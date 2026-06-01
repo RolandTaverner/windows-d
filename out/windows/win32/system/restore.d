@@ -67,7 +67,6 @@ enum : uint
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-restorepointinfoa
 struct RESTOREPOINTINFOA
 {
@@ -78,7 +77,6 @@ align (1):
     CHAR[64] szDescription;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-restorepointinfow
 struct RESTOREPOINTINFOW
 {

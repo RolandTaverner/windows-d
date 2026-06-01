@@ -3,7 +3,6 @@
 module windows.win32.system.windowsprogramming;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
                                                     HANDLE, HGLOBAL, HINSTANCE, HLOCAL,
                                                     HMODULE, HRESULT, HWND, LPARAM,
@@ -1407,7 +1406,6 @@ union PROCESS_CREATION_SVE_VECTOR_LENGTH
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-hw_profile_infoa
 struct HW_PROFILE_INFOA
 {
@@ -1416,7 +1414,6 @@ struct HW_PROFILE_INFOA
     CHAR[80] szHwProfileName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-hw_profile_infow
 struct HW_PROFILE_INFOW
 {
@@ -1707,7 +1704,6 @@ struct DCIOVERLAY
     uint           dwChromakeyMask;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/advpub/ns-advpub-strentrya
 struct STRENTRYA
 {
@@ -1715,7 +1711,6 @@ struct STRENTRYA
     PSTR pszValue;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/advpub/ns-advpub-strentryw
 struct STRENTRYW
 {
@@ -1723,7 +1718,6 @@ struct STRENTRYW
     PWSTR pszValue;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/advpub/ns-advpub-strtablea
 struct STRTABLEA
 {
@@ -1731,7 +1725,6 @@ struct STRTABLEA
     STRENTRYA* pse;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/advpub/ns-advpub-strtablew
 struct STRTABLEW
 {
@@ -1739,7 +1732,6 @@ struct STRTABLEW
     STRENTRYW* pse;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct CABINFOA
 {
     PSTR      pszCab;
@@ -1749,7 +1741,6 @@ struct CABINFOA
     uint      dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct CABINFOW
 {
     PWSTR      pszCab;
@@ -1759,7 +1750,6 @@ struct CABINFOW
     uint       dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PERUSERSECTIONA
 {
     CHAR[59]   szGUID;
@@ -1772,7 +1762,6 @@ struct PERUSERSECTIONA
     BOOL       bRollback;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PERUSERSECTIONW
 {
     wchar[59]   szGUID;
@@ -1835,7 +1824,6 @@ struct DATETIME
     ushort sec;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct IMEPROA
 {
     HWND      hWnd;
@@ -1846,7 +1834,6 @@ struct IMEPROA
     ubyte[30] szOptions;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct IMEPROW
 {
     HWND      hWnd;
@@ -2142,7 +2129,6 @@ size_t LocalShrink(HLOCAL hMem, uint cbNewSize);
 @DllImport("KERNEL32.dll")
 size_t LocalCompact(uint uMinFree);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetEnvironmentStringsA(/*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR NewEnvironment);
 
@@ -2213,11 +2199,9 @@ int _lclose(int hFile);
 @DllImport("KERNEL32.dll")
 int _llseek(int hFile, int lOffset, int iOrigin);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE OpenMutexA(uint dwDesiredAccess, BOOL bInheritHandle, const(PSTR) lpName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE OpenSemaphoreA(uint dwDesiredAccess, BOOL bInheritHandle, const(PSTR) lpName);
 
@@ -2612,12 +2596,10 @@ int DCISetDestination(DCIOFFSCREEN* pdci, RECT* dst, RECT* src);
 @DllImport("api-ms-win-dx-d3dkmt-l1-1-0.dll")
 uint GdiEntry13();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RunSetupCommandA(HWND hWnd, const(PSTR) szCmdName, const(PSTR) szInfSection, const(PSTR) szDir, 
                          const(PSTR) lpszTitle, HANDLE* phEXE, uint dwFlags, void* pvReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RunSetupCommandW(HWND hWnd, const(PWSTR) szCmdName, const(PWSTR) szInfSection, const(PWSTR) szDir, 
                          const(PWSTR) lpszTitle, HANDLE* phEXE, uint dwFlags, void* pvReserved);
@@ -2628,22 +2610,18 @@ uint NeedRebootInit();
 @DllImport("ADVPACK.dll")
 BOOL NeedReboot(uint dwRebootCheck);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RebootCheckOnInstallA(HWND hwnd, const(PSTR) pszINF, const(PSTR) pszSec, uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RebootCheckOnInstallW(HWND hwnd, const(PWSTR) pszINF, const(PWSTR) pszSec, uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT TranslateInfStringA(const(PSTR) pszInfFilename, const(PSTR) pszInstallSection, 
                             const(PSTR) pszTranslateSection, const(PSTR) pszTranslateKey, PSTR pszBuffer, 
                             uint cchBuffer, uint* pdwRequiredSize, 
                             /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pvReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT TranslateInfStringW(const(PWSTR) pszInfFilename, const(PWSTR) pszInstallSection, 
                             const(PWSTR) pszTranslateSection, const(PWSTR) pszTranslateKey, PWSTR pszBuffer, 
@@ -2658,136 +2636,107 @@ HRESULT RegInstallA(HMODULE hmod, const(PSTR) pszSection, const(STRTABLEA)* pstT
 @DllImport("ADVPACK.dll")
 HRESULT RegInstallW(HMODULE hmod, const(PWSTR) pszSection, const(STRTABLEW)* pstTable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT LaunchINFSectionExW(HWND hwnd, HINSTANCE hInstance, PWSTR pszParms, int nShow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT ExecuteCabA(HWND hwnd, CABINFOA* pCab, void* pReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT ExecuteCabW(HWND hwnd, CABINFOW* pCab, void* pReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT AdvInstallFileA(HWND hwnd, const(PSTR) lpszSourceDir, const(PSTR) lpszSourceFile, const(PSTR) lpszDestDir, 
                         const(PSTR) lpszDestFile, uint dwFlags, uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT AdvInstallFileW(HWND hwnd, const(PWSTR) lpszSourceDir, const(PWSTR) lpszSourceFile, 
                         const(PWSTR) lpszDestDir, const(PWSTR) lpszDestFile, uint dwFlags, uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RegSaveRestoreA(HWND hWnd, const(PSTR) pszTitleString, HKEY hkBckupKey, const(PSTR) pcszRootKey, 
                         const(PSTR) pcszSubKey, const(PSTR) pcszValueName, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RegSaveRestoreW(HWND hWnd, const(PWSTR) pszTitleString, HKEY hkBckupKey, const(PWSTR) pcszRootKey, 
                         const(PWSTR) pcszSubKey, const(PWSTR) pcszValueName, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RegSaveRestoreOnINFA(HWND hWnd, const(PSTR) pszTitle, const(PSTR) pszINF, const(PSTR) pszSection, 
                              HKEY hHKLMBackKey, HKEY hHKCUBackKey, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RegSaveRestoreOnINFW(HWND hWnd, const(PWSTR) pszTitle, const(PWSTR) pszINF, const(PWSTR) pszSection, 
                              HKEY hHKLMBackKey, HKEY hHKCUBackKey, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RegRestoreAllA(HWND hWnd, const(PSTR) pszTitleString, HKEY hkBckupKey);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT RegRestoreAllW(HWND hWnd, const(PWSTR) pszTitleString, HKEY hkBckupKey);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT FileSaveRestoreW(HWND hDlg, PWSTR lpFileList, const(PWSTR) lpDir, const(PWSTR) lpBaseName, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT FileSaveRestoreOnINFA(HWND hWnd, const(PSTR) pszTitle, const(PSTR) pszINF, const(PSTR) pszSection, 
                               const(PSTR) pszBackupDir, const(PSTR) pszBaseBackupFile, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT FileSaveRestoreOnINFW(HWND hWnd, const(PWSTR) pszTitle, const(PWSTR) pszINF, const(PWSTR) pszSection, 
                               const(PWSTR) pszBackupDir, const(PWSTR) pszBaseBackupFile, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT AddDelBackupEntryA(const(PSTR) lpcszFileList, const(PSTR) lpcszBackupDir, const(PSTR) lpcszBaseName, 
                            uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT AddDelBackupEntryW(const(PWSTR) lpcszFileList, const(PWSTR) lpcszBackupDir, const(PWSTR) lpcszBaseName, 
                            uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT FileSaveMarkNotExistA(const(PSTR) lpFileList, const(PSTR) lpDir, const(PSTR) lpBaseName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT FileSaveMarkNotExistW(const(PWSTR) lpFileList, const(PWSTR) lpDir, const(PWSTR) lpBaseName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT GetVersionFromFileA(const(PSTR) lpszFilename, uint* pdwMSVer, uint* pdwLSVer, BOOL bVersion);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT GetVersionFromFileW(const(PWSTR) lpszFilename, uint* pdwMSVer, uint* pdwLSVer, BOOL bVersion);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT GetVersionFromFileExA(const(PSTR) lpszFilename, uint* pdwMSVer, uint* pdwLSVer, BOOL bVersion);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT GetVersionFromFileExW(const(PWSTR) lpszFilename, uint* pdwMSVer, uint* pdwLSVer, BOOL bVersion);
 
 @DllImport("ADVPACK.dll")
 BOOL IsNTAdmin(uint dwReserved, uint* lpdwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT DelNodeA(const(PSTR) pszFileOrDirName, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT DelNodeW(const(PWSTR) pszFileOrDirName, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT DelNodeRunDLL32W(HWND hwnd, HINSTANCE hInstance, PWSTR pszParms, int nShow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT OpenINFEngineA(const(PSTR) pszInfFilename, const(PSTR) pszInstallSection, uint dwFlags, void** phInf, 
                        void* pvReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT OpenINFEngineW(const(PWSTR) pszInfFilename, const(PWSTR) pszInstallSection, uint dwFlags, void** phInf, 
                        void* pvReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT TranslateInfStringExA(void* hInf, const(PSTR) pszInfFilename, const(PSTR) pszTranslateSection, 
                               const(PSTR) pszTranslateKey, PSTR pszBuffer, uint dwBufferSize, uint* pdwRequiredSize, 
                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pvReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT TranslateInfStringExW(void* hInf, const(PWSTR) pszInfFilename, const(PWSTR) pszTranslateSection, 
                               const(PWSTR) pszTranslateKey, PWSTR pszBuffer, uint dwBufferSize, 
@@ -2797,41 +2746,32 @@ HRESULT TranslateInfStringExW(void* hInf, const(PWSTR) pszInfFilename, const(PWS
 @DllImport("ADVPACK.dll")
 HRESULT CloseINFEngine(void* hInf);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT ExtractFilesA(const(PSTR) pszCabName, const(PSTR) pszExpandDir, uint dwFlags, const(PSTR) pszFileList, 
                       void* lpReserved, uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT ExtractFilesW(const(PWSTR) pszCabName, const(PWSTR) pszExpandDir, uint dwFlags, const(PWSTR) pszFileList, 
                       void* lpReserved, uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 int LaunchINFSectionW(HWND hwndOwner, HINSTANCE hInstance, PWSTR pszParams, int nShow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT UserInstStubWrapperA(HWND hwnd, HINSTANCE hInstance, const(PSTR) pszParms, int nShow);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT UserInstStubWrapperW(HWND hwnd, HINSTANCE hInstance, const(PWSTR) pszParms, int nShow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT UserUnInstStubWrapperA(HWND hwnd, HINSTANCE hInstance, const(PSTR) pszParms, int nShow);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT UserUnInstStubWrapperW(HWND hwnd, HINSTANCE hInstance, const(PWSTR) pszParms, int nShow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT SetPerUserSecValuesA(PERUSERSECTIONA* pPerUser);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ADVPACK.dll")
 HRESULT SetPerUserSecValuesW(PERUSERSECTIONW* pPerUser);
 
@@ -2843,27 +2783,21 @@ LRESULT SendIMEMessageExA(HWND param0, LPARAM param1);
 @DllImport("USER32.dll")
 LRESULT SendIMEMessageExW(HWND param0, LPARAM param1);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IMPGetIMEA(HWND param0, IMEPROA* param1);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IMPGetIMEW(HWND param0, IMEPROW* param1);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IMPQueryIMEA(IMEPROA* param0);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IMPQueryIMEW(IMEPROW* param0);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IMPSetIMEA(HWND param0, IMEPROA* param1);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IMPSetIMEW(HWND param0, IMEPROW* param1);
 

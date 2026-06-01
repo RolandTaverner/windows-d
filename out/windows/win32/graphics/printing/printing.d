@@ -3,7 +3,6 @@
 module windows.win32.graphics.printing.printing;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument2;
 public import windows.win32.devices.communication : COMMTIMEOUTS;
 public import windows.win32.devices.display : FD_KERNINGPAIR;
@@ -2962,7 +2961,6 @@ struct PROPSHEETUI_INFO_HEADER
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-1
 struct PRINTER_INFO_1A
 {
@@ -2972,7 +2970,6 @@ struct PRINTER_INFO_1A
     PSTR pComment;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-1
 struct PRINTER_INFO_1W
 {
@@ -2982,7 +2979,6 @@ struct PRINTER_INFO_1W
     PWSTR pComment;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-2
 struct PRINTER_INFO_2A
 {
@@ -3009,7 +3005,6 @@ struct PRINTER_INFO_2A
     uint                 AveragePPM;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-2
 struct PRINTER_INFO_2W
 {
@@ -3042,7 +3037,6 @@ struct PRINTER_INFO_3
     PSECURITY_DESCRIPTOR pSecurityDescriptor;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-4
 struct PRINTER_INFO_4A
 {
@@ -3051,7 +3045,6 @@ struct PRINTER_INFO_4A
     uint Attributes;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-4
 struct PRINTER_INFO_4W
 {
@@ -3060,7 +3053,6 @@ struct PRINTER_INFO_4W
     uint  Attributes;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-5
 struct PRINTER_INFO_5A
 {
@@ -3071,7 +3063,6 @@ struct PRINTER_INFO_5A
     uint TransmissionRetryTimeout;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-5
 struct PRINTER_INFO_5W
 {
@@ -3088,7 +3079,6 @@ struct PRINTER_INFO_6
     uint dwStatus;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-7
 struct PRINTER_INFO_7A
 {
@@ -3096,7 +3086,6 @@ struct PRINTER_INFO_7A
     uint dwAction;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-7
 struct PRINTER_INFO_7W
 {
@@ -3104,35 +3093,30 @@ struct PRINTER_INFO_7W
     uint  dwAction;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-8
 struct PRINTER_INFO_8A
 {
     DEVMODEA* pDevMode;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-8
 struct PRINTER_INFO_8W
 {
     DEVMODEW* pDevMode;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-9
 struct PRINTER_INFO_9A
 {
     DEVMODEA* pDevMode;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-9
 struct PRINTER_INFO_9W
 {
     DEVMODEW* pDevMode;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-1
 struct JOB_INFO_1A
 {
@@ -3151,7 +3135,6 @@ struct JOB_INFO_1A
     SYSTEMTIME Submitted;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-1
 struct JOB_INFO_1W
 {
@@ -3170,7 +3153,6 @@ struct JOB_INFO_1W
     SYSTEMTIME Submitted;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-2
 struct JOB_INFO_2A
 {
@@ -3199,7 +3181,6 @@ struct JOB_INFO_2A
     uint                 PagesPrinted;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-2
 struct JOB_INFO_2W
 {
@@ -3236,7 +3217,6 @@ struct JOB_INFO_3
     uint Reserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-4
 struct JOB_INFO_4A
 {
@@ -3266,7 +3246,6 @@ struct JOB_INFO_4A
     int                  SizeHigh;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-4
 struct JOB_INFO_4W
 {
@@ -3296,7 +3275,6 @@ struct JOB_INFO_4W
     int                  SizeHigh;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/addjob-info-1
 struct ADDJOB_INFO_1A
 {
@@ -3304,7 +3282,6 @@ struct ADDJOB_INFO_1A
     uint JobId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/addjob-info-1
 struct ADDJOB_INFO_1W
 {
@@ -3312,21 +3289,18 @@ struct ADDJOB_INFO_1W
     uint  JobId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-1
 struct DRIVER_INFO_1A
 {
     PSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-1
 struct DRIVER_INFO_1W
 {
     PWSTR pName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-2
 struct DRIVER_INFO_2A
 {
@@ -3338,7 +3312,6 @@ struct DRIVER_INFO_2A
     PSTR pConfigFile;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-2
 struct DRIVER_INFO_2W
 {
@@ -3350,7 +3323,6 @@ struct DRIVER_INFO_2W
     PWSTR pConfigFile;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-3
 struct DRIVER_INFO_3A
 {
@@ -3366,7 +3338,6 @@ struct DRIVER_INFO_3A
     PSTR pDefaultDataType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-3
 struct DRIVER_INFO_3W
 {
@@ -3382,7 +3353,6 @@ struct DRIVER_INFO_3W
     PWSTR pDefaultDataType;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-4
 struct DRIVER_INFO_4A
 {
@@ -3399,7 +3369,6 @@ struct DRIVER_INFO_4A
     PSTR pszzPreviousNames;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-4
 struct DRIVER_INFO_4W
 {
@@ -3416,7 +3385,6 @@ struct DRIVER_INFO_4W
     PWSTR pszzPreviousNames;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-5
 struct DRIVER_INFO_5A
 {
@@ -3431,7 +3399,6 @@ struct DRIVER_INFO_5A
     uint dwDriverVersion;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-5
 struct DRIVER_INFO_5W
 {
@@ -3446,7 +3413,6 @@ struct DRIVER_INFO_5W
     uint  dwDriverVersion;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-6
 struct DRIVER_INFO_6A
 {
@@ -3469,7 +3435,6 @@ struct DRIVER_INFO_6A
     PSTR     pszProvider;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-6
 struct DRIVER_INFO_6W
 {
@@ -3492,7 +3457,6 @@ struct DRIVER_INFO_6W
     PWSTR    pszProvider;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-8
 struct DRIVER_INFO_8A
 {
@@ -3523,7 +3487,6 @@ struct DRIVER_INFO_8A
     ulong    dwlMinInboxDriverVerVersion;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-8
 struct DRIVER_INFO_8W
 {
@@ -3554,7 +3517,6 @@ struct DRIVER_INFO_8W
     ulong    dwlMinInboxDriverVerVersion;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-1
 struct DOC_INFO_1A
 {
@@ -3563,7 +3525,6 @@ struct DOC_INFO_1A
     PSTR pDatatype;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-1
 struct DOC_INFO_1W
 {
@@ -3572,7 +3533,6 @@ struct DOC_INFO_1W
     PWSTR pDatatype;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-1
 struct FORM_INFO_1A
 {
@@ -3582,7 +3542,6 @@ struct FORM_INFO_1A
     RECTL ImageableArea;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-1
 struct FORM_INFO_1W
 {
@@ -3592,7 +3551,6 @@ struct FORM_INFO_1W
     RECTL ImageableArea;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-2
 struct FORM_INFO_2A
 {
@@ -3608,7 +3566,6 @@ struct FORM_INFO_2A
     ushort      wLangId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-2
 struct FORM_INFO_2W
 {
@@ -3624,7 +3581,6 @@ struct FORM_INFO_2W
     ushort       wLangId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-2
 struct DOC_INFO_2A
 {
@@ -3635,7 +3591,6 @@ struct DOC_INFO_2A
     uint JobId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-2
 struct DOC_INFO_2W
 {
@@ -3646,7 +3601,6 @@ struct DOC_INFO_2W
     uint  JobId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-3
 struct DOC_INFO_3A
 {
@@ -3656,7 +3610,6 @@ struct DOC_INFO_3A
     uint dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-3
 struct DOC_INFO_3W
 {
@@ -3666,14 +3619,12 @@ struct DOC_INFO_3W
     uint  dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printprocessor-info-1
 struct PRINTPROCESSOR_INFO_1A
 {
     PSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printprocessor-info-1
 struct PRINTPROCESSOR_INFO_1W
 {
@@ -3703,21 +3654,18 @@ struct PRINTPROCESSOR_CAPS_2
     uint dwScalingCaps;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-1
 struct PORT_INFO_1A
 {
     PSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-1
 struct PORT_INFO_1W
 {
     PWSTR pName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-2
 struct PORT_INFO_2A
 {
@@ -3728,7 +3676,6 @@ struct PORT_INFO_2A
     uint Reserved;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-2
 struct PORT_INFO_2W
 {
@@ -3739,7 +3686,6 @@ struct PORT_INFO_2W
     uint  Reserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-3
 struct PORT_INFO_3A
 {
@@ -3748,7 +3694,6 @@ struct PORT_INFO_3A
     uint dwSeverity;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-3
 struct PORT_INFO_3W
 {
@@ -3757,21 +3702,18 @@ struct PORT_INFO_3W
     uint  dwSeverity;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-1
 struct MONITOR_INFO_1A
 {
     PSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-1
 struct MONITOR_INFO_1W
 {
     PWSTR pName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-2
 struct MONITOR_INFO_2A
 {
@@ -3780,7 +3722,6 @@ struct MONITOR_INFO_2A
     PSTR pDLLName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-2
 struct MONITOR_INFO_2W
 {
@@ -3789,21 +3730,18 @@ struct MONITOR_INFO_2W
     PWSTR pDLLName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/datatypes-info-1
 struct DATATYPES_INFO_1A
 {
     PSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/datatypes-info-1
 struct DATATYPES_INFO_1W
 {
     PWSTR pName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-defaults
 struct PRINTER_DEFAULTSA
 {
@@ -3812,7 +3750,6 @@ struct PRINTER_DEFAULTSA
     PRINTER_ACCESS_RIGHTS DesiredAccess;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-defaults
 struct PRINTER_DEFAULTSW
 {
@@ -3821,7 +3758,6 @@ struct PRINTER_DEFAULTSW
     PRINTER_ACCESS_RIGHTS DesiredAccess;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-enum-values
 struct PRINTER_ENUM_VALUESA
 {
@@ -3832,7 +3768,6 @@ struct PRINTER_ENUM_VALUESA
     uint   cbData;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-enum-values
 struct PRINTER_ENUM_VALUESW
 {
@@ -3940,7 +3875,6 @@ struct BIDI_RESPONSE_CONTAINER
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BIDI_RESPONSE_DATA[1] aData;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-1
 struct PROVIDOR_INFO_1A
 {
@@ -3949,7 +3883,6 @@ struct PROVIDOR_INFO_1A
     PSTR pDLLName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-1
 struct PROVIDOR_INFO_1W
 {
@@ -3958,21 +3891,18 @@ struct PROVIDOR_INFO_1W
     PWSTR pDLLName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-2
 struct PROVIDOR_INFO_2A
 {
     PSTR pOrder;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-2
 struct PROVIDOR_INFO_2W
 {
     PWSTR pOrder;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct PRINTER_OPTIONSA
 {
@@ -3980,7 +3910,6 @@ struct PRINTER_OPTIONSA
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PRINTER_OPTION_FLAGS))], [])*/uint dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct PRINTER_OPTIONSW
 {
@@ -3988,21 +3917,18 @@ struct PRINTER_OPTIONSW
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PRINTER_OPTION_FLAGS))], [])*/uint dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PRINTER_CONNECTION_INFO_1A
 {
     uint dwFlags;
     PSTR pszDriverName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PRINTER_CONNECTION_INFO_1W
 {
     uint  dwFlags;
     PWSTR pszDriverName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/core-printer-driver
 struct CORE_PRINTER_DRIVERA
 {
@@ -4012,7 +3938,6 @@ struct CORE_PRINTER_DRIVERA
     CHAR[260] szPackageID;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/core-printer-driver
 struct CORE_PRINTER_DRIVERW
 {
@@ -5085,11 +5010,9 @@ struct SHOWUIPARAMS
 
 // Functions
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("COMPSTUI.dll")
 int CommonPropertySheetUIA(HWND hWndOwner, PFNPROPSHEETUI pfnPropSheetUI, LPARAM lParam, uint* pResult);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("COMPSTUI.dll")
 int CommonPropertySheetUIW(HWND hWndOwner, PFNPROPSHEETUI pfnPropSheetUI, LPARAM lParam, uint* pResult);
 
@@ -5099,13 +5022,11 @@ size_t GetCPSUIUserData(HWND hDlg);
 @DllImport("COMPSTUI.dll")
 BOOL SetCPSUIUserData(HWND hDlg, size_t CPSUIUserData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrintersA(uint Flags, const(PSTR) Name, uint Level, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrinterEnum, 
                    uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrintersW(uint Flags, const(PWSTR) Name, uint Level, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrinterEnum, 
@@ -5123,61 +5044,49 @@ HANDLE CommitSpoolData(PRINTER_HANDLE hPrinter, HANDLE hSpoolFile, uint cbCommit
 @DllImport("winspool.drv")
 BOOL CloseSpoolFileHandle(PRINTER_HANDLE hPrinter, HANDLE hSpoolFile);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL OpenPrinterA(const(PSTR) pPrinterName, PRINTER_HANDLE* phPrinter, PRINTER_DEFAULTSA* pDefault);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL OpenPrinterW(const(PWSTR) pPrinterName, PRINTER_HANDLE* phPrinter, PRINTER_DEFAULTSW* pDefault);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL ResetPrinterA(PRINTER_HANDLE hPrinter, PRINTER_DEFAULTSA* pDefault);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL ResetPrinterW(PRINTER_HANDLE hPrinter, PRINTER_DEFAULTSW* pDefault);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetJobA(PRINTER_HANDLE hPrinter, uint JobId, uint Level, 
              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/ubyte* pJob, uint Command);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetJobW(PRINTER_HANDLE hPrinter, uint JobId, uint Level, 
              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/ubyte* pJob, uint Command);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetJobA(PRINTER_HANDLE hPrinter, uint JobId, uint Level, 
              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pJob, 
              uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetJobW(PRINTER_HANDLE hPrinter, uint JobId, uint Level, 
              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pJob, 
              uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumJobsA(PRINTER_HANDLE hPrinter, uint FirstJob, uint NoJobs, uint Level, 
                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pJob, 
                uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumJobsW(PRINTER_HANDLE hPrinter, uint FirstJob, uint NoJobs, uint Level, 
                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pJob, 
                uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 PRINTER_HANDLE AddPrinterA(const(PSTR) pName, uint Level, ubyte* pPrinter);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 PRINTER_HANDLE AddPrinterW(const(PWSTR) pName, uint Level, ubyte* pPrinter);
 
@@ -5185,155 +5094,125 @@ PRINTER_HANDLE AddPrinterW(const(PWSTR) pName, uint Level, ubyte* pPrinter);
 @DllImport("winspool.drv")
 BOOL DeletePrinter(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetPrinterA(PRINTER_HANDLE hPrinter, uint Level, ubyte* pPrinter, uint Command);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetPrinterW(PRINTER_HANDLE hPrinter, uint Level, ubyte* pPrinter, uint Command);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterA(PRINTER_HANDLE hPrinter, uint Level, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pPrinter, 
                  uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterW(PRINTER_HANDLE hPrinter, uint Level, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pPrinter, 
                  uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterDriverA(const(PSTR) pName, uint Level, ubyte* pDriverInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterDriverW(const(PWSTR) pName, uint Level, ubyte* pDriverInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterDriverExA(const(PSTR) pName, uint Level, ubyte* lpbDriverInfo, uint dwFileCopyFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterDriverExW(const(PWSTR) pName, uint Level, ubyte* lpbDriverInfo, uint dwFileCopyFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrinterDriversA(const(PSTR) pName, const(PSTR) pEnvironment, uint Level, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDriverInfo, 
                          uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrinterDriversW(const(PWSTR) pName, const(PWSTR) pEnvironment, uint Level, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDriverInfo, 
                          uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterDriverA(PRINTER_HANDLE hPrinter, const(PSTR) pEnvironment, uint Level, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDriverInfo, 
                        uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterDriverW(PRINTER_HANDLE hPrinter, const(PWSTR) pEnvironment, uint Level, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDriverInfo, 
                        uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterDriverDirectoryA(const(PSTR) pName, const(PSTR) pEnvironment, uint Level, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDriverDirectory, 
                                 uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterDriverDirectoryW(const(PWSTR) pName, const(PWSTR) pEnvironment, uint Level, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDriverDirectory, 
                                 uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrinterDriverA(const(PSTR) pName, const(PSTR) pEnvironment, const(PSTR) pDriverName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrinterDriverW(const(PWSTR) pName, const(PWSTR) pEnvironment, const(PWSTR) pDriverName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrinterDriverExA(const(PSTR) pName, const(PSTR) pEnvironment, const(PSTR) pDriverName, 
                             uint dwDeleteFlag, uint dwVersionFlag);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrinterDriverExW(const(PWSTR) pName, const(PWSTR) pEnvironment, const(PWSTR) pDriverName, 
                             uint dwDeleteFlag, uint dwVersionFlag);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrintProcessorA(const(PSTR) pName, const(PSTR) pEnvironment, const(PSTR) pPathName, 
                         const(PSTR) pPrintProcessorName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrintProcessorW(const(PWSTR) pName, const(PWSTR) pEnvironment, const(PWSTR) pPathName, 
                         const(PWSTR) pPrintProcessorName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrintProcessorsA(const(PSTR) pName, const(PSTR) pEnvironment, uint Level, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrintProcessorInfo, 
                           uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrintProcessorsW(const(PWSTR) pName, const(PWSTR) pEnvironment, uint Level, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrintProcessorInfo, 
                           uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrintProcessorDirectoryA(const(PSTR) pName, const(PSTR) pEnvironment, uint Level, 
                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrintProcessorInfo, 
                                  uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrintProcessorDirectoryW(const(PWSTR) pName, const(PWSTR) pEnvironment, uint Level, 
                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrintProcessorInfo, 
                                  uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrintProcessorDatatypesA(const(PSTR) pName, const(PSTR) pPrintProcessorName, uint Level, 
                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDatatypes, 
                                   uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPrintProcessorDatatypesW(const(PWSTR) pName, const(PWSTR) pPrintProcessorName, uint Level, 
                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pDatatypes, 
                                   uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrintProcessorA(const(PSTR) pName, const(PSTR) pEnvironment, const(PSTR) pPrintProcessorName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrintProcessorW(const(PWSTR) pName, const(PWSTR) pEnvironment, const(PWSTR) pPrintProcessorName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint StartDocPrinterA(PRINTER_HANDLE hPrinter, uint Level, DOC_INFO_1A* pDocInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint StartDocPrinterW(PRINTER_HANDLE hPrinter, uint Level, DOC_INFO_1W* pDocInfo);
 
@@ -5371,13 +5250,11 @@ BOOL ReadPrinter(PRINTER_HANDLE hPrinter,
 @DllImport("winspool.drv")
 BOOL EndDocPrinter(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddJobA(PRINTER_HANDLE hPrinter, uint Level, 
              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pData, 
              uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddJobW(PRINTER_HANDLE hPrinter, uint Level, 
              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pData, 
@@ -5391,22 +5268,18 @@ BOOL ScheduleJob(PRINTER_HANDLE hPrinter, uint JobId);
 @DllImport("winspool.drv")
 BOOL PrinterProperties(HWND hWnd, PRINTER_HANDLE hPrinter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 int DocumentPropertiesA(HWND hWnd, PRINTER_HANDLE hPrinter, PSTR pDeviceName, DEVMODEA* pDevModeOutput, 
                         DEVMODEA* pDevModeInput, uint fMode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 int DocumentPropertiesW(HWND hWnd, PRINTER_HANDLE hPrinter, PWSTR pDeviceName, DEVMODEW* pDevModeOutput, 
                         DEVMODEW* pDevModeInput, uint fMode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 int AdvancedDocumentPropertiesA(HWND hWnd, PRINTER_HANDLE hPrinter, PSTR pDeviceName, DEVMODEA* pDevModeOutput, 
                                 DEVMODEA* pDevModeInput);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 int AdvancedDocumentPropertiesW(HWND hWnd, PRINTER_HANDLE hPrinter, PWSTR pDeviceName, DEVMODEW* pDevModeOutput, 
                                 DEVMODEW* pDevModeInput);
@@ -5415,111 +5288,91 @@ int AdvancedDocumentPropertiesW(HWND hWnd, PRINTER_HANDLE hPrinter, PWSTR pDevic
 int ExtDeviceMode(HWND hWnd, HANDLE hInst, DEVMODEA* pDevModeOutput, PSTR pDeviceName, PSTR pPort, 
                   DEVMODEA* pDevModeInput, PSTR pProfile, uint fMode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint GetPrinterDataA(PRINTER_HANDLE hPrinter, const(PSTR) pValueName, uint* pType, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pData, 
                      uint nSize, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint GetPrinterDataW(PRINTER_HANDLE hPrinter, const(PWSTR) pValueName, uint* pType, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pData, 
                      uint nSize, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint GetPrinterDataExA(PRINTER_HANDLE hPrinter, const(PSTR) pKeyName, const(PSTR) pValueName, uint* pType, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pData, 
                        uint nSize, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint GetPrinterDataExW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName, const(PWSTR) pValueName, uint* pType, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pData, 
                        uint nSize, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint EnumPrinterDataA(PRINTER_HANDLE hPrinter, uint dwIndex, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PSTR pValueName, 
                       uint cbValueName, uint* pcbValueName, uint* pType, ubyte* pData, uint cbData, uint* pcbData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint EnumPrinterDataW(PRINTER_HANDLE hPrinter, uint dwIndex, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PWSTR pValueName, 
                       uint cbValueName, uint* pcbValueName, uint* pType, ubyte* pData, uint cbData, uint* pcbData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint EnumPrinterDataExA(PRINTER_HANDLE hPrinter, const(PSTR) pKeyName, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pEnumValues, 
                         uint cbEnumValues, uint* pcbEnumValues, uint* pnEnumValues);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint EnumPrinterDataExW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pEnumValues, 
                         uint cbEnumValues, uint* pcbEnumValues, uint* pnEnumValues);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint EnumPrinterKeyA(PRINTER_HANDLE hPrinter, const(PSTR) pKeyName, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PSTR pSubkey, 
                      uint cbSubkey, uint* pcbSubkey);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint EnumPrinterKeyW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PWSTR pSubkey, 
                      uint cbSubkey, uint* pcbSubkey);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint SetPrinterDataA(PRINTER_HANDLE hPrinter, const(PSTR) pValueName, uint Type, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pData, 
                      uint cbData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint SetPrinterDataW(PRINTER_HANDLE hPrinter, const(PWSTR) pValueName, uint Type, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pData, 
                      uint cbData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint SetPrinterDataExA(PRINTER_HANDLE hPrinter, const(PSTR) pKeyName, const(PSTR) pValueName, uint Type, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pData, 
                        uint cbData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint SetPrinterDataExW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName, const(PWSTR) pValueName, uint Type, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pData, 
                        uint cbData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint DeletePrinterDataA(PRINTER_HANDLE hPrinter, const(PSTR) pValueName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint DeletePrinterDataW(PRINTER_HANDLE hPrinter, const(PWSTR) pValueName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint DeletePrinterDataExA(PRINTER_HANDLE hPrinter, const(PSTR) pKeyName, const(PSTR) pValueName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint DeletePrinterDataExW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName, const(PWSTR) pValueName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint DeletePrinterKeyA(PRINTER_HANDLE hPrinter, const(PSTR) pKeyName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint DeletePrinterKeyW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName);
 
@@ -5544,11 +5397,9 @@ BOOL FreePrinterNotifyInfo(PRINTER_NOTIFY_INFO* pPrinterNotifyInfo);
 @DllImport("winspool.drv")
 BOOL FindClosePrinterChangeNotification(FINDPRINTERCHANGENOTIFICATION_HANDLE hChange);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint PrinterMessageBoxA(PRINTER_HANDLE hPrinter, uint Error, HWND hWnd, PSTR pText, PSTR pCaption, uint dwType);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 uint PrinterMessageBoxW(PRINTER_HANDLE hPrinter, uint Error, HWND hWnd, PWSTR pText, PWSTR pCaption, uint dwType);
 
@@ -5556,115 +5407,91 @@ uint PrinterMessageBoxW(PRINTER_HANDLE hPrinter, uint Error, HWND hWnd, PWSTR pT
 @DllImport("winspool.drv")
 BOOL ClosePrinter(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddFormA(PRINTER_HANDLE hPrinter, uint Level, ubyte* pForm);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddFormW(PRINTER_HANDLE hPrinter, uint Level, ubyte* pForm);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeleteFormA(PRINTER_HANDLE hPrinter, const(PSTR) pFormName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeleteFormW(PRINTER_HANDLE hPrinter, const(PWSTR) pFormName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetFormA(PRINTER_HANDLE hPrinter, const(PSTR) pFormName, uint Level, 
               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pForm, 
               uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetFormW(PRINTER_HANDLE hPrinter, const(PWSTR) pFormName, uint Level, 
               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pForm, 
               uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetFormA(PRINTER_HANDLE hPrinter, const(PSTR) pFormName, uint Level, ubyte* pForm);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetFormW(PRINTER_HANDLE hPrinter, const(PWSTR) pFormName, uint Level, ubyte* pForm);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumFormsA(PRINTER_HANDLE hPrinter, uint Level, 
                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pForm, 
                 uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumFormsW(PRINTER_HANDLE hPrinter, uint Level, 
                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pForm, 
                 uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumMonitorsA(PSTR pName, uint Level, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pMonitor, 
                    uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumMonitorsW(PWSTR pName, uint Level, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pMonitor, 
                    uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddMonitorA(const(PSTR) pName, uint Level, ubyte* pMonitors);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddMonitorW(const(PWSTR) pName, uint Level, ubyte* pMonitors);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeleteMonitorA(const(PSTR) pName, const(PSTR) pEnvironment, const(PSTR) pMonitorName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeleteMonitorW(const(PWSTR) pName, const(PWSTR) pEnvironment, const(PWSTR) pMonitorName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPortsA(PSTR pName, uint Level, 
                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pPort, 
                 uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL EnumPortsW(PWSTR pName, uint Level, 
                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pPort, 
                 uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPortA(const(PSTR) pName, HWND hWnd, const(PSTR) pMonitorName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPortW(const(PWSTR) pName, HWND hWnd, const(PWSTR) pMonitorName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL ConfigurePortA(const(PSTR) pName, HWND hWnd, const(PSTR) pPortName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL ConfigurePortW(const(PWSTR) pName, HWND hWnd, const(PWSTR) pPortName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePortA(const(PSTR) pName, HWND hWnd, const(PSTR) pPortName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePortW(const(PWSTR) pName, HWND hWnd, const(PWSTR) pPortName);
 
@@ -5675,43 +5502,33 @@ BOOL XcvDataW(HANDLE hXcv, const(PWSTR) pszDataName,
               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pOutputData, 
               uint cbOutputData, uint* pcbOutputNeeded, uint* pdwStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetDefaultPrinterA(PSTR pszBuffer, uint* pcchBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetDefaultPrinterW(PWSTR pszBuffer, uint* pcchBuffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetDefaultPrinterA(const(PSTR) pszPrinter);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetDefaultPrinterW(const(PWSTR) pszPrinter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetPortA(PSTR pName, PSTR pPortName, uint dwLevel, ubyte* pPortInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL SetPortW(PWSTR pName, PWSTR pPortName, uint dwLevel, ubyte* pPortInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterConnectionA(const(PSTR) pName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterConnectionW(const(PWSTR) pName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrinterConnectionA(PSTR pName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrinterConnectionW(PWSTR pName);
 
@@ -5719,107 +5536,85 @@ BOOL DeletePrinterConnectionW(PWSTR pName);
 @DllImport("winspool.drv")
 HANDLE ConnectToPrinterDlg(HWND hwnd, uint Flags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrintProvidorA(PSTR pName, uint Level, ubyte* pProvidorInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrintProvidorW(PWSTR pName, uint Level, ubyte* pProvidorInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrintProvidorA(PSTR pName, PSTR pEnvironment, PSTR pPrintProvidorName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL DeletePrintProvidorW(PWSTR pName, PWSTR pEnvironment, PWSTR pPrintProvidorName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL IsValidDevmodeA(DEVMODEA* pDevmode, size_t DevmodeSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL IsValidDevmodeW(DEVMODEW* pDevmode, size_t DevmodeSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL OpenPrinter2A(const(PSTR) pPrinterName, PRINTER_HANDLE* phPrinter, PRINTER_DEFAULTSA* pDefault, 
                    PRINTER_OPTIONSA* pOptions);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL OpenPrinter2W(const(PWSTR) pPrinterName, PRINTER_HANDLE* phPrinter, PRINTER_DEFAULTSW* pDefault, 
                    PRINTER_OPTIONSW* pOptions);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterConnection2A(HWND hWnd, const(PSTR) pszName, uint dwLevel, void* pConnectionInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL AddPrinterConnection2W(HWND hWnd, const(PWSTR) pszName, uint dwLevel, void* pConnectionInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT InstallPrinterDriverFromPackageA(const(PSTR) pszServer, const(PSTR) pszInfPath, const(PSTR) pszDriverName, 
                                          const(PSTR) pszEnvironment, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT InstallPrinterDriverFromPackageW(const(PWSTR) pszServer, const(PWSTR) pszInfPath, 
                                          const(PWSTR) pszDriverName, const(PWSTR) pszEnvironment, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT UploadPrinterDriverPackageA(const(PSTR) pszServer, const(PSTR) pszInfPath, const(PSTR) pszEnvironment, 
                                     uint dwFlags, HWND hwnd, PSTR pszDestInfPath, uint* pcchDestInfPath);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT UploadPrinterDriverPackageW(const(PWSTR) pszServer, const(PWSTR) pszInfPath, const(PWSTR) pszEnvironment, 
                                     uint dwFlags, HWND hwnd, PWSTR pszDestInfPath, uint* pcchDestInfPath);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT GetCorePrinterDriversA(const(PSTR) pszServer, const(PSTR) pszEnvironment, 
                                const(PSTR) pszzCoreDriverDependencies, uint cCorePrinterDrivers, 
                                CORE_PRINTER_DRIVERA* pCorePrinterDrivers);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT GetCorePrinterDriversW(const(PWSTR) pszServer, const(PWSTR) pszEnvironment, 
                                const(PWSTR) pszzCoreDriverDependencies, uint cCorePrinterDrivers, 
                                CORE_PRINTER_DRIVERW* pCorePrinterDrivers);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT CorePrinterDriverInstalledA(const(PSTR) pszServer, const(PSTR) pszEnvironment, GUID CoreDriverGUID, 
                                     FILETIME ftDriverDate, ulong dwlDriverVersion, BOOL* pbDriverInstalled);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT CorePrinterDriverInstalledW(const(PWSTR) pszServer, const(PWSTR) pszEnvironment, GUID CoreDriverGUID, 
                                     FILETIME ftDriverDate, ulong dwlDriverVersion, BOOL* pbDriverInstalled);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT GetPrinterDriverPackagePathA(const(PSTR) pszServer, const(PSTR) pszEnvironment, const(PSTR) pszLanguage, 
                                      const(PSTR) pszPackageID, PSTR pszDriverPackageCab, uint cchDriverPackageCab, 
                                      uint* pcchRequiredSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT GetPrinterDriverPackagePathW(const(PWSTR) pszServer, const(PWSTR) pszEnvironment, const(PWSTR) pszLanguage, 
                                      const(PWSTR) pszPackageID, PWSTR pszDriverPackageCab, uint cchDriverPackageCab, 
                                      uint* pcchRequiredSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT DeletePrinterDriverPackageA(const(PSTR) pszServer, const(PSTR) pszInfPath, const(PSTR) pszEnvironment);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 HRESULT DeletePrinterDriverPackageW(const(PWSTR) pszServer, const(PWSTR) pszInfPath, const(PWSTR) pszEnvironment);
 
@@ -5828,13 +5623,11 @@ HRESULT DeletePrinterDriverPackageW(const(PWSTR) pszServer, const(PWSTR) pszInfP
 HRESULT ReportJobProcessingProgress(HANDLE printerHandle, uint jobId, EPrintXPSJobOperation jobOperation, 
                                     EPrintXPSJobProgress jobProgress);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterDriver2A(HWND hWnd, PRINTER_HANDLE hPrinter, PSTR pEnvironment, uint Level, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pDriverInfo, 
                         uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("winspool.drv")
 BOOL GetPrinterDriver2W(HWND hWnd, PRINTER_HANDLE hPrinter, PWSTR pEnvironment, uint Level, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pDriverInfo, 
@@ -6384,7 +6177,6 @@ interface IPrintOemUI : IPrintOemCommon
     HRESULT DocumentPropertySheets(PROPSHEETUI_INFO* pPSUIInfo, LPARAM lParam);
     HRESULT DevicePropertySheets(PROPSHEETUI_INFO* pPSUIInfo, LPARAM lParam);
     HRESULT DevQueryPrintEx(OEMUIOBJ* poemuiobj, DEVQUERYPRINT_INFO* pDQPInfo, DEVMODEA* pPublicDM, void* pOEMDM);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT DeviceCapabilitiesA(OEMUIOBJ* poemuiobj, HANDLE hPrinter, PWSTR pDeviceName, ushort wCapability, 
                                 void* pOutput, DEVMODEA* pPublicDM, void* pOEMDM, uint dwOld, uint* dwResult);
     HRESULT UpgradePrinter(uint dwLevel, ubyte* pDriverUpgradeInfo);

@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.netshell;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
 
 extern(Windows) @nogc nothrow:

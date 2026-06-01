@@ -3,7 +3,6 @@
 module windows.win32.system.winrt.printing;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HRESULT, HWND, PWSTR;
 public import windows.win32.graphics.printing.printing : IPrinterPropertyBag, IPrinterQueue;
 public import windows.win32.storage.xps.xps : IXpsDocumentPackageTarget, IXpsOMObjectFactory1,

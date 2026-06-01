@@ -3,7 +3,6 @@
 module windows.win32.system.diagnostics.debug_.extensions;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMElement;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FARPROC,
                                                     HANDLE, HRESULT, PSTR, PWSTR,
@@ -4831,7 +4830,6 @@ interface IDebugClient : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -4886,7 +4884,6 @@ interface IDebugClient2 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -4949,7 +4946,6 @@ interface IDebugClient3 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -5019,7 +5015,6 @@ interface IDebugClient4 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -5096,7 +5091,6 @@ interface IDebugClient5 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -5213,7 +5207,6 @@ interface IDebugClient6 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -5331,7 +5324,6 @@ interface IDebugClient7 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -5451,7 +5443,6 @@ interface IDebugClient8 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -5572,7 +5563,6 @@ interface IDebugClient9 : IUnknown
                                          uint* ActualExeNameSize, PSTR Description, uint DescriptionSize, 
                                          uint* ActualDescriptionSize);
     HRESULT AttachProcess(ulong Server, uint ProcessId, uint AttachFlags);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong Server, PSTR CommandLine, uint CreateFlags);
     HRESULT CreateProcessAndAttach(ulong Server, PSTR CommandLine, uint CreateFlags, uint ProcessId, 
                                    uint AttachFlags);
@@ -7226,7 +7216,6 @@ interface IDebugEventCallbacks : IUnknown
     HRESULT Exception(EXCEPTION_RECORD64* Exception, uint FirstChance);
     HRESULT CreateThread(ulong Handle, ulong DataOffset, ulong StartOffset);
     HRESULT ExitThread(uint ExitCode);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong ImageFileHandle, ulong Handle, ulong BaseOffset, uint ModuleSize, 
                            const(PSTR) ModuleName, const(PSTR) ImageName, uint CheckSum, uint TimeDateStamp, 
                            ulong InitialThreadHandle, ulong ThreadDataOffset, ulong StartOffset);
@@ -7249,7 +7238,6 @@ interface IDebugEventCallbacksWide : IUnknown
     HRESULT Exception(EXCEPTION_RECORD64* Exception, uint FirstChance);
     HRESULT CreateThread(ulong Handle, ulong DataOffset, ulong StartOffset);
     HRESULT ExitThread(uint ExitCode);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong ImageFileHandle, ulong Handle, ulong BaseOffset, uint ModuleSize, 
                            const(PWSTR) ModuleName, const(PWSTR) ImageName, uint CheckSum, uint TimeDateStamp, 
                            ulong InitialThreadHandle, ulong ThreadDataOffset, ulong StartOffset);
@@ -7280,7 +7268,6 @@ interface IDebugEventContextCallbacks : IUnknown
     HRESULT ExitThread(uint ExitCode, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* Context, 
                        uint ContextSize);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateProcessA(ulong ImageFileHandle, ulong Handle, ulong BaseOffset, uint ModuleSize, 
                            const(PWSTR) ModuleName, const(PWSTR) ImageName, uint CheckSum, uint TimeDateStamp, 
                            ulong InitialThreadHandle, ulong ThreadDataOffset, ulong StartOffset, 

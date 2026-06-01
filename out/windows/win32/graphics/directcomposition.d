@@ -3,7 +3,6 @@
 module windows.win32.graphics.directcomposition;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, LUID,
                                                     POINT, RECT;
 public import windows.win32.graphics.direct2d.common : D2D1_2DAFFINETRANSFORM_INTERPOLATION_MODE, D2D1_BLEND_MODE,

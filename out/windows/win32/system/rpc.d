@@ -3,7 +3,6 @@
 module windows.win32.system.rpc;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
                                                     LUID, PSTR, PWSTR, SYSTEMTIME;
 public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
@@ -950,14 +949,12 @@ struct RPC_IF_ID
     ushort VersMinor;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RPC_PROTSEQ_VECTORA
 {
     uint Count;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1]* Protseq;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RPC_PROTSEQ_VECTORW
 {
     uint Count;
@@ -995,7 +992,6 @@ struct RPC_SECURITY_QOS
     RPC_C_IMP_LEVEL    ImpersonationType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-sec_winnt_auth_identity_w
 struct SEC_WINNT_AUTH_IDENTITY_W
 {
@@ -1008,7 +1004,6 @@ struct SEC_WINNT_AUTH_IDENTITY_W
     SEC_WINNT_AUTH_IDENTITY Flags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-sec_winnt_auth_identity_a
 struct SEC_WINNT_AUTH_IDENTITY_A
 {
@@ -1021,7 +1016,6 @@ struct SEC_WINNT_AUTH_IDENTITY_A
     SEC_WINNT_AUTH_IDENTITY Flags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_http_transport_credentials_w
 struct RPC_HTTP_TRANSPORT_CREDENTIALS_W
 {
@@ -1033,7 +1027,6 @@ struct RPC_HTTP_TRANSPORT_CREDENTIALS_W
     ushort*          ServerCertificateSubject;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_http_transport_credentials_a
 struct RPC_HTTP_TRANSPORT_CREDENTIALS_A
 {
@@ -1045,7 +1038,6 @@ struct RPC_HTTP_TRANSPORT_CREDENTIALS_A
     ubyte*           ServerCertificateSubject;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_http_transport_credentials_v2_w
 struct RPC_HTTP_TRANSPORT_CREDENTIALS_V2_W
 {
@@ -1060,7 +1052,6 @@ struct RPC_HTTP_TRANSPORT_CREDENTIALS_V2_W
     uint*            ProxyAuthnSchemes;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_http_transport_credentials_v2_a
 struct RPC_HTTP_TRANSPORT_CREDENTIALS_V2_A
 {
@@ -1075,7 +1066,6 @@ struct RPC_HTTP_TRANSPORT_CREDENTIALS_V2_A
     uint*            ProxyAuthnSchemes;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_http_transport_credentials_v3_w
 struct RPC_HTTP_TRANSPORT_CREDENTIALS_V3_W
 {
@@ -1090,7 +1080,6 @@ struct RPC_HTTP_TRANSPORT_CREDENTIALS_V3_W
     uint*            ProxyAuthnSchemes;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_http_transport_credentials_v3_a
 struct RPC_HTTP_TRANSPORT_CREDENTIALS_V3_A
 {
@@ -1105,7 +1094,6 @@ struct RPC_HTTP_TRANSPORT_CREDENTIALS_V3_A
     uint*            ProxyAuthnSchemes;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v2_w
 struct RPC_SECURITY_QOS_V2_W
 {
@@ -1120,7 +1108,6 @@ struct RPC_SECURITY_QOS_V2_W
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v2_a
 struct RPC_SECURITY_QOS_V2_A
 {
@@ -1135,7 +1122,6 @@ struct RPC_SECURITY_QOS_V2_A
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v3_w
 struct RPC_SECURITY_QOS_V3_W
 {
@@ -1151,7 +1137,6 @@ struct RPC_SECURITY_QOS_V3_W
     void*              Sid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v3_a
 struct RPC_SECURITY_QOS_V3_A
 {
@@ -1167,7 +1152,6 @@ struct RPC_SECURITY_QOS_V3_A
     void*              Sid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v4_w
 struct RPC_SECURITY_QOS_V4_W
 {
@@ -1184,7 +1168,6 @@ struct RPC_SECURITY_QOS_V4_W
     uint               EffectiveOnly;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v4_a
 struct RPC_SECURITY_QOS_V4_A
 {
@@ -1201,7 +1184,6 @@ struct RPC_SECURITY_QOS_V4_A
     uint               EffectiveOnly;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v5_w
 struct RPC_SECURITY_QOS_V5_W
 {
@@ -1219,7 +1201,6 @@ struct RPC_SECURITY_QOS_V5_W
     void*              ServerSecurityDescriptor;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos_v5_a
 struct RPC_SECURITY_QOS_V5_A
 {
@@ -1237,7 +1218,6 @@ struct RPC_SECURITY_QOS_V5_A
     void*              ServerSecurityDescriptor;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_binding_handle_template_v1_w
 struct RPC_BINDING_HANDLE_TEMPLATE_V1_W
 {
@@ -1253,7 +1233,6 @@ struct RPC_BINDING_HANDLE_TEMPLATE_V1_W
     GUID    ObjectUuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_binding_handle_template_v1_a
 struct RPC_BINDING_HANDLE_TEMPLATE_V1_A
 {
@@ -1269,7 +1248,6 @@ struct RPC_BINDING_HANDLE_TEMPLATE_V1_A
     GUID   ObjectUuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_binding_handle_security_v1_w
 struct RPC_BINDING_HANDLE_SECURITY_V1_W
 {
@@ -1281,7 +1259,6 @@ struct RPC_BINDING_HANDLE_SECURITY_V1_W
     RPC_SECURITY_QOS* SecurityQos;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_binding_handle_security_v1_a
 struct RPC_BINDING_HANDLE_SECURITY_V1_A
 {
@@ -1310,7 +1287,6 @@ struct RPC_CLIENT_INFORMATION1
     uint   AuthFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_endpoint_templatew
 struct RPC_ENDPOINT_TEMPLATEW
 {
@@ -1321,7 +1297,6 @@ struct RPC_ENDPOINT_TEMPLATEW
     uint  Backlog;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_endpoint_templatea
 struct RPC_ENDPOINT_TEMPLATEA
 {
@@ -1332,7 +1307,6 @@ struct RPC_ENDPOINT_TEMPLATEA
     uint  Backlog;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_interface_templatea
 struct RPC_INTERFACE_TEMPLATEA
 {
@@ -1349,7 +1323,6 @@ struct RPC_INTERFACE_TEMPLATEA
     void*              SecurityDescriptor;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_interface_templatew
 struct RPC_INTERFACE_TEMPLATEW
 {
@@ -1584,7 +1557,6 @@ struct RPC_CALL_LOCAL_ADDRESS_V1
     RpcLocalAddressFormat AddressFormat;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcasync/ns-rpcasync-rpc_call_attributes_v1_w
 struct RPC_CALL_ATTRIBUTES_V1_W
 {
@@ -1599,7 +1571,6 @@ struct RPC_CALL_ATTRIBUTES_V1_W
     BOOL    NullSession;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcasync/ns-rpcasync-rpc_call_attributes_v1_a
 struct RPC_CALL_ATTRIBUTES_V1_A
 {
@@ -1614,7 +1585,6 @@ struct RPC_CALL_ATTRIBUTES_V1_A
     BOOL   NullSession;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcasync/ns-rpcasync-rpc_call_attributes_v2_w
 struct RPC_CALL_ATTRIBUTES_V2_W
 {
@@ -1638,7 +1608,6 @@ struct RPC_CALL_ATTRIBUTES_V2_W
     GUID        InterfaceUuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcasync/ns-rpcasync-rpc_call_attributes_v2_a
 struct RPC_CALL_ATTRIBUTES_V2_A
 {
@@ -1662,7 +1631,6 @@ struct RPC_CALL_ATTRIBUTES_V2_A
     GUID        InterfaceUuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RPC_CALL_ATTRIBUTES_V3_W
 {
     uint        Version;
@@ -1687,7 +1655,6 @@ struct RPC_CALL_ATTRIBUTES_V3_W
     ubyte*      ClientIdentifier;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RPC_CALL_ATTRIBUTES_V3_A
 {
     uint        Version;
@@ -3234,30 +3201,24 @@ RPC_STATUS I_RpcBindingInqLocalClientPID(void* Binding, uint* Pid);
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcBindingHandleToAsyncHandle(void* Binding, void** AsyncHandle);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcNsBindingSetEntryNameW(void* Binding, uint EntryNameSyntax, PWSTR EntryName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcNsBindingSetEntryNameA(void* Binding, uint EntryNameSyntax, PSTR EntryName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcServerUseProtseqEp2A(PSTR NetworkAddress, PSTR Protseq, uint MaxCalls, PSTR Endpoint, 
                                      void* SecurityDescriptor, void* Policy);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcServerUseProtseqEp2W(PWSTR NetworkAddress, PWSTR Protseq, uint MaxCalls, PWSTR Endpoint, 
                                      void* SecurityDescriptor, void* Policy);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcServerUseProtseq2W(PWSTR NetworkAddress, PWSTR Protseq, uint MaxCalls, void* SecurityDescriptor, 
                                    void* Policy);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcServerUseProtseq2A(PSTR NetworkAddress, PSTR Protseq, uint MaxCalls, void* SecurityDescriptor, 
                                    void* Policy);
@@ -3265,11 +3226,9 @@ RPC_STATUS I_RpcServerUseProtseq2A(PSTR NetworkAddress, PSTR Protseq, uint MaxCa
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcServerStartService(PWSTR Protseq, PWSTR Endpoint, void* IfSpec);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcBindingInqDynamicEndpointW(void* Binding, PWSTR* DynamicEndpoint);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("RPCRT4.dll")
 RPC_STATUS I_RpcBindingInqDynamicEndpointA(void* Binding, PSTR* DynamicEndpoint);
 

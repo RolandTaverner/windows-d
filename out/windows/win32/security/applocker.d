@@ -3,7 +3,6 @@
 module windows.win32.security.applocker;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HWND,
                                                     PWSTR;
 public import windows.win32.security.cryptography.cryptography : ALG_ID;

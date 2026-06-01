@@ -3,7 +3,6 @@
 module windows.win32.system.clrhosting;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, HANDLE, HINSTANCE,
                                                     HMODULE, HRESULT, HWND, PSTR, PWSTR;
 public import windows.win32.security.security : ACL;
@@ -446,105 +445,105 @@ struct CLR_DEBUGGING_VERSION
 
 // Functions
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetCORSystemDirectory(PWSTR pbuffer, uint cchBuffer, uint* dwLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetCORVersion(PWSTR pbBuffer, uint cchBuffer, uint* dwLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetFileVersion(const(PWSTR) szFilename, PWSTR szBuffer, uint cchBuffer, uint* dwLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetCORRequiredVersion(PWSTR pbuffer, uint cchBuffer, uint* dwLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetRequestedRuntimeInfo(const(PWSTR) pExe, const(PWSTR) pwszVersion, const(PWSTR) pConfigurationFile, 
                                 uint startupFlags, uint runtimeInfoFlags, PWSTR pDirectory, uint dwDirectory, 
                                 uint* dwDirectoryLength, PWSTR pVersion, uint cchBuffer, uint* dwlength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetRequestedRuntimeVersion(PWSTR pExe, PWSTR pVersion, uint cchBuffer, uint* dwLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CorBindToRuntimeHost(const(PWSTR) pwszVersion, const(PWSTR) pwszBuildFlavor, 
                              const(PWSTR) pwszHostConfigFile, void* pReserved, uint startupFlags, 
                              const(GUID)* rclsid, const(GUID)* riid, void** ppv);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CorBindToRuntimeEx(const(PWSTR) pwszVersion, const(PWSTR) pwszBuildFlavor, uint startupFlags, 
                            const(GUID)* rclsid, const(GUID)* riid, void** ppv);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CorBindToRuntimeByCfg(IStream pCfgStream, uint reserved, uint startupFlags, const(GUID)* rclsid, 
                               const(GUID)* riid, void** ppv);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CorBindToRuntime(const(PWSTR) pwszVersion, const(PWSTR) pwszBuildFlavor, const(GUID)* rclsid, 
                          const(GUID)* riid, void** ppv);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CorBindToCurrentRuntime(const(PWSTR) pwszFileName, const(GUID)* rclsid, const(GUID)* riid, void** ppv);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT ClrCreateManagedInstance(const(PWSTR) pTypeName, const(GUID)* riid, void** ppObject);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 void CorMarkThreadInThreadPool();
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT RunDll32ShimW(HWND hwnd, HINSTANCE hinst, const(PWSTR) lpszCmdLine, int nCmdShow);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT LoadLibraryShim(const(PWSTR) szDllName, const(PWSTR) szVersion, void* pvReserved, HMODULE* phModDll);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CallFunctionShim(const(PWSTR) szDllName, const(PSTR) szFunctionName, void* lpvArgument1, 
                          void* lpvArgument2, const(PWSTR) szVersion, void* pvReserved);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetRealProcAddress(const(PSTR) pwszProcName, void** ppv);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 void CorExitProcess(int exitCode);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT LoadStringRC(uint iResouceID, PWSTR szBuffer, int iMax, int bQuiet);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT LoadStringRCEx(uint lcid, uint iResouceID, PWSTR szBuffer, int iMax, int bQuiet, int* pcwchUsed);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT LockClrVersion(FLockClrVersionCallback hostCallback, FLockClrVersionCallback* pBeginHostSetup, 
                        FLockClrVersionCallback* pEndHostSetup);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT CreateDebuggingInterfaceFromVersion(int iDebuggerVersion, const(PWSTR) szDebuggeeVersion, 
                                             IUnknown* ppCordb);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSCorEE.dll")
 HRESULT GetVersionFromProcess(HANDLE hProcess, PWSTR pVersion, uint cchBuffer, uint* dwLength);
 
@@ -892,7 +891,6 @@ interface IHostSyncManager : IUnknown
     HRESULT CreateMonitorEvent(size_t Cookie, IHostAutoEvent* ppEvent);
     HRESULT CreateRWLockWriterEvent(size_t Cookie, IHostAutoEvent* ppEvent);
     HRESULT CreateRWLockReaderEvent(BOOL bInitialState, size_t Cookie, IHostManualEvent* ppEvent);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT CreateSemaphoreA(uint dwInitial, uint dwMax, IHostSemaphore* ppSemaphore);
 }
 
@@ -1193,7 +1191,6 @@ interface ICLRRuntimeInfo : IUnknown
     HRESULT GetRuntimeDirectory(PWSTR pwzBuffer, uint* pcchBuffer);
     HRESULT IsLoaded(HANDLE hndProcess, BOOL* pbLoaded);
     HRESULT LoadErrorString(uint iResourceID, PWSTR pwzBuffer, uint* pcchBuffer, int iLocaleID);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT LoadLibraryA(const(PWSTR) pwzDllName, HMODULE* phndModule);
     HRESULT GetProcAddress(const(PSTR) pszProcName, void** ppProc);
     HRESULT GetInterface(const(GUID)* rclsid, const(GUID)* riid, void** ppUnk);

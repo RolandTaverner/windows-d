@@ -3,7 +3,6 @@
 module windows.win32.security.cryptography.ui;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND,
                                                     LPARAM, PSTR, PWSTR, WPARAM;
 public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT,
@@ -328,7 +327,6 @@ alias PFNCFILTERPROC = BOOL function(const(CERT_CONTEXT)* pCertContext, BOOL* pf
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cryptdlg/ns-cryptdlg-cert_select_struct_a
 struct CERT_SELECT_STRUCT_A
 {
@@ -351,7 +349,6 @@ struct CERT_SELECT_STRUCT_A
     size_t          hprov;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cryptdlg/ns-cryptdlg-cert_select_struct_w
 struct CERT_SELECT_STRUCT_W
 {
@@ -374,7 +371,6 @@ struct CERT_SELECT_STRUCT_W
     size_t          hprov;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cryptdlg/ns-cryptdlg-cert_viewproperties_struct_a
 struct CERT_VIEWPROPERTIES_STRUCT_A
 {
@@ -402,7 +398,6 @@ struct CERT_VIEWPROPERTIES_STRUCT_A
     PROPSHEETPAGEA*      arrayPropSheetPages;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cryptdlg/ns-cryptdlg-cert_viewproperties_struct_w
 struct CERT_VIEWPROPERTIES_STRUCT_W
 {
@@ -589,7 +584,6 @@ struct CRYPTUI_INITDIALOG_STRUCT
     const(CERT_CONTEXT)* pCertContext;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cryptuiapi/ns-cryptuiapi-cryptui_viewcertificate_structw
 struct CRYPTUI_VIEWCERTIFICATE_STRUCTW
 {
@@ -617,7 +611,6 @@ struct CRYPTUI_VIEWCERTIFICATE_STRUCTW
     uint                 nStartPage;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cryptuiapi/ns-cryptuiapi-cryptui_viewcertificate_structa
 struct CRYPTUI_VIEWCERTIFICATE_STRUCTA
 {

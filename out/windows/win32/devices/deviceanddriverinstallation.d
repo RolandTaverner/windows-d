@@ -3,7 +3,6 @@
 module windows.win32.devices.deviceanddriverinstallation;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.htmlhelp : PRIORITY;
 public import windows.win32.devices.properties : DEVPROPTYPE;
 public import windows.win32.foundation.foundation : BOOL, CHAR, DEVPROPKEY, FILETIME,
@@ -2639,9 +2638,7 @@ enum GUID GUID_QUERY_CRASHDUMP_FUNCTIONS = GUID("9cc6b8ff-32e2-4834-b1de-b32ef88
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSP_FILE_CALLBACK_A = uint function(void* Context, uint Notification, size_t Param1, size_t Param2);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PSP_FILE_CALLBACK_W = uint function(void* Context, uint Notification, size_t Param1, size_t Param2);
 alias PDETECT_PROGRESS_NOTIFY = BOOL function(void* ProgressNotifyParam, uint DetectComplete);
 alias PSP_DETSIG_CMPPROC = uint function(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* NewDeviceData, 
@@ -2835,7 +2832,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_a
     struct SP_ORIGINAL_FILE_INFO_A
@@ -2848,7 +2844,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_a
     struct SP_ORIGINAL_FILE_INFO_A
@@ -2861,7 +2856,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_w
     struct SP_ORIGINAL_FILE_INFO_W
@@ -2874,7 +2868,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_w
     struct SP_ORIGINAL_FILE_INFO_W
@@ -2887,7 +2880,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_a
     struct FILEPATHS_A
     {
@@ -2900,7 +2892,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_a
     struct FILEPATHS_A
     {
@@ -2913,7 +2904,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_w
     struct FILEPATHS_W
     {
@@ -2926,7 +2916,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_w
     struct FILEPATHS_W
     {
@@ -2939,7 +2928,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_a
     struct FILEPATHS_SIGNERINFO_A
     {
@@ -2955,7 +2943,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_a
     struct FILEPATHS_SIGNERINFO_A
     {
@@ -2971,7 +2958,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_w
     struct FILEPATHS_SIGNERINFO_W
     {
@@ -2987,7 +2973,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_w
     struct FILEPATHS_SIGNERINFO_W
     {
@@ -3003,7 +2988,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_a
     struct SOURCE_MEDIA_A
     {
@@ -3018,7 +3002,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_a
     struct SOURCE_MEDIA_A
     {
@@ -3033,7 +3016,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_w
     struct SOURCE_MEDIA_W
     {
@@ -3048,7 +3030,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_w
     struct SOURCE_MEDIA_W
     {
@@ -3063,7 +3044,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_a
     struct CABINET_INFO_A
     {
@@ -3077,7 +3057,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_a
     struct CABINET_INFO_A
     {
@@ -3091,7 +3070,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_w
     struct CABINET_INFO_W
     {
@@ -3105,7 +3083,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_w
     struct CABINET_INFO_W
     {
@@ -3119,7 +3096,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_a
     struct FILE_IN_CABINET_INFO_A
     {
@@ -3135,7 +3111,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_a
     struct FILE_IN_CABINET_INFO_A
     {
@@ -3151,7 +3126,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_w
     struct FILE_IN_CABINET_INFO_W
     {
@@ -3167,7 +3141,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_w
     struct FILE_IN_CABINET_INFO_W
     {
@@ -3183,7 +3156,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusa
     struct SP_REGISTER_CONTROL_STATUSA
@@ -3197,7 +3169,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusa
     struct SP_REGISTER_CONTROL_STATUSA
@@ -3211,7 +3182,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusw
     struct SP_REGISTER_CONTROL_STATUSW
@@ -3225,7 +3195,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusw
     struct SP_REGISTER_CONTROL_STATUSW
@@ -3239,7 +3208,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_a
     struct SP_FILE_COPY_PARAMS_A
@@ -3261,7 +3229,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_a
     struct SP_FILE_COPY_PARAMS_A
@@ -3283,7 +3250,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_w
     struct SP_FILE_COPY_PARAMS_W
@@ -3305,7 +3271,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_w
     struct SP_FILE_COPY_PARAMS_W
@@ -3379,7 +3344,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
@@ -3391,7 +3355,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
@@ -3403,7 +3366,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
@@ -3415,7 +3377,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
@@ -3427,7 +3388,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_a
     struct SP_DEVINFO_LIST_DETAIL_DATA_A
@@ -3441,7 +3401,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_a
     struct SP_DEVINFO_LIST_DETAIL_DATA_A
@@ -3455,7 +3414,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_w
     struct SP_DEVINFO_LIST_DETAIL_DATA_W
@@ -3469,7 +3427,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_w
     struct SP_DEVINFO_LIST_DETAIL_DATA_W
@@ -3483,7 +3440,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_a
     struct SP_DEVINSTALL_PARAMS_A
@@ -3503,7 +3459,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_a
     struct SP_DEVINSTALL_PARAMS_A
@@ -3523,7 +3478,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_w
     struct SP_DEVINSTALL_PARAMS_W
@@ -3543,7 +3497,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_w
     struct SP_DEVINSTALL_PARAMS_W
@@ -3673,7 +3626,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_w
     struct SP_SELECTDEVICE_PARAMS_W
     {
@@ -3687,7 +3639,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_w
     struct SP_SELECTDEVICE_PARAMS_W
     {
@@ -3779,7 +3730,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_w
     struct SP_TROUBLESHOOTER_PARAMS_W
     {
@@ -3791,7 +3741,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_w
     struct SP_TROUBLESHOOTER_PARAMS_W
     {
@@ -3803,7 +3752,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_w
     struct SP_POWERMESSAGEWAKE_PARAMS_W
     {
@@ -3814,7 +3762,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_w
     struct SP_POWERMESSAGEWAKE_PARAMS_W
     {
@@ -3825,7 +3772,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_a
     struct SP_DRVINFO_DATA_V2_A
@@ -3843,7 +3789,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_a
     struct SP_DRVINFO_DATA_V2_A
@@ -3861,7 +3806,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_w
     struct SP_DRVINFO_DATA_V2_W
@@ -3879,7 +3823,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_w
     struct SP_DRVINFO_DATA_V2_W
@@ -3897,7 +3840,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_a
     struct SP_DRVINFO_DATA_V1_A
@@ -3913,7 +3855,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_a
     struct SP_DRVINFO_DATA_V1_A
@@ -3929,7 +3870,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_w
     struct SP_DRVINFO_DATA_V1_W
@@ -3945,7 +3885,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_w
     struct SP_DRVINFO_DATA_V1_W
@@ -3961,7 +3900,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_a
     struct SP_DRVINFO_DETAIL_DATA_A
@@ -3980,7 +3918,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_a
     struct SP_DRVINFO_DETAIL_DATA_A
@@ -3999,7 +3936,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_w
     struct SP_DRVINFO_DETAIL_DATA_W
@@ -4018,7 +3954,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_w
     struct SP_DRVINFO_DETAIL_DATA_W
@@ -4135,7 +4070,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V2_A
     {
@@ -4148,7 +4082,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V2_A
     {
@@ -4161,7 +4094,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V2_W
     {
@@ -4174,7 +4106,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V2_W
     {
@@ -4187,7 +4118,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V1_A
     {
@@ -4199,7 +4129,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V1_A
     {
@@ -4211,7 +4140,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V1_W
     {
@@ -4223,7 +4151,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V1_W
     {
@@ -4235,7 +4162,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_a
     struct SP_INF_SIGNER_INFO_V1_A
@@ -4249,7 +4175,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_a
     struct SP_INF_SIGNER_INFO_V1_A
@@ -4263,7 +4188,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_w
     struct SP_INF_SIGNER_INFO_V1_W
@@ -4277,7 +4201,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_w
     struct SP_INF_SIGNER_INFO_V1_W
@@ -4291,7 +4214,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_a
     struct SP_INF_SIGNER_INFO_V2_A
@@ -4306,7 +4228,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_a
     struct SP_INF_SIGNER_INFO_V2_A
@@ -4321,7 +4242,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_w
     struct SP_INF_SIGNER_INFO_V2_W
@@ -4336,7 +4256,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_w
     struct SP_INF_SIGNER_INFO_V2_W
@@ -4430,7 +4349,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_a
     struct SP_ORIGINAL_FILE_INFO_A
@@ -4444,7 +4362,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_w
     struct SP_ORIGINAL_FILE_INFO_W
@@ -4458,7 +4375,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_a
     struct FILEPATHS_A
     {
@@ -4472,7 +4388,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_w
     struct FILEPATHS_W
     {
@@ -4486,7 +4401,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_a
     struct FILEPATHS_SIGNERINFO_A
     {
@@ -4503,7 +4417,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_w
     struct FILEPATHS_SIGNERINFO_W
     {
@@ -4520,7 +4433,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_a
     struct SOURCE_MEDIA_A
     {
@@ -4536,7 +4448,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_w
     struct SOURCE_MEDIA_W
     {
@@ -4552,7 +4463,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_a
     struct CABINET_INFO_A
     {
@@ -4567,7 +4477,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_w
     struct CABINET_INFO_W
     {
@@ -4582,7 +4491,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_a
     struct FILE_IN_CABINET_INFO_A
     {
@@ -4599,7 +4507,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_w
     struct FILE_IN_CABINET_INFO_W
     {
@@ -4616,7 +4523,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusa
     struct SP_REGISTER_CONTROL_STATUSA
@@ -4631,7 +4537,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusw
     struct SP_REGISTER_CONTROL_STATUSW
@@ -4646,7 +4551,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_a
     struct SP_FILE_COPY_PARAMS_A
@@ -4669,7 +4573,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_w
     struct SP_FILE_COPY_PARAMS_W
@@ -4720,7 +4623,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
@@ -4733,7 +4635,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
@@ -4746,7 +4647,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_a
     struct SP_DEVINFO_LIST_DETAIL_DATA_A
@@ -4761,7 +4661,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_w
     struct SP_DEVINFO_LIST_DETAIL_DATA_W
@@ -4776,7 +4675,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_a
     struct SP_DEVINSTALL_PARAMS_A
@@ -4797,7 +4695,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_w
     struct SP_DEVINSTALL_PARAMS_W
@@ -4876,7 +4773,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_a
 struct SP_SELECTDEVICE_PARAMS_A
 {
@@ -4890,7 +4786,6 @@ struct SP_SELECTDEVICE_PARAMS_A
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_w
     struct SP_SELECTDEVICE_PARAMS_W
     {
@@ -4945,7 +4840,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_a
 struct SP_TROUBLESHOOTER_PARAMS_A
 {
@@ -4956,7 +4850,6 @@ struct SP_TROUBLESHOOTER_PARAMS_A
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_w
     struct SP_TROUBLESHOOTER_PARAMS_W
     {
@@ -4967,7 +4860,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_a
 struct SP_POWERMESSAGEWAKE_PARAMS_A
 {
@@ -4977,7 +4869,6 @@ struct SP_POWERMESSAGEWAKE_PARAMS_A
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_w
     struct SP_POWERMESSAGEWAKE_PARAMS_W
     {
@@ -4989,7 +4880,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_a
     struct SP_DRVINFO_DATA_V2_A
@@ -5008,7 +4898,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_w
     struct SP_DRVINFO_DATA_V2_W
@@ -5027,7 +4916,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_a
     struct SP_DRVINFO_DATA_V1_A
@@ -5044,7 +4932,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_w
     struct SP_DRVINFO_DATA_V1_W
@@ -5061,7 +4948,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_a
     struct SP_DRVINFO_DETAIL_DATA_A
@@ -5081,7 +4967,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_w
     struct SP_DRVINFO_DETAIL_DATA_W
@@ -5154,7 +5039,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V2_A
     {
@@ -5168,7 +5052,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V2_W
     {
@@ -5182,7 +5065,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V1_A
     {
@@ -5195,7 +5077,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     struct SP_BACKUP_QUEUE_PARAMS_V1_W
     {
@@ -5208,7 +5089,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_a
     struct SP_INF_SIGNER_INFO_V1_A
@@ -5223,7 +5103,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_w
     struct SP_INF_SIGNER_INFO_V1_W
@@ -5238,7 +5117,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_a
     struct SP_INF_SIGNER_INFO_V2_A
@@ -5254,7 +5132,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_w
     struct SP_INF_SIGNER_INFO_V2_W
@@ -5268,7 +5145,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-conflict_details_a
 struct CONFLICT_DETAILS_A
 {
@@ -5280,7 +5156,6 @@ struct CONFLICT_DETAILS_A
     CHAR[260]  CD_szDescription;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-conflict_details_w
 struct CONFLICT_DETAILS_W
 {
@@ -5592,7 +5467,6 @@ align (1):
     CONNECTION_DES Connection_Header;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct HWPROFILEINFO_A
 {
 align (1):
@@ -5601,7 +5475,6 @@ align (1):
     uint     HWPI_dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct HWPROFILEINFO_W
 {
 align (1):
@@ -6532,19 +6405,15 @@ void SetupWriteTextLogError(ulong LogToken, uint Category, uint LogFlags, uint E
 @DllImport("SETUPAPI.dll")
 void SetupWriteTextLogInfLine(ulong LogToken, uint Flags, void* InfHandle, INFCONTEXT* Context);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("SETUPAPI.dll")
 BOOL SetupGetBackupInformationA(void* QueueHandle, SP_BACKUP_QUEUE_PARAMS_V2_A* BackupParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("SETUPAPI.dll")
 BOOL SetupGetBackupInformationW(void* QueueHandle, SP_BACKUP_QUEUE_PARAMS_V2_W* BackupParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("SETUPAPI.dll")
 BOOL SetupPrepareQueueForRestoreA(void* QueueHandle, const(PSTR) BackupPath, uint RestoreFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("SETUPAPI.dll")
 BOOL SetupPrepareQueueForRestoreW(void* QueueHandle, const(PWSTR) BackupPath, uint RestoreFlags);
 
@@ -7299,13 +7168,11 @@ BOOL SetupDiGetSelectedDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInf
 @DllImport("SETUPAPI.dll")
 BOOL SetupDiSetSelectedDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("SETUPAPI.dll")
 BOOL SetupDiGetActualModelsSectionA(INFCONTEXT* Context, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
                                     PSTR InfSectionWithExt, uint InfSectionWithExtSize, uint* RequiredSize, 
                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("SETUPAPI.dll")
 BOOL SetupDiGetActualModelsSectionW(INFCONTEXT* Context, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
                                     PWSTR InfSectionWithExt, uint InfSectionWithExtSize, uint* RequiredSize, 
@@ -7384,7 +7251,6 @@ CONFIGRET CM_Add_Empty_Log_Conf(size_t* plcLogConf, uint dnDevInst, PRIORITY Pri
 CONFIGRET CM_Add_Empty_Log_Conf_Ex(size_t* plcLogConf, uint dnDevInst, PRIORITY Priority, uint ulFlags, 
                                    ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Add_IDA(uint dnDevInst, PSTR pszID, uint ulFlags);
 
@@ -7392,7 +7258,6 @@ CONFIGRET CM_Add_IDA(uint dnDevInst, PSTR pszID, uint ulFlags);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Add_IDW(uint dnDevInst, PWSTR pszID, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Add_ID_ExA(uint dnDevInst, PSTR pszID, uint ulFlags, ptrdiff_t hMachine);
 
@@ -7416,7 +7281,6 @@ CONFIGRET CM_Add_Res_Des_Ex(size_t* prdResDes, size_t lcLogConf, uint ResourceID
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* ResourceData, 
                             uint ResourceLen, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Connect_MachineA(const(PSTR) UNCServerName, ptrdiff_t* phMachine);
 
@@ -7424,19 +7288,15 @@ CONFIGRET CM_Connect_MachineA(const(PSTR) UNCServerName, ptrdiff_t* phMachine);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Connect_MachineW(const(PWSTR) UNCServerName, ptrdiff_t* phMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Create_DevNodeA(uint* pdnDevInst, PSTR pDeviceID, uint dnParent, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Create_DevNodeW(uint* pdnDevInst, PWSTR pDeviceID, uint dnParent, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Create_DevNode_ExA(uint* pdnDevInst, PSTR pDeviceID, uint dnParent, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Create_DevNode_ExW(uint* pdnDevInst, PWSTR pDeviceID, uint dnParent, uint ulFlags, ptrdiff_t hMachine);
 
@@ -7510,7 +7370,6 @@ CONFIGRET CM_Enumerate_Classes(uint ulClassIndex, GUID* ClassGuid, CM_ENUMERATE_
 CONFIGRET CM_Enumerate_Classes_Ex(uint ulClassIndex, GUID* ClassGuid, CM_ENUMERATE_FLAGS ulFlags, 
                                   ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Enumerate_EnumeratorsA(uint ulEnumIndex, PSTR Buffer, uint* pulLength, uint ulFlags);
 
@@ -7518,7 +7377,6 @@ CONFIGRET CM_Enumerate_EnumeratorsA(uint ulEnumIndex, PSTR Buffer, uint* pulLeng
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Enumerate_EnumeratorsW(uint ulEnumIndex, PWSTR Buffer, uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Enumerate_Enumerators_ExA(uint ulEnumIndex, PSTR Buffer, uint* pulLength, uint ulFlags, 
                                        ptrdiff_t hMachine);
@@ -7573,36 +7431,28 @@ CONFIGRET CM_Get_Child(uint* pdnDevInst, uint dnDevInst, uint ulFlags);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Child_Ex(uint* pdnDevInst, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_NameA(GUID* ClassGuid, PSTR Buffer, uint* pulLength, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_NameW(GUID* ClassGuid, PWSTR Buffer, uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Name_ExA(GUID* ClassGuid, PSTR Buffer, uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Name_ExW(GUID* ClassGuid, PWSTR Buffer, uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Key_NameA(GUID* ClassGuid, PSTR pszKeyName, uint* pulLength, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Key_NameW(GUID* ClassGuid, PWSTR pszKeyName, uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Key_Name_ExA(GUID* ClassGuid, PSTR pszKeyName, uint* pulLength, uint ulFlags, 
                                     ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Key_Name_ExW(GUID* ClassGuid, PWSTR pszKeyName, uint* pulLength, uint ulFlags, 
                                     ptrdiff_t hMachine);
@@ -7615,7 +7465,6 @@ CONFIGRET CM_Get_Depth(uint* pulDepth, uint dnDevInst, uint ulFlags);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Depth_Ex(uint* pulDepth, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_IDA(uint dnDevInst, PSTR Buffer, uint BufferLen, uint ulFlags);
 
@@ -7623,7 +7472,6 @@ CONFIGRET CM_Get_Device_IDA(uint dnDevInst, PSTR Buffer, uint BufferLen, uint ul
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_IDW(uint dnDevInst, PWSTR Buffer, uint BufferLen, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_ID_ExA(uint dnDevInst, PSTR Buffer, uint BufferLen, uint ulFlags, ptrdiff_t hMachine);
 
@@ -7643,7 +7491,6 @@ CONFIGRET CM_Get_Device_ID_ListW(const(PWSTR) pszFilter,
                                  /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
                                  uint BufferLen, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_ID_List_ExA(const(PSTR) pszFilter, 
                                     /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer, 
@@ -7663,7 +7510,6 @@ CONFIGRET CM_Get_Device_ID_List_SizeA(uint* pulLen, const(PSTR) pszFilter, uint 
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_ID_List_SizeW(uint* pulLen, const(PWSTR) pszFilter, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_ID_List_Size_ExA(uint* pulLen, const(PSTR) pszFilter, uint ulFlags, ptrdiff_t hMachine);
 
@@ -7701,7 +7547,6 @@ CONFIGRET CM_Get_DevNode_Property_Keys(uint dnDevInst, DEVPROPKEY* PropertyKeyAr
 CONFIGRET CM_Get_DevNode_Property_Keys_Ex(uint dnDevInst, DEVPROPKEY* PropertyKeyArray, uint* PropertyKeyCount, 
                                           uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Registry_PropertyA(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
@@ -7713,38 +7558,32 @@ CONFIGRET CM_Get_DevNode_Registry_PropertyW(uint dnDevInst, uint ulProperty, uin
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                             uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Registry_Property_ExA(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
                                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                                uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Registry_Property_ExW(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
                                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                                uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Custom_PropertyA(uint dnDevInst, const(PSTR) pszCustomPropertyName, uint* pulRegDataType, 
                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                           uint* pulLength, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Custom_PropertyW(uint dnDevInst, const(PWSTR) pszCustomPropertyName, uint* pulRegDataType, 
                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                           uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Custom_Property_ExA(uint dnDevInst, const(PSTR) pszCustomPropertyName, 
                                              uint* pulRegDataType, 
                                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                              uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_DevNode_Custom_Property_ExW(uint dnDevInst, const(PWSTR) pszCustomPropertyName, 
                                              uint* pulRegDataType, 
@@ -7777,20 +7616,16 @@ CONFIGRET CM_Get_Global_State(uint* pulState, uint ulFlags);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Global_State_Ex(uint* pulState, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Hardware_Profile_InfoA(uint ulIndex, HWPROFILEINFO_A* pHWProfileInfo, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Hardware_Profile_Info_ExA(uint ulIndex, HWPROFILEINFO_A* pHWProfileInfo, uint ulFlags, 
                                            ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Hardware_Profile_InfoW(uint ulIndex, HWPROFILEINFO_W* pHWProfileInfo, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Hardware_Profile_Info_ExW(uint ulIndex, HWPROFILEINFO_W* pHWProfileInfo, uint ulFlags, 
                                            ptrdiff_t hMachine);
@@ -7813,7 +7648,6 @@ CONFIGRET CM_Get_HW_Prof_Flags_ExA(PSTR pDeviceID, uint ulHardwareProfile, uint*
 CONFIGRET CM_Get_HW_Prof_Flags_ExW(PWSTR pDeviceID, uint ulHardwareProfile, uint* pulValue, uint ulFlags, 
                                    ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_AliasA(const(PSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
                                          PSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags);
@@ -7823,13 +7657,11 @@ CONFIGRET CM_Get_Device_Interface_AliasA(const(PSTR) pszDeviceInterface, GUID* A
 CONFIGRET CM_Get_Device_Interface_AliasW(const(PWSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
                                          PWSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_Alias_ExA(const(PSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
                                             PSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags, 
                                             ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_Alias_ExW(const(PWSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
                                             PWSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags, 
@@ -7847,14 +7679,12 @@ CONFIGRET CM_Get_Device_Interface_ListW(GUID* InterfaceClassGuid, PWSTR pDeviceI
                                         /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
                                         uint BufferLen, CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_List_ExA(GUID* InterfaceClassGuid, PSTR pDeviceID, 
                                            /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer, 
                                            uint BufferLen, CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, 
                                            ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_List_ExW(GUID* InterfaceClassGuid, PWSTR pDeviceID, 
                                            /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
@@ -7871,12 +7701,10 @@ CONFIGRET CM_Get_Device_Interface_List_SizeA(uint* pulLen, GUID* InterfaceClassG
 CONFIGRET CM_Get_Device_Interface_List_SizeW(uint* pulLen, GUID* InterfaceClassGuid, PWSTR pDeviceID, 
                                              CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_List_Size_ExA(uint* pulLen, GUID* InterfaceClassGuid, PSTR pDeviceID, 
                                                 CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Device_Interface_List_Size_ExW(uint* pulLen, GUID* InterfaceClassGuid, PWSTR pDeviceID, 
                                                 CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, ptrdiff_t hMachine);
@@ -7992,7 +7820,6 @@ CONFIGRET CM_Locate_DevNodeA(uint* pdnDevInst, PSTR pDeviceID, CM_LOCATE_DEVNODE
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Locate_DevNodeW(uint* pdnDevInst, PWSTR pDeviceID, CM_LOCATE_DEVNODE_FLAGS ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Locate_DevNode_ExA(uint* pdnDevInst, PSTR pDeviceID, uint ulFlags, ptrdiff_t hMachine);
 
@@ -8038,7 +7865,6 @@ CONFIGRET CM_Get_Next_Res_Des(size_t* prdResDes, size_t rdResDes, CM_RESTYPE For
 CONFIGRET CM_Get_Next_Res_Des_Ex(size_t* prdResDes, size_t rdResDes, CM_RESTYPE ForResource, 
                                  CM_RESTYPE* pResourceID, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Open_Class_KeyA(GUID* ClassGuid, const(PSTR) pszClassName, uint samDesired, uint Disposition, 
                              HKEY* phkClass, uint ulFlags);
@@ -8048,12 +7874,10 @@ CONFIGRET CM_Open_Class_KeyA(GUID* ClassGuid, const(PSTR) pszClassName, uint sam
 CONFIGRET CM_Open_Class_KeyW(GUID* ClassGuid, const(PWSTR) pszClassName, uint samDesired, uint Disposition, 
                              HKEY* phkClass, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Open_Class_Key_ExA(GUID* ClassGuid, const(PSTR) pszClassName, uint samDesired, uint Disposition, 
                                 HKEY* phkClass, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Open_Class_Key_ExW(GUID* ClassGuid, const(PWSTR) pszClassName, uint samDesired, uint Disposition, 
                                 HKEY* phkClass, uint ulFlags, ptrdiff_t hMachine);
@@ -8088,7 +7912,6 @@ CONFIGRET CM_Open_Device_Interface_Key_ExA(const(PSTR) pszDeviceInterface, uint 
 CONFIGRET CM_Open_Device_Interface_Key_ExW(const(PWSTR) pszDeviceInterface, uint samDesired, uint Disposition, 
                                            HKEY* phkDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Delete_Device_Interface_KeyA(const(PSTR) pszDeviceInterface, uint ulFlags);
 
@@ -8132,7 +7955,6 @@ CONFIGRET CM_Query_Remove_SubTree(uint dnAncestor, uint ulFlags);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Query_Remove_SubTree_Ex(uint dnAncestor, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Query_And_Remove_SubTreeA(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, 
                                        uint ulNameLength, uint ulFlags);
@@ -8142,7 +7964,6 @@ CONFIGRET CM_Query_And_Remove_SubTreeA(uint dnAncestor, PNP_VETO_TYPE* pVetoType
 CONFIGRET CM_Query_And_Remove_SubTreeW(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PWSTR pszVetoName, 
                                        uint ulNameLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Query_And_Remove_SubTree_ExA(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, 
                                           uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
@@ -8152,12 +7973,10 @@ CONFIGRET CM_Query_And_Remove_SubTree_ExA(uint dnAncestor, PNP_VETO_TYPE* pVetoT
 CONFIGRET CM_Query_And_Remove_SubTree_ExW(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PWSTR pszVetoName, 
                                           uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Request_Device_EjectA(uint dnDevInst, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, uint ulNameLength, 
                                    uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Request_Device_Eject_ExA(uint dnDevInst, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, 
                                       uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
@@ -8180,23 +7999,19 @@ CONFIGRET CM_Reenumerate_DevNode(uint dnDevInst, CM_REENUMERATE_FLAGS ulFlags);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Reenumerate_DevNode_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Register_Device_InterfaceA(uint dnDevInst, GUID* InterfaceClassGuid, const(PSTR) pszReference, 
                                         PSTR pszDeviceInterface, uint* pulLength, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Register_Device_InterfaceW(uint dnDevInst, GUID* InterfaceClassGuid, const(PWSTR) pszReference, 
                                         PWSTR pszDeviceInterface, uint* pulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Register_Device_Interface_ExA(uint dnDevInst, GUID* InterfaceClassGuid, const(PSTR) pszReference, 
                                            PSTR pszDeviceInterface, uint* pulLength, uint ulFlags, 
                                            ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Register_Device_Interface_ExW(uint dnDevInst, GUID* InterfaceClassGuid, const(PWSTR) pszReference, 
                                            PWSTR pszDeviceInterface, uint* pulLength, uint ulFlags, 
@@ -8210,19 +8025,15 @@ CONFIGRET CM_Set_DevNode_Problem_Ex(uint dnDevInst, uint ulProblem, uint ulFlags
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_DevNode_Problem(uint dnDevInst, uint ulProblem, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Unregister_Device_InterfaceA(const(PSTR) pszDeviceInterface, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Unregister_Device_InterfaceW(const(PWSTR) pszDeviceInterface, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Unregister_Device_Interface_ExA(const(PSTR) pszDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Unregister_Device_Interface_ExW(const(PWSTR) pszDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
 
@@ -8254,7 +8065,6 @@ CONFIGRET CM_Set_DevNode_Property_ExW(uint dnDevInst, const(DEVPROPKEY)* Propert
                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
                                       uint PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_DevNode_Registry_PropertyA(uint dnDevInst, uint ulProperty, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
@@ -8266,13 +8076,11 @@ CONFIGRET CM_Set_DevNode_Registry_PropertyW(uint dnDevInst, uint ulProperty,
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
                                             uint ulLength, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_DevNode_Registry_Property_ExA(uint dnDevInst, uint ulProperty, 
                                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
                                                uint ulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_DevNode_Registry_Property_ExW(uint dnDevInst, uint ulProperty, 
                                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
@@ -8308,19 +8116,15 @@ CONFIGRET CM_Request_Eject_PC();
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Request_Eject_PC_Ex(ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_HW_Prof_FlagsA(PSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_HW_Prof_FlagsW(PWSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_HW_Prof_Flags_ExA(PSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_HW_Prof_Flags_ExW(PWSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags, ptrdiff_t hMachine);
 
@@ -8374,7 +8178,6 @@ CONFIGRET CM_Free_Resource_Conflict_Handle(size_t clConflictList);
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Resource_Conflict_Count(size_t clConflictList, uint* pulCount);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Resource_Conflict_DetailsA(size_t clConflictList, uint ulIndex, 
                                             CONFLICT_DETAILS_A* pConflictDetails);
@@ -8420,7 +8223,6 @@ CONFIGRET CM_Set_Class_Property_ExW(const(GUID)* ClassGUID, const(DEVPROPKEY)* P
                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
                                     uint PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Get_Class_Registry_PropertyA(GUID* ClassGuid, uint ulProperty, uint* pulRegDataType, 
                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
@@ -8432,7 +8234,6 @@ CONFIGRET CM_Get_Class_Registry_PropertyW(GUID* ClassGuid, uint ulProperty, uint
                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
                                           uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("CFGMGR32.dll")
 CONFIGRET CM_Set_Class_Registry_PropertyA(GUID* ClassGuid, uint ulProperty, 
                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
@@ -8492,7 +8293,6 @@ BOOL DiUninstallDevice(HWND hwndParent, HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA*
 @DllImport("newdev.dll")
 BOOL DiUninstallDriverW(HWND hwndParent, const(PWSTR) InfPath, DIUNINSTALLDRIVER_FLAGS Flags, BOOL* NeedReboot);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("newdev.dll")
 BOOL DiUninstallDriverA(HWND hwndParent, const(PSTR) InfPath, DIUNINSTALLDRIVER_FLAGS Flags, BOOL* NeedReboot);
 

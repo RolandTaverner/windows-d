@@ -3,7 +3,6 @@
 module windows.win32.system.useraccesslogging;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HRESULT, PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR_STORAGE;
 

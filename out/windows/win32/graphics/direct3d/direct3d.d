@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct3d.direct3d;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HRESULT, PSTR, PWSTR;
 public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.services : SC_HANDLE;

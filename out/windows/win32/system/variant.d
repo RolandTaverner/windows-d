@@ -3,7 +3,6 @@
 module windows.win32.system.variant;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, DECIMAL, FILETIME,
                                                     HINSTANCE, HRESULT, PSTR, PWSTR,
                                                     SYSTEMTIME, VARIANT_BOOL;

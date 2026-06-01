@@ -3,7 +3,6 @@
 module windows.win32.security.cryptography.certificates;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, NTSTATUS,
                                                     PWSTR, UNICODE_STRING, VARIANT_BOOL;
 public import windows.win32.security.authentication.identity.identity : LSA_TOKEN_INFORMATION_TYPE,

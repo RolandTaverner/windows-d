@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct2d.direct2d;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, POINT, PSTR, PWSTR,
                                                     RECT;
 public import windows.win32.graphics.direct3d.direct3d : D3D_FEATURE_LEVEL;
@@ -2864,7 +2863,7 @@ interface ID2D1Factory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1factory-reloadsystemmetrics
     HRESULT ReloadSystemMetrics();
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Deprecated. Use DisplayInformation::LogicalDpi for Windows Store Apps or GetDpiForWindow for desktop apps.))], [])
+    deprecated("Deprecated. Use DisplayInformation::LogicalDpi for Windows Store Apps or GetDpiForWindow for desktop apps.") 
     void    GetDesktopDpi(float* dpiX, float* dpiY);
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/Direct2D/id2d1factory-createrectanglegeometry
     HRESULT CreateRectangleGeometry(const(D2D_RECT_F)* rectangle, ID2D1RectangleGeometry* rectangleGeometry);

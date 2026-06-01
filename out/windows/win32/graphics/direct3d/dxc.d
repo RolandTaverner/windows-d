@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct3d.dxc;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
 public import windows.win32.system.com.com : IMalloc, IStream, IUnknown;
 

@@ -364,7 +364,6 @@ alias PF_NPFMXGetPermHelp = uint function(PWSTR lpDriveName, uint nDialogType, B
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netresourcea
 struct NETRESOURCEA
 {
@@ -378,7 +377,6 @@ struct NETRESOURCEA
     PSTR               lpProvider;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netresourcew
 struct NETRESOURCEW
 {
@@ -392,7 +390,6 @@ struct NETRESOURCEW
     PWSTR              lpProvider;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-connectdlgstructa
 struct CONNECTDLGSTRUCTA
 {
@@ -403,7 +400,6 @@ struct CONNECTDLGSTRUCTA
     uint          dwDevNum;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-connectdlgstructw
 struct CONNECTDLGSTRUCTW
 {
@@ -414,7 +410,6 @@ struct CONNECTDLGSTRUCTW
     uint          dwDevNum;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-discdlgstructa
 struct DISCDLGSTRUCTA
 {
@@ -425,7 +420,6 @@ struct DISCDLGSTRUCTA
     DISCDLGSTRUCT_FLAGS dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-discdlgstructw
 struct DISCDLGSTRUCTW
 {
@@ -436,21 +430,18 @@ struct DISCDLGSTRUCTW
     DISCDLGSTRUCT_FLAGS dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infoa
 struct UNIVERSAL_NAME_INFOA
 {
     PSTR lpUniversalName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infow
 struct UNIVERSAL_NAME_INFOW
 {
     PWSTR lpUniversalName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-remote_name_infoa
 struct REMOTE_NAME_INFOA
 {
@@ -459,7 +450,6 @@ struct REMOTE_NAME_INFOA
     PSTR lpRemainingPath;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-remote_name_infow
 struct REMOTE_NAME_INFOW
 {
@@ -546,7 +536,6 @@ WIN32_ERROR WNetAddConnection3A(HWND hwndOwner, NETRESOURCEA* lpNetResource, con
 WIN32_ERROR WNetAddConnection3W(HWND hwndOwner, NETRESOURCEW* lpNetResource, const(PWSTR) lpPassword, 
                                 const(PWSTR) lpUserName, NET_CONNECT_FLAGS dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MPR.dll")
 WIN32_ERROR WNetAddConnection4A(HWND hwndOwner, NETRESOURCEA* lpNetResource, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pAuthBuffer, 
@@ -554,7 +543,6 @@ WIN32_ERROR WNetAddConnection4A(HWND hwndOwner, NETRESOURCEA* lpNetResource,
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/ubyte* lpUseOptions, 
                                 uint cbUseOptions);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MPR.dll")
 WIN32_ERROR WNetAddConnection4W(HWND hwndOwner, NETRESOURCEW* lpNetResource, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pAuthBuffer, 
@@ -598,7 +586,6 @@ WIN32_ERROR WNetUseConnectionW(HWND hwndOwner, NETRESOURCEW* lpNetResource, cons
                                const(PWSTR) lpUserId, NET_CONNECT_FLAGS dwFlags, PWSTR lpAccessName, 
                                uint* lpBufferSize, uint* lpResult);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MPR.dll")
 WIN32_ERROR WNetUseConnection4A(HWND hwndOwner, NETRESOURCEA* lpNetResource, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pAuthBuffer, 
@@ -606,7 +593,6 @@ WIN32_ERROR WNetUseConnection4A(HWND hwndOwner, NETRESOURCEA* lpNetResource,
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/ubyte* lpUseOptions, 
                                 uint cbUseOptions, PSTR lpAccessName, uint* lpBufferSize, uint* lpResult);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MPR.dll")
 WIN32_ERROR WNetUseConnection4W(HWND hwndOwner, NETRESOURCEW* lpNetResource, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pAuthBuffer, 
@@ -837,7 +823,6 @@ uint NPFormatNetworkName(PWSTR lpRemoteName, PWSTR lpFormattedName, uint* lpnLen
 @DllImport("MPR.dll")
 void WNetSetLastErrorA(uint err, PSTR lpError, PSTR lpProviders);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MPR.dll")
 void WNetSetLastErrorW(uint err, PWSTR lpError, PWSTR lpProviders);
 

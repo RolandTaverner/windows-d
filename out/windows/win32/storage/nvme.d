@@ -3,7 +3,6 @@
 module windows.win32.storage.nvme;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : CHAR;
 
 extern(Windows) @nogc nothrow:

@@ -3,7 +3,6 @@
 module windows.win32.ui.colorsystem;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, HRESULT,
                                                     HWND, LPARAM, LUID, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : CIEXYZ, CIEXYZTRIPLE, EMR, HDC, HPALETTE,
@@ -295,14 +294,10 @@ enum int WCS_ICCONLY = 0x00010000;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ICMENUMPROCA = int function(PSTR param0, LPARAM param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ICMENUMPROCW = int function(PWSTR param0, LPARAM param1);
 alias LPBMCALLBACKFN = BOOL function(uint param0, uint param1, LPARAM param2);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PCMSCALLBACKW = BOOL function(COLORMATCHSETUPW* param0, LPARAM param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PCMSCALLBACKA = BOOL function(COLORMATCHSETUPA* param0, LPARAM param1);
 
 // Structs
@@ -316,7 +311,6 @@ struct HCOLORSPACE
     void* Value;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logcolorspacea
 struct LOGCOLORSPACEA
 {
@@ -332,7 +326,6 @@ struct LOGCOLORSPACEA
     CHAR[260]    lcsFilename;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logcolorspacew
 struct LOGCOLORSPACEW
 {
@@ -348,7 +341,6 @@ struct LOGCOLORSPACEW
     wchar[260]   lcsFilename;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatecolorspace
 struct EMRCREATECOLORSPACE
 {
@@ -357,7 +349,6 @@ struct EMRCREATECOLORSPACE
     LOGCOLORSPACEA lcs;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatecolorspacew
 struct EMRCREATECOLORSPACEW
 {
@@ -577,7 +568,6 @@ struct PROFILE
     uint  cbDataSize;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-enumtypea
 struct ENUMTYPEA
 {
@@ -603,7 +593,6 @@ struct ENUMTYPEA
     uint        dwDeviceClass;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-enumtypew
 struct ENUMTYPEW
 {
@@ -629,7 +618,6 @@ struct ENUMTYPEW
     uint         dwDeviceClass;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-colormatchsetupw
 struct COLORMATCHSETUPW
 {
@@ -654,7 +642,6 @@ struct COLORMATCHSETUPW
     LPARAM        lParamApplyCallback;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-colormatchsetupa
 struct COLORMATCHSETUPA
 {
@@ -788,11 +775,9 @@ BOOL UpdateICMRegKeyW(/*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [
 @DllImport("GDI32.dll")
 BOOL ColorCorrectPalette(HDC hdc, HPALETTE hPal, uint deFirst, uint num);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 ptrdiff_t OpenColorProfileA(PROFILE* pProfile, uint dwDesiredAccess, uint dwShareMode, uint dwCreationMode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 ptrdiff_t OpenColorProfileW(PROFILE* pProfile, uint dwDesiredAccess, uint dwShareMode, uint dwCreationMode);
 
@@ -810,11 +795,9 @@ BOOL GetColorProfileFromHandle(ptrdiff_t hProfile,
 @DllImport("mscms.dll")
 BOOL IsColorProfileValid(ptrdiff_t hProfile, BOOL* pbValid);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL CreateProfileFromLogColorSpaceA(LOGCOLORSPACEA* pLogColorSpace, ubyte** pProfile);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL CreateProfileFromLogColorSpaceW(LOGCOLORSPACEW* pLogColorSpace, ubyte** pProfile);
 
@@ -891,12 +874,10 @@ BOOL ConvertIndexToColorName(ptrdiff_t hProfile, uint* paIndex, byte** paColorNa
 BOOL CreateDeviceLinkProfile(ptrdiff_t* hProfile, uint nProfiles, uint* padwIntent, uint nIntents, uint dwFlags, 
                              ubyte** pProfileData, uint indexPreferredCMM);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 ptrdiff_t CreateColorTransformA(LOGCOLORSPACEA* pLogColorSpace, ptrdiff_t hDestProfile, ptrdiff_t hTargetProfile, 
                                 uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 ptrdiff_t CreateColorTransformW(LOGCOLORSPACEW* pLogColorSpace, ptrdiff_t hDestProfile, ptrdiff_t hTargetProfile, 
                                 uint dwFlags);
@@ -934,19 +915,15 @@ BOOL CheckColors(ptrdiff_t hColorTransform, COLOR* paInputColors, uint nColors, 
 @DllImport("mscms.dll")
 uint GetCMMInfo(ptrdiff_t hColorTransform, uint param1);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL RegisterCMMA(const(PSTR) pMachineName, uint cmmID, const(PSTR) pCMMdll);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL RegisterCMMW(const(PWSTR) pMachineName, uint cmmID, const(PWSTR) pCMMdll);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL UnregisterCMMA(const(PSTR) pMachineName, uint cmmID);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL UnregisterCMMW(const(PWSTR) pMachineName, uint cmmID);
 
@@ -954,90 +931,74 @@ BOOL UnregisterCMMW(const(PWSTR) pMachineName, uint cmmID);
 @DllImport("mscms.dll")
 BOOL SelectCMM(uint dwCMMType);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(GetColorDirectoryW is deprecated and might not work on all platforms. For more info, see MSDN.))], [])
+deprecated("GetColorDirectoryW is deprecated and might not work on all platforms. For more info, see MSDN.") 
 @DllImport("mscms.dll")
 BOOL GetColorDirectoryA(const(PSTR) pMachineName, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PSTR pBuffer, 
                         uint* pdwSize);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(GetColorDirectoryA is deprecated and might not work on all platforms. For more info, see MSDN.))], [])
+deprecated("GetColorDirectoryA is deprecated and might not work on all platforms. For more info, see MSDN.") 
 @DllImport("mscms.dll")
 BOOL GetColorDirectoryW(const(PWSTR) pMachineName, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PWSTR pBuffer, 
                         uint* pdwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL InstallColorProfileA(const(PSTR) pMachineName, const(PSTR) pProfileName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL InstallColorProfileW(const(PWSTR) pMachineName, const(PWSTR) pProfileName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL UninstallColorProfileA(const(PSTR) pMachineName, const(PSTR) pProfileName, BOOL bDelete);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL UninstallColorProfileW(const(PWSTR) pMachineName, const(PWSTR) pProfileName, BOOL bDelete);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL EnumColorProfilesA(const(PSTR) pMachineName, ENUMTYPEA* pEnumRecord, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pEnumerationBuffer, 
                         uint* pdwSizeOfEnumerationBuffer, uint* pnProfiles);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL EnumColorProfilesW(const(PWSTR) pMachineName, ENUMTYPEW* pEnumRecord, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pEnumerationBuffer, 
                         uint* pdwSizeOfEnumerationBuffer, uint* pnProfiles);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL SetStandardColorSpaceProfileA(const(PSTR) pMachineName, uint dwProfileID, const(PSTR) pProfilename);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL SetStandardColorSpaceProfileW(const(PWSTR) pMachineName, uint dwProfileID, const(PWSTR) pProfileName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL GetStandardColorSpaceProfileA(const(PSTR) pMachineName, uint dwSCS, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PSTR pBuffer, 
                                    uint* pcbSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL GetStandardColorSpaceProfileW(const(PWSTR) pMachineName, uint dwSCS, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PWSTR pBuffer, 
                                    uint* pcbSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL AssociateColorProfileWithDeviceA(const(PSTR) pMachineName, const(PSTR) pProfileName, const(PSTR) pDeviceName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL AssociateColorProfileWithDeviceW(const(PWSTR) pMachineName, const(PWSTR) pProfileName, 
                                       const(PWSTR) pDeviceName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL DisassociateColorProfileFromDeviceA(const(PSTR) pMachineName, const(PSTR) pProfileName, 
                                          const(PSTR) pDeviceName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 BOOL DisassociateColorProfileFromDeviceW(const(PWSTR) pMachineName, const(PWSTR) pProfileName, 
                                          const(PWSTR) pDeviceName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ICMUI.dll")
 BOOL SetupColorMatchingW(COLORMATCHSETUPW* pcms);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ICMUI.dll")
 BOOL SetupColorMatchingA(COLORMATCHSETUPA* pcms);
 
@@ -1139,19 +1100,15 @@ BOOL CMCreateDeviceLinkProfile(ptrdiff_t* pahProfiles, uint nProfiles, uint* pad
 ptrdiff_t CMCreateMultiProfileTransform(ptrdiff_t* pahProfiles, uint nProfiles, uint* padwIntents, uint nIntents, 
                                         uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ICM32.dll")
 BOOL CMCreateProfileW(LOGCOLORSPACEW* lpColorSpace, void** lpProfileData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ICM32.dll")
 ptrdiff_t CMCreateTransform(LOGCOLORSPACEA* lpColorSpace, void* lpDevCharacter, void* lpTargetDevCharacter);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ICM32.dll")
 ptrdiff_t CMCreateTransformW(LOGCOLORSPACEW* lpColorSpace, void* lpDevCharacter, void* lpTargetDevCharacter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ICM32.dll")
 ptrdiff_t CMCreateTransformExt(LOGCOLORSPACEA* lpColorSpace, void* lpDevCharacter, void* lpTargetDevCharacter, 
                                uint dwFlags);
@@ -1162,7 +1119,6 @@ BOOL CMCheckColorsInGamut(ptrdiff_t hcmTransform, RGBTRIPLE* lpaRGBTriple,
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* lpaResult, 
                           uint nCount);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ICM32.dll")
 BOOL CMCreateProfile(LOGCOLORSPACEA* lpColorSpace, void** lpProfileData);
 
@@ -1175,7 +1131,6 @@ BOOL CMTranslateRGB(ptrdiff_t hcmTransform, COLORREF ColorRef, uint* lpColorRef,
 BOOL CMTranslateRGBs(ptrdiff_t hcmTransform, void* lpSrcBits, BMFORMAT bmInput, uint dwWidth, uint dwHeight, 
                      uint dwStride, void* lpDestBits, BMFORMAT bmOutput, uint dwTranslateDirection);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ICM32.dll")
 ptrdiff_t CMCreateTransformExtW(LOGCOLORSPACEW* lpColorSpace, void* lpDevCharacter, void* lpTargetDevCharacter, 
                                 uint dwFlags);
@@ -1207,12 +1162,10 @@ BOOL CMTranslateRGBsExt(ptrdiff_t hcmTransform, void* lpSrcBits, BMFORMAT bmInpu
                         uint dwInputStride, void* lpDestBits, BMFORMAT bmOutput, uint dwOutputStride, 
                         LPBMCALLBACKFN lpfnCallback, LPARAM ulCallbackData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 ptrdiff_t WcsOpenColorProfileA(PROFILE* pCDMPProfile, PROFILE* pCAMPProfile, PROFILE* pGMMPProfile, 
                                uint dwDesireAccess, uint dwShareMode, uint dwCreationMode, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mscms.dll")
 ptrdiff_t WcsOpenColorProfileW(PROFILE* pCDMPProfile, PROFILE* pCAMPProfile, PROFILE* pGMMPProfile, 
                                uint dwDesireAccess, uint dwShareMode, uint dwCreationMode, uint dwFlags);

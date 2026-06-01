@@ -3,7 +3,6 @@
 module windows.win32.graphics.dxgi.dxgi;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, HRESULT, HWND,
                                                     LUID, POINT, PSTR, PWSTR, RECT;
 public import windows.win32.graphics.gdi : HDC, HMONITOR;

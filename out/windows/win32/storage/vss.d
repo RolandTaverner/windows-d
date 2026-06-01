@@ -3,7 +3,6 @@
 module windows.win32.storage.vss;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR;
 public import windows.win32.storage.virtualdiskservice : VDS_LUN_INFORMATION;

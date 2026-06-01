@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.iphelper;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, HANDLE, PSTR,
                                                     PWSTR, WIN32_ERROR;
 public import windows.win32.networkmanagement.ndis : IF_OPER_STATUS, NDIS_MEDIUM, NDIS_PHYSICAL_MEDIUM,

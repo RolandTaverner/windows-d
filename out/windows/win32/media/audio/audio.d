@@ -3,7 +3,6 @@
 module windows.win32.media.audio.audio;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HINSTANCE, HMODULE,
                                                     HRESULT, HTASK, HWND, LPARAM,
                                                     LRESULT, PROPERTYKEY, PSTR, PWSTR,
@@ -1217,37 +1216,25 @@ alias PAudioStateMonitorCallback = void function(IAudioStateMonitor audioStateMo
 alias ACMDRIVERENUMCB = BOOL function(HACMDRIVERID hadid, size_t dwInstance, uint fdwSupport);
 alias LPACMDRIVERPROC = LRESULT function(size_t param0, HACMDRIVERID param1, uint param2, LPARAM param3, 
                                          LPARAM param4);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACMFORMATTAGENUMCBA = BOOL function(HACMDRIVERID hadid, ACMFORMATTAGDETAILSA* paftd, size_t dwInstance, 
                                           uint fdwSupport);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACMFORMATTAGENUMCBW = BOOL function(HACMDRIVERID hadid, ACMFORMATTAGDETAILSW* paftd, size_t dwInstance, 
                                           uint fdwSupport);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACMFORMATENUMCBA = BOOL function(HACMDRIVERID hadid, ACMFORMATDETAILSA* pafd, size_t dwInstance, 
                                        uint fdwSupport);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACMFORMATENUMCBW = BOOL function(HACMDRIVERID hadid, tACMFORMATDETAILSW* pafd, size_t dwInstance, 
                                        uint fdwSupport);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACMFORMATCHOOSEHOOKPROCA = uint function(HWND hwnd, uint uMsg, WPARAM wParam, LPARAM lParam);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACMFORMATCHOOSEHOOKPROCW = uint function(HWND hwnd, uint uMsg, WPARAM wParam, LPARAM lParam);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACMFILTERTAGENUMCBA = BOOL function(HACMDRIVERID hadid, ACMFILTERTAGDETAILSA* paftd, size_t dwInstance, 
                                           uint fdwSupport);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACMFILTERTAGENUMCBW = BOOL function(HACMDRIVERID hadid, ACMFILTERTAGDETAILSW* paftd, size_t dwInstance, 
                                           uint fdwSupport);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACMFILTERENUMCBA = BOOL function(HACMDRIVERID hadid, ACMFILTERDETAILSA* pafd, size_t dwInstance, 
                                        uint fdwSupport);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACMFILTERENUMCBW = BOOL function(HACMDRIVERID hadid, ACMFILTERDETAILSW* pafd, size_t dwInstance, 
                                        uint fdwSupport);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACMFILTERCHOOSEHOOKPROCA = uint function(HWND hwnd, uint uMsg, WPARAM wParam, LPARAM lParam);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACMFILTERCHOOSEHOOKPROCW = uint function(HWND hwnd, uint uMsg, WPARAM wParam, LPARAM lParam);
 
 // Structs
@@ -1459,7 +1446,6 @@ align (1):
     size_t   reserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-waveoutcapsa
 struct WAVEOUTCAPSA
 {
@@ -1474,7 +1460,6 @@ align (1):
     uint     dwSupport;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-waveoutcapsw
 struct WAVEOUTCAPSW
 {
@@ -1489,7 +1474,6 @@ align (1):
     uint      dwSupport;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct WAVEOUTCAPS2A
 {
 align (1):
@@ -1506,7 +1490,6 @@ align (1):
     GUID     NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct WAVEOUTCAPS2W
 {
 align (1):
@@ -1523,7 +1506,6 @@ align (1):
     GUID      NameGuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-waveincapsa
 struct WAVEINCAPSA
 {
@@ -1537,7 +1519,6 @@ align (1):
     ushort   wReserved1;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-waveincapsw
 struct WAVEINCAPSW
 {
@@ -1551,7 +1532,6 @@ align (1):
     ushort    wReserved1;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct WAVEINCAPS2A
 {
 align (1):
@@ -1567,7 +1547,6 @@ align (1):
     GUID     NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct WAVEINCAPS2W
 {
 align (1):
@@ -1616,7 +1595,6 @@ align (1):
     ushort cbSize;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-midioutcapsa
 struct MIDIOUTCAPSA
 {
@@ -1632,7 +1610,6 @@ align (1):
     uint     dwSupport;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-midioutcapsw
 struct MIDIOUTCAPSW
 {
@@ -1648,7 +1625,6 @@ align (1):
     uint      dwSupport;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MIDIOUTCAPS2A
 {
 align (1):
@@ -1666,7 +1642,6 @@ align (1):
     GUID     NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MIDIOUTCAPS2W
 {
 align (1):
@@ -1684,7 +1659,6 @@ align (1):
     GUID      NameGuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-midiincapsa
 struct MIDIINCAPSA
 {
@@ -1696,7 +1670,6 @@ align (1):
     uint     dwSupport;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-midiincapsw
 struct MIDIINCAPSW
 {
@@ -1708,7 +1681,6 @@ align (1):
     uint      dwSupport;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MIDIINCAPS2A
 {
 align (1):
@@ -1722,7 +1694,6 @@ align (1):
     GUID     NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MIDIINCAPS2W
 {
 align (1):
@@ -1786,7 +1757,6 @@ align (1):
     uint dwTempo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-auxcapsa
 struct AUXCAPSA
 {
@@ -1800,7 +1770,6 @@ align (1):
     uint     dwSupport;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-auxcapsw
 struct AUXCAPSW
 {
@@ -1814,7 +1783,6 @@ align (1):
     uint      dwSupport;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct AUXCAPS2A
 {
 align (1):
@@ -1830,7 +1798,6 @@ align (1):
     GUID     NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct AUXCAPS2W
 {
 align (1):
@@ -1846,7 +1813,6 @@ align (1):
     GUID      NameGuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixercapsa
 struct MIXERCAPSA
 {
@@ -1859,7 +1825,6 @@ align (1):
     uint     cDestinations;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixercapsw
 struct MIXERCAPSW
 {
@@ -1872,7 +1837,6 @@ align (1):
     uint      cDestinations;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MIXERCAPS2A
 {
 align (1):
@@ -1887,7 +1851,6 @@ align (1):
     GUID     NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MIXERCAPS2W
 {
 align (1):
@@ -1902,7 +1865,6 @@ align (1):
     GUID      NameGuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixerlinea
 struct MIXERLINEA
 {
@@ -1931,7 +1893,6 @@ align (1):
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixerlinew
 struct MIXERLINEW
 {
@@ -1960,7 +1921,6 @@ align (1):
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixercontrola
 struct MIXERCONTROLA
 {
@@ -1998,7 +1958,6 @@ align (1):
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixercontrolw
 struct MIXERCONTROLW
 {
@@ -2036,7 +1995,6 @@ align (1):
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixerlinecontrolsa
 struct MIXERLINECONTROLSA
 {
@@ -2054,7 +2012,6 @@ align (1):
     MIXERCONTROLA* pamxctrl;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixerlinecontrolsw
 struct MIXERLINECONTROLSW
 {
@@ -2089,7 +2046,6 @@ align (1):
     void* paDetails;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixercontroldetails_listtexta
 struct MIXERCONTROLDETAILS_LISTTEXTA
 {
@@ -2099,7 +2055,6 @@ align (1):
     CHAR[64] szName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmeapi/ns-mmeapi-mixercontroldetails_listtextw
 struct MIXERCONTROLDETAILS_LISTTEXTW
 {
@@ -2359,7 +2314,6 @@ struct AUDIOCLIENT_ACTIVATION_PARAMS
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMDRIVERDETAILSA
 {
 align (1):
@@ -2381,7 +2335,6 @@ align (1):
     CHAR[512] szFeatures;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMDRIVERDETAILSW
 {
 align (1):
@@ -2403,7 +2356,6 @@ align (1):
     wchar[512] szFeatures;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMFORMATTAGDETAILSA
 {
 align (1):
@@ -2416,7 +2368,6 @@ align (1):
     CHAR[48] szFormatTag;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMFORMATTAGDETAILSW
 {
 align (1):
@@ -2453,7 +2404,6 @@ align (1):
     wchar[128]    szFormat;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMFORMATCHOOSEA
 {
 align (1):
@@ -2475,7 +2425,6 @@ align (1):
     ACMFORMATCHOOSEHOOKPROCA pfnHook;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMFORMATCHOOSEW
 {
 align (1):
@@ -2497,7 +2446,6 @@ align (1):
     ACMFORMATCHOOSEHOOKPROCW pfnHook;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMFILTERTAGDETAILSA
 {
 align (1):
@@ -2510,7 +2458,6 @@ align (1):
     CHAR[48] szFilterTag;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMFILTERTAGDETAILSW
 {
 align (1):
@@ -2523,7 +2470,6 @@ align (1):
     wchar[48] szFilterTag;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMFILTERDETAILSA
 {
 align (1):
@@ -2536,7 +2482,6 @@ align (1):
     CHAR[128]   szFilter;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMFILTERDETAILSW
 {
 align (1):
@@ -2549,7 +2494,6 @@ align (1):
     wchar[128]  szFilter;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMFILTERCHOOSEA
 {
 align (1):
@@ -2571,7 +2515,6 @@ align (1):
     ACMFILTERCHOOSEHOOKPROCA pfnHook;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMFILTERCHOOSEW
 {
 align (1):
@@ -2614,7 +2557,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct ACMDRVOPENDESCA
 {
 align (1):
@@ -2629,7 +2571,6 @@ align (1):
     uint        dnDevNode;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct ACMDRVOPENDESCW
 {
 align (1):
@@ -2711,19 +2652,15 @@ align (1):
 @DllImport("OLE32.dll")
 HRESULT CoRegisterMessageFilter(IMessageFilter lpMessageFilter, IMessageFilter* lplpMessageFilter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 BOOL sndPlaySoundA(const(PSTR) pszSound, uint fuSound);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 BOOL sndPlaySoundW(const(PWSTR) pszSound, uint fuSound);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 BOOL PlaySoundA(const(PSTR) pszSound, HMODULE hmod, SND_FLAGS fdwSound);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 BOOL PlaySoundW(const(PWSTR) pszSound, HMODULE hmod, SND_FLAGS fdwSound);
 
@@ -2731,11 +2668,9 @@ BOOL PlaySoundW(const(PWSTR) pszSound, HMODULE hmod, SND_FLAGS fdwSound);
 @DllImport("WINMM.dll")
 uint waveOutGetNumDevs();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveOutGetDevCapsA(size_t uDeviceID, WAVEOUTCAPSA* pwoc, uint cbwoc);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveOutGetDevCapsW(size_t uDeviceID, WAVEOUTCAPSW* pwoc, uint cbwoc);
 
@@ -2747,11 +2682,9 @@ uint waveOutGetVolume(HWAVEOUT hwo, uint* pdwVolume);
 @DllImport("WINMM.dll")
 uint waveOutSetVolume(HWAVEOUT hwo, uint dwVolume);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveOutGetErrorTextA(uint mmrError, PSTR pszText, uint cchText);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveOutGetErrorTextW(uint mmrError, PWSTR pszText, uint cchText);
 
@@ -2832,23 +2765,19 @@ uint waveOutMessage(HWAVEOUT hwo, uint uMsg, size_t dw1, size_t dw2);
 @DllImport("WINMM.dll")
 uint waveInGetNumDevs();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveInGetDevCapsA(size_t uDeviceID, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/WAVEINCAPSA* pwic, 
                        uint cbwic);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveInGetDevCapsW(size_t uDeviceID, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/WAVEINCAPSW* pwic, 
                        uint cbwic);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveInGetErrorTextA(uint mmrError, PSTR pszText, uint cchText);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint waveInGetErrorTextW(uint mmrError, PWSTR pszText, uint cchText);
 

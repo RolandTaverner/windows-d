@@ -3,7 +3,6 @@
 module windows.win32.security.cryptography.cryptography;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE,
                                                     HMODULE, HRESULT, HWND, NTSTATUS,
                                                     PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
@@ -7713,9 +7712,7 @@ alias SslInitializeInterfaceFn = HRESULT function(const(PWSTR) pszProviderName,
                                                   NCRYPT_SSL_FUNCTION_TABLE* pFunctionTable, uint dwFlags);
 alias PFN_OFFLOAD_MOD_EXPO = BOOL function(ubyte* pbBase, ubyte* pbExponent, uint cbExponent, ubyte* pbModulus, 
                                            uint cbModulus, ubyte* pbResult, void* pvOffloadPrivateKey, uint dwFlags);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CRYPT_VERIFY_IMAGE_A = BOOL function(const(PSTR) szImage, const(ubyte)* pbSigData);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CRYPT_VERIFY_IMAGE_W = BOOL function(const(PWSTR) szImage, const(ubyte)* pbSigData);
 alias CRYPT_RETURN_HWND = void function(HWND* phWnd);
 alias PFN_CARD_ACQUIRE_CONTEXT = uint function(CARD_DATA* pCardData, uint dwFlags);
@@ -10693,7 +10690,6 @@ struct CRYPT_CREDENTIALS
     void*       pvCredentials;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincrypt/ns-wincrypt-crypt_password_credentialsa
 struct CRYPT_PASSWORD_CREDENTIALSA
@@ -10703,7 +10699,6 @@ struct CRYPT_PASSWORD_CREDENTIALSA
     PSTR pszPassword;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincrypt/ns-wincrypt-crypt_password_credentialsw
 struct CRYPT_PASSWORD_CREDENTIALSW
@@ -12058,7 +12053,6 @@ struct OFFLOAD_PRIVATE_KEY
     ubyte* pbPrime2;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/vtableprovstruc
 struct VTableProvStruc
 {
@@ -12071,7 +12065,6 @@ struct VTableProvStruc
     PSTR                 pszProvName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/vtableprovstruc
 struct VTableProvStrucW
 {

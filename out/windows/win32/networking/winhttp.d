@@ -3,7 +3,6 @@
 module windows.win32.networking.winhttp;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HRESULT,
                                                     PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
 public import windows.win32.networking.winsock : SOCKADDR_STORAGE;
@@ -1463,7 +1462,6 @@ struct HTTP_VERSION_INFO
     uint dwMinorVersion;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winhttp/ns-winhttp-url_components
 struct URL_COMPONENTS
 {

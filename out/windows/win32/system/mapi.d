@@ -122,10 +122,8 @@ enum uint MAPI_E_ATTACHMENT_TOO_LARGE = 0x0000001cU;
 alias LPMAPILOGON = uint function(size_t ulUIParam, PSTR lpszProfileName, PSTR lpszPassword, uint flFlags, 
                                   uint ulReserved, size_t* lplhSession);
 alias LPMAPILOGOFF = uint function(size_t lhSession, size_t ulUIParam, uint flFlags, uint ulReserved);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPMAPISENDMAIL = uint function(size_t lhSession, size_t ulUIParam, MapiMessage* lpMessage, uint flFlags, 
                                      uint ulReserved);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPMAPISENDMAILW = uint function(size_t lhSession, size_t ulUIParam, MapiMessageW* lpMessage, uint flFlags, 
                                       uint ulReserved);
 alias LPMAPISENDDOCUMENTS = uint function(size_t ulUIParam, PSTR lpszDelimChar, PSTR lpszFilePaths, 
@@ -150,7 +148,6 @@ alias LPMAPIRESOLVENAME = uint function(size_t lhSession, size_t ulUIParam, PSTR
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mapi/ns-mapi-mapifiledesc
 struct MapiFileDesc
 {
@@ -162,7 +159,6 @@ struct MapiFileDesc
     void* lpFileType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mapi/ns-mapi-mapifiledescw
 struct MapiFileDescW
 {
@@ -184,7 +180,6 @@ struct MapiFileTagExt
     ubyte* lpEncoding;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mapi/ns-mapi-mapirecipdesc
 struct MapiRecipDesc
 {
@@ -196,7 +191,6 @@ struct MapiRecipDesc
     void* lpEntryID;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mapi/ns-mapi-mapirecipdescw
 struct MapiRecipDescW
 {
@@ -208,7 +202,6 @@ struct MapiRecipDescW
     void* lpEntryID;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mapi/ns-mapi-mapimessage
 struct MapiMessage
 {
@@ -226,7 +219,6 @@ struct MapiMessage
     MapiFileDesc*  lpFiles;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mapi/ns-mapi-mapimessagew
 struct MapiMessageW
 {

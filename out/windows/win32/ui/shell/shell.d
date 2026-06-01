@@ -3,7 +3,6 @@
 module windows.win32.ui.shell.shell;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, COLORREF,
                                                     FILETIME, HANDLE, HINSTANCE, HRESULT,
@@ -6540,7 +6539,6 @@ struct APPCATEGORYINFOLIST
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct DRAGINFOA
     {
         uint  uSize;
@@ -6553,7 +6551,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct DRAGINFOA
     {
         uint  uSize;
@@ -6566,7 +6563,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct DRAGINFOW
     {
         uint  uSize;
@@ -6579,7 +6575,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct DRAGINFOW
     {
         uint  uSize;
@@ -6622,7 +6617,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileopstructa
     struct SHFILEOPSTRUCTA
     {
@@ -6639,7 +6633,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileopstructa
     struct SHFILEOPSTRUCTA
     {
@@ -6656,7 +6649,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileopstructw
     struct SHFILEOPSTRUCTW
     {
@@ -6673,7 +6665,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileopstructw
     struct SHFILEOPSTRUCTW
     {
@@ -6690,7 +6681,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shnamemappinga
     struct SHNAMEMAPPINGA
     {
@@ -6703,7 +6693,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shnamemappinga
     struct SHNAMEMAPPINGA
     {
@@ -6716,7 +6705,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shnamemappingw
     struct SHNAMEMAPPINGW
     {
@@ -6729,7 +6717,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shnamemappingw
     struct SHNAMEMAPPINGW
     {
@@ -6742,7 +6729,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfoa
     struct SHELLEXECUTEINFOA
@@ -6771,7 +6757,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfoa
     struct SHELLEXECUTEINFOA
@@ -6800,7 +6785,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfow
     struct SHELLEXECUTEINFOW
@@ -6829,7 +6813,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfow
     struct SHELLEXECUTEINFOW
@@ -6948,7 +6931,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-notifyicondataa
     struct NOTIFYICONDATAA
@@ -6977,7 +6959,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-notifyicondataa
     struct NOTIFYICONDATAA
@@ -7006,7 +6987,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-notifyicondataw
     struct NOTIFYICONDATAW
@@ -7035,7 +7015,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-notifyicondataw
     struct NOTIFYICONDATAW
@@ -7090,7 +7069,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileinfoa
     struct SHFILEINFOA
     {
@@ -7104,7 +7082,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileinfoa
     struct SHFILEINFOA
     {
@@ -7118,7 +7095,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileinfow
     struct SHFILEINFOW
     {
@@ -7132,7 +7108,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileinfow
     struct SHFILEINFOW
     {
@@ -7174,7 +7149,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-open_printer_props_infoa
     struct OPEN_PRINTER_PROPS_INFOA
     {
@@ -7188,7 +7162,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-open_printer_props_infoa
     struct OPEN_PRINTER_PROPS_INFOA
     {
@@ -7202,7 +7175,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-open_printer_props_infow
     struct OPEN_PRINTER_PROPS_INFOW
     {
@@ -7216,7 +7188,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-open_printer_props_infow
     struct OPEN_PRINTER_PROPS_INFOW
     {
@@ -7240,7 +7211,6 @@ struct HELPINFO
     POINT          MousePos;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-multikeyhelpa
 struct MULTIKEYHELPA
 {
@@ -7249,7 +7219,6 @@ struct MULTIKEYHELPA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] szKeyphrase;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-multikeyhelpw
 struct MULTIKEYHELPW
 {
@@ -7258,7 +7227,6 @@ struct MULTIKEYHELPW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] szKeyphrase;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-helpwininfoa
 struct HELPWININFOA
 {
@@ -7271,7 +7239,6 @@ struct HELPWININFOA
     CHAR[2] rgchMember;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-helpwininfow
 struct HELPWININFOW
 {
@@ -7649,7 +7616,6 @@ struct SHFOLDERCUSTOMSETTINGS
     uint  cchLogo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-browseinfoa
 struct BROWSEINFOA
 {
@@ -7663,7 +7629,6 @@ struct BROWSEINFOA
     int         iImage;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-browseinfow
 struct BROWSEINFOW
 {
@@ -7692,7 +7657,6 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aoffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-filedescriptora
 struct FILEDESCRIPTORA
 {
@@ -7710,7 +7674,6 @@ align (1):
     CHAR[260] cFileName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-filedescriptorw
 struct FILEDESCRIPTORW
 {
@@ -7728,7 +7691,6 @@ align (1):
     wchar[260] cFileName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-filegroupdescriptora
 struct FILEGROUPDESCRIPTORA
 {
@@ -7737,7 +7699,6 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILEDESCRIPTORA[1] fgd;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-filegroupdescriptorw
 struct FILEGROUPDESCRIPTORW
 {
@@ -7972,7 +7933,6 @@ struct CSFV
     FOLDERVIEWMODE   fvm;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-shellstatea
 struct SHELLSTATEA
 {
@@ -7987,7 +7947,6 @@ align (1):
     /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fSpareFlags)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/int _bitfield2;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-shellstatew
 struct SHELLSTATEW
 {
@@ -8098,7 +8057,6 @@ struct AASHELLMENUITEM
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct DRAGINFOA
     {
     align (1):
@@ -8112,7 +8070,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct DRAGINFOW
     {
     align (1):
@@ -8142,7 +8099,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileopstructa
     struct SHFILEOPSTRUCTA
     {
@@ -8160,7 +8116,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileopstructw
     struct SHFILEOPSTRUCTW
     {
@@ -8178,7 +8133,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shnamemappinga
     struct SHNAMEMAPPINGA
     {
@@ -8192,7 +8146,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shnamemappingw
     struct SHNAMEMAPPINGW
     {
@@ -8206,7 +8159,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfoa
     struct SHELLEXECUTEINFOA
@@ -8232,7 +8184,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shellexecuteinfow
     struct SHELLEXECUTEINFOW
@@ -8306,7 +8257,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-notifyicondataa
     struct NOTIFYICONDATAA
@@ -8332,7 +8282,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-notifyicondataw
     struct NOTIFYICONDATAW
@@ -8372,7 +8321,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileinfoa
     struct SHFILEINFOA
     {
@@ -8387,7 +8335,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-shfileinfow
     struct SHFILEINFOW
     {
@@ -8417,7 +8364,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-open_printer_props_infoa
     struct OPEN_PRINTER_PROPS_INFOA
     {
@@ -8432,7 +8378,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellapi/ns-shellapi-open_printer_props_infow
     struct OPEN_PRINTER_PROPS_INFOW
     {
@@ -8453,7 +8398,6 @@ struct NC_ADDRESS
     ubyte             PrefixLength;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlwapi/ns-shlwapi-parsedurla
 struct PARSEDURLA
@@ -8466,7 +8410,6 @@ struct PARSEDURLA
     uint        nScheme;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlwapi/ns-shlwapi-parsedurlw
 struct PARSEDURLW
@@ -8772,7 +8715,6 @@ align (1):
     ptrdiff_t lData;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cpl/ns-cpl-newcplinfoa
 struct NEWCPLINFOA
 {
@@ -8787,7 +8729,6 @@ align (1):
     CHAR[128] szHelpFile;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cpl/ns-cpl-newcplinfow
 struct NEWCPLINFOW
 {
@@ -8802,7 +8743,6 @@ align (1):
     wchar[128] szHelpFile;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/profinfo/ns-profinfo-profileinfoa
 struct PROFILEINFOA
 {
@@ -8816,7 +8756,6 @@ struct PROFILEINFOA
     HANDLE hProfile;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/profinfo/ns-profinfo-profileinfow
 struct PROFILEINFOW
 {
@@ -8830,7 +8769,6 @@ struct PROFILEINFOW
     HANDLE hProfile;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct URLINVOKECOMMANDINFOA
 {
     uint        dwcbSize;
@@ -8839,7 +8777,6 @@ struct URLINVOKECOMMANDINFOA
     const(PSTR) pcszVerb;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct URLINVOKECOMMANDINFOW
 {
     uint         dwcbSize;
@@ -9991,11 +9928,9 @@ int ShellMessageBoxA(HINSTANCE hAppInst, HWND hWnd, const(PSTR) lpcText, const(P
 int ShellMessageBoxW(HINSTANCE hAppInst, HWND hWnd, const(PWSTR) lpcText, const(PWSTR) lpcTitle, 
                      MESSAGEBOX_STYLE fuStyle);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("SHELL32.dll")
 BOOL IsLFNDriveA(const(PSTR) pszPath);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("SHELL32.dll")
 BOOL IsLFNDriveW(const(PWSTR) pszPath);
 
@@ -12505,13 +12440,13 @@ interface IFolderView2 : IFolderView
     HRESULT SetGroupBy(const(PROPERTYKEY)* key, BOOL fAscending);
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifolderview2-getgroupby
     HRESULT GetGroupBy(PROPERTYKEY* pkey, BOOL* pfAscending);
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+    deprecated("marked as obsolete") 
     HRESULT SetViewProperty(ITEMIDLIST* pidl, const(PROPERTYKEY)* propkey, const(PROPVARIANT)* propvar);
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+    deprecated("marked as obsolete") 
     HRESULT GetViewProperty(ITEMIDLIST* pidl, const(PROPERTYKEY)* propkey, PROPVARIANT* ppropvar);
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+    deprecated("marked as obsolete") 
     HRESULT SetTileViewProperties(ITEMIDLIST* pidl, const(PWSTR) pszPropList);
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+    deprecated("marked as obsolete") 
     HRESULT SetExtendedTileViewProperties(ITEMIDLIST* pidl, const(PWSTR) pszPropList);
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifolderview2-settext
     HRESULT SetText(FVTEXTTYPE iType, const(PWSTR) pwszText);
@@ -13103,7 +13038,6 @@ interface IDragSourceHelper : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllinka
 @GUID("000214ee-0000-0000-c000-000000000046")
 interface IShellLinkA : IUnknown
@@ -13147,7 +13081,6 @@ interface IShellLinkA : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nn-shobjidl_core-ishelllinkw
 @GUID("000214f9-0000-0000-c000-000000000046")
 interface IShellLinkW : IUnknown
@@ -16577,7 +16510,6 @@ interface IDataObjectAsyncCapability : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/nn-shlobj_core-iextracticona
 @GUID("000214eb-0000-0000-c000-000000000046")
 interface IExtractIconA : IUnknown
@@ -16589,7 +16521,6 @@ interface IExtractIconA : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/nn-shlobj_core-iextracticonw
 @GUID("000214fa-0000-0000-c000-000000000046")
 interface IExtractIconW : IUnknown
@@ -16854,7 +16785,6 @@ interface INamedPropertyBag : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nn-shlobj-inewshortcuthooka
 @GUID("000214e1-0000-0000-c000-000000000046")
 interface INewShortcutHookA : IUnknown
@@ -16874,7 +16804,6 @@ interface INewShortcutHookA : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nn-shlobj-inewshortcuthookw
 @GUID("000214f7-0000-0000-c000-000000000046")
 interface INewShortcutHookW : IUnknown
@@ -16893,7 +16822,6 @@ interface INewShortcutHookW : IUnknown
     HRESULT GetExtension(PWSTR pszExtension, int cchExtension);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nn-shlobj-icopyhooka
 @GUID("000214ef-0000-0000-c000-000000000046")
 interface ICopyHookA : IUnknown
@@ -16903,7 +16831,6 @@ interface ICopyHookA : IUnknown
                       const(PSTR) pszDestFile, uint dwDestAttribs);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nn-shlobj-icopyhookw
 @GUID("000214fc-0000-0000-c000-000000000046")
 interface ICopyHookW : IUnknown
@@ -18464,7 +18391,6 @@ interface ITranscodeImage : IUnknown
                            uint* puiWidth, uint* puiHeight);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("fbf23b80-e3f0-101b-8488-00aa003e56f8")
 interface IUniformResourceLocatorA : IUnknown
 {
@@ -18473,7 +18399,6 @@ interface IUniformResourceLocatorA : IUnknown
     HRESULT InvokeCommand(URLINVOKECOMMANDINFOA* purlici);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("cabb0da0-da57-11cf-9974-0020afd79762")
 interface IUniformResourceLocatorW : IUnknown
 {

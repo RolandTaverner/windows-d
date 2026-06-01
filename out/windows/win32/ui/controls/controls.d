@@ -3,7 +3,6 @@
 module windows.win32.ui.controls.controls;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, COLORREF, HANDLE, HINSTANCE,
                                                     HRESULT, HWND, LPARAM, LRESULT,
                                                     POINT, PSTR, PWSTR, RECT, SIZE,
@@ -7657,9 +7656,7 @@ enum uint EM_ENABLEFEATURE = 0x000000daU;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPFNPSPCALLBACKA = uint function(HWND hwnd, PSPCB_MESSAGE uMsg, PROPSHEETPAGEA* ppsp);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPFNPSPCALLBACKW = uint function(HWND hwnd, PSPCB_MESSAGE uMsg, PROPSHEETPAGEW* ppsp);
 alias PFNPROPSHEETCALLBACK = int function(HWND param0, uint param1, LPARAM param2);
 alias LPFNSVADDPROPSHEETPAGE = BOOL function(HPROPSHEETPAGE param0, LPARAM param1);
@@ -7678,21 +7675,13 @@ alias PFNDPASTREAM = HRESULT function(DPASTREAMINFO* pinfo, IStream pstream, voi
 alias PFNDPAMERGE = void* function(DPAMM_MESSAGE uMsg, void* pvDest, void* pvSrc, LPARAM lParam);
 alias PFNDPAMERGECONST = void* function(DPAMM_MESSAGE uMsg, const(void)* pvDest, const(void)* pvSrc, LPARAM lParam);
 alias DTT_CALLBACK_PROC = int function(HDC hdc, PWSTR pszText, int cchText, RECT* prc, uint dwFlags, LPARAM lParam);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPFNCCSTYLEA = BOOL function(HWND hwndParent, CCSTYLEA* pccs);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPFNCCSTYLEW = BOOL function(HWND hwndParent, CCSTYLEW* pccs);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPFNCCSIZETOTEXTA = int function(uint flStyle, uint flExtStyle, HFONT hfont, PSTR pszText);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPFNCCSIZETOTEXTW = int function(uint flStyle, uint flExtStyle, HFONT hfont, PWSTR pszText);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPFNCCINFOA = uint function(CCINFOA* acci);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPFNCCINFOW = uint function(CCINFOW* acci);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias EDITWORDBREAKPROCA = int function(PSTR lpch, int ichCurrent, int cch, WORD_BREAK_ACTION code);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias EDITWORDBREAKPROCW = int function(PWSTR lpch, int ichCurrent, int cch, WORD_BREAK_ACTION code);
 
 // Structs
@@ -7845,7 +7834,6 @@ struct PROPSHEETPAGEA_V3
     HANDLE           hActCtx;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PROPSHEETPAGEA
 {
     uint             dwSize;
@@ -7949,7 +7937,6 @@ struct PROPSHEETPAGEW_V3
     HANDLE           hActCtx;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PROPSHEETPAGEW
 {
     uint             dwSize;
@@ -8248,7 +8235,6 @@ struct IMAGEINFO
     RECT    rcImage;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hd_textfiltera
 struct HD_TEXTFILTERA
 {
@@ -8256,7 +8242,6 @@ struct HD_TEXTFILTERA
     int  cchTextMax;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hd_textfilterw
 struct HD_TEXTFILTERW
 {
@@ -8264,7 +8249,6 @@ struct HD_TEXTFILTERW
     int   cchTextMax;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hditema
 struct HDITEMA
 {
@@ -8282,7 +8266,6 @@ struct HDITEMA
     HEADER_CONTROL_FORMAT_STATE state;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hditemw
 struct HDITEMW
 {
@@ -8315,7 +8298,6 @@ struct HDHITTESTINFO
     int   iItem;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmheadera
 struct NMHEADERA
 {
@@ -8325,7 +8307,6 @@ struct NMHEADERA
     HDITEMA* pitem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmheaderw
 struct NMHEADERW
 {
@@ -8335,7 +8316,6 @@ struct NMHEADERW
     HDITEMW* pitem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmhddispinfow
 struct NMHDDISPINFOW
 {
@@ -8348,7 +8328,6 @@ struct NMHDDISPINFOW
     LPARAM   lParam;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmhddispinfoa
 struct NMHDDISPINFOA
 {
@@ -8417,7 +8396,6 @@ struct TBADDBITMAP
     size_t    nID;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbsaveparamsa
 struct TBSAVEPARAMSA
 {
@@ -8426,7 +8404,6 @@ struct TBSAVEPARAMSA
     const(PSTR) pszValueName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbsaveparamsw
 struct TBSAVEPARAMSW
 {
@@ -8452,7 +8429,6 @@ struct TBREPLACEBITMAP
     int       nButtons;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbbuttoninfoa
 struct TBBUTTONINFOA
@@ -8469,7 +8445,6 @@ struct TBBUTTONINFOA
     int                cchText;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbbuttoninfow
 struct TBBUTTONINFOW
@@ -8534,7 +8509,6 @@ struct NMTBRESTORE
     TBBUTTON tbButton;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbgetinfotipa
 struct NMTBGETINFOTIPA
 {
@@ -8545,7 +8519,6 @@ struct NMTBGETINFOTIPA
     LPARAM lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbgetinfotipw
 struct NMTBGETINFOTIPW
 {
@@ -8556,7 +8529,6 @@ struct NMTBGETINFOTIPW
     LPARAM lParam;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbdispinfoa
 struct NMTBDISPINFOA
 {
@@ -8569,7 +8541,6 @@ struct NMTBDISPINFOA
     int                cchText;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbdispinfow
 struct NMTBDISPINFOW
 {
@@ -8582,7 +8553,6 @@ struct NMTBDISPINFOW
     int                cchText;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtoolbara
 struct NMTOOLBARA
 {
@@ -8594,7 +8564,6 @@ struct NMTOOLBARA
     RECT     rcButton;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtoolbarw
 struct NMTOOLBARW
 {
@@ -8615,7 +8584,6 @@ struct REBARINFO
     HIMAGELIST himl;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-rebarbandinfoa
 struct REBARBANDINFOA
@@ -8644,7 +8612,6 @@ struct REBARBANDINFOA
     uint     uChevronState;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-rebarbandinfow
 struct REBARBANDINFOW
@@ -8741,7 +8708,6 @@ struct RBHITTESTINFO
     int   iBand;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tttoolinfoa
 struct TTTOOLINFOA
@@ -8757,7 +8723,6 @@ struct TTTOOLINFOA
     void*         lpReserved;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tttoolinfow
 struct TTTOOLINFOW
@@ -8782,7 +8747,6 @@ struct TTGETTITLE
     PWSTR pszTitle;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tthittestinfoa
 struct TTHITTESTINFOA
 {
@@ -8791,7 +8755,6 @@ struct TTHITTESTINFOA
     TTTOOLINFOA ti;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tthittestinfow
 struct TTHITTESTINFOW
 {
@@ -8800,7 +8763,6 @@ struct TTHITTESTINFOW
     TTTOOLINFOW ti;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmttdispinfoa
 struct NMTTDISPINFOA
 {
@@ -8812,7 +8774,6 @@ struct NMTTDISPINFOA
     LPARAM        lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmttdispinfow
 struct NMTTDISPINFOW
 {
@@ -8887,7 +8848,6 @@ struct NMLINK
     LITEM item;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvitema
 struct LVITEMA
 {
@@ -8908,7 +8868,6 @@ struct LVITEMA
     int                  iGroup;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvitemw
 struct LVITEMW
 {
@@ -8929,7 +8888,6 @@ struct LVITEMW
     int                  iGroup;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvfindinfoa
 struct LVFINDINFOA
 {
@@ -8940,7 +8898,6 @@ struct LVFINDINFOA
     uint              vkDirection;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvfindinfow
 struct LVFINDINFOW
 {
@@ -8961,7 +8918,6 @@ struct LVHITTESTINFO
     int                 iGroup;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvcolumna
 struct LVCOLUMNA
 {
@@ -8978,7 +8934,6 @@ struct LVCOLUMNA
     int              cxIdeal;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvcolumnw
 struct LVCOLUMNW
 {
@@ -8995,7 +8950,6 @@ struct LVCOLUMNW
     int              cxIdeal;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvbkimagea
 struct LVBKIMAGEA
 {
@@ -9007,7 +8961,6 @@ struct LVBKIMAGEA
     int     yOffsetPercent;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvbkimagew
 struct LVBKIMAGEW
 {
@@ -9198,7 +9151,6 @@ struct NMLVCACHEHINT
     int   iTo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvfinditema
 struct NMLVFINDITEMA
 {
@@ -9207,7 +9159,6 @@ struct NMLVFINDITEMA
     LVFINDINFOA lvfi;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvfinditemw
 struct NMLVFINDITEMW
 {
@@ -9226,7 +9177,6 @@ struct NMLVODSTATECHANGE
     LIST_VIEW_ITEM_STATE_FLAGS uOldState;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvdispinfoa
 struct NMLVDISPINFOA
 {
@@ -9234,7 +9184,6 @@ struct NMLVDISPINFOA
     LVITEMA item;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvdispinfow
 struct NMLVDISPINFOW
 {
@@ -9260,7 +9209,6 @@ struct NMLVLINK
     int   iSubItem;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvgetinfotipa
 struct NMLVGETINFOTIPA
 {
@@ -9273,7 +9221,6 @@ struct NMLVGETINFOTIPA
     LPARAM               lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvgetinfotipw
 struct NMLVGETINFOTIPW
 {
@@ -9311,7 +9258,6 @@ struct NMTVSTATEIMAGECHANGING
     int       iNewStateImageIndex;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitema
 struct TVITEMA
 {
@@ -9327,7 +9273,6 @@ struct TVITEMA
     LPARAM             lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitemw
 struct TVITEMW
 {
@@ -9343,7 +9288,6 @@ struct TVITEMW
     LPARAM             lParam;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitemexa
 struct TVITEMEXA
 {
@@ -9364,7 +9308,6 @@ struct TVITEMEXA
     int                iReserved;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitemexw
 struct TVITEMEXW
 {
@@ -9385,7 +9328,6 @@ struct TVITEMEXW
     int                iReserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvinsertstructa
 struct TVINSERTSTRUCTA
 {
@@ -9398,7 +9340,6 @@ struct TVINSERTSTRUCTA
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvinsertstructw
 struct TVINSERTSTRUCTW
 {
@@ -9435,7 +9376,6 @@ struct TVSORTCB
     LPARAM       lParam;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtreeviewa
 struct NMTREEVIEWA
 {
@@ -9446,7 +9386,6 @@ struct NMTREEVIEWA
     POINT              ptDrag;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtreevieww
 struct NMTREEVIEWW
 {
@@ -9457,7 +9396,6 @@ struct NMTREEVIEWW
     POINT              ptDrag;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfoa
 struct NMTVDISPINFOA
 {
@@ -9465,7 +9403,6 @@ struct NMTVDISPINFOA
     TVITEMA item;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfow
 struct NMTVDISPINFOW
 {
@@ -9473,7 +9410,6 @@ struct NMTVDISPINFOW
     TVITEMW item;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfoexa
 struct NMTVDISPINFOEXA
 {
@@ -9481,7 +9417,6 @@ struct NMTVDISPINFOEXA
     TVITEMEXA item;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfoexw
 struct NMTVDISPINFOEXW
 {
@@ -9507,7 +9442,6 @@ struct NMTVCUSTOMDRAW
     int          iLevel;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvgetinfotipa
 struct NMTVGETINFOTIPA
 {
@@ -9518,7 +9452,6 @@ struct NMTVGETINFOTIPA
     LPARAM    lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvgetinfotipw
 struct NMTVGETINFOTIPW
 {
@@ -9552,7 +9485,6 @@ struct NMTVASYNCDRAW
     int                  iRetImageIndex;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-comboboxexitema
 struct COMBOBOXEXITEMA
 {
@@ -9567,7 +9499,6 @@ struct COMBOBOXEXITEMA
     LPARAM    lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-comboboxexitemw
 struct COMBOBOXEXITEMW
 {
@@ -9582,7 +9513,6 @@ struct COMBOBOXEXITEMW
     LPARAM    lParam;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcomboboxexa
 struct NMCOMBOBOXEXA
 {
@@ -9590,7 +9520,6 @@ struct NMCOMBOBOXEXA
     COMBOBOXEXITEMA ceItem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcomboboxexw
 struct NMCOMBOBOXEXW
 {
@@ -9598,7 +9527,6 @@ struct NMCOMBOBOXEXW
     COMBOBOXEXITEMW ceItem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbedragbeginw
 struct NMCBEDRAGBEGINW
 {
@@ -9607,7 +9535,6 @@ struct NMCBEDRAGBEGINW
     wchar[260] szText;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbedragbegina
 struct NMCBEDRAGBEGINA
 {
@@ -9616,7 +9543,6 @@ struct NMCBEDRAGBEGINA
     CHAR[260] szText;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbeendeditw
 struct NMCBEENDEDITW
 {
@@ -9627,7 +9553,6 @@ struct NMCBEENDEDITW
     int        iWhy;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbeendedita
 struct NMCBEENDEDITA
 {
@@ -9638,7 +9563,6 @@ struct NMCBEENDEDITA
     int       iWhy;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitemheadera
 struct TCITEMHEADERA
 {
@@ -9650,7 +9574,6 @@ struct TCITEMHEADERA
     int                iImage;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitemheaderw
 struct TCITEMHEADERW
 {
@@ -9662,7 +9585,6 @@ struct TCITEMHEADERW
     int                iImage;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitema
 struct TCITEMA
 {
@@ -9675,7 +9597,6 @@ struct TCITEMA
     LPARAM             lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitemw
 struct TCITEMW
 {
@@ -9783,7 +9704,6 @@ struct NMDATETIMECHANGE
     SYSTEMTIME st;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimestringa
 struct NMDATETIMESTRINGA
 {
@@ -9793,7 +9713,6 @@ struct NMDATETIMESTRINGA
     uint        dwFlags;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimestringw
 struct NMDATETIMESTRINGW
 {
@@ -9803,7 +9722,6 @@ struct NMDATETIMESTRINGW
     uint         dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimewmkeydowna
 struct NMDATETIMEWMKEYDOWNA
 {
@@ -9813,7 +9731,6 @@ struct NMDATETIMEWMKEYDOWNA
     SYSTEMTIME  st;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimewmkeydownw
 struct NMDATETIMEWMKEYDOWNW
 {
@@ -9823,7 +9740,6 @@ struct NMDATETIMEWMKEYDOWNW
     SYSTEMTIME   st;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformata
 struct NMDATETIMEFORMATA
 {
@@ -9834,7 +9750,6 @@ struct NMDATETIMEFORMATA
     CHAR[64]    szDisplay;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformatw
 struct NMDATETIMEFORMATW
 {
@@ -9845,7 +9760,6 @@ struct NMDATETIMEFORMATW
     wchar[64]    szDisplay;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformatquerya
 struct NMDATETIMEFORMATQUERYA
 {
@@ -9854,7 +9768,6 @@ struct NMDATETIMEFORMATQUERYA
     SIZE        szMax;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformatqueryw
 struct NMDATETIMEFORMATQUERYW
 {
@@ -10142,7 +10055,6 @@ struct BP_PAINTPARAMS
     const(BLENDFUNCTION)* pBlendFunction;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct CCSTYLEA
 {
     uint      flStyle;
@@ -10152,7 +10064,6 @@ struct CCSTYLEA
     ushort    wReserved1;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct CCSTYLEW
 {
     uint       flStyle;
@@ -10162,7 +10073,6 @@ struct CCSTYLEW
     ushort     wReserved1;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct CCSTYLEFLAGA
 {
     uint flStyle;
@@ -10170,7 +10080,6 @@ struct CCSTYLEFLAGA
     PSTR pszStyle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct CCSTYLEFLAGW
 {
     uint  flStyle;
@@ -10178,7 +10087,6 @@ struct CCSTYLEFLAGW
     PWSTR pszStyle;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct CCINFOA
 {
     CHAR[32]          szClass;
@@ -10198,7 +10106,6 @@ struct CCINFOA
     uint              dwReserved2;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct CCINFOW
 {
     wchar[32]         szClass;

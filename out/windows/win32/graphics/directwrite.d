@@ -3,7 +3,6 @@
 module windows.win32.graphics.directwrite;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, COLORREF, FILETIME, HANDLE,
                                                     HRESULT, POINT, PWSTR, RECT, SIZE;
 public import windows.win32.globalization : FONTSIGNATURE;

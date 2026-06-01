@@ -3,7 +3,6 @@
 module windows.win32.devices.tapi;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HINSTANCE,
                                                     HRESULT, HWND, PSTR, PWSTR,
                                                     SYSTEMTIME, VARIANT_BOOL, WPARAM;
@@ -3540,7 +3539,6 @@ align (1):
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi/ns-tapi-linereqmakecall
 struct LINEREQMAKECALL
 {
@@ -3550,7 +3548,6 @@ struct LINEREQMAKECALL
     CHAR[80] szComment;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct LINEREQMAKECALLW
 {
 align (1):
@@ -3560,7 +3557,6 @@ align (1):
     wchar[80] szComment;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi/ns-tapi-linereqmediacall
 struct LINEREQMEDIACALL
 {
@@ -3577,7 +3573,6 @@ align (1):
     CHAR[80]  szComment;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct LINEREQMEDIACALLW
 {
 align (1):
@@ -3947,15 +3942,12 @@ struct NSID
 @DllImport("TAPI32.dll")
 int lineAccept(uint hCall, const(PSTR) lpsUserUserInfo, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineAddProvider(const(PSTR) lpszProviderFilename, HWND hwndOwner, uint* lpdwPermanentProviderID);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineAddProviderA(const(PSTR) lpszProviderFilename, HWND hwndOwner, uint* lpdwPermanentProviderID);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineAddProviderW(const(PWSTR) lpszProviderFilename, HWND hwndOwner, uint* lpdwPermanentProviderID);
 
@@ -3971,15 +3963,12 @@ int lineAgentSpecific(uint hLine, uint dwAddressID, uint dwAgentExtensionIDIndex
 @DllImport("TAPI32.dll")
 int lineAnswer(uint hCall, const(PSTR) lpsUserUserInfo, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineBlindTransfer(uint hCall, const(PSTR) lpszDestAddress, uint dwCountryCode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineBlindTransferA(uint hCall, const(PSTR) lpszDestAddress, uint dwCountryCode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineBlindTransferW(uint hCall, const(PWSTR) lpszDestAddressW, uint dwCountryCode);
 
@@ -3995,29 +3984,23 @@ int lineCompleteCall(uint hCall, uint* lpdwCompletionID, uint dwCompletionMode, 
 @DllImport("TAPI32.dll")
 int lineCompleteTransfer(uint hCall, uint hConsultCall, uint* lphConfCall, uint dwTransferMode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineConfigDialog(uint dwDeviceID, HWND hwndOwner, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineConfigDialogA(uint dwDeviceID, HWND hwndOwner, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineConfigDialogW(uint dwDeviceID, HWND hwndOwner, const(PWSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineConfigDialogEdit(uint dwDeviceID, HWND hwndOwner, const(PSTR) lpszDeviceClass, 
                          const(void)* lpDeviceConfigIn, uint dwSize, VARSTRING* lpDeviceConfigOut);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineConfigDialogEditA(uint dwDeviceID, HWND hwndOwner, const(PSTR) lpszDeviceClass, 
                           const(void)* lpDeviceConfigIn, uint dwSize, VARSTRING* lpDeviceConfigOut);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineConfigDialogEditW(uint dwDeviceID, HWND hwndOwner, const(PWSTR) lpszDeviceClass, 
                           const(void)* lpDeviceConfigIn, uint dwSize, VARSTRING* lpDeviceConfigOut);
@@ -4026,20 +4009,16 @@ int lineConfigDialogEditW(uint dwDeviceID, HWND hwndOwner, const(PWSTR) lpszDevi
 @DllImport("TAPI32.dll")
 int lineConfigProvider(HWND hwndOwner, uint dwPermanentProviderID);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineCreateAgentW(uint hLine, const(PWSTR) lpszAgentID, const(PWSTR) lpszAgentPIN, uint* lphAgent);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineCreateAgentA(uint hLine, const(PSTR) lpszAgentID, const(PSTR) lpszAgentPIN, uint* lphAgent);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineCreateAgentSessionW(uint hLine, uint hAgent, const(PWSTR) lpszAgentPIN, uint dwWorkingAddressID, 
                             GUID* lpGroupID, uint* lphAgentSession);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineCreateAgentSessionA(uint hLine, uint hAgent, const(PSTR) lpszAgentPIN, uint dwWorkingAddressID, 
                             GUID* lpGroupID, uint* lphAgentSession);
@@ -4056,15 +4035,12 @@ int lineDevSpecific(uint hLine, uint dwAddressID, uint hCall, void* lpParams, ui
 @DllImport("TAPI32.dll")
 int lineDevSpecificFeature(uint hLine, uint dwFeature, void* lpParams, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineDial(uint hCall, const(PSTR) lpszDestAddress, uint dwCountryCode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineDialA(uint hCall, const(PSTR) lpszDestAddress, uint dwCountryCode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineDialW(uint hCall, const(PWSTR) lpszDestAddress, uint dwCountryCode);
 
@@ -4072,45 +4048,36 @@ int lineDialW(uint hCall, const(PWSTR) lpszDestAddress, uint dwCountryCode);
 @DllImport("TAPI32.dll")
 int lineDrop(uint hCall, const(PSTR) lpsUserUserInfo, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineForward(uint hLine, uint bAllAddresses, uint dwAddressID, const(LINEFORWARDLIST)* lpForwardList, 
                 uint dwNumRingsNoAnswer, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineForwardA(uint hLine, uint bAllAddresses, uint dwAddressID, const(LINEFORWARDLIST)* lpForwardList, 
                  uint dwNumRingsNoAnswer, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineForwardW(uint hLine, uint bAllAddresses, uint dwAddressID, const(LINEFORWARDLIST)* lpForwardList, 
                  uint dwNumRingsNoAnswer, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGatherDigits(uint hCall, uint dwDigitModes, PSTR lpsDigits, uint dwNumDigits, 
                      const(PSTR) lpszTerminationDigits, uint dwFirstDigitTimeout, uint dwInterDigitTimeout);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGatherDigitsA(uint hCall, uint dwDigitModes, PSTR lpsDigits, uint dwNumDigits, 
                       const(PSTR) lpszTerminationDigits, uint dwFirstDigitTimeout, uint dwInterDigitTimeout);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGatherDigitsW(uint hCall, uint dwDigitModes, PWSTR lpsDigits, uint dwNumDigits, 
                       const(PWSTR) lpszTerminationDigits, uint dwFirstDigitTimeout, uint dwInterDigitTimeout);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGenerateDigits(uint hCall, uint dwDigitMode, const(PSTR) lpszDigits, uint dwDuration);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGenerateDigitsA(uint hCall, uint dwDigitMode, const(PSTR) lpszDigits, uint dwDuration);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGenerateDigitsW(uint hCall, uint dwDigitMode, const(PWSTR) lpszDigits, uint dwDuration);
 
@@ -4119,68 +4086,53 @@ int lineGenerateDigitsW(uint hCall, uint dwDigitMode, const(PWSTR) lpszDigits, u
 int lineGenerateTone(uint hCall, uint dwToneMode, uint dwDuration, uint dwNumTones, 
                      const(LINEGENERATETONE)* lpTones);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressCaps(uint hLineApp, uint dwDeviceID, uint dwAddressID, uint dwAPIVersion, uint dwExtVersion, 
                        LINEADDRESSCAPS* lpAddressCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressCapsA(uint hLineApp, uint dwDeviceID, uint dwAddressID, uint dwAPIVersion, uint dwExtVersion, 
                         LINEADDRESSCAPS* lpAddressCaps);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressCapsW(uint hLineApp, uint dwDeviceID, uint dwAddressID, uint dwAPIVersion, uint dwExtVersion, 
                         LINEADDRESSCAPS* lpAddressCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressID(uint hLine, uint* lpdwAddressID, uint dwAddressMode, const(PSTR) lpsAddress, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressIDA(uint hLine, uint* lpdwAddressID, uint dwAddressMode, const(PSTR) lpsAddress, uint dwSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressIDW(uint hLine, uint* lpdwAddressID, uint dwAddressMode, const(PWSTR) lpsAddress, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressStatus(uint hLine, uint dwAddressID, LINEADDRESSSTATUS* lpAddressStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressStatusA(uint hLine, uint dwAddressID, LINEADDRESSSTATUS* lpAddressStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAddressStatusW(uint hLine, uint dwAddressID, LINEADDRESSSTATUS* lpAddressStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentActivityListA(uint hLine, uint dwAddressID, LINEAGENTACTIVITYLIST* lpAgentActivityList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentActivityListW(uint hLine, uint dwAddressID, LINEAGENTACTIVITYLIST* lpAgentActivityList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentCapsA(uint hLineApp, uint dwDeviceID, uint dwAddressID, uint dwAppAPIVersion, 
                       LINEAGENTCAPS* lpAgentCaps);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentCapsW(uint hLineApp, uint dwDeviceID, uint dwAddressID, uint dwAppAPIVersion, 
                       LINEAGENTCAPS* lpAgentCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentGroupListA(uint hLine, uint dwAddressID, LINEAGENTGROUPLIST* lpAgentGroupList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentGroupListW(uint hLine, uint dwAddressID, LINEAGENTGROUPLIST* lpAgentGroupList);
 
@@ -4196,38 +4148,30 @@ int lineGetAgentSessionInfo(uint hLine, uint hAgentSession, LINEAGENTSESSIONINFO
 @DllImport("TAPI32.dll")
 int lineGetAgentSessionList(uint hLine, uint hAgent, LINEAGENTSESSIONLIST* lpAgentSessionList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentStatusA(uint hLine, uint dwAddressID, LINEAGENTSTATUS* lpAgentStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAgentStatusW(uint hLine, uint dwAddressID, LINEAGENTSTATUS* lpAgentStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAppPriority(const(PSTR) lpszAppFilename, uint dwMediaMode, LINEEXTENSIONID* lpExtensionID, 
                        uint dwRequestMode, VARSTRING* lpExtensionName, uint* lpdwPriority);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAppPriorityA(const(PSTR) lpszAppFilename, uint dwMediaMode, LINEEXTENSIONID* lpExtensionID, 
                         uint dwRequestMode, VARSTRING* lpExtensionName, uint* lpdwPriority);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetAppPriorityW(const(PWSTR) lpszAppFilename, uint dwMediaMode, LINEEXTENSIONID* lpExtensionID, 
                         uint dwRequestMode, VARSTRING* lpExtensionName, uint* lpdwPriority);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetCallInfo(uint hCall, LINECALLINFO* lpCallInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetCallInfoA(uint hCall, LINECALLINFO* lpCallInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetCallInfoW(uint hCall, LINECALLINFO* lpCallInfo);
 
@@ -4239,89 +4183,69 @@ int lineGetCallStatus(uint hCall, LINECALLSTATUS* lpCallStatus);
 @DllImport("TAPI32.dll")
 int lineGetConfRelatedCalls(uint hCall, LINECALLLIST* lpCallList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetCountry(uint dwCountryID, uint dwAPIVersion, LINECOUNTRYLIST* lpLineCountryList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetCountryA(uint dwCountryID, uint dwAPIVersion, LINECOUNTRYLIST* lpLineCountryList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetCountryW(uint dwCountryID, uint dwAPIVersion, LINECOUNTRYLIST* lpLineCountryList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetDevCaps(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtVersion, 
                    LINEDEVCAPS* lpLineDevCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetDevCapsA(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtVersion, 
                     LINEDEVCAPS* lpLineDevCaps);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetDevCapsW(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtVersion, 
                     LINEDEVCAPS* lpLineDevCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetDevConfig(uint dwDeviceID, VARSTRING* lpDeviceConfig, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetDevConfigA(uint dwDeviceID, VARSTRING* lpDeviceConfig, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetDevConfigW(uint dwDeviceID, VARSTRING* lpDeviceConfig, const(PWSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetGroupListA(uint hLine, LINEAGENTGROUPLIST* lpGroupList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetGroupListW(uint hLine, LINEAGENTGROUPLIST* lpGroupList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetIcon(uint dwDeviceID, const(PSTR) lpszDeviceClass, HICON* lphIcon);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetIconA(uint dwDeviceID, const(PSTR) lpszDeviceClass, HICON* lphIcon);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetIconW(uint dwDeviceID, const(PWSTR) lpszDeviceClass, HICON* lphIcon);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetID(uint hLine, uint dwAddressID, uint hCall, uint dwSelect, VARSTRING* lpDeviceID, 
               const(PSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetIDA(uint hLine, uint dwAddressID, uint hCall, uint dwSelect, VARSTRING* lpDeviceID, 
                const(PSTR) lpszDeviceClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetIDW(uint hLine, uint dwAddressID, uint hCall, uint dwSelect, VARSTRING* lpDeviceID, 
                const(PWSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetLineDevStatus(uint hLine, LINEDEVSTATUS* lpLineDevStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetLineDevStatusA(uint hLine, LINEDEVSTATUS* lpLineDevStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetLineDevStatusW(uint hLine, LINEDEVSTATUS* lpLineDevStatus);
 
@@ -4337,15 +4261,12 @@ int lineGetNewCalls(uint hLine, uint dwAddressID, uint dwSelect, LINECALLLIST* l
 @DllImport("TAPI32.dll")
 int lineGetNumRings(uint hLine, uint dwAddressID, uint* lpdwNumRings);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetProviderList(uint dwAPIVersion, LINEPROVIDERLIST* lpProviderList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetProviderListA(uint dwAPIVersion, LINEPROVIDERLIST* lpProviderList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetProviderListW(uint dwAPIVersion, LINEPROVIDERLIST* lpProviderList);
 
@@ -4358,23 +4279,18 @@ int lineGetProxyStatus(uint hLineApp, uint dwDeviceID, uint dwAppAPIVersion,
 @DllImport("TAPI32.dll")
 int lineGetQueueInfo(uint hLine, uint dwQueueID, LINEQUEUEINFO* lpLineQueueInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetQueueListA(uint hLine, GUID* lpGroupID, LINEQUEUELIST* lpQueueList);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetQueueListW(uint hLine, GUID* lpGroupID, LINEQUEUELIST* lpQueueList);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetRequest(uint hLineApp, uint dwRequestMode, void* lpRequestBuffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetRequestA(uint hLineApp, uint dwRequestMode, void* lpRequestBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetRequestW(uint hLineApp, uint dwRequestMode, void* lpRequestBuffer);
 
@@ -4382,27 +4298,21 @@ int lineGetRequestW(uint hLineApp, uint dwRequestMode, void* lpRequestBuffer);
 @DllImport("TAPI32.dll")
 int lineGetStatusMessages(uint hLine, uint* lpdwLineStates, uint* lpdwAddressStates);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetTranslateCaps(uint hLineApp, uint dwAPIVersion, LINETRANSLATECAPS* lpTranslateCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetTranslateCapsA(uint hLineApp, uint dwAPIVersion, LINETRANSLATECAPS* lpTranslateCaps);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineGetTranslateCapsW(uint hLineApp, uint dwAPIVersion, LINETRANSLATECAPS* lpTranslateCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineHandoff(uint hCall, const(PSTR) lpszFileName, uint dwMediaMode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineHandoffA(uint hCall, const(PSTR) lpszFileName, uint dwMediaMode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineHandoffW(uint hCall, const(PWSTR) lpszFileName, uint dwMediaMode);
 
@@ -4415,29 +4325,24 @@ int lineHold(uint hCall);
 int lineInitialize(uint* lphLineApp, HINSTANCE hInstance, LINECALLBACK lpfnCallback, const(PSTR) lpszAppName, 
                    uint* lpdwNumDevs);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineInitializeExA(uint* lphLineApp, HINSTANCE hInstance, LINECALLBACK lpfnCallback, 
                       const(PSTR) lpszFriendlyAppName, uint* lpdwNumDevs, uint* lpdwAPIVersion, 
                       LINEINITIALIZEEXPARAMS* lpLineInitializeExParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineInitializeExW(uint* lphLineApp, HINSTANCE hInstance, LINECALLBACK lpfnCallback, 
                       const(PWSTR) lpszFriendlyAppName, uint* lpdwNumDevs, uint* lpdwAPIVersion, 
                       LINEINITIALIZEEXPARAMS* lpLineInitializeExParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineMakeCall(uint hLine, uint* lphCall, const(PSTR) lpszDestAddress, uint dwCountryCode, 
                  const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineMakeCallA(uint hLine, uint* lphCall, const(PSTR) lpszDestAddress, uint dwCountryCode, 
                   const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineMakeCallW(uint hLine, uint* lphCall, const(PWSTR) lpszDestAddress, uint dwCountryCode, 
                   const(LINECALLPARAMS)* lpCallParams);
@@ -4464,55 +4369,43 @@ int lineNegotiateAPIVersion(uint hLineApp, uint dwDeviceID, uint dwAPILowVersion
 int lineNegotiateExtVersion(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtLowVersion, 
                             uint dwExtHighVersion, uint* lpdwExtVersion);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineOpen(uint hLineApp, uint dwDeviceID, uint* lphLine, uint dwAPIVersion, uint dwExtVersion, 
              size_t dwCallbackInstance, uint dwPrivileges, uint dwMediaModes, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineOpenA(uint hLineApp, uint dwDeviceID, uint* lphLine, uint dwAPIVersion, uint dwExtVersion, 
               size_t dwCallbackInstance, uint dwPrivileges, uint dwMediaModes, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineOpenW(uint hLineApp, uint dwDeviceID, uint* lphLine, uint dwAPIVersion, uint dwExtVersion, 
               size_t dwCallbackInstance, uint dwPrivileges, uint dwMediaModes, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePark(uint hCall, uint dwParkMode, const(PSTR) lpszDirAddress, VARSTRING* lpNonDirAddress);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineParkA(uint hCall, uint dwParkMode, const(PSTR) lpszDirAddress, VARSTRING* lpNonDirAddress);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineParkW(uint hCall, uint dwParkMode, const(PWSTR) lpszDirAddress, VARSTRING* lpNonDirAddress);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePickup(uint hLine, uint dwAddressID, uint* lphCall, const(PSTR) lpszDestAddress, const(PSTR) lpszGroupID);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePickupA(uint hLine, uint dwAddressID, uint* lphCall, const(PSTR) lpszDestAddress, const(PSTR) lpszGroupID);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePickupW(uint hLine, uint dwAddressID, uint* lphCall, const(PWSTR) lpszDestAddress, 
                 const(PWSTR) lpszGroupID);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePrepareAddToConference(uint hConfCall, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePrepareAddToConferenceA(uint hConfCall, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int linePrepareAddToConferenceW(uint hConfCall, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
@@ -4524,15 +4417,12 @@ int lineProxyMessage(uint hLine, uint hCall, uint dwMsg, uint dwParam1, uint dwP
 @DllImport("TAPI32.dll")
 int lineProxyResponse(uint hLine, LINEPROXYREQUEST* lpProxyRequest, uint dwResult);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineRedirect(uint hCall, const(PSTR) lpszDestAddress, uint dwCountryCode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineRedirectA(uint hCall, const(PSTR) lpszDestAddress, uint dwCountryCode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineRedirectW(uint hCall, const(PWSTR) lpszDestAddress, uint dwCountryCode);
 
@@ -4585,17 +4475,14 @@ int lineSetAgentStateEx(uint hLine, uint hAgent, uint dwAgentState, uint dwNextA
 @DllImport("TAPI32.dll")
 int lineSetAgentState(uint hLine, uint dwAddressID, uint dwAgentState, uint dwNextAgentState);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetAppPriority(const(PSTR) lpszAppFilename, uint dwMediaMode, LINEEXTENSIONID* lpExtensionID, 
                        uint dwRequestMode, const(PSTR) lpszExtensionName, uint dwPriority);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetAppPriorityA(const(PSTR) lpszAppFilename, uint dwMediaMode, LINEEXTENSIONID* lpExtensionID, 
                         uint dwRequestMode, const(PSTR) lpszExtensionName, uint dwPriority);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetAppPriorityW(const(PWSTR) lpszAppFilename, uint dwMediaMode, LINEEXTENSIONID* lpExtensionID, 
                         uint dwRequestMode, const(PWSTR) lpszExtensionName, uint dwPriority);
@@ -4630,15 +4517,12 @@ int lineSetCallTreatment(uint hCall, uint dwTreatment);
 @DllImport("TAPI32.dll")
 int lineSetCurrentLocation(uint hLineApp, uint dwLocation);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetDevConfig(uint dwDeviceID, const(void)* lpDeviceConfig, uint dwSize, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetDevConfigA(uint dwDeviceID, const(void)* lpDeviceConfig, uint dwSize, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetDevConfigW(uint dwDeviceID, const(void)* lpDeviceConfig, uint dwSize, const(PWSTR) lpszDeviceClass);
 
@@ -4675,42 +4559,33 @@ int lineSetStatusMessages(uint hLine, uint dwLineStates, uint dwAddressStates);
 int lineSetTerminal(uint hLine, uint dwAddressID, uint hCall, uint dwSelect, uint dwTerminalModes, 
                     uint dwTerminalID, uint bEnable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetTollList(uint hLineApp, uint dwDeviceID, const(PSTR) lpszAddressIn, uint dwTollListOption);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetTollListA(uint hLineApp, uint dwDeviceID, const(PSTR) lpszAddressIn, uint dwTollListOption);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetTollListW(uint hLineApp, uint dwDeviceID, const(PWSTR) lpszAddressInW, uint dwTollListOption);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetupConference(uint hCall, uint hLine, uint* lphConfCall, uint* lphConsultCall, uint dwNumParties, 
                         const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetupConferenceA(uint hCall, uint hLine, uint* lphConfCall, uint* lphConsultCall, uint dwNumParties, 
                          const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetupConferenceW(uint hCall, uint hLine, uint* lphConfCall, uint* lphConsultCall, uint dwNumParties, 
                          const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetupTransfer(uint hCall, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetupTransferA(uint hCall, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineSetupTransferW(uint hCall, uint* lphConsultCall, const(LINECALLPARAMS)* lpCallParams);
 
@@ -4722,32 +4597,26 @@ int lineShutdown(uint hLineApp);
 @DllImport("TAPI32.dll")
 int lineSwapHold(uint hActiveCall, uint hHeldCall);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineTranslateAddress(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, const(PSTR) lpszAddressIn, uint dwCard, 
                          uint dwTranslateOptions, LINETRANSLATEOUTPUT* lpTranslateOutput);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineTranslateAddressA(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, const(PSTR) lpszAddressIn, 
                           uint dwCard, uint dwTranslateOptions, LINETRANSLATEOUTPUT* lpTranslateOutput);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineTranslateAddressW(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, const(PWSTR) lpszAddressIn, 
                           uint dwCard, uint dwTranslateOptions, LINETRANSLATEOUTPUT* lpTranslateOutput);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineTranslateDialog(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, HWND hwndOwner, 
                         const(PSTR) lpszAddressIn);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineTranslateDialogA(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, HWND hwndOwner, 
                          const(PSTR) lpszAddressIn);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineTranslateDialogW(uint hLineApp, uint dwDeviceID, uint dwAPIVersion, HWND hwndOwner, 
                          const(PWSTR) lpszAddressIn);
@@ -4760,15 +4629,12 @@ int lineUncompleteCall(uint hLine, uint dwCompletionID);
 @DllImport("TAPI32.dll")
 int lineUnhold(uint hCall);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineUnpark(uint hLine, uint dwAddressID, uint* lphCall, const(PSTR) lpszDestAddress);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineUnparkA(uint hLine, uint dwAddressID, uint* lphCall, const(PSTR) lpszDestAddress);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int lineUnparkW(uint hLine, uint dwAddressID, uint* lphCall, const(PWSTR) lpszDestAddress);
 
@@ -4776,15 +4642,12 @@ int lineUnparkW(uint hLine, uint dwAddressID, uint* lphCall, const(PWSTR) lpszDe
 @DllImport("TAPI32.dll")
 int phoneClose(uint hPhone);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneConfigDialog(uint dwDeviceID, HWND hwndOwner, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneConfigDialogA(uint dwDeviceID, HWND hwndOwner, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneConfigDialogW(uint dwDeviceID, HWND hwndOwner, const(PWSTR) lpszDeviceClass);
 
@@ -4792,15 +4655,12 @@ int phoneConfigDialogW(uint dwDeviceID, HWND hwndOwner, const(PWSTR) lpszDeviceC
 @DllImport("TAPI32.dll")
 int phoneDevSpecific(uint hPhone, void* lpParams, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetButtonInfo(uint hPhone, uint dwButtonLampID, PHONEBUTTONINFO* lpButtonInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetButtonInfoA(uint hPhone, uint dwButtonLampID, PHONEBUTTONINFO* lpButtonInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetButtonInfoW(uint hPhone, uint dwButtonLampID, PHONEBUTTONINFO* lpButtonInfo);
 
@@ -4808,15 +4668,12 @@ int phoneGetButtonInfoW(uint hPhone, uint dwButtonLampID, PHONEBUTTONINFO* lpBut
 @DllImport("TAPI32.dll")
 int phoneGetData(uint hPhone, uint dwDataID, void* lpData, uint dwSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetDevCaps(uint hPhoneApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtVersion, PHONECAPS* lpPhoneCaps);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetDevCapsA(uint hPhoneApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtVersion, PHONECAPS* lpPhoneCaps);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetDevCapsW(uint hPhoneApp, uint dwDeviceID, uint dwAPIVersion, uint dwExtVersion, PHONECAPS* lpPhoneCaps);
 
@@ -4832,27 +4689,21 @@ int phoneGetGain(uint hPhone, uint dwHookSwitchDev, uint* lpdwGain);
 @DllImport("TAPI32.dll")
 int phoneGetHookSwitch(uint hPhone, uint* lpdwHookSwitchDevs);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetIcon(uint dwDeviceID, const(PSTR) lpszDeviceClass, HICON* lphIcon);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetIconA(uint dwDeviceID, const(PSTR) lpszDeviceClass, HICON* lphIcon);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetIconW(uint dwDeviceID, const(PWSTR) lpszDeviceClass, HICON* lphIcon);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetID(uint hPhone, VARSTRING* lpDeviceID, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetIDA(uint hPhone, VARSTRING* lpDeviceID, const(PSTR) lpszDeviceClass);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetIDW(uint hPhone, VARSTRING* lpDeviceID, const(PWSTR) lpszDeviceClass);
 
@@ -4868,15 +4719,12 @@ int phoneGetMessage(uint hPhoneApp, PHONEMESSAGE* lpMessage, uint dwTimeout);
 @DllImport("TAPI32.dll")
 int phoneGetRing(uint hPhone, uint* lpdwRingMode, uint* lpdwVolume);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetStatus(uint hPhone, PHONESTATUS* lpPhoneStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetStatusA(uint hPhone, PHONESTATUS* lpPhoneStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneGetStatusW(uint hPhone, PHONESTATUS* lpPhoneStatus);
 
@@ -4893,13 +4741,11 @@ int phoneGetVolume(uint hPhone, uint dwHookSwitchDev, uint* lpdwVolume);
 int phoneInitialize(uint* lphPhoneApp, HINSTANCE hInstance, PHONECALLBACK lpfnCallback, const(PSTR) lpszAppName, 
                     uint* lpdwNumDevs);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneInitializeExA(uint* lphPhoneApp, HINSTANCE hInstance, PHONECALLBACK lpfnCallback, 
                        const(PSTR) lpszFriendlyAppName, uint* lpdwNumDevs, uint* lpdwAPIVersion, 
                        PHONEINITIALIZEEXPARAMS* lpPhoneInitializeExParams);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneInitializeExW(uint* lphPhoneApp, HINSTANCE hInstance, PHONECALLBACK lpfnCallback, 
                        const(PWSTR) lpszFriendlyAppName, uint* lpdwNumDevs, uint* lpdwAPIVersion, 
@@ -4920,15 +4766,12 @@ int phoneNegotiateExtVersion(uint hPhoneApp, uint dwDeviceID, uint dwAPIVersion,
 int phoneOpen(uint hPhoneApp, uint dwDeviceID, uint* lphPhone, uint dwAPIVersion, uint dwExtVersion, 
               size_t dwCallbackInstance, uint dwPrivilege);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneSetButtonInfo(uint hPhone, uint dwButtonLampID, const(PHONEBUTTONINFO)* lpButtonInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneSetButtonInfoA(uint hPhone, uint dwButtonLampID, const(PHONEBUTTONINFO)* lpButtonInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int phoneSetButtonInfoW(uint hPhone, uint dwButtonLampID, const(PHONEBUTTONINFO)* lpButtonInfo);
 
@@ -4968,15 +4811,12 @@ int phoneSetVolume(uint hPhone, uint dwHookSwitchDev, uint dwVolume);
 @DllImport("TAPI32.dll")
 int phoneShutdown(uint hPhoneApp);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiGetLocationInfo(PSTR lpszCountryCode, PSTR lpszCityCode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiGetLocationInfoA(PSTR lpszCountryCode, PSTR lpszCityCode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiGetLocationInfoW(PWSTR lpszCountryCodeW, PWSTR lpszCityCodeW);
 
@@ -4984,34 +4824,28 @@ int tapiGetLocationInfoW(PWSTR lpszCountryCodeW, PWSTR lpszCityCodeW);
 @DllImport("TAPI32.dll")
 int tapiRequestDrop(HWND hwnd, WPARAM wRequestID);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiRequestMakeCall(const(PSTR) lpszDestAddress, const(PSTR) lpszAppName, const(PSTR) lpszCalledParty, 
                         const(PSTR) lpszComment);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiRequestMakeCallA(const(PSTR) lpszDestAddress, const(PSTR) lpszAppName, const(PSTR) lpszCalledParty, 
                          const(PSTR) lpszComment);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiRequestMakeCallW(const(PWSTR) lpszDestAddress, const(PWSTR) lpszAppName, const(PWSTR) lpszCalledParty, 
                          const(PWSTR) lpszComment);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiRequestMediaCall(HWND hwnd, WPARAM wRequestID, const(PSTR) lpszDeviceClass, const(PSTR) lpDeviceID, 
                          uint dwSize, uint dwSecure, const(PSTR) lpszDestAddress, const(PSTR) lpszAppName, 
                          const(PSTR) lpszCalledParty, const(PSTR) lpszComment);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiRequestMediaCallA(HWND hwnd, WPARAM wRequestID, const(PSTR) lpszDeviceClass, const(PSTR) lpDeviceID, 
                           uint dwSize, uint dwSecure, const(PSTR) lpszDestAddress, const(PSTR) lpszAppName, 
                           const(PSTR) lpszCalledParty, const(PSTR) lpszComment);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("TAPI32.dll")
 int tapiRequestMediaCallW(HWND hwnd, WPARAM wRequestID, const(PWSTR) lpszDeviceClass, const(PWSTR) lpDeviceID, 
                           uint dwSize, uint dwSecure, const(PWSTR) lpszDestAddress, const(PWSTR) lpszAppName, 

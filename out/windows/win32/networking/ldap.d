@@ -826,7 +826,6 @@ struct LDAPMessage
     BOOLEAN      ConnectionReferenced;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrola
 struct LDAPControlA
 {
@@ -835,7 +834,6 @@ struct LDAPControlA
     BOOLEAN     ldctl_iscritical;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrolw
 struct LDAPControlW
 {
@@ -844,7 +842,6 @@ struct LDAPControlW
     BOOLEAN     ldctl_iscritical;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmodw
 struct LDAPModW
 {
@@ -857,7 +854,6 @@ struct LDAPModW
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmoda
 struct LDAPModA
 {
@@ -883,7 +879,6 @@ struct LDAP_VERSION_INFO
     uint lv_minor;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapiinfoa
 struct LDAPAPIInfoA
 {
@@ -895,7 +890,6 @@ struct LDAPAPIInfoA
     int    ldapai_vendor_version;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapiinfow
 struct LDAPAPIInfoW
 {
@@ -907,7 +901,6 @@ struct LDAPAPIInfoW
     int    ldapai_vendor_version;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfoa
 struct LDAPAPIFeatureInfoA
 {
@@ -916,7 +909,6 @@ struct LDAPAPIFeatureInfoA
     int  ldapaif_version;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfow
 struct LDAPAPIFeatureInfoW
 {
@@ -925,7 +917,6 @@ struct LDAPAPIFeatureInfoW
     int ldapaif_version;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeyw
 struct LDAPSortKeyW
 {
@@ -934,7 +925,6 @@ struct LDAPSortKeyW
     BOOLEAN sk_reverseorder;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeya
 struct LDAPSortKeyA
 {

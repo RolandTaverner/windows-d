@@ -3,7 +3,6 @@
 module windows.win32.graphics.gdiplus;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND,
                                                     PSTR, PWSTR, RECT, RECTL, SIZE;
 public import windows.win32.graphics.directdraw : IDirectDrawSurface7;
@@ -3869,11 +3868,9 @@ Status GdipGetLineSpacing(const(GpFontFamily)* family, int style, ushort* LineSp
 @DllImport("gdiplus.dll")
 Status GdipCreateFontFromDC(HDC hdc, GpFont** font);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("gdiplus.dll")
 Status GdipCreateFontFromLogfontA(HDC hdc, const(LOGFONTA)* logfont, GpFont** font);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("gdiplus.dll")
 Status GdipCreateFontFromLogfontW(HDC hdc, const(LOGFONTW)* logfont, GpFont** font);
 
@@ -3904,11 +3901,9 @@ Status GdipGetFontHeight(const(GpFont)* font, const(GpGraphics)* graphics, float
 @DllImport("gdiplus.dll")
 Status GdipGetFontHeightGivenDPI(const(GpFont)* font, float dpi, float* height);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("gdiplus.dll")
 Status GdipGetLogFontA(GpFont* font, GpGraphics* graphics, LOGFONTA* logfontA);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("gdiplus.dll")
 Status GdipGetLogFontW(GpFont* font, GpGraphics* graphics, LOGFONTW* logfontW);
 

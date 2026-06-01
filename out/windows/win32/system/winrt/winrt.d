@@ -3,7 +3,6 @@
 module windows.win32.system.winrt.winrt;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.system : DispatcherQueueController;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
 public import windows.win32.system.com.com : IStream, IUnknown;

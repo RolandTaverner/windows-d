@@ -3,7 +3,6 @@
 module windows.win32.system.power;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE,
                                                     HRESULT, LPARAM, NTSTATUS, PWSTR,
                                                     WIN32_ERROR;

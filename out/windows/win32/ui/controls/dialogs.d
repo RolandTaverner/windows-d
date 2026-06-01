@@ -410,7 +410,6 @@ alias LPPAGESETUPHOOK = size_t function(HWND param0, uint param1, WPARAM param2,
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilename_nt4a
     struct OPENFILENAME_NT4A
     {
@@ -439,7 +438,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilename_nt4a
     struct OPENFILENAME_NT4A
     {
@@ -468,7 +466,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilename_nt4w
     struct OPENFILENAME_NT4W
     {
@@ -497,7 +494,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilename_nt4w
     struct OPENFILENAME_NT4W
     {
@@ -526,7 +522,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilenamea
     struct OPENFILENAMEA
     {
@@ -558,7 +553,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilenamea
     struct OPENFILENAMEA
     {
@@ -590,7 +584,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilenamew
     struct OPENFILENAMEW
     {
@@ -622,7 +615,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilenamew
     struct OPENFILENAMEW
     {
@@ -654,7 +646,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifya
     struct OFNOTIFYA
     {
@@ -666,7 +657,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifya
     struct OFNOTIFYA
     {
@@ -678,7 +668,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyw
     struct OFNOTIFYW
     {
@@ -690,7 +679,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyw
     struct OFNOTIFYW
     {
@@ -702,7 +690,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyexa
     struct OFNOTIFYEXA
     {
@@ -715,7 +702,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyexa
     struct OFNOTIFYEXA
     {
@@ -728,7 +714,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyexw
     struct OFNOTIFYEXW
     {
@@ -741,7 +726,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyexw
     struct OFNOTIFYEXW
     {
@@ -754,7 +738,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosecolora
     struct CHOOSECOLORA
     {
@@ -772,7 +755,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosecolora
     struct CHOOSECOLORA
     {
@@ -790,7 +772,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosecolorw
     struct CHOOSECOLORW
     {
@@ -808,7 +789,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosecolorw
     struct CHOOSECOLORW
     {
@@ -826,7 +806,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-findreplacea
     struct FINDREPLACEA
     {
@@ -846,7 +825,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-findreplacea
     struct FINDREPLACEA
     {
@@ -866,7 +844,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-findreplacew
     struct FINDREPLACEW
     {
@@ -886,7 +863,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-findreplacew
     struct FINDREPLACEW
     {
@@ -906,7 +882,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosefonta
     struct CHOOSEFONTA
     {
@@ -931,7 +906,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosefonta
     struct CHOOSEFONTA
     {
@@ -956,7 +930,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosefontw
     struct CHOOSEFONTW
     {
@@ -981,7 +954,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosefontw
     struct CHOOSEFONTW
     {
@@ -1006,7 +978,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlga
     struct PRINTDLGA
     {
@@ -1034,7 +1005,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlga
     struct PRINTDLGA
     {
@@ -1062,7 +1032,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgw
     struct PRINTDLGW
     {
@@ -1090,7 +1059,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgw
     struct PRINTDLGW
     {
@@ -1138,7 +1106,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgexa
     struct PRINTDLGEXA
     {
@@ -1168,7 +1135,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgexa
     struct PRINTDLGEXA
     {
@@ -1198,7 +1164,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgexw
     struct PRINTDLGEXW
     {
@@ -1228,7 +1193,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgexw
     struct PRINTDLGEXW
     {
@@ -1282,7 +1246,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-pagesetupdlga
     struct PAGESETUPDLGA
     {
@@ -1305,7 +1268,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-pagesetupdlga
     struct PAGESETUPDLGA
     {
@@ -1328,7 +1290,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-pagesetupdlgw
     struct PAGESETUPDLGW
     {
@@ -1351,7 +1312,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-pagesetupdlgw
     struct PAGESETUPDLGW
     {
@@ -1374,7 +1334,6 @@ version(AArch64)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilename_nt4a
     struct OPENFILENAME_NT4A
     {
@@ -1404,7 +1363,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilename_nt4w
     struct OPENFILENAME_NT4W
     {
@@ -1434,7 +1392,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilenamea
     struct OPENFILENAMEA
     {
@@ -1467,7 +1424,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-openfilenamew
     struct OPENFILENAMEW
     {
@@ -1500,7 +1456,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifya
     struct OFNOTIFYA
     {
@@ -1513,7 +1468,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyw
     struct OFNOTIFYW
     {
@@ -1526,7 +1480,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyexa
     struct OFNOTIFYEXA
     {
@@ -1540,7 +1493,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-ofnotifyexw
     struct OFNOTIFYEXW
     {
@@ -1554,7 +1506,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosecolora
     struct CHOOSECOLORA
     {
@@ -1573,7 +1524,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosecolorw
     struct CHOOSECOLORW
     {
@@ -1592,7 +1542,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-findreplacea
     struct FINDREPLACEA
     {
@@ -1613,7 +1562,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-findreplacew
     struct FINDREPLACEW
     {
@@ -1634,7 +1582,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosefonta
     struct CHOOSEFONTA
     {
@@ -1660,7 +1607,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-choosefontw
     struct CHOOSEFONTW
     {
@@ -1686,7 +1632,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlga
     struct PRINTDLGA
     {
@@ -1715,7 +1660,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgw
     struct PRINTDLGW
     {
@@ -1755,7 +1699,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgexa
     struct PRINTDLGEXA
     {
@@ -1786,7 +1729,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-printdlgexw
     struct PRINTDLGEXW
     {
@@ -1830,7 +1772,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-pagesetupdlga
     struct PAGESETUPDLGA
     {
@@ -1854,7 +1795,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/ns-commdlg-pagesetupdlgw
     struct PAGESETUPDLGW
     {
@@ -1902,11 +1842,9 @@ short GetFileTitleA(const(PSTR) param0, PSTR Buf, ushort cchSize);
 @DllImport("COMDLG32.dll")
 short GetFileTitleW(const(PWSTR) param0, PWSTR Buf, ushort cchSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL ChooseColorA(CHOOSECOLORA* param0);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL ChooseColorW(CHOOSECOLORW* param0);
 
@@ -1926,27 +1864,21 @@ HWND ReplaceTextA(FINDREPLACEA* param0);
 @DllImport("COMDLG32.dll")
 HWND ReplaceTextW(FINDREPLACEW* param0);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL ChooseFontA(CHOOSEFONTA* param0);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL ChooseFontW(CHOOSEFONTW* param0);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL PrintDlgA(PRINTDLGA* pPD);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL PrintDlgW(PRINTDLGW* pPD);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 HRESULT PrintDlgExA(PRINTDLGEXA* pPD);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 HRESULT PrintDlgExW(PRINTDLGEXW* pPD);
 
@@ -1954,11 +1886,9 @@ HRESULT PrintDlgExW(PRINTDLGEXW* pPD);
 @DllImport("COMDLG32.dll")
 COMMON_DLG_ERRORS CommDlgExtendedError();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL PageSetupDlgA(PAGESETUPDLGA* param0);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("COMDLG32.dll")
 BOOL PageSetupDlgW(PAGESETUPDLGW* param0);
 

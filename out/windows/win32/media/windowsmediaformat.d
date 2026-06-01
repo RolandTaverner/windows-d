@@ -3,7 +3,6 @@
 module windows.win32.media.windowsmediaformat;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, LPARAM, PWSTR,
                                                     RECT;
 public import windows.win32.graphics.gdi : BITMAPINFOHEADER;

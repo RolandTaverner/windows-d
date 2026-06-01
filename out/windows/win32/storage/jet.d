@@ -2042,21 +2042,18 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_RSTMAP_A
 {
     byte* szDatabaseName;
     byte* szNewDatabaseName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_RSTMAP_W
 {
     ushort* szDatabaseName;
     ushort* szNewDatabaseName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_CONVERT_A
 {
     byte* szOldDll;
@@ -2070,7 +2067,6 @@ struct JET_CONVERT_A
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_CONVERT_W
 {
     ushort* szOldDll;
@@ -2210,7 +2206,6 @@ struct JET_COLUMNDEF
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.grbit-property))], [])*/uint grbit;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_COLUMNBASE_A
 {
     uint      cbStruct;
@@ -2226,7 +2221,6 @@ struct JET_COLUMNBASE_A
     byte[256] szBaseColumnName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_COLUMNBASE_W
 {
     uint        cbStruct;
@@ -2282,7 +2276,6 @@ struct JET_INDEXLIST
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlcmapflags-property))], [])*/uint columnidLCMapFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_COLUMNCREATE_A
 {
     uint  cbStruct;
@@ -2297,7 +2290,6 @@ struct JET_COLUMNCREATE_A
     int   err;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_COLUMNCREATE_W
 {
     uint    cbStruct;
@@ -2312,7 +2304,6 @@ struct JET_COLUMNCREATE_W
     int     err;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_USERDEFINEDDEFAULT_A
 {
     byte*  szCallback;
@@ -2321,7 +2312,6 @@ struct JET_USERDEFINEDDEFAULT_A
     byte*  szDependantColumns;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_USERDEFINEDDEFAULT_W
 {
     ushort* szCallback;
@@ -2330,7 +2320,6 @@ struct JET_USERDEFINEDDEFAULT_W
     ushort* szDependantColumns;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_CONDITIONALCOLUMN_A
 {
     uint  cbStruct;
@@ -2338,7 +2327,6 @@ struct JET_CONDITIONALCOLUMN_A
     uint  grbit;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_CONDITIONALCOLUMN_W
 {
     uint    cbStruct;
@@ -2391,7 +2379,6 @@ struct JET_SPACEHINTS
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbmaxextent-property))], [])*/uint cbMaxExtent;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE_A
 {
     uint  cbStruct;
@@ -2416,7 +2403,6 @@ struct JET_INDEXCREATE_A
     uint  cbKeyMost;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE_W
 {
     uint    cbStruct;
@@ -2441,7 +2427,6 @@ struct JET_INDEXCREATE_W
     uint    cbKeyMost;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE2_A
 {
     uint            cbStruct;
@@ -2467,7 +2452,6 @@ struct JET_INDEXCREATE2_A
     JET_SPACEHINTS* pSpacehints;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE2_W
 {
     uint            cbStruct;
@@ -2493,7 +2477,6 @@ struct JET_INDEXCREATE2_W
     JET_SPACEHINTS* pSpacehints;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE3_A
 {
     uint               cbStruct;
@@ -2515,7 +2498,6 @@ struct JET_INDEXCREATE3_A
     JET_SPACEHINTS*    pSpacehints;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE3_W
 {
     uint               cbStruct;
@@ -2537,7 +2519,6 @@ struct JET_INDEXCREATE3_W
     JET_SPACEHINTS*    pSpacehints;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE_A
 {
     uint                cbStruct;
@@ -2554,7 +2535,6 @@ struct JET_TABLECREATE_A
     uint                cCreated;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE_W
 {
     uint                cbStruct;
@@ -2571,7 +2551,6 @@ struct JET_TABLECREATE_W
     uint                cCreated;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE2_A
 {
     uint                cbStruct;
@@ -2590,7 +2569,6 @@ struct JET_TABLECREATE2_A
     uint                cCreated;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE2_W
 {
     uint                cbStruct;
@@ -2609,7 +2587,6 @@ struct JET_TABLECREATE2_W
     uint                cCreated;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE3_A
 {
     uint                cbStruct;
@@ -2631,7 +2608,6 @@ struct JET_TABLECREATE3_A
     uint                cCreated;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE3_W
 {
     uint                cbStruct;
@@ -2653,7 +2629,6 @@ struct JET_TABLECREATE3_W
     uint                cCreated;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE4_A
 {
     uint                cbStruct;
@@ -2675,7 +2650,6 @@ struct JET_TABLECREATE4_A
     uint                cCreated;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_TABLECREATE4_W
 {
     uint                cbStruct;
@@ -3126,7 +3100,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_RSTINFO_A
 {
     uint          cbStruct;
@@ -3137,7 +3110,6 @@ struct JET_RSTINFO_A
     JET_PFNSTATUS pfnStatus;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_RSTINFO_W
 {
     uint          cbStruct;
@@ -3198,7 +3170,6 @@ struct JET_SETCOLUMN
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.err-property))], [])*/int err;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_SETSYSPARAM_A
 {
     uint        paramid;
@@ -3207,7 +3178,6 @@ struct JET_SETSYSPARAM_A
     int         err;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_SETSYSPARAM_W
 {
     uint        paramid;
@@ -3330,7 +3300,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct JET_LOGINFO_A
 {
@@ -3340,7 +3309,6 @@ struct JET_LOGINFO_A
     byte[4] szBaseName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct JET_LOGINFO_W
 {
@@ -3350,7 +3318,6 @@ struct JET_LOGINFO_W
     ushort[4] szBaseName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INSTANCE_INFO_A
 {
     JET_INSTANCE hInstanceId;
@@ -3361,7 +3328,6 @@ struct JET_INSTANCE_INFO_A
     byte**       szDatabaseSLVFileName_Obsolete;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INSTANCE_INFO_W
 {
     JET_INSTANCE hInstanceId;
@@ -3382,27 +3348,21 @@ int JetInit(JET_INSTANCE* pinstance);
 @DllImport("ESENT.dll")
 int JetInit2(JET_INSTANCE* pinstance, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetInit3A(JET_INSTANCE* pinstance, JET_RSTINFO_A* prstInfo, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetInit3W(JET_INSTANCE* pinstance, JET_RSTINFO_W* prstInfo, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateInstanceA(JET_INSTANCE* pinstance, byte* szInstanceName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateInstanceW(JET_INSTANCE* pinstance, ushort* szInstanceName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateInstance2A(JET_INSTANCE* pinstance, byte* szInstanceName, byte* szDisplayName, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateInstance2W(JET_INSTANCE* pinstance, ushort* szInstanceName, ushort* szDisplayName, uint grbit);
 
@@ -3440,33 +3400,27 @@ int JetStopBackup();
 @DllImport("ESENT.dll")
 int JetStopBackupInstance(JET_INSTANCE instance);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetSystemParameterA(JET_INSTANCE* pinstance, JET_SESID sesid, uint paramid, JET_API_PTR lParam, 
                            byte* szParam);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetSystemParameterW(JET_INSTANCE* pinstance, JET_SESID sesid, uint paramid, JET_API_PTR lParam, 
                            ushort* szParam);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetSystemParameterA(JET_INSTANCE instance, JET_SESID sesid, uint paramid, JET_API_PTR* plParam, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/byte* szParam, 
                            uint cbMax);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetSystemParameterW(JET_INSTANCE instance, JET_SESID sesid, uint paramid, JET_API_PTR* plParam, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ushort* szParam, 
                            uint cbMax);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetEnableMultiInstanceA(JET_SETSYSPARAM_A* psetsysparam, uint csetsysparam, uint* pcsetsucceed);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetEnableMultiInstanceW(JET_SETSYSPARAM_W* psetsysparam, uint csetsysparam, uint* pcsetsucceed);
 
@@ -3475,11 +3429,9 @@ int JetEnableMultiInstanceW(JET_SETSYSPARAM_W* psetsysparam, uint csetsysparam, 
 int JetGetThreadStats(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pvResult, 
                       uint cbMax);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetBeginSessionA(JET_INSTANCE instance, JET_SESID* psesid, byte* szUserName, byte* szPassword);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetBeginSessionW(JET_INSTANCE instance, JET_SESID* psesid, ushort* szUserName, ushort* szPassword);
 
@@ -3499,274 +3451,216 @@ int JetGetVersion(JET_SESID sesid, uint* pwVersion);
 @DllImport("ESENT.dll")
 int JetIdle(JET_SESID sesid, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateDatabaseA(JET_SESID sesid, byte* szFilename, byte* szConnect, uint* pdbid, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateDatabaseW(JET_SESID sesid, ushort* szFilename, ushort* szConnect, uint* pdbid, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateDatabase2A(JET_SESID sesid, byte* szFilename, const(uint) cpgDatabaseSizeMax, uint* pdbid, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateDatabase2W(JET_SESID sesid, ushort* szFilename, const(uint) cpgDatabaseSizeMax, uint* pdbid, 
                         uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetAttachDatabaseA(JET_SESID sesid, byte* szFilename, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetAttachDatabaseW(JET_SESID sesid, ushort* szFilename, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetAttachDatabase2A(JET_SESID sesid, byte* szFilename, const(uint) cpgDatabaseSizeMax, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetAttachDatabase2W(JET_SESID sesid, ushort* szFilename, const(uint) cpgDatabaseSizeMax, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDetachDatabaseA(JET_SESID sesid, byte* szFilename);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDetachDatabaseW(JET_SESID sesid, ushort* szFilename);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDetachDatabase2A(JET_SESID sesid, byte* szFilename, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDetachDatabase2W(JET_SESID sesid, ushort* szFilename, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetObjectInfoA(JET_SESID sesid, uint dbid, uint objtyp, byte* szContainerName, byte* szObjectName, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* pvResult, 
                       uint cbMax, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetObjectInfoW(JET_SESID sesid, uint dbid, uint objtyp, ushort* szContainerName, ushort* szObjectName, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* pvResult, 
                       uint cbMax, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTableInfoA(JET_SESID sesid, JET_TABLEID tableid, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvResult, 
                      uint cbMax, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTableInfoW(JET_SESID sesid, JET_TABLEID tableid, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvResult, 
                      uint cbMax, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableA(JET_SESID sesid, uint dbid, byte* szTableName, uint lPages, uint lDensity, 
                     JET_TABLEID* ptableid);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableW(JET_SESID sesid, uint dbid, ushort* szTableName, uint lPages, uint lDensity, 
                     JET_TABLEID* ptableid);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndexA(JET_SESID sesid, uint dbid, JET_TABLECREATE_A* ptablecreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndexW(JET_SESID sesid, uint dbid, JET_TABLECREATE_W* ptablecreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndex2A(JET_SESID sesid, uint dbid, JET_TABLECREATE2_A* ptablecreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndex2W(JET_SESID sesid, uint dbid, JET_TABLECREATE2_W* ptablecreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndex3A(JET_SESID sesid, uint dbid, JET_TABLECREATE3_A* ptablecreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndex3W(JET_SESID sesid, uint dbid, JET_TABLECREATE3_W* ptablecreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndex4A(JET_SESID sesid, uint dbid, JET_TABLECREATE4_A* ptablecreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateTableColumnIndex4W(JET_SESID sesid, uint dbid, JET_TABLECREATE4_W* ptablecreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteTableA(JET_SESID sesid, uint dbid, byte* szTableName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteTableW(JET_SESID sesid, uint dbid, ushort* szTableName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRenameTableA(JET_SESID sesid, uint dbid, byte* szName, byte* szNameNew);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRenameTableW(JET_SESID sesid, uint dbid, ushort* szName, ushort* szNameNew);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTableColumnInfoA(JET_SESID sesid, JET_TABLEID tableid, byte* szColumnName, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvResult, 
                            uint cbMax, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTableColumnInfoW(JET_SESID sesid, JET_TABLEID tableid, ushort* szColumnName, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvResult, 
                            uint cbMax, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetColumnInfoA(JET_SESID sesid, uint dbid, byte* szTableName, byte* pColumnNameOrId, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvResult, 
                       uint cbMax, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetColumnInfoW(JET_SESID sesid, uint dbid, ushort* szTableName, ushort* pwColumnNameOrId, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvResult, 
                       uint cbMax, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetAddColumnA(JET_SESID sesid, JET_TABLEID tableid, byte* szColumnName, const(JET_COLUMNDEF)* pcolumndef, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvDefault, 
                   uint cbDefault, uint* pcolumnid);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetAddColumnW(JET_SESID sesid, JET_TABLEID tableid, ushort* szColumnName, const(JET_COLUMNDEF)* pcolumndef, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvDefault, 
                   uint cbDefault, uint* pcolumnid);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteColumnA(JET_SESID sesid, JET_TABLEID tableid, byte* szColumnName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteColumnW(JET_SESID sesid, JET_TABLEID tableid, ushort* szColumnName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteColumn2A(JET_SESID sesid, JET_TABLEID tableid, byte* szColumnName, const(uint) grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteColumn2W(JET_SESID sesid, JET_TABLEID tableid, ushort* szColumnName, const(uint) grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRenameColumnA(JET_SESID sesid, JET_TABLEID tableid, byte* szName, byte* szNameNew, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRenameColumnW(JET_SESID sesid, JET_TABLEID tableid, ushort* szName, ushort* szNameNew, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetColumnDefaultValueA(JET_SESID sesid, uint dbid, byte* szTableName, byte* szColumnName, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvData, 
                               const(uint) cbData, const(uint) grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetColumnDefaultValueW(JET_SESID sesid, uint dbid, ushort* szTableName, ushort* szColumnName, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvData, 
                               const(uint) cbData, const(uint) grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTableIndexInfoA(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvResult, 
                           uint cbResult, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTableIndexInfoW(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvResult, 
                           uint cbResult, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetIndexInfoA(JET_SESID sesid, uint dbid, byte* szTableName, byte* szIndexName, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvResult, 
                      uint cbResult, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetIndexInfoW(JET_SESID sesid, uint dbid, ushort* szTableName, ushort* szIndexName, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvResult, 
                      uint cbResult, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndexA(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName, uint grbit, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/byte* szKey, 
                     uint cbKey, uint lDensity);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndexW(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName, uint grbit, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ushort* szKey, 
                     uint cbKey, uint lDensity);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndex2A(JET_SESID sesid, JET_TABLEID tableid, JET_INDEXCREATE_A* pindexcreate, uint cIndexCreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndex2W(JET_SESID sesid, JET_TABLEID tableid, JET_INDEXCREATE_W* pindexcreate, uint cIndexCreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndex3A(JET_SESID sesid, JET_TABLEID tableid, JET_INDEXCREATE2_A* pindexcreate, uint cIndexCreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndex3W(JET_SESID sesid, JET_TABLEID tableid, JET_INDEXCREATE2_W* pindexcreate, uint cIndexCreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndex4A(JET_SESID sesid, JET_TABLEID tableid, JET_INDEXCREATE3_A* pindexcreate, uint cIndexCreate);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCreateIndex4W(JET_SESID sesid, JET_TABLEID tableid, JET_INDEXCREATE3_W* pindexcreate, uint cIndexCreate);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteIndexA(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDeleteIndexW(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName);
 
@@ -3794,35 +3688,29 @@ int JetCommitTransaction2(JET_SESID sesid, uint grbit, uint cmsecDurableCommit, 
 @DllImport("ESENT.dll")
 int JetRollback(JET_SESID sesid, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetDatabaseInfoA(JET_SESID sesid, uint dbid, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvResult, 
                         uint cbMax, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetDatabaseInfoW(JET_SESID sesid, uint dbid, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvResult, 
                         uint cbMax, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetDatabaseFileInfoA(byte* szDatabaseName, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pvResult, 
                             uint cbMax, uint InfoLevel);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetDatabaseFileInfoW(ushort* szDatabaseName, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pvResult, 
                             uint cbMax, uint InfoLevel);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenDatabaseA(JET_SESID sesid, byte* szFilename, byte* szConnect, uint* pdbid, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenDatabaseW(JET_SESID sesid, ushort* szFilename, ushort* szConnect, uint* pdbid, uint grbit);
 
@@ -3830,13 +3718,11 @@ int JetOpenDatabaseW(JET_SESID sesid, ushort* szFilename, ushort* szConnect, uin
 @DllImport("ESENT.dll")
 int JetCloseDatabase(JET_SESID sesid, uint dbid, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenTableA(JET_SESID sesid, uint dbid, byte* szTableName, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvParameters, 
                   uint cbParameters, uint grbit, JET_TABLEID* ptableid);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenTableW(JET_SESID sesid, uint dbid, ushort* szTableName, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvParameters, 
@@ -3937,48 +3823,38 @@ int JetGetCursorInfo(JET_SESID sesid, JET_TABLEID tableid,
 @DllImport("ESENT.dll")
 int JetDupCursor(JET_SESID sesid, JET_TABLEID tableid, JET_TABLEID* ptableid, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetCurrentIndexA(JET_SESID sesid, JET_TABLEID tableid, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/byte* szIndexName, 
                         uint cbIndexName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetCurrentIndexW(JET_SESID sesid, JET_TABLEID tableid, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ushort* szIndexName, 
                         uint cbIndexName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndexA(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndexW(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndex2A(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndex2W(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndex3A(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName, uint grbit, uint itagSequence);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndex3W(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName, uint grbit, uint itagSequence);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndex4A(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName, JET_INDEXID* pindexid, 
                          uint grbit, uint itagSequence);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetCurrentIndex4W(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName, JET_INDEXID* pindexid, 
                          uint grbit, uint itagSequence);
@@ -4031,49 +3907,39 @@ int JetGetSecondaryIndexBookmark(JET_SESID sesid, JET_TABLEID tableid,
                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* pvPrimaryBookmark, 
                                  uint cbPrimaryBookmarkMax, uint* pcbPrimaryBookmarkActual, const(uint) grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCompactA(JET_SESID sesid, byte* szDatabaseSrc, byte* szDatabaseDest, JET_PFNSTATUS pfnStatus, 
                 JET_CONVERT_A* pconvert, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetCompactW(JET_SESID sesid, ushort* szDatabaseSrc, ushort* szDatabaseDest, JET_PFNSTATUS pfnStatus, 
                 JET_CONVERT_W* pconvert, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDefragmentA(JET_SESID sesid, uint dbid, byte* szTableName, uint* pcPasses, uint* pcSeconds, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDefragmentW(JET_SESID sesid, uint dbid, ushort* szTableName, uint* pcPasses, uint* pcSeconds, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDefragment2A(JET_SESID sesid, uint dbid, byte* szTableName, uint* pcPasses, uint* pcSeconds, 
                     JET_CALLBACK callback, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDefragment2W(JET_SESID sesid, uint dbid, ushort* szTableName, uint* pcPasses, uint* pcSeconds, 
                     JET_CALLBACK callback, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDefragment3A(JET_SESID sesid, byte* szDatabaseName, byte* szTableName, uint* pcPasses, uint* pcSeconds, 
                     JET_CALLBACK callback, void* pvContext, uint grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetDefragment3W(JET_SESID sesid, ushort* szDatabaseName, ushort* szTableName, uint* pcPasses, uint* pcSeconds, 
                     JET_CALLBACK callback, void* pvContext, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetDatabaseSizeA(JET_SESID sesid, byte* szDatabaseName, uint cpg, uint* pcpgReal);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetSetDatabaseSizeW(JET_SESID sesid, ushort* szDatabaseName, uint cpg, uint* pcpgReal);
 
@@ -4139,43 +4005,33 @@ int JetOpenTemporaryTable(JET_SESID sesid, JET_OPENTEMPORARYTABLE* popentemporar
 @DllImport("ESENT.dll")
 int JetOpenTemporaryTable2(JET_SESID sesid, JET_OPENTEMPORARYTABLE2* popentemporarytable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetBackupA(byte* szBackupPath, uint grbit, JET_PFNSTATUS pfnStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetBackupW(ushort* szBackupPath, uint grbit, JET_PFNSTATUS pfnStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetBackupInstanceA(JET_INSTANCE instance, byte* szBackupPath, uint grbit, JET_PFNSTATUS pfnStatus);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetBackupInstanceW(JET_INSTANCE instance, ushort* szBackupPath, uint grbit, JET_PFNSTATUS pfnStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRestoreA(byte* szSource, JET_PFNSTATUS pfn);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRestoreW(ushort* szSource, JET_PFNSTATUS pfn);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRestore2A(byte* sz, byte* szDest, JET_PFNSTATUS pfn);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRestore2W(ushort* sz, ushort* szDest, JET_PFNSTATUS pfn);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRestoreInstanceA(JET_INSTANCE instance, byte* sz, byte* szDest, JET_PFNSTATUS pfn);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetRestoreInstanceW(JET_INSTANCE instance, ushort* sz, ushort* szDest, JET_PFNSTATUS pfn);
 
@@ -4201,42 +4057,34 @@ int JetBeginExternalBackup(uint grbit);
 @DllImport("ESENT.dll")
 int JetBeginExternalBackupInstance(JET_INSTANCE instance, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetAttachInfoA(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/byte* szzDatabases, 
                       uint cbMax, uint* pcbActual);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetAttachInfoW(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/ushort* wszzDatabases, 
                       uint cbMax, uint* pcbActual);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetAttachInfoInstanceA(JET_INSTANCE instance, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/byte* szzDatabases, 
                               uint cbMax, uint* pcbActual);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetAttachInfoInstanceW(JET_INSTANCE instance, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/ushort* szzDatabases, 
                               uint cbMax, uint* pcbActual);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenFileA(byte* szFileName, JET_HANDLE* phfFile, uint* pulFileSizeLow, uint* pulFileSizeHigh);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenFileW(ushort* szFileName, JET_HANDLE* phfFile, uint* pulFileSizeLow, uint* pulFileSizeHigh);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenFileInstanceA(JET_INSTANCE instance, byte* szFileName, JET_HANDLE* phfFile, uint* pulFileSizeLow, 
                          uint* pulFileSizeHigh);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOpenFileInstanceW(JET_INSTANCE instance, ushort* szFileName, JET_HANDLE* phfFile, uint* pulFileSizeLow, 
                          uint* pulFileSizeHigh);
@@ -4261,47 +4109,39 @@ int JetCloseFile(JET_HANDLE hfFile);
 @DllImport("ESENT.dll")
 int JetCloseFileInstance(JET_INSTANCE instance, JET_HANDLE hfFile);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetLogInfoA(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/byte* szzLogs, 
                    uint cbMax, uint* pcbActual);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetLogInfoW(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/ushort* szzLogs, 
                    uint cbMax, uint* pcbActual);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetLogInfoInstanceA(JET_INSTANCE instance, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/byte* szzLogs, 
                            uint cbMax, uint* pcbActual);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetLogInfoInstanceW(JET_INSTANCE instance, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/ushort* wszzLogs, 
                            uint cbMax, uint* pcbActual);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetLogInfoInstance2A(JET_INSTANCE instance, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/byte* szzLogs, 
                             uint cbMax, uint* pcbActual, JET_LOGINFO_A* pLogInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetLogInfoInstance2W(JET_INSTANCE instance, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/ushort* wszzLogs, 
                             uint cbMax, uint* pcbActual, JET_LOGINFO_W* pLogInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTruncateLogInfoInstanceA(JET_INSTANCE instance, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/byte* szzLogs, 
                                    uint cbMax, uint* pcbActual);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetTruncateLogInfoInstanceW(JET_INSTANCE instance, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/ushort* wszzLogs, 
@@ -4327,23 +4167,19 @@ int JetEndExternalBackupInstance(JET_INSTANCE instance);
 @DllImport("ESENT.dll")
 int JetEndExternalBackupInstance2(JET_INSTANCE instance, uint grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetExternalRestoreA(byte* szCheckpointFilePath, byte* szLogPath, JET_RSTMAP_A* rgrstmap, int crstfilemap, 
                         byte* szBackupLogPath, int genLow, int genHigh, JET_PFNSTATUS pfn);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetExternalRestoreW(ushort* szCheckpointFilePath, ushort* szLogPath, JET_RSTMAP_W* rgrstmap, int crstfilemap, 
                         ushort* szBackupLogPath, int genLow, int genHigh, JET_PFNSTATUS pfn);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetExternalRestore2A(byte* szCheckpointFilePath, byte* szLogPath, JET_RSTMAP_A* rgrstmap, int crstfilemap, 
                          byte* szBackupLogPath, JET_LOGINFO_A* pLogInfo, byte* szTargetInstanceName, 
                          byte* szTargetInstanceLogPath, byte* szTargetInstanceCheckpointPath, JET_PFNSTATUS pfn);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetExternalRestore2W(ushort* szCheckpointFilePath, ushort* szLogPath, JET_RSTMAP_W* rgrstmap, int crstfilemap, 
                          ushort* szBackupLogPath, JET_LOGINFO_W* pLogInfo, ushort* szTargetInstanceName, 
@@ -4358,11 +4194,9 @@ int JetRegisterCallback(JET_SESID sesid, JET_TABLEID tableid, uint cbtyp, JET_CA
 @DllImport("ESENT.dll")
 int JetUnregisterCallback(JET_SESID sesid, JET_TABLEID tableid, uint cbtyp, JET_HANDLE hCallbackId);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetInstanceInfoA(uint* pcInstanceInfo, JET_INSTANCE_INFO_A** paInstanceInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetGetInstanceInfoW(uint* pcInstanceInfo, JET_INSTANCE_INFO_W** paInstanceInfo);
 
@@ -4386,12 +4220,10 @@ int JetOSSnapshotPrepare(JET_OSSNAPID* psnapId, const(uint) grbit);
 @DllImport("ESENT.dll")
 int JetOSSnapshotPrepareInstance(JET_OSSNAPID snapId, JET_INSTANCE instance, const(uint) grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOSSnapshotFreezeA(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, JET_INSTANCE_INFO_A** paInstanceInfo, 
                          const(uint) grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOSSnapshotFreezeW(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, JET_INSTANCE_INFO_W** paInstanceInfo, 
                          const(uint) grbit);
@@ -4412,12 +4244,10 @@ int JetOSSnapshotTruncateLog(const(JET_OSSNAPID) snapId, const(uint) grbit);
 @DllImport("ESENT.dll")
 int JetOSSnapshotTruncateLogInstance(const(JET_OSSNAPID) snapId, JET_INSTANCE instance, const(uint) grbit);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOSSnapshotGetFreezeInfoA(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, 
                                 JET_INSTANCE_INFO_A** paInstanceInfo, const(uint) grbit);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ESENT.dll")
 int JetOSSnapshotGetFreezeInfoW(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, 
                                 JET_INSTANCE_INFO_W** paInstanceInfo, const(uint) grbit);

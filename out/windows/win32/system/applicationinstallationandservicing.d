@@ -3,7 +3,6 @@
 module windows.win32.system.applicationinstallationandservicing;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
                                                     HRESULT, HWND, PSTR, PWSTR,
                                                     VARIANT_BOOL;
@@ -2231,9 +2230,7 @@ enum uint DEFAULT_DISK_ID = 0x00000002U;
 alias LPDISPLAYVAL = BOOL function(void* pContext, RESULTTYPES uiType, const(PWSTR) szwVal, 
                                    const(PWSTR) szwDescription, const(PWSTR) szwLocation);
 alias LPEVALCOMCALLBACK = BOOL function(STATUSTYPES iStatus, const(PWSTR) szData, void* pContext);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias INSTALLUI_HANDLERA = int function(void* pvContext, uint iMessageType, const(PSTR) szMessage);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias INSTALLUI_HANDLERW = int function(void* pvContext, uint iMessageType, const(PWSTR) szMessage);
 alias PINSTALLUI_HANDLER_RECORD = int function(void* pvContext, uint iMessageType, MSIHANDLE hRecord);
 alias PPATCH_PROGRESS_CALLBACK = BOOL function(void* CallbackContext, uint CurrentPosition, uint MaximumPosition);
@@ -2257,7 +2254,6 @@ struct PMSIHANDLE
     MSIHANDLE m_h;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msipatchsequenceinfoa
 struct MSIPATCHSEQUENCEINFOA
 {
@@ -2267,7 +2263,6 @@ struct MSIPATCHSEQUENCEINFOA
     uint             uStatus;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msipatchsequenceinfow
 struct MSIPATCHSEQUENCEINFOW
 {
@@ -2447,7 +2442,6 @@ struct PATCH_RETAIN_RANGE
     uint OffsetInNewFile;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PATCH_OLD_FILE_INFO_A
 {
     uint                SizeOfThisStruct;
@@ -2458,7 +2452,6 @@ struct PATCH_OLD_FILE_INFO_A
     PATCH_RETAIN_RANGE* RetainRangeArray;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PATCH_OLD_FILE_INFO_W
 {
     uint                SizeOfThisStruct;
@@ -2633,7 +2626,6 @@ struct ACTIVATION_CONTEXT_DETAILED_INFORMATION
     const(PWSTR) lpAppDirPath;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctxa
 struct ACTCTXA
@@ -2649,7 +2641,6 @@ struct ACTCTXA
     HMODULE     hModule;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctxw
 struct ACTCTXW
@@ -3927,12 +3918,10 @@ BOOL SfcIsKeyProtected(HKEY KeyHandle, const(PWSTR) SubKeyName, uint KeySam);
 @DllImport("sfc.dll")
 BOOL SfpVerifyFile(const(PSTR) pszFileName, PSTR pszError, uint dwErrSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatchc.dll")
 BOOL CreatePatchFileA(const(PSTR) OldFileName, const(PSTR) NewFileName, const(PSTR) PatchFileName, 
                       uint OptionFlags, PATCH_OPTION_DATA* OptionData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatchc.dll")
 BOOL CreatePatchFileW(const(PWSTR) OldFileName, const(PWSTR) NewFileName, const(PWSTR) PatchFileName, 
                       uint OptionFlags, PATCH_OPTION_DATA* OptionData);
@@ -3941,13 +3930,11 @@ BOOL CreatePatchFileW(const(PWSTR) OldFileName, const(PWSTR) NewFileName, const(
 BOOL CreatePatchFileByHandles(HANDLE OldFileHandle, HANDLE NewFileHandle, HANDLE PatchFileHandle, uint OptionFlags, 
                               PATCH_OPTION_DATA* OptionData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatchc.dll")
 BOOL CreatePatchFileExA(uint OldFileCount, PATCH_OLD_FILE_INFO_A* OldFileInfoArray, const(PSTR) NewFileName, 
                         const(PSTR) PatchFileName, uint OptionFlags, PATCH_OPTION_DATA* OptionData, 
                         PPATCH_PROGRESS_CALLBACK ProgressCallback, void* CallbackContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatchc.dll")
 BOOL CreatePatchFileExW(uint OldFileCount, PATCH_OLD_FILE_INFO_W* OldFileInfoArray, const(PWSTR) NewFileName, 
                         const(PWSTR) PatchFileName, uint OptionFlags, PATCH_OPTION_DATA* OptionData, 
@@ -3958,22 +3945,18 @@ BOOL CreatePatchFileByHandlesEx(uint OldFileCount, PATCH_OLD_FILE_INFO_H* OldFil
                                 HANDLE PatchFileHandle, uint OptionFlags, PATCH_OPTION_DATA* OptionData, 
                                 PPATCH_PROGRESS_CALLBACK ProgressCallback, void* CallbackContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatchc.dll")
 BOOL ExtractPatchHeaderToFileA(const(PSTR) PatchFileName, const(PSTR) PatchHeaderFileName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatchc.dll")
 BOOL ExtractPatchHeaderToFileW(const(PWSTR) PatchFileName, const(PWSTR) PatchHeaderFileName);
 
 @DllImport("mspatchc.dll")
 BOOL ExtractPatchHeaderToFileByHandles(HANDLE PatchFileHandle, HANDLE PatchHeaderFileHandle);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL TestApplyPatchToFileA(const(PSTR) PatchFileName, const(PSTR) OldFileName, uint ApplyOptionFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL TestApplyPatchToFileW(const(PWSTR) PatchFileName, const(PWSTR) OldFileName, uint ApplyOptionFlags);
 
@@ -3986,12 +3969,10 @@ BOOL TestApplyPatchToFileByBuffers(/*PARAM ATTR: MemorySizeAttribute : CustomAtt
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* OldFileBuffer, 
                                    uint OldFileSize, uint* NewFileSize, uint ApplyOptionFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL ApplyPatchToFileA(const(PSTR) PatchFileName, const(PSTR) OldFileName, const(PSTR) NewFileName, 
                        uint ApplyOptionFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL ApplyPatchToFileW(const(PWSTR) PatchFileName, const(PWSTR) OldFileName, const(PWSTR) NewFileName, 
                        uint ApplyOptionFlags);
@@ -4000,12 +3981,10 @@ BOOL ApplyPatchToFileW(const(PWSTR) PatchFileName, const(PWSTR) OldFileName, con
 BOOL ApplyPatchToFileByHandles(HANDLE PatchFileHandle, HANDLE OldFileHandle, HANDLE NewFileHandle, 
                                uint ApplyOptionFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL ApplyPatchToFileExA(const(PSTR) PatchFileName, const(PSTR) OldFileName, const(PSTR) NewFileName, 
                          uint ApplyOptionFlags, PPATCH_PROGRESS_CALLBACK ProgressCallback, void* CallbackContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL ApplyPatchToFileExW(const(PWSTR) PatchFileName, const(PWSTR) OldFileName, const(PWSTR) NewFileName, 
                          uint ApplyOptionFlags, PPATCH_PROGRESS_CALLBACK ProgressCallback, void* CallbackContext);
@@ -4025,14 +4004,12 @@ BOOL ApplyPatchToFileByBuffers(/*PARAM ATTR: MemorySizeAttribute : CustomAttribu
                                uint ApplyOptionFlags, PPATCH_PROGRESS_CALLBACK ProgressCallback, 
                                void* CallbackContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL GetFilePatchSignatureA(const(PSTR) FileName, uint OptionFlags, void* OptionData, uint IgnoreRangeCount, 
                             PATCH_IGNORE_RANGE* IgnoreRangeArray, uint RetainRangeCount, 
                             PATCH_RETAIN_RANGE* RetainRangeArray, uint SignatureBufferSize, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(7)))])*/PSTR SignatureBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("mspatcha.dll")
 BOOL GetFilePatchSignatureW(const(PWSTR) FileName, uint OptionFlags, void* OptionData, uint IgnoreRangeCount, 
                             PATCH_IGNORE_RANGE* IgnoreRangeArray, uint RetainRangeCount, 
@@ -4062,11 +4039,9 @@ int NormalizeFileForPatchSignature(/*PARAM ATTR: MemorySizeAttribute : CustomAtt
 @DllImport("msdelta.dll")
 BOOL GetDeltaInfoB(DELTA_INPUT Delta, DELTA_HEADER_INFO* lpHeaderInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL GetDeltaInfoA(const(PSTR) lpDeltaName, DELTA_HEADER_INFO* lpHeaderInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL GetDeltaInfoW(const(PWSTR) lpDeltaName, DELTA_HEADER_INFO* lpHeaderInfo);
 
@@ -4083,11 +4058,9 @@ BOOL ApplyDeltaProvidedB(long ApplyFlags, DELTA_INPUT Source, DELTA_INPUT Delta,
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* lpTarget, 
                          size_t uTargetSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL ApplyDeltaA(long ApplyFlags, const(PSTR) lpSourceName, const(PSTR) lpDeltaName, const(PSTR) lpTargetName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL ApplyDeltaW(long ApplyFlags, const(PWSTR) lpSourceName, const(PWSTR) lpDeltaName, const(PWSTR) lpTargetName);
 
@@ -4097,14 +4070,12 @@ BOOL CreateDeltaB(long FileTypeSet, long SetFlags, long ResetFlags, DELTA_INPUT 
                   DELTA_INPUT SourceOptions, DELTA_INPUT TargetOptions, DELTA_INPUT GlobalOptions, 
                   const(FILETIME)* lpTargetFileTime, ALG_ID HashAlgId, DELTA_OUTPUT* lpDelta);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL CreateDeltaA(long FileTypeSet, long SetFlags, long ResetFlags, const(PSTR) lpSourceName, 
                   const(PSTR) lpTargetName, const(PSTR) lpSourceOptionsName, const(PSTR) lpTargetOptionsName, 
                   DELTA_INPUT GlobalOptions, const(FILETIME)* lpTargetFileTime, ALG_ID HashAlgId, 
                   const(PSTR) lpDeltaName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL CreateDeltaW(long FileTypeSet, long SetFlags, long ResetFlags, const(PWSTR) lpSourceName, 
                   const(PWSTR) lpTargetName, const(PWSTR) lpSourceOptionsName, const(PWSTR) lpTargetOptionsName, 
@@ -4114,11 +4085,9 @@ BOOL CreateDeltaW(long FileTypeSet, long SetFlags, long ResetFlags, const(PWSTR)
 @DllImport("msdelta.dll")
 BOOL GetDeltaSignatureB(long FileTypeSet, ALG_ID HashAlgId, DELTA_INPUT Source, DELTA_HASH* lpHash);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL GetDeltaSignatureA(long FileTypeSet, ALG_ID HashAlgId, const(PSTR) lpSourceName, DELTA_HASH* lpHash);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("msdelta.dll")
 BOOL GetDeltaSignatureW(long FileTypeSet, ALG_ID HashAlgId, const(PWSTR) lpSourceName, DELTA_HASH* lpHash);
 

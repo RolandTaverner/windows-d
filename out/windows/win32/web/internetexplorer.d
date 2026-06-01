@@ -3,7 +3,6 @@
 module windows.win32.web.internetexplorer;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HINSTANCE,
                                                     HRESULT, HWND, LPARAM, LUID, POINT,
                                                     PSTR, PWSTR, RECT, SIZE, VARIANT_BOOL,
@@ -1067,41 +1066,33 @@ BOOL IEGetFileAttributesEx(const(PWSTR) lpFileName, GET_FILEEX_INFO_LEVELS fInfo
 @DllImport("Ieframe.dll")
 HANDLE IEFindFirstFile(const(PWSTR) lpFileName, WIN32_FIND_DATAA* lpFindFileData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingEnable(HWND hwndParent, const(PSTR) pszUsername, BOOL fEnable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingEnableW(HWND hwndParent, const(PWSTR) pszUsername, BOOL fEnable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingCheckUserAccess(const(PSTR) pszUsername, const(PSTR) pszURL, const(PSTR) pszRatingInfo, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pData, 
                               uint cbData, void** ppRatingDetails);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingCheckUserAccessW(const(PWSTR) pszUsername, const(PWSTR) pszURL, const(PWSTR) pszRatingInfo, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pData, 
                                uint cbData, void** ppRatingDetails);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingAccessDeniedDialog(HWND hDlg, const(PSTR) pszUsername, const(PSTR) pszContentDescription, 
                                  void* pRatingDetails);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingAccessDeniedDialogW(HWND hDlg, const(PWSTR) pszUsername, const(PWSTR) pszContentDescription, 
                                   void* pRatingDetails);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingAccessDeniedDialog2(HWND hDlg, const(PSTR) pszUsername, void* pRatingDetails);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingAccessDeniedDialog2W(HWND hDlg, const(PWSTR) pszUsername, void* pRatingDetails);
 
@@ -1111,21 +1102,17 @@ HRESULT RatingFreeDetails(void* pRatingDetails);
 @DllImport("MSRATING.dll")
 HRESULT RatingObtainCancel(HANDLE hRatingObtainQuery);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingObtainQuery(const(PSTR) pszTargetUrl, uint dwUserData, ptrdiff_t fCallback, 
                           HANDLE* phRatingObtainQuery);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingObtainQueryW(const(PWSTR) pszTargetUrl, uint dwUserData, ptrdiff_t fCallback, 
                            HANDLE* phRatingObtainQuery);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingSetupUI(HWND hDlg, const(PSTR) pszUsername);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("MSRATING.dll")
 HRESULT RatingSetupUIW(HWND hDlg, const(PWSTR) pszUsername);
 
@@ -1502,7 +1489,6 @@ interface IActiveXUIHandlerSite : IUnknown
 @GUID("7904009a-1238-47f4-901c-871375c34608")
 interface IActiveXUIHandlerSite3 : IUnknown
 {
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     HRESULT MessageBoxW(HWND hwnd, const(PWSTR) text, const(PWSTR) caption, uint type, int* result);
 }
 

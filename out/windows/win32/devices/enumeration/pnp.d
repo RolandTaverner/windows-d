@@ -3,7 +3,6 @@
 module windows.win32.devices.enumeration.pnp;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.devices.properties : DEVPROPERTY;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
 public import windows.win32.security.security : SECURITY_DESCRIPTOR;

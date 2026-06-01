@@ -3,7 +3,6 @@
 module windows.win32.system.diagnostics.debug_.activescript;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HANDLE_PTR, HRESULT,
                                                     HWND, PSTR, PWSTR, VARIANT_BOOL;
 public import windows.win32.system.com.com : DISPPARAMS, EXCEPINFO, IDispatch, ITypeInfo,

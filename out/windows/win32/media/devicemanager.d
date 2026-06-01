@@ -3,7 +3,6 @@
 module windows.win32.media.devicemanager;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
 public import windows.win32.media.audio.audio : WAVEFORMATEX;
 public import windows.win32.media.mediafoundation : VIDEOINFOHEADER;

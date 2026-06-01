@@ -539,39 +539,31 @@ BOOL SetConsoleMode(HANDLE hConsoleHandle, CONSOLE_MODE dwMode);
 @DllImport("KERNEL32.dll")
 BOOL GetNumberOfConsoleInputEvents(HANDLE hConsoleInput, uint* lpNumberOfEvents);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleInputA(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, uint* lpNumberOfEventsRead);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleInputW(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, uint* lpNumberOfEventsRead);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL PeekConsoleInputA(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, uint* lpNumberOfEventsRead);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL PeekConsoleInputW(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, uint* lpNumberOfEventsRead);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleA(HANDLE hConsoleInput, void* lpBuffer, uint nNumberOfCharsToRead, uint* lpNumberOfCharsRead, 
                   CONSOLE_READCONSOLE_CONTROL* pInputControl);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleW(HANDLE hConsoleInput, void* lpBuffer, uint nNumberOfCharsToRead, uint* lpNumberOfCharsRead, 
                   CONSOLE_READCONSOLE_CONTROL* pInputControl);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleA(HANDLE hConsoleOutput, const(PSTR) lpBuffer, uint nNumberOfCharsToWrite, 
                    uint* lpNumberOfCharsWritten, 
                    /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* lpReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleW(HANDLE hConsoleOutput, const(PWSTR) lpBuffer, uint nNumberOfCharsToWrite, 
                    uint* lpNumberOfCharsWritten, 
@@ -596,12 +588,10 @@ void ClosePseudoConsole(HPCON hPC);
 @DllImport("KERNEL32.dll")
 HRESULT ReleasePseudoConsole(HPCON hPC);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL FillConsoleOutputCharacterA(HANDLE hConsoleOutput, CHAR cCharacter, uint nLength, COORD dwWriteCoord, 
                                  uint* lpNumberOfCharsWritten);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL FillConsoleOutputCharacterW(HANDLE hConsoleOutput, wchar cCharacter, uint nLength, COORD dwWriteCoord, 
                                  uint* lpNumberOfCharsWritten);
@@ -677,12 +667,10 @@ BOOL SetConsoleTextAttribute(HANDLE hConsoleOutput, CONSOLE_CHARACTER_ATTRIBUTES
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleWindowInfo(HANDLE hConsoleOutput, BOOL bAbsolute, const(SMALL_RECT)* lpConsoleWindow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleOutputCharacterA(HANDLE hConsoleOutput, const(PSTR) lpCharacter, uint nLength, COORD dwWriteCoord, 
                                   uint* lpNumberOfCharsWritten);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleOutputCharacterW(HANDLE hConsoleOutput, const(PWSTR) lpCharacter, uint nLength, 
                                   COORD dwWriteCoord, uint* lpNumberOfCharsWritten);
@@ -692,12 +680,10 @@ BOOL WriteConsoleOutputCharacterW(HANDLE hConsoleOutput, const(PWSTR) lpCharacte
 BOOL WriteConsoleOutputAttribute(HANDLE hConsoleOutput, const(ushort)* lpAttribute, uint nLength, 
                                  COORD dwWriteCoord, uint* lpNumberOfAttrsWritten);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleOutputCharacterA(HANDLE hConsoleOutput, PSTR lpCharacter, uint nLength, COORD dwReadCoord, 
                                  uint* lpNumberOfCharsRead);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleOutputCharacterW(HANDLE hConsoleOutput, PWSTR lpCharacter, uint nLength, COORD dwReadCoord, 
                                  uint* lpNumberOfCharsRead);
@@ -707,69 +693,55 @@ BOOL ReadConsoleOutputCharacterW(HANDLE hConsoleOutput, PWSTR lpCharacter, uint 
 BOOL ReadConsoleOutputAttribute(HANDLE hConsoleOutput, ushort* lpAttribute, uint nLength, COORD dwReadCoord, 
                                 uint* lpNumberOfAttrsRead);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleInputA(HANDLE hConsoleInput, const(INPUT_RECORD)* lpBuffer, uint nLength, 
                         uint* lpNumberOfEventsWritten);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleInputW(HANDLE hConsoleInput, const(INPUT_RECORD)* lpBuffer, uint nLength, 
                         uint* lpNumberOfEventsWritten);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ScrollConsoleScreenBufferA(HANDLE hConsoleOutput, const(SMALL_RECT)* lpScrollRectangle, 
                                 const(SMALL_RECT)* lpClipRectangle, COORD dwDestinationOrigin, 
                                 const(CHAR_INFO)* lpFill);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ScrollConsoleScreenBufferW(HANDLE hConsoleOutput, const(SMALL_RECT)* lpScrollRectangle, 
                                 const(SMALL_RECT)* lpClipRectangle, COORD dwDestinationOrigin, 
                                 const(CHAR_INFO)* lpFill);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleOutputA(HANDLE hConsoleOutput, const(CHAR_INFO)* lpBuffer, COORD dwBufferSize, 
                          COORD dwBufferCoord, SMALL_RECT* lpWriteRegion);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleOutputW(HANDLE hConsoleOutput, const(CHAR_INFO)* lpBuffer, COORD dwBufferSize, 
                          COORD dwBufferCoord, SMALL_RECT* lpWriteRegion);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleOutputA(HANDLE hConsoleOutput, CHAR_INFO* lpBuffer, COORD dwBufferSize, COORD dwBufferCoord, 
                         SMALL_RECT* lpReadRegion);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleOutputW(HANDLE hConsoleOutput, CHAR_INFO* lpBuffer, COORD dwBufferSize, COORD dwBufferCoord, 
                         SMALL_RECT* lpReadRegion);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleTitleA(PSTR lpConsoleTitle, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleTitleW(PWSTR lpConsoleTitle, uint nSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleOriginalTitleA(PSTR lpConsoleTitle, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleOriginalTitleW(PWSTR lpConsoleTitle, uint nSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleTitleA(const(PSTR) lpConsoleTitle);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleTitleW(const(PWSTR) lpConsoleTitle);
 
@@ -819,84 +791,64 @@ BOOL SetConsoleDisplayMode(HANDLE hConsoleOutput, uint dwFlags, COORD* lpNewScre
 @DllImport("KERNEL32.dll")
 HWND GetConsoleWindow();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL AddConsoleAliasA(PSTR Source, PSTR Target, PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL AddConsoleAliasW(PWSTR Source, PWSTR Target, PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasA(PSTR Source, PSTR TargetBuffer, uint TargetBufferLength, PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasW(PWSTR Source, PWSTR TargetBuffer, uint TargetBufferLength, PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasesLengthA(PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasesLengthW(PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasExesLengthA();
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasExesLengthW();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasesA(PSTR AliasBuffer, uint AliasBufferLength, PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasesW(PWSTR AliasBuffer, uint AliasBufferLength, PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasExesA(PSTR ExeNameBuffer, uint ExeNameBufferLength);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleAliasExesW(PWSTR ExeNameBuffer, uint ExeNameBufferLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 void ExpungeConsoleCommandHistoryA(PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 void ExpungeConsoleCommandHistoryW(PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleNumberOfCommandsA(uint Number, PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleNumberOfCommandsW(uint Number, PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleCommandHistoryLengthA(PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleCommandHistoryLengthW(PWSTR ExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleCommandHistoryA(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/PSTR Commands, 
                                uint CommandBufferLength, PSTR ExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleCommandHistoryW(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/PWSTR Commands, 
                                uint CommandBufferLength, PWSTR ExeName);
@@ -905,11 +857,9 @@ uint GetConsoleCommandHistoryW(/*PARAM ATTR: MemorySizeAttribute : CustomAttribu
 @DllImport("KERNEL32.dll")
 uint GetConsoleProcessList(uint* lpdwProcessList, uint dwProcessCount);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("user32.dll")
 BOOL GetConsoleKeyboardLayoutNameA(PSTR pszLayout);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("user32.dll")
 BOOL GetConsoleKeyboardLayoutNameW(PWSTR pszLayout);
 
@@ -965,38 +915,30 @@ BOOL SetConsoleKeyShortcuts(BOOL bSet, ubyte bReserveKeys, APPKEY* lpAppKeys, ui
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleMenuClose(BOOL bEnable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleInputExeNameA(uint nBufferLength, PSTR lpBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetConsoleInputExeNameW(uint nBufferLength, PWSTR lpBuffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleInputExeNameA(PSTR lpExeName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleInputExeNameW(PWSTR lpExeName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleInputExA(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, uint* lpNumberOfEventsRead, 
                          ushort wFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleInputExW(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, uint* lpNumberOfEventsRead, 
                          ushort wFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleInputVDMA(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, 
                            uint* lpNumberOfEventsWritten);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleInputVDMW(HANDLE hConsoleInput, INPUT_RECORD* lpBuffer, uint nLength, 
                            uint* lpNumberOfEventsWritten);

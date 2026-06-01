@@ -3,7 +3,6 @@
 module windows.win32.devices.fax;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, DEVPROPKEY, FILETIME,
                                                     HANDLE, HINSTANCE, HRESULT, HWND,
                                                     PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
@@ -826,130 +825,82 @@ enum ushort wcharREASSIGN_RECIPIENTS_DELIMITER = cast(ushort) 0x003b;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXCONNECTFAXSERVERA = BOOL function(const(PSTR) MachineName, HANDLE* FaxHandle);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXCONNECTFAXSERVERW = BOOL function(const(PWSTR) MachineName, HANDLE* FaxHandle);
 alias PFAXCLOSE = BOOL function(HANDLE FaxHandle);
 alias PFAXOPENPORT = BOOL function(HANDLE FaxHandle, uint DeviceId, uint Flags, HANDLE* FaxPortHandle);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXCOMPLETEJOBPARAMSA = BOOL function(FAX_JOB_PARAMA** JobParams, FAX_COVERPAGE_INFOA** CoverpageInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXCOMPLETEJOBPARAMSW = BOOL function(FAX_JOB_PARAMW** JobParams, FAX_COVERPAGE_INFOW** CoverpageInfo);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSENDDOCUMENTA = BOOL function(HANDLE FaxHandle, const(PSTR) FileName, FAX_JOB_PARAMA* JobParams, 
                                         const(FAX_COVERPAGE_INFOA)* CoverpageInfo, uint* FaxJobId);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSENDDOCUMENTW = BOOL function(HANDLE FaxHandle, const(PWSTR) FileName, FAX_JOB_PARAMW* JobParams, 
                                         const(FAX_COVERPAGE_INFOW)* CoverpageInfo, uint* FaxJobId);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAX_RECIPIENT_CALLBACKA = BOOL function(HANDLE FaxHandle, uint RecipientNumber, void* Context, 
                                                FAX_JOB_PARAMA* JobParams, FAX_COVERPAGE_INFOA* CoverpageInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAX_RECIPIENT_CALLBACKW = BOOL function(HANDLE FaxHandle, uint RecipientNumber, void* Context, 
                                                FAX_JOB_PARAMW* JobParams, FAX_COVERPAGE_INFOW* CoverpageInfo);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSENDDOCUMENTFORBROADCASTA = BOOL function(HANDLE FaxHandle, const(PSTR) FileName, uint* FaxJobId, 
                                                     PFAX_RECIPIENT_CALLBACKA FaxRecipientCallback, void* Context);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSENDDOCUMENTFORBROADCASTW = BOOL function(HANDLE FaxHandle, const(PWSTR) FileName, uint* FaxJobId, 
                                                     PFAX_RECIPIENT_CALLBACKW FaxRecipientCallback, void* Context);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXENUMJOBSA = BOOL function(HANDLE FaxHandle, FAX_JOB_ENTRYA** JobEntry, uint* JobsReturned);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXENUMJOBSW = BOOL function(HANDLE FaxHandle, FAX_JOB_ENTRYW** JobEntry, uint* JobsReturned);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXGETJOBA = BOOL function(HANDLE FaxHandle, uint JobId, FAX_JOB_ENTRYA** JobEntry);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXGETJOBW = BOOL function(HANDLE FaxHandle, uint JobId, FAX_JOB_ENTRYW** JobEntry);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSETJOBA = BOOL function(HANDLE FaxHandle, uint JobId, uint Command, const(FAX_JOB_ENTRYA)* JobEntry);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSETJOBW = BOOL function(HANDLE FaxHandle, uint JobId, uint Command, const(FAX_JOB_ENTRYW)* JobEntry);
 alias PFAXGETPAGEDATA = BOOL function(HANDLE FaxHandle, uint JobId, ubyte** Buffer, uint* BufferSize, 
                                       uint* ImageWidth, uint* ImageHeight);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXGETDEVICESTATUSA = BOOL function(HANDLE FaxPortHandle, FAX_DEVICE_STATUSA** DeviceStatus);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXGETDEVICESTATUSW = BOOL function(HANDLE FaxPortHandle, FAX_DEVICE_STATUSW** DeviceStatus);
 alias PFAXABORT = BOOL function(HANDLE FaxHandle, uint JobId);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXGETCONFIGURATIONA = BOOL function(HANDLE FaxHandle, FAX_CONFIGURATIONA** FaxConfig);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXGETCONFIGURATIONW = BOOL function(HANDLE FaxHandle, FAX_CONFIGURATIONW** FaxConfig);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSETCONFIGURATIONA = BOOL function(HANDLE FaxHandle, const(FAX_CONFIGURATIONA)* FaxConfig);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSETCONFIGURATIONW = BOOL function(HANDLE FaxHandle, const(FAX_CONFIGURATIONW)* FaxConfig);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXGETLOGGINGCATEGORIESA = BOOL function(HANDLE FaxHandle, FAX_LOG_CATEGORYA** Categories, 
                                                 uint* NumberCategories);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXGETLOGGINGCATEGORIESW = BOOL function(HANDLE FaxHandle, FAX_LOG_CATEGORYW** Categories, 
                                                 uint* NumberCategories);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSETLOGGINGCATEGORIESA = BOOL function(HANDLE FaxHandle, const(FAX_LOG_CATEGORYA)* Categories, 
                                                 uint NumberCategories);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSETLOGGINGCATEGORIESW = BOOL function(HANDLE FaxHandle, const(FAX_LOG_CATEGORYW)* Categories, 
                                                 uint NumberCategories);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXENUMPORTSA = BOOL function(HANDLE FaxHandle, FAX_PORT_INFOA** PortInfo, uint* PortsReturned);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXENUMPORTSW = BOOL function(HANDLE FaxHandle, FAX_PORT_INFOW** PortInfo, uint* PortsReturned);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXGETPORTA = BOOL function(HANDLE FaxPortHandle, FAX_PORT_INFOA** PortInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXGETPORTW = BOOL function(HANDLE FaxPortHandle, FAX_PORT_INFOW** PortInfo);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSETPORTA = BOOL function(HANDLE FaxPortHandle, const(FAX_PORT_INFOA)* PortInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSETPORTW = BOOL function(HANDLE FaxPortHandle, const(FAX_PORT_INFOW)* PortInfo);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXENUMROUTINGMETHODSA = BOOL function(HANDLE FaxPortHandle, FAX_ROUTING_METHODA** RoutingMethod, 
                                               uint* MethodsReturned);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXENUMROUTINGMETHODSW = BOOL function(HANDLE FaxPortHandle, FAX_ROUTING_METHODW** RoutingMethod, 
                                               uint* MethodsReturned);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXENABLEROUTINGMETHODA = BOOL function(HANDLE FaxPortHandle, const(PSTR) RoutingGuid, BOOL Enabled);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXENABLEROUTINGMETHODW = BOOL function(HANDLE FaxPortHandle, const(PWSTR) RoutingGuid, BOOL Enabled);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXENUMGLOBALROUTINGINFOA = BOOL function(HANDLE FaxHandle, FAX_GLOBAL_ROUTING_INFOA** RoutingInfo, 
                                                  uint* MethodsReturned);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXENUMGLOBALROUTINGINFOW = BOOL function(HANDLE FaxHandle, FAX_GLOBAL_ROUTING_INFOW** RoutingInfo, 
                                                  uint* MethodsReturned);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSETGLOBALROUTINGINFOA = BOOL function(HANDLE FaxPortHandle, const(FAX_GLOBAL_ROUTING_INFOA)* RoutingInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSETGLOBALROUTINGINFOW = BOOL function(HANDLE FaxPortHandle, const(FAX_GLOBAL_ROUTING_INFOW)* RoutingInfo);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXGETROUTINGINFOA = BOOL function(HANDLE FaxPortHandle, const(PSTR) RoutingGuid, ubyte** RoutingInfoBuffer, 
                                           uint* RoutingInfoBufferSize);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXGETROUTINGINFOW = BOOL function(HANDLE FaxPortHandle, const(PWSTR) RoutingGuid, 
                                           ubyte** RoutingInfoBuffer, uint* RoutingInfoBufferSize);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSETROUTINGINFOA = BOOL function(HANDLE FaxPortHandle, const(PSTR) RoutingGuid, 
                                           const(ubyte)* RoutingInfoBuffer, uint RoutingInfoBufferSize);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSETROUTINGINFOW = BOOL function(HANDLE FaxPortHandle, const(PWSTR) RoutingGuid, 
                                           const(ubyte)* RoutingInfoBuffer, uint RoutingInfoBufferSize);
 alias PFAXINITIALIZEEVENTQUEUE = BOOL function(HANDLE FaxHandle, HANDLE CompletionPort, size_t CompletionKey, 
                                                HWND hWnd, uint MessageStart);
 alias PFAXFREEBUFFER = void function(void* Buffer);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXSTARTPRINTJOBA = BOOL function(const(PSTR) PrinterName, const(FAX_PRINT_INFOA)* PrintInfo, 
                                          uint* FaxJobId, FAX_CONTEXT_INFOA* FaxContextInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXSTARTPRINTJOBW = BOOL function(const(PWSTR) PrinterName, const(FAX_PRINT_INFOW)* PrintInfo, 
                                          uint* FaxJobId, FAX_CONTEXT_INFOW* FaxContextInfo);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PFAXPRINTCOVERPAGEA = BOOL function(const(FAX_CONTEXT_INFOA)* FaxContextInfo, 
                                           const(FAX_COVERPAGE_INFOA)* CoverPageInfo);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PFAXPRINTCOVERPAGEW = BOOL function(const(FAX_CONTEXT_INFOW)* FaxContextInfo, 
                                           const(FAX_COVERPAGE_INFOW)* CoverPageInfo);
 alias PFAXREGISTERSERVICEPROVIDERW = BOOL function(const(PWSTR) DeviceProvider, const(PWSTR) FriendlyName, 
@@ -1012,7 +963,6 @@ alias PFAX_EXT_INITIALIZE_CONFIG = HRESULT function(PFAX_EXT_GET_DATA param0, PF
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_log_categorya
 struct FAX_LOG_CATEGORYA
 {
@@ -1021,7 +971,6 @@ struct FAX_LOG_CATEGORYA
     uint        Level;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_log_categoryw
 struct FAX_LOG_CATEGORYW
 {
@@ -1037,7 +986,6 @@ struct FAX_TIME
     ushort Minute;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_configurationa
 struct FAX_CONFIGURATIONA
 {
@@ -1056,7 +1004,6 @@ struct FAX_CONFIGURATIONA
     const(PSTR) Reserved;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_configurationw
 struct FAX_CONFIGURATIONW
 {
@@ -1075,7 +1022,6 @@ struct FAX_CONFIGURATIONW
     const(PWSTR) Reserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_device_statusa
 struct FAX_DEVICE_STATUSA
 {
@@ -1101,7 +1047,6 @@ struct FAX_DEVICE_STATUSA
     const(PSTR) UserName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_device_statusw
 struct FAX_DEVICE_STATUSW
 {
@@ -1127,7 +1072,6 @@ struct FAX_DEVICE_STATUSW
     const(PWSTR) UserName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_entrya
 struct FAX_JOB_ENTRYA
 {
@@ -1153,7 +1097,6 @@ struct FAX_JOB_ENTRYA
     const(PSTR) DocumentName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_entryw
 struct FAX_JOB_ENTRYW
 {
@@ -1179,7 +1122,6 @@ struct FAX_JOB_ENTRYW
     const(PWSTR) DocumentName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_port_infoa
 struct FAX_PORT_INFOA
 {
@@ -1194,7 +1136,6 @@ struct FAX_PORT_INFOA
     const(PSTR) Csid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_port_infow
 struct FAX_PORT_INFOW
 {
@@ -1209,7 +1150,6 @@ struct FAX_PORT_INFOW
     const(PWSTR) Csid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_routing_methoda
 struct FAX_ROUTING_METHODA
 {
@@ -1224,7 +1164,6 @@ struct FAX_ROUTING_METHODA
     const(PSTR) ExtensionFriendlyName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_routing_methodw
 struct FAX_ROUTING_METHODW
 {
@@ -1239,7 +1178,6 @@ struct FAX_ROUTING_METHODW
     const(PWSTR) ExtensionFriendlyName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_global_routing_infoa
 struct FAX_GLOBAL_ROUTING_INFOA
 {
@@ -1252,7 +1190,6 @@ struct FAX_GLOBAL_ROUTING_INFOA
     const(PSTR) ExtensionFriendlyName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_global_routing_infow
 struct FAX_GLOBAL_ROUTING_INFOW
 {
@@ -1265,7 +1202,6 @@ struct FAX_GLOBAL_ROUTING_INFOW
     const(PWSTR) ExtensionFriendlyName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_coverpage_infoa
 struct FAX_COVERPAGE_INFOA
 {
@@ -1300,7 +1236,6 @@ struct FAX_COVERPAGE_INFOA
     uint        PageCount;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_coverpage_infow
 struct FAX_COVERPAGE_INFOW
 {
@@ -1335,7 +1270,6 @@ struct FAX_COVERPAGE_INFOW
     uint         PageCount;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_parama
 struct FAX_JOB_PARAMA
 {
@@ -1356,7 +1290,6 @@ struct FAX_JOB_PARAMA
     size_t[3]   Reserved;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_paramw
 struct FAX_JOB_PARAMW
 {
@@ -1377,7 +1310,6 @@ struct FAX_JOB_PARAMW
     size_t[3]    Reserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_eventa
 struct FAX_EVENTA
 {
@@ -1388,7 +1320,6 @@ struct FAX_EVENTA
     uint     JobId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_eventw
 struct FAX_EVENTW
 {
@@ -1399,7 +1330,6 @@ struct FAX_EVENTW
     uint     JobId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_print_infoa
 struct FAX_PRINT_INFOA
 {
@@ -1416,7 +1346,6 @@ struct FAX_PRINT_INFOA
     const(PSTR) OutputFileName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_print_infow
 struct FAX_PRINT_INFOW
 {
@@ -1433,7 +1362,6 @@ struct FAX_PRINT_INFOW
     const(PWSTR) OutputFileName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_context_infoa
 struct FAX_CONTEXT_INFOA
 {
@@ -1442,7 +1370,6 @@ struct FAX_CONTEXT_INFOA
     CHAR[16] ServerName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_context_infow
 struct FAX_CONTEXT_INFOW
 {

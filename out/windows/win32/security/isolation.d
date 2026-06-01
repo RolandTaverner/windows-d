@@ -3,7 +3,6 @@
 module windows.win32.security.isolation;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 public import windows.win32.security.security : PSID, SID_AND_ATTRIBUTES;
 public import windows.win32.system.com.com : IUnknown;
@@ -33,11 +32,11 @@ struct IsolatedAppLauncherTelemetryParameters
 BOOL GetAppContainerNamedObjectPath(HANDLE Token, PSID AppContainerSid, uint ObjectPathLength, PWSTR ObjectPath, 
                                     uint* ReturnLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsProcessInWDAGContainer is deprecated and might not work on all platforms. For more info, see MSDN.))], [])
+deprecated("IsProcessInWDAGContainer is deprecated and might not work on all platforms. For more info, see MSDN.") 
 @DllImport("api-ms-win-security-isolatedcontainer-l1-1-1.dll")
 HRESULT IsProcessInWDAGContainer(void* Reserved, BOOL* isProcessInWDAGContainer);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsProcessInIsolatedContainer is deprecated and might not work on all platforms. For more info, see MSDN.))], [])
+deprecated("IsProcessInIsolatedContainer is deprecated and might not work on all platforms. For more info, see MSDN.") 
 @DllImport("api-ms-win-security-isolatedcontainer-l1-1-0.dll")
 HRESULT IsProcessInIsolatedContainer(BOOL* isProcessInIsolatedContainer);
 

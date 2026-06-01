@@ -3,7 +3,6 @@
 module windows.win32.ui.windowsandmessaging;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, COLORREF, HANDLE,
                                                     HINSTANCE, HRESULT, HWND, LPARAM,
                                                     LRESULT, POINT, PSTR, PWSTR, RECT,
@@ -3778,17 +3777,11 @@ alias TIMERPROC = void function(HWND param0, uint param1, size_t param2, uint pa
 alias WNDENUMPROC = BOOL function(HWND param0, LPARAM param1);
 alias HOOKPROC = LRESULT function(int code, WPARAM wParam, LPARAM lParam);
 alias SENDASYNCPROC = void function(HWND param0, uint param1, size_t param2, LRESULT param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PROPENUMPROCA = BOOL function(HWND param0, const(PSTR) param1, HANDLE param2);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PROPENUMPROCW = BOOL function(HWND param0, const(PWSTR) param1, HANDLE param2);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PROPENUMPROCEXA = BOOL function(HWND param0, PSTR param1, HANDLE param2, size_t param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PROPENUMPROCEXW = BOOL function(HWND param0, PWSTR param1, HANDLE param2, size_t param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias NAMEENUMPROCA = BOOL function(PSTR param0, LPARAM param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias NAMEENUMPROCW = BOOL function(PWSTR param0, LPARAM param1);
 alias PREGISTERCLASSNAMEW = BOOLEAN function(const(PWSTR) param0);
 alias MSGBOXCALLBACK = void function(HELPINFO* lpHelpInfo);
@@ -3874,7 +3867,6 @@ struct MESSAGE_RESOURCE_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MESSAGE_RESOURCE_BLOCK[1] Blocks;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-cbt_createwnda
 struct CBT_CREATEWNDA
 {
@@ -3882,7 +3874,6 @@ struct CBT_CREATEWNDA
     HWND           hwndInsertAfter;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-cbt_createwndw
 struct CBT_CREATEWNDW
 {
@@ -3986,7 +3977,6 @@ struct HARDWAREHOOKSTRUCT
     LPARAM lParam;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassexa
 struct WNDCLASSEXA
@@ -4005,7 +3995,6 @@ struct WNDCLASSEXA
     HICON           hIconSm;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassexw
 struct WNDCLASSEXW
@@ -4024,7 +4013,6 @@ struct WNDCLASSEXW
     HICON           hIconSm;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassa
 struct WNDCLASSA
 {
@@ -4040,7 +4028,6 @@ struct WNDCLASSA
     const(PSTR)     lpszClassName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-wndclassw
 struct WNDCLASSW
 {
@@ -4112,7 +4099,6 @@ struct ACCEL
     ushort           cmd;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-createstructa
 struct CREATESTRUCTA
 {
@@ -4130,7 +4116,6 @@ struct CREATESTRUCTA
     WINDOW_EX_STYLE dwExStyle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-createstructw
 struct CREATESTRUCTW
 {
@@ -4265,7 +4250,6 @@ struct MENUGETOBJECTINFO
     void* pvObj;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-menuiteminfoa
 struct MENUITEMINFOA
@@ -4284,7 +4268,6 @@ struct MENUITEMINFOA
     HBITMAP         hbmpItem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-menuiteminfow
 struct MENUITEMINFOW
@@ -4313,7 +4296,6 @@ struct DROPSTRUCT
     uint   dwControlData;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-msgboxparamsa
 struct MSGBOXPARAMSA
@@ -4330,7 +4312,6 @@ struct MSGBOXPARAMSA
     uint             dwLanguageId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-msgboxparamsw
 struct MSGBOXPARAMSW
@@ -4384,7 +4365,6 @@ struct CURSORSHAPE
     ubyte BitsPixel;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-iconinfoexa
 struct ICONINFOEXA
@@ -4400,7 +4380,6 @@ struct ICONINFOEXA
     CHAR[260] szResName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-iconinfoexw
 struct ICONINFOEXW
@@ -4429,7 +4408,6 @@ struct SCROLLINFO
     int             nTrackPos;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-mdicreatestructa
 struct MDICREATESTRUCTA
 {
@@ -4444,7 +4422,6 @@ struct MDICREATESTRUCTA
     LPARAM       lParam;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-mdicreatestructw
 struct MDICREATESTRUCTW
 {
@@ -4476,7 +4453,6 @@ struct TOUCHPREDICTIONPARAMETERS
     uint bUseHWTimeStamp;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-nonclientmetricsa
 struct NONCLIENTMETRICSA
@@ -4499,7 +4475,6 @@ struct NONCLIENTMETRICSA
     int      iPaddedBorderWidth;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-nonclientmetricsw
 struct NONCLIENTMETRICSW
@@ -4533,7 +4508,6 @@ struct MINIMIZEDMETRICS
     MINIMIZEDMETRICS_ARRANGE iArrange;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-iconmetricsa
 struct ICONMETRICSA
@@ -4545,7 +4519,6 @@ struct ICONMETRICSA
     LOGFONTA lfFont;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-iconmetricsw
 struct ICONMETRICSW
@@ -4827,7 +4800,6 @@ struct DEV_BROADCAST_VOLUME
     DEV_BROADCAST_VOLUME_FLAGS dbcv_flags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_port_a
 struct DEV_BROADCAST_PORT_A
 {
@@ -4837,7 +4809,6 @@ struct DEV_BROADCAST_PORT_A
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] dbcp_name;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_port_w
 struct DEV_BROADCAST_PORT_W
 {
@@ -4856,7 +4827,6 @@ struct DEV_BROADCAST_NET
     uint dbcn_flags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_deviceinterface_a
 struct DEV_BROADCAST_DEVICEINTERFACE_A
 {
@@ -4867,7 +4837,6 @@ struct DEV_BROADCAST_DEVICEINTERFACE_A
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] dbcc_name;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_deviceinterface_w
 struct DEV_BROADCAST_DEVICEINTERFACE_W
 {
@@ -5470,7 +5439,6 @@ int GetDlgCtrlID(HWND hWnd);
 @DllImport("USER32.dll")
 int GetDialogBaseUnits();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 LRESULT DefDlgProcA(HWND hDlg, uint Msg, WPARAM wParam, LPARAM lParam);
 
@@ -5602,7 +5570,6 @@ BOOL IsCharUpperW(wchar ch);
 @DllImport("USER32.dll")
 BOOL IsCharLowerA(CHAR ch);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL IsCharLowerW(wchar ch);
 
@@ -5704,11 +5671,9 @@ HMENU GetMenu(HWND hWnd);
 @DllImport("USER32.dll")
 BOOL SetMenu(HWND hWnd, HMENU hMenu);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL ChangeMenuA(HMENU hMenu, uint cmd, const(PSTR) lpszNewItem, uint cmdInsert, uint flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 BOOL ChangeMenuW(HMENU hMenu, uint cmd, const(PWSTR) lpszNewItem, uint cmdInsert, uint flags);
 
@@ -6258,11 +6223,9 @@ HWND GetLastActivePopup(HWND hWnd);
 @DllImport("USER32.dll")
 HWND GetWindow(HWND hWnd, GET_WINDOW_CMD uCmd);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 HHOOK SetWindowsHookA(int nFilterType, HOOKPROC pfnFilterProc);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 HHOOK SetWindowsHookW(int nFilterType, HOOKPROC pfnFilterProc);
 
@@ -6535,7 +6498,6 @@ HWND GetAncestor(HWND hwnd, GET_ANCESTOR_FLAGS gaFlags);
 @DllImport("USER32.dll")
 HWND RealChildWindowFromPoint(HWND hwndParent, POINT ptParentClientCoords);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 uint RealGetWindowClassA(HWND hwnd, PSTR ptszClassName, uint cchClassNameMax);
 

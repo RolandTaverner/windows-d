@@ -3,7 +3,6 @@
 module windows.win32.system.winrt.display;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HANDLE, HRESULT;
 public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 public import windows.win32.system.com.com : IUnknown;

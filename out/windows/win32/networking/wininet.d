@@ -3,7 +3,6 @@
 module windows.win32.networking.wininet;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE,
                                                     HINSTANCE, HRESULT, HWND, PSTR,
                                                     PWSTR, SYSTEMTIME;
@@ -1862,7 +1861,6 @@ struct INTERNET_PROXY_INFO
     byte*                lpszProxyBypass;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_per_conn_optiona
 struct INTERNET_PER_CONN_OPTIONA
 {
@@ -1875,7 +1873,6 @@ struct INTERNET_PER_CONN_OPTIONA
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_per_conn_optionw
 struct INTERNET_PER_CONN_OPTIONW
 {
@@ -1888,7 +1885,6 @@ struct INTERNET_PER_CONN_OPTIONW
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_per_conn_option_lista
 struct INTERNET_PER_CONN_OPTION_LISTA
 {
@@ -1899,7 +1895,6 @@ struct INTERNET_PER_CONN_OPTION_LISTA
     INTERNET_PER_CONN_OPTIONA* pOptions;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_per_conn_option_listw
 struct INTERNET_PER_CONN_OPTION_LISTW
 {
@@ -1924,7 +1919,6 @@ struct INTERNET_CONNECTED_INFO
     uint           dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-url_componentsa
 struct URL_COMPONENTSA
 {
@@ -1945,7 +1939,6 @@ struct URL_COMPONENTSA
     uint            dwExtraInfoLength;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-url_componentsw
 struct URL_COMPONENTSW
 {
@@ -1979,7 +1972,6 @@ struct INTERNET_CERTIFICATE_INFO
     uint     dwKeySize;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_buffersa
 struct INTERNET_BUFFERSA
 {
@@ -1995,7 +1987,6 @@ struct INTERNET_BUFFERSA
     uint               dwOffsetHigh;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_buffersw
 struct INTERNET_BUFFERSW
 {
@@ -2044,7 +2035,6 @@ struct CookieDecision
     BOOL fAllowSession;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-gopher_find_dataa
 struct GOPHER_FIND_DATAA
 {
@@ -2056,7 +2046,6 @@ struct GOPHER_FIND_DATAA
     CHAR[654]   Locator;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-gopher_find_dataw
 struct GOPHER_FIND_DATAW
 {
@@ -2212,7 +2201,6 @@ struct INTERNET_AUTH_NOTIFY_DATA
     size_t          dwContext;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_cache_entry_infoa
 struct INTERNET_CACHE_ENTRY_INFOA
 {
@@ -2238,7 +2226,6 @@ struct INTERNET_CACHE_ENTRY_INFOA
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_cache_entry_infow
 struct INTERNET_CACHE_ENTRY_INFOW
 {
@@ -2271,7 +2258,6 @@ struct INTERNET_CACHE_TIMESTAMPS
     FILETIME ftLastModified;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_cache_group_infoa
 struct INTERNET_CACHE_GROUP_INFOA
 {
@@ -2284,7 +2270,6 @@ struct INTERNET_CACHE_GROUP_INFOA
     CHAR[120] szGroupName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wininet/ns-wininet-internet_cache_group_infow
 struct INTERNET_CACHE_GROUP_INFOW
 {
@@ -2446,21 +2431,18 @@ struct COOKIE_DLG_INFO
     uint             dwOperation;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct INTERNET_CACHE_CONFIG_PATH_ENTRYA
 {
     CHAR[260] CachePath;
     uint      dwCacheSize;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct INTERNET_CACHE_CONFIG_PATH_ENTRYW
 {
     wchar[260] CachePath;
     uint       dwCacheSize;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winineti/ns-winineti-internet_cache_config_infoa
 struct INTERNET_CACHE_CONFIG_INFOA
 {
@@ -2484,7 +2466,6 @@ struct INTERNET_CACHE_CONFIG_INFOA
     uint dwExemptUsage;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winineti/ns-winineti-internet_cache_config_infow
 struct INTERNET_CACHE_CONFIG_INFOW
 {
@@ -2508,7 +2489,6 @@ struct INTERNET_CACHE_CONFIG_INFOW
     uint dwExemptUsage;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct INTERNET_CACHE_CONTAINER_INFOA
 {
     uint dwCacheVersion;
@@ -2518,7 +2498,6 @@ struct INTERNET_CACHE_CONTAINER_INFOA
     PSTR lpszVolumeTitle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct INTERNET_CACHE_CONTAINER_INFOW
 {
     uint  dwCacheVersion;
@@ -2790,12 +2769,10 @@ BOOL InternetGetLastResponseInfoA(uint* lpdwError, PSTR lpszBuffer, uint* lpdwBu
 @DllImport("WININET.dll")
 BOOL InternetGetLastResponseInfoW(uint* lpdwError, PWSTR lpszBuffer, uint* lpdwBufferLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 LPINTERNET_STATUS_CALLBACK InternetSetStatusCallbackA(void* hInternet, 
                                                       LPINTERNET_STATUS_CALLBACK lpfnInternetCallback);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 LPINTERNET_STATUS_CALLBACK InternetSetStatusCallbackW(void* hInternet, 
                                                       LPINTERNET_STATUS_CALLBACK lpfnInternetCallback);
@@ -3464,17 +3441,14 @@ BOOL CreateMD5SSOHash(PWSTR pszChallengeInfo, PWSTR pwszRealm, PWSTR pwszTarget,
 BOOL InternetGetConnectedStateEx(INTERNET_CONNECTION* lpdwFlags, PSTR lpszConnectionName, uint dwNameLen, 
                                  uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetSetDialStateA(const(PSTR) lpszConnectoid, uint dwState, 
                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetSetDialStateW(const(PWSTR) lpszConnectoid, uint dwState, 
                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetSetDialState(const(PSTR) lpszConnectoid, uint dwState, uint dwReserved);
 
@@ -3517,35 +3491,28 @@ uint PrivacyGetZonePreferenceW(uint dwZone, uint dwType, uint* pdwTemplate, PWST
 @DllImport("WININET.dll")
 uint HttpIsHostHstsEnabled(const(PWSTR) pcwszUrl, BOOL* pfIsHsts);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetAlgIdToStringA(ALG_ID ai, PSTR lpstr, uint* lpdwstrLength, 
                             /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetAlgIdToStringW(ALG_ID ai, PWSTR lpstr, uint* lpdwstrLength, 
                             /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetSecurityProtocolToStringA(uint dwProtocol, PSTR lpstr, uint* lpdwstrLength, 
                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetSecurityProtocolToStringW(uint dwProtocol, PWSTR lpstr, uint* lpdwstrLength, 
                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetGetSecurityInfoByURLA(PSTR lpszURL, CERT_CHAIN_CONTEXT** ppCertChain, uint* pdwSecureFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetGetSecurityInfoByURLW(const(PWSTR) lpszURL, CERT_CHAIN_CONTEXT** ppCertChain, uint* pdwSecureFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetGetSecurityInfoByURL(PSTR lpszURL, CERT_CHAIN_CONTEXT** ppCertChain, uint* pdwSecureFlags);
 
@@ -3564,15 +3531,12 @@ uint ShowClientAuthCerts(HWND hWndParent);
 uint ParseX509EncodedCertificateForListBoxEntry(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/ubyte* lpCert, 
                                                 uint cbCert, PSTR lpszListBoxEntry, uint* lpdwListBoxEntry);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetShowSecurityInfoByURLA(PSTR lpszURL, HWND hwndParent);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetShowSecurityInfoByURLW(const(PWSTR) lpszURL, HWND hwndParent);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetShowSecurityInfoByURL(PSTR lpszURL, HWND hwndParent);
 
@@ -3584,11 +3548,9 @@ BOOL InternetFortezzaCommand(uint dwCommand, HWND hwnd,
 BOOL InternetQueryFortezzaStatus(uint* pdwStatus, 
                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/size_t dwReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetWriteFileExA(void* hFile, INTERNET_BUFFERSA* lpBuffersIn, uint dwFlags, size_t dwContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL InternetWriteFileExW(void* hFile, INTERNET_BUFFERSW* lpBuffersIn, uint dwFlags, size_t dwContext);
 
@@ -3608,21 +3570,17 @@ uint HttpPushWait(HTTP_PUSH_WAIT_HANDLE hWait, HTTP_PUSH_WAIT_TYPE eType,
 @DllImport("WININET.dll")
 void HttpPushClose(HTTP_PUSH_WAIT_HANDLE hWait);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL HttpCheckDavComplianceA(const(PSTR) lpszUrl, const(PSTR) lpszComplianceToken, BOOL* lpfFound, HWND hWnd, 
                              void* lpvReserved);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL HttpCheckDavComplianceW(const(PWSTR) lpszUrl, const(PWSTR) lpszComplianceToken, BOOL* lpfFound, HWND hWnd, 
                              void* lpvReserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL IsUrlCacheEntryExpiredA(const(PSTR) lpszUrlName, uint dwFlags, FILETIME* pftLastModified);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL IsUrlCacheEntryExpiredW(const(PWSTR) lpszUrlName, uint dwFlags, FILETIME* pftLastModified);
 
@@ -3660,25 +3618,21 @@ BOOL DeleteUrlCacheContainerA(const(PSTR) Name, uint dwOptions);
 @DllImport("WININET.dll")
 BOOL DeleteUrlCacheContainerW(const(PWSTR) Name, uint dwOptions);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 HANDLE FindFirstUrlCacheContainerA(uint* pdwModified, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/INTERNET_CACHE_CONTAINER_INFOA* lpContainerInfo, 
                                    uint* lpcbContainerInfo, uint dwOptions);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 HANDLE FindFirstUrlCacheContainerW(uint* pdwModified, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/INTERNET_CACHE_CONTAINER_INFOW* lpContainerInfo, 
                                    uint* lpcbContainerInfo, uint dwOptions);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL FindNextUrlCacheContainerA(HANDLE hEnumHandle, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/INTERNET_CACHE_CONTAINER_INFOA* lpContainerInfo, 
                                 uint* lpcbContainerInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL FindNextUrlCacheContainerW(HANDLE hEnumHandle, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/INTERNET_CACHE_CONTAINER_INFOW* lpContainerInfo, 
@@ -3710,11 +3664,9 @@ BOOL GetUrlCacheConfigInfoW(INTERNET_CACHE_CONFIG_INFOW* lpCacheConfigInfo,
                             /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint* lpcbCacheConfigInfo, 
                             CACHE_CONFIG dwFieldControl);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL SetUrlCacheConfigInfoA(INTERNET_CACHE_CONFIG_INFOA* lpCacheConfigInfo, uint dwFieldControl);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL SetUrlCacheConfigInfoW(INTERNET_CACHE_CONFIG_INFOW* lpCacheConfigInfo, uint dwFieldControl);
 
@@ -3906,27 +3858,21 @@ BOOL IsProfilesEnabled();
 @DllImport("WININET.dll")
 uint InternalInternetGetCookie(const(PSTR) lpszUrl, PSTR lpszCookieData, uint* lpdwDataSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL ImportCookieFileA(const(PSTR) szFilename);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL ImportCookieFileW(const(PWSTR) szFilename);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL ExportCookieFileA(const(PSTR) szFilename, BOOL fAppend);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL ExportCookieFileW(const(PWSTR) szFilename, BOOL fAppend);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL IsDomainLegalCookieDomainA(const(PSTR) pchDomain, const(PSTR) pchFullDomain);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WININET.dll")
 BOOL IsDomainLegalCookieDomainW(const(PWSTR) pchDomain, const(PWSTR) pchFullDomain);
 

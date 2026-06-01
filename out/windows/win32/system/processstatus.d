@@ -27,10 +27,8 @@ enum uint PSAPI_VERSION = 0x00000002U;
 
 // Callbacks
 
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PENUM_PAGE_FILE_CALLBACKW = BOOL function(void* pContext, ENUM_PAGE_FILE_INFORMATION* pPageFileInfo, 
                                                 const(PWSTR) lpFilename);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PENUM_PAGE_FILE_CALLBACKA = BOOL function(void* pContext, ENUM_PAGE_FILE_INFORMATION* pPageFileInfo, 
                                                 const(PSTR) lpFilename);
 
@@ -321,19 +319,15 @@ BOOL K32EnumProcessModulesEx(HANDLE hProcess,
                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/HMODULE* lphModule, 
                              uint cb, uint* lpcbNeeded, uint dwFilterFlag);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetModuleBaseNameA(HANDLE hProcess, HMODULE hModule, PSTR lpBaseName, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetModuleBaseNameW(HANDLE hProcess, HMODULE hModule, PWSTR lpBaseName, uint nSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetModuleFileNameExA(HANDLE hProcess, HMODULE hModule, PSTR lpFilename, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetModuleFileNameExW(HANDLE hProcess, HMODULE hModule, PWSTR lpFilename, uint nSize);
 
@@ -361,11 +355,9 @@ BOOL K32GetWsChangesEx(HANDLE hProcess,
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PSAPI_WS_WATCH_INFORMATION_EX* lpWatchInfoEx, 
                        uint* cb);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetMappedFileNameW(HANDLE hProcess, void* lpv, PWSTR lpFilename, uint nSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetMappedFileNameA(HANDLE hProcess, void* lpv, PSTR lpFilename, uint nSize);
 
@@ -374,19 +366,15 @@ uint K32GetMappedFileNameA(HANDLE hProcess, void* lpv, PSTR lpFilename, uint nSi
 BOOL K32EnumDeviceDrivers(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void** lpImageBase, 
                           uint cb, uint* lpcbNeeded);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetDeviceDriverBaseNameA(void* ImageBase, PSTR lpFilename, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetDeviceDriverBaseNameW(void* ImageBase, PWSTR lpBaseName, uint nSize);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetDeviceDriverFileNameA(void* ImageBase, PSTR lpFilename, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetDeviceDriverFileNameW(void* ImageBase, PWSTR lpFilename, uint nSize);
 
@@ -412,19 +400,15 @@ BOOL K32GetProcessMemoryInfo(HANDLE Process,
 @DllImport("KERNEL32.dll")
 BOOL K32GetPerformanceInfo(PERFORMANCE_INFORMATION* pPerformanceInformation, uint cb);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL K32EnumPageFilesW(PENUM_PAGE_FILE_CALLBACKW pCallBackRoutine, void* pContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL K32EnumPageFilesA(PENUM_PAGE_FILE_CALLBACKA pCallBackRoutine, void* pContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetProcessImageFileNameA(HANDLE hProcess, PSTR lpImageFileName, uint nSize);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint K32GetProcessImageFileNameW(HANDLE hProcess, PWSTR lpImageFileName, uint nSize);
 

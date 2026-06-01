@@ -1700,7 +1700,7 @@ PSTR alljoyn_message_getreceiveendpointname(alljoyn_message msg);
 @DllImport("MSAJApi.dll")
 PSTR alljoyn_message_getdestination(alljoyn_message msg);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 uint alljoyn_message_getcompressiontoken(alljoyn_message msg);
 
@@ -1944,11 +1944,11 @@ int alljoyn_interfacedescription_issecure(const(alljoyn_interfacedescription) if
 @DllImport("MSAJApi.dll")
 alljoyn_interfacedescription_securitypolicy alljoyn_interfacedescription_getsecuritypolicy(const(alljoyn_interfacedescription) iface);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 void alljoyn_interfacedescription_setdescriptionlanguage(alljoyn_interfacedescription iface, const(PSTR) language);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 size_t alljoyn_interfacedescription_getdescriptionlanguages(const(alljoyn_interfacedescription) iface, 
                                                             const(byte)** languages, size_t size);
@@ -1957,7 +1957,7 @@ size_t alljoyn_interfacedescription_getdescriptionlanguages(const(alljoyn_interf
 size_t alljoyn_interfacedescription_getdescriptionlanguages2(const(alljoyn_interfacedescription) iface, 
                                                              PSTR languages, size_t languagesSize);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 void alljoyn_interfacedescription_setdescription(alljoyn_interfacedescription iface, const(PSTR) description);
 
@@ -1969,7 +1969,7 @@ QStatus alljoyn_interfacedescription_setdescriptionforlanguage(alljoyn_interface
 size_t alljoyn_interfacedescription_getdescriptionforlanguage(alljoyn_interfacedescription iface, PSTR description, 
                                                               size_t maxLanguageLength, const(PSTR) languageTag);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 QStatus alljoyn_interfacedescription_setmemberdescription(alljoyn_interfacedescription iface, const(PSTR) member, 
                                                           const(PSTR) description);
@@ -1985,7 +1985,7 @@ size_t alljoyn_interfacedescription_getmemberdescriptionforlanguage(alljoyn_inte
                                                                     size_t maxLanguageLength, 
                                                                     const(PSTR) languageTag);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 QStatus alljoyn_interfacedescription_setargdescription(alljoyn_interfacedescription iface, const(PSTR) member, 
                                                        const(PSTR) argName, const(PSTR) description);
@@ -2001,7 +2001,7 @@ size_t alljoyn_interfacedescription_getargdescriptionforlanguage(alljoyn_interfa
                                                                  PSTR description, size_t maxLanguageLength, 
                                                                  const(PSTR) languageTag);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 QStatus alljoyn_interfacedescription_setpropertydescription(alljoyn_interfacedescription iface, const(PSTR) name, 
                                                             const(PSTR) description);
@@ -2017,12 +2017,12 @@ size_t alljoyn_interfacedescription_getpropertydescriptionforlanguage(alljoyn_in
                                                                       size_t maxLanguageLength, 
                                                                       const(PSTR) languageTag);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 void alljoyn_interfacedescription_setdescriptiontranslationcallback(alljoyn_interfacedescription iface, 
                                                                     alljoyn_interfacedescription_translation_callback_ptr translationCallback);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("MSAJApi.dll")
 alljoyn_interfacedescription_translation_callback_ptr alljoyn_interfacedescription_getdescriptiontranslationcallback(const(alljoyn_interfacedescription) iface);
 

@@ -3,7 +3,6 @@
 module windows.win32.storage.filesystem;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
                                                     HRESULT, PSTR, PWSTR, SYSTEMTIME;
 public import windows.win32.security.cryptography.cryptography : ALG_ID;
@@ -1930,7 +1929,6 @@ struct HIORING
     void* Value;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataa
 struct WIN32_FIND_DATAA
 {
@@ -1946,7 +1944,6 @@ struct WIN32_FIND_DATAA
     CHAR[14]  cAlternateFileName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-win32_find_dataw
 struct WIN32_FIND_DATAW
 {
@@ -2145,7 +2142,6 @@ struct NTMS_ALLOCATION_INFORMATION
     GUID  AllocatedFrom;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_driveinformationa
 struct NTMS_DRIVEINFORMATIONA
 {
@@ -2167,7 +2163,6 @@ struct NTMS_DRIVEINFORMATIONA
     uint       dwDeferDismountDelay;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_driveinformationw
 struct NTMS_DRIVEINFORMATIONW
 {
@@ -2217,7 +2212,6 @@ struct NTMS_LIBRARYINFORMATION
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLibraryFlags))], [])*/uint dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_changerinformationa
 struct NTMS_CHANGERINFORMATIONA
 {
@@ -2233,7 +2227,6 @@ struct NTMS_CHANGERINFORMATIONA
     GUID     Library;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_changerinformationw
 struct NTMS_CHANGERINFORMATIONW
 {
@@ -2276,7 +2269,6 @@ struct NTMS_IEPORTINFORMATION
     GUID   Library;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_pmidinformationa
 struct NTMS_PMIDINFORMATIONA
 {
@@ -2296,7 +2288,6 @@ struct NTMS_PMIDINFORMATIONA
     GUID     MountedPartition;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_pmidinformationw
 struct NTMS_PMIDINFORMATIONW
 {
@@ -2323,7 +2314,6 @@ struct NTMS_LMIDINFORMATION
     uint dwNumberOfPartitions;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_partitioninformationa
 struct NTMS_PARTITIONINFORMATIONA
 {
@@ -2340,7 +2330,6 @@ struct NTMS_PARTITIONINFORMATIONA
     long       Capacity;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_partitioninformationw
 struct NTMS_PARTITIONINFORMATIONW
 {
@@ -2380,7 +2369,6 @@ struct NTMS_MEDIATYPEINFORMATION
     FILE_DEVICE_TYPE DeviceType;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_drivetypeinformationa
 struct NTMS_DRIVETYPEINFORMATIONA
 {
@@ -2390,7 +2378,6 @@ struct NTMS_DRIVETYPEINFORMATIONA
     FILE_DEVICE_TYPE DeviceType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_drivetypeinformationw
 struct NTMS_DRIVETYPEINFORMATIONW
 {
@@ -2400,7 +2387,6 @@ struct NTMS_DRIVETYPEINFORMATIONW
     FILE_DEVICE_TYPE DeviceType;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_changertypeinformationa
 struct NTMS_CHANGERTYPEINFORMATIONA
 {
@@ -2409,7 +2395,6 @@ struct NTMS_CHANGERTYPEINFORMATIONA
     uint      DeviceType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_changertypeinformationw
 struct NTMS_CHANGERTYPEINFORMATIONW
 {
@@ -2418,7 +2403,6 @@ struct NTMS_CHANGERTYPEINFORMATIONW
     uint       DeviceType;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_librequestinformationa
 struct NTMS_LIBREQUESTINFORMATIONA
 {
@@ -2440,7 +2424,6 @@ struct NTMS_LIBREQUESTINFORMATIONA
     uint       dwPriority;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_librequestinformationw
 struct NTMS_LIBREQUESTINFORMATIONW
 {
@@ -2462,7 +2445,6 @@ struct NTMS_LIBREQUESTINFORMATIONW
     uint       dwPriority;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_oprequestinformationa
 struct NTMS_OPREQUESTINFORMATIONA
 {
@@ -2479,7 +2461,6 @@ struct NTMS_OPREQUESTINFORMATIONA
     CHAR[64]   szComputer;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_oprequestinformationw
 struct NTMS_OPREQUESTINFORMATIONW
 {
@@ -2506,7 +2487,6 @@ struct NTMS_COMPUTERINFORMATION
     uint dwMediaPoolPolicy;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_objectinformationa
 struct NTMS_OBJECTINFORMATIONA
 {
@@ -2540,7 +2520,6 @@ struct NTMS_OBJECTINFORMATIONA
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_objectinformationw
 struct NTMS_OBJECTINFORMATIONW
 {
@@ -2599,7 +2578,6 @@ struct NTMS_I1_LIBRARYINFORMATION
     GUID Reserved;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_LIBREQUESTINFORMATIONA
 {
     uint       OperationCode;
@@ -2617,7 +2595,6 @@ struct NTMS_I1_LIBREQUESTINFORMATIONA
     CHAR[64]   szComputer;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_LIBREQUESTINFORMATIONW
 {
     uint       OperationCode;
@@ -2635,7 +2612,6 @@ struct NTMS_I1_LIBREQUESTINFORMATIONW
     wchar[64]  szComputer;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_PMIDINFORMATIONA
 {
     GUID     CurrentLibrary;
@@ -2651,7 +2627,6 @@ struct NTMS_I1_PMIDINFORMATIONA
     uint     dwNumberOfPartitions;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_PMIDINFORMATIONW
 {
     GUID      CurrentLibrary;
@@ -2667,7 +2642,6 @@ struct NTMS_I1_PMIDINFORMATIONW
     uint      dwNumberOfPartitions;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_PARTITIONINFORMATIONA
 {
     GUID       PhysicalMedia;
@@ -2682,7 +2656,6 @@ struct NTMS_I1_PARTITIONINFORMATIONA
     uint       dwAllocateCount;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_PARTITIONINFORMATIONW
 {
     GUID       PhysicalMedia;
@@ -2697,7 +2670,6 @@ struct NTMS_I1_PARTITIONINFORMATIONW
     uint       dwAllocateCount;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_OPREQUESTINFORMATIONA
 {
     uint       Request;
@@ -2713,7 +2685,6 @@ struct NTMS_I1_OPREQUESTINFORMATIONA
     CHAR[64]   szComputer;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_OPREQUESTINFORMATIONW
 {
     uint       Request;
@@ -2729,7 +2700,6 @@ struct NTMS_I1_OPREQUESTINFORMATIONW
     wchar[64]  szComputer;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_OBJECTINFORMATIONA
 {
     uint       dwSize;
@@ -2761,7 +2731,6 @@ struct NTMS_I1_OBJECTINFORMATIONA
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NTMS_I1_OBJECTINFORMATIONW
 {
     uint       dwSize;
@@ -4298,11 +4267,9 @@ BOOL GetDiskFreeSpaceExA(const(PSTR) lpDirectoryName, ulong* lpFreeBytesAvailabl
 BOOL GetDiskFreeSpaceExW(const(PWSTR) lpDirectoryName, ulong* lpFreeBytesAvailableToCaller, 
                          ulong* lpTotalNumberOfBytes, ulong* lpTotalNumberOfFreeBytes);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HRESULT GetDiskSpaceInformationA(const(PSTR) rootPath, DISK_SPACE_INFORMATION* diskSpaceInfo);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HRESULT GetDiskSpaceInformationW(const(PWSTR) rootPath, DISK_SPACE_INFORMATION* diskSpaceInfo);
 
@@ -4601,11 +4568,9 @@ void SetFileApisToOEM();
 @DllImport("KERNEL32.dll")
 void SetFileApisToANSI();
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetTempPath2W(uint BufferLength, PWSTR Buffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 uint GetTempPath2A(uint BufferLength, PSTR Buffer);
 
@@ -4613,29 +4578,23 @@ uint GetTempPath2A(uint BufferLength, PSTR Buffer);
 HANDLE CreateFile3(const(PWSTR) lpFileName, uint dwDesiredAccess, uint dwShareMode, uint dwCreationDisposition, 
                    CREATEFILE3_EXTENDED_PARAMETERS* pCreateExParams);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreateDirectory2A(const(PSTR) lpPathName, uint dwDesiredAccess, uint dwShareMode, 
                          DIRECTORY_FLAGS DirectoryFlags, SECURITY_ATTRIBUTES* lpSecurityAttributes);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 HANDLE CreateDirectory2W(const(PWSTR) lpPathName, uint dwDesiredAccess, uint dwShareMode, 
                          DIRECTORY_FLAGS DirectoryFlags, SECURITY_ATTRIBUTES* lpSecurityAttributes);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL RemoveDirectory2A(const(PSTR) lpPathName, DIRECTORY_FLAGS DirectoryFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL RemoveDirectory2W(const(PWSTR) lpPathName, DIRECTORY_FLAGS DirectoryFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL DeleteFile2A(const(PSTR) lpFileName, uint Flags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("KERNEL32.dll")
 BOOL DeleteFile2W(const(PWSTR) lpFileName, uint Flags);
 
@@ -5070,17 +5029,17 @@ BOOL EncryptionDisable(const(PWSTR) DirPath, BOOL Disable);
 uint DuplicateEncryptionInfoFile(const(PWSTR) SrcFileName, const(PWSTR) DstFileName, uint dwCreationDistribution, 
                                  uint dwAttributes, const(SECURITY_ATTRIBUTES)* lpSecurityAttributes);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("ADVAPI32.dll")
 uint GetEncryptedFileMetadata(const(PWSTR) lpFileName, uint* pcbMetadata, ubyte** ppbMetadata);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("ADVAPI32.dll")
 uint SetEncryptedFileMetadata(const(PWSTR) lpFileName, ubyte* pbOldMetadata, ubyte* pbNewMetadata, 
                               ENCRYPTION_CERTIFICATE_HASH* pOwnerHash, uint dwOperation, 
                               ENCRYPTION_CERTIFICATE_HASH_LIST* pCertificatesAdded);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("ADVAPI32.dll")
 void FreeEncryptedFileMetadata(ubyte* pbMetadata);
 

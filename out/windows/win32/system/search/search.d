@@ -3,7 +3,6 @@
 module windows.win32.system.search.search;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HRESULT,
                                                     HWND, PROPERTYKEY, PSTR, PWSTR,
                                                     SYSTEMTIME, VARIANT_BOOL;
@@ -9225,18 +9224,16 @@ struct SSERRORINFO
 short SQLBindCol(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, 
                  long BufferLength, long* StrLen_or_Ind);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLBindParam is deprecated. Please use SQLBindParameter instead.))], [])
+deprecated("ODBC API: SQLBindParam is deprecated. Please use SQLBindParameter instead.") 
 @DllImport("ODBC32.dll")
 short SQLBindParam(void* StatementHandle, ushort ParameterNumber, short ValueType, short ParameterType, 
                    ulong LengthPrecision, short ParameterScale, void* ParameterValue, long* StrLen_or_Ind);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttribute(void* StatementHandle, ushort ColumnNumber, ushort FieldIdentifier, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* CharacterAttribute, 
                       short BufferLength, short* StringLength, long* NumericAttribute);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDescribeCol(void* StatementHandle, ushort ColumnNumber, ubyte* ColumnName, short BufferLength, 
                      short* NameLength, short* DataType, ulong* ColumnSize, short* DecimalDigits, short* Nullable);
@@ -9250,7 +9247,6 @@ short SQLFetchScroll(void* StatementHandle, short FetchOrientation, long FetchOf
 short SQLGetData(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, 
                  long BufferLength, long* StrLen_or_IndPtr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescRec(void* DescriptorHandle, short RecNumber, ubyte* Name, short BufferLength, 
                     short* StringLengthPtr, short* TypePtr, short* SubTypePtr, long* LengthPtr, short* PrecisionPtr, 
@@ -9264,7 +9260,7 @@ short SQLPutData(void* StatementHandle, void* Data, long StrLen_or_Ind);
 @DllImport("ODBC32.dll")
 short SQLRowCount(void* StatementHandle, long* RowCount);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLSetConnectOption is deprecated. Please use SQLSetConnectAttr instead.))], [])
+deprecated("ODBC API: SQLSetConnectOption is deprecated. Please use SQLSetConnectAttr instead.") 
 @DllImport("ODBC32.dll")
 short SQLSetConnectOption(void* ConnectionHandle, ushort Option, ulong Value);
 
@@ -9275,16 +9271,15 @@ short SQLSetDescRec(void* DescriptorHandle, short RecNumber, short Type, short S
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Data, 
                     long* StringLength, long* Indicator);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLSetParam is deprecated. Please use SQLBindParameter instead.))], [])
+deprecated("ODBC API: SQLSetParam is deprecated. Please use SQLBindParameter instead.") 
 @DllImport("ODBC32.dll")
 short SQLSetParam(void* StatementHandle, ushort ParameterNumber, short ValueType, short ParameterType, 
                   ulong LengthPrecision, short ParameterScale, void* ParameterValue, long* StrLen_or_Ind);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLSetStmtOption is deprecated. Please use SQLSetStmtAttr instead.))], [])
+deprecated("ODBC API: SQLSetStmtOption is deprecated. Please use SQLSetStmtAttr instead.") 
 @DllImport("ODBC32.dll")
 short SQLSetStmtOption(void* StatementHandle, ushort Option, ulong Value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributes(void* hstmt, ushort icol, ushort fDescType, void* rgbDesc, short cbDescMax, short* pcbDesc, 
                        long* pfDesc);
@@ -9315,55 +9310,45 @@ short SQLBindParameter(void* hstmt, ushort ipar, short fParamType, short fCType,
 @DllImport("ODBC32.dll")
 short SQLSetScrollOptions(void* hstmt, ushort fConcurrency, long crowKeyset, ushort crowRowset);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributeW(void* hstmt, ushort iCol, ushort iField, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pCharAttr, 
                        short cbDescMax, short* pcbCharAttr, long* pNumAttr);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributesW(void* hstmt, ushort icol, ushort fDescType, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* rgbDesc, 
                         short cbDescMax, short* pcbDesc, long* pfDesc);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDescribeColW(void* hstmt, ushort icol, ushort* szColName, short cchColNameMax, short* pcchColName, 
                       short* pfSqlType, ulong* pcbColDef, short* pibScale, short* pfNullable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescRecW(void* hdesc, short iRecord, ushort* szName, short cchNameMax, short* pcchName, short* pfType, 
                      short* pfSubType, long* pLength, short* pPrecision, short* pScale, short* pNullable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectOptionW(void* hdbc, ushort fOption, ulong vParam);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributeA(void* hstmt, short iCol, short iField, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pCharAttr, 
                        short cbCharAttrMax, short* pcbCharAttr, long* pNumAttr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributesA(void* hstmt, ushort icol, ushort fDescType, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* rgbDesc, 
                         short cbDescMax, short* pcbDesc, long* pfDesc);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDescribeColA(void* hstmt, ushort icol, ubyte* szColName, short cbColNameMax, short* pcbColName, 
                       short* pfSqlType, ulong* pcbColDef, short* pibScale, short* pfNullable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescRecA(void* hdesc, short iRecord, ubyte* szName, short cbNameMax, short* pcbName, short* pfType, 
                      short* pfSubType, long* pLength, short* pPrecision, short* pScale, short* pNullable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectOptionA(void* hdbc, ushort fOption, ulong vParam);
 
@@ -9388,7 +9373,7 @@ short SQLAllocStmt(void* ConnectionHandle, void** StatementHandle);
 short SQLBindCol(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, int BufferLength, 
                  int* StrLen_or_Ind);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLBindParam is deprecated. Please use SQLBindParameter instead.))], [])
+deprecated("ODBC API: SQLBindParam is deprecated. Please use SQLBindParameter instead.") 
 @DllImport("ODBC32.dll")
 short SQLBindParam(void* StatementHandle, ushort ParameterNumber, short ValueType, short ParameterType, 
                    uint LengthPrecision, short ParameterScale, void* ParameterValue, int* StrLen_or_Ind);
@@ -9405,13 +9390,11 @@ short SQLCancelHandle(short HandleType, void* InputHandle);
 @DllImport("ODBC32.dll")
 short SQLCloseCursor(void* StatementHandle);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttribute(void* StatementHandle, ushort ColumnNumber, ushort FieldIdentifier, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* CharacterAttribute, 
                       short BufferLength, short* StringLength, void* NumericAttribute);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColumns(void* StatementHandle, ubyte* CatalogName, short NameLength1, ubyte* SchemaName, 
                  short NameLength2, ubyte* TableName, short NameLength3, ubyte* ColumnName, short NameLength4);
@@ -9420,7 +9403,6 @@ short SQLColumns(void* StatementHandle, ubyte* CatalogName, short NameLength1, u
 @DllImport("ODBC32.dll")
 short SQLCompleteAsync(short HandleType, void* Handle, short* AsyncRetCodePtr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLConnect(void* ConnectionHandle, ubyte* ServerName, short NameLength1, ubyte* UserName, short NameLength2, 
                  ubyte* Authentication, short NameLength3);
@@ -9429,12 +9411,10 @@ short SQLConnect(void* ConnectionHandle, ubyte* ServerName, short NameLength1, u
 @DllImport("ODBC32.dll")
 short SQLCopyDesc(void* SourceDescHandle, void* TargetDescHandle);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDataSources(void* EnvironmentHandle, ushort Direction, ubyte* ServerName, short BufferLength1, 
                      short* NameLength1Ptr, ubyte* Description, short BufferLength2, short* NameLength2Ptr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDescribeCol(void* StatementHandle, ushort ColumnNumber, ubyte* ColumnName, short BufferLength, 
                      short* NameLength, short* DataType, uint* ColumnSize, short* DecimalDigits, short* Nullable);
@@ -9447,12 +9427,10 @@ short SQLDisconnect(void* ConnectionHandle);
 @DllImport("ODBC32.dll")
 short SQLEndTran(short HandleType, void* Handle, short CompletionType);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLError(void* EnvironmentHandle, void* ConnectionHandle, void* StatementHandle, ubyte* Sqlstate, 
                int* NativeError, ubyte* MessageText, short BufferLength, short* TextLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLExecDirect(void* StatementHandle, ubyte* StatementText, int TextLength);
 
@@ -9484,15 +9462,13 @@ short SQLFreeHandle(short HandleType, void* Handle);
 @DllImport("ODBC32.dll")
 short SQLFreeStmt(void* StatementHandle, ushort Option);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetConnectAttr(void* ConnectionHandle, int Attribute, void* Value, int BufferLength, int* StringLengthPtr);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLGetConnectOption is deprecated. Please use SQLGetConnectAttr instead.))], [])
+deprecated("ODBC API: SQLGetConnectOption is deprecated. Please use SQLGetConnectAttr instead.") 
 @DllImport("ODBC32.dll")
 short SQLGetConnectOption(void* ConnectionHandle, ushort Option, void* Value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetCursorName(void* StatementHandle, ubyte* CursorName, short BufferLength, short* NameLengthPtr);
 
@@ -9501,23 +9477,19 @@ short SQLGetCursorName(void* StatementHandle, ubyte* CursorName, short BufferLen
 short SQLGetData(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, int BufferLength, 
                  int* StrLen_or_IndPtr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescField(void* DescriptorHandle, short RecNumber, short FieldIdentifier, void* Value, 
                       int BufferLength, int* StringLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescRec(void* DescriptorHandle, short RecNumber, ubyte* Name, short BufferLength, 
                     short* StringLengthPtr, short* TypePtr, short* SubTypePtr, int* LengthPtr, short* PrecisionPtr, 
                     short* ScalePtr, short* NullablePtr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDiagField(short HandleType, void* Handle, short RecNumber, short DiagIdentifier, void* DiagInfo, 
                       short BufferLength, short* StringLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDiagRec(short HandleType, void* Handle, short RecNumber, ubyte* Sqlstate, int* NativeError, 
                     ubyte* MessageText, short BufferLength, short* TextLength);
@@ -9530,21 +9502,18 @@ short SQLGetEnvAttr(void* EnvironmentHandle, int Attribute, void* Value, int Buf
 @DllImport("ODBC32.dll")
 short SQLGetFunctions(void* ConnectionHandle, ushort FunctionId, ushort* Supported);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetInfo(void* ConnectionHandle, ushort InfoType, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* InfoValue, 
                  short BufferLength, short* StringLengthPtr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetStmtAttr(void* StatementHandle, int Attribute, void* Value, int BufferLength, int* StringLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLGetStmtOption is deprecated. Please use SQLGetStmtAttr instead.))], [])
+deprecated("ODBC API: SQLGetStmtOption is deprecated. Please use SQLGetStmtAttr instead.") 
 @DllImport("ODBC32.dll")
 short SQLGetStmtOption(void* StatementHandle, ushort Option, void* Value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetTypeInfo(void* StatementHandle, short DataType);
 
@@ -9556,7 +9525,6 @@ short SQLNumResultCols(void* StatementHandle, short* ColumnCount);
 @DllImport("ODBC32.dll")
 short SQLParamData(void* StatementHandle, void** Value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLPrepare(void* StatementHandle, ubyte* StatementText, int TextLength);
 
@@ -9568,21 +9536,18 @@ short SQLPutData(void* StatementHandle, void* Data, int StrLen_or_Ind);
 @DllImport("ODBC32.dll")
 short SQLRowCount(void* StatementHandle, int* RowCount);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectAttr(void* ConnectionHandle, int Attribute, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Value, 
                         int StringLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLSetConnectOption is deprecated. Please use SQLSetConnectAttr instead.))], [])
+deprecated("ODBC API: SQLSetConnectOption is deprecated. Please use SQLSetConnectAttr instead.") 
 @DllImport("ODBC32.dll")
 short SQLSetConnectOption(void* ConnectionHandle, ushort Option, uint Value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetCursorName(void* StatementHandle, ubyte* CursorName, short NameLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetDescField(void* DescriptorHandle, short RecNumber, short FieldIdentifier, void* Value, 
                       int BufferLength);
@@ -9600,31 +9565,27 @@ short SQLSetEnvAttr(void* EnvironmentHandle, int Attribute,
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Value, 
                     int StringLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLSetParam is deprecated. Please use SQLBindParameter instead.))], [])
+deprecated("ODBC API: SQLSetParam is deprecated. Please use SQLBindParameter instead.") 
 @DllImport("ODBC32.dll")
 short SQLSetParam(void* StatementHandle, ushort ParameterNumber, short ValueType, short ParameterType, 
                   uint LengthPrecision, short ParameterScale, void* ParameterValue, int* StrLen_or_Ind);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetStmtAttr(void* StatementHandle, int Attribute, void* Value, int StringLength);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ODBC API: SQLSetStmtOption is deprecated. Please use SQLSetStmtAttr instead.))], [])
+deprecated("ODBC API: SQLSetStmtOption is deprecated. Please use SQLSetStmtAttr instead.") 
 @DllImport("ODBC32.dll")
 short SQLSetStmtOption(void* StatementHandle, ushort Option, uint Value);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSpecialColumns(void* StatementHandle, ushort IdentifierType, ubyte* CatalogName, short NameLength1, 
                         ubyte* SchemaName, short NameLength2, ubyte* TableName, short NameLength3, ushort Scope, 
                         ushort Nullable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLStatistics(void* StatementHandle, ubyte* CatalogName, short NameLength1, ubyte* SchemaName, 
                     short NameLength2, ubyte* TableName, short NameLength3, ushort Unique, ushort Reserved);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLTables(void* StatementHandle, ubyte* CatalogName, short NameLength1, ubyte* SchemaName, short NameLength2, 
                 ubyte* TableName, short NameLength3, ubyte* TableType, short NameLength4);
@@ -9675,11 +9636,9 @@ short bcp_exec(void* param0, int* param1);
 @DllImport("odbcbcp.dll")
 short bcp_getcolfmt(void* param0, int param1, int param2, void* param3, int param4, int* param5);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short bcp_initA(void* param0, const(PSTR) param1, const(PSTR) param2, const(PSTR) param3, int param4);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short bcp_initW(void* param0, const(PWSTR) param1, const(PWSTR) param2, const(PWSTR) param3, int param4);
 
@@ -9687,11 +9646,9 @@ short bcp_initW(void* param0, const(PWSTR) param1, const(PWSTR) param2, const(PW
 @DllImport("odbcbcp.dll")
 short bcp_moretext(void* param0, int param1, ubyte* param2);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short bcp_readfmtA(void* param0, const(PSTR) param1);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short bcp_readfmtW(void* param0, const(PWSTR) param1);
 
@@ -9703,30 +9660,24 @@ short bcp_sendrow(void* param0);
 @DllImport("odbcbcp.dll")
 short bcp_setcolfmt(void* param0, int param1, int param2, void* param3, int param4);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short bcp_writefmtA(void* param0, const(PSTR) param1);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short bcp_writefmtW(void* param0, const(PWSTR) param1);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 PSTR dbprtypeA(int param0);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 PWSTR dbprtypeW(int param0);
 
 @DllImport("odbcbcp.dll")
 short SQLLinkedServers(void* param0);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short SQLLinkedCatalogsA(void* param0, const(PSTR) param1, short param2);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("odbcbcp.dll")
 short SQLLinkedCatalogsW(void* param0, const(PWSTR) param1, short param2);
 
@@ -9739,12 +9690,10 @@ short SQLGetNextEnumeration(HANDLE hEnumHandle, ubyte* prgEnumData, int* piEnumL
 @DllImport("odbcbcp.dll")
 short SQLCloseEnumServers(HANDLE hEnumHandle);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDriverConnect(void* hdbc, ptrdiff_t hwnd, ubyte* szConnStrIn, short cchConnStrIn, ubyte* szConnStrOut, 
                        short cchConnStrOutMax, short* pcchConnStrOut, ushort fDriverCompletion);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLBrowseConnect(void* hdbc, ubyte* szConnStrIn, short cchConnStrIn, ubyte* szConnStrOut, 
                        short cchConnStrOutMax, short* pcchConnStrOut);
@@ -9753,12 +9702,10 @@ short SQLBrowseConnect(void* hdbc, ubyte* szConnStrIn, short cchConnStrIn, ubyte
 @DllImport("ODBC32.dll")
 short SQLBulkOperations(void* StatementHandle, short Operation);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributes(void* hstmt, ushort icol, ushort fDescType, void* rgbDesc, short cbDescMax, short* pcbDesc, 
                        int* pfDesc);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColumnPrivileges(void* hstmt, ubyte* szCatalogName, short cchCatalogName, ubyte* szSchemaName, 
                           short cchSchemaName, ubyte* szTableName, short cchTableName, ubyte* szColumnName, 
@@ -9773,7 +9720,6 @@ short SQLDescribeParam(void* hstmt, ushort ipar, short* pfSqlType, uint* pcbPara
 @DllImport("ODBC32.dll")
 short SQLExtendedFetch(void* hstmt, ushort fFetchType, int irow, uint* pcrow, ushort* rgfRowStatus);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLForeignKeys(void* hstmt, ubyte* szPkCatalogName, short cchPkCatalogName, ubyte* szPkSchemaName, 
                      short cchPkSchemaName, ubyte* szPkTableName, short cchPkTableName, ubyte* szFkCatalogName, 
@@ -9784,7 +9730,6 @@ short SQLForeignKeys(void* hstmt, ubyte* szPkCatalogName, short cchPkCatalogName
 @DllImport("ODBC32.dll")
 short SQLMoreResults(void* hstmt);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLNativeSql(void* hdbc, ubyte* szSqlStrIn, int cchSqlStrIn, ubyte* szSqlStr, int cchSqlStrMax, 
                    int* pcbSqlStr);
@@ -9797,18 +9742,15 @@ short SQLNumParams(void* hstmt, short* pcpar);
 @DllImport("ODBC32.dll")
 short SQLParamOptions(void* hstmt, uint crow, uint* pirow);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLPrimaryKeys(void* hstmt, ubyte* szCatalogName, short cchCatalogName, ubyte* szSchemaName, 
                      short cchSchemaName, ubyte* szTableName, short cchTableName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLProcedureColumns(void* hstmt, ubyte* szCatalogName, short cchCatalogName, ubyte* szSchemaName, 
                           short cchSchemaName, ubyte* szProcName, short cchProcName, ubyte* szColumnName, 
                           short cchColumnName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLProcedures(void* hstmt, ubyte* szCatalogName, short cchCatalogName, ubyte* szSchemaName, 
                     short cchSchemaName, ubyte* szProcName, short cchProcName);
@@ -9817,12 +9759,10 @@ short SQLProcedures(void* hstmt, ubyte* szCatalogName, short cchCatalogName, uby
 @DllImport("ODBC32.dll")
 short SQLSetPos(void* hstmt, ushort irow, ushort fOption, ushort fLock);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLTablePrivileges(void* hstmt, ubyte* szCatalogName, short cchCatalogName, ubyte* szSchemaName, 
                          short cchSchemaName, ubyte* szTableName, short cchTableName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDrivers(void* henv, ushort fDirection, ubyte* szDriverDesc, short cchDriverDescMax, short* pcchDriverDesc, 
                  ubyte* szDriverAttributes, short cchDrvrAttrMax, short* pcchDrvrAttr);
@@ -9845,363 +9785,291 @@ BOOL ODBCSetTryWaitValue(uint dwValue);
 @DllImport("ODBC32.dll")
 uint ODBCGetTryWaitValue();
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributeW(void* hstmt, ushort iCol, ushort iField, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pCharAttr, 
                        short cbDescMax, short* pcbCharAttr, void* pNumAttr);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributesW(void* hstmt, ushort icol, ushort fDescType, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* rgbDesc, 
                         short cbDescMax, short* pcbDesc, int* pfDesc);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLConnectW(void* hdbc, ushort* szDSN, short cchDSN, ushort* szUID, short cchUID, ushort* szAuthStr, 
                   short cchAuthStr);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDescribeColW(void* hstmt, ushort icol, ushort* szColName, short cchColNameMax, short* pcchColName, 
                       short* pfSqlType, uint* pcbColDef, short* pibScale, short* pfNullable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLErrorW(void* henv, void* hdbc, void* hstmt, ushort* wszSqlState, int* pfNativeError, ushort* wszErrorMsg, 
                 short cchErrorMsgMax, short* pcchErrorMsg);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLExecDirectW(void* hstmt, ushort* szSqlStr, int TextLength);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetConnectAttrW(void* hdbc, int fAttribute, void* rgbValue, int cbValueMax, int* pcbValue);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetCursorNameW(void* hstmt, ushort* szCursor, short cchCursorMax, short* pcchCursor);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetDescFieldW(void* DescriptorHandle, short RecNumber, short FieldIdentifier, void* Value, 
                        int BufferLength);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescFieldW(void* hdesc, short iRecord, short iField, void* rgbValue, int cbBufferLength, 
                        int* StringLength);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescRecW(void* hdesc, short iRecord, ushort* szName, short cchNameMax, short* pcchName, short* pfType, 
                      short* pfSubType, int* pLength, short* pPrecision, short* pScale, short* pNullable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDiagFieldW(short fHandleType, void* handle, short iRecord, short fDiagField, void* rgbDiagInfo, 
                        short cbBufferLength, short* pcbStringLength);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDiagRecW(short fHandleType, void* handle, short iRecord, ushort* szSqlState, int* pfNativeError, 
                      ushort* szErrorMsg, short cchErrorMsgMax, short* pcchErrorMsg);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLPrepareW(void* hstmt, ushort* szSqlStr, int cchSqlStr);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectAttrW(void* hdbc, int fAttribute, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* rgbValue, 
                          int cbValue);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetCursorNameW(void* hstmt, ushort* szCursor, short cchCursor);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColumnsW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                   short cchSchemaName, ushort* szTableName, short cchTableName, ushort* szColumnName, 
                   short cchColumnName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetConnectOptionW(void* hdbc, ushort fOption, void* pvParam);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetInfoW(void* hdbc, ushort fInfoType, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* rgbInfoValue, 
                   short cbInfoValueMax, short* pcbInfoValue);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetTypeInfoW(void* StatementHandle, short DataType);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectOptionW(void* hdbc, ushort fOption, uint vParam);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSpecialColumnsW(void* hstmt, ushort fColType, ushort* szCatalogName, short cchCatalogName, 
                          ushort* szSchemaName, short cchSchemaName, ushort* szTableName, short cchTableName, 
                          ushort fScope, ushort fNullable);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLStatisticsW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                      short cchSchemaName, ushort* szTableName, short cchTableName, ushort fUnique, ushort fAccuracy);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLTablesW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                  short cchSchemaName, ushort* szTableName, short cchTableName, ushort* szTableType, 
                  short cchTableType);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDataSourcesW(void* henv, ushort fDirection, ushort* szDSN, short cchDSNMax, short* pcchDSN, 
                       ushort* wszDescription, short cchDescriptionMax, short* pcchDescription);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDriverConnectW(void* hdbc, ptrdiff_t hwnd, ushort* szConnStrIn, short cchConnStrIn, ushort* szConnStrOut, 
                         short cchConnStrOutMax, short* pcchConnStrOut, ushort fDriverCompletion);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLBrowseConnectW(void* hdbc, ushort* szConnStrIn, short cchConnStrIn, ushort* szConnStrOut, 
                         short cchConnStrOutMax, short* pcchConnStrOut);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColumnPrivilegesW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                            short cchSchemaName, ushort* szTableName, short cchTableName, ushort* szColumnName, 
                            short cchColumnName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetStmtAttrW(void* hstmt, int fAttribute, void* rgbValue, int cbValueMax, int* pcbValue);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetStmtAttrW(void* hstmt, int fAttribute, void* rgbValue, int cbValueMax);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLForeignKeysW(void* hstmt, ushort* szPkCatalogName, short cchPkCatalogName, ushort* szPkSchemaName, 
                       short cchPkSchemaName, ushort* szPkTableName, short cchPkTableName, ushort* szFkCatalogName, 
                       short cchFkCatalogName, ushort* szFkSchemaName, short cchFkSchemaName, ushort* szFkTableName, 
                       short cchFkTableName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLNativeSqlW(void* hdbc, ushort* szSqlStrIn, int cchSqlStrIn, ushort* szSqlStr, int cchSqlStrMax, 
                     int* pcchSqlStr);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLPrimaryKeysW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                       short cchSchemaName, ushort* szTableName, short cchTableName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLProcedureColumnsW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                            short cchSchemaName, ushort* szProcName, short cchProcName, ushort* szColumnName, 
                            short cchColumnName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLProceduresW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                      short cchSchemaName, ushort* szProcName, short cchProcName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLTablePrivilegesW(void* hstmt, ushort* szCatalogName, short cchCatalogName, ushort* szSchemaName, 
                           short cchSchemaName, ushort* szTableName, short cchTableName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDriversW(void* henv, ushort fDirection, ushort* szDriverDesc, short cchDriverDescMax, 
                   short* pcchDriverDesc, ushort* szDriverAttributes, short cchDrvrAttrMax, short* pcchDrvrAttr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributeA(void* hstmt, short iCol, short iField, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pCharAttr, 
                        short cbCharAttrMax, short* pcbCharAttr, void* pNumAttr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColAttributesA(void* hstmt, ushort icol, ushort fDescType, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* rgbDesc, 
                         short cbDescMax, short* pcbDesc, int* pfDesc);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLConnectA(void* hdbc, ubyte* szDSN, short cbDSN, ubyte* szUID, short cbUID, ubyte* szAuthStr, 
                   short cbAuthStr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDescribeColA(void* hstmt, ushort icol, ubyte* szColName, short cbColNameMax, short* pcbColName, 
                       short* pfSqlType, uint* pcbColDef, short* pibScale, short* pfNullable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLErrorA(void* henv, void* hdbc, void* hstmt, ubyte* szSqlState, int* pfNativeError, ubyte* szErrorMsg, 
                 short cbErrorMsgMax, short* pcbErrorMsg);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLExecDirectA(void* hstmt, ubyte* szSqlStr, int cbSqlStr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetConnectAttrA(void* hdbc, int fAttribute, void* rgbValue, int cbValueMax, int* pcbValue);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetCursorNameA(void* hstmt, ubyte* szCursor, short cbCursorMax, short* pcbCursor);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescFieldA(void* hdesc, short iRecord, short iField, void* rgbValue, int cbBufferLength, 
                        int* StringLength);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDescRecA(void* hdesc, short iRecord, ubyte* szName, short cbNameMax, short* pcbName, short* pfType, 
                      short* pfSubType, int* pLength, short* pPrecision, short* pScale, short* pNullable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDiagFieldA(short fHandleType, void* handle, short iRecord, short fDiagField, void* rgbDiagInfo, 
                        short cbDiagInfoMax, short* pcbDiagInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetDiagRecA(short fHandleType, void* handle, short iRecord, ubyte* szSqlState, int* pfNativeError, 
                      ubyte* szErrorMsg, short cbErrorMsgMax, short* pcbErrorMsg);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetStmtAttrA(void* hstmt, int fAttribute, void* rgbValue, int cbValueMax, int* pcbValue);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetTypeInfoA(void* StatementHandle, short DataType);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLPrepareA(void* hstmt, ubyte* szSqlStr, int cbSqlStr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectAttrA(void* hdbc, int fAttribute, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* rgbValue, 
                          int cbValue);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetCursorNameA(void* hstmt, ubyte* szCursor, short cbCursor);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColumnsA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, short cbSchemaName, 
                   ubyte* szTableName, short cbTableName, ubyte* szColumnName, short cbColumnName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetConnectOptionA(void* hdbc, ushort fOption, void* pvParam);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLGetInfoA(void* hdbc, ushort fInfoType, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* rgbInfoValue, 
                   short cbInfoValueMax, short* pcbInfoValue);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSetConnectOptionA(void* hdbc, ushort fOption, uint vParam);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLSpecialColumnsA(void* hstmt, ushort fColType, ubyte* szCatalogName, short cbCatalogName, 
                          ubyte* szSchemaName, short cbSchemaName, ubyte* szTableName, short cbTableName, 
                          ushort fScope, ushort fNullable);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLStatisticsA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, 
                      short cbSchemaName, ubyte* szTableName, short cbTableName, ushort fUnique, ushort fAccuracy);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLTablesA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, short cbSchemaName, 
                  ubyte* szTableName, short cbTableName, ubyte* szTableType, short cbTableType);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDataSourcesA(void* henv, ushort fDirection, ubyte* szDSN, short cbDSNMax, short* pcbDSN, 
                       ubyte* szDescription, short cbDescriptionMax, short* pcbDescription);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDriverConnectA(void* hdbc, ptrdiff_t hwnd, ubyte* szConnStrIn, short cbConnStrIn, ubyte* szConnStrOut, 
                         short cbConnStrOutMax, short* pcbConnStrOut, ushort fDriverCompletion);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLBrowseConnectA(void* hdbc, ubyte* szConnStrIn, short cbConnStrIn, ubyte* szConnStrOut, 
                         short cbConnStrOutMax, short* pcbConnStrOut);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLColumnPrivilegesA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, 
                            short cbSchemaName, ubyte* szTableName, short cbTableName, ubyte* szColumnName, 
                            short cbColumnName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLForeignKeysA(void* hstmt, ubyte* szPkCatalogName, short cbPkCatalogName, ubyte* szPkSchemaName, 
                       short cbPkSchemaName, ubyte* szPkTableName, short cbPkTableName, ubyte* szFkCatalogName, 
                       short cbFkCatalogName, ubyte* szFkSchemaName, short cbFkSchemaName, ubyte* szFkTableName, 
                       short cbFkTableName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLNativeSqlA(void* hdbc, ubyte* szSqlStrIn, int cbSqlStrIn, ubyte* szSqlStr, int cbSqlStrMax, 
                     int* pcbSqlStr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLPrimaryKeysA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, 
                       short cbSchemaName, ubyte* szTableName, short cbTableName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLProcedureColumnsA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, 
                            short cbSchemaName, ubyte* szProcName, short cbProcName, ubyte* szColumnName, 
                            short cbColumnName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLProceduresA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, 
                      short cbSchemaName, ubyte* szProcName, short cbProcName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLTablePrivilegesA(void* hstmt, ubyte* szCatalogName, short cbCatalogName, ubyte* szSchemaName, 
                           short cbSchemaName, ubyte* szTableName, short cbTableName);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ODBC32.dll")
 short SQLDriversA(void* henv, ushort fDirection, ubyte* szDriverDesc, short cbDriverDescMax, short* pcbDriverDesc, 
                   ubyte* szDriverAttributes, short cbDrvrAttrMax, short* pcbDrvrAttr);

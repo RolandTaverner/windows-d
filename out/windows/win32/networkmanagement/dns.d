@@ -660,21 +660,18 @@ struct DNS_A_DATA
     uint IpAddress;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_ptr_dataw
 struct DNS_PTR_DATAW
 {
     PWSTR pNameHost;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_ptr_dataa
 struct DNS_PTR_DATAA
 {
     PSTR pNameHost;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_soa_dataw
 struct DNS_SOA_DATAW
 {
@@ -687,7 +684,6 @@ struct DNS_SOA_DATAW
     uint  dwDefaultTtl;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_soa_dataa
 struct DNS_SOA_DATAA
 {
@@ -700,7 +696,6 @@ struct DNS_SOA_DATAA
     uint dwDefaultTtl;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_minfo_dataw
 struct DNS_MINFO_DATAW
 {
@@ -708,7 +703,6 @@ struct DNS_MINFO_DATAW
     PWSTR pNameErrorsMailbox;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_minfo_dataa
 struct DNS_MINFO_DATAA
 {
@@ -716,7 +710,6 @@ struct DNS_MINFO_DATAA
     PSTR pNameErrorsMailbox;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_mx_dataw
 struct DNS_MX_DATAW
 {
@@ -725,7 +718,6 @@ struct DNS_MX_DATAW
     ushort Pad;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_mx_dataa
 struct DNS_MX_DATAA
 {
@@ -734,7 +726,6 @@ struct DNS_MX_DATAA
     ushort Pad;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_txt_dataw
 struct DNS_TXT_DATAW
 {
@@ -742,7 +733,6 @@ struct DNS_TXT_DATAW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] pStringArray;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_txt_dataa
 struct DNS_TXT_DATAA
 {
@@ -771,7 +761,6 @@ struct DNS_AAAA_DATA
     IP6_ADDRESS Ip6Address;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_sig_dataw
 struct DNS_SIG_DATAW
 {
@@ -787,7 +776,6 @@ struct DNS_SIG_DATAW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Signature;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_sig_dataa
 struct DNS_SIG_DATAA
 {
@@ -821,7 +809,6 @@ struct DNS_DHCID_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DHCID;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nsec_dataw
 struct DNS_NSEC_DATAW
 {
@@ -831,7 +818,6 @@ struct DNS_NSEC_DATAW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] TypeBitMaps;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nsec_dataa
 struct DNS_NSEC_DATAA
 {
@@ -903,7 +889,6 @@ struct DNS_LOC_DATA
     uint   dwAltitude;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nxt_dataw
 struct DNS_NXT_DATAW
 {
@@ -912,7 +897,6 @@ struct DNS_NXT_DATAW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] wTypes;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nxt_dataa
 struct DNS_NXT_DATAA
 {
@@ -921,7 +905,6 @@ struct DNS_NXT_DATAA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] wTypes;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_srv_dataw
 struct DNS_SRV_DATAW
 {
@@ -932,7 +915,6 @@ struct DNS_SRV_DATAW
     ushort Pad;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_srv_dataa
 struct DNS_SRV_DATAA
 {
@@ -943,7 +925,6 @@ struct DNS_SRV_DATAA
     ushort Pad;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_naptr_dataw
 struct DNS_NAPTR_DATAW
 {
@@ -955,7 +936,6 @@ struct DNS_NAPTR_DATAW
     PWSTR  pReplacement;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_naptr_dataa
 struct DNS_NAPTR_DATAA
 {
@@ -974,7 +954,6 @@ struct DNS_ATMA_DATA
     ubyte[20] Address;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_tkey_dataw
 struct DNS_TKEY_DATAW
 {
@@ -992,7 +971,6 @@ struct DNS_TKEY_DATAW
     BOOL   bPacketPointers;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_tkey_dataa
 struct DNS_TKEY_DATAA
 {
@@ -1010,7 +988,6 @@ struct DNS_TKEY_DATAA
     BOOL   bPacketPointers;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_tsig_dataw
 struct DNS_TSIG_DATAW
 {
@@ -1028,7 +1005,6 @@ struct DNS_TSIG_DATAW
     BOOL   bPacketPointers;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_tsig_dataa
 struct DNS_TSIG_DATAA
 {
@@ -1062,7 +1038,6 @@ struct DNS_WINS_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] WinsServers;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_winsr_dataw
 struct DNS_WINSR_DATAW
 {
@@ -1072,7 +1047,6 @@ struct DNS_WINSR_DATAW
     PWSTR pNameResultDomain;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_winsr_dataa
 struct DNS_WINSR_DATAA
 {
@@ -1148,7 +1122,6 @@ struct DNS_RECORD_FLAGS
     /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield117;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_recordw
 struct DNS_RECORDW
 {
@@ -1275,7 +1248,6 @@ struct DNS_RECORD_OPTW
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_recorda
 struct DNS_RECORDA
 {

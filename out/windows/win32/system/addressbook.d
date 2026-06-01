@@ -3,7 +3,6 @@
 module windows.win32.system.addressbook;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HINSTANCE, HRESULT,
                                                     HWND, PSTR, PWSTR;
 public import windows.win32.system.com.com : CY, IMalloc, IStream, IUnknown;

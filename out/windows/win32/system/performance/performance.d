@@ -3,7 +3,6 @@
 module windows.win32.system.performance.performance;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
                                                     HRESULT, HWND, PSTR, PWSTR,
                                                     SYSTEMTIME, VARIANT_BOOL;
@@ -1018,7 +1017,6 @@ struct PDH_RAW_COUNTER
     uint     MultiCount;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter_item_a
 struct PDH_RAW_COUNTER_ITEM_A
 {
@@ -1026,7 +1024,6 @@ struct PDH_RAW_COUNTER_ITEM_A
     PDH_RAW_COUNTER RawValue;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter_item_w
 struct PDH_RAW_COUNTER_ITEM_W
 {
@@ -1048,7 +1045,6 @@ struct PDH_FMT_COUNTERVALUE
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue_item_a
 struct PDH_FMT_COUNTERVALUE_ITEM_A
 {
@@ -1056,7 +1052,6 @@ struct PDH_FMT_COUNTERVALUE_ITEM_A
     PDH_FMT_COUNTERVALUE FmtValue;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue_item_w
 struct PDH_FMT_COUNTERVALUE_ITEM_W
 {
@@ -1074,7 +1069,6 @@ struct PDH_STATISTICS
     PDH_FMT_COUNTERVALUE mean;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_path_elements_a
 struct PDH_COUNTER_PATH_ELEMENTS_A
 {
@@ -1086,7 +1080,6 @@ struct PDH_COUNTER_PATH_ELEMENTS_A
     PSTR szCounterName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_path_elements_w
 struct PDH_COUNTER_PATH_ELEMENTS_W
 {
@@ -1098,7 +1091,6 @@ struct PDH_COUNTER_PATH_ELEMENTS_W
     PWSTR szCounterName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_data_item_path_elements_a
 struct PDH_DATA_ITEM_PATH_ELEMENTS_A
 {
@@ -1108,7 +1100,6 @@ struct PDH_DATA_ITEM_PATH_ELEMENTS_A
     PSTR szInstanceName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_data_item_path_elements_w
 struct PDH_DATA_ITEM_PATH_ELEMENTS_W
 {
@@ -1118,7 +1109,6 @@ struct PDH_DATA_ITEM_PATH_ELEMENTS_W
     PWSTR szInstanceName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_info_a
 struct PDH_COUNTER_INFO_A
 {
@@ -1149,7 +1139,6 @@ struct PDH_COUNTER_INFO_A
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] DataBuffer;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_info_w
 struct PDH_COUNTER_INFO_W
 {
@@ -1197,7 +1186,6 @@ struct PDH_RAW_LOG_RECORD
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RawBytes;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PDH_LOG_SERVICE_QUERY_INFO_A
 {
     uint dwSize;
@@ -1237,7 +1225,6 @@ struct PDH_LOG_SERVICE_QUERY_INFO_A
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PDH_LOG_SERVICE_QUERY_INFO_W
 {
     uint  dwSize;
@@ -1277,7 +1264,6 @@ struct PDH_LOG_SERVICE_QUERY_INFO_W
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_hw
 struct PDH_BROWSE_DLG_CONFIG_HW
 {
@@ -1293,7 +1279,6 @@ struct PDH_BROWSE_DLG_CONFIG_HW
     PWSTR               szDialogBoxCaption;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_ha
 struct PDH_BROWSE_DLG_CONFIG_HA
 {
@@ -1309,7 +1294,6 @@ struct PDH_BROWSE_DLG_CONFIG_HA
     PSTR                szDialogBoxCaption;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_w
 struct PDH_BROWSE_DLG_CONFIG_W
 {
@@ -1325,7 +1309,6 @@ struct PDH_BROWSE_DLG_CONFIG_W
     PWSTR               szDialogBoxCaption;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_a
 struct PDH_BROWSE_DLG_CONFIG_A
 {
@@ -1351,11 +1334,9 @@ BOOL QueryPerformanceCounter(long* lpPerformanceCount);
 @DllImport("KERNEL32.dll")
 BOOL QueryPerformanceFrequency(long* lpFrequency);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("loadperf.dll")
 uint InstallPerfDllW(const(PWSTR) szComputerName, const(PWSTR) lpIniFile, size_t dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("loadperf.dll")
 uint InstallPerfDllA(const(PSTR) szComputerName, const(PSTR) lpIniFile, size_t dwFlags);
 
@@ -1375,21 +1356,17 @@ uint UnloadPerfCounterTextStringsW(PWSTR lpCommandLine, BOOL bQuietModeArg);
 @DllImport("loadperf.dll")
 uint UnloadPerfCounterTextStringsA(PSTR lpCommandLine, BOOL bQuietModeArg);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("loadperf.dll")
 uint UpdatePerfNameFilesA(const(PSTR) szNewCtrFilePath, const(PSTR) szNewHlpFilePath, PSTR szLanguageID, 
                           size_t dwModes);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("loadperf.dll")
 uint UpdatePerfNameFilesW(const(PWSTR) szNewCtrFilePath, const(PWSTR) szNewHlpFilePath, PWSTR szLanguageID, 
                           size_t dwModes);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("loadperf.dll")
 uint SetServiceAsTrustedA(const(PSTR) szReserved, const(PSTR) szServiceName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("loadperf.dll")
 uint SetServiceAsTrustedW(const(PWSTR) szReserved, const(PWSTR) szServiceName);
 
@@ -1956,19 +1933,15 @@ uint PdhBrowseCountersHW(PDH_BROWSE_DLG_CONFIG_HW* pBrowseDlgData);
 @DllImport("pdh.dll")
 uint PdhBrowseCountersHA(PDH_BROWSE_DLG_CONFIG_HA* pBrowseDlgData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("pdh.dll")
 uint PdhVerifySQLDBW(const(PWSTR) szDataSource);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("pdh.dll")
 uint PdhVerifySQLDBA(const(PSTR) szDataSource);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("pdh.dll")
 uint PdhCreateSQLTablesW(const(PWSTR) szDataSource);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("pdh.dll")
 uint PdhCreateSQLTablesA(const(PSTR) szDataSource);
 

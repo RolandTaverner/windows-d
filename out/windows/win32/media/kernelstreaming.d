@@ -3,7 +3,6 @@
 module windows.win32.media.kernelstreaming;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, DEVPROPKEY, HANDLE, HRESULT,
                                                     LUID, PWSTR, RECT, SIZE;
 public import windows.win32.media.directshow.directshow : IMediaSample, IMemAllocator, IPin;

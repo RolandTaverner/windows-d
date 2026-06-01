@@ -3,7 +3,6 @@
 module windows.win32.storage.projectedfilesystem;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:

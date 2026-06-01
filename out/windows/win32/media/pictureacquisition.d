@@ -3,7 +3,6 @@
 module windows.win32.media.pictureacquisition;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT, HWND,
                                                     PROPERTYKEY, PWSTR, SIZE;
 public import windows.win32.graphics.gdi : HBITMAP;

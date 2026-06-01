@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.rras;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, HANDLE, HINSTANCE,
                                                     HWND, LUID, PSTR, PWSTR;
 public import windows.win32.networkmanagement.iphelper : MIB_IPMCAST_MFE;
@@ -1571,9 +1570,7 @@ alias RASDIALFUNC1 = void function(HRASCONN param0, uint param1, RASCONNSTATE pa
 alias RASDIALFUNC2 = uint function(size_t param0, uint param1, HRASCONN param2, uint param3, RASCONNSTATE param4, 
                                    uint param5, uint param6);
 alias ORASADFUNC = BOOL function(HWND param0, PSTR param1, uint param2, uint* param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias RASADFUNCA = BOOL function(PSTR param0, PSTR param1, RASADPARAMS* param2, uint* param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias RASADFUNCW = BOOL function(PWSTR param0, PWSTR param1, RASADPARAMS* param2, uint* param3);
 alias PFNRASGETBUFFER = uint function(ubyte** ppBuffer, uint* pdwSize);
 alias PFNRASFREEBUFFER = uint function(ubyte* pBufer);
@@ -1594,9 +1591,7 @@ alias RasCustomDialFn = uint function(HINSTANCE hInstDll, RASDIALEXTENSIONS* lpR
                                       uint dwNotifierType, void* lpvNotifier, HRASCONN* lphRasConn, uint dwFlags);
 alias RasCustomDeleteEntryNotifyFn = uint function(const(PWSTR) lpszPhonebook, const(PWSTR) lpszEntry, 
                                                    uint dwFlags);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias RASPBDLGFUNCW = void function(size_t param0, uint param1, PWSTR param2, void* param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias RASPBDLGFUNCA = void function(size_t param0, uint param1, PSTR param2, void* param3);
 alias RasCustomDialDlgFn = BOOL function(HINSTANCE hInstDll, uint dwFlags, PWSTR lpszPhonebook, PWSTR lpszEntry, 
                                          PWSTR lpszPhoneNumber, RASDIALDLG* lpInfo, void* pvInfo);
@@ -1663,7 +1658,6 @@ struct HRASCONN
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASCONNW
     {
     align (4):
@@ -1683,7 +1677,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASCONNW
     {
     align (4):
@@ -1703,7 +1696,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASCONNA
     {
     align (4):
@@ -1723,7 +1715,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASCONNA
     {
     align (4):
@@ -1743,7 +1734,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASDIALPARAMSW
     {
     align (4):
@@ -1763,7 +1753,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASDIALPARAMSW
     {
     align (4):
@@ -1783,7 +1772,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASDIALPARAMSA
     {
     align (4):
@@ -1803,7 +1791,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASDIALPARAMSA
     {
     align (4):
@@ -1893,7 +1880,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASPBDLGW
     {
     align (4):
@@ -1912,7 +1898,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASPBDLGW
     {
     align (4):
@@ -1931,7 +1916,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASPBDLGA
     {
     align (4):
@@ -1950,7 +1934,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASPBDLGA
     {
     align (4):
@@ -1969,7 +1952,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASENTRYDLGW
     {
     align (4):
@@ -1987,7 +1969,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASENTRYDLGW
     {
     align (4):
@@ -2005,7 +1986,6 @@ version(AArch64)
 
 version(X86_64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASENTRYDLGA
     {
     align (4):
@@ -2023,7 +2003,6 @@ version(X86_64)
 
 version(AArch64)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASENTRYDLGA
     {
     align (4):
@@ -2059,7 +2038,6 @@ struct RASTUNNELENDPOINT
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASCONNW
     {
         uint       dwSize;
@@ -2078,7 +2056,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASCONNA
     {
         uint      dwSize;
@@ -2095,7 +2072,6 @@ version(X86)
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASCONNSTATUSW
 {
     uint              dwSize;
@@ -2109,7 +2085,6 @@ struct RASCONNSTATUSW
     RASCONNSUBSTATE   rasconnsubstate;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASCONNSTATUSA
 {
     uint              dwSize;
@@ -2125,7 +2100,6 @@ struct RASCONNSTATUSA
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASDIALPARAMSW
     {
         uint       dwSize;
@@ -2144,7 +2118,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASDIALPARAMSA
     {
         uint      dwSize;
@@ -2191,7 +2164,6 @@ align (4):
     RASDEVSPECIFICINFO RasDevSpecificInfo;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASENTRYNAMEW
 {
     uint       dwSize;
@@ -2200,7 +2172,6 @@ struct RASENTRYNAMEW
     wchar[261] szPhonebookPath;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASENTRYNAMEA
 {
     uint      dwSize;
@@ -2209,7 +2180,6 @@ struct RASENTRYNAMEA
     CHAR[261] szPhonebookPath;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASAMBW
 {
     uint      dwSize;
@@ -2218,7 +2188,6 @@ struct RASAMBW
     ubyte     bLana;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASAMBA
 {
     uint     dwSize;
@@ -2227,7 +2196,6 @@ struct RASAMBA
     ubyte    bLana;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASPPPNBFW
 {
     uint      dwSize;
@@ -2238,7 +2206,6 @@ struct RASPPPNBFW
     ubyte     bLana;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASPPPNBFA
 {
     uint     dwSize;
@@ -2263,7 +2230,6 @@ struct RASPPPIPXA
     CHAR[22] szIpxAddress;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASPPPIPW
 {
     uint      dwSize;
@@ -2274,7 +2240,6 @@ struct RASPPPIPW
     uint      dwServerOptions;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASPPPIPA
 {
     uint     dwSize;
@@ -2295,7 +2260,6 @@ struct RASPPPIPV6
     ubyte[2] bPeerCompressionProtocol;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASPPPLCPW
 {
     uint        dwSize;
@@ -2315,7 +2279,6 @@ struct RASPPPLCPW
     uint        dwServerOptions;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASPPPLCPA
 {
     uint       dwSize;
@@ -2408,7 +2371,6 @@ struct RAS_PROJECTION_INFO
     }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASDEVINFOW
 {
     uint       dwSize;
@@ -2416,7 +2378,6 @@ struct RASDEVINFOW
     wchar[129] szDeviceName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASDEVINFOA
 {
     uint      dwSize;
@@ -2433,7 +2394,6 @@ struct RASCTRYINFO
     uint dwCountryNameOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASENTRYA
 {
     uint               dwSize;
@@ -2499,7 +2459,6 @@ struct RASENTRYA
     BOOL               fDisableIKEv2Fragmentation;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASENTRYW
 {
     uint               dwSize;
@@ -2575,7 +2534,6 @@ align (4):
     int  yDlg;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASSUBENTRYA
 {
     uint      dwSize;
@@ -2586,7 +2544,6 @@ struct RASSUBENTRYA
     uint      dwAlternateOffset;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASSUBENTRYW
 {
     uint       dwSize;
@@ -2597,7 +2554,6 @@ struct RASSUBENTRYW
     uint       dwAlternateOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASCREDENTIALSA
 {
     uint      dwSize;
@@ -2607,7 +2563,6 @@ struct RASCREDENTIALSA
     CHAR[16]  szDomain;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASCREDENTIALSW
 {
     uint       dwSize;
@@ -2617,7 +2572,6 @@ struct RASCREDENTIALSW
     wchar[16]  szDomain;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASAUTODIALENTRYA
 {
     uint      dwSize;
@@ -2626,7 +2580,6 @@ struct RASAUTODIALENTRYA
     CHAR[257] szEntry;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASAUTODIALENTRYW
 {
     uint       dwSize;
@@ -2635,7 +2588,6 @@ struct RASAUTODIALENTRYW
     wchar[257] szEntry;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASEAPUSERIDENTITYA
 {
     CHAR[257] szUserName;
@@ -2643,7 +2595,6 @@ struct RASEAPUSERIDENTITYA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbEapInfo;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASEAPUSERIDENTITYW
 {
     wchar[257] szUserName;
@@ -2697,7 +2648,6 @@ struct RASUPDATECONN
     RASTUNNELENDPOINT remoteEndPoint;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct RASNOUSERW
 {
     uint       dwSize;
@@ -2708,7 +2658,6 @@ struct RASNOUSERW
     wchar[16]  szDomain;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct RASNOUSERA
 {
     uint      dwSize;
@@ -2721,7 +2670,6 @@ struct RASNOUSERA
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASPBDLGW
     {
         uint          dwSize;
@@ -2739,7 +2687,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASPBDLGA
     {
         uint          dwSize;
@@ -2757,7 +2704,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     struct RASENTRYDLGW
     {
         uint       dwSize;
@@ -2774,7 +2720,6 @@ version(X86)
 
 version(X86)
 {
-    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
     struct RASENTRYDLGA
     {
         uint      dwSize;

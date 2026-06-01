@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.wifi;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE,
                                                     HRESULT, HWND, PWSTR;
 public import windows.win32.networkmanagement.ndis : NDIS_OBJECT_HEADER;

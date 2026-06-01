@@ -3,7 +3,6 @@
 module windows.win32.ai.machinelearning.directml;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
 public import windows.win32.graphics.direct3d12 : D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE,
                                                   ID3D12CommandList, ID3D12Device,

@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct3d12;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, LUID,
                                                     PSTR, PWSTR, RECT;
 public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_FEATURE_LEVEL,

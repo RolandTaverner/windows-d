@@ -3,7 +3,6 @@
 module windows.win32.storage.vhd;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR, WIN32_ERROR;
 public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
 public import windows.win32.system.io : OVERLAPPED;

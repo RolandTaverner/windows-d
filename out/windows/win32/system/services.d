@@ -3,7 +3,6 @@
 module windows.win32.system.services;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
 public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
 public import windows.win32.system.registry : HKEY;
@@ -397,13 +396,9 @@ enum const(wchar)* SC_AGGREGATE_STORAGE_KEY = "System\\CurrentControlSet\\Contro
 
 // Callbacks
 
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias SERVICE_MAIN_FUNCTIONW = void function(uint dwNumServicesArgs, PWSTR* lpServiceArgVectors);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias SERVICE_MAIN_FUNCTIONA = void function(uint dwNumServicesArgs, byte** lpServiceArgVectors);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPSERVICE_MAIN_FUNCTIONW = void function(uint dwNumServicesArgs, PWSTR* lpServiceArgVectors);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPSERVICE_MAIN_FUNCTIONA = void function(uint dwNumServicesArgs, PSTR* lpServiceArgVectors);
 alias HANDLER_FUNCTION = void function(uint dwControl);
 alias HANDLER_FUNCTION_EX = uint function(uint dwControl, uint dwEventType, void* lpEventData, void* lpContext);
@@ -453,14 +448,12 @@ struct SERVICE_CUSTOM_SYSTEM_STATE_CHANGE_DATA_ITEM
     }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_descriptiona
 struct SERVICE_DESCRIPTIONA
 {
     PSTR lpDescription;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_descriptionw
 struct SERVICE_DESCRIPTIONW
 {
@@ -474,7 +467,6 @@ struct SC_ACTION
     uint           Delay;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actionsa
 struct SERVICE_FAILURE_ACTIONSA
 {
@@ -485,7 +477,6 @@ struct SERVICE_FAILURE_ACTIONSA
     SC_ACTION* lpsaActions;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actionsw
 struct SERVICE_FAILURE_ACTIONSW
 {
@@ -514,14 +505,12 @@ struct SERVICE_SID_INFO
     uint dwServiceSidType;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_required_privileges_infoa
 struct SERVICE_REQUIRED_PRIVILEGES_INFOA
 {
     PSTR pmszRequiredPrivileges;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_required_privileges_infow
 struct SERVICE_REQUIRED_PRIVILEGES_INFOW
 {
@@ -606,7 +595,6 @@ struct SERVICE_STATUS_PROCESS
     SERVICE_RUNS_IN_PROCESS dwServiceFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_statusa
 struct ENUM_SERVICE_STATUSA
 {
@@ -615,7 +603,6 @@ struct ENUM_SERVICE_STATUSA
     SERVICE_STATUS ServiceStatus;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_statusw
 struct ENUM_SERVICE_STATUSW
 {
@@ -624,7 +611,6 @@ struct ENUM_SERVICE_STATUSW
     SERVICE_STATUS ServiceStatus;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_status_processa
 struct ENUM_SERVICE_STATUS_PROCESSA
 {
@@ -633,7 +619,6 @@ struct ENUM_SERVICE_STATUS_PROCESSA
     SERVICE_STATUS_PROCESS ServiceStatusProcess;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_status_processw
 struct ENUM_SERVICE_STATUS_PROCESSW
 {
@@ -642,7 +627,6 @@ struct ENUM_SERVICE_STATUS_PROCESSW
     SERVICE_STATUS_PROCESS ServiceStatusProcess;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_lock_statusa
 struct QUERY_SERVICE_LOCK_STATUSA
 {
@@ -651,7 +635,6 @@ struct QUERY_SERVICE_LOCK_STATUSA
     uint dwLockDuration;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_lock_statusw
 struct QUERY_SERVICE_LOCK_STATUSW
 {
@@ -660,7 +643,6 @@ struct QUERY_SERVICE_LOCK_STATUSW
     uint  dwLockDuration;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_configa
 struct QUERY_SERVICE_CONFIGA
 {
@@ -675,7 +657,6 @@ struct QUERY_SERVICE_CONFIGA
     PSTR               lpDisplayName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_configw
 struct QUERY_SERVICE_CONFIGW
 {
@@ -690,7 +671,6 @@ struct QUERY_SERVICE_CONFIGW
     PWSTR              lpDisplayName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_table_entrya
 struct SERVICE_TABLE_ENTRYA
 {
@@ -698,7 +678,6 @@ struct SERVICE_TABLE_ENTRYA
     LPSERVICE_MAIN_FUNCTIONA lpServiceProc;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_table_entryw
 struct SERVICE_TABLE_ENTRYW
 {
@@ -715,7 +694,6 @@ struct SERVICE_NOTIFY_1
     SERVICE_STATUS_PROCESS ServiceStatus;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_notify_2a
 struct SERVICE_NOTIFY_2A
 {
@@ -728,7 +706,6 @@ struct SERVICE_NOTIFY_2A
     PSTR  pszServiceNames;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_notify_2w
 struct SERVICE_NOTIFY_2W
 {
@@ -741,7 +718,6 @@ struct SERVICE_NOTIFY_2W
     PWSTR pszServiceNames;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_control_status_reason_paramsa
 struct SERVICE_CONTROL_STATUS_REASON_PARAMSA
 {
@@ -750,7 +726,6 @@ struct SERVICE_CONTROL_STATUS_REASON_PARAMSA
     SERVICE_STATUS_PROCESS ServiceStatus;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_control_status_reason_paramsw
 struct SERVICE_CONTROL_STATUS_REASON_PARAMSW
 {

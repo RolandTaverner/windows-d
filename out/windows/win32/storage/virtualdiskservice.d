@@ -3,7 +3,6 @@
 module windows.win32.storage.virtualdiskservice;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
 public import windows.win32.storage.vhd : ATTACH_VIRTUAL_DISK_FLAG, COMPACT_VIRTUAL_DISK_FLAG,
                                           CREATE_VIRTUAL_DISK_FLAG, DEPENDENT_DISK_FLAG,

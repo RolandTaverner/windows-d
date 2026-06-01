@@ -3,7 +3,6 @@
 module windows.win32.media.multimedia;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, FARPROC, HANDLE, HINSTANCE,
                                                     HMODULE, HRESULT, HTASK, HWND,
                                                     LPARAM, LRESULT, POINT, PSTR, PWSTR,
@@ -7751,13 +7750,9 @@ alias DRIVERMSGPROC = uint function(uint param0, uint param1, size_t param2, siz
 alias LPMMIOPROC = LRESULT function(PSTR lpmmioinfo, uint uMsg, LPARAM lParam1, LPARAM lParam2);
 alias AVISAVECALLBACK = BOOL function(int param0);
 alias CAPYIELDCALLBACK = LRESULT function(HWND hWnd);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CAPSTATUSCALLBACKW = LRESULT function(HWND hWnd, int nID, const(PWSTR) lpsz);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CAPERRORCALLBACKW = LRESULT function(HWND hWnd, int nID, const(PWSTR) lpsz);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CAPSTATUSCALLBACKA = LRESULT function(HWND hWnd, int nID, const(PSTR) lpsz);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CAPERRORCALLBACKA = LRESULT function(HWND hWnd, int nID, const(PSTR) lpsz);
 alias CAPVIDEOCALLBACK = LRESULT function(HWND hWnd, VIDEOHDR* lpVHdr);
 alias CAPWAVECALLBACK = LRESULT function(HWND hWnd, WAVEHDR* lpWHdr);
@@ -8118,7 +8113,6 @@ align (1):
     size_t dwCallback;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_OPEN_PARMSA
 {
 align (1):
@@ -8129,7 +8123,6 @@ align (1):
     const(PSTR) lpstrAlias;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_OPEN_PARMSW
 {
 align (1):
@@ -8167,7 +8160,6 @@ align (1):
     uint   dwTrack;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_INFO_PARMSA
 {
 align (1):
@@ -8176,7 +8168,6 @@ align (1):
     uint   dwRetSize;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_INFO_PARMSW
 {
 align (1):
@@ -8194,7 +8185,6 @@ align (1):
     uint   dwItem;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_SYSINFO_PARMSA
 {
 align (1):
@@ -8205,7 +8195,6 @@ align (1):
     uint   wDeviceType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_SYSINFO_PARMSW
 {
 align (1):
@@ -8234,7 +8223,6 @@ align (1):
     HWND   hwndBreak;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_SAVE_PARMSA
 {
 align (1):
@@ -8242,7 +8230,6 @@ align (1):
     const(PSTR) lpfilename;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_SAVE_PARMSW
 {
 align (1):
@@ -8250,7 +8237,6 @@ align (1):
     const(PWSTR) lpfilename;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_LOAD_PARMSA
 {
 align (1):
@@ -8258,7 +8244,6 @@ align (1):
     const(PSTR) lpfilename;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_LOAD_PARMSW
 {
 align (1):
@@ -8293,7 +8278,6 @@ align (1):
     uint   dwFrames;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_VD_ESCAPE_PARMSA
 {
 align (1):
@@ -8301,7 +8285,6 @@ align (1):
     const(PSTR) lpstrCommand;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_VD_ESCAPE_PARMSW
 {
 align (1):
@@ -8309,7 +8292,6 @@ align (1):
     const(PWSTR) lpstrCommand;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_WAVE_OPEN_PARMSA
 {
 align (1):
@@ -8321,7 +8303,6 @@ align (1):
     uint        dwBufferSeconds;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_WAVE_OPEN_PARMSW
 {
 align (1):
@@ -8377,7 +8358,6 @@ align (1):
     uint   dwOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_ANIM_OPEN_PARMSA
 {
 align (1):
@@ -8390,7 +8370,6 @@ align (1):
     HWND        hWndParent;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_ANIM_OPEN_PARMSW
 {
 align (1):
@@ -8419,7 +8398,6 @@ align (1):
     uint   dwFrames;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_ANIM_WINDOW_PARMSA
 {
 align (1):
@@ -8429,7 +8407,6 @@ align (1):
     const(PSTR) lpstrText;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_ANIM_WINDOW_PARMSW
 {
 align (1):
@@ -8454,7 +8431,6 @@ align (1):
     HDC    hDC;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_OPEN_PARMSA
 {
 align (1):
@@ -8467,7 +8443,6 @@ align (1):
     HWND        hWndParent;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_OPEN_PARMSW
 {
 align (1):
@@ -8480,7 +8455,6 @@ align (1):
     HWND         hWndParent;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_WINDOW_PARMSA
 {
 align (1):
@@ -8490,7 +8464,6 @@ align (1):
     const(PSTR) lpstrText;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_WINDOW_PARMSW
 {
 align (1):
@@ -8508,7 +8481,6 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_SAVE_PARMSA
 {
 align (1):
@@ -8517,7 +8489,6 @@ align (1):
     RECT        rc;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_SAVE_PARMSW
 {
 align (1):
@@ -8526,7 +8497,6 @@ align (1):
     RECT         rc;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_LOAD_PARMSA
 {
 align (1):
@@ -8535,7 +8505,6 @@ align (1):
     RECT        rc;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct MCI_OVLY_LOAD_PARMSW
 {
 align (1):
@@ -8594,7 +8563,6 @@ align (1):
     uint dwFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joycapsa
 struct JOYCAPSA
 {
@@ -8625,7 +8593,6 @@ align (1):
     CHAR[260] szOEMVxD;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joycapsw
 struct JOYCAPSW
 {
@@ -8656,7 +8623,6 @@ align (1):
     wchar[260] szOEMVxD;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JOYCAPS2A
 {
 align (1):
@@ -8689,7 +8655,6 @@ align (1):
     GUID      NameGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JOYCAPS2W
 {
 align (1):
@@ -8759,7 +8724,6 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_capture_parmsa
 struct MCI_DGV_CAPTURE_PARMSA
 {
@@ -8769,7 +8733,6 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_capture_parmsw
 struct MCI_DGV_CAPTURE_PARMSW
 {
@@ -8823,7 +8786,6 @@ align (1):
     uint   dwVideoStream;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_info_parmsa
 struct MCI_DGV_INFO_PARMSA
 {
@@ -8834,7 +8796,6 @@ align (1):
     uint   dwItem;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_info_parmsw
 struct MCI_DGV_INFO_PARMSW
 {
@@ -8845,7 +8806,6 @@ align (1):
     uint   dwItem;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_list_parmsa
 struct MCI_DGV_LIST_PARMSA
 {
@@ -8858,7 +8818,6 @@ align (1):
     PSTR   lpstrAlgorithm;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_list_parmsw
 struct MCI_DGV_LIST_PARMSW
 {
@@ -8880,7 +8839,6 @@ align (1):
     uint   dwMethod;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_open_parmsa
 struct MCI_DGV_OPEN_PARMSA
 {
@@ -8894,7 +8852,6 @@ align (1):
     HWND   hWndParent;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_open_parmsw
 struct MCI_DGV_OPEN_PARMSW
 {
@@ -8919,7 +8876,6 @@ align (1):
     uint   dwVideoStream;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_quality_parmsa
 struct MCI_DGV_QUALITY_PARMSA
 {
@@ -8931,7 +8887,6 @@ align (1):
     uint   dwHandle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_quality_parmsw
 struct MCI_DGV_QUALITY_PARMSW
 {
@@ -8955,7 +8910,6 @@ align (1):
     uint   dwVideoStream;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_reserve_parmsa
 struct MCI_DGV_RESERVE_PARMSA
 {
@@ -8965,7 +8919,6 @@ align (1):
     uint   dwSize;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_reserve_parmsw
 struct MCI_DGV_RESERVE_PARMSW
 {
@@ -8975,7 +8928,6 @@ align (1):
     uint   dwSize;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_restore_parmsa
 struct MCI_DGV_RESTORE_PARMSA
 {
@@ -8985,7 +8937,6 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_restore_parmsw
 struct MCI_DGV_RESTORE_PARMSW
 {
@@ -8995,7 +8946,6 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_save_parmsa
 struct MCI_DGV_SAVE_PARMSA
 {
@@ -9005,7 +8955,6 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_save_parmsw
 struct MCI_DGV_SAVE_PARMSW
 {
@@ -9026,7 +8975,6 @@ align (1):
     uint   dwSpeed;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setaudio_parmsa
 struct MCI_DGV_SETAUDIO_PARMSA
 {
@@ -9039,7 +8987,6 @@ align (1):
     PSTR   lpstrQuality;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setaudio_parmsw
 struct MCI_DGV_SETAUDIO_PARMSW
 {
@@ -9062,7 +9009,6 @@ align (1):
     uint   dwUserParm;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setvideo_parmsa
 struct MCI_DGV_SETVIDEO_PARMSA
 {
@@ -9076,7 +9022,6 @@ align (1):
     uint   dwSourceNumber;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setvideo_parmsw
 struct MCI_DGV_SETVIDEO_PARMSW
 {
@@ -9090,7 +9035,6 @@ align (1):
     uint   dwSourceNumber;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_status_parmsa
 struct MCI_DGV_STATUS_PARMSA
 {
@@ -9103,7 +9047,6 @@ align (1):
     uint   dwReference;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_status_parmsw
 struct MCI_DGV_STATUS_PARMSW
 {
@@ -9133,7 +9076,6 @@ align (1):
     HDC    hDC;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_window_parmsa
 struct MCI_DGV_WINDOW_PARMSA
 {
@@ -9144,7 +9086,6 @@ align (1):
     PSTR   lpstrText;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_window_parmsw
 struct MCI_DGV_WINDOW_PARMSW
 {
@@ -9342,7 +9283,6 @@ struct DRAWDIBTIME
     int timeSetDIBits;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avistreaminfow
 struct AVISTREAMINFOW
 {
@@ -9366,7 +9306,6 @@ struct AVISTREAMINFOW
     wchar[64] szName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avistreaminfoa
 struct AVISTREAMINFOA
 {
@@ -9390,7 +9329,6 @@ struct AVISTREAMINFOA
     CHAR[64] szName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avifileinfow
 struct AVIFILEINFOW
 {
@@ -9408,7 +9346,6 @@ struct AVIFILEINFOW
     wchar[64] szFileType;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avifileinfoa
 struct AVIFILEINFOA
 {
@@ -9600,43 +9537,33 @@ align (1):
 
 // Functions
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciSendCommandA(uint mciId, uint uMsg, size_t dwParam1, size_t dwParam2);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciSendCommandW(uint mciId, uint uMsg, size_t dwParam1, size_t dwParam2);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciSendStringA(const(PSTR) lpstrCommand, PSTR lpstrReturnString, uint uReturnLength, HWND hwndCallback);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciSendStringW(const(PWSTR) lpstrCommand, PWSTR lpstrReturnString, uint uReturnLength, HWND hwndCallback);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciGetDeviceIDA(const(PSTR) pszDevice);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciGetDeviceIDW(const(PWSTR) pszDevice);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciGetDeviceIDFromElementIDA(uint dwElementID, const(PSTR) lpstrType);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint mciGetDeviceIDFromElementIDW(uint dwElementID, const(PWSTR) lpstrType);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 BOOL mciGetErrorStringA(uint mcierr, PSTR pszText, uint cchText);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 BOOL mciGetErrorStringW(uint mcierr, PWSTR pszText, uint cchText);
 
@@ -9799,7 +9726,6 @@ uint joyGetPosEx(uint uJoyID, JOYINFOEX* pji);
 @DllImport("WINMM.dll")
 uint joyGetNumDevs();
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("WINMM.dll")
 uint joyGetDevCapsA(size_t uJoyID, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/JOYCAPSA* pjc, 

@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.qos;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
 public import windows.win32.networkmanagement.ndis : NETWORK_ADDRESS_LIST;
 public import windows.win32.networking.winsock : FLOWSPEC, SOCKADDR, SOCKET;

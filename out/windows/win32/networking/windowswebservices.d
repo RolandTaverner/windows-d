@@ -3,7 +3,6 @@
 module windows.win32.networking.windowswebservices;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, DECIMAL, FILETIME, HRESULT,
                                                     PWSTR;
 public import windows.win32.security.authentication.identity.identity : SecPkgContext_IssuerListInfoEx;

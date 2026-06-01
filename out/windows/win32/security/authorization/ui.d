@@ -3,7 +3,6 @@
 module windows.win32.security.authorization.ui;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HINSTANCE, HRESULT,
                                                     HWND, PWSTR;
 public import windows.win32.security.security : ACE_FLAGS, ACL;

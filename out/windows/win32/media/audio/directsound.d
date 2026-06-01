@@ -3,7 +3,6 @@
 module windows.win32.media.audio.directsound;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, PSTR,
                                                     PWSTR;
 public import windows.win32.graphics.direct3d.direct3d : D3DVECTOR;
@@ -585,9 +584,7 @@ enum : int
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDSENUMCALLBACKA = BOOL function(GUID* param0, const(PSTR) param1, const(PSTR) param2, void* param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDSENUMCALLBACKW = BOOL function(GUID* param0, const(PWSTR) param1, const(PWSTR) param2, void* param3);
 
 // Structs
@@ -840,22 +837,18 @@ struct DSCFXNoiseSuppress
 @DllImport("DSOUND.dll")
 HRESULT DirectSoundCreate(const(GUID)* pcGuidDevice, IDirectSound* ppDS, IUnknown pUnkOuter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("DSOUND.dll")
 HRESULT DirectSoundEnumerateA(LPDSENUMCALLBACKA pDSEnumCallback, void* pContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("DSOUND.dll")
 HRESULT DirectSoundEnumerateW(LPDSENUMCALLBACKW pDSEnumCallback, void* pContext);
 
 @DllImport("DSOUND.dll")
 HRESULT DirectSoundCaptureCreate(const(GUID)* pcGuidDevice, IDirectSoundCapture* ppDSC, IUnknown pUnkOuter);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("DSOUND.dll")
 HRESULT DirectSoundCaptureEnumerateA(LPDSENUMCALLBACKA pDSEnumCallback, void* pContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("DSOUND.dll")
 HRESULT DirectSoundCaptureEnumerateW(LPDSENUMCALLBACKW pDSEnumCallback, void* pContext);
 

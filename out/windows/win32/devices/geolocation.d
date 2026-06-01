@@ -3,7 +3,6 @@
 module windows.win32.devices.geolocation;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.devices.sensors : LOCATION_DESIRED_ACCURACY;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HRESULT,
                                                     HWND, NTSTATUS, PROPERTYKEY,

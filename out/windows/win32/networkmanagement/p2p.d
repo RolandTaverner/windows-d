@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.p2p;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
                                                     PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR, SOCKADDR_IN6, SOCKADDR_STORAGE,
@@ -613,15 +612,15 @@ enum : uint
 
 // Callbacks
 
-//DELEGATE ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 alias PFNPEER_VALIDATE_RECORD = HRESULT function(void* hGraph, void* pvContext, PEER_RECORD* pRecord, 
                                                  PEER_RECORD_CHANGE_TYPE changeType);
-//DELEGATE ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 alias PFNPEER_SECURE_RECORD = HRESULT function(void* hGraph, void* pvContext, PEER_RECORD* pRecord, 
                                                PEER_RECORD_CHANGE_TYPE changeType, PEER_DATA** ppSecurityData);
-//DELEGATE ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 alias PFNPEER_FREE_SECURITY_DATA = HRESULT function(void* hGraph, void* pvContext, PEER_DATA* pSecurityData);
-//DELEGATE ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 alias PFNPEER_ON_PASSWORD_AUTH_FAILED = HRESULT function(void* hGraph, void* pvContext);
 alias DRT_BOOTSTRAP_RESOLVE_CALLBACK = void function(HRESULT hr, void* pvContext, SOCKET_ADDRESS_LIST* pAddresses, 
                                                      BOOL fFatalError);
@@ -1633,7 +1632,7 @@ HRESULT PeerGroupPeerTimeToUniversalTime(void* hGroup, FILETIME* pftPeerTime, FI
 @DllImport("P2P.dll")
 HRESULT PeerGroupUniversalTimeToPeerTime(void* hGroup, FILETIME* pftUniversalTime, FILETIME* pftPeerTime);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([], [])
+deprecated("marked as obsolete") 
 @DllImport("P2P.dll")
 HRESULT PeerGroupResumePasswordAuthentication(void* hGroup, void* hPeerEventHandle);
 

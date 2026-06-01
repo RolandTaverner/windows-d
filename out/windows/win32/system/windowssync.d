@@ -3,7 +3,6 @@
 module windows.win32.system.windowssync;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, PROPERTYKEY,
                                                     PWSTR;
 public import windows.win32.system.com.com : IUnknown;

@@ -3,7 +3,6 @@
 module windows.win32.security.authentication.identity.identity;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
                                                     HRESULT, HWND, LUID, NTSTATUS,
                                                     PSTR, PWSTR;
@@ -3555,33 +3554,25 @@ alias PSAM_PASSWORD_FILTER_ROUTINE = BOOLEAN function(LSA_UNICODE_STRING* Accoun
                                                       LSA_UNICODE_STRING* FullName, LSA_UNICODE_STRING* Password, 
                                                       BOOLEAN SetOperation);
 alias SEC_GET_KEY_FN = void function(void* Arg, void* Principal, uint KeyVer, void** Key, HRESULT* Status);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ACQUIRE_CREDENTIALS_HANDLE_FN_W = HRESULT function(ushort* param0, ushort* param1, uint param2, void* param3, 
                                                          void* param4, SEC_GET_KEY_FN param5, void* param6, 
                                                          SecHandle* param7, long* param8);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ACQUIRE_CREDENTIALS_HANDLE_FN_A = HRESULT function(byte* param0, byte* param1, uint param2, void* param3, 
                                                          void* param4, SEC_GET_KEY_FN param5, void* param6, 
                                                          SecHandle* param7, long* param8);
 alias FREE_CREDENTIALS_HANDLE_FN = HRESULT function(SecHandle* param0);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ADD_CREDENTIALS_FN_W = HRESULT function(SecHandle* param0, ushort* param1, ushort* param2, uint param3, 
                                               void* param4, SEC_GET_KEY_FN param5, void* param6, long* param7);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ADD_CREDENTIALS_FN_A = HRESULT function(SecHandle* param0, byte* param1, byte* param2, uint param3, 
                                               void* param4, SEC_GET_KEY_FN param5, void* param6, long* param7);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias CHANGE_PASSWORD_FN_W = HRESULT function(ushort* param0, ushort* param1, ushort* param2, ushort* param3, 
                                               ushort* param4, BOOLEAN param5, uint param6, SecBufferDesc* param7);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias CHANGE_PASSWORD_FN_A = HRESULT function(byte* param0, byte* param1, byte* param2, byte* param3, byte* param4, 
                                               BOOLEAN param5, uint param6, SecBufferDesc* param7);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias INITIALIZE_SECURITY_CONTEXT_FN_W = HRESULT function(SecHandle* param0, SecHandle* param1, ushort* param2, 
                                                           uint param3, uint param4, uint param5, 
                                                           SecBufferDesc* param6, uint param7, SecHandle* param8, 
                                                           SecBufferDesc* param9, uint* param10, long* param11);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias INITIALIZE_SECURITY_CONTEXT_FN_A = HRESULT function(SecHandle* param0, SecHandle* param1, byte* param2, 
                                                           uint param3, uint param4, uint param5, 
                                                           SecBufferDesc* param6, uint param7, SecHandle* param8, 
@@ -3595,58 +3586,38 @@ alias REVERT_SECURITY_CONTEXT_FN = HRESULT function(SecHandle* param0);
 alias QUERY_SECURITY_CONTEXT_TOKEN_FN = HRESULT function(SecHandle* param0, void** param1);
 alias DELETE_SECURITY_CONTEXT_FN = HRESULT function(SecHandle* param0);
 alias APPLY_CONTROL_TOKEN_FN = HRESULT function(SecHandle* param0, SecBufferDesc* param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias QUERY_CONTEXT_ATTRIBUTES_FN_W = HRESULT function(SecHandle* param0, uint param1, void* param2);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias QUERY_CONTEXT_ATTRIBUTES_EX_FN_W = HRESULT function(SecHandle* param0, uint param1, void* param2, 
                                                           uint param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias QUERY_CONTEXT_ATTRIBUTES_FN_A = HRESULT function(SecHandle* param0, uint param1, void* param2);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias QUERY_CONTEXT_ATTRIBUTES_EX_FN_A = HRESULT function(SecHandle* param0, uint param1, void* param2, 
                                                           uint param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias SET_CONTEXT_ATTRIBUTES_FN_W = HRESULT function(SecHandle* param0, uint param1, void* param2, uint param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias SET_CONTEXT_ATTRIBUTES_FN_A = HRESULT function(SecHandle* param0, uint param1, void* param2, uint param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias QUERY_CREDENTIALS_ATTRIBUTES_FN_W = HRESULT function(SecHandle* param0, uint param1, void* param2);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias QUERY_CREDENTIALS_ATTRIBUTES_EX_FN_W = HRESULT function(SecHandle* param0, uint param1, void* param2, 
                                                               uint param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias QUERY_CREDENTIALS_ATTRIBUTES_FN_A = HRESULT function(SecHandle* param0, uint param1, void* param2);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias QUERY_CREDENTIALS_ATTRIBUTES_EX_FN_A = HRESULT function(SecHandle* param0, uint param1, void* param2, 
                                                               uint param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias SET_CREDENTIALS_ATTRIBUTES_FN_W = HRESULT function(SecHandle* param0, uint param1, void* param2, uint param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias SET_CREDENTIALS_ATTRIBUTES_FN_A = HRESULT function(SecHandle* param0, uint param1, void* param2, uint param3);
 alias FREE_CONTEXT_BUFFER_FN = HRESULT function(void* param0);
 alias MAKE_SIGNATURE_FN = HRESULT function(SecHandle* param0, uint param1, SecBufferDesc* param2, uint param3);
 alias VERIFY_SIGNATURE_FN = HRESULT function(SecHandle* param0, SecBufferDesc* param1, uint param2, uint* param3);
 alias ENCRYPT_MESSAGE_FN = HRESULT function(SecHandle* param0, uint param1, SecBufferDesc* param2, uint param3);
 alias DECRYPT_MESSAGE_FN = HRESULT function(SecHandle* param0, SecBufferDesc* param1, uint param2, uint* param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias ENUMERATE_SECURITY_PACKAGES_FN_W = HRESULT function(uint* param0, SecPkgInfoW** param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias ENUMERATE_SECURITY_PACKAGES_FN_A = HRESULT function(uint* param0, SecPkgInfoA** param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias QUERY_SECURITY_PACKAGE_INFO_FN_W = HRESULT function(ushort* param0, SecPkgInfoW** param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias QUERY_SECURITY_PACKAGE_INFO_FN_A = HRESULT function(byte* param0, SecPkgInfoA** param1);
 alias EXPORT_SECURITY_CONTEXT_FN = HRESULT function(SecHandle* param0, uint param1, SecBuffer* param2, 
                                                     void** param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias IMPORT_SECURITY_CONTEXT_FN_W = HRESULT function(ushort* param0, SecBuffer* param1, void* param2, 
                                                       SecHandle* param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias IMPORT_SECURITY_CONTEXT_FN_A = HRESULT function(byte* param0, SecBuffer* param1, void* param2, 
                                                       SecHandle* param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias INIT_SECURITY_INTERFACE_A = SecurityFunctionTableA* function();
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias INIT_SECURITY_INTERFACE_W = SecurityFunctionTableW* function();
 alias PLSA_CREATE_LOGON_SESSION = NTSTATUS function(LUID* LogonId);
 alias PLSA_DELETE_LOGON_SESSION = NTSTATUS function(LUID* LogonId);
@@ -4019,9 +3990,7 @@ alias KspCompleteTokenFn = NTSTATUS function(size_t ContextId, SecBufferDesc* To
 alias KspMapHandleFn = NTSTATUS function(size_t ContextId, size_t* LsaContextId);
 alias KspSetPagingModeFn = NTSTATUS function(BOOLEAN PagingMode);
 alias KspSerializeAuthDataFn = NTSTATUS function(void* pvAuthData, uint* Size, void** SerializedData);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias SSL_EMPTY_CACHE_FN_A = BOOL function(PSTR pszTargetName, uint dwFlags);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias SSL_EMPTY_CACHE_FN_W = BOOL function(PWSTR pszTargetName, uint dwFlags);
 alias SSL_CRACK_CERTIFICATE_FN = BOOL function(ubyte* pbCertificate, uint cbCertificate, BOOL VerifySignature, 
                                                X509Certificate** ppCertificate);
@@ -5462,7 +5431,6 @@ struct SECURITY_STRING
     ushort* Buffer;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkginfow
 struct SecPkgInfoW
 {
@@ -5474,7 +5442,6 @@ struct SecPkgInfoW
     ushort* Comment;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkginfoa
 struct SecPkgInfoA
 {
@@ -5643,21 +5610,18 @@ struct SEC_TRAFFIC_SECRETS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] TrafficSecret;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_namesw
 struct SecPkgCredentials_NamesW
 {
     ushort* sUserName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_namesa
 struct SecPkgCredentials_NamesA
 {
     byte* sUserName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_ssiproviderw
 struct SecPkgCredentials_SSIProviderW
 {
@@ -5666,7 +5630,6 @@ struct SecPkgCredentials_SSIProviderW
     PSTR    ProviderInfo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_ssiprovidera
 struct SecPkgCredentials_SSIProviderA
 {
@@ -5748,7 +5711,6 @@ struct SecPkgContext_StreamSizes
     uint cbBlockSize;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_namesw
 struct SecPkgContext_NamesW
 {
@@ -5761,7 +5723,6 @@ struct SecPkgContext_LastClientTokenStatus
     SECPKG_ATTR_LCT_STATUS LastClientTokenStatus;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_namesa
 struct SecPkgContext_NamesA
 {
@@ -5782,7 +5743,6 @@ struct SecPkgContext_DceInfo
     void* pPac;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_keyinfoa
 struct SecPkgContext_KeyInfoA
 {
@@ -5793,7 +5753,6 @@ struct SecPkgContext_KeyInfoA
     uint  EncryptAlgorithm;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_keyinfow
 struct SecPkgContext_KeyInfoW
 {
@@ -5804,21 +5763,18 @@ struct SecPkgContext_KeyInfoW
     uint    EncryptAlgorithm;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authoritya
 struct SecPkgContext_AuthorityA
 {
     byte* sAuthorityName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authorityw
 struct SecPkgContext_AuthorityW
 {
     ushort* sAuthorityName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_protoinfoa
 struct SecPkgContext_ProtoInfoA
 {
@@ -5827,7 +5783,6 @@ struct SecPkgContext_ProtoInfoA
     uint  minorVersion;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_protoinfow
 struct SecPkgContext_ProtoInfoW
 {
@@ -5866,14 +5821,12 @@ struct SecPkgContext_NegoKeys
     ubyte* VerifyKeyValue;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_packageinfow
 struct SecPkgContext_PackageInfoW
 {
     SecPkgInfoW* PackageInfo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_packageinfoa
 struct SecPkgContext_PackageInfoA
 {
@@ -5892,7 +5845,6 @@ struct SecPkgContext_Flags
     uint Flags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiationinfoa
 struct SecPkgContext_NegotiationInfoA
 {
@@ -5900,7 +5852,6 @@ struct SecPkgContext_NegotiationInfoA
     uint         NegotiationState;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiationinfow
 struct SecPkgContext_NegotiationInfoW
 {
@@ -5908,7 +5859,6 @@ struct SecPkgContext_NegotiationInfoW
     uint         NegotiationState;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_nativenamesw
 struct SecPkgContext_NativeNamesW
 {
@@ -5916,7 +5866,6 @@ struct SecPkgContext_NativeNamesW
     ushort* sServerName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-_secpkgcontext_nativenamesa
 struct SecPkgContext_NativeNamesA
 {
@@ -5924,7 +5873,6 @@ struct SecPkgContext_NativeNamesA
     byte* sServerName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_credentialnamew
 struct SecPkgContext_CredentialNameW
 {
@@ -5932,7 +5880,6 @@ struct SecPkgContext_CredentialNameW
     ushort* sCredentialName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-_secpkgcontext_credentialnamea
 struct SecPkgContext_CredentialNameA
 {
@@ -6005,7 +5952,6 @@ struct SECPKG_APP_MODE_INFO
     BOOLEAN   ReturnToLsa;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-securityfunctiontablew
 struct SecurityFunctionTableW
 {
@@ -6043,7 +5989,6 @@ struct SecurityFunctionTableW
     QUERY_CREDENTIALS_ATTRIBUTES_EX_FN_W QueryCredentialsAttributesExW;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-securityfunctiontablea
 struct SecurityFunctionTableA
 {
@@ -6098,7 +6043,6 @@ struct SEC_WINNT_AUTH_IDENTITY_EX2
     ushort PackageListLength;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_exw
 struct SEC_WINNT_AUTH_IDENTITY_EXW
 {
@@ -6115,7 +6059,6 @@ struct SEC_WINNT_AUTH_IDENTITY_EXW
     uint    PackageListLength;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_exa
 struct SEC_WINNT_AUTH_IDENTITY_EXA
 {
@@ -7751,12 +7694,10 @@ HRESULT AcquireCredentialsHandleA(PSTR pszPrincipal, PSTR pszPackage, SECPKG_CRE
 @DllImport("SECUR32.dll")
 HRESULT FreeCredentialsHandle(SecHandle* phCredential);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("SECUR32.dll")
 HRESULT AddCredentialsW(SecHandle* hCredentials, PWSTR pszPrincipal, PWSTR pszPackage, uint fCredentialUse, 
                         void* pAuthData, SEC_GET_KEY_FN pGetKeyFn, void* pvGetKeyArgument, long* ptsExpiry);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("SECUR32.dll")
 HRESULT AddCredentialsA(SecHandle* hCredentials, PSTR pszPrincipal, PSTR pszPackage, uint fCredentialUse, 
                         void* pAuthData, SEC_GET_KEY_FN pGetKeyFn, void* pvGetKeyArgument, long* ptsExpiry);
@@ -7853,7 +7794,6 @@ HRESULT SetContextAttributesA(SecHandle* phContext, SECPKG_ATTR ulAttribute,
 @DllImport("SECUR32.dll")
 HRESULT QueryCredentialsAttributesW(SecHandle* phCredential, uint ulAttribute, void* pBuffer);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("SspiCli.dll")
 HRESULT QueryCredentialsAttributesExW(SecHandle* phCredential, uint ulAttribute, 
                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pBuffer, 
@@ -7863,7 +7803,6 @@ HRESULT QueryCredentialsAttributesExW(SecHandle* phCredential, uint ulAttribute,
 @DllImport("SECUR32.dll")
 HRESULT QueryCredentialsAttributesA(SecHandle* phCredential, uint ulAttribute, void* pBuffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("SspiCli.dll")
 HRESULT QueryCredentialsAttributesExA(SecHandle* phCredential, uint ulAttribute, 
                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pBuffer, 

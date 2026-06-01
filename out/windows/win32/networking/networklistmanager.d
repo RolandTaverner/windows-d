@@ -3,7 +3,6 @@
 module windows.win32.networking.networklistmanager;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT,
                                                     VARIANT_BOOL;
 public import windows.win32.system.com.com : IDispatch, IUnknown;

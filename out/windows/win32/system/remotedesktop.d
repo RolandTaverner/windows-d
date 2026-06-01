@@ -3,7 +3,6 @@
 module windows.win32.system.remotedesktop;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
                                                     HANDLE, HANDLE_PTR, HRESULT, HWND,
                                                     PSTR, PWSTR, RECT, VARIANT_BOOL;
@@ -1125,21 +1124,18 @@ struct AAAccountingData
     int           subSessionId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_server_infow
 struct WTS_SERVER_INFOW
 {
     PWSTR pServerName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_server_infoa
 struct WTS_SERVER_INFOA
 {
     PSTR pServerName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_session_infow
 struct WTS_SESSION_INFOW
 {
@@ -1148,7 +1144,6 @@ struct WTS_SESSION_INFOW
     WTS_CONNECTSTATE_CLASS State;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_session_infoa
 struct WTS_SESSION_INFOA
 {
@@ -1157,7 +1152,6 @@ struct WTS_SESSION_INFOA
     WTS_CONNECTSTATE_CLASS State;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_session_info_1w
 struct WTS_SESSION_INFO_1W
 {
@@ -1171,7 +1165,6 @@ struct WTS_SESSION_INFO_1W
     PWSTR pFarmName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_session_info_1a
 struct WTS_SESSION_INFO_1A
 {
@@ -1185,7 +1178,6 @@ struct WTS_SESSION_INFO_1A
     PSTR pFarmName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_process_infow
 struct WTS_PROCESS_INFOW
 {
@@ -1195,7 +1187,6 @@ struct WTS_PROCESS_INFOW
     PSID  pUserSid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_process_infoa
 struct WTS_PROCESS_INFOA
 {
@@ -1205,7 +1196,6 @@ struct WTS_PROCESS_INFOA
     PSID pUserSid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsconfiginfow
 struct WTSCONFIGINFOW
 {
@@ -1222,7 +1212,6 @@ struct WTSCONFIGINFOW
     wchar[261] ApplicationName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsconfiginfoa
 struct WTSCONFIGINFOA
 {
@@ -1239,7 +1228,6 @@ struct WTSCONFIGINFOA
     CHAR[261] ApplicationName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfow
 struct WTSINFOW
 {
@@ -1261,7 +1249,6 @@ struct WTSINFOW
     long      CurrentTime;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoa
 struct WTSINFOA
 {
@@ -1283,7 +1270,6 @@ struct WTSINFOA
     long     CurrentTime;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoex_level1_w
 struct WTSINFOEX_LEVEL1_W
 {
@@ -1306,7 +1292,6 @@ struct WTSINFOEX_LEVEL1_W
     uint      OutgoingCompressedBytes;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoex_level1_a
 struct WTSINFOEX_LEVEL1_A
 {
@@ -1329,21 +1314,18 @@ struct WTSINFOEX_LEVEL1_A
     uint     OutgoingCompressedBytes;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoex_level_w
 union WTSINFOEX_LEVEL_W
 {
     WTSINFOEX_LEVEL1_W WTSInfoExLevel1;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoex_level_a
 union WTSINFOEX_LEVEL_A
 {
     WTSINFOEX_LEVEL1_A WTSInfoExLevel1;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoexw
 struct WTSINFOEXW
 {
@@ -1351,7 +1333,6 @@ struct WTSINFOEXW
     WTSINFOEX_LEVEL_W Data;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoexa
 struct WTSINFOEXA
 {
@@ -1359,7 +1340,6 @@ struct WTSINFOEXA
     WTSINFOEX_LEVEL_A Data;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsclientw
 struct WTSCLIENTW
 {
@@ -1384,7 +1364,6 @@ struct WTSCLIENTW
     wchar[261] DeviceId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsclienta
 struct WTSCLIENTA
 {
@@ -1409,21 +1388,18 @@ struct WTSCLIENTA
     CHAR[261]  DeviceId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PRODUCT_INFOA
 {
     CHAR[256] CompanyName;
     CHAR[4]   ProductID;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PRODUCT_INFOW
 {
     wchar[256] CompanyName;
     wchar[4]   ProductID;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct WTS_VALIDATION_INFORMATIONA
 {
     PRODUCT_INFOA ProductInfo;
@@ -1433,7 +1409,6 @@ struct WTS_VALIDATION_INFORMATIONA
     uint          HardwareIDLength;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct WTS_VALIDATION_INFORMATIONW
 {
     PRODUCT_INFOW ProductInfo;
@@ -1458,7 +1433,6 @@ struct WTS_CLIENT_DISPLAY
     uint ColorDepth;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsuserconfiga
 struct WTSUSERCONFIGA
 {
@@ -1482,7 +1456,6 @@ struct WTSUSERCONFIGA
     CHAR[4]   TerminalServerHomeDirDrive;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtsuserconfigw
 struct WTSUSERCONFIGW
 {
@@ -1513,7 +1486,6 @@ struct WTS_SESSION_ADDRESS
     ubyte[20] Address;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_process_info_exw
 struct WTS_PROCESS_INFO_EXW
 {
@@ -1531,7 +1503,6 @@ struct WTS_PROCESS_INFO_EXW
     long  KernelTime;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wts_process_info_exa
 struct WTS_PROCESS_INFO_EXA
 {
@@ -1549,7 +1520,6 @@ struct WTS_PROCESS_INFO_EXA
     long KernelTime;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtslistenerconfigw
 struct WTSLISTENERCONFIGW
 {
@@ -1586,7 +1556,6 @@ struct WTSLISTENERCONFIGW
     wchar[261] InitialProgram;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsapi32/ns-wtsapi32-wtslistenerconfiga
 struct WTSLISTENERCONFIGA
 {

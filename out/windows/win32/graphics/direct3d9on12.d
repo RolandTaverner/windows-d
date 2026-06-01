@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct3d9on12;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT;
 public import windows.win32.graphics.direct3d12 : ID3D12CommandQueue, ID3D12Fence;
 public import windows.win32.graphics.direct3d9 : IDirect3D9, IDirect3D9Ex, IDirect3DResource9;

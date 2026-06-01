@@ -110,17 +110,15 @@ public struct Generator
         }
         writeln("Building dependency graph done.");
 
-        bool mustCopyCore = true;
+        auto corePath = buildPath(outDirectory, "windows", "core.d");
+        mkdirRecurse(dirName(corePath));
+        copy(cfgCoreFileName, corePath);
+
         foreach(namespace; namespaces)
         {
             string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
             string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
             mkdirRecurse(dirName(path));
-            if (mustCopyCore)
-            {
-                copy(cfgCoreFileName, buildPath(dirName(path), "core.d"));
-                mustCopyCore = false;
-            }
 
             auto f = std.stdio.File(path, "w");
             f.writeln("// Written in the D programming language.");
@@ -246,6 +244,14 @@ public struct Generator
         {
             atLeastOne = true;
             auto n = getNamespace(i);
+            auto importName = getName(i);
+            
+            // Guid implemented as GUID at windows.core
+            if (n == "System" && importName == "Guid")
+            {
+                continue;
+            }
+
             if (n != lastNamespace)
             {
                 if (lastNamespace.length)
@@ -253,7 +259,6 @@ public struct Generator
                     f.writeln(";");
                 }
                 auto moduleName = makeModuleName(n, configNamespace, safeWords, nestedNamespaces);
-                auto importName = getName(i);
                 f.writef("public import %s : %s", moduleName, importName);
                 lastNamespace = n;
                 w = 17 + moduleName.length + importName.length;
@@ -261,7 +266,6 @@ public struct Generator
             }
             else
             {
-                auto importName = getName(i);
                 if (importName.length + w > maxLineWidth - 3)
                 {
                     f.writeln(",");                    
@@ -324,10 +328,7 @@ public struct Generator
             }
         }
 
-        if (enumAttrs.getDocumentation().length != 0)
-        {
-            f.writefln("// Microsoft documentation: %s", enumAttrs.getDocumentation());
-        }
+        f.dumpDocAttr(enumAttrs, 0);
 
         bool hasMembers = e.getFieldList().any!(f => !f.getFlags().hasRuntimeSpecialName);
         bool trueEnum = hasMembers && seemsLikeTrueEnum(e.getTypeName());
@@ -533,8 +534,8 @@ public struct Generator
         if (flds.length == 1)
         {
             auto fx = flds[0];
-            auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
-            auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
+            //auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
+            //auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
 
             if (!wasOne)
                 f.writeln;
@@ -738,11 +739,7 @@ public struct Generator
             }
         }
 
-        if (structAttrs.getDocumentation().length != 0)
-        {
-            f.write("".padLeft(' ', level * 4));
-            f.writefln("// Microsoft documentation: %s", structAttrs.getDocumentation());
-        }
+        f.dumpDocAttr(structAttrs, level).dumpObsoleteAttr(structAttrs, level);
 
         string[string] types;
 
@@ -827,16 +824,11 @@ public struct Generator
             // if (doc)
             // {
             //     auto fdoc = doc.fields.find!(a => a.name == fx.name);
-            //     if (!fdoc.empty)            
-            //         dumpDocumentation(f, fdoc.front.description, level + 1);            
+            //     if (!fdoc.empty)
+            //         dumpDocumentation(f, fdoc.front.description, level + 1);
             // }
-            
-            if (fieldAttrs.getDocumentation().length != 0)
-            {
-                f.write("".padLeft(' ', level * 4));
-                f.write("".padLeft(' ' , 4));
-                f.writefln("// Microsoft documentation: %s", fieldAttrs.getDocumentation());
-            }
+
+            f.dumpDocAttr(fieldAttrs, level + 1);
 
             f.write("".padLeft(' ', level * 4));
             f.write("".padLeft(' ' , 4));
@@ -894,13 +886,13 @@ public struct Generator
 
     private void dumpDelegate(scope ref std.stdio.File f,
         scope ref const TypeDefEntity type,
-        scope ref const CommonAttributes attrs,
+        scope ref const CommonAttributes delegateAttrs,
         int level,
         bool docs = false)
     {
         string conv;
 
-        foreach(ca; attrs.getUnhandledAttributes())
+        foreach(ca; delegateAttrs.getUnhandledAttributes())
         {
             if (ca.name() == "UnmanagedFunctionPointerAttribute")
             {
@@ -933,10 +925,7 @@ public struct Generator
                 //     dumpDocumentationReturn(f, doc.returns, 0);
                 // }
 
-                if (attrs.getDocumentation().length != 0)
-                {
-                    f.writefln("// Microsoft documentation: %s", attrs.getDocumentation());
-                }
+                f.dumpDocAttr(delegateAttrs, level).dumpObsoleteAttr(delegateAttrs, level);
 
                 auto name = safeWords.get(type.getTypeName(), type.getTypeName());
                 size_t w, v;
@@ -1044,7 +1033,7 @@ public struct Generator
 
     private void dumpMethod(scope ref std.stdio.File f, 
         scope ref const MethodDefEntity meth, 
-        scope ref const CommonAttributes attrs,
+        scope ref const CommonAttributes methAttrs,
         int level, 
         size_t maxReturnTypeLength,
         bool docs = false,
@@ -1052,7 +1041,7 @@ public struct Generator
     {
         size_t w, v;
 
-        foreach(ca; attrs.getUnhandledAttributes())
+        foreach(ca; methAttrs.getUnhandledAttributes())
         {
             f.writefln("//METH ATTR: %s : %s", ca.name(), ca.value());
         }
@@ -1065,12 +1054,7 @@ public struct Generator
         //     dumpDocumentationParams(f, *doc, level);     
         //     dumpDocumentationReturn(f, doc.returns, level);
         // }
-
-        if (attrs.getDocumentation().length != 0)
-        {
-            f.write("".padLeft(' ', level * 4));
-            f.writefln("// Microsoft documentation: %s", attrs.getDocumentation());
-        }
+        f.dumpDocAttr(methAttrs, level).dumpObsoleteAttr(methAttrs, level);
 
         f.write("".padLeft(' ', level * 4));
         w = level * 4;
@@ -1175,14 +1159,7 @@ public struct Generator
                 f.writefln("//INTERFACEF ATTR: %s : %s", ca.name(), ca.value());
             }
 
-            if (intfAttrs.getDocumentation().length != 0)
-            {
-                f.writefln("// Microsoft documentation: %s", intfAttrs.getDocumentation());
-            }
-            if (!guidAttribute.getGuid().empty)
-            {
-                dumpGUIDAttr(f, guidAttribute.getGuid());
-            }
+            f.dumpDocAttr(intfAttrs, 0).dumpObsoleteAttr(intfAttrs, 0).dumpGuidAttr(guidAttribute);
 
             auto intfName = intf.getTypeName();
             
@@ -1210,13 +1187,10 @@ public struct Generator
                 f.writefln("//INTERFACEF ATTR: %s : %s", ca.name(), ca.value());
             }
 
-            if (intfAttrs.getDocumentation().length != 0)
-            {
-                f.writefln("// Microsoft documentation: %s", intfAttrs.getDocumentation());
-            }
+            f.dumpDocAttr(intfAttrs, 0).dumpObsoleteAttr(intfAttrs, 0).dumpGuidAttr(guidAttribute);
+
             if (!guidAttribute.getGuid().empty)
             {
-                dumpGUIDAttr(f, guidAttribute.getGuid());
                 hasGuid = true;
             }
 
@@ -1227,7 +1201,7 @@ public struct Generator
                 if (name.length > maxLength)
                     maxLength = name.length;
             }
-            
+
             f.writef("interface %s", name);
             bool atLeastOne;    
 
@@ -1909,25 +1883,6 @@ string nameof(T)(T value)
     return null;
 }
 
-SupportedArchitecture getSupportedArchitecture(scope ref const CustomAttributeEntity ca)
-{
-    assert(ca.name() == "SupportedArchitectureAttribute");
-    auto sig = ca.value();
-    
-    if (sig.fixed.length != 1)
-    {
-        throw new Exception(format("SupportedArchitectureAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
-    }
-
-    auto element = sig.fixed[0].value.peek!ElementSig;
-    assert(element != null);
-    
-    auto value = element.value.peek!uint;
-    enforce(value != null, "SupportedArchitectureAttribute: can't get uint value");
-    
-    return cast(SupportedArchitecture)(*value);
-}
-
 string[] getSupportedArchitectureVersions(SupportedArchitecture arch)
 {
     string[] result;
@@ -1947,21 +1902,50 @@ string[] getSupportedArchitectureVersions(SupportedArchitecture arch)
     return result;
 }
 
-string getDocumentationAttribute(scope ref const CustomAttributeEntity ca)
+private ref std.stdio.File dumpDocAttr(return scope ref std.stdio.File f, scope ref const CommonAttributes ca, const int level = 0)
 {
-    assert(ca.name() == "DocumentationAttribute");
-    auto sig = ca.value();
-    
-    if (sig.fixed.length != 1)
+    if (ca.getDocumentation().length != 0)
     {
-        throw new Exception(format("DocumentationAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
+        if (level != 0)
+        {
+            f.write("".padLeft(' ', level * 4));
+        }
+        f.writefln("// Microsoft documentation: %s", ca.getDocumentation());
     }
 
-    auto element = sig.fixed[0].value.peek!ElementSig;
-    assert(element != null);
-    
-    auto value = element.value.peek!string;
-    enforce(value != null, "DocumentationAttribute: can't get string value");
-    
-    return *value;
+    return f;
+}
+
+private ref std.stdio.File dumpObsoleteAttr(return scope ref std.stdio.File f, scope ref const CommonAttributes ca, const int level = 0)
+{
+    if (!ca.getObsolete().isNull)
+    {
+        if (level != 0)
+        {
+            f.write("".padLeft(' ', level * 4));
+        }
+        auto msg = ca.getObsolete().get;
+        if (msg.length == 0)
+        {
+            msg = "marked as obsolete";
+        }
+
+        f.writefln("deprecated(\"%s\") ", msg);
+    }
+
+    return f;
+}
+
+private ref std.stdio.File dumpGuidAttr(return scope ref std.stdio.File f, scope ref const GuidAttribute ca, const int level = 0)
+{
+    if (!ca.getGuid().empty)
+    {
+        if (level != 0)
+        {
+            f.write("".padLeft(' ', level * 4));
+        }
+        f.writefln("@GUID(\"%s\")", ca.getGuid());
+    }
+
+    return f;
 }

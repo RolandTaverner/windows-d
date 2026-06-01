@@ -3,7 +3,6 @@
 module windows.win32.networkmanagement.netmanagement;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMNodeList;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
                                                     HANDLE, HRESULT, HWND, NTSTATUS,
@@ -7130,167 +7129,129 @@ uint NetScheduleJobEnum(const(PWSTR) Servername, ubyte** PointerToBuffer, uint P
 @DllImport("NETAPI32.dll")
 uint NetScheduleJobGetInfo(const(PWSTR) Servername, uint JobId, ubyte** PointerToBuffer);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceRegisterExA(const(PSTR) lpszCallerName, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceDeregisterA(uint dwTraceID);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceDeregisterExA(uint dwTraceID, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceGetConsoleA(uint dwTraceID, HANDLE* lphConsole);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TracePrintfA(uint dwTraceID, const(PSTR) lpszFormat);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TracePrintfExA(uint dwTraceID, uint dwFlags, const(PSTR) lpszFormat);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceVprintfExA(uint dwTraceID, uint dwFlags, const(PSTR) lpszFormat, byte* arglist);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TracePutsExA(uint dwTraceID, uint dwFlags, const(PSTR) lpszString);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceDumpExA(uint dwTraceID, uint dwFlags, ubyte* lpbBytes, uint dwByteCount, uint dwGroupSize, 
                   BOOL bAddressPrefix, const(PSTR) lpszPrefix);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceRegisterExW(const(PWSTR) lpszCallerName, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceDeregisterW(uint dwTraceID);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceDeregisterExW(uint dwTraceID, uint dwFlags);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceGetConsoleW(uint dwTraceID, HANDLE* lphConsole);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TracePrintfW(uint dwTraceID, const(PWSTR) lpszFormat);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TracePrintfExW(uint dwTraceID, uint dwFlags, const(PWSTR) lpszFormat);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceVprintfExW(uint dwTraceID, uint dwFlags, const(PWSTR) lpszFormat, byte* arglist);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TracePutsExW(uint dwTraceID, uint dwFlags, const(PWSTR) lpszString);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint TraceDumpExW(uint dwTraceID, uint dwFlags, ubyte* lpbBytes, uint dwByteCount, uint dwGroupSize, 
                   BOOL bAddressPrefix, const(PWSTR) lpszPrefix);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void LogErrorA(uint dwMessageId, uint cNumberOfSubStrings, PSTR* plpwsSubStrings, uint dwErrorCode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void LogEventA(uint wEventType, uint dwMessageId, uint cNumberOfSubStrings, PSTR* plpwsSubStrings);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void LogErrorW(uint dwMessageId, uint cNumberOfSubStrings, PWSTR* plpwsSubStrings, uint dwErrorCode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void LogEventW(uint wEventType, uint dwMessageId, uint cNumberOfSubStrings, PWSTR* plpwsSubStrings);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 HANDLE RouterLogRegisterA(const(PSTR) lpszSource);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogDeregisterA(HANDLE hLogHandle);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventA(HANDLE hLogHandle, uint dwEventType, uint dwMessageId, uint dwSubStringCount, 
                      PSTR* plpszSubStringArray, uint dwErrorCode);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventDataA(HANDLE hLogHandle, uint dwEventType, uint dwMessageId, uint dwSubStringCount, 
                          PSTR* plpszSubStringArray, uint dwDataBytes, ubyte* lpDataBytes);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventStringA(HANDLE hLogHandle, uint dwEventType, uint dwMessageId, uint dwSubStringCount, 
                            PSTR* plpszSubStringArray, uint dwErrorCode, uint dwErrorIndex);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventExA(HANDLE hLogHandle, uint dwEventType, uint dwErrorCode, uint dwMessageId, 
                        const(PSTR) ptszFormat);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventValistExA(HANDLE hLogHandle, uint dwEventType, uint dwErrorCode, uint dwMessageId, 
                              const(PSTR) ptszFormat, byte* arglist);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint RouterGetErrorStringA(uint dwErrorCode, PSTR* lplpszErrorString);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 HANDLE RouterLogRegisterW(const(PWSTR) lpszSource);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogDeregisterW(HANDLE hLogHandle);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventW(HANDLE hLogHandle, uint dwEventType, uint dwMessageId, uint dwSubStringCount, 
                      PWSTR* plpszSubStringArray, uint dwErrorCode);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventDataW(HANDLE hLogHandle, uint dwEventType, uint dwMessageId, uint dwSubStringCount, 
                          PWSTR* plpszSubStringArray, uint dwDataBytes, ubyte* lpDataBytes);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventStringW(HANDLE hLogHandle, uint dwEventType, uint dwMessageId, uint dwSubStringCount, 
                            PWSTR* plpszSubStringArray, uint dwErrorCode, uint dwErrorIndex);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventExW(HANDLE hLogHandle, uint dwEventType, uint dwErrorCode, uint dwMessageId, 
                        const(PWSTR) ptszFormat);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 void RouterLogEventValistExW(HANDLE hLogHandle, uint dwEventType, uint dwErrorCode, uint dwMessageId, 
                              const(PWSTR) ptszFormat, byte* arglist);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("rtutils.dll")
 uint RouterGetErrorStringW(uint dwErrorCode, PWSTR* lplpwszErrorString);
 

@@ -7,4 +7,3 @@ public import windows.core;
 extern(Windows) @nogc nothrow:
 
 
-public alias Guid = GUID;

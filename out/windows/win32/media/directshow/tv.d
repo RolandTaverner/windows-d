@@ -3,7 +3,6 @@
 module windows.win32.media.directshow.tv;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
                                                     HWND, PWSTR, RECT, SIZE, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HDC;

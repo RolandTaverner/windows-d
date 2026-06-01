@@ -3,7 +3,6 @@
 module windows.win32.media.directshow.directshow;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, COLORREF, HANDLE,
                                                     HRESULT, HWND, PAPCFUNC, POINT,
                                                     PSTR, PWSTR, RECT, SIZE, VARIANT_BOOL;
@@ -3791,9 +3790,7 @@ enum GUID SPECIFYPAGES_STATISTICS = GUID("4c437b92-6e9e-11d1-a704-006097c4e476")
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias AMGETERRORTEXTPROCA = BOOL function(HRESULT param0, PSTR param1, uint param2);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias AMGETERRORTEXTPROCW = BOOL function(HRESULT param0, PWSTR param1, uint param2);
 alias PDXVA2SW_GETVIDEOPROCESSORRENDERTARGETCOUNT = HRESULT function(const(DXVA2_VideoDesc)* pVideoDesc, 
                                                                      uint* pCount);
@@ -5718,11 +5715,9 @@ struct DXVA_COPPStatusSignalingCmdData
 
 // Functions
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("QUARTZ.dll")
 uint AMGetErrorTextA(HRESULT hr, PSTR pbuffer, uint MaxLen);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("QUARTZ.dll")
 uint AMGetErrorTextW(HRESULT hr, PWSTR pbuffer, uint MaxLen);
 

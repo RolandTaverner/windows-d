@@ -3,7 +3,6 @@
 module windows.win32.system.diagnostics.etw;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
                                                     HRESULT, PSTR, PWSTR, WIN32_ERROR;
 public import windows.win32.security.security : PSECURITY_DESCRIPTOR, PSID;
@@ -1120,9 +1119,7 @@ enum GUID CLSID_TraceRelogger = GUID("7b40792d-05ff-44c4-9058-f440c71f17d4");
 
 // Callbacks
 
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias PEVENT_TRACE_BUFFER_CALLBACKW = uint function(EVENT_TRACE_LOGFILEW* Logfile);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PEVENT_TRACE_BUFFER_CALLBACKA = uint function(EVENT_TRACE_LOGFILEA* Logfile);
 alias PEVENT_CALLBACK = void function(EVENT_TRACE* pEvent);
 alias PEVENT_RECORD_CALLBACK = void function(EVENT_RECORD* EventRecord);
@@ -1747,7 +1744,6 @@ struct ETW_OPEN_TRACE_OPTIONS
     void*                BufferCallbackContext;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntrace/ns-evntrace-event_trace_logfilew
 struct EVENT_TRACE_LOGFILEW
 {
@@ -1775,7 +1771,6 @@ struct EVENT_TRACE_LOGFILEW
     void*                Context;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntrace/ns-evntrace-event_trace_logfilea
 struct EVENT_TRACE_LOGFILEA
 {

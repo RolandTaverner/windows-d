@@ -3,7 +3,6 @@
 module windows.win32.networking.activedirectory;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
                                                     HANDLE, HINSTANCE, HRESULT, HWND,
                                                     LPARAM, PSTR, PWSTR, SYSTEMTIME,
@@ -2200,7 +2199,6 @@ struct DSCLASSCREATIONINFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] aWizardExtensions;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfow
 struct DSBROWSEINFOW
 {
@@ -2221,7 +2219,6 @@ struct DSBROWSEINFOW
     uint         cchObjectClass;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfoa
 struct DSBROWSEINFOA
 {
@@ -2242,7 +2239,6 @@ struct DSBROWSEINFOA
     uint         cchObjectClass;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbitemw
 struct DSBITEMW
 {
@@ -2257,7 +2253,6 @@ struct DSBITEMW
     int          iIconResID;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbitema
 struct DSBITEMA
 {
@@ -2422,7 +2417,6 @@ struct SCHEDULE
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCHEDULE_HEADER[1] Schedules;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itema
 struct DS_NAME_RESULT_ITEMA
 {
@@ -2431,7 +2425,6 @@ struct DS_NAME_RESULT_ITEMA
     PSTR pName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_resulta
 struct DS_NAME_RESULTA
 {
@@ -2439,7 +2432,6 @@ struct DS_NAME_RESULTA
     DS_NAME_RESULT_ITEMA* rItems;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itemw
 struct DS_NAME_RESULT_ITEMW
 {
@@ -2448,7 +2440,6 @@ struct DS_NAME_RESULT_ITEMW
     PWSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_resultw
 struct DS_NAME_RESULTW
 {
@@ -2456,7 +2447,6 @@ struct DS_NAME_RESULTW
     DS_NAME_RESULT_ITEMW* rItems;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_synca
 struct DS_REPSYNCALL_SYNCA
 {
@@ -2467,7 +2457,6 @@ struct DS_REPSYNCALL_SYNCA
     GUID* pguidDst;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_syncw
 struct DS_REPSYNCALL_SYNCW
 {
@@ -2478,7 +2467,6 @@ struct DS_REPSYNCALL_SYNCW
     GUID* pguidDst;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_errinfoa
 struct DS_REPSYNCALL_ERRINFOA
 {
@@ -2488,7 +2476,6 @@ struct DS_REPSYNCALL_ERRINFOA
     PSTR                pszSrcId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_errinfow
 struct DS_REPSYNCALL_ERRINFOW
 {
@@ -2498,7 +2485,6 @@ struct DS_REPSYNCALL_ERRINFOW
     PWSTR               pszSrcId;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_updatea
 struct DS_REPSYNCALL_UPDATEA
 {
@@ -2507,7 +2493,6 @@ struct DS_REPSYNCALL_UPDATEA
     DS_REPSYNCALL_SYNCA* pSync;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_updatew
 struct DS_REPSYNCALL_UPDATEW
 {
@@ -2523,7 +2508,6 @@ struct DS_SITE_COST_INFO
     uint cost;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_schema_guid_mapa
 struct DS_SCHEMA_GUID_MAPA
 {
@@ -2532,7 +2516,6 @@ struct DS_SCHEMA_GUID_MAPA
     PSTR pName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_schema_guid_mapw
 struct DS_SCHEMA_GUID_MAPW
 {
@@ -2541,7 +2524,6 @@ struct DS_SCHEMA_GUID_MAPW
     PWSTR pName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_1a
 struct DS_DOMAIN_CONTROLLER_INFO_1A
 {
@@ -2554,7 +2536,6 @@ struct DS_DOMAIN_CONTROLLER_INFO_1A
     BOOL fDsEnabled;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_1w
 struct DS_DOMAIN_CONTROLLER_INFO_1W
 {
@@ -2567,7 +2548,6 @@ struct DS_DOMAIN_CONTROLLER_INFO_1W
     BOOL  fDsEnabled;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_2a
 struct DS_DOMAIN_CONTROLLER_INFO_2A
 {
@@ -2587,7 +2567,6 @@ struct DS_DOMAIN_CONTROLLER_INFO_2A
     GUID NtdsDsaObjectGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_2w
 struct DS_DOMAIN_CONTROLLER_INFO_2W
 {
@@ -2607,7 +2586,6 @@ struct DS_DOMAIN_CONTROLLER_INFO_2W
     GUID  NtdsDsaObjectGuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_3a
 struct DS_DOMAIN_CONTROLLER_INFO_3A
 {
@@ -2628,7 +2606,6 @@ struct DS_DOMAIN_CONTROLLER_INFO_3A
     GUID NtdsDsaObjectGuid;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_3w
 struct DS_DOMAIN_CONTROLLER_INFO_3W
 {
@@ -3021,7 +2998,6 @@ struct DSROLE_OPERATION_STATE_INFO
     DSROLE_OPERATION_STATE OperationState;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-domain_controller_infoa
 struct DOMAIN_CONTROLLER_INFOA
 {
@@ -3036,7 +3012,6 @@ struct DOMAIN_CONTROLLER_INFOA
     PSTR ClientSiteName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-domain_controller_infow
 struct DOMAIN_CONTROLLER_INFOW
 {
@@ -3051,7 +3026,6 @@ struct DOMAIN_CONTROLLER_INFOW
     PWSTR ClientSiteName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-ds_domain_trustsw
 struct DS_DOMAIN_TRUSTSW
 {
@@ -3065,7 +3039,6 @@ struct DS_DOMAIN_TRUSTSW
     GUID  DomainGuid;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-ds_domain_trustsa
 struct DS_DOMAIN_TRUSTSA
 {
@@ -3293,12 +3266,10 @@ BOOL DsIsMangledDnA(const(PSTR) pszDn, DS_MANGLE_FOR eDsMangleFor);
 @DllImport("DSPARSE.dll")
 BOOL DsIsMangledDnW(const(PWSTR) pszDn, DS_MANGLE_FOR eDsMangleFor);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("DSPARSE.dll")
 uint DsCrackSpn2A(const(PSTR) pszSpn, uint cSpn, uint* pcServiceClass, PSTR ServiceClass, uint* pcServiceName, 
                   PSTR ServiceName, uint* pcInstanceName, PSTR InstanceName, ushort* pInstancePort);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("DSPARSE.dll")
 uint DsCrackSpn2W(const(PWSTR) pszSpn, uint cSpn, uint* pcServiceClass, PWSTR ServiceClass, uint* pcServiceName, 
                   PWSTR ServiceName, uint* pcInstanceName, PWSTR InstanceName, ushort* pInstancePort);

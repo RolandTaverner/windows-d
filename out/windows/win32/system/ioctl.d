@@ -3,7 +3,6 @@
 module windows.win32.system.ioctl;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN, CHAR, DEVPROPKEY, HANDLE;
 public import windows.win32.security.security : SID;
 public import windows.win32.storage.filesystem : FILE_ID_128, STORAGE_BUS_TYPE;

@@ -3,7 +3,6 @@
 module windows.win32.ui.accessibility;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, HMODULE, HRESULT, HWND,
                                                     LPARAM, LRESULT, POINT, PSTR, PWSTR,
                                                     RECT, WPARAM;
@@ -2043,7 +2042,6 @@ struct UiaWindowClosedEventArgs
     int           cRuntimeIdLen;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-serialkeysa
 struct SERIALKEYSA
@@ -2057,7 +2055,6 @@ struct SERIALKEYSA
     uint             iActive;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-serialkeysw
 struct SERIALKEYSW
@@ -2071,7 +2068,6 @@ struct SERIALKEYSW
     uint             iActive;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-highcontrasta
 struct HIGHCONTRASTA
@@ -2081,7 +2077,6 @@ struct HIGHCONTRASTA
     PSTR                lpszDefaultScheme;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-highcontrastw
 struct HIGHCONTRASTW
@@ -2133,7 +2128,6 @@ struct ACCESSTIMEOUT
     uint iTimeOutMSec;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-soundsentrya
 struct SOUNDSENTRYA
@@ -2152,7 +2146,6 @@ struct SOUNDSENTRYA
     uint              iWindowsEffectOrdinal;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-soundsentryw
 struct SOUNDSENTRYW

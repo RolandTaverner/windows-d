@@ -3,7 +3,6 @@
 module windows.win32.storage.indexserver;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : HRESULT, PWSTR, RECT;
 public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage, PROPSPEC, PROPVARIANT;

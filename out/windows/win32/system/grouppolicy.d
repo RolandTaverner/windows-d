@@ -3,7 +3,6 @@
 module windows.win32.system.grouppolicy;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
                                                     HWND, LPARAM, PSTR, PWSTR, SYSTEMTIME,
                                                     VARIANT_BOOL;
@@ -433,7 +432,6 @@ alias PFNGENERATEGROUPPOLICY = uint function(uint dwFlags, BOOL* pbAbort, PWSTR 
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-group_policy_objecta
 struct GROUP_POLICY_OBJECTA
 {
@@ -452,7 +450,6 @@ struct GROUP_POLICY_OBJECTA
     PSTR     lpLink;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-group_policy_objectw
 struct GROUP_POLICY_OBJECTW
 {

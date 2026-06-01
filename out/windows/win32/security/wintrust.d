@@ -3,7 +3,6 @@
 module windows.win32.security.wintrust;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HRESULT,
                                                     HWND, PSTR, PWSTR;
 public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CHAIN_ELEMENT,

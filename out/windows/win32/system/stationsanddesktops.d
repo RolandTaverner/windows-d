@@ -77,13 +77,9 @@ enum : uint
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias WINSTAENUMPROCA = BOOL function(PSTR param0, LPARAM param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias WINSTAENUMPROCW = BOOL function(PWSTR param0, LPARAM param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias DESKTOPENUMPROCA = BOOL function(PSTR param0, LPARAM param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias DESKTOPENUMPROCW = BOOL function(PWSTR param0, LPARAM param1);
 
 // Structs
@@ -265,7 +261,6 @@ int BroadcastSystemMessageExA(BROADCAST_SYSTEM_MESSAGE_FLAGS flags, BROADCAST_SY
 int BroadcastSystemMessageExW(BROADCAST_SYSTEM_MESSAGE_FLAGS flags, BROADCAST_SYSTEM_MESSAGE_INFO* lpInfo, 
                               uint Msg, WPARAM wParam, LPARAM lParam, BSMINFO* pbsmInfo);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("USER32.dll")
 int BroadcastSystemMessageA(uint flags, uint* lpInfo, uint Msg, WPARAM wParam, LPARAM lParam);
 

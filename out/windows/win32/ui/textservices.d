@@ -3,7 +3,6 @@
 module windows.win32.ui.textservices;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HANDLE, HRESULT,
                                                     HWND, LPARAM, POINT, PWSTR, RECT,
                                                     SIZE, WPARAM;
@@ -2757,15 +2756,11 @@ interface ITfPreservedKeyNotifySink : IUnknown
 @GUID("8f1b8ad8-0b6b-4874-90c5-bd76011e8f7c")
 interface ITfMessagePump : IUnknown
 {
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT PeekMessageA(MSG* pMsg, HWND hwnd, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg, 
                          BOOL* pfResult);
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
     HRESULT GetMessageA(MSG* pMsg, HWND hwnd, uint wMsgFilterMin, uint wMsgFilterMax, BOOL* pfResult);
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     HRESULT PeekMessageW(MSG* pMsg, HWND hwnd, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg, 
                          BOOL* pfResult);
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
     HRESULT GetMessageW(MSG* pMsg, HWND hwnd, uint wMsgFilterMin, uint wMsgFilterMax, BOOL* pfResult);
 }
 

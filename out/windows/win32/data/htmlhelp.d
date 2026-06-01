@@ -3,7 +3,6 @@
 module windows.win32.data.htmlhelp;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, COLORREF, HINSTANCE, HRESULT,
                                                     HWND, POINT, PSTR, PWSTR, RECT;
 public import windows.win32.system.com.com : IPersistStreamInit, IStream, IUnknown;
@@ -627,13 +626,11 @@ struct COLUMNSTATUS
 
 // Functions
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("hhctrl.ocx")
 HWND HtmlHelpA(HWND hwndCaller, const(PSTR) pszFile, 
                /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HTML_HELP_COMMAND))], [])*/uint uCommand, 
                size_t dwData);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("hhctrl.ocx")
 HWND HtmlHelpW(HWND hwndCaller, const(PWSTR) pszFile, 
                /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HTML_HELP_COMMAND))], [])*/uint uCommand, 

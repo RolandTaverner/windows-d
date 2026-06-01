@@ -3,7 +3,6 @@
 module windows.win32.system.winrt.composition;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.ui.composition.composition : CompositionCapabilities, CompositionGraphicsDevice,
                                                    CompositionTexture;
 public import windows.ui.composition.desktop : DesktopWindowTarget;

@@ -3,7 +3,7 @@
 module windows.win32.foundation.foundation;
 
 public import windows.core;
-public import system.system : Guid;
+;
 
 extern(Windows) @nogc nothrow:
 

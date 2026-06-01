@@ -3,7 +3,6 @@
 module windows.win32.system.winrt.graphics.imaging;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT;
 public import windows.win32.graphics.imaging.imaging : IWICBitmap;
 public import windows.win32.media.mediafoundation : IMF2DBuffer2, MFVideoArea;

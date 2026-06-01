@@ -3,7 +3,6 @@
 module windows.win32.devices.imageacquisition;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE,
                                                     HGLOBAL, HRESULT, HWND, PWSTR,
                                                     RECT;

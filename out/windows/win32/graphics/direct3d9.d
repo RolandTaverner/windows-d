@@ -3,7 +3,6 @@
 module windows.win32.graphics.direct3d9;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND,
                                                     LUID, POINT, PSTR, PWSTR, RECT;
 public import windows.win32.graphics.direct3d.direct3d : D3DMATRIX, D3DVECTOR;

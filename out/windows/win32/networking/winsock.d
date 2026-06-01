@@ -3,7 +3,6 @@
 module windows.win32.networking.winsock;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FARPROC, HANDLE,
                                                     HRESULT, HWND, LPARAM, LUID, PSTR,
                                                     PWSTR, WAIT_EVENT, WPARAM;
@@ -3309,7 +3308,6 @@ struct CMSGHDR
     int    cmsg_type;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoa
 struct ADDRINFOA
 {
@@ -3323,7 +3321,6 @@ struct ADDRINFOA
     ADDRINFOA* ai_next;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfow
 struct ADDRINFOW
 {
@@ -3337,9 +3334,8 @@ struct ADDRINFOW
     ADDRINFOW* ai_next;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ADDRINFOEXW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoexa
+deprecated("ADDRINFOEXW") 
 struct ADDRINFOEXA
 {
     int          ai_flags;
@@ -3355,7 +3351,6 @@ struct ADDRINFOEXA
     ADDRINFOEXA* ai_next;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoexw
 struct ADDRINFOEXW
 {
@@ -3372,9 +3367,8 @@ struct ADDRINFOEXW
     ADDRINFOEXW* ai_next;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ADDRINFOEX2W))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex2a
+deprecated("ADDRINFOEX2W") 
 struct ADDRINFOEX2A
 {
     int           ai_flags;
@@ -3392,7 +3386,6 @@ struct ADDRINFOEX2A
     PSTR          ai_fqdn;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex2w
 struct ADDRINFOEX2W
 {
@@ -3635,9 +3628,8 @@ struct WSAPROTOCOLCHAIN
     uint[7] ChainEntries;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSAPROTOCOL_INFOW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocol_infoa
+deprecated("WSAPROTOCOL_INFOW") 
 struct WSAPROTOCOL_INFOA
 {
     uint             dwServiceFlags1;
@@ -3662,7 +3654,6 @@ struct WSAPROTOCOL_INFOA
     CHAR[256]        szProtocol;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocol_infow
 struct WSAPROTOCOL_INFOW
 {
@@ -3732,9 +3723,8 @@ struct WSAVERSION
     WSAECOMPARATOR ecHow;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSAQUERYSETW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryseta
+deprecated("WSAQUERYSETW") 
 struct WSAQUERYSETA
 {
     uint         dwSize;
@@ -3754,7 +3744,6 @@ struct WSAQUERYSETA
     BLOB*        lpBlob;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaquerysetw
 struct WSAQUERYSETW
 {
@@ -3775,9 +3764,8 @@ struct WSAQUERYSETW
     BLOB*        lpBlob;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSAQUERYSET2W))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryset2a
+deprecated("WSAQUERYSET2W") 
 struct WSAQUERYSET2A
 {
     uint         dwSize;
@@ -3796,7 +3784,6 @@ struct WSAQUERYSET2A
     BLOB*        lpBlob;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryset2w
 struct WSAQUERYSET2W
 {
@@ -3816,9 +3803,8 @@ struct WSAQUERYSET2W
     BLOB*        lpBlob;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSANSCLASSINFOW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsansclassinfoa
+deprecated("WSANSCLASSINFOW") 
 struct WSANSCLASSINFOA
 {
     PSTR  lpszName;
@@ -3828,7 +3814,6 @@ struct WSANSCLASSINFOA
     void* lpValue;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsansclassinfow
 struct WSANSCLASSINFOW
 {
@@ -3839,9 +3824,8 @@ struct WSANSCLASSINFOW
     void* lpValue;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSASERVICECLASSINFOW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaserviceclassinfoa
+deprecated("WSASERVICECLASSINFOW") 
 struct WSASERVICECLASSINFOA
 {
     GUID*            lpServiceClassId;
@@ -3850,7 +3834,6 @@ struct WSASERVICECLASSINFOA
     WSANSCLASSINFOA* lpClassInfos;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaserviceclassinfow
 struct WSASERVICECLASSINFOW
 {
@@ -3860,9 +3843,8 @@ struct WSASERVICECLASSINFOW
     WSANSCLASSINFOW* lpClassInfos;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSANAMESPACE_INFOW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoa
+deprecated("WSANAMESPACE_INFOW") 
 struct WSANAMESPACE_INFOA
 {
     GUID NSProviderId;
@@ -3872,7 +3854,6 @@ struct WSANAMESPACE_INFOA
     PSTR lpszIdentifier;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infow
 struct WSANAMESPACE_INFOW
 {
@@ -3883,9 +3864,8 @@ struct WSANAMESPACE_INFOW
     PWSTR lpszIdentifier;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSANAMESPACE_INFOEXW))], [])
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoexa
+deprecated("WSANAMESPACE_INFOEXW") 
 struct WSANAMESPACE_INFOEXA
 {
     GUID NSProviderId;
@@ -3896,7 +3876,6 @@ struct WSANAMESPACE_INFOEXA
     BLOB ProviderSpecific;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoexw
 struct WSANAMESPACE_INFOEXW
 {
@@ -5036,7 +5015,6 @@ struct NSPV2_ROUTINE
     LPNSPV2CLIENTSESSIONRUNDOWN NSPv2ClientSessionRundown;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NS_INFOA
 {
     uint dwNameSpace;
@@ -5044,7 +5022,6 @@ struct NS_INFOA
     PSTR lpNameSpace;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NS_INFOW
 {
     uint  dwNameSpace;
@@ -5061,7 +5038,6 @@ struct SERVICE_TYPE_VALUE
     uint dwValueOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_value_absa
 struct SERVICE_TYPE_VALUE_ABSA
 {
@@ -5072,7 +5048,6 @@ struct SERVICE_TYPE_VALUE_ABSA
     void* lpValue;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_value_absw
 struct SERVICE_TYPE_VALUE_ABSW
 {
@@ -5090,7 +5065,6 @@ struct SERVICE_TYPE_INFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_TYPE_VALUE[1] Values;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absa
 struct SERVICE_TYPE_INFO_ABSA
 {
@@ -5099,7 +5073,6 @@ struct SERVICE_TYPE_INFO_ABSA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_TYPE_VALUE_ABSA[1] Values;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absw
 struct SERVICE_TYPE_INFO_ABSW
 {
@@ -5126,7 +5099,6 @@ struct SERVICE_ADDRESSES
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_ADDRESS[1] Addresses;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infoa
 struct SERVICE_INFOA
 {
@@ -5142,7 +5114,6 @@ struct SERVICE_INFOA
     BLOB               ServiceSpecificInfo;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infow
 struct SERVICE_INFOW
 {
@@ -5158,7 +5129,6 @@ struct SERVICE_INFOW
     BLOB               ServiceSpecificInfo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-ns_service_infoa
 struct NS_SERVICE_INFOA
 {
@@ -5166,7 +5136,6 @@ struct NS_SERVICE_INFOA
     SERVICE_INFOA ServiceInfo;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-ns_service_infow
 struct NS_SERVICE_INFOW
 {
@@ -5174,7 +5143,6 @@ struct NS_SERVICE_INFOW
     SERVICE_INFOW ServiceInfo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-protocol_infoa
 struct PROTOCOL_INFOA
 {
@@ -5188,7 +5156,6 @@ struct PROTOCOL_INFOA
     PSTR lpProtocol;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-protocol_infow
 struct PROTOCOL_INFOW
 {
@@ -5202,7 +5169,6 @@ struct PROTOCOL_INFOW
     PWSTR lpProtocol;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct NETRESOURCE2A
 {
     uint     dwScope;
@@ -5218,7 +5184,6 @@ struct NETRESOURCE2A
     int*     lpiProtocols;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct NETRESOURCE2W
 {
     uint     dwScope;
@@ -6202,19 +6167,19 @@ void WSASetLastError(int iError);
 @DllImport("WS2_32.dll")
 WSA_ERROR WSAGetLastError();
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Winsock 2))], [])
+deprecated("Winsock 2") 
 @DllImport("WS2_32.dll")
 BOOL WSAIsBlocking();
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Winsock 2))], [])
+deprecated("Winsock 2") 
 @DllImport("WS2_32.dll")
 int WSAUnhookBlockingHook();
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Winsock 2))], [])
+deprecated("Winsock 2") 
 @DllImport("WS2_32.dll")
 FARPROC WSASetBlockingHook(FARPROC lpBlockFunc);
 
-//METH ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Winsock 2))], [])
+deprecated("Winsock 2") 
 @DllImport("WS2_32.dll")
 int WSACancelBlockingCall();
 
@@ -6569,7 +6534,6 @@ uint ProcessSocketNotifications(HANDLE completionPort, uint registrationCount,
 @DllImport("ntdll.dll")
 PSTR RtlIpv4AddressToStringA(const(IN_ADDR)* Addr, PSTR S);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ntdll.dll")
 int RtlIpv4AddressToStringExA(const(IN_ADDR)* Address, ushort Port, PSTR AddressString, uint* AddressStringLength);
 
@@ -6585,7 +6549,6 @@ int RtlIpv4AddressToStringExW(const(IN_ADDR)* Address, ushort Port, PWSTR Addres
 @DllImport("ntdll.dll")
 int RtlIpv4StringToAddressA(const(PSTR) S, BOOLEAN Strict, const(PSTR)* Terminator, IN_ADDR* Addr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ntdll.dll")
 int RtlIpv4StringToAddressExA(const(PSTR) AddressString, BOOLEAN Strict, IN_ADDR* Address, ushort* Port);
 
@@ -6601,7 +6564,6 @@ int RtlIpv4StringToAddressExW(const(PWSTR) AddressString, BOOLEAN Strict, IN_ADD
 @DllImport("ntdll.dll")
 PSTR RtlIpv6AddressToStringA(const(IN6_ADDR)* Addr, PSTR S);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ntdll.dll")
 int RtlIpv6AddressToStringExA(const(IN6_ADDR)* Address, uint ScopeId, ushort Port, PSTR AddressString, 
                               uint* AddressStringLength);
@@ -6619,7 +6581,6 @@ int RtlIpv6AddressToStringExW(const(IN6_ADDR)* Address, uint ScopeId, ushort Por
 @DllImport("ntdll.dll")
 int RtlIpv6StringToAddressA(const(PSTR) S, const(PSTR)* Terminator, IN6_ADDR* Addr);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("ntdll.dll")
 int RtlIpv6StringToAddressExA(const(PSTR) AddressString, IN6_ADDR* Address, uint* ScopeId, ushort* Port);
 

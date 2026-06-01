@@ -2642,9 +2642,7 @@ enum : int
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias FONTENUMPROCA = int function(const(LOGFONTA)* param0, const(TEXTMETRICA)* param1, uint param2, LPARAM param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias FONTENUMPROCW = int function(const(LOGFONTW)* param0, const(TEXTMETRICW)* param1, uint param2, LPARAM param3);
 alias GOBJENUMPROC = int function(void* param0, LPARAM param1);
 alias LINEDDAPROC = void function(int param0, int param1, LPARAM param2);
@@ -2666,7 +2664,6 @@ alias MONITORENUMPROC = BOOL function(HMONITOR param0, HDC param1, RECT* param2,
 // Structs
 
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-monitorinfoexa
 struct MONITORINFOEXA
 {
@@ -2674,7 +2671,6 @@ struct MONITORINFOEXA
     CHAR[32]    szDevice;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-monitorinfoexw
 struct MONITORINFOEXW
 {
@@ -2994,7 +2990,6 @@ struct ENHMETAHEADER
     SIZE   szlMicrometers;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-textmetrica
 struct TEXTMETRICA
 {
@@ -3020,7 +3015,6 @@ struct TEXTMETRICA
     ubyte      tmCharSet;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-textmetricw
 struct TEXTMETRICW
 {
@@ -3046,7 +3040,6 @@ struct TEXTMETRICW
     ubyte      tmCharSet;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetrica
 struct NEWTEXTMETRICA
 {
@@ -3076,7 +3069,6 @@ struct NEWTEXTMETRICA
     uint       ntmAvgWidth;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricw
 struct NEWTEXTMETRICW
 {
@@ -3179,7 +3171,6 @@ struct LOGPALETTE
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PALETTEENTRY[1] palPalEntry;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-logfonta
 struct LOGFONTA
 {
@@ -3199,7 +3190,6 @@ struct LOGFONTA
     CHAR[32]            lfFaceName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-logfontw
 struct LOGFONTW
 {
@@ -3219,7 +3209,6 @@ struct LOGFONTW
     wchar[32]           lfFaceName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfonta
 struct ENUMLOGFONTA
 {
@@ -3228,7 +3217,6 @@ struct ENUMLOGFONTA
     ubyte[32] elfStyle;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontw
 struct ENUMLOGFONTW
 {
@@ -3237,7 +3225,6 @@ struct ENUMLOGFONTW
     wchar[32] elfStyle;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexa
 struct ENUMLOGFONTEXA
 {
@@ -3247,7 +3234,6 @@ struct ENUMLOGFONTEXA
     ubyte[32] elfScript;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexw
 struct ENUMLOGFONTEXW
 {
@@ -3272,7 +3258,6 @@ struct PANOSE
     PAN_XHEIGHT          bXHeight;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-extlogfonta
 struct EXTLOGFONTA
 {
@@ -3288,7 +3273,6 @@ struct EXTLOGFONTA
     PANOSE    elfPanose;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-extlogfontw
 struct EXTLOGFONTW
 {
@@ -3304,7 +3288,6 @@ struct EXTLOGFONTW
     PANOSE    elfPanose;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-devmodea
 struct DEVMODEA
 {
@@ -3360,7 +3343,6 @@ struct DEVMODEA
     uint                dmPanningHeight;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-devmodew
 struct DEVMODEW
 {
@@ -3416,7 +3398,6 @@ struct DEVMODEW
     uint                dmPanningHeight;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-display_devicea
 struct DISPLAY_DEVICEA
 {
@@ -3428,7 +3409,6 @@ struct DISPLAY_DEVICEA
     CHAR[128] DeviceKey;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-display_devicew
 struct DISPLAY_DEVICEW
 {
@@ -3473,7 +3453,6 @@ struct ABCFLOAT
     float abcfC;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-outlinetextmetrica
 struct OUTLINETEXTMETRICA
 {
@@ -3511,7 +3490,6 @@ struct OUTLINETEXTMETRICA
     PSTR        otmpFullName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-outlinetextmetricw
 struct OUTLINETEXTMETRICW
 {
@@ -3549,7 +3527,6 @@ struct OUTLINETEXTMETRICW
     PSTR        otmpFullName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-polytexta
 struct POLYTEXTA
 {
@@ -3562,7 +3539,6 @@ struct POLYTEXTA
     int*        pdx;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-polytextw
 struct POLYTEXTW
 {
@@ -3624,7 +3600,6 @@ struct TTPOLYGONHEADER
     POINTFX pfxStart;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-gcp_resultsa
 struct GCP_RESULTSA
 {
@@ -3639,7 +3614,6 @@ struct GCP_RESULTSA
     int   nMaxFit;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-gcp_resultsw
 struct GCP_RESULTSW
 {
@@ -3687,7 +3661,6 @@ struct DESIGNVECTOR
     int[16] dvValues;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axisinfoa
 struct AXISINFOA
 {
@@ -3696,7 +3669,6 @@ struct AXISINFOA
     ubyte[16] axAxisName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axisinfow
 struct AXISINFOW
 {
@@ -3705,7 +3677,6 @@ struct AXISINFOW
     wchar[16] axAxisName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axeslista
 struct AXESLISTA
 {
@@ -3714,7 +3685,6 @@ struct AXESLISTA
     AXISINFOA[16] axlAxisInfo;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axeslistw
 struct AXESLISTW
 {
@@ -3723,7 +3693,6 @@ struct AXESLISTW
     AXISINFOW[16] axlAxisInfo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexdva
 struct ENUMLOGFONTEXDVA
 {
@@ -3731,7 +3700,6 @@ struct ENUMLOGFONTEXDVA
     DESIGNVECTOR   elfDesignVector;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexdvw
 struct ENUMLOGFONTEXDVW
 {
@@ -4594,7 +4562,6 @@ struct MONITORINFO
 
 // Functions
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("GDI32.dll")
 int GetObjectA(HGDIOBJ h, int c, 
                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pv);
@@ -5009,11 +4976,9 @@ HDC_MAP_MODE GetMapMode(HDC hdc);
 uint GetMetaFileBitsEx(HMETAFILE hMF, uint cbBuffer, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* lpData);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("GDI32.dll")
 HMETAFILE GetMetaFileA(const(PSTR) lpName);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("GDI32.dll")
 HMETAFILE GetMetaFileW(const(PWSTR) lpName);
 

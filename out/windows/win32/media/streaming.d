@@ -3,7 +3,6 @@
 module windows.win32.media.streaming;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : DEVPROPKEY, RECT;
 
 extern(Windows) @nogc nothrow:

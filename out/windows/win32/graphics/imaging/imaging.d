@@ -3,7 +3,6 @@
 module windows.win32.graphics.imaging.imaging;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, GENERIC_ACCESS_RIGHTS, HANDLE,
                                                     HRESULT, PWSTR;
 public import windows.win32.graphics.direct2d.common : D2D1_PIXEL_FORMAT;

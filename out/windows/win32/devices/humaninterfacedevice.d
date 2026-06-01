@@ -3,7 +3,6 @@
 module windows.win32.devices.humaninterfacedevice;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, DEVPROPKEY,
                                                     FILETIME, HANDLE, HINSTANCE, HRESULT,
                                                     HWND, NTSTATUS, POINT, PSTR, PWSTR,
@@ -6361,24 +6360,16 @@ enum : uint
 // Callbacks
 
 alias LPDIENUMEFFECTSINFILECALLBACK = BOOL function(DIFILEEFFECT* param0, void* param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDIENUMDEVICEOBJECTSCALLBACKA = BOOL function(DIDEVICEOBJECTINSTANCEA* param0, void* param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDIENUMDEVICEOBJECTSCALLBACKW = BOOL function(DIDEVICEOBJECTINSTANCEW* param0, void* param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDIENUMEFFECTSCALLBACKA = BOOL function(DIEFFECTINFOA* param0, void* param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDIENUMEFFECTSCALLBACKW = BOOL function(DIEFFECTINFOW* param0, void* param1);
 alias LPDIENUMCREATEDEFFECTOBJECTSCALLBACK = BOOL function(IDirectInputEffect param0, void* param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDIENUMDEVICESCALLBACKA = BOOL function(DIDEVICEINSTANCEA* param0, void* param1);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDIENUMDEVICESCALLBACKW = BOOL function(DIDEVICEINSTANCEW* param0, void* param1);
 alias LPDICONFIGUREDEVICESCALLBACK = BOOL function(IUnknown param0, void* param1);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDIENUMDEVICESBYSEMANTICSCBA = BOOL function(DIDEVICEINSTANCEA* param0, IDirectInputDevice8A param1, 
                                                     uint param2, uint param3, void* param4);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDIENUMDEVICESBYSEMANTICSCBW = BOOL function(DIDEVICEINSTANCEW* param0, IDirectInputDevice8W param1, 
                                                     uint param2, uint param3, void* param4);
 alias LPFNSHOWJOYCPL = void function(HWND hWnd);
@@ -6539,7 +6530,6 @@ struct DIDATAFORMAT
     DIOBJECTDATAFORMAT* rgodf;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIACTIONA
 {
     size_t uAppData;
@@ -6555,7 +6545,6 @@ struct DIACTIONA
     uint   dwHow;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIACTIONW
 {
     size_t uAppData;
@@ -6571,7 +6560,6 @@ struct DIACTIONW
     uint   dwHow;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIACTIONFORMATA
 {
     uint       dwSize;
@@ -6590,7 +6578,6 @@ struct DIACTIONFORMATA
     CHAR[260]  tszActionMap;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIACTIONFORMATW
 {
     uint       dwSize;
@@ -6622,7 +6609,6 @@ struct DICOLORSET
     uint cAreaFill;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DICONFIGUREDEVICESPARAMSA
 {
     uint             dwSize;
@@ -6635,7 +6621,6 @@ struct DICONFIGUREDEVICESPARAMSA
     IUnknown         lpUnkDDSTarget;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DICONFIGUREDEVICESPARAMSW
 {
     uint             dwSize;
@@ -6648,7 +6633,6 @@ struct DICONFIGUREDEVICESPARAMSW
     IUnknown         lpUnkDDSTarget;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIDEVICEIMAGEINFOA
 {
     CHAR[260] tszImagePath;
@@ -6662,7 +6646,6 @@ struct DIDEVICEIMAGEINFOA
     uint      dwTextAlign;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIDEVICEIMAGEINFOW
 {
     wchar[260] tszImagePath;
@@ -6676,7 +6659,6 @@ struct DIDEVICEIMAGEINFOW
     uint       dwTextAlign;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIDEVICEIMAGEINFOHEADERA
 {
     uint                dwSize;
@@ -6690,7 +6672,6 @@ struct DIDEVICEIMAGEINFOHEADERA
     DIDEVICEIMAGEINFOA* lprgImageInfoArray;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIDEVICEIMAGEINFOHEADERW
 {
     uint                dwSize;
@@ -6704,7 +6685,6 @@ struct DIDEVICEIMAGEINFOHEADERW
     DIDEVICEIMAGEINFOW* lprgImageInfoArray;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIDEVICEOBJECTINSTANCE_DX3A
 {
     uint      dwSize;
@@ -6715,7 +6695,6 @@ struct DIDEVICEOBJECTINSTANCE_DX3A
     CHAR[260] tszName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIDEVICEOBJECTINSTANCE_DX3W
 {
     uint       dwSize;
@@ -6726,7 +6705,6 @@ struct DIDEVICEOBJECTINSTANCE_DX3W
     wchar[260] tszName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIDEVICEOBJECTINSTANCEA
 {
     uint      dwSize;
@@ -6746,7 +6724,6 @@ struct DIDEVICEOBJECTINSTANCEA
     ushort    wReportId;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIDEVICEOBJECTINSTANCEW
 {
     uint       dwSize;
@@ -6851,7 +6828,6 @@ struct DIDEVICEOBJECTDATA
     size_t uAppData;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIDEVICEINSTANCE_DX3A
 {
     uint      dwSize;
@@ -6862,7 +6838,6 @@ struct DIDEVICEINSTANCE_DX3A
     CHAR[260] tszProductName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIDEVICEINSTANCE_DX3W
 {
     uint       dwSize;
@@ -6873,7 +6848,6 @@ struct DIDEVICEINSTANCE_DX3W
     wchar[260] tszProductName;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIDEVICEINSTANCEA
 {
     uint      dwSize;
@@ -6887,7 +6861,6 @@ struct DIDEVICEINSTANCEA
     ushort    wUsage;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIDEVICEINSTANCEW
 {
     uint       dwSize;
@@ -6901,7 +6874,6 @@ struct DIDEVICEINSTANCEW
     ushort     wUsage;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct DIEFFECTINFOA
 {
     uint      dwSize;
@@ -6912,7 +6884,6 @@ struct DIEFFECTINFOA
     CHAR[260] tszName;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct DIEFFECTINFOW
 {
     uint       dwSize;
@@ -7771,7 +7742,6 @@ interface IDirectInputEffect : IUnknown
     HRESULT Escape(DIEFFESCAPE* param0);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("5944e681-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDeviceW : IUnknown
 {
@@ -7792,7 +7762,6 @@ interface IDirectInputDeviceW : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1, const(GUID)* param2);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("5944e680-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDeviceA : IUnknown
 {
@@ -7813,7 +7782,6 @@ interface IDirectInputDeviceA : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1, const(GUID)* param2);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("5944e683-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDevice2W : IDirectInputDeviceW
 {
@@ -7828,7 +7796,6 @@ interface IDirectInputDevice2W : IDirectInputDeviceW
     HRESULT SendDeviceData(uint param0, DIDEVICEOBJECTDATA* param1, uint* param2, uint param3);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("5944e682-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDevice2A : IDirectInputDeviceA
 {
@@ -7843,7 +7810,6 @@ interface IDirectInputDevice2A : IDirectInputDeviceA
     HRESULT SendDeviceData(uint param0, DIDEVICEOBJECTDATA* param1, uint* param2, uint param3);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("57d7c6bd-2356-11d3-8e9d-00c04f6844ae")
 interface IDirectInputDevice7W : IDirectInputDevice2W
 {
@@ -7851,7 +7817,6 @@ interface IDirectInputDevice7W : IDirectInputDevice2W
     HRESULT WriteEffectToFile(const(PWSTR) param0, uint param1, DIFILEEFFECT* param2, uint param3);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("57d7c6bc-2356-11d3-8e9d-00c04f6844ae")
 interface IDirectInputDevice7A : IDirectInputDevice2A
 {
@@ -7859,7 +7824,6 @@ interface IDirectInputDevice7A : IDirectInputDevice2A
     HRESULT WriteEffectToFile(const(PSTR) param0, uint param1, DIFILEEFFECT* param2, uint param3);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("54d41081-dc15-4833-a41b-748f73a38179")
 interface IDirectInputDevice8W : IUnknown
 {
@@ -7894,7 +7858,6 @@ interface IDirectInputDevice8W : IUnknown
     HRESULT GetImageInfo(DIDEVICEIMAGEINFOHEADERW* param0);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("54d41080-dc15-4833-a41b-748f73a38179")
 interface IDirectInputDevice8A : IUnknown
 {
@@ -7929,7 +7892,6 @@ interface IDirectInputDevice8A : IUnknown
     HRESULT GetImageInfo(DIDEVICEIMAGEINFOHEADERA* param0);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("89521361-aa8a-11cf-bfc7-444553540000")
 interface IDirectInputW : IUnknown
 {
@@ -7940,7 +7902,6 @@ interface IDirectInputW : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("89521360-aa8a-11cf-bfc7-444553540000")
 interface IDirectInputA : IUnknown
 {
@@ -7951,35 +7912,30 @@ interface IDirectInputA : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("5944e663-aa8a-11cf-bfc7-444553540000")
 interface IDirectInput2W : IDirectInputW
 {
     HRESULT FindDevice(const(GUID)* param0, const(PWSTR) param1, GUID* param2);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("5944e662-aa8a-11cf-bfc7-444553540000")
 interface IDirectInput2A : IDirectInputA
 {
     HRESULT FindDevice(const(GUID)* param0, const(PSTR) param1, GUID* param2);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("9a4cb685-236d-11d3-8e9d-00c04f6844ae")
 interface IDirectInput7W : IDirectInput2W
 {
     HRESULT CreateDeviceEx(const(GUID)* param0, const(GUID)* param1, void** param2, IUnknown param3);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("9a4cb684-236d-11d3-8e9d-00c04f6844ae")
 interface IDirectInput7A : IDirectInput2A
 {
     HRESULT CreateDeviceEx(const(GUID)* param0, const(GUID)* param1, void** param2, IUnknown param3);
 }
 
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @GUID("bf798031-483a-4da2-aa99-5d64ed369700")
 interface IDirectInput8W : IUnknown
 {
@@ -7995,7 +7951,6 @@ interface IDirectInput8W : IUnknown
                              void* param3);
 }
 
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @GUID("bf798030-483a-4da2-aa99-5d64ed369700")
 interface IDirectInput8A : IUnknown
 {

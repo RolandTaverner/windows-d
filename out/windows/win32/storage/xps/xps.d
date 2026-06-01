@@ -483,7 +483,6 @@ struct PSFEATURE_CUSTPAPER
     int lHeightOffset;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-docinfoa
 struct DOCINFOA
@@ -495,7 +494,6 @@ struct DOCINFOA
     uint        fwType;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-docinfow
 struct DOCINFOW

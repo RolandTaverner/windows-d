@@ -3,7 +3,6 @@
 module windows.win32.system.mmc;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HRESULT, HWND,
                                                     LPARAM, LRESULT, PWSTR, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HBITMAP, HPALETTE;

@@ -3,7 +3,6 @@
 module windows.win32.devices.functiondiscovery;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
 public import windows.win32.system.com.com : IServiceProvider, IUnknown, STGM;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;

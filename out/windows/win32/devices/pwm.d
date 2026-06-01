@@ -3,7 +3,6 @@
 module windows.win32.devices.pwm;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOLEAN;
 
 extern(Windows) @nogc nothrow:

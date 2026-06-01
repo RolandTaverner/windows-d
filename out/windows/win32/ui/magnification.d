@@ -3,7 +3,6 @@
 module windows.win32.ui.magnification;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HWND, RECT;
 public import windows.win32.graphics.gdi : HRGN;
 

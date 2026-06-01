@@ -3,7 +3,6 @@
 module windows.win32.graphics.directdraw;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HINSTANCE, HRESULT,
                                                     HWND, PSTR, PWSTR, RECT, RECTL,
                                                     SIZE;
@@ -1699,17 +1698,11 @@ enum uint DXAPI_HALVERSION = 0x00000001U;
 
 // Callbacks
 
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDDENUMCALLBACKA = BOOL function(GUID* param0, PSTR param1, PSTR param2, void* param3);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDDENUMCALLBACKW = BOOL function(GUID* param0, PWSTR param1, PWSTR param2, void* param3);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDDENUMCALLBACKEXA = BOOL function(GUID* param0, PSTR param1, PSTR param2, void* param3, HMONITOR param4);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDDENUMCALLBACKEXW = BOOL function(GUID* param0, PWSTR param1, PWSTR param2, void* param3, HMONITOR param4);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias LPDIRECTDRAWENUMERATEEXA = HRESULT function(LPDDENUMCALLBACKEXA lpCallback, void* lpContext, uint dwFlags);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 alias LPDIRECTDRAWENUMERATEEXW = HRESULT function(LPDDENUMCALLBACKEXW lpCallback, void* lpContext, uint dwFlags);
 alias LPDDENUMMODESCALLBACK = HRESULT function(DDSURFACEDESC* param0, void* param1);
 alias LPDDENUMMODESCALLBACK2 = HRESULT function(DDSURFACEDESC2* param0, void* param1);
@@ -5506,19 +5499,15 @@ struct DXAPI_INTERFACE
 
 // Functions
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawEnumerateW(LPDDENUMCALLBACKW lpCallback, void* lpContext);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawEnumerateA(LPDDENUMCALLBACKA lpCallback, void* lpContext);
 
-//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawEnumerateExW(LPDDENUMCALLBACKEXW lpCallback, void* lpContext, uint dwFlags);
 
-//METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawEnumerateExA(LPDDENUMCALLBACKEXA lpCallback, void* lpContext, uint dwFlags);
 

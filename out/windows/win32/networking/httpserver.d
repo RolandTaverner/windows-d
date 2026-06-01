@@ -3,7 +3,6 @@
 module windows.win32.networking.httpserver;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR,
                                                     PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR, SOCKADDR_STORAGE;
@@ -788,7 +787,6 @@ struct HTTP_SERVICE_BINDING_BASE
     HTTP_SERVICE_BINDING_TYPE Type;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_a
 struct HTTP_SERVICE_BINDING_A
 {
@@ -797,7 +795,6 @@ struct HTTP_SERVICE_BINDING_A
     uint BufferSize;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_w
 struct HTTP_SERVICE_BINDING_W
 {

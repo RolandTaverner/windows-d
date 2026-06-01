@@ -3,7 +3,6 @@
 module windows.win32.media.audio.apo;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, LPARAM, PROPERTYKEY,
                                                     PWSTR;
 public import windows.win32.media.audio.audio : AUDIO_SYSTEMEFFECTS_PROPERTYSTORE_TYPE, AUDIO_VOLUME_NOTIFICATION_DATA,

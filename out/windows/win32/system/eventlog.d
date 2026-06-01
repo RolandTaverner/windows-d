@@ -3,7 +3,6 @@
 module windows.win32.system.eventlog;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
                                                     SYSTEMTIME;
 public import windows.win32.security.security : PSID;
@@ -464,7 +463,7 @@ struct EVENTLOGRECORD
     uint              DataOffset;
 }
 
-//STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(struct EVENTSFORLOGFILE is deprecated and might not work on all platforms. For more info, see MSDN.))], [])
+deprecated("struct EVENTSFORLOGFILE is deprecated and might not work on all platforms. For more info, see MSDN.") 
 struct EVENTSFORLOGFILE
 {
     uint              ulSize;

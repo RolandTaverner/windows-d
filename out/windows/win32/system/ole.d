@@ -3,7 +3,6 @@
 module windows.win32.system.ole;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, DECIMAL,
                                                     FILETIME, HANDLE, HGLOBAL, HINSTANCE,
                                                     HRESULT, HRSRC, HTASK, HWND, LPARAM,
@@ -2358,7 +2357,6 @@ struct OLECMDTEXT
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] rgwz;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjectw
 struct OLEUIINSERTOBJECTW
 {
@@ -2386,7 +2384,6 @@ struct OLEUIINSERTOBJECTW
     HGLOBAL             hMetaPict;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjecta
 struct OLEUIINSERTOBJECTA
 {
@@ -2414,7 +2411,6 @@ struct OLEUIINSERTOBJECTA
     HGLOBAL             hMetaPict;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipasteentryw
 struct OLEUIPASTEENTRYW
 {
@@ -2425,7 +2421,6 @@ struct OLEUIPASTEENTRYW
     uint         dwScratchSpace;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipasteentrya
 struct OLEUIPASTEENTRYA
 {
@@ -2436,7 +2431,6 @@ struct OLEUIPASTEENTRYA
     uint        dwScratchSpace;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipastespecialw
 struct OLEUIPASTESPECIALW
 {
@@ -2462,7 +2456,6 @@ struct OLEUIPASTESPECIALW
     SIZE                sizel;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipastespeciala
 struct OLEUIPASTESPECIALA
 {
@@ -2488,7 +2481,6 @@ struct OLEUIPASTESPECIALA
     SIZE                sizel;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuieditlinksw
 struct OLEUIEDITLINKSW
 {
@@ -2504,7 +2496,6 @@ struct OLEUIEDITLINKSW
     IOleUILinkContainerW lpOleUILinkContainer;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuieditlinksa
 struct OLEUIEDITLINKSA
 {
@@ -2520,7 +2511,6 @@ struct OLEUIEDITLINKSA
     IOleUILinkContainerA lpOleUILinkContainer;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangeiconw
 struct OLEUICHANGEICONW
 {
@@ -2539,7 +2529,6 @@ struct OLEUICHANGEICONW
     int               cchIconExe;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangeicona
 struct OLEUICHANGEICONA
 {
@@ -2558,7 +2547,6 @@ struct OLEUICHANGEICONA
     int               cchIconExe;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiconvertw
 struct OLEUICONVERTW
 {
@@ -2586,7 +2574,6 @@ struct OLEUICONVERTW
     GUID*            lpClsidExclude;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiconverta
 struct OLEUICONVERTA
 {
@@ -2614,7 +2601,6 @@ struct OLEUICONVERTA
     GUID*            lpClsidExclude;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuibusyw
 struct OLEUIBUSYW
 {
@@ -2631,7 +2617,6 @@ struct OLEUIBUSYW
     HWND*             lphWndDialog;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuibusya
 struct OLEUIBUSYA
 {
@@ -2648,7 +2633,6 @@ struct OLEUIBUSYA
     HWND*             lphWndDialog;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangesourcew
 struct OLEUICHANGESOURCEW
 {
@@ -2671,7 +2655,6 @@ struct OLEUICHANGESOURCEW
     PWSTR                lpszTo;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangesourcea
 struct OLEUICHANGESOURCEA
 {
@@ -2694,7 +2677,6 @@ struct OLEUICHANGESOURCEA
     PSTR                 lpszTo;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuignrlpropsw
 struct OLEUIGNRLPROPSW
 {
@@ -2707,7 +2689,6 @@ struct OLEUIGNRLPROPSW
     OLEUIOBJECTPROPSW* lpOP;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuignrlpropsa
 struct OLEUIGNRLPROPSA
 {
@@ -2720,7 +2701,6 @@ struct OLEUIGNRLPROPSA
     OLEUIOBJECTPROPSA* lpOP;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiviewpropsw
 struct OLEUIVIEWPROPSW
 {
@@ -2735,7 +2715,6 @@ struct OLEUIVIEWPROPSW
     int                nScaleMax;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiviewpropsa
 struct OLEUIVIEWPROPSA
 {
@@ -2750,7 +2729,6 @@ struct OLEUIVIEWPROPSA
     int                nScaleMax;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuilinkpropsw
 struct OLEUILINKPROPSW
 {
@@ -2763,7 +2741,6 @@ struct OLEUILINKPROPSW
     OLEUIOBJECTPROPSW* lpOP;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuilinkpropsa
 struct OLEUILINKPROPSA
 {
@@ -2776,7 +2753,6 @@ struct OLEUILINKPROPSA
     OLEUIOBJECTPROPSA* lpOP;
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiobjectpropsw
 struct OLEUIOBJECTPROPSW
 {
@@ -2792,7 +2768,6 @@ struct OLEUIOBJECTPROPSW
     OLEUILINKPROPSW*     lpLP;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiobjectpropsa
 struct OLEUIOBJECTPROPSA
 {
@@ -5971,7 +5946,6 @@ interface IProtectedModeMenuServices : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkcontainerw
 interface IOleUILinkContainerW : IUnknown
 {
@@ -5996,7 +5970,6 @@ interface IOleUILinkContainerW : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkcontainera
 interface IOleUILinkContainerA : IUnknown
 {
@@ -6021,7 +5994,6 @@ interface IOleUILinkContainerA : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuiobjinfow
 interface IOleUIObjInfoW : IUnknown
 {
@@ -6040,7 +6012,6 @@ interface IOleUIObjInfoW : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuiobjinfoa
 interface IOleUIObjInfoA : IUnknown
 {
@@ -6059,7 +6030,6 @@ interface IOleUIObjInfoA : IUnknown
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkinfow
 interface IOleUILinkInfoW : IOleUILinkContainerW
 {
@@ -6068,7 +6038,6 @@ interface IOleUILinkInfoW : IOleUILinkContainerW
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkinfoa
 interface IOleUILinkInfoA : IOleUILinkContainerA
 {

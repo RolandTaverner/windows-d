@@ -3,7 +3,6 @@
 module windows.win32.system.winrt.metadata;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.foundation.collections : IPropertySet;
 public import windows.storage.streams : IPropertySetSerializer;
 public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;

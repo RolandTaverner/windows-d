@@ -3,7 +3,6 @@
 module windows.win32.system.kernel;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : PSTR;
 public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_RECORD;
 

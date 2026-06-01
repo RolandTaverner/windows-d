@@ -3,7 +3,6 @@
 module windows.win32.devices.webservicesondevices;
 
 public import windows.core;
-public import system.system : Guid;
 public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR_STORAGE;
 public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT, HCERTSTORE;
