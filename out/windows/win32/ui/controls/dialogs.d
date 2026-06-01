@@ -1965,9 +1965,9 @@ BOOL PageSetupDlgW(PAGESETUPDLGW* param0);
 
 // Interfaces
 
-@GUID("5852a2c3-6530-11d1-b6a3-0000f8757bf9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/nn-commdlg-iprintdialogcallback
+@GUID("5852a2c3-6530-11d1-b6a3-0000f8757bf9")
 interface IPrintDialogCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/nf-commdlg-iprintdialogcallback-initdone
@@ -1978,9 +1978,9 @@ interface IPrintDialogCallback : IUnknown
     HRESULT HandleMessage(HWND hDlg, uint uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 }
 
-@GUID("509aaeda-5639-11d1-b6a1-0000f8757bf9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/nn-commdlg-iprintdialogservices
+@GUID("509aaeda-5639-11d1-b6a1-0000f8757bf9")
 interface IPrintDialogServices : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commdlg/nf-commdlg-iprintdialogservices-getcurrentdevmode

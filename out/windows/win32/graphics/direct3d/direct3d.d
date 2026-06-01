@@ -957,18 +957,18 @@ struct D3DMATRIX
 
 // Interfaces
 
-@GUID("8ba5fb08-5195-40e2-ac58-0d989c3a0102")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("8ba5fb08-5195-40e2-ac58-0d989c3a0102")
 interface ID3DBlob : IUnknown
 {
     void*  GetBufferPointer();
     size_t GetBufferSize();
 }
 
-@GUID("a06eb39a-50da-425b-8c31-4eecd6c270f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nn-d3dcommon-id3ddestructionotifier
+@GUID("a06eb39a-50da-425b-8c31-4eecd6c270f3")
 interface ID3DDestructionNotifier : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3ddestructionotifier-registerdestructioncallback
@@ -988,8 +988,8 @@ interface ID3DInclude
     HRESULT Close(const(void)* pData);
 }
 
-@GUID("a16ee930-d9f6-4222-a514-244473e5d266")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("a16ee930-d9f6-4222-a514-244473e5d266")
 interface ID3DShaderCacheInstallerClient
 {
     HRESULT GetInstallerName(size_t* pNameLength, PWSTR pName);
@@ -997,8 +997,8 @@ interface ID3DShaderCacheInstallerClient
     HRESULT HandleDriverUpdate(ID3DShaderCacheInstaller pInstaller);
 }
 
-@GUID("eed1bf00-f5c7-4cf7-885c-d0f9c0cb4828")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("eed1bf00-f5c7-4cf7-885c-d0f9c0cb4828")
 interface ID3DShaderCacheComponent : IUnknown
 {
     HRESULT GetComponentName(const(ushort)** pName);
@@ -1008,8 +1008,8 @@ interface ID3DShaderCacheComponent : IUnknown
     HRESULT GetPrecompiledShaderDatabases(uint ArraySize, D3D_SHADER_CACHE_PSDB_PROPERTIES* pPSDBs);
 }
 
-@GUID("fc688ee2-1b35-4913-93be-1ca3fa7df39e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("fc688ee2-1b35-4913-93be-1ca3fa7df39e")
 interface ID3DShaderCacheApplication : IUnknown
 {
     HRESULT GetExePath(const(ushort)** pExePath);
@@ -1026,8 +1026,8 @@ interface ID3DShaderCacheApplication : IUnknown
     HRESULT GetInstallerName(const(ushort)** pInstallerName);
 }
 
-@GUID("bbe30de1-6318-4526-ae17-776693191bb4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("bbe30de1-6318-4526-ae17-776693191bb4")
 interface ID3DShaderCacheInstaller : IUnknown
 {
     HRESULT RegisterDriverUpdateListener();
@@ -1045,15 +1045,15 @@ interface ID3DShaderCacheInstaller : IUnknown
                                  D3D_SHADER_CACHE_COMPILER_PROPERTIES* pArray, D3D_SHADER_CACHE_TARGET_FLAGS flags);
 }
 
-@GUID("90432322-32f5-487f-9264-e9390fa58b2a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("90432322-32f5-487f-9264-e9390fa58b2a")
 interface ID3DShaderCacheExplorer : IUnknown
 {
     HRESULT GetApplicationFromExePath(const(PWSTR) pFullExePath, const(GUID)* riid, void** ppvApp);
 }
 
-@GUID("09b2dfe4-840f-401a-804c-0dd8aadc9e9f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("09b2dfe4-840f-401a-804c-0dd8aadc9e9f")
 interface ID3DShaderCacheInstallerFactory : IUnknown
 {
     HRESULT CreateInstaller(ID3DShaderCacheInstallerClient pClient, const(GUID)* riid, void** ppvInstaller);

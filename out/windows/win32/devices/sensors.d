@@ -832,15 +832,16 @@ struct SensorManager;
 @GUID("79c43adb-a429-469f-aa39-2f2b74b75937")
 struct SensorCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/sensor-profile-guids
 @GUID("e97ced00-523a-4133-bf6f-d3a2dae7f6ba")
 struct Sensor;
 
 @GUID("4ea9d6ef-694b-4218-8816-ccda8da74bba")
 struct SensorDataReport;
 
-@GUID("bd77db67-45a8-42dc-8d00-6dcf15f8377a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensormanager
+@GUID("bd77db67-45a8-42dc-8d00-6dcf15f8377a")
 interface ISensorManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorsbycategory
@@ -855,9 +856,9 @@ interface ISensorManager : IUnknown
     HRESULT RequestPermissions(HWND hParent, ISensorCollection pSensors, BOOL fModal);
 }
 
-@GUID("d5fb0a7f-e74e-44f5-8e02-4806863a274f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-ilocationpermissions
+@GUID("d5fb0a7f-e74e-44f5-8e02-4806863a274f")
 interface ILocationPermissions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-ilocationpermissions-getgloballocationpermission
@@ -866,9 +867,9 @@ interface ILocationPermissions : IUnknown
     HRESULT CheckLocationCapability(uint dwClientThreadId);
 }
 
-@GUID("23571e11-e545-4dd8-a337-b89bf44b10df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensorcollection
+@GUID("23571e11-e545-4dd8-a337-b89bf44b10df")
 interface ISensorCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-getat
@@ -885,9 +886,9 @@ interface ISensorCollection : IUnknown
     HRESULT Clear();
 }
 
-@GUID("5fa08f80-2657-458e-af75-46f73fa6ac5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensor
+@GUID("5fa08f80-2657-458e-af75-46f73fa6ac5c")
 interface ISensor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getid
@@ -922,9 +923,9 @@ interface ISensor : IUnknown
     HRESULT SetEventSink(ISensorEvents pEvents);
 }
 
-@GUID("0ab9df9b-c4b5-4796-8898-0470706a2e1d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensordatareport
+@GUID("0ab9df9b-c4b5-4796-8898-0470706a2e1d")
 interface ISensorDataReport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-gettimestamp
@@ -935,18 +936,18 @@ interface ISensorDataReport : IUnknown
     HRESULT GetSensorValues(IPortableDeviceKeyCollection pKeys, IPortableDeviceValues* ppValues);
 }
 
-@GUID("9b3b0b86-266a-4aad-b21f-fde5501001b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensormanagerevents
+@GUID("9b3b0b86-266a-4aad-b21f-fde5501001b7")
 interface ISensorManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanagerevents-onsensorenter
     HRESULT OnSensorEnter(ISensor pSensor, SensorState state);
 }
 
-@GUID("5d8dcc91-4641-47e7-b7c3-b74f48a6c391")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensorevents
+@GUID("5d8dcc91-4641-47e7-b7c3-b74f48a6c391")
 interface ISensorEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onstatechanged

@@ -2646,9 +2646,9 @@ HRESULT D3D10CreateDeviceAndSwapChain1(IDXGIAdapter pAdapter, D3D10_DRIVER_TYPE 
 
 // Interfaces
 
-@GUID("9b7e4c00-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10devicechild
+@GUID("9b7e4c00-342c-4106-a19f-4f2704f689f0")
 interface ID3D10DeviceChild : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-getdevice
@@ -2663,36 +2663,36 @@ interface ID3D10DeviceChild : IUnknown
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
 }
 
-@GUID("2b4b1cc8-a4ad-41f8-8322-ca86fc3ec675")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10depthstencilstate
+@GUID("2b4b1cc8-a4ad-41f8-8322-ca86fc3ec675")
 interface ID3D10DepthStencilState : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10depthstencilstate-getdesc
     void GetDesc(D3D10_DEPTH_STENCIL_DESC* pDesc);
 }
 
-@GUID("edad8d19-8a35-4d6d-8566-2ea276cde161")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10blendstate
+@GUID("edad8d19-8a35-4d6d-8566-2ea276cde161")
 interface ID3D10BlendState : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10blendstate-getdesc
     void GetDesc(D3D10_BLEND_DESC* pDesc);
 }
 
-@GUID("a2a07292-89af-4345-be2e-c53d9fbb6e9f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10rasterizerstate
+@GUID("a2a07292-89af-4345-be2e-c53d9fbb6e9f")
 interface ID3D10RasterizerState : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10rasterizerstate-getdesc
     void GetDesc(D3D10_RASTERIZER_DESC* pDesc);
 }
 
-@GUID("9b7e4c01-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10resource
+@GUID("9b7e4c01-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Resource : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-gettype
@@ -2703,9 +2703,9 @@ interface ID3D10Resource : ID3D10DeviceChild
     uint GetEvictionPriority();
 }
 
-@GUID("9b7e4c02-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10buffer
+@GUID("9b7e4c02-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Buffer : ID3D10Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-map
@@ -2716,9 +2716,9 @@ interface ID3D10Buffer : ID3D10Resource
     void    GetDesc(D3D10_BUFFER_DESC* pDesc);
 }
 
-@GUID("9b7e4c03-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture1d
+@GUID("9b7e4c03-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Texture1D : ID3D10Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-map
@@ -2729,9 +2729,9 @@ interface ID3D10Texture1D : ID3D10Resource
     void    GetDesc(D3D10_TEXTURE1D_DESC* pDesc);
 }
 
-@GUID("9b7e4c04-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture2d
+@GUID("9b7e4c04-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Texture2D : ID3D10Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-map
@@ -2742,9 +2742,9 @@ interface ID3D10Texture2D : ID3D10Resource
     void    GetDesc(D3D10_TEXTURE2D_DESC* pDesc);
 }
 
-@GUID("9b7e4c05-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture3d
+@GUID("9b7e4c05-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Texture3D : ID3D10Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-map
@@ -2755,82 +2755,82 @@ interface ID3D10Texture3D : ID3D10Resource
     void    GetDesc(D3D10_TEXTURE3D_DESC* pDesc);
 }
 
-@GUID("c902b03f-60a7-49ba-9936-2a3ab37a7e33")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10view
+@GUID("c902b03f-60a7-49ba-9936-2a3ab37a7e33")
 interface ID3D10View : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10view-getresource
     void GetResource(ID3D10Resource* ppResource);
 }
 
-@GUID("9b7e4c07-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10shaderresourceview
+@GUID("9b7e4c07-342c-4106-a19f-4f2704f689f0")
 interface ID3D10ShaderResourceView : ID3D10View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10shaderresourceview-getdesc
     void GetDesc(D3D10_SHADER_RESOURCE_VIEW_DESC* pDesc);
 }
 
-@GUID("9b7e4c08-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10rendertargetview
+@GUID("9b7e4c08-342c-4106-a19f-4f2704f689f0")
 interface ID3D10RenderTargetView : ID3D10View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10rendertargetview-getdesc
     void GetDesc(D3D10_RENDER_TARGET_VIEW_DESC* pDesc);
 }
 
-@GUID("9b7e4c09-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10depthstencilview
+@GUID("9b7e4c09-342c-4106-a19f-4f2704f689f0")
 interface ID3D10DepthStencilView : ID3D10View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10depthstencilview-getdesc
     void GetDesc(D3D10_DEPTH_STENCIL_VIEW_DESC* pDesc);
 }
 
-@GUID("9b7e4c0a-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10vertexshader
+@GUID("9b7e4c0a-342c-4106-a19f-4f2704f689f0")
 interface ID3D10VertexShader : ID3D10DeviceChild
 {
 }
 
-@GUID("6316be88-54cd-4040-ab44-20461bc81f68")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10geometryshader
+@GUID("6316be88-54cd-4040-ab44-20461bc81f68")
 interface ID3D10GeometryShader : ID3D10DeviceChild
 {
 }
 
-@GUID("4968b601-9d00-4cde-8346-8e7f675819b6")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10pixelshader
+@GUID("4968b601-9d00-4cde-8346-8e7f675819b6")
 interface ID3D10PixelShader : ID3D10DeviceChild
 {
 }
 
-@GUID("9b7e4c0b-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10inputlayout
+@GUID("9b7e4c0b-342c-4106-a19f-4f2704f689f0")
 interface ID3D10InputLayout : ID3D10DeviceChild
 {
 }
 
-@GUID("9b7e4c0c-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10samplerstate
+@GUID("9b7e4c0c-342c-4106-a19f-4f2704f689f0")
 interface ID3D10SamplerState : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10samplerstate-getdesc
     void GetDesc(D3D10_SAMPLER_DESC* pDesc);
 }
 
-@GUID("9b7e4c0d-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10asynchronous
+@GUID("9b7e4c0d-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Asynchronous : ID3D10DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-begin
@@ -2844,34 +2844,34 @@ interface ID3D10Asynchronous : ID3D10DeviceChild
     uint    GetDataSize();
 }
 
-@GUID("9b7e4c0e-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10query
+@GUID("9b7e4c0e-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Query : ID3D10Asynchronous
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10query-getdesc
     void GetDesc(D3D10_QUERY_DESC* pDesc);
 }
 
-@GUID("9b7e4c10-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10predicate
+@GUID("9b7e4c10-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Predicate : ID3D10Query
 {
 }
 
-@GUID("9b7e4c11-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10counter
+@GUID("9b7e4c11-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Counter : ID3D10Asynchronous
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10counter-getdesc
     void GetDesc(D3D10_COUNTER_DESC* pDesc);
 }
 
-@GUID("9b7e4c0f-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10device
+@GUID("9b7e4c0f-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Device : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetconstantbuffers
@@ -3097,9 +3097,9 @@ interface ID3D10Device : IUnknown
     void    GetTextFilterSize(uint* pWidth, uint* pHeight);
 }
 
-@GUID("9b7e4e00-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10multithread
+@GUID("9b7e4e00-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Multithread : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-enter
@@ -3112,9 +3112,9 @@ interface ID3D10Multithread : IUnknown
     BOOL GetMultithreadProtected();
 }
 
-@GUID("9b7e4e01-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10debug
+@GUID("9b7e4e01-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Debug : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setfeaturemask
@@ -3133,9 +3133,9 @@ interface ID3D10Debug : IUnknown
     HRESULT Validate();
 }
 
-@GUID("9b7e4e02-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10switchtoref
+@GUID("9b7e4e02-342c-4106-a19f-4f2704f689f0")
 interface ID3D10SwitchToRef : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10switchtoref-setuseref
@@ -3144,9 +3144,9 @@ interface ID3D10SwitchToRef : IUnknown
     BOOL GetUseRef();
 }
 
-@GUID("1b940b17-2642-4d1f-ab1f-b99bad0c395f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10infoqueue
+@GUID("1b940b17-2642-4d1f-ab1f-b99bad0c395f")
 interface ID3D10InfoQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setmessagecountlimit
@@ -3226,9 +3226,9 @@ interface ID3D10InfoQueue : IUnknown
     BOOL    GetMuteDebugOutput();
 }
 
-@GUID("c530ad7d-9b16-4395-a979-ba2ecff83add")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectiontype
+@GUID("c530ad7d-9b16-4395-a979-ba2ecff83add")
 interface ID3D10ShaderReflectionType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getdesc
@@ -3241,9 +3241,9 @@ interface ID3D10ShaderReflectionType
     PSTR    GetMemberTypeName(uint Index);
 }
 
-@GUID("1bf63c95-2650-405d-99c1-3636bd1da0a1")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectionvariable
+@GUID("1bf63c95-2650-405d-99c1-3636bd1da0a1")
 interface ID3D10ShaderReflectionVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionvariable-getdesc
@@ -3252,9 +3252,9 @@ interface ID3D10ShaderReflectionVariable
     ID3D10ShaderReflectionType GetType();
 }
 
-@GUID("66c66a94-dddd-4b62-a66a-f0da33c2b4d0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectionconstantbuffer
+@GUID("66c66a94-dddd-4b62-a66a-f0da33c2b4d0")
 interface ID3D10ShaderReflectionConstantBuffer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getdesc
@@ -3265,9 +3265,9 @@ interface ID3D10ShaderReflectionConstantBuffer
     ID3D10ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
 }
 
-@GUID("d40e20b6-f8f7-42ad-ab20-4baf8f15dfaa")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflection
+@GUID("d40e20b6-f8f7-42ad-ab20-4baf8f15dfaa")
 interface ID3D10ShaderReflection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getdesc
@@ -3284,9 +3284,9 @@ interface ID3D10ShaderReflection : IUnknown
     HRESULT GetOutputParameterDesc(uint ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
 }
 
-@GUID("0803425a-57f5-4dd6-9465-a87570834a08")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10stateblock
+@GUID("0803425a-57f5-4dd6-9465-a87570834a08")
 interface ID3D10StateBlock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-capture
@@ -3299,9 +3299,9 @@ interface ID3D10StateBlock : IUnknown
     HRESULT GetDevice(ID3D10Device* ppDevice);
 }
 
-@GUID("4e9e1ddc-cd9d-4772-a837-00180b9b88fd")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effecttype
+@GUID("4e9e1ddc-cd9d-4772-a837-00180b9b88fd")
 interface ID3D10EffectType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-isvalid
@@ -3320,9 +3320,9 @@ interface ID3D10EffectType
     PSTR    GetMemberSemantic(uint Index);
 }
 
-@GUID("ae897105-00e6-45bf-bb8e-281dd6db8e1b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectvariable
+@GUID("ae897105-00e6-45bf-bb8e-281dd6db8e1b")
 interface ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-isvalid
@@ -3379,9 +3379,9 @@ interface ID3D10EffectVariable
                         uint Offset, uint ByteCount);
 }
 
-@GUID("00e48f7b-d2c8-49e8-a86c-022dee53431f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectscalarvariable
+@GUID("00e48f7b-d2c8-49e8-a86c-022dee53431f")
 interface ID3D10EffectScalarVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setfloat
@@ -3410,9 +3410,9 @@ interface ID3D10EffectScalarVariable : ID3D10EffectVariable
     HRESULT GetBoolArray(BOOL* pData, uint Offset, uint Count);
 }
 
-@GUID("62b98c44-1f82-4c67-bcd0-72cf8f217e81")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectvectorvariable
+@GUID("62b98c44-1f82-4c67-bcd0-72cf8f217e81")
 interface ID3D10EffectVectorVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setboolvector
@@ -3441,9 +3441,9 @@ interface ID3D10EffectVectorVariable : ID3D10EffectVariable
     HRESULT GetFloatVectorArray(float* pData, uint Offset, uint Count);
 }
 
-@GUID("50666c24-b82f-4eed-a172-5b6e7e8522e0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectmatrixvariable
+@GUID("50666c24-b82f-4eed-a172-5b6e7e8522e0")
 interface ID3D10EffectMatrixVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrix
@@ -3464,9 +3464,9 @@ interface ID3D10EffectMatrixVariable : ID3D10EffectVariable
     HRESULT GetMatrixTransposeArray(float* pData, uint Offset, uint Count);
 }
 
-@GUID("71417501-8df9-4e0a-a78a-255f9756baff")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectstringvariable
+@GUID("71417501-8df9-4e0a-a78a-255f9756baff")
 interface ID3D10EffectStringVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectstringvariable-getstring
@@ -3475,9 +3475,9 @@ interface ID3D10EffectStringVariable : ID3D10EffectVariable
     HRESULT GetStringArray(const(PSTR)* ppStrings, uint Offset, uint Count);
 }
 
-@GUID("c0a7157b-d872-4b1d-8073-efc2acd4b1fc")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectshaderresourcevariable
+@GUID("c0a7157b-d872-4b1d-8073-efc2acd4b1fc")
 interface ID3D10EffectShaderResourceVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-setresource
@@ -3490,9 +3490,9 @@ interface ID3D10EffectShaderResourceVariable : ID3D10EffectVariable
     HRESULT GetResourceArray(ID3D10ShaderResourceView* ppResources, uint Offset, uint Count);
 }
 
-@GUID("28ca0cc3-c2c9-40bb-b57f-67b737122b17")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectrendertargetviewvariable
+@GUID("28ca0cc3-c2c9-40bb-b57f-67b737122b17")
 interface ID3D10EffectRenderTargetViewVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-setrendertarget
@@ -3505,9 +3505,9 @@ interface ID3D10EffectRenderTargetViewVariable : ID3D10EffectVariable
     HRESULT GetRenderTargetArray(ID3D10RenderTargetView* ppResources, uint Offset, uint Count);
 }
 
-@GUID("3e02c918-cc79-4985-b622-2d92ad701623")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectdepthstencilviewvariable
+@GUID("3e02c918-cc79-4985-b622-2d92ad701623")
 interface ID3D10EffectDepthStencilViewVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-setdepthstencil
@@ -3520,9 +3520,9 @@ interface ID3D10EffectDepthStencilViewVariable : ID3D10EffectVariable
     HRESULT GetDepthStencilArray(ID3D10DepthStencilView* ppResources, uint Offset, uint Count);
 }
 
-@GUID("56648f4d-cc8b-4444-a5ad-b5a3d76e91b3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectconstantbuffer
+@GUID("56648f4d-cc8b-4444-a5ad-b5a3d76e91b3")
 interface ID3D10EffectConstantBuffer : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-setconstantbuffer
@@ -3535,9 +3535,9 @@ interface ID3D10EffectConstantBuffer : ID3D10EffectVariable
     HRESULT GetTextureBuffer(ID3D10ShaderResourceView* ppTextureBuffer);
 }
 
-@GUID("80849279-c799-4797-8c33-0407a07d9e06")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectshadervariable
+@GUID("80849279-c799-4797-8c33-0407a07d9e06")
 interface ID3D10EffectShaderVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getshaderdesc
@@ -3554,9 +3554,9 @@ interface ID3D10EffectShaderVariable : ID3D10EffectVariable
     HRESULT GetOutputSignatureElementDesc(uint ShaderIndex, uint Element, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
 }
 
-@GUID("1fcd2294-df6d-4eae-86b3-0e9160cfb07b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectblendvariable
+@GUID("1fcd2294-df6d-4eae-86b3-0e9160cfb07b")
 interface ID3D10EffectBlendVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectblendvariable-getblendstate
@@ -3565,9 +3565,9 @@ interface ID3D10EffectBlendVariable : ID3D10EffectVariable
     HRESULT GetBackingStore(uint Index, D3D10_BLEND_DESC* pBlendDesc);
 }
 
-@GUID("af482368-330a-46a5-9a5c-01c71af24c8d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectdepthstencilvariable
+@GUID("af482368-330a-46a5-9a5c-01c71af24c8d")
 interface ID3D10EffectDepthStencilVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilvariable-getdepthstencilstate
@@ -3576,9 +3576,9 @@ interface ID3D10EffectDepthStencilVariable : ID3D10EffectVariable
     HRESULT GetBackingStore(uint Index, D3D10_DEPTH_STENCIL_DESC* pDepthStencilDesc);
 }
 
-@GUID("21af9f0e-4d94-4ea9-9785-2cb76b8c0b34")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectrasterizervariable
+@GUID("21af9f0e-4d94-4ea9-9785-2cb76b8c0b34")
 interface ID3D10EffectRasterizerVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrasterizervariable-getrasterizerstate
@@ -3587,9 +3587,9 @@ interface ID3D10EffectRasterizerVariable : ID3D10EffectVariable
     HRESULT GetBackingStore(uint Index, D3D10_RASTERIZER_DESC* pRasterizerDesc);
 }
 
-@GUID("6530d5c7-07e9-4271-a418-e7ce4bd1e480")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectsamplervariable
+@GUID("6530d5c7-07e9-4271-a418-e7ce4bd1e480")
 interface ID3D10EffectSamplerVariable : ID3D10EffectVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectsamplervariable-getsampler
@@ -3598,9 +3598,9 @@ interface ID3D10EffectSamplerVariable : ID3D10EffectVariable
     HRESULT GetBackingStore(uint Index, D3D10_SAMPLER_DESC* pSamplerDesc);
 }
 
-@GUID("5cfbeb89-1a06-46e0-b282-e3f9bfa36a54")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectpass
+@GUID("5cfbeb89-1a06-46e0-b282-e3f9bfa36a54")
 interface ID3D10EffectPass
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-isvalid
@@ -3623,9 +3623,9 @@ interface ID3D10EffectPass
     HRESULT ComputeStateBlockMask(D3D10_STATE_BLOCK_MASK* pStateBlockMask);
 }
 
-@GUID("db122ce8-d1c9-4292-b237-24ed3de8b175")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effecttechnique
+@GUID("db122ce8-d1c9-4292-b237-24ed3de8b175")
 interface ID3D10EffectTechnique
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-isvalid
@@ -3644,9 +3644,9 @@ interface ID3D10EffectTechnique
     HRESULT ComputeStateBlockMask(D3D10_STATE_BLOCK_MASK* pStateBlockMask);
 }
 
-@GUID("51b0ca8b-ec0b-4519-870d-8ee1cb5017c7")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effect
+@GUID("51b0ca8b-ec0b-4519-870d-8ee1cb5017c7")
 interface ID3D10Effect : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-isvalid
@@ -3677,36 +3677,36 @@ interface ID3D10Effect : IUnknown
     BOOL    IsOptimized();
 }
 
-@GUID("9537ab04-3250-412e-8213-fcd2f8677933")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectpool
+@GUID("9537ab04-3250-412e-8213-fcd2f8677933")
 interface ID3D10EffectPool : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpool-aseffect
     ID3D10Effect AsEffect();
 }
 
-@GUID("edad8d99-8a35-4d6d-8566-2ea276cde161")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10blendstate1
+@GUID("edad8d99-8a35-4d6d-8566-2ea276cde161")
 interface ID3D10BlendState1 : ID3D10BlendState
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10blendstate1-getdesc1
     void GetDesc1(D3D10_BLEND_DESC1* pDesc);
 }
 
-@GUID("9b7e4c87-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10shaderresourceview1
+@GUID("9b7e4c87-342c-4106-a19f-4f2704f689f0")
 interface ID3D10ShaderResourceView1 : ID3D10ShaderResourceView
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10shaderresourceview1-getdesc1
     void GetDesc1(D3D10_SHADER_RESOURCE_VIEW_DESC1* pDesc);
 }
 
-@GUID("9b7e4c8f-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10device1
+@GUID("9b7e4c8f-342c-4106-a19f-4f2704f689f0")
 interface ID3D10Device1 : ID3D10Device
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-createshaderresourceview1
@@ -3718,9 +3718,9 @@ interface ID3D10Device1 : ID3D10Device
     D3D10_FEATURE_LEVEL1 GetFeatureLevel();
 }
 
-@GUID("c3457783-a846-47ce-9520-cea6f66e7447")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nn-d3d10_1shader-id3d10shaderreflection1
+@GUID("c3457783-a846-47ce-9520-cea6f66e7447")
 interface ID3D10ShaderReflection1 : IUnknown
 {
     HRESULT GetDesc(D3D10_SHADER_DESC* pDesc);

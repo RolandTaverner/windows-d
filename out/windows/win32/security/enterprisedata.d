@@ -118,8 +118,8 @@ HRESULT UnprotectFile(const(PWSTR) fileOrFolderPath, const(FILE_UNPROTECT_OPTION
 
 // Interfaces
 
-@GUID("4652651d-c1fe-4ba1-9f0a-c0f56596f721")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nn-efswrtinterop-iprotectionpolicymanagerinterop
+@GUID("4652651d-c1fe-4ba1-9f0a-c0f56596f721")
 interface IProtectionPolicyManagerInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop-requestaccessforwindowasync
@@ -129,8 +129,8 @@ interface IProtectionPolicyManagerInterop : IInspectable
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** result);
 }
 
-@GUID("157cfbe4-a78d-4156-b384-61fdac41e686")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nn-efswrtinterop-iprotectionpolicymanagerinterop2
+@GUID("157cfbe4-a78d-4156-b384-61fdac41e686")
 interface IProtectionPolicyManagerInterop2 : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithwindowasync

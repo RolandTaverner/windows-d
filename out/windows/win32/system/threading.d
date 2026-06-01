@@ -2720,9 +2720,9 @@ BOOL GetNumaProximityNode(uint ProximityId, ubyte* NodeNumber);
 
 // Interfaces
 
-@GUID("ac6b7889-0740-4d51-8619-905994a55cc6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtworkq/nn-rtworkq-irtwqasyncresult
+@GUID("ac6b7889-0740-4d51-8619-905994a55cc6")
 interface IRtwqAsyncResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtworkq/nf-rtworkq-irtwqasyncresult-getstate
@@ -2737,9 +2737,9 @@ interface IRtwqAsyncResult : IUnknown
     IUnknown GetStateNoAddRef();
 }
 
-@GUID("a27003cf-2354-4f2a-8d6a-ab7cff15437e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtworkq/nn-rtworkq-irtwqasynccallback
+@GUID("a27003cf-2354-4f2a-8d6a-ab7cff15437e")
 interface IRtwqAsyncCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtworkq/nf-rtworkq-irtwqasynccallback-getparameters
@@ -2752,9 +2752,9 @@ interface RTWQASYNCRESULT : IRtwqAsyncResult
 {
 }
 
-@GUID("63d9255a-7ff1-4b61-8faf-ed6460dacf2b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtworkq/nn-rtworkq-irtwqplatformevents
+@GUID("63d9255a-7ff1-4b61-8faf-ed6460dacf2b")
 interface IRtwqPlatformEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtworkq/nf-rtworkq-irtwqplatformevents-initializationcomplete

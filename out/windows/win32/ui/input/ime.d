@@ -2180,8 +2180,8 @@ interface IFEClassFactory : IClassFactory
 {
 }
 
-@GUID("019f7151-e6db-11d0-83c3-00c04fddb82e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifecommon
+@GUID("019f7151-e6db-11d0-83c3-00c04fddb82e")
 interface IFECommon : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-isdefaultime
@@ -2194,8 +2194,8 @@ interface IFECommon : IUnknown
     HRESULT InvokeDictToolDialog(IMEDLG* pimedlg);
 }
 
-@GUID("019f7152-e6db-11d0-83c3-00c04fddb82e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifelanguage
+@GUID("019f7152-e6db-11d0-83c3-00c04fddb82e")
 interface IFELanguage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-open
@@ -2212,8 +2212,8 @@ interface IFELanguage : IUnknown
     HRESULT GetConversion(BSTR string, int start, int length, BSTR* result);
 }
 
-@GUID("019f7153-e6db-11d0-83c3-00c04fddb82e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifedictionary
+@GUID("019f7153-e6db-11d0-83c3-00c04fddb82e")
 interface IFEDictionary : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-open
@@ -2249,16 +2249,16 @@ interface IFEDictionary : IUnknown
     HRESULT ConvertFromUserToSys();
 }
 
-@GUID("5d8e643c-c3a9-11d1-afef-00805f0c8b6d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimespecifyapplets
+@GUID("5d8e643c-c3a9-11d1-afef-00805f0c8b6d")
 interface IImeSpecifyApplets : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimespecifyapplets-getappletiidlist
     HRESULT GetAppletIIDList(const(GUID)* refiid, APPLETIDLIST* lpIIDList);
 }
 
-@GUID("5d8e643b-c3a9-11d1-afef-00805f0c8b6d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepadapplet
+@GUID("5d8e643b-c3a9-11d1-afef-00805f0c8b6d")
 interface IImePadApplet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-initialize
@@ -2272,8 +2272,8 @@ interface IImePadApplet : IUnknown
     HRESULT Notify(IUnknown lpImePad, int notify, WPARAM wParam, LPARAM lParam);
 }
 
-@GUID("5d8e643a-c3a9-11d1-afef-00805f0c8b6d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepad
+@GUID("5d8e643a-c3a9-11d1-afef-00805f0c8b6d")
 interface IImePad : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepad-request
@@ -2282,9 +2282,9 @@ interface IImePad : IUnknown
                     WPARAM wParam, LPARAM lParam);
 }
 
-@GUID("98752974-b0a6-489b-8f6f-bff3769c8eeb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msimeapi/nn-msimeapi-iimeplugindictdictionarylist
+@GUID("98752974-b0a6-489b-8f6f-bff3769c8eeb")
 interface IImePlugInDictDictionaryList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-getdictionariesinuse
@@ -2294,8 +2294,8 @@ interface IImePlugInDictDictionaryList : IUnknown
     HRESULT DeleteDictionary(BSTR bstrDictionaryGUID);
 }
 
-@GUID("08c03412-f96b-11d0-a475-00aa006bcc59")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("08c03412-f96b-11d0-a475-00aa006bcc59")
 interface IEnumRegisterWordA : IUnknown
 {
     HRESULT Clone(IEnumRegisterWordA* ppEnum);
@@ -2304,8 +2304,8 @@ interface IEnumRegisterWordA : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("4955dd31-b159-11d0-8fcf-00aa006bcc59")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("4955dd31-b159-11d0-8fcf-00aa006bcc59")
 interface IEnumRegisterWordW : IUnknown
 {
     HRESULT Clone(IEnumRegisterWordW* ppEnum);

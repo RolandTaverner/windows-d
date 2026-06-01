@@ -2828,9 +2828,9 @@ struct VDS_FILE_SYSTEM_PROP
 
 // Interfaces
 
-@GUID("11f3cd41-b7e8-48ff-9472-9dff018aa292")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsproviderprivate
+@GUID("11f3cd41-b7e8-48ff-9472-9dff018aa292")
 interface IVdsProviderPrivate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsproviderprivate-getobject
@@ -2841,27 +2841,27 @@ interface IVdsProviderPrivate : IUnknown
     HRESULT OnUnload(BOOL bForceUnload);
 }
 
-@GUID("98f17bf3-9f33-4f12-8714-8b4075092c2e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdshwproviderprivate
+@GUID("98f17bf3-9f33-4f12-8714-8b4075092c2e")
 interface IVdsHwProviderPrivate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdshwproviderprivate-queryifcreatedlun
     HRESULT QueryIfCreatedLun(PWSTR pwszDevicePath, VDS_LUN_INFORMATION* pVdsLunInformation, GUID* pLunId);
 }
 
-@GUID("310a7715-ac2b-4c6f-9827-3d742f351676")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdshwproviderprivatempio
+@GUID("310a7715-ac2b-4c6f-9827-3d742f351676")
 interface IVdsHwProviderPrivateMpio : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdshwproviderprivatempio-setallpathstatusesfromhbaport
     HRESULT SetAllPathStatusesFromHbaPort(VDS_HBAPORT_PROP hbaPortProp, VDS_PATH_STATUS status);
 }
 
-@GUID("d188e97d-85aa-4d33-abc6-26299a10ffc1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsadmin
+@GUID("d188e97d-85aa-4d33-abc6-26299a10ffc1")
 interface IVdsAdmin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsadmin-registerprovider
@@ -2871,9 +2871,9 @@ interface IVdsAdmin : IUnknown
     HRESULT UnregisterProvider(GUID providerId);
 }
 
-@GUID("118610b7-8d94-4030-b5b8-500889788e4e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ienumvdsobject
+@GUID("118610b7-8d94-4030-b5b8-500889788e4e")
 interface IEnumVdsObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ienumvdsobject-next
@@ -2886,9 +2886,9 @@ interface IEnumVdsObject : IUnknown
     HRESULT Clone(IEnumVdsObject* ppEnum);
 }
 
-@GUID("d5d23b6d-5a55-4492-9889-397a3c2d2dbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsasync
+@GUID("d5d23b6d-5a55-4492-9889-397a3c2d2dbc")
 interface IVdsAsync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsasync-cancel
@@ -2899,36 +2899,36 @@ interface IVdsAsync : IUnknown
     HRESULT QueryStatus(HRESULT* pHrResult, uint* pulPercentCompleted);
 }
 
-@GUID("8326cd1d-cf59-4936-b786-5efc08798e25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsadvisesink
+@GUID("8326cd1d-cf59-4936-b786-5efc08798e25")
 interface IVdsAdviseSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsadvisesink-onnotify
     HRESULT OnNotify(int lNumberOfNotifications, VDS_NOTIFICATION* pNotificationArray);
 }
 
-@GUID("10c5e575-7984-4e81-a56b-431f5f92ae42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsprovider
+@GUID("10c5e575-7984-4e81-a56b-431f5f92ae42")
 interface IVdsProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsprovider-getproperties
     HRESULT GetProperties(VDS_PROVIDER_PROP* pProviderProp);
 }
 
-@GUID("1732be13-e8f9-4a03-bfbc-5f616aa66ce1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsprovidersupport
+@GUID("1732be13-e8f9-4a03-bfbc-5f616aa66ce1")
 interface IVdsProviderSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsprovidersupport-getversionsupport
     HRESULT GetVersionSupport(uint* ulVersionSupport);
 }
 
-@GUID("9aa58360-ce33-4f92-b658-ed24b14425b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsswprovider
+@GUID("9aa58360-ce33-4f92-b658-ed24b14425b8")
 interface IVdsSwProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsswprovider-querypacks
@@ -2937,9 +2937,9 @@ interface IVdsSwProvider : IUnknown
     HRESULT CreatePack(IVdsPack* ppPack);
 }
 
-@GUID("3b69d7f5-9d94-4648-91ca-79939ba263bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdspack
+@GUID("3b69d7f5-9d94-4648-91ca-79939ba263bf")
 interface IVdsPack : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdspack-getproperties
@@ -2966,9 +2966,9 @@ interface IVdsPack : IUnknown
     HRESULT Recover(IVdsAsync* ppAsync);
 }
 
-@GUID("13b50bff-290a-47dd-8558-b7c58db1a71a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdspack2
+@GUID("13b50bff-290a-47dd-8558-b7c58db1a71a")
 interface IVdsPack2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdspack2-createvolume2
@@ -2976,9 +2976,9 @@ interface IVdsPack2 : IUnknown
                           uint ulStripeSize, uint ulAlign, IVdsAsync* ppAsync);
 }
 
-@GUID("07e5c822-f00c-47a1-8fce-b244da56fd06")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsdisk
+@GUID("07e5c822-f00c-47a1-8fce-b244da56fd06")
 interface IVdsDisk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsdisk-getproperties
@@ -2997,18 +2997,18 @@ interface IVdsDisk : IUnknown
     HRESULT ClearFlags(uint ulFlags);
 }
 
-@GUID("40f73c8b-687d-4a13-8d96-3d7f2e683936")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsdisk2
+@GUID("40f73c8b-687d-4a13-8d96-3d7f2e683936")
 interface IVdsDisk2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsdisk2-setsanmode
     HRESULT SetSANMode(BOOL bEnable);
 }
 
-@GUID("90681b1d-6a7f-48e8-9061-31b7aa125322")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsdiskonline
+@GUID("90681b1d-6a7f-48e8-9061-31b7aa125322")
 interface IVdsDiskOnline : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsdiskonline-online
@@ -3017,9 +3017,9 @@ interface IVdsDiskOnline : IUnknown
     HRESULT Offline();
 }
 
-@GUID("6e6f6b40-977c-4069-bddd-ac710059f8c0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsadvanceddisk
+@GUID("6e6f6b40-977c-4069-bddd-ac710059f8c0")
 interface IVdsAdvancedDisk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsadvanceddisk-getpartitionproperties
@@ -3045,9 +3045,9 @@ interface IVdsAdvancedDisk : IUnknown
     HRESULT Clean(BOOL bForce, BOOL bForceOEM, BOOL bFullClean, IVdsAsync* ppAsync);
 }
 
-@GUID("9723f420-9355-42de-ab66-e31bb15beeac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsadvanceddisk2
+@GUID("9723f420-9355-42de-ab66-e31bb15beeac")
 interface IVdsAdvancedDisk2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsadvanceddisk2-changepartitiontype
@@ -3061,9 +3061,9 @@ interface IVdsAdvancedDisk3 : IUnknown
     HRESULT GetUniqueId(PWSTR* ppwszId);
 }
 
-@GUID("9882f547-cfc3-420b-9750-00dfbec50662")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdscreatepartitionex
+@GUID("9882f547-cfc3-420b-9750-00dfbec50662")
 interface IVdsCreatePartitionEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdscreatepartitionex-createpartitionex
@@ -3071,9 +3071,9 @@ interface IVdsCreatePartitionEx : IUnknown
                               IVdsAsync* ppAsync);
 }
 
-@GUID("0316560b-5db4-4ed9-bbb5-213436ddc0d9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsremovable
+@GUID("0316560b-5db4-4ed9-bbb5-213436ddc0d9")
 interface IVdsRemovable : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsremovable-querymedia
@@ -3082,9 +3082,9 @@ interface IVdsRemovable : IUnknown
     HRESULT Eject();
 }
 
-@GUID("88306bb2-e71f-478c-86a2-79da200a0f11")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolume
+@GUID("88306bb2-e71f-478c-86a2-79da200a0f11")
 interface IVdsVolume : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolume-getproperties
@@ -3111,27 +3111,27 @@ interface IVdsVolume : IUnknown
     HRESULT ClearFlags(uint ulFlags);
 }
 
-@GUID("72ae6713-dcbb-4a03-b36b-371f6ac6b53d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolume2
+@GUID("72ae6713-dcbb-4a03-b36b-371f6ac6b53d")
 interface IVdsVolume2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolume2-getproperties2
     HRESULT GetProperties2(VDS_VOLUME_PROP2* pVolumeProperties);
 }
 
-@GUID("1be2275a-b315-4f70-9e44-879b3a2a53f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolumeonline
+@GUID("1be2275a-b315-4f70-9e44-879b3a2a53f2")
 interface IVdsVolumeOnline : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolumeonline-online
     HRESULT Online();
 }
 
-@GUID("4daa0135-e1d1-40f1-aaa5-3cc1e53221c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolumeplex
+@GUID("4daa0135-e1d1-40f1-aaa5-3cc1e53221c3")
 interface IVdsVolumePlex : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolumeplex-getproperties
@@ -3144,9 +3144,9 @@ interface IVdsVolumePlex : IUnknown
     HRESULT Repair(VDS_INPUT_DISK* pInputDiskArray, int lNumberOfDisks, IVdsAsync* ppAsync);
 }
 
-@GUID("8f4b2f5d-ec15-4357-992f-473ef10975b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsdisk3
+@GUID("8f4b2f5d-ec15-4357-992f-473ef10975b9")
 interface IVdsDisk3 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsdisk3-getproperties2
@@ -3155,9 +3155,9 @@ interface IVdsDisk3 : IUnknown
     HRESULT QueryFreeExtents(uint ulAlign, VDS_DISK_FREE_EXTENT** ppFreeExtentArray, int* plNumberOfFreeExtents);
 }
 
-@GUID("d99bdaae-b13a-4178-9fdb-e27f16b4603e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdshwprovider
+@GUID("d99bdaae-b13a-4178-9fdb-e27f16b4603e")
 interface IVdsHwProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdshwprovider-querysubsystems
@@ -3168,27 +3168,27 @@ interface IVdsHwProvider : IUnknown
     HRESULT Refresh();
 }
 
-@GUID("3e0f5166-542d-4fc6-947a-012174240b7e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdshwprovidertype
+@GUID("3e0f5166-542d-4fc6-947a-012174240b7e")
 interface IVdsHwProviderType : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdshwprovidertype-getprovidertype
     HRESULT GetProviderType(VDS_HWPROVIDER_TYPE* pType);
 }
 
-@GUID("8190236f-c4d0-4e81-8011-d69512fcc984")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdshwprovidertype2
+@GUID("8190236f-c4d0-4e81-8011-d69512fcc984")
 interface IVdsHwProviderType2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdshwprovidertype2-getprovidertype2
     HRESULT GetProviderType2(VDS_HWPROVIDER_TYPE* pType);
 }
 
-@GUID("d5b5937a-f188-4c79-b86c-11c920ad11b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdshwproviderstoragepools
+@GUID("d5b5937a-f188-4c79-b86c-11c920ad11b8")
 interface IVdsHwProviderStoragePools : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdshwproviderstoragepools-querystoragepools
@@ -3202,9 +3202,9 @@ interface IVdsHwProviderStoragePools : IUnknown
                                                ulong* pullMaxLunSize);
 }
 
-@GUID("6fcee2d3-6d90-4f91-80e2-a5c7caaca9d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdssubsystem
+@GUID("6fcee2d3-6d90-4f91-80e2-a5c7caaca9d8")
 interface IVdsSubSystem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdssubsystem-getproperties
@@ -3236,9 +3236,9 @@ interface IVdsSubSystem : IUnknown
                                   ulong* pullMaxLunSize);
 }
 
-@GUID("be666735-7800-4a77-9d9c-40f85b87e292")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdssubsystem2
+@GUID("be666735-7800-4a77-9d9c-40f85b87e292")
 interface IVdsSubSystem2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdssubsystem2-getproperties2
@@ -3253,18 +3253,18 @@ interface IVdsSubSystem2 : IUnknown
                                    VDS_HINTS2* pHints2, ulong* pullMaxLunSize);
 }
 
-@GUID("0d70faa3-9cd4-4900-aa20-6981b6aafc75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdssubsystemnaming
+@GUID("0d70faa3-9cd4-4900-aa20-6981b6aafc75")
 interface IVdsSubSystemNaming : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdssubsystemnaming-setfriendlyname
     HRESULT SetFriendlyName(PWSTR pwszFriendlyName);
 }
 
-@GUID("0027346f-40d0-4b45-8cec-5906dc0380c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdssubsystemiscsi
+@GUID("0027346f-40d0-4b45-8cec-5906dc0380c8")
 interface IVdsSubSystemIscsi : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdssubsystemiscsi-querytargets
@@ -3277,18 +3277,18 @@ interface IVdsSubSystemIscsi : IUnknown
     HRESULT SetIpsecGroupPresharedKey(VDS_ISCSI_IPSEC_KEY* pIpsecKey);
 }
 
-@GUID("9e6fa560-c141-477b-83ba-0b6c38f7febf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdssubsysteminterconnect
+@GUID("9e6fa560-c141-477b-83ba-0b6c38f7febf")
 interface IVdsSubSystemInterconnect : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdssubsysteminterconnect-getsupportedinterconnects
     HRESULT GetSupportedInterconnects(uint* pulSupportedInterconnectsFlag);
 }
 
-@GUID("18691d0d-4e7f-43e8-92e4-cf44beeed11c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdscontrollerport
+@GUID("18691d0d-4e7f-43e8-92e4-cf44beeed11c")
 interface IVdsControllerPort : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdscontrollerport-getproperties
@@ -3303,9 +3303,9 @@ interface IVdsControllerPort : IUnknown
     HRESULT SetStatus(VDS_PORT_STATUS status);
 }
 
-@GUID("cb53d96e-dffb-474a-a078-790d1e2bc082")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdscontroller
+@GUID("cb53d96e-dffb-474a-a078-790d1e2bc082")
 interface IVdsController : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdscontroller-getproperties
@@ -3326,18 +3326,18 @@ interface IVdsController : IUnknown
     HRESULT SetStatus(VDS_CONTROLLER_STATUS status);
 }
 
-@GUID("ca5d735f-6bae-42c0-b30e-f2666045ce71")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdscontrollercontrollerport
+@GUID("ca5d735f-6bae-42c0-b30e-f2666045ce71")
 interface IVdsControllerControllerPort : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdscontrollercontrollerport-querycontrollerports
     HRESULT QueryControllerPorts(IEnumVdsObject* ppEnum);
 }
 
-@GUID("ff24efa4-aade-4b6b-898b-eaa6a20887c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsdrive
+@GUID("ff24efa4-aade-4b6b-898b-eaa6a20887c7")
 interface IVdsDrive : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsdrive-getproperties
@@ -3354,18 +3354,18 @@ interface IVdsDrive : IUnknown
     HRESULT SetStatus(VDS_DRIVE_STATUS status);
 }
 
-@GUID("60b5a730-addf-4436-8ca7-5769e2d1ffa4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsdrive2
+@GUID("60b5a730-addf-4436-8ca7-5769e2d1ffa4")
 interface IVdsDrive2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsdrive2-getproperties2
     HRESULT GetProperties2(VDS_DRIVE_PROP2* pDriveProp2);
 }
 
-@GUID("3540a9c7-e60f-4111-a840-8bba6c2c83d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdslun
+@GUID("3540a9c7-e60f-4111-a840-8bba6c2c83d8")
 interface IVdsLun : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdslun-getproperties
@@ -3405,9 +3405,9 @@ interface IVdsLun : IUnknown
     HRESULT QueryMaxLunExtendSize(GUID* pDriveIdArray, int lNumberOfDrives, ulong* pullMaxBytesToBeAdded);
 }
 
-@GUID("e5b3a735-9efb-499a-8071-4394d9ee6fcb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdslun2
+@GUID("e5b3a735-9efb-499a-8071-4394d9ee6fcb")
 interface IVdsLun2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdslun2-queryhints2
@@ -3416,27 +3416,27 @@ interface IVdsLun2 : IUnknown
     HRESULT ApplyHints2(VDS_HINTS2* pHints2);
 }
 
-@GUID("907504cb-6b4e-4d88-a34d-17ba661fbb06")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdslunnaming
+@GUID("907504cb-6b4e-4d88-a34d-17ba661fbb06")
 interface IVdsLunNaming : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdslunnaming-setfriendlyname
     HRESULT SetFriendlyName(PWSTR pwszFriendlyName);
 }
 
-@GUID("d3f95e46-54b3-41f9-b678-0f1871443a08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdslunnumber
+@GUID("d3f95e46-54b3-41f9-b678-0f1871443a08")
 interface IVdsLunNumber : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdslunnumber-getlunnumber
     HRESULT GetLunNumber(uint* pulLunNumber);
 }
 
-@GUID("451fe266-da6d-406a-bb60-82e534f85aeb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsluncontrollerports
+@GUID("451fe266-da6d-406a-bb60-82e534f85aeb")
 interface IVdsLunControllerPorts : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsluncontrollerports-associatecontrollerports
@@ -3446,9 +3446,9 @@ interface IVdsLunControllerPorts : IUnknown
     HRESULT QueryActiveControllerPorts(IEnumVdsObject* ppEnum);
 }
 
-@GUID("7c5fbae3-333a-48a1-a982-33c15788cde3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdslunmpio
+@GUID("7c5fbae3-333a-48a1-a982-33c15788cde3")
 interface IVdsLunMpio : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdslunmpio-getpathinfo
@@ -3462,9 +3462,9 @@ interface IVdsLunMpio : IUnknown
     HRESULT GetSupportedLbPolicies(uint* pulLbFlags);
 }
 
-@GUID("0d7c1e64-b59b-45ae-b86a-2c2cc6a42067")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsluniscsi
+@GUID("0d7c1e64-b59b-45ae-b86a-2c2cc6a42067")
 interface IVdsLunIscsi : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsluniscsi-associatetargets
@@ -3473,9 +3473,9 @@ interface IVdsLunIscsi : IUnknown
     HRESULT QueryAssociatedTargets(IEnumVdsObject* ppEnum);
 }
 
-@GUID("0ee1a790-5d2e-4abb-8c99-c481e8be2138")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdslunplex
+@GUID("0ee1a790-5d2e-4abb-8c99-c481e8be2138")
 interface IVdsLunPlex : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdslunplex-getproperties
@@ -3490,9 +3490,9 @@ interface IVdsLunPlex : IUnknown
     HRESULT ApplyHints(VDS_HINTS* pHints);
 }
 
-@GUID("7fa1499d-ec85-4a8a-a47b-ff69201fcd34")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsiscsiportal
+@GUID("7fa1499d-ec85-4a8a-a47b-ff69201fcd34")
 interface IVdsIscsiPortal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsiscsiportal-getproperties
@@ -3512,9 +3512,9 @@ interface IVdsIscsiPortal : IUnknown
                              VDS_ISCSI_IPSEC_KEY* pIpsecKey);
 }
 
-@GUID("aa8f5055-83e5-4bcc-aa73-19851a36a849")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsiscsitarget
+@GUID("aa8f5055-83e5-4bcc-aa73-19851a36a849")
 interface IVdsIscsiTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsiscsitarget-getproperties
@@ -3539,9 +3539,9 @@ interface IVdsIscsiTarget : IUnknown
     HRESULT GetConnectedInitiators(PWSTR** pppwszInitiatorList, int* plNumberOfInitiators);
 }
 
-@GUID("fef5f89d-a3dd-4b36-bf28-e7dde045c593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsiscsiportalgroup
+@GUID("fef5f89d-a3dd-4b36-bf28-e7dde045c593")
 interface IVdsIscsiPortalGroup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsiscsiportalgroup-getproperties
@@ -3558,9 +3558,9 @@ interface IVdsIscsiPortalGroup : IUnknown
     HRESULT Delete(IVdsAsync* ppAsync);
 }
 
-@GUID("932ca8cf-0eb3-4ba8-9620-22665d7f8450")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsstoragepool
+@GUID("932ca8cf-0eb3-4ba8-9620-22665d7f8450")
 interface IVdsStoragePool : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsstoragepool-getprovider
@@ -3577,9 +3577,9 @@ interface IVdsStoragePool : IUnknown
     HRESULT QueryAllocatedStoragePools(IEnumVdsObject* ppEnum);
 }
 
-@GUID("daebeef3-8523-47ed-a2b9-05cecce2a1ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nn-vdshwprv-ivdsmaintenance
+@GUID("daebeef3-8523-47ed-a2b9-05cecce2a1ae")
 interface IVdsMaintenance : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vdshwprv/nf-vdshwprv-ivdsmaintenance-startmaintenance
@@ -3590,9 +3590,9 @@ interface IVdsMaintenance : IUnknown
     HRESULT PulseMaintenance(VDS_MAINTENANCE_OPERATION operation, uint ulCount);
 }
 
-@GUID("b481498c-8354-45f9-84a0-0bdd2832a91f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvdprovider
+@GUID("b481498c-8354-45f9-84a0-0bdd2832a91f")
 interface IVdsVdProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvdprovider-queryvdisks
@@ -3609,9 +3609,9 @@ interface IVdsVdProvider : IUnknown
     HRESULT GetVDiskFromDisk(IVdsDisk pDisk, IVdsVDisk* ppVDisk);
 }
 
-@GUID("1e062b84-e5e6-4b4b-8a25-67b81e8f13e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvdisk
+@GUID("1e062b84-e5e6-4b4b-8a25-67b81e8f13e8")
 interface IVdsVDisk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvdisk-open
@@ -3625,9 +3625,9 @@ interface IVdsVDisk : IUnknown
     HRESULT GetDeviceName(PWSTR* ppDeviceName);
 }
 
-@GUID("75c8f324-f715-4fe3-a28e-f9011b61a4a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsopenvdisk
+@GUID("75c8f324-f715-4fe3-a28e-f9011b61a4a1")
 interface IVdsOpenVDisk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsopenvdisk-attach
@@ -3645,18 +3645,18 @@ interface IVdsOpenVDisk : IUnknown
     HRESULT Expand(EXPAND_VIRTUAL_DISK_FLAG Flags, ulong NewSize, IVdsAsync* ppAsync);
 }
 
-@GUID("e0393303-90d4-4a97-ab71-e9b671ee2729")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsserviceloader
+@GUID("e0393303-90d4-4a97-ab71-e9b671ee2729")
 interface IVdsServiceLoader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsserviceloader-loadservice
     HRESULT LoadService(PWSTR pwszMachineName, IVdsService* ppService);
 }
 
-@GUID("0818a8ef-9ba9-40d8-a6f9-e22833cc771e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsservice
+@GUID("0818a8ef-9ba9-40d8-a6f9-e22833cc771e")
 interface IVdsService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsservice-isserviceready
@@ -3695,9 +3695,9 @@ interface IVdsService : IUnknown
     HRESULT ClearFlags(uint ulFlags);
 }
 
-@GUID("b6b22da8-f903-4be7-b492-c09d875ac9da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsserviceuninstalldisk
+@GUID("b6b22da8-f903-4be7-b492-c09d875ac9da")
 interface IVdsServiceUninstallDisk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsserviceuninstalldisk-getdiskidfromluninfo
@@ -3706,18 +3706,18 @@ interface IVdsServiceUninstallDisk : IUnknown
     HRESULT UninstallDisks(GUID* pDiskIdArray, uint ulCount, BOOLEAN bForce, ubyte* pbReboot, HRESULT* pResults);
 }
 
-@GUID("0ac13689-3134-47c6-a17c-4669216801be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsservicehba
+@GUID("0ac13689-3134-47c6-a17c-4669216801be")
 interface IVdsServiceHba : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsservicehba-queryhbaports
     HRESULT QueryHbaPorts(IEnumVdsObject* ppEnum);
 }
 
-@GUID("14fbe036-3ed7-4e10-90e9-a5ff991aff01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsserviceiscsi
+@GUID("14fbe036-3ed7-4e10-90e9-a5ff991aff01")
 interface IVdsServiceIscsi : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsserviceiscsi-getinitiatorname
@@ -3736,16 +3736,16 @@ interface IVdsServiceIscsi : IUnknown
     HRESULT RememberTargetSharedSecret(GUID targetId, VDS_ISCSI_SHARED_SECRET* pTargetSharedSecret);
 }
 
-@GUID("4afc3636-db01-4052-80c3-03bbcb8d3c69")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsserviceinitialization
+@GUID("4afc3636-db01-4052-80c3-03bbcb8d3c69")
 interface IVdsServiceInitialization : IUnknown
 {
     HRESULT Initialize(PWSTR pwszMachineName);
 }
 
-@GUID("2abd757f-2851-4997-9a13-47d2a885d6ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdshbaport
+@GUID("2abd757f-2851-4997-9a13-47d2a885d6ca")
 interface IVdsHbaPort : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdshbaport-getproperties
@@ -3754,9 +3754,9 @@ interface IVdsHbaPort : IUnknown
     HRESULT SetAllPathStatuses(VDS_PATH_STATUS status);
 }
 
-@GUID("b07fedd4-1682-4440-9189-a39b55194dc5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsiscsiinitiatoradapter
+@GUID("b07fedd4-1682-4440-9189-a39b55194dc5")
 interface IVdsIscsiInitiatorAdapter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsiscsiinitiatoradapter-getproperties
@@ -3771,9 +3771,9 @@ interface IVdsIscsiInitiatorAdapter : IUnknown
     HRESULT LogoutFromTarget(GUID targetId, IVdsAsync* ppAsync);
 }
 
-@GUID("38a0a9ab-7cc8-4693-ac07-1f28bd03c3da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsiscsiinitiatorportal
+@GUID("38a0a9ab-7cc8-4693-ac07-1f28bd03c3da")
 interface IVdsIscsiInitiatorPortal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsiscsiinitiatorportal-getproperties
@@ -3788,9 +3788,9 @@ interface IVdsIscsiInitiatorPortal : IUnknown
     HRESULT SetIpsecSecurity(GUID targetPortalId, ulong ullSecurityFlags, VDS_ISCSI_IPSEC_KEY* pIpsecKey);
 }
 
-@GUID("538684e0-ba3d-4bc0-aca9-164aff85c2a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsdiskpartitionmf
+@GUID("538684e0-ba3d-4bc0-aca9-164aff85c2a9")
 interface IVdsDiskPartitionMF : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsdiskpartitionmf-getpartitionfilesystemproperties
@@ -3807,9 +3807,9 @@ interface IVdsDiskPartitionMF : IUnknown
                               BOOL bEnableCompression, IVdsAsync* ppAsync);
 }
 
-@GUID("ee2d5ded-6236-4169-931d-b9778ce03dc6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolumemf
+@GUID("ee2d5ded-6236-4169-931d-b9778ce03dc6")
 interface IVdsVolumeMF : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolumemf-getfilesystemproperties
@@ -3835,9 +3835,9 @@ interface IVdsVolumeMF : IUnknown
     HRESULT ClearFileSystemFlags(uint ulFlags);
 }
 
-@GUID("4dbcee9a-6343-4651-b85f-5e75d74d983c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolumemf2
+@GUID("4dbcee9a-6343-4651-b85f-5e75d74d983c")
 interface IVdsVolumeMF2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolumemf2-getfilesystemtypename
@@ -3850,9 +3850,9 @@ interface IVdsVolumeMF2 : IUnknown
                      PWSTR pwszLabel, BOOL bForce, BOOL bQuickFormat, BOOL bEnableCompression, IVdsAsync* ppAsync);
 }
 
-@GUID("d68168c9-82a2-4f85-b6e9-74707c49a58f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolumeshrink
+@GUID("d68168c9-82a2-4f85-b6e9-74707c49a58f")
 interface IVdsVolumeShrink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolumeshrink-querymaxreclaimablebytes
@@ -3862,9 +3862,9 @@ interface IVdsVolumeShrink : IUnknown
                    IVdsAsync* ppAsync);
 }
 
-@GUID("83bfb87f-43fb-4903-baa6-127f01029eec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdssubsystemimporttarget
+@GUID("83bfb87f-43fb-4903-baa6-127f01029eec")
 interface IVdsSubSystemImportTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdssubsystemimporttarget-getimporttarget
@@ -3873,18 +3873,18 @@ interface IVdsSubSystemImportTarget : IUnknown
     HRESULT SetImportTarget(PWSTR pwszIscsiName);
 }
 
-@GUID("ad837c28-52c1-421d-bf04-fae7da665396")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsiscsiportallocal
+@GUID("ad837c28-52c1-421d-bf04-fae7da665396")
 interface IVdsIscsiPortalLocal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsiscsiportallocal-setipsecsecuritylocal
     HRESULT SetIpsecSecurityLocal(ulong ullSecurityFlags, VDS_ISCSI_IPSEC_KEY* pIpsecKey);
 }
 
-@GUID("fc5d23e8-a88b-41a5-8de0-2d2f73c5a630")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsservicesan
+@GUID("fc5d23e8-a88b-41a5-8de0-2d2f73c5a630")
 interface IVdsServiceSAN : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsservicesan-getsanpolicy
@@ -3893,9 +3893,9 @@ interface IVdsServiceSAN : IUnknown
     HRESULT SetSANPolicy(VDS_SAN_POLICY SanPolicy);
 }
 
-@GUID("6788faf9-214e-4b85-ba59-266953616e09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsvolumemf3
+@GUID("6788faf9-214e-4b85-ba59-266953616e09")
 interface IVdsVolumeMF3 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsvolumemf3-queryvolumeguidpathnames
@@ -3907,9 +3907,9 @@ interface IVdsVolumeMF3 : IUnknown
     HRESULT OfflineVolume();
 }
 
-@GUID("9cbe50ca-f2d2-4bf4-ace1-96896b729625")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nn-vds-ivdsdiskpartitionmf2
+@GUID("9cbe50ca-f2d2-4bf4-ace1-96896b729625")
 interface IVdsDiskPartitionMF2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vds/nf-vds-ivdsdiskpartitionmf2-formatpartitionex2

@@ -913,9 +913,9 @@ HRESULT WSDUriDecode(const(PWSTR) source, uint cchSource, PWSTR* destOut, uint* 
 
 // Interfaces
 
-@GUID("b9574c6c-12a6-4f74-93a1-3318ff605759")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdaddress
+@GUID("b9574c6c-12a6-4f74-93a1-3318ff605759")
 interface IWSDAddress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdaddress-serialize
@@ -924,9 +924,9 @@ interface IWSDAddress : IUnknown
     HRESULT Deserialize(const(PWSTR) pszBuffer);
 }
 
-@GUID("70d23498-4ee6-4340-a3df-d845d2235467")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdtransportaddress
+@GUID("70d23498-4ee6-4340-a3df-d845d2235467")
 interface IWSDTransportAddress : IWSDAddress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdtransportaddress-getport
@@ -941,9 +941,9 @@ interface IWSDTransportAddress : IWSDAddress
     HRESULT SetTransportAddress(const(PWSTR) pszAddress);
 }
 
-@GUID("1fafe8a2-e6fc-4b80-b6cf-b7d45c416d7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdmessageparameters
+@GUID("1fafe8a2-e6fc-4b80-b6cf-b7d45c416d7c")
 interface IWSDMessageParameters : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdmessageparameters-getlocaladdress
@@ -958,9 +958,9 @@ interface IWSDMessageParameters : IUnknown
     HRESULT GetLowerParameters(IWSDMessageParameters* ppTxParams);
 }
 
-@GUID("9934149f-8f0c-447b-aa0b-73124b0ca7f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdudpmessageparameters
+@GUID("9934149f-8f0c-447b-aa0b-73124b0ca7f0")
 interface IWSDUdpMessageParameters : IWSDMessageParameters
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdudpmessageparameters-setretransmitparams
@@ -969,9 +969,9 @@ interface IWSDUdpMessageParameters : IWSDMessageParameters
     HRESULT GetRetransmitParams(WSDUdpRetransmitParams* pParams);
 }
 
-@GUID("74d6124a-a441-4f78-a1eb-97a8d1996893")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdudpaddress
+@GUID("74d6124a-a441-4f78-a1eb-97a8d1996893")
 interface IWSDUdpAddress : IWSDTransportAddress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdudpaddress-setsockaddr
@@ -996,9 +996,9 @@ interface IWSDUdpAddress : IWSDTransportAddress
     HRESULT GetAlias(GUID* pAlias);
 }
 
-@GUID("540bd122-5c83-4dec-b396-ea62a2697fdf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdhttpmessageparameters
+@GUID("540bd122-5c83-4dec-b396-ea62a2697fdf")
 interface IWSDHttpMessageParameters : IWSDMessageParameters
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdhttpmessageparameters-setinboundhttpheaders
@@ -1021,9 +1021,9 @@ interface IWSDHttpMessageParameters : IWSDMessageParameters
     HRESULT Clear();
 }
 
-@GUID("d09ac7bd-2a3e-4b85-8605-2737ff3e4ea0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdhttpaddress
+@GUID("d09ac7bd-2a3e-4b85-8605-2737ff3e4ea0")
 interface IWSDHttpAddress : IWSDTransportAddress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdhttpaddress-getsecure
@@ -1036,9 +1036,9 @@ interface IWSDHttpAddress : IWSDTransportAddress
     HRESULT SetPath(const(PWSTR) pszPath);
 }
 
-@GUID("de105e87-a0da-418e-98ad-27b9eed87bdc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdsslclientcertificate
+@GUID("de105e87-a0da-418e-98ad-27b9eed87bdc")
 interface IWSDSSLClientCertificate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdsslclientcertificate-getclientcertificate
@@ -1047,9 +1047,9 @@ interface IWSDSSLClientCertificate : IUnknown
     HRESULT GetMappedAccessToken(HANDLE* phToken);
 }
 
-@GUID("0b476df0-8dac-480d-b05c-99781a5884aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdhttpauthparameters
+@GUID("0b476df0-8dac-480d-b05c-99781a5884aa")
 interface IWSDHttpAuthParameters : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdhttpauthparameters-getclientaccesstoken
@@ -1058,9 +1058,9 @@ interface IWSDHttpAuthParameters : IUnknown
     HRESULT GetAuthType(uint* pAuthType);
 }
 
-@GUID("03ce20aa-71c4-45e2-b32e-3766c61c790f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nn-wsdbase-iwsdsignatureproperty
+@GUID("03ce20aa-71c4-45e2-b32e-3766c61c790f")
 interface IWSDSignatureProperty : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdbase/nf-wsdbase-iwsdsignatureproperty-ismessagesigned
@@ -1077,16 +1077,16 @@ interface IWSDSignatureProperty : IUnknown
                               uint* pdwHashSize);
 }
 
-@GUID("5d55a616-9df8-4b09-b156-9ba351a48b76")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdattachment/nn-wsdattachment-iwsdattachment
+@GUID("5d55a616-9df8-4b09-b156-9ba351a48b76")
 interface IWSDAttachment : IUnknown
 {
 }
 
-@GUID("aa302f8d-5a22-4ba5-b392-aa8486f4c15d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdattachment/nn-wsdattachment-iwsdoutboundattachment
+@GUID("aa302f8d-5a22-4ba5-b392-aa8486f4c15d")
 interface IWSDOutboundAttachment : IWSDAttachment
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdattachment/nf-wsdattachment-iwsdoutboundattachment-write
@@ -1097,9 +1097,9 @@ interface IWSDOutboundAttachment : IWSDAttachment
     HRESULT Abort();
 }
 
-@GUID("5bd6ca65-233c-4fb8-9f7a-2641619655c9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdattachment/nn-wsdattachment-iwsdinboundattachment
+@GUID("5bd6ca65-233c-4fb8-9f7a-2641619655c9")
 interface IWSDInboundAttachment : IWSDAttachment
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdattachment/nf-wsdattachment-iwsdinboundattachment-read
@@ -1108,9 +1108,9 @@ interface IWSDInboundAttachment : IWSDAttachment
     HRESULT Close();
 }
 
-@GUID("75d8f3ee-3e5a-43b4-a15a-bcf6887460c0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdxml/nn-wsdxml-iwsdxmlcontext
+@GUID("75d8f3ee-3e5a-43b4-a15a-bcf6887460c0")
 interface IWSDXMLContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdxml/nf-wsdxml-iwsdxmlcontext-addnamespace
@@ -1123,9 +1123,9 @@ interface IWSDXMLContext : IUnknown
     HRESULT SetTypes(const(WSDXML_TYPE)** pTypes, uint dwTypesCount, ubyte bLayerNumber);
 }
 
-@GUID("8ffc8e55-f0eb-480f-88b7-b435dd281d45")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nn-wsddisco-iwsdiscoveryprovider
+@GUID("8ffc8e55-f0eb-480f-88b7-b435dd281d45")
 interface IWSDiscoveryProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nf-wsddisco-iwsdiscoveryprovider-setaddressfamily
@@ -1145,9 +1145,9 @@ interface IWSDiscoveryProvider : IUnknown
     HRESULT GetXMLContext(IWSDXMLContext* ppContext);
 }
 
-@GUID("73ee3ced-b6e6-4329-a546-3e8ad46563d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nn-wsddisco-iwsdiscoveryprovidernotify
+@GUID("73ee3ced-b6e6-4329-a546-3e8ad46563d2")
 interface IWSDiscoveryProviderNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nf-wsddisco-iwsdiscoveryprovidernotify-add
@@ -1160,9 +1160,9 @@ interface IWSDiscoveryProviderNotify : IUnknown
     HRESULT SearchComplete(const(PWSTR) pszTag);
 }
 
-@GUID("4bad8a3b-b374-4420-9632-aac945b374aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nn-wsddisco-iwsdiscoveredservice
+@GUID("4bad8a3b-b374-4420-9632-aac945b374aa")
 interface IWSDiscoveredService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nf-wsddisco-iwsdiscoveredservice-getendpointreference
@@ -1189,9 +1189,9 @@ interface IWSDiscoveredService : IUnknown
     HRESULT GetInstanceId(ulong* pullInstanceId);
 }
 
-@GUID("ae01e1a8-3ff9-4148-8116-057cc616fe13")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nn-wsddisco-iwsdiscoverypublisher
+@GUID("ae01e1a8-3ff9-4148-8116-057cc616fe13")
 interface IWSDiscoveryPublisher : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nf-wsddisco-iwsdiscoverypublisher-setaddressfamily
@@ -1247,9 +1247,9 @@ interface IWSDiscoveryPublisher : IUnknown
     HRESULT GetXMLContext(IWSDXMLContext* ppContext);
 }
 
-@GUID("e67651b0-337a-4b3c-9758-733388568251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nn-wsddisco-iwsdiscoverypublishernotify
+@GUID("e67651b0-337a-4b3c-9758-733388568251")
 interface IWSDiscoveryPublisherNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nf-wsddisco-iwsdiscoverypublishernotify-probehandler
@@ -1258,9 +1258,9 @@ interface IWSDiscoveryPublisherNotify : IUnknown
     HRESULT ResolveHandler(const(WSD_SOAP_MESSAGE)* pSoap, IWSDMessageParameters pMessageParameters);
 }
 
-@GUID("fcafe424-fef5-481a-bd9f-33ce0574256f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nn-wsddisco-iwsdscopematchingrule
+@GUID("fcafe424-fef5-481a-bd9f-33ce0574256f")
 interface IWSDScopeMatchingRule : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsddisco/nf-wsddisco-iwsdscopematchingrule-getscoperule
@@ -1269,9 +1269,9 @@ interface IWSDScopeMatchingRule : IUnknown
     HRESULT MatchScopes(const(PWSTR) pszScope1, const(PWSTR) pszScope2, BOOL* pfMatch);
 }
 
-@GUID("1860d430-b24c-4975-9f90-dbb39baa24ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdendpointproxy
+@GUID("1860d430-b24c-4975-9f90-dbb39baa24ec")
 interface IWSDEndpointProxy : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdendpointproxy-sendonewayrequest
@@ -1292,18 +1292,18 @@ interface IWSDEndpointProxy : IUnknown
     HRESULT GetFaultInfo(WSD_SOAP_FAULT** ppFault);
 }
 
-@GUID("06996d57-1d67-4928-9307-3d7833fdb846")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdmetadataexchange
+@GUID("06996d57-1d67-4928-9307-3d7833fdb846")
 interface IWSDMetadataExchange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdmetadataexchange-getmetadata
     HRESULT GetMetadata(WSD_METADATA_SECTION_LIST** MetadataOut);
 }
 
-@GUID("d4c7fb9c-03ab-4175-9d67-094fafebf487")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdserviceproxy
+@GUID("d4c7fb9c-03ab-4175-9d67-094fafebf487")
 interface IWSDServiceProxy : IWSDMetadataExchange
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdserviceproxy-begingetmetadata
@@ -1323,9 +1323,9 @@ interface IWSDServiceProxy : IWSDMetadataExchange
     HRESULT GetEndpointProxy(IWSDEndpointProxy* ppProxy);
 }
 
-@GUID("f9279d6d-1012-4a94-b8cc-fd35d2202bfe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdserviceproxyeventing
+@GUID("f9279d6d-1012-4a94-b8cc-fd35d2202bfe")
 interface IWSDServiceProxyEventing : IWSDServiceProxy
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdserviceproxyeventing-subscribetomultipleoperations
@@ -1379,9 +1379,9 @@ interface IWSDServiceProxyEventing : IWSDServiceProxy
                                               WSDXML_ELEMENT** ppAny);
 }
 
-@GUID("eee0c031-c578-4c0e-9a3b-973c35f409db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsddeviceproxy
+@GUID("eee0c031-c578-4c0e-9a3b-973c35f409db")
 interface IWSDDeviceProxy : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsddeviceproxy-init
@@ -1407,9 +1407,9 @@ interface IWSDDeviceProxy : IUnknown
     HRESULT GetEndpointProxy(IWSDEndpointProxy* ppProxy);
 }
 
-@GUID("11a9852a-8dd8-423e-b537-9356db4fbfb8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdasyncresult
+@GUID("11a9852a-8dd8-423e-b537-9356db4fbfb8")
 interface IWSDAsyncResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdasyncresult-setcallback
@@ -1428,18 +1428,18 @@ interface IWSDAsyncResult : IUnknown
     HRESULT GetEndpointProxy(IWSDEndpointProxy* ppEndpoint);
 }
 
-@GUID("a63e109d-ce72-49e2-ba98-e845f5ee1666")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdasynccallback
+@GUID("a63e109d-ce72-49e2-ba98-e845f5ee1666")
 interface IWSDAsyncCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdasynccallback-asyncoperationcomplete
     HRESULT AsyncOperationComplete(IWSDAsyncResult pAsyncResult, IUnknown pAsyncState);
 }
 
-@GUID("49b17f52-637a-407a-ae99-fbe82a4d38c0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nn-wsdclient-iwsdeventingstatus
+@GUID("49b17f52-637a-407a-ae99-fbe82a4d38c0")
 interface IWSDEventingStatus : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdclient/nf-wsdclient-iwsdeventingstatus-subscriptionrenewed
@@ -1450,9 +1450,9 @@ interface IWSDEventingStatus : IUnknown
     void SubscriptionEnded(const(PWSTR) pszSubscriptionAction);
 }
 
-@GUID("917fe891-3d13-4138-9809-934c8abeb12c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdhost/nn-wsdhost-iwsddevicehost
+@GUID("917fe891-3d13-4138-9809-934c8abeb12c")
 interface IWSDDeviceHost : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdhost/nf-wsdhost-iwsddevicehost-init
@@ -1486,18 +1486,18 @@ interface IWSDDeviceHost : IUnknown
     HRESULT SignalEvent(const(PWSTR) pszServiceId, const(void)* pBody, const(WSD_OPERATION)* pOperation);
 }
 
-@GUID("b5bee9f9-eeda-41fe-96f7-f45e14990fb0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdhost/nn-wsdhost-iwsddevicehostnotify
+@GUID("b5bee9f9-eeda-41fe-96f7-f45e14990fb0")
 interface IWSDDeviceHostNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdhost/nf-wsdhost-iwsddevicehostnotify-getservice
     HRESULT GetService(const(PWSTR) pszServiceId, IUnknown* ppService);
 }
 
-@GUID("94974cf4-0cab-460d-a3f6-7a0ad623c0e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdhost/nn-wsdhost-iwsdservicemessaging
+@GUID("94974cf4-0cab-460d-a3f6-7a0ad623c0e6")
 interface IWSDServiceMessaging : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsdhost/nf-wsdhost-iwsdservicemessaging-sendresponse

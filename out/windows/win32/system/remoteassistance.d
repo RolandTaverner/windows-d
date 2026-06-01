@@ -54,9 +54,9 @@ enum : uint
 @GUID("0b7e019a-b5de-47fa-8966-9082f82fb192")
 struct RendezvousApplication;
 
-@GUID("9ba4b1dd-8b0c-48b7-9e7c-2f25857c8df5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rendezvoussession/nn-rendezvoussession-irendezvoussession
+@GUID("9ba4b1dd-8b0c-48b7-9e7c-2f25857c8df5")
 interface IRendezvousSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rendezvoussession/nf-rendezvoussession-irendezvoussession-get_state
@@ -71,16 +71,16 @@ interface IRendezvousSession : IUnknown
     HRESULT Terminate(HRESULT hr, BSTR bstrAppData);
 }
 
-@GUID("3fa19cf8-64c4-4f53-ae60-635b3806eca6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rendezvoussession/nn-rendezvoussession-drendezvoussessionevents
+@GUID("3fa19cf8-64c4-4f53-ae60-635b3806eca6")
 interface DRendezvousSessionEvents : IDispatch
 {
 }
 
-@GUID("4f4d070b-a275-49fb-b10d-8ec26387b50d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rendezvoussession/nn-rendezvoussession-irendezvousapplication
+@GUID("4f4d070b-a275-49fb-b10d-8ec26387b50d")
 interface IRendezvousApplication : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rendezvoussession/nf-rendezvoussession-irendezvousapplication-setrendezvoussession

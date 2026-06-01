@@ -421,9 +421,9 @@ struct OfflineFilesSetting;
 @GUID("48c6be7c-3871-43cc-b46f-1449a1bb2ff3")
 struct OfflineFilesCache;
 
-@GUID("e25585c1-0caa-4eb1-873b-1cae5b77c314")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesevents
+@GUID("e25585c1-0caa-4eb1-873b-1cae5b77c314")
 interface IOfflineFilesEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesevents-cachemoved
@@ -482,9 +482,9 @@ interface IOfflineFilesEvents : IUnknown
     HRESULT Ping();
 }
 
-@GUID("1ead8f56-ff76-4faa-a795-6f6ef792498b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesevents2
+@GUID("1ead8f56-ff76-4faa-a795-6f6ef792498b")
 interface IOfflineFilesEvents2 : IOfflineFilesEvents
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesevents2-itemreconnectbegin
@@ -507,9 +507,9 @@ interface IOfflineFilesEvents2 : IOfflineFilesEvents
     HRESULT SettingsChangesApplied();
 }
 
-@GUID("9ba04a45-ee69-42f0-9ab1-7db5c8805808")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesevents3
+@GUID("9ba04a45-ee69-42f0-9ab1-7db5c8805808")
 interface IOfflineFilesEvents3 : IOfflineFilesEvents2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesevents3-transparentcacheitemnotify
@@ -529,9 +529,9 @@ interface IOfflineFilesEvents4 : IOfflineFilesEvents3
     HRESULT PrefetchCloseHandleEnd(uint dwClosedHandleCount, uint dwOpenHandleCount, HRESULT hrResult);
 }
 
-@GUID("33fc4e1b-0716-40fa-ba65-6e62a84a846f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefileseventsfilter
+@GUID("33fc4e1b-0716-40fa-ba65-6e62a84a846f")
 interface IOfflineFilesEventsFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefileseventsfilter-getpathfilter
@@ -542,9 +542,9 @@ interface IOfflineFilesEventsFilter : IUnknown
     HRESULT GetExcludedEvents(uint cElements, OFFLINEFILES_EVENTS* prgEvents, uint* pcEvents);
 }
 
-@GUID("7112fa5f-7571-435a-8eb7-195c7c1429bc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefileserrorinfo
+@GUID("7112fa5f-7571-435a-8eb7-195c7c1429bc")
 interface IOfflineFilesErrorInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefileserrorinfo-getrawdata
@@ -553,9 +553,9 @@ interface IOfflineFilesErrorInfo : IUnknown
     HRESULT GetDescription(PWSTR* ppszDescription);
 }
 
-@GUID("ecdbaf0d-6a18-4d55-8017-108f7660ba44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessyncerroriteminfo
+@GUID("ecdbaf0d-6a18-4d55-8017-108f7660ba44")
 interface IOfflineFilesSyncErrorItemInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessyncerroriteminfo-getfileattributes
@@ -566,9 +566,9 @@ interface IOfflineFilesSyncErrorItemInfo : IUnknown
     HRESULT GetFileSize(long* pSize);
 }
 
-@GUID("59f95e46-eb54-49d1-be76-de95458d01b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessyncerrorinfo
+@GUID("59f95e46-eb54-49d1-be76-de95458d01b0")
 interface IOfflineFilesSyncErrorInfo : IOfflineFilesErrorInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessyncerrorinfo-getsyncoperation
@@ -587,9 +587,9 @@ interface IOfflineFilesSyncErrorInfo : IOfflineFilesErrorInfo
     HRESULT GetOriginalInfo(IOfflineFilesSyncErrorItemInfo* ppInfo);
 }
 
-@GUID("fad63237-c55b-4911-9850-bcf96d4c979e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesprogress
+@GUID("fad63237-c55b-4911-9850-bcf96d4c979e")
 interface IOfflineFilesProgress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesprogress-begin
@@ -600,9 +600,9 @@ interface IOfflineFilesProgress : IUnknown
     HRESULT End(HRESULT hrResult);
 }
 
-@GUID("c34f7f9b-c43d-4f9d-a776-c0eb6de5d401")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessimpleprogress
+@GUID("c34f7f9b-c43d-4f9d-a776-c0eb6de5d401")
 interface IOfflineFilesSimpleProgress : IOfflineFilesProgress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessimpleprogress-itembegin
@@ -611,9 +611,9 @@ interface IOfflineFilesSimpleProgress : IOfflineFilesProgress
     HRESULT ItemResult(const(PWSTR) pszFile, HRESULT hrResult, OFFLINEFILES_OP_RESPONSE* pResponse);
 }
 
-@GUID("6931f49a-6fc7-4c1b-b265-56793fc451b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessyncprogress
+@GUID("6931f49a-6fc7-4c1b-b265-56793fc451b7")
 interface IOfflineFilesSyncProgress : IOfflineFilesProgress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessyncprogress-syncitembegin
@@ -623,9 +623,9 @@ interface IOfflineFilesSyncProgress : IOfflineFilesProgress
                            OFFLINEFILES_OP_RESPONSE* pResponse);
 }
 
-@GUID("b6dd5092-c65c-46b6-97b8-fadd08e7e1be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessyncconflicthandler
+@GUID("b6dd5092-c65c-46b6-97b8-fadd08e7e1be")
 interface IOfflineFilesSyncConflictHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessyncconflicthandler-resolveconflict
@@ -634,9 +634,9 @@ interface IOfflineFilesSyncConflictHandler : IUnknown
                             PWSTR* ppszNewName);
 }
 
-@GUID("f4b5a26c-dc05-4f20-ada4-551f1077be5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesitemfilter
+@GUID("f4b5a26c-dc05-4f20-ada4-551f1077be5c")
 interface IOfflineFilesItemFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesitemfilter-getfilterflags
@@ -648,9 +648,9 @@ interface IOfflineFilesItemFilter : IUnknown
     HRESULT GetPatternFilter(PWSTR pszPattern, uint cchPattern);
 }
 
-@GUID("4a753da6-e044-4f12-a718-5d14d079a906")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesitem
+@GUID("4a753da6-e044-4f12-a718-5d14d079a906")
 interface IOfflineFilesItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesitem-getitemtype
@@ -664,30 +664,30 @@ interface IOfflineFilesItem : IUnknown
     HRESULT IsMarkedForDeletion(BOOL* pbMarkedForDeletion);
 }
 
-@GUID("9b1c9576-a92b-4151-8e9e-7c7b3ec2e016")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesserveritem
+@GUID("9b1c9576-a92b-4151-8e9e-7c7b3ec2e016")
 interface IOfflineFilesServerItem : IOfflineFilesItem
 {
 }
 
-@GUID("bab7e48d-4804-41b5-a44d-0f199b06b145")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesshareitem
+@GUID("bab7e48d-4804-41b5-a44d-0f199b06b145")
 interface IOfflineFilesShareItem : IOfflineFilesItem
 {
 }
 
-@GUID("2273597a-a08c-4a00-a37a-c1ae4e9a1cfd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesdirectoryitem
+@GUID("2273597a-a08c-4a00-a37a-c1ae4e9a1cfd")
 interface IOfflineFilesDirectoryItem : IOfflineFilesItem
 {
 }
 
-@GUID("8dfadead-26c2-4eff-8a72-6b50723d9a00")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesfileitem
+@GUID("8dfadead-26c2-4eff-8a72-6b50723d9a00")
 interface IOfflineFilesFileItem : IOfflineFilesItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesfileitem-issparse
@@ -696,9 +696,9 @@ interface IOfflineFilesFileItem : IOfflineFilesItem
     HRESULT IsEncrypted(BOOL* pbIsEncrypted);
 }
 
-@GUID("da70e815-c361-4407-bc0b-0d7046e5f2cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-ienumofflinefilesitems
+@GUID("da70e815-c361-4407-bc0b-0d7046e5f2cd")
 interface IEnumOfflineFilesItems : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-ienumofflinefilesitems-next
@@ -711,9 +711,9 @@ interface IEnumOfflineFilesItems : IUnknown
     HRESULT Clone(IEnumOfflineFilesItems* ppenum);
 }
 
-@GUID("3836f049-9413-45dd-bf46-b5aaa82dc310")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesitemcontainer
+@GUID("3836f049-9413-45dd-bf46-b5aaa82dc310")
 interface IOfflineFilesItemContainer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesitemcontainer-enumitems
@@ -724,9 +724,9 @@ interface IOfflineFilesItemContainer : IUnknown
                         uint dwEnumFlags, uint dwQueryFlags, IEnumOfflineFilesItems* ppenum);
 }
 
-@GUID("a96e6fa4-e0d1-4c29-960b-ee508fe68c72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefileschangeinfo
+@GUID("a96e6fa4-e0d1-4c29-960b-ee508fe68c72")
 interface IOfflineFilesChangeInfo : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -743,9 +743,9 @@ interface IOfflineFilesChangeInfo : IUnknown
     HRESULT IsLocallyModifiedTime(BOOL* pbLocallyModifiedTime);
 }
 
-@GUID("0f50ce33-bac9-4eaa-a11d-da0e527d047d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesdirtyinfo
+@GUID("0f50ce33-bac9-4eaa-a11d-da0e527d047d")
 interface IOfflineFilesDirtyInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesdirtyinfo-localdirtybytecount
@@ -754,9 +754,9 @@ interface IOfflineFilesDirtyInfo : IUnknown
     HRESULT RemoteDirtyByteCount(long* pDirtyByteCount);
 }
 
-@GUID("bc1a163f-7bfd-4d88-9c66-96ea9a6a3d6b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesfilesysinfo
+@GUID("bc1a163f-7bfd-4d88-9c66-96ea9a6a3d6b")
 interface IOfflineFilesFileSysInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesfilesysinfo-getattributes
@@ -768,9 +768,9 @@ interface IOfflineFilesFileSysInfo : IUnknown
     HRESULT GetFileSize(OFFLINEFILES_ITEM_COPY copy, long* pSize);
 }
 
-@GUID("5b2b0655-b3fd-497d-adeb-bd156bc8355b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilespininfo
+@GUID("5b2b0655-b3fd-497d-adeb-bd156bc8355b")
 interface IOfflineFilesPinInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilespininfo-ispinned
@@ -785,36 +785,36 @@ interface IOfflineFilesPinInfo : IUnknown
     HRESULT IsPinnedForFolderRedirection(BOOL* pbPinnedForFolderRedirection, BOOL* pbInherit);
 }
 
-@GUID("623c58a2-42ed-4ad7-b69a-0f1b30a72d0d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilespininfo2
+@GUID("623c58a2-42ed-4ad7-b69a-0f1b30a72d0d")
 interface IOfflineFilesPinInfo2 : IOfflineFilesPinInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilespininfo2-ispartlypinned
     HRESULT IsPartlyPinned(BOOL* pbPartlyPinned);
 }
 
-@GUID("bcaf4a01-5b68-4b56-a6a1-8d2786ede8e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilestransparentcacheinfo
+@GUID("bcaf4a01-5b68-4b56-a6a1-8d2786ede8e3")
 interface IOfflineFilesTransparentCacheInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilestransparentcacheinfo-istransparentlycached
     HRESULT IsTransparentlyCached(BOOL* pbTransparentlyCached);
 }
 
-@GUID("2b09d48c-8ab5-464f-a755-a59d92f99429")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesghostinfo
+@GUID("2b09d48c-8ab5-464f-a755-a59d92f99429")
 interface IOfflineFilesGhostInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesghostinfo-isghosted
     HRESULT IsGhosted(BOOL* pbGhosted);
 }
 
-@GUID("efb23a09-a867-4be8-83a6-86969a7d0856")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesconnectioninfo
+@GUID("efb23a09-a867-4be8-83a6-86969a7d0856")
 interface IOfflineFilesConnectionInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesconnectioninfo-getconnectstate
@@ -828,9 +828,9 @@ interface IOfflineFilesConnectionInfo : IUnknown
                               BOOL* pbOpenFilesPreventedTransition);
 }
 
-@GUID("7bcc43e7-31ce-4ca4-8ccd-1cff2dc494da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilesshareinfo
+@GUID("7bcc43e7-31ce-4ca4-8ccd-1cff2dc494da")
 interface IOfflineFilesShareInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilesshareinfo-getshareitem
@@ -841,27 +841,27 @@ interface IOfflineFilesShareInfo : IUnknown
     HRESULT IsShareDfsJunction(BOOL* pbIsDfsJunction);
 }
 
-@GUID("62c4560f-bc0b-48ca-ad9d-34cb528d99a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessuspend
+@GUID("62c4560f-bc0b-48ca-ad9d-34cb528d99a9")
 interface IOfflineFilesSuspend : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessuspend-suspendroot
     HRESULT SuspendRoot(BOOL bSuspend);
 }
 
-@GUID("a457c25b-4e9c-4b04-85af-8932ccd97889")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessuspendinfo
+@GUID("a457c25b-4e9c-4b04-85af-8932ccd97889")
 interface IOfflineFilesSuspendInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessuspendinfo-issuspended
     HRESULT IsSuspended(BOOL* pbSuspended, BOOL* pbSuspendedRoot);
 }
 
-@GUID("d871d3f7-f613-48a1-827e-7a34e560fff6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilessetting
+@GUID("d871d3f7-f613-48a1-827e-7a34e560fff6")
 interface IOfflineFilesSetting : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilessetting-getname
@@ -884,9 +884,9 @@ interface IOfflineFilesSetting : IUnknown
     HRESULT GetValue(VARIANT* pvarValue, BOOL* pbSetByPolicy);
 }
 
-@GUID("729680c4-1a38-47bc-9e5c-02c51562ac30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-ienumofflinefilessettings
+@GUID("729680c4-1a38-47bc-9e5c-02c51562ac30")
 interface IEnumOfflineFilesSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-ienumofflinefilessettings-next
@@ -899,9 +899,9 @@ interface IEnumOfflineFilesSettings : IUnknown
     HRESULT Clone(IEnumOfflineFilesSettings* ppenum);
 }
 
-@GUID("855d6203-7914-48b9-8d40-4c56f5acffc5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilescache
+@GUID("855d6203-7914-48b9-8d40-4c56f5acffc5")
 interface IOfflineFilesCache : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilescache-synchronize
@@ -950,9 +950,9 @@ interface IOfflineFilesCache : IUnknown
     HRESULT IsPathCacheable(const(PWSTR) pszPath, BOOL* pbCacheable, OFFLINEFILES_CACHING_MODE* pShareCachingMode);
 }
 
-@GUID("8c075039-1551-4ed9-8781-56705c04d3c0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nn-cscobj-iofflinefilescache2
+@GUID("8c075039-1551-4ed9-8781-56705c04d3c0")
 interface IOfflineFilesCache2 : IOfflineFilesCache
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cscobj/nf-cscobj-iofflinefilescache2-renameitemex

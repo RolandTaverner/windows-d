@@ -8437,8 +8437,8 @@ void SendSAS(BOOL AsUser);
 
 // Interfaces
 
-@GUID("6ecda518-2010-4437-8bc3-46e752b7b172")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ccgplugins/nn-ccgplugins-iccgdomainauthcredentials
+@GUID("6ecda518-2010-4437-8bc3-46e752b7b172")
 interface ICcgDomainAuthCredentials : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ccgplugins/nf-ccgplugins-iccgdomainauthcredentials-getpasswordcredentials

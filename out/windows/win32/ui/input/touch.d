@@ -186,9 +186,9 @@ struct InertiaProcessor;
 @GUID("597d4fb0-47fd-4aff-89b9-c6cfae8cf08e")
 struct ManipulationProcessor;
 
-@GUID("4f62c8da-9c53-4b22-93df-927a862bbb03")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/manipulations/nn-manipulations-_imanipulationevents
+@GUID("4f62c8da-9c53-4b22-93df-927a862bbb03")
 interface _IManipulationEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/manipulations/nf-manipulations-_imanipulationevents-manipulationstarted
@@ -203,9 +203,9 @@ interface _IManipulationEvents : IUnknown
                                   float cumulativeScale, float cumulativeExpansion, float cumulativeRotation);
 }
 
-@GUID("18b00c6d-c5ee-41b1-90a9-9d4a929095ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/manipulations/nn-manipulations-iinertiaprocessor
+@GUID("18b00c6d-c5ee-41b1-90a9-9d4a929095ad")
 interface IInertiaProcessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/manipulations/nf-manipulations-iinertiaprocessor-get_initialoriginx
@@ -308,9 +308,9 @@ interface IInertiaProcessor : IUnknown
     HRESULT CompleteTime(uint timestamp);
 }
 
-@GUID("a22ac519-8300-48a0-bef4-f1be8737dba4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/manipulations/nn-manipulations-imanipulationprocessor
+@GUID("a22ac519-8300-48a0-bef4-f1be8737dba4")
 interface IManipulationProcessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/manipulations/nf-manipulations-imanipulationprocessor-get_supportedmanipulations

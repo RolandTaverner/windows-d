@@ -160,15 +160,16 @@ struct CONTACT_AGGREGATION_BLOB
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/contact-properties
 @GUID("61b68808-8eee-4fd1-acb8-3d804c8db056")
 struct Contact;
 
 @GUID("7165c8ab-af88-42bd-86fd-5310b4285a02")
 struct ContactManager;
 
-@GUID("ad553d98-deb1-474a-8e17-fc0c2075b738")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactmanager
+@GUID("ad553d98-deb1-474a-8e17-fc0c2075b738")
 interface IContactManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-initialize
@@ -185,9 +186,9 @@ interface IContactManager : IUnknown
     HRESULT GetContactCollection(IContactCollection* ppContactCollection);
 }
 
-@GUID("b6afa338-d779-11d9-8bde-f66bad1e3f3a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactcollection
+@GUID("b6afa338-d779-11d9-8bde-f66bad1e3f3a")
 interface IContactCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-reset
@@ -198,9 +199,9 @@ interface IContactCollection : IUnknown
     HRESULT GetCurrent(IContact* ppContact);
 }
 
-@GUID("70dd27dd-5cbd-46e8-bef0-23b6b346288f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactproperties
+@GUID("70dd27dd-5cbd-46e8-bef0-23b6b346288f")
 interface IContactProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getstring
@@ -237,9 +238,9 @@ interface IContactProperties : IUnknown
                                   BOOL fAnyLabelMatches);
 }
 
-@GUID("f941b671-bda7-4f77-884a-f46462f226a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontact
+@GUID("f941b671-bda7-4f77-884a-f46462f226a7")
 interface IContact : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-getcontactid
@@ -250,9 +251,9 @@ interface IContact : IUnknown
     HRESULT CommitChanges(uint dwCommitFlags);
 }
 
-@GUID("ffd3adf8-fa64-4328-b1b6-2e0db509cb3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactpropertycollection
+@GUID("ffd3adf8-fa64-4328-b1b6-2e0db509cb3c")
 interface IContactPropertyCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-reset

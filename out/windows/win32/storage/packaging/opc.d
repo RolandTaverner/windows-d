@@ -303,9 +303,9 @@ enum HRESULT OPC_E_ZIP_REQUIRES_64_BIT = HRESULT(0x80511010);
 @GUID("6b2d6ba0-9f3e-4f27-920b-313cc426a39e")
 struct OpcFactory;
 
-@GUID("bc9c1b9b-d62c-49eb-aef0-3b4e0b28ebed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcuri
+@GUID("bc9c1b9b-d62c-49eb-aef0-3b4e0b28ebed")
 interface IOpcUri : IUri
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcuri-getrelationshipsparturi
@@ -316,9 +316,9 @@ interface IOpcUri : IUri
     HRESULT CombinePartUri(IUri relativeUri, IOpcPartUri* combinedUri);
 }
 
-@GUID("7d3babe7-88b2-46ba-85cb-4203cb016c87")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcparturi
+@GUID("7d3babe7-88b2-46ba-85cb-4203cb016c87")
 interface IOpcPartUri : IOpcUri
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcparturi-compareparturi
@@ -329,9 +329,9 @@ interface IOpcPartUri : IOpcUri
     HRESULT IsRelationshipsPartUri(BOOL* isRelationshipUri);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcpackage
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee70")
 interface IOpcPackage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcpackage-getpartset
@@ -340,9 +340,9 @@ interface IOpcPackage : IUnknown
     HRESULT GetRelationshipSet(IOpcRelationshipSet* relationshipSet);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee71")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcpart
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee71")
 interface IOpcPart : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcpart-getrelationshipset
@@ -357,9 +357,9 @@ interface IOpcPart : IUnknown
     HRESULT GetCompressionOptions(OPC_COMPRESSION_OPTIONS* compressionOptions);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcrelationship
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee72")
 interface IOpcRelationship : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcrelationship-getid
@@ -374,9 +374,9 @@ interface IOpcRelationship : IUnknown
     HRESULT GetTargetMode(OPC_URI_TARGET_MODE* targetMode);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee73")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcpartset
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee73")
 interface IOpcPartSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcpartset-getpart
@@ -392,9 +392,9 @@ interface IOpcPartSet : IUnknown
     HRESULT GetEnumerator(IOpcPartEnumerator* partEnumerator);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee74")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcrelationshipset
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee74")
 interface IOpcRelationshipSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcrelationshipset-getrelationship
@@ -414,9 +414,9 @@ interface IOpcRelationshipSet : IUnknown
     HRESULT GetRelationshipsContentStream(IStream* contents);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcpartenumerator
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee75")
 interface IOpcPartEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcpartenumerator-movenext
@@ -429,9 +429,9 @@ interface IOpcPartEnumerator : IUnknown
     HRESULT Clone(IOpcPartEnumerator* copy);
 }
 
-@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee76")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcrelationshipenumerator
+@GUID("42195949-3b79-4fc8-89c6-fc7fb979ee76")
 interface IOpcRelationshipEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcrelationshipenumerator-movenext
@@ -444,9 +444,9 @@ interface IOpcRelationshipEnumerator : IUnknown
     HRESULT Clone(IOpcRelationshipEnumerator* copy);
 }
 
-@GUID("e24231ca-59f4-484e-b64b-36eeda36072c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturepartreference
+@GUID("e24231ca-59f4-484e-b64b-36eeda36072c")
 interface IOpcSignaturePartReference : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturepartreference-getpartname
@@ -461,9 +461,9 @@ interface IOpcSignaturePartReference : IUnknown
     HRESULT GetTransformMethod(OPC_CANONICALIZATION_METHOD* transformMethod);
 }
 
-@GUID("57babac6-9d4a-4e50-8b86-e5d4051eae7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturerelationshipreference
+@GUID("57babac6-9d4a-4e50-8b86-e5d4051eae7c")
 interface IOpcSignatureRelationshipReference : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturerelationshipreference-getsourceuri
@@ -480,9 +480,9 @@ interface IOpcSignatureRelationshipReference : IUnknown
     HRESULT GetRelationshipSelectorEnumerator(IOpcRelationshipSelectorEnumerator* selectorEnumerator);
 }
 
-@GUID("f8f26c7f-b28f-4899-84c8-5d5639ede75f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcrelationshipselector
+@GUID("f8f26c7f-b28f-4899-84c8-5d5639ede75f")
 interface IOpcRelationshipSelector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcrelationshipselector-getselectortype
@@ -491,9 +491,9 @@ interface IOpcRelationshipSelector : IUnknown
     HRESULT GetSelectionCriterion(PWSTR* selectionCriterion);
 }
 
-@GUID("1b47005e-3011-4edc-be6f-0f65e5ab0342")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturereference
+@GUID("1b47005e-3011-4edc-be6f-0f65e5ab0342")
 interface IOpcSignatureReference : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturereference-getid
@@ -510,18 +510,18 @@ interface IOpcSignatureReference : IUnknown
     HRESULT GetDigestValue(ubyte** digestValue, uint* count);
 }
 
-@GUID("5d77a19e-62c1-44e7-becd-45da5ae51a56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturecustomobject
+@GUID("5d77a19e-62c1-44e7-becd-45da5ae51a56")
 interface IOpcSignatureCustomObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturecustomobject-getxml
     HRESULT GetXml(ubyte** xmlMarkup, uint* count);
 }
 
-@GUID("52ab21dd-1cd0-4949-bc80-0c1232d00cb4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcdigitalsignature
+@GUID("52ab21dd-1cd0-4949-bc80-0c1232d00cb4")
 interface IOpcDigitalSignature : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcdigitalsignature-getnamespaces
@@ -556,9 +556,9 @@ interface IOpcDigitalSignature : IUnknown
     HRESULT GetSignatureXml(ubyte** signatureXml, uint* count);
 }
 
-@GUID("50d2d6a5-7aeb-46c0-b241-43ab0e9b407e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsigningoptions
+@GUID("50d2d6a5-7aeb-46c0-b241-43ab0e9b407e")
 interface IOpcSigningOptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsigningoptions-getsignatureid
@@ -597,9 +597,9 @@ interface IOpcSigningOptions : IUnknown
     HRESULT SetSignaturePartName(IOpcPartUri signaturePartName);
 }
 
-@GUID("d5e62a0b-696d-462f-94df-72e33cef2659")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcdigitalsignaturemanager
+@GUID("d5e62a0b-696d-462f-94df-72e33cef2659")
 interface IOpcDigitalSignatureManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcdigitalsignaturemanager-getsignatureoriginpartname
@@ -623,9 +623,9 @@ interface IOpcDigitalSignatureManager : IUnknown
                                 IOpcDigitalSignature* digitalSignature);
 }
 
-@GUID("80eb1561-8c77-49cf-8266-459b356ee99a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturepartreferenceenumerator
+@GUID("80eb1561-8c77-49cf-8266-459b356ee99a")
 interface IOpcSignaturePartReferenceEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturepartreferenceenumerator-movenext
@@ -638,9 +638,9 @@ interface IOpcSignaturePartReferenceEnumerator : IUnknown
     HRESULT Clone(IOpcSignaturePartReferenceEnumerator* copy);
 }
 
-@GUID("773ba3e4-f021-48e4-aa04-9816db5d3495")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturerelationshipreferenceenumerator
+@GUID("773ba3e4-f021-48e4-aa04-9816db5d3495")
 interface IOpcSignatureRelationshipReferenceEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturerelationshipreferenceenumerator-movenext
@@ -653,9 +653,9 @@ interface IOpcSignatureRelationshipReferenceEnumerator : IUnknown
     HRESULT Clone(IOpcSignatureRelationshipReferenceEnumerator* copy);
 }
 
-@GUID("5e50a181-a91b-48ac-88d2-bca3d8f8c0b1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcrelationshipselectorenumerator
+@GUID("5e50a181-a91b-48ac-88d2-bca3d8f8c0b1")
 interface IOpcRelationshipSelectorEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcrelationshipselectorenumerator-movenext
@@ -668,9 +668,9 @@ interface IOpcRelationshipSelectorEnumerator : IUnknown
     HRESULT Clone(IOpcRelationshipSelectorEnumerator* copy);
 }
 
-@GUID("cfa59a45-28b1-4868-969e-fa8097fdc12a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturereferenceenumerator
+@GUID("cfa59a45-28b1-4868-969e-fa8097fdc12a")
 interface IOpcSignatureReferenceEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturereferenceenumerator-movenext
@@ -683,9 +683,9 @@ interface IOpcSignatureReferenceEnumerator : IUnknown
     HRESULT Clone(IOpcSignatureReferenceEnumerator* copy);
 }
 
-@GUID("5ee4fe1d-e1b0-4683-8079-7ea0fcf80b4c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturecustomobjectenumerator
+@GUID("5ee4fe1d-e1b0-4683-8079-7ea0fcf80b4c")
 interface IOpcSignatureCustomObjectEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturecustomobjectenumerator-movenext
@@ -698,9 +698,9 @@ interface IOpcSignatureCustomObjectEnumerator : IUnknown
     HRESULT Clone(IOpcSignatureCustomObjectEnumerator* copy);
 }
 
-@GUID("85131937-8f24-421f-b439-59ab24d140b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopccertificateenumerator
+@GUID("85131937-8f24-421f-b439-59ab24d140b8")
 interface IOpcCertificateEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopccertificateenumerator-movenext
@@ -713,9 +713,9 @@ interface IOpcCertificateEnumerator : IUnknown
     HRESULT Clone(IOpcCertificateEnumerator* copy);
 }
 
-@GUID("967b6882-0ba3-4358-b9e7-b64c75063c5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcdigitalsignatureenumerator
+@GUID("967b6882-0ba3-4358-b9e7-b64c75063c5e")
 interface IOpcDigitalSignatureEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcdigitalsignatureenumerator-movenext
@@ -728,9 +728,9 @@ interface IOpcDigitalSignatureEnumerator : IUnknown
     HRESULT Clone(IOpcDigitalSignatureEnumerator* copy);
 }
 
-@GUID("6c9fe28c-ecd9-4b22-9d36-7fdde670fec0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturepartreferenceset
+@GUID("6c9fe28c-ecd9-4b22-9d36-7fdde670fec0")
 interface IOpcSignaturePartReferenceSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturepartreferenceset-create
@@ -742,9 +742,9 @@ interface IOpcSignaturePartReferenceSet : IUnknown
     HRESULT GetEnumerator(IOpcSignaturePartReferenceEnumerator* partReferenceEnumerator);
 }
 
-@GUID("9f863ca5-3631-404c-828d-807e0715069b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturerelationshipreferenceset
+@GUID("9f863ca5-3631-404c-828d-807e0715069b")
 interface IOpcSignatureRelationshipReferenceSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturerelationshipreferenceset-create
@@ -760,9 +760,9 @@ interface IOpcSignatureRelationshipReferenceSet : IUnknown
     HRESULT GetEnumerator(IOpcSignatureRelationshipReferenceEnumerator* relationshipReferenceEnumerator);
 }
 
-@GUID("6e34c269-a4d3-47c0-b5c4-87ff2b3b6136")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcrelationshipselectorset
+@GUID("6e34c269-a4d3-47c0-b5c4-87ff2b3b6136")
 interface IOpcRelationshipSelectorSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcrelationshipselectorset-create
@@ -774,9 +774,9 @@ interface IOpcRelationshipSelectorSet : IUnknown
     HRESULT GetEnumerator(IOpcRelationshipSelectorEnumerator* relationshipSelectorEnumerator);
 }
 
-@GUID("f3b02d31-ab12-42dd-9e2f-2b16761c3c1e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturereferenceset
+@GUID("f3b02d31-ab12-42dd-9e2f-2b16761c3c1e")
 interface IOpcSignatureReferenceSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturereferenceset-create
@@ -788,9 +788,9 @@ interface IOpcSignatureReferenceSet : IUnknown
     HRESULT GetEnumerator(IOpcSignatureReferenceEnumerator* referenceEnumerator);
 }
 
-@GUID("8f792ac5-7947-4e11-bc3d-2659ff046ae1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcsignaturecustomobjectset
+@GUID("8f792ac5-7947-4e11-bc3d-2659ff046ae1")
 interface IOpcSignatureCustomObjectSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcsignaturecustomobjectset-create
@@ -801,9 +801,9 @@ interface IOpcSignatureCustomObjectSet : IUnknown
     HRESULT GetEnumerator(IOpcSignatureCustomObjectEnumerator* customObjectEnumerator);
 }
 
-@GUID("56ea4325-8e2d-4167-b1a4-e486d24c8fa7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopccertificateset
+@GUID("56ea4325-8e2d-4167-b1a4-e486d24c8fa7")
 interface IOpcCertificateSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopccertificateset-add
@@ -814,9 +814,9 @@ interface IOpcCertificateSet : IUnknown
     HRESULT GetEnumerator(IOpcCertificateEnumerator* certificateEnumerator);
 }
 
-@GUID("6d0b4446-cd73-4ab3-94f4-8ccdf6116154")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nn-msopc-iopcfactory
+@GUID("6d0b4446-cd73-4ab3-94f4-8ccdf6116154")
 interface IOpcFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msopc/nf-msopc-iopcfactory-createpackagerooturi

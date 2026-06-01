@@ -508,9 +508,9 @@ HRESULT BindIFilterFromStream(IStream pStm, IUnknown pUnkOuter, void** ppIUnk);
 
 // Interfaces
 
-@GUID("89bcb740-6119-101a-bcb7-00dd010655af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nn-filter-ifilter
+@GUID("89bcb740-6119-101a-bcb7-00dd010655af")
 interface IFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-init
@@ -533,9 +533,9 @@ interface IPixelFilter : IFilter
                               ubyte* pixelBuffer);
 }
 
-@GUID("cc906ff0-c058-101a-b554-08002b33b0e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iphrasesink
+@GUID("cc906ff0-c058-101a-b554-08002b33b0e6")
 interface IPhraseSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iphrasesink-putsmallphrase

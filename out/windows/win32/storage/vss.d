@@ -666,9 +666,9 @@ struct VssSnapshotMgmt;
 @GUID("e579ab5f-1cc4-44b4-bed9-de0991ff0623")
 struct VSSCoordinator;
 
-@GUID("ae1c7110-2f60-11d3-8a39-00c04f72d8e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vss/nn-vss-ivssenumobject
+@GUID("ae1c7110-2f60-11d3-8a39-00c04f72d8e3")
 interface IVssEnumObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vss/nf-vss-ivssenumobject-next
@@ -681,9 +681,9 @@ interface IVssEnumObject : IUnknown
     HRESULT Clone(IVssEnumObject* ppenum);
 }
 
-@GUID("507c37b4-cf5b-4e95-b0af-14eb9767467e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vss/nn-vss-ivssasync
+@GUID("507c37b4-cf5b-4e95-b0af-14eb9767467e")
 interface IVssAsync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vss/nf-vss-ivssasync-cancel
@@ -720,8 +720,8 @@ interface IVssWMDependency : IUnknown
     HRESULT GetComponentName(BSTR* pbstrComponentName);
 }
 
-@GUID("d2c72c96-c121-4518-b627-e5a93d010ead")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nl-vswriter-ivsscomponent
+@GUID("d2c72c96-c121-4518-b627-e5a93d010ead")
 interface IVssComponent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nf-vswriter-ivsscomponent-getlogicalpath
@@ -823,8 +823,8 @@ interface IVssWriterComponents
     HRESULT GetComponent(uint iComponent, IVssComponent* ppComponent);
 }
 
-@GUID("156c8b5e-f131-4bd7-9c97-d1923be7e1fa")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nl-vswriter-ivsscomponentex
+@GUID("156c8b5e-f131-4bd7-9c97-d1923be7e1fa")
 interface IVssComponentEx : IVssComponent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nf-vswriter-ivsscomponentex-setprepareforbackupfailuremsg
@@ -843,8 +843,8 @@ interface IVssComponentEx : IVssComponent
     HRESULT GetRestoreName(BSTR* pbstrName);
 }
 
-@GUID("3b5be0f2-07a9-4e4b-bdd3-cfdc8e2c0d2d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nl-vswriter-ivsscomponentex2
+@GUID("3b5be0f2-07a9-4e4b-bdd3-cfdc8e2c0d2d")
 interface IVssComponentEx2 : IVssComponentEx
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nf-vswriter-ivsscomponentex2-setfailure
@@ -893,8 +893,8 @@ interface IVssCreateWriterMetadata
     HRESULT SaveAsXML(BSTR* pbstrXML);
 }
 
-@GUID("9c772e77-b26e-427f-92dd-c996f41ea5e3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nl-vswriter-ivsscreateexpresswritermetadata
+@GUID("9c772e77-b26e-427f-92dd-c996f41ea5e3")
 interface IVssCreateExpressWriterMetadata : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nf-vswriter-ivsscreateexpresswritermetadata-addexcludefiles
@@ -920,8 +920,8 @@ interface IVssCreateExpressWriterMetadata : IUnknown
     HRESULT SaveAsXML(BSTR* pbstrXML);
 }
 
-@GUID("e33affdc-59c7-47b1-97d5-4266598f6235")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nl-vswriter-ivssexpresswriter
+@GUID("e33affdc-59c7-47b1-97d5-4266598f6235")
 interface IVssExpressWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vswriter/nf-vswriter-ivssexpresswriter-createmetadata
@@ -935,9 +935,9 @@ interface IVssExpressWriter : IUnknown
     HRESULT Unregister(GUID writerId);
 }
 
-@GUID("fa7df749-66e7-4986-a27f-e2f04ae53772")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nn-vsmgmt-ivsssnapshotmgmt
+@GUID("fa7df749-66e7-4986-a27f-e2f04ae53772")
 interface IVssSnapshotMgmt : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nf-vsmgmt-ivsssnapshotmgmt-getprovidermgmtinterface
@@ -948,18 +948,18 @@ interface IVssSnapshotMgmt : IUnknown
     HRESULT QuerySnapshotsByVolume(ushort* pwszVolumeName, GUID ProviderId, IVssEnumObject* ppEnum);
 }
 
-@GUID("0f61ec39-fe82-45f2-a3f0-768b5d427102")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nn-vsmgmt-ivsssnapshotmgmt2
+@GUID("0f61ec39-fe82-45f2-a3f0-768b5d427102")
 interface IVssSnapshotMgmt2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nf-vsmgmt-ivsssnapshotmgmt2-getmindiffareasize
     HRESULT GetMinDiffAreaSize(long* pllMinDiffAreaSize);
 }
 
-@GUID("214a0f28-b737-4026-b847-4f9e37d79529")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nn-vsmgmt-ivssdifferentialsoftwaresnapshotmgmt
+@GUID("214a0f28-b737-4026-b847-4f9e37d79529")
 interface IVssDifferentialSoftwareSnapshotMgmt : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nf-vsmgmt-ivssdifferentialsoftwaresnapshotmgmt-adddiffarea
@@ -977,9 +977,9 @@ interface IVssDifferentialSoftwareSnapshotMgmt : IUnknown
     HRESULT QueryDiffAreasForSnapshot(GUID SnapshotId, IVssEnumMgmtObject* ppEnum);
 }
 
-@GUID("949d7353-675f-4275-8969-f044c6277815")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nn-vsmgmt-ivssdifferentialsoftwaresnapshotmgmt2
+@GUID("949d7353-675f-4275-8969-f044c6277815")
 interface IVssDifferentialSoftwareSnapshotMgmt2 : IVssDifferentialSoftwareSnapshotMgmt
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nf-vsmgmt-ivssdifferentialsoftwaresnapshotmgmt2-changediffareamaximumsizeex
@@ -994,9 +994,9 @@ interface IVssDifferentialSoftwareSnapshotMgmt2 : IVssDifferentialSoftwareSnapsh
     HRESULT SetSnapshotPriority(GUID idSnapshot, ubyte priority);
 }
 
-@GUID("383f7e71-a4c5-401f-b27f-f826289f8458")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nn-vsmgmt-ivssdifferentialsoftwaresnapshotmgmt3
+@GUID("383f7e71-a4c5-401f-b27f-f826289f8458")
 interface IVssDifferentialSoftwareSnapshotMgmt3 : IVssDifferentialSoftwareSnapshotMgmt2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nf-vsmgmt-ivssdifferentialsoftwaresnapshotmgmt3-setvolumeprotectlevel
@@ -1012,9 +1012,9 @@ interface IVssDifferentialSoftwareSnapshotMgmt3 : IVssDifferentialSoftwareSnapsh
                                      uint* pcBitmapLength, ubyte** ppbBitmap);
 }
 
-@GUID("01954e6b-9254-4e6e-808c-c9e05d007696")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nn-vsmgmt-ivssenummgmtobject
+@GUID("01954e6b-9254-4e6e-808c-c9e05d007696")
 interface IVssEnumMgmtObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsmgmt/nf-vsmgmt-ivssenummgmtobject-next
@@ -1027,9 +1027,9 @@ interface IVssEnumMgmtObject : IUnknown
     HRESULT Clone(IVssEnumMgmtObject* ppenum);
 }
 
-@GUID("77ed5996-2f63-11d3-8a39-00c04f72d8e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsadmin/nn-vsadmin-ivssadmin
+@GUID("77ed5996-2f63-11d3-8a39-00c04f72d8e3")
 interface IVssAdmin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsadmin/nf-vsadmin-ivssadmin-registerprovider
@@ -1051,9 +1051,9 @@ interface IVssAdminEx : IVssAdmin
     HRESULT SetProviderContext(GUID ProviderId, int lContext);
 }
 
-@GUID("609e123e-2c5a-44d3-8f01-0b1d9a47d1ff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nn-vsprov-ivsssoftwaresnapshotprovider
+@GUID("609e123e-2c5a-44d3-8f01-0b1d9a47d1ff")
 interface IVssSoftwareSnapshotProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nf-vsprov-ivsssoftwaresnapshotprovider-setcontext
@@ -1080,9 +1080,9 @@ interface IVssSoftwareSnapshotProvider : IUnknown
     HRESULT QueryRevertStatus(ushort* pwszVolume, IVssAsync* ppAsync);
 }
 
-@GUID("5f894e5b-1e39-4778-8e23-9abad9f0e08c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nn-vsprov-ivssprovidercreatesnapshotset
+@GUID("5f894e5b-1e39-4778-8e23-9abad9f0e08c")
 interface IVssProviderCreateSnapshotSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nf-vsprov-ivssprovidercreatesnapshotset-endpreparesnapshots
@@ -1101,9 +1101,9 @@ interface IVssProviderCreateSnapshotSet : IUnknown
     HRESULT AbortSnapshots(GUID SnapshotSetId);
 }
 
-@GUID("e561901f-03a5-4afe-86d0-72baeece7004")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nn-vsprov-ivssprovidernotifications
+@GUID("e561901f-03a5-4afe-86d0-72baeece7004")
 interface IVssProviderNotifications : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nf-vsprov-ivssprovidernotifications-onload
@@ -1112,9 +1112,9 @@ interface IVssProviderNotifications : IUnknown
     HRESULT OnUnload(BOOL bForceUnload);
 }
 
-@GUID("9593a157-44e9-4344-bbeb-44fbf9b06b10")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nn-vsprov-ivsshardwaresnapshotprovider
+@GUID("9593a157-44e9-4344-bbeb-44fbf9b06b10")
 interface IVssHardwareSnapshotProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nf-vsprov-ivsshardwaresnapshotprovider-arelunssupported
@@ -1134,9 +1134,9 @@ interface IVssHardwareSnapshotProvider : IUnknown
     HRESULT OnLunEmpty(ushort* wszDeviceName, VDS_LUN_INFORMATION* pInformation);
 }
 
-@GUID("7f5ba925-cdb1-4d11-a71f-339eb7e709fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nn-vsprov-ivsshardwaresnapshotproviderex
+@GUID("7f5ba925-cdb1-4d11-a71f-339eb7e709fd")
 interface IVssHardwareSnapshotProviderEx : IVssHardwareSnapshotProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nf-vsprov-ivsshardwaresnapshotproviderex-getprovidercapabilities
@@ -1151,9 +1151,9 @@ interface IVssHardwareSnapshotProviderEx : IVssHardwareSnapshotProvider
     HRESULT OnReuseLuns(VDS_LUN_INFORMATION* pSnapshotLuns, VDS_LUN_INFORMATION* pOriginalLuns, uint dwCount);
 }
 
-@GUID("c8636060-7c2e-11df-8c4a-0800200c9a66")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nn-vsprov-ivssfilesharesnapshotprovider
+@GUID("c8636060-7c2e-11df-8c4a-0800200c9a66")
 interface IVssFileShareSnapshotProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vsprov/nf-vsprov-ivssfilesharesnapshotprovider-setcontext

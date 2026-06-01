@@ -151,9 +151,9 @@ struct DedupBackupSupport;
 @GUID("8f107207-1829-48b2-a64b-e61f8e0d9acb")
 struct DedupDataPort;
 
-@GUID("7bacc67a-2f1d-42d0-897e-6ff62dd533bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nn-ddpbackup-idedupreadfilecallback
+@GUID("7bacc67a-2f1d-42d0-897e-6ff62dd533bb")
 interface IDedupReadFileCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-readbackupfile
@@ -166,9 +166,9 @@ interface IDedupReadFileCallback : IUnknown
     HRESULT PreviewContainerRead(BSTR FileFullPath, uint NumberOfReads, DDP_FILE_EXTENT* ReadOffsets);
 }
 
-@GUID("c719d963-2b2d-415e-acf7-7eb7ca596ff4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nn-ddpbackup-idedupbackupsupport
+@GUID("c719d963-2b2d-415e-acf7-7eb7ca596ff4")
 interface IDedupBackupSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupbackupsupport-restorefiles

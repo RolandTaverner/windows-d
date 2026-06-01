@@ -5049,8 +5049,8 @@ struct Rendezvous;
 @GUID("df0daef2-a289-11d1-8697-006008b0e5d2")
 struct McastAddressAllocation;
 
-@GUID("b1efc382-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittapi
+@GUID("b1efc382-9355-11d0-835c-00aa003ccabd")
 interface ITTAPI : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittapi-initialize
@@ -5088,8 +5088,8 @@ interface ITTAPI : IDispatch
     HRESULT get_EventFilter(int* plFilterMask);
 }
 
-@GUID("54fbdc8c-d90f-4dad-9695-b373097f094b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittapi2
+@GUID("54fbdc8c-d90f-4dad-9695-b373097f094b")
 interface ITTAPI2 : ITTAPI
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittapi2-get_phones
@@ -5100,8 +5100,8 @@ interface ITTAPI2 : ITTAPI
     HRESULT CreateEmptyCollectionObject(ITCollection2* ppCollection);
 }
 
-@GUID("b1efc384-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itmediasupport
+@GUID("b1efc384-9355-11d0-835c-00aa003ccabd")
 interface ITMediaSupport : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itmediasupport-get_mediatypes
@@ -5110,8 +5110,8 @@ interface ITMediaSupport : IDispatch
     HRESULT QueryMediaType(int lMediaType, VARIANT_BOOL* pfSupport);
 }
 
-@GUID("41757f4a-cf09-4b34-bc96-0a79d2390076")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itpluggableterminalclassinfo
+@GUID("41757f4a-cf09-4b34-bc96-0a79d2390076")
 interface ITPluggableTerminalClassInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itpluggableterminalclassinfo-get_name
@@ -5130,8 +5130,8 @@ interface ITPluggableTerminalClassInfo : IDispatch
     HRESULT get_MediaTypes(int* pMediaTypes);
 }
 
-@GUID("6d54e42c-4625-4359-a6f7-631999107e05")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itpluggableterminalsuperclassinfo
+@GUID("6d54e42c-4625-4359-a6f7-631999107e05")
 interface ITPluggableTerminalSuperclassInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itpluggableterminalsuperclassinfo-get_name
@@ -5140,8 +5140,8 @@ interface ITPluggableTerminalSuperclassInfo : IDispatch
     HRESULT get_CLSID(BSTR* pCLSID);
 }
 
-@GUID("b1efc385-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itterminalsupport
+@GUID("b1efc385-9355-11d0-835c-00aa003ccabd")
 interface ITTerminalSupport : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itterminalsupport-get_staticterminals
@@ -5159,8 +5159,8 @@ interface ITTerminalSupport : IDispatch
     HRESULT GetDefaultStaticTerminal(int lMediaType, TERMINAL_DIRECTION Direction, ITTerminal* ppTerminal);
 }
 
-@GUID("f3eb39bc-1b1f-4e99-a0c0-56305c4dd591")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itterminalsupport2
+@GUID("f3eb39bc-1b1f-4e99-a0c0-56305c4dd591")
 interface ITTerminalSupport2 : ITTerminalSupport
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itterminalsupport2-get_pluggablesuperclasses
@@ -5174,8 +5174,8 @@ interface ITTerminalSupport2 : ITTerminalSupport
                                               IEnumPluggableTerminalClassInfo* ppClassEnumerator);
 }
 
-@GUID("b1efc386-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddress
+@GUID("b1efc386-9355-11d0-835c-00aa003ccabd")
 interface ITAddress : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddress-get_state
@@ -5210,8 +5210,8 @@ interface ITAddress : IDispatch
     HRESULT get_DoNotDisturb(VARIANT_BOOL* pfDoNotDisturb);
 }
 
-@GUID("b0ae5d9b-be51-46c9-b0f7-dfa8a22a8bc4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddress2
+@GUID("b0ae5d9b-be51-46c9-b0f7-dfa8a22a8bc4")
 interface ITAddress2 : ITAddress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddress2-get_phones
@@ -5236,8 +5236,8 @@ interface ITAddress2 : ITAddress
     HRESULT NegotiateExtVersion(int lLowVersion, int lHighVersion, int* plExtVersion);
 }
 
-@GUID("8df232f5-821b-11d1-bb5c-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddresscapabilities
+@GUID("8df232f5-821b-11d1-bb5c-00c04fb6809f")
 interface ITAddressCapabilities : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddresscapabilities-get_addresscapability
@@ -5258,8 +5258,8 @@ interface ITAddressCapabilities : IDispatch
     HRESULT EnumerateDeviceClasses(IEnumBstr* ppEnumDeviceClass);
 }
 
-@GUID("09d48db4-10cc-4388-9de7-a8465618975a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itphone
+@GUID("09d48db4-10cc-4388-9de7-a8465618975a")
 interface ITPhone : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itphone-open
@@ -5331,8 +5331,8 @@ interface ITPhone : IDispatch
     HRESULT NegotiateExtVersion(int lLowVersion, int lHighVersion, int* plExtVersion);
 }
 
-@GUID("1ee1af0e-6159-4a61-b79b-6a4ba3fc9dfc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itautomatedphonecontrol
+@GUID("1ee1af0e-6159-4a61-b79b-6a4ba3fc9dfc")
 interface ITAutomatedPhoneControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itautomatedphonecontrol-starttone
@@ -5401,8 +5401,8 @@ interface ITAutomatedPhoneControl : IDispatch
     HRESULT get_SelectedCalls(VARIANT* pVariant);
 }
 
-@GUID("b1efc389-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itbasiccallcontrol
+@GUID("b1efc389-9355-11d0-835c-00aa003ccabd")
 interface ITBasicCallControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itbasiccallcontrol-connect
@@ -5443,8 +5443,8 @@ interface ITBasicCallControl : IDispatch
     HRESULT RemoveFromConference();
 }
 
-@GUID("350f85d1-1227-11d3-83d4-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallinfo
+@GUID("350f85d1-1227-11d3-83d4-00c04fb6809f")
 interface ITCallInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallinfo-get_address
@@ -5475,8 +5475,8 @@ interface ITCallInfo : IDispatch
     HRESULT ReleaseUserUserInfo();
 }
 
-@GUID("94d70ca6-7ab0-4daa-81ca-b8f8643faec1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallinfo2
+@GUID("94d70ca6-7ab0-4daa-81ca-b8f8643faec1")
 interface ITCallInfo2 : ITCallInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallinfo2-get_eventfilter
@@ -5485,8 +5485,8 @@ interface ITCallInfo2 : ITCallInfo
     HRESULT put_EventFilter(TAPI_EVENT TapiEvent, int lSubEvent, VARIANT_BOOL bEnable);
 }
 
-@GUID("b1efc38a-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itterminal
+@GUID("b1efc38a-9355-11d0-835c-00aa003ccabd")
 interface ITTerminal : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itterminal-get_name
@@ -5503,8 +5503,8 @@ interface ITTerminal : IDispatch
     HRESULT get_Direction(TERMINAL_DIRECTION* pDirection);
 }
 
-@GUID("fe040091-ade8-4072-95c9-bf7de8c54b44")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itmultitrackterminal
+@GUID("fe040091-ade8-4072-95c9-bf7de8c54b44")
 interface ITMultiTrackTerminal : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itmultitrackterminal-get_trackterminals
@@ -5521,8 +5521,8 @@ interface ITMultiTrackTerminal : IDispatch
     HRESULT RemoveTrackTerminal(ITTerminal pTrackTerminalToRemove);
 }
 
-@GUID("31ca6ea9-c08a-4bea-8811-8e9c1ba3ea3a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itfiletrack
+@GUID("31ca6ea9-c08a-4bea-8811-8e9c1ba3ea3a")
 interface ITFileTrack : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itfiletrack-get_format
@@ -5539,8 +5539,8 @@ interface ITFileTrack : IDispatch
     HRESULT get_EmptyAudioFormatForScripting(ITScriptableAudioFormat* ppAudioFormat);
 }
 
-@GUID("627e8ae6-ae4c-4a69-bb63-2ad625404b77")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itmediaplayback
+@GUID("627e8ae6-ae4c-4a69-bb63-2ad625404b77")
 interface ITMediaPlayback : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itmediaplayback-put_playlist
@@ -5549,8 +5549,8 @@ interface ITMediaPlayback : IDispatch
     HRESULT get_PlayList(VARIANT* pPlayListVariant);
 }
 
-@GUID("f5dd4592-5476-4cc1-9d4d-fad3eefe7db2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itmediarecord
+@GUID("f5dd4592-5476-4cc1-9d4d-fad3eefe7db2")
 interface ITMediaRecord : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itmediarecord-put_filename
@@ -5559,8 +5559,8 @@ interface ITMediaRecord : IDispatch
     HRESULT get_FileName(BSTR* pbstrFileName);
 }
 
-@GUID("c445dde8-5199-4bc7-9807-5ffb92e42e09")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itmediacontrol
+@GUID("c445dde8-5199-4bc7-9807-5ffb92e42e09")
 interface ITMediaControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itmediacontrol-start
@@ -5573,8 +5573,8 @@ interface ITMediaControl : IDispatch
     HRESULT get_MediaState(TERMINAL_MEDIA_STATE* pTerminalMediaState);
 }
 
-@GUID("b1efc38d-9355-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itbasicaudioterminal
+@GUID("b1efc38d-9355-11d0-835c-00aa003ccabd")
 interface ITBasicAudioTerminal : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itbasicaudioterminal-put_volume
@@ -5587,16 +5587,16 @@ interface ITBasicAudioTerminal : IDispatch
     HRESULT get_Balance(int* plBalance);
 }
 
-@GUID("a86b7871-d14c-48e6-922e-a8d15f984800")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itstaticaudioterminal
+@GUID("a86b7871-d14c-48e6-922e-a8d15f984800")
 interface ITStaticAudioTerminal : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itstaticaudioterminal-get_waveid
     HRESULT get_WaveId(int* plWaveId);
 }
 
-@GUID("a3c1544e-5b92-11d1-8f4e-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallhub
+@GUID("a3c1544e-5b92-11d1-8f4e-00c04fb6809f")
 interface ITCallHub : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallhub-clear
@@ -5611,8 +5611,8 @@ interface ITCallHub : IDispatch
     HRESULT get_State(CALLHUB_STATE* pState);
 }
 
-@GUID("ab493640-4c0b-11d2-a046-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itlegacyaddressmediacontrol
+@GUID("ab493640-4c0b-11d2-a046-00c04fb6809f")
 interface ITLegacyAddressMediaControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itlegacyaddressmediacontrol-getid
@@ -5623,8 +5623,8 @@ interface ITLegacyAddressMediaControl : IUnknown
     HRESULT SetDevConfig(BSTR pDeviceClass, uint dwSize, ubyte* pDeviceConfig);
 }
 
-@GUID("0e269cd0-10d4-4121-9c22-9c85d625650d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itprivateevent
+@GUID("0e269cd0-10d4-4121-9c22-9c85d625650d")
 interface ITPrivateEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itprivateevent-get_address
@@ -5639,8 +5639,8 @@ interface ITPrivateEvent : IDispatch
     HRESULT get_EventInterface(IDispatch* pEventInterface);
 }
 
-@GUID("b0ee512b-a531-409e-9dd9-4099fe86c738")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itlegacyaddressmediacontrol2
+@GUID("b0ee512b-a531-409e-9dd9-4099fe86c738")
 interface ITLegacyAddressMediaControl2 : ITLegacyAddressMediaControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itlegacyaddressmediacontrol2-configdialog
@@ -5650,8 +5650,8 @@ interface ITLegacyAddressMediaControl2 : ITLegacyAddressMediaControl
                              uint* pdwSizeOut, ubyte** ppDeviceConfigOut);
 }
 
-@GUID("d624582f-cc23-4436-b8a5-47c625c8045d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itlegacycallmediacontrol
+@GUID("d624582f-cc23-4436-b8a5-47c625c8045d")
 interface ITLegacyCallMediaControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itlegacycallmediacontrol-detectdigits
@@ -5666,8 +5666,8 @@ interface ITLegacyCallMediaControl : IDispatch
     HRESULT MonitorMedia(int lMediaType);
 }
 
-@GUID("57ca332d-7bc2-44f1-a60c-936fe8d7ce73")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itlegacycallmediacontrol2
+@GUID("57ca332d-7bc2-44f1-a60c-936fe8d7ce73")
 interface ITLegacyCallMediaControl2 : ITLegacyCallMediaControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itlegacycallmediacontrol2-generatedigits2
@@ -5693,8 +5693,8 @@ interface ITLegacyCallMediaControl2 : ITLegacyCallMediaControl
     HRESULT GetIDAsVariant(BSTR bstrDeviceClass, VARIANT* pVarDeviceID);
 }
 
-@GUID("961f79bd-3097-49df-a1d6-909b77e89ca0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itdetecttone
+@GUID("961f79bd-3097-49df-a1d6-909b77e89ca0")
 interface ITDetectTone : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itdetecttone-get_appspecific
@@ -5711,8 +5711,8 @@ interface ITDetectTone : IDispatch
     HRESULT put_Frequency(int Index, int lFrequency);
 }
 
-@GUID("357ad764-b3c6-4b2a-8fa5-0722827a9254")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcustomtone
+@GUID("357ad764-b3c6-4b2a-8fa5-0722827a9254")
 interface ITCustomTone : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcustomtone-get_frequency
@@ -5733,8 +5733,8 @@ interface ITCustomTone : IDispatch
     HRESULT put_Volume(int lVolume);
 }
 
-@GUID("f15b7669-4780-4595-8c89-fb369c8cf7aa")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumphone
+@GUID("f15b7669-4780-4595-8c89-fb369c8cf7aa")
 interface IEnumPhone : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumphone-next
@@ -5747,8 +5747,8 @@ interface IEnumPhone : IUnknown
     HRESULT Clone(IEnumPhone* ppEnum);
 }
 
-@GUID("ae269cf4-935e-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumterminal
+@GUID("ae269cf4-935e-11d0-835c-00aa003ccabd")
 interface IEnumTerminal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumterminal-next
@@ -5761,8 +5761,8 @@ interface IEnumTerminal : IUnknown
     HRESULT Clone(IEnumTerminal* ppEnum);
 }
 
-@GUID("ae269cf5-935e-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumterminalclass
+@GUID("ae269cf5-935e-11d0-835c-00aa003ccabd")
 interface IEnumTerminalClass : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumterminalclass-next
@@ -5775,8 +5775,8 @@ interface IEnumTerminalClass : IUnknown
     HRESULT Clone(IEnumTerminalClass* ppEnum);
 }
 
-@GUID("ae269cf6-935e-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumcall
+@GUID("ae269cf6-935e-11d0-835c-00aa003ccabd")
 interface IEnumCall : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumcall-next
@@ -5789,8 +5789,8 @@ interface IEnumCall : IUnknown
     HRESULT Clone(IEnumCall* ppEnum);
 }
 
-@GUID("1666fca1-9363-11d0-835c-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumaddress
+@GUID("1666fca1-9363-11d0-835c-00aa003ccabd")
 interface IEnumAddress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumaddress-next
@@ -5803,8 +5803,8 @@ interface IEnumAddress : IUnknown
     HRESULT Clone(IEnumAddress* ppEnum);
 }
 
-@GUID("a3c15450-5b92-11d1-8f4e-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumcallhub
+@GUID("a3c15450-5b92-11d1-8f4e-00c04fb6809f")
 interface IEnumCallHub : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumcallhub-next
@@ -5817,8 +5817,8 @@ interface IEnumCallHub : IUnknown
     HRESULT Clone(IEnumCallHub* ppEnum);
 }
 
-@GUID("35372049-0bc6-11d2-a033-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumbstr
+@GUID("35372049-0bc6-11d2-a033-00c04fb6809f")
 interface IEnumBstr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumbstr-next
@@ -5831,8 +5831,8 @@ interface IEnumBstr : IUnknown
     HRESULT Clone(IEnumBstr* ppEnum);
 }
 
-@GUID("4567450c-dbee-4e3f-aaf5-37bf9ebf5e29")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumpluggableterminalclassinfo
+@GUID("4567450c-dbee-4e3f-aaf5-37bf9ebf5e29")
 interface IEnumPluggableTerminalClassInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumpluggableterminalclassinfo-next
@@ -5845,8 +5845,8 @@ interface IEnumPluggableTerminalClassInfo : IUnknown
     HRESULT Clone(IEnumPluggableTerminalClassInfo* ppEnum);
 }
 
-@GUID("e9586a80-89e6-4cff-931d-478d5751f4c0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumpluggablesuperclassinfo
+@GUID("e9586a80-89e6-4cff-931d-478d5751f4c0")
 interface IEnumPluggableSuperclassInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumpluggablesuperclassinfo-next
@@ -5859,8 +5859,8 @@ interface IEnumPluggableSuperclassInfo : IUnknown
     HRESULT Clone(IEnumPluggableSuperclassInfo* ppEnum);
 }
 
-@GUID("8f942dd8-64ed-4aaf-a77d-b23db0837ead")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itphoneevent
+@GUID("8f942dd8-64ed-4aaf-a77d-b23db0837ead")
 interface ITPhoneEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itphoneevent-get_phone
@@ -5883,8 +5883,8 @@ interface ITPhoneEvent : IDispatch
     HRESULT get_Call(ITCallInfo* ppCallInfo);
 }
 
-@GUID("62f47097-95c9-11d0-835d-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallstateevent
+@GUID("62f47097-95c9-11d0-835d-00aa003ccabd")
 interface ITCallStateEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallstateevent-get_call
@@ -5897,8 +5897,8 @@ interface ITCallStateEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("63ffb2a6-872b-4cd3-a501-326e8fb40af7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itphonedevicespecificevent
+@GUID("63ffb2a6-872b-4cd3-a501-326e8fb40af7")
 interface ITPhoneDeviceSpecificEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itphonedevicespecificevent-get_phone
@@ -5911,8 +5911,8 @@ interface ITPhoneDeviceSpecificEvent : IDispatch
     HRESULT get_lParam3(int* pParam3);
 }
 
-@GUID("ff36b87f-ec3a-11d0-8ee4-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallmediaevent
+@GUID("ff36b87f-ec3a-11d0-8ee4-00c04fb6809f")
 interface ITCallMediaEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallmediaevent-get_call
@@ -5929,8 +5929,8 @@ interface ITCallMediaEvent : IDispatch
     HRESULT get_Cause(CALL_MEDIA_EVENT_CAUSE* pCause);
 }
 
-@GUID("80d3bfac-57d9-11d2-a04a-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itdigitdetectionevent
+@GUID("80d3bfac-57d9-11d2-a04a-00c04fb6809f")
 interface ITDigitDetectionEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itdigitdetectionevent-get_call
@@ -5945,8 +5945,8 @@ interface ITDigitDetectionEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("80d3bfad-57d9-11d2-a04a-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itdigitgenerationevent
+@GUID("80d3bfad-57d9-11d2-a04a-00c04fb6809f")
 interface ITDigitGenerationEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itdigitgenerationevent-get_call
@@ -5959,8 +5959,8 @@ interface ITDigitGenerationEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("e52ec4c1-cba3-441a-9e6a-93cb909e9724")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itdigitsgatheredevent
+@GUID("e52ec4c1-cba3-441a-9e6a-93cb909e9724")
 interface ITDigitsGatheredEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itdigitsgatheredevent-get_call
@@ -5975,8 +5975,8 @@ interface ITDigitsGatheredEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("407e0faf-d047-4753-b0c6-8e060373fecd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittonedetectionevent
+@GUID("407e0faf-d047-4753-b0c6-8e060373fecd")
 interface ITToneDetectionEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittonedetectionevent-get_call
@@ -5989,8 +5989,8 @@ interface ITToneDetectionEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("f4854d48-937a-11d1-bb58-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittapiobjectevent
+@GUID("f4854d48-937a-11d1-bb58-00c04fb6809f")
 interface ITTAPIObjectEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittapiobjectevent-get_tapiobject
@@ -6003,24 +6003,24 @@ interface ITTAPIObjectEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("359dda6e-68ce-4383-bf0b-169133c41b46")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittapiobjectevent2
+@GUID("359dda6e-68ce-4383-bf0b-169133c41b46")
 interface ITTAPIObjectEvent2 : ITTAPIObjectEvent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittapiobjectevent2-get_phone
     HRESULT get_Phone(ITPhone* ppPhone);
 }
 
-@GUID("eddb9426-3b91-11d1-8f30-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittapieventnotification
+@GUID("eddb9426-3b91-11d1-8f30-00c04fb6809f")
 interface ITTAPIEventNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittapieventnotification-event
     HRESULT Event(TAPI_EVENT TapiEvent, IDispatch pEvent);
 }
 
-@GUID("a3c15451-5b92-11d1-8f4e-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallhubevent
+@GUID("a3c15451-5b92-11d1-8f4e-00c04fb6809f")
 interface ITCallHubEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallhubevent-get_event
@@ -6031,8 +6031,8 @@ interface ITCallHubEvent : IDispatch
     HRESULT get_Call(ITCallInfo* ppCall);
 }
 
-@GUID("831ce2d1-83b5-11d1-bb5c-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddressevent
+@GUID("831ce2d1-83b5-11d1-bb5c-00c04fb6809f")
 interface ITAddressEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddressevent-get_address
@@ -6043,8 +6043,8 @@ interface ITAddressEvent : IDispatch
     HRESULT get_Terminal(ITTerminal* ppTerminal);
 }
 
-@GUID("3acb216b-40bd-487a-8672-5ce77bd7e3a3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddressdevicespecificevent
+@GUID("3acb216b-40bd-487a-8672-5ce77bd7e3a3")
 interface ITAddressDeviceSpecificEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddressdevicespecificevent-get_address
@@ -6059,8 +6059,8 @@ interface ITAddressDeviceSpecificEvent : IDispatch
     HRESULT get_lParam3(int* pParam3);
 }
 
-@GUID("e4a7fbac-8c17-4427-9f55-9f589ac8af00")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itfileterminalevent
+@GUID("e4a7fbac-8c17-4427-9f55-9f589ac8af00")
 interface ITFileTerminalEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itfileterminalevent-get_terminal
@@ -6077,8 +6077,8 @@ interface ITFileTerminalEvent : IDispatch
     HRESULT get_Error(HRESULT* phrErrorCode);
 }
 
-@GUID("d964788f-95a5-461d-ab0c-b9900a6c2713")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itttsterminalevent
+@GUID("d964788f-95a5-461d-ab0c-b9900a6c2713")
 interface ITTTSTerminalEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itttsterminalevent-get_terminal
@@ -6089,8 +6089,8 @@ interface ITTTSTerminalEvent : IDispatch
     HRESULT get_Error(HRESULT* phrErrorCode);
 }
 
-@GUID("ee016a02-4fa9-467c-933f-5a15b12377d7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itasrterminalevent
+@GUID("ee016a02-4fa9-467c-933f-5a15b12377d7")
 interface ITASRTerminalEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itasrterminalevent-get_terminal
@@ -6101,8 +6101,8 @@ interface ITASRTerminalEvent : IDispatch
     HRESULT get_Error(HRESULT* phrErrorCode);
 }
 
-@GUID("e6f56009-611f-4945-bbd2-2d0ce5612056")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ittoneterminalevent
+@GUID("e6f56009-611f-4945-bbd2-2d0ce5612056")
 interface ITToneTerminalEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ittoneterminalevent-get_terminal
@@ -6113,8 +6113,8 @@ interface ITToneTerminalEvent : IDispatch
     HRESULT get_Error(HRESULT* phrErrorCode);
 }
 
-@GUID("cfa3357c-ad77-11d1-bb68-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itqosevent
+@GUID("cfa3357c-ad77-11d1-bb68-00c04fb6809f")
 interface ITQOSEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itqosevent-get_call
@@ -6125,8 +6125,8 @@ interface ITQOSEvent : IDispatch
     HRESULT get_MediaType(int* plMediaType);
 }
 
-@GUID("5d4b65f9-e51c-11d1-a02f-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallinfochangeevent
+@GUID("5d4b65f9-e51c-11d1-a02f-00c04fb6809f")
 interface ITCallInfoChangeEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallinfochangeevent-get_call
@@ -6137,16 +6137,16 @@ interface ITCallInfoChangeEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("ac48ffdf-f8c4-11d1-a030-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itrequest
+@GUID("ac48ffdf-f8c4-11d1-a030-00c04fb6809f")
 interface ITRequest : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itrequest-makecall
     HRESULT MakeCall(BSTR pDestAddress, BSTR pAppName, BSTR pCalledParty, BSTR pComment);
 }
 
-@GUID("ac48ffde-f8c4-11d1-a030-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itrequestevent
+@GUID("ac48ffde-f8c4-11d1-a030-00c04fb6809f")
 interface ITRequestEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itrequestevent-get_registrationinstance
@@ -6163,8 +6163,8 @@ interface ITRequestEvent : IDispatch
     HRESULT get_Comment(BSTR* ppComment);
 }
 
-@GUID("5ec5acf2-9c02-11d0-8362-00aa003ccabd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcollection
+@GUID("5ec5acf2-9c02-11d0-8362-00aa003ccabd")
 interface ITCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcollection-get_count
@@ -6175,8 +6175,8 @@ interface ITCollection : IDispatch
     HRESULT get__NewEnum(IUnknown* ppNewEnum);
 }
 
-@GUID("e6dddda5-a6d3-48ff-8737-d32fc4d95477")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcollection2
+@GUID("e6dddda5-a6d3-48ff-8737-d32fc4d95477")
 interface ITCollection2 : ITCollection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcollection2-add
@@ -6185,8 +6185,8 @@ interface ITCollection2 : ITCollection
     HRESULT Remove(int Index);
 }
 
-@GUID("449f659e-88a3-11d1-bb5d-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itforwardinformation
+@GUID("449f659e-88a3-11d1-bb5d-00c04fb6809f")
 interface ITForwardInformation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itforwardinformation-put_numringsnoanswer
@@ -6205,8 +6205,8 @@ interface ITForwardInformation : IDispatch
     HRESULT Clear();
 }
 
-@GUID("5229b4ed-b260-4382-8e1a-5df3a8a4ccc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itforwardinformation2
+@GUID("5229b4ed-b260-4382-8e1a-5df3a8a4ccc0")
 interface ITForwardInformation2 : ITForwardInformation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itforwardinformation2-setforwardtype2
@@ -6221,8 +6221,8 @@ interface ITForwardInformation2 : ITForwardInformation
     HRESULT get_ForwardTypeCallerAddressType(int Forwardtype, int* pCallerAddressType);
 }
 
-@GUID("0c4d8f03-8ddb-11d1-a09e-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddresstranslation
+@GUID("0c4d8f03-8ddb-11d1-a09e-00805fc147d3")
 interface ITAddressTranslation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddresstranslation-translateaddress
@@ -6240,8 +6240,8 @@ interface ITAddressTranslation : IDispatch
     HRESULT get_CallingCards(VARIANT* pVariant);
 }
 
-@GUID("afc15945-8d40-11d1-a09e-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itaddresstranslationinfo
+@GUID("afc15945-8d40-11d1-a09e-00805fc147d3")
 interface ITAddressTranslationInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itaddresstranslationinfo-get_dialablestring
@@ -6256,8 +6256,8 @@ interface ITAddressTranslationInfo : IDispatch
     HRESULT get_TranslationResults(int* plResults);
 }
 
-@GUID("0c4d8eff-8ddb-11d1-a09e-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itlocationinfo
+@GUID("0c4d8eff-8ddb-11d1-a09e-00805fc147d3")
 interface ITLocationInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itlocationinfo-get_permanentlocationid
@@ -6284,8 +6284,8 @@ interface ITLocationInfo : IDispatch
     HRESULT get_CancelCallWaitingCode(BSTR* ppCode);
 }
 
-@GUID("0c4d8f01-8ddb-11d1-a09e-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumlocation
+@GUID("0c4d8f01-8ddb-11d1-a09e-00805fc147d3")
 interface IEnumLocation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumlocation-next
@@ -6298,8 +6298,8 @@ interface IEnumLocation : IUnknown
     HRESULT Clone(IEnumLocation* ppEnum);
 }
 
-@GUID("0c4d8f00-8ddb-11d1-a09e-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallingcard
+@GUID("0c4d8f00-8ddb-11d1-a09e-00805fc147d3")
 interface ITCallingCard : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallingcard-get_permanentcardid
@@ -6318,8 +6318,8 @@ interface ITCallingCard : IDispatch
     HRESULT get_InternationalDialingRule(BSTR* ppRule);
 }
 
-@GUID("0c4d8f02-8ddb-11d1-a09e-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumcallingcard
+@GUID("0c4d8f02-8ddb-11d1-a09e-00805fc147d3")
 interface IEnumCallingCard : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumcallingcard-next
@@ -6332,8 +6332,8 @@ interface IEnumCallingCard : IUnknown
     HRESULT Clone(IEnumCallingCard* ppEnum);
 }
 
-@GUID("895801df-3dd6-11d1-8f30-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itcallnotificationevent
+@GUID("895801df-3dd6-11d1-8f30-00c04fb6809f")
 interface ITCallNotificationEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itcallnotificationevent-get_call
@@ -6344,16 +6344,16 @@ interface ITCallNotificationEvent : IDispatch
     HRESULT get_CallbackInstance(int* plCallbackInstance);
 }
 
-@GUID("e9225295-c759-11d1-a02b-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itdispatchmapper
+@GUID("e9225295-c759-11d1-a02b-00c04fb6809f")
 interface ITDispatchMapper : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itdispatchmapper-querydispatchinterface
     HRESULT QueryDispatchInterface(BSTR pIID, IDispatch pInterfaceToMap, IDispatch* ppReturnedInterface);
 }
 
-@GUID("ee3bd604-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itstreamcontrol
+@GUID("ee3bd604-3868-11d2-a045-00c04fb6809f")
 interface ITStreamControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itstreamcontrol-createstream
@@ -6366,8 +6366,8 @@ interface ITStreamControl : IDispatch
     HRESULT get_Streams(VARIANT* pVariant);
 }
 
-@GUID("ee3bd605-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itstream
+@GUID("ee3bd605-3868-11d2-a045-00c04fb6809f")
 interface ITStream : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itstream-get_mediatype
@@ -6392,8 +6392,8 @@ interface ITStream : IDispatch
     HRESULT get_Terminals(VARIANT* pTerminals);
 }
 
-@GUID("ee3bd606-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumstream
+@GUID("ee3bd606-3868-11d2-a045-00c04fb6809f")
 interface IEnumStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumstream-next
@@ -6406,8 +6406,8 @@ interface IEnumStream : IUnknown
     HRESULT Clone(IEnumStream* ppEnum);
 }
 
-@GUID("ee3bd607-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itsubstreamcontrol
+@GUID("ee3bd607-3868-11d2-a045-00c04fb6809f")
 interface ITSubStreamControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itsubstreamcontrol-createsubstream
@@ -6420,8 +6420,8 @@ interface ITSubStreamControl : IDispatch
     HRESULT get_SubStreams(VARIANT* pVariant);
 }
 
-@GUID("ee3bd608-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itsubstream
+@GUID("ee3bd608-3868-11d2-a045-00c04fb6809f")
 interface ITSubStream : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itsubstream-startsubstream
@@ -6442,8 +6442,8 @@ interface ITSubStream : IDispatch
     HRESULT get_Stream(ITStream* ppITStream);
 }
 
-@GUID("ee3bd609-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-ienumsubstream
+@GUID("ee3bd609-3868-11d2-a045-00c04fb6809f")
 interface IEnumSubStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-ienumsubstream-next
@@ -6456,16 +6456,16 @@ interface IEnumSubStream : IUnknown
     HRESULT Clone(IEnumSubStream* ppEnum);
 }
 
-@GUID("207823ea-e252-11d2-b77e-0080c7135381")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itlegacywavesupport
+@GUID("207823ea-e252-11d2-b77e-0080c7135381")
 interface ITLegacyWaveSupport : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itlegacywavesupport-isfullduplex
     HRESULT IsFullDuplex(FULLDUPLEX_SUPPORT* pSupport);
 }
 
-@GUID("161a4a56-1e99-4b3f-a46a-168f38a5ee4c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itbasiccallcontrol2
+@GUID("161a4a56-1e99-4b3f-a46a-168f38a5ee4c")
 interface ITBasicCallControl2 : ITBasicCallControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itbasiccallcontrol2-requestterminal
@@ -6477,8 +6477,8 @@ interface ITBasicCallControl2 : ITBasicCallControl
     HRESULT UnselectTerminalOnCall(ITTerminal pTerminal);
 }
 
-@GUID("b87658bd-3c59-4f64-be74-aede3e86a81e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nn-tapi3if-itscriptableaudioformat
+@GUID("b87658bd-3c59-4f64-be74-aede3e86a81e")
 interface ITScriptableAudioFormat : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3if/nf-tapi3if-itscriptableaudioformat-get_channels
@@ -6507,8 +6507,8 @@ interface ITScriptableAudioFormat : IDispatch
     HRESULT put_FormatTag(const(int) nNewVal);
 }
 
-@GUID("5770ece5-4b27-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itagent
+@GUID("5770ece5-4b27-11d1-bf80-00805fc147d3")
 interface ITAgent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itagent-enumerateagentsessions
@@ -6548,8 +6548,8 @@ interface ITAgent : IDispatch
     HRESULT get_AgentSessions(VARIANT* pVariant);
 }
 
-@GUID("5afc3147-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itagentsession
+@GUID("5afc3147-4bcc-11d1-bf80-00805fc147d3")
 interface ITAgentSession : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itagentsession-get_agent
@@ -6588,8 +6588,8 @@ interface ITAgentSession : IDispatch
     HRESULT get_AverageTimeToAnswer(int* plAnswerTime);
 }
 
-@GUID("5afc3148-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itacdgroup
+@GUID("5afc3148-4bcc-11d1-bf80-00805fc147d3")
 interface ITACDGroup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itacdgroup-get_name
@@ -6600,8 +6600,8 @@ interface ITACDGroup : IDispatch
     HRESULT get_Queues(VARIANT* pVariant);
 }
 
-@GUID("5afc3149-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itqueue
+@GUID("5afc3149-4bcc-11d1-bf80-00805fc147d3")
 interface ITQueue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itqueue-put_measurementperiod
@@ -6630,8 +6630,8 @@ interface ITQueue : IDispatch
     HRESULT get_Name(BSTR* ppName);
 }
 
-@GUID("5afc314a-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itagentevent
+@GUID("5afc314a-4bcc-11d1-bf80-00805fc147d3")
 interface ITAgentEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itagentevent-get_agent
@@ -6640,8 +6640,8 @@ interface ITAgentEvent : IDispatch
     HRESULT get_Event(AGENT_EVENT* pEvent);
 }
 
-@GUID("5afc314b-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itagentsessionevent
+@GUID("5afc314b-4bcc-11d1-bf80-00805fc147d3")
 interface ITAgentSessionEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itagentsessionevent-get_session
@@ -6650,8 +6650,8 @@ interface ITAgentSessionEvent : IDispatch
     HRESULT get_Event(AGENT_SESSION_EVENT* pEvent);
 }
 
-@GUID("297f3032-bd11-11d1-a0a7-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itacdgroupevent
+@GUID("297f3032-bd11-11d1-a0a7-00805fc147d3")
 interface ITACDGroupEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itacdgroupevent-get_group
@@ -6660,8 +6660,8 @@ interface ITACDGroupEvent : IDispatch
     HRESULT get_Event(ACDGROUP_EVENT* pEvent);
 }
 
-@GUID("297f3033-bd11-11d1-a0a7-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itqueueevent
+@GUID("297f3033-bd11-11d1-a0a7-00805fc147d3")
 interface ITQueueEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itqueueevent-get_queue
@@ -6670,8 +6670,8 @@ interface ITQueueEvent : IDispatch
     HRESULT get_Event(ACDQUEUE_EVENT* pEvent);
 }
 
-@GUID("297f3034-bd11-11d1-a0a7-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itagenthandlerevent
+@GUID("297f3034-bd11-11d1-a0a7-00805fc147d3")
 interface ITAgentHandlerEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itagenthandlerevent-get_agenthandler
@@ -6680,8 +6680,8 @@ interface ITAgentHandlerEvent : IDispatch
     HRESULT get_Event(AGENTHANDLER_EVENT* pEvent);
 }
 
-@GUID("5afc3154-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-ittapicallcenter
+@GUID("5afc3154-4bcc-11d1-bf80-00805fc147d3")
 interface ITTAPICallCenter : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-ittapicallcenter-enumerateagenthandlers
@@ -6690,8 +6690,8 @@ interface ITTAPICallCenter : IDispatch
     HRESULT get_AgentHandlers(VARIANT* pVariant);
 }
 
-@GUID("587e8c22-9802-11d1-a0a4-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-itagenthandler
+@GUID("587e8c22-9802-11d1-a0a4-00805fc147d3")
 interface ITAgentHandler : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-itagenthandler-get_name
@@ -6710,8 +6710,8 @@ interface ITAgentHandler : IDispatch
     HRESULT get_UsableAddresses(VARIANT* pVariant);
 }
 
-@GUID("5afc314d-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-ienumagent
+@GUID("5afc314d-4bcc-11d1-bf80-00805fc147d3")
 interface IEnumAgent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-ienumagent-next
@@ -6724,8 +6724,8 @@ interface IEnumAgent : IUnknown
     HRESULT Clone(IEnumAgent* ppEnum);
 }
 
-@GUID("5afc314e-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-ienumagentsession
+@GUID("5afc314e-4bcc-11d1-bf80-00805fc147d3")
 interface IEnumAgentSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-ienumagentsession-next
@@ -6738,8 +6738,8 @@ interface IEnumAgentSession : IUnknown
     HRESULT Clone(IEnumAgentSession* ppEnum);
 }
 
-@GUID("5afc3158-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-ienumqueue
+@GUID("5afc3158-4bcc-11d1-bf80-00805fc147d3")
 interface IEnumQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-ienumqueue-next
@@ -6752,8 +6752,8 @@ interface IEnumQueue : IUnknown
     HRESULT Clone(IEnumQueue* ppEnum);
 }
 
-@GUID("5afc3157-4bcc-11d1-bf80-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-ienumacdgroup
+@GUID("5afc3157-4bcc-11d1-bf80-00805fc147d3")
 interface IEnumACDGroup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-ienumacdgroup-next
@@ -6766,8 +6766,8 @@ interface IEnumACDGroup : IUnknown
     HRESULT Clone(IEnumACDGroup* ppEnum);
 }
 
-@GUID("587e8c28-9802-11d1-a0a4-00805fc147d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nn-tapi3cc-ienumagenthandler
+@GUID("587e8c28-9802-11d1-a0a4-00805fc147d3")
 interface IEnumAgentHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3cc/nf-tapi3cc-ienumagenthandler-next
@@ -6780,8 +6780,8 @@ interface IEnumAgentHandler : IUnknown
     HRESULT Clone(IEnumAgentHandler* ppEnum);
 }
 
-@GUID("0364eb00-4a77-11d1-a671-006097c9a2e8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3ds/nn-tapi3ds-itammediaformat
+@GUID("0364eb00-4a77-11d1-a671-006097c9a2e8")
 interface ITAMMediaFormat : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3ds/nf-tapi3ds-itammediaformat-get_mediaformat
@@ -6790,8 +6790,8 @@ interface ITAMMediaFormat : IUnknown
     HRESULT put_MediaFormat(const(AM_MEDIA_TYPE)* pmt);
 }
 
-@GUID("c1bc3c90-bcfe-11d1-9745-00c04fd91ac0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3ds/nn-tapi3ds-itallocatorproperties
+@GUID("c1bc3c90-bcfe-11d1-9745-00c04fd91ac0")
 interface ITAllocatorProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi3ds/nf-tapi3ds-itallocatorproperties-setallocatorproperties
@@ -6808,16 +6808,16 @@ interface ITAllocatorProperties : IUnknown
     HRESULT GetBufferSize(uint* pBufferSize);
 }
 
-@GUID("6e0887be-ba1a-492e-bd10-4020ec5e33e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msp/nn-msp-itpluggableterminaleventsink
+@GUID("6e0887be-ba1a-492e-bd10-4020ec5e33e0")
 interface ITPluggableTerminalEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msp/nf-msp-itpluggableterminaleventsink-fireevent
     HRESULT FireEvent(const(MSP_EVENT_INFO)* pMspEventInfo);
 }
 
-@GUID("f7115709-a216-4957-a759-060ab32a90d1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msp/nn-msp-itpluggableterminaleventsinkregistration
+@GUID("f7115709-a216-4957-a759-060ab32a90d1")
 interface ITPluggableTerminalEventSinkRegistration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msp/nf-msp-itpluggableterminaleventsinkregistration-registersink
@@ -6826,8 +6826,8 @@ interface ITPluggableTerminalEventSinkRegistration : IUnknown
     HRESULT UnregisterSink();
 }
 
-@GUID("ee3bd600-3868-11d2-a045-00c04fb6809f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msp/nn-msp-itmspaddress
+@GUID("ee3bd600-3868-11d2-a045-00c04fb6809f")
 interface ITMSPAddress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msp/nf-msp-itmspaddress-initialize
@@ -6850,8 +6850,8 @@ interface ITTAPIDispatchEventNotification : IDispatch
 {
 }
 
-@GUID("f1029e5d-cb5b-11d0-8d59-00c04fd91ac0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-itdirectoryobjectconference
+@GUID("f1029e5d-cb5b-11d0-8d59-00c04fd91ac0")
 interface ITDirectoryObjectConference : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-itdirectoryobjectconference-get_protocol
@@ -6886,8 +6886,8 @@ interface ITDirectoryObjectConference : IDispatch
     HRESULT put_StopTime(double Date);
 }
 
-@GUID("34621d6f-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-itdirectoryobjectuser
+@GUID("34621d6f-6cff-11d1-aff7-00c04fc31fee")
 interface ITDirectoryObjectUser : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-itdirectoryobjectuser-get_ipphoneprimary
@@ -6896,8 +6896,8 @@ interface ITDirectoryObjectUser : IDispatch
     HRESULT put_IPPhonePrimary(BSTR pName);
 }
 
-@GUID("34621d70-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-ienumdialableaddrs
+@GUID("34621d70-6cff-11d1-aff7-00c04fc31fee")
 interface IEnumDialableAddrs : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-ienumdialableaddrs-next
@@ -6910,8 +6910,8 @@ interface IEnumDialableAddrs : IUnknown
     HRESULT Clone(IEnumDialableAddrs* ppEnum);
 }
 
-@GUID("34621d6e-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-itdirectoryobject
+@GUID("34621d6e-6cff-11d1-aff7-00c04fc31fee")
 interface ITDirectoryObject : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-itdirectoryobject-get_objecttype
@@ -6930,8 +6930,8 @@ interface ITDirectoryObject : IDispatch
     HRESULT put_SecurityDescriptor(IDispatch pSecDes);
 }
 
-@GUID("06c9b64a-306d-11d1-9774-00c04fd91ac0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-ienumdirectoryobject
+@GUID("06c9b64a-306d-11d1-9774-00c04fd91ac0")
 interface IEnumDirectoryObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-ienumdirectoryobject-next
@@ -6944,8 +6944,8 @@ interface IEnumDirectoryObject : IUnknown
     HRESULT Clone(IEnumDirectoryObject* ppEnum);
 }
 
-@GUID("34621d72-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-itilsconfig
+@GUID("34621d72-6cff-11d1-aff7-00c04fc31fee")
 interface ITILSConfig : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-itilsconfig-get_port
@@ -6954,8 +6954,8 @@ interface ITILSConfig : IDispatch
     HRESULT put_Port(int Port);
 }
 
-@GUID("34621d6c-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-itdirectory
+@GUID("34621d6c-6cff-11d1-aff7-00c04fc31fee")
 interface ITDirectory : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-itdirectory-get_directorytype
@@ -6989,8 +6989,8 @@ interface ITDirectory : IDispatch
                                       IEnumDirectoryObject* ppEnumObject);
 }
 
-@GUID("34621d6d-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-ienumdirectory
+@GUID("34621d6d-6cff-11d1-aff7-00c04fc31fee")
 interface IEnumDirectory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-ienumdirectory-next
@@ -7003,8 +7003,8 @@ interface IEnumDirectory : IUnknown
     HRESULT Clone(IEnumDirectory* ppEnum);
 }
 
-@GUID("34621d6b-6cff-11d1-aff7-00c04fc31fee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nn-rend-itrendezvous
+@GUID("34621d6b-6cff-11d1-aff7-00c04fc31fee")
 interface ITRendezvous : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rend/nf-rend-itrendezvous-get_defaultdirectories
@@ -7018,8 +7018,8 @@ interface ITRendezvous : IDispatch
                                   ITDirectoryObject* ppDirectoryObject);
 }
 
-@GUID("df0daef4-a289-11d1-8697-006008b0e5d2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nn-mdhcp-imcastscope
+@GUID("df0daef4-a289-11d1-8697-006008b0e5d2")
 interface IMcastScope : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nf-mdhcp-imcastscope-get_scopeid
@@ -7034,8 +7034,8 @@ interface IMcastScope : IDispatch
     HRESULT get_TTL(int* pTTL);
 }
 
-@GUID("df0daefd-a289-11d1-8697-006008b0e5d2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nn-mdhcp-imcastleaseinfo
+@GUID("df0daefd-a289-11d1-8697-006008b0e5d2")
 interface IMcastLeaseInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nf-mdhcp-imcastleaseinfo-get_requestid
@@ -7060,8 +7060,8 @@ interface IMcastLeaseInfo : IDispatch
     HRESULT EnumerateAddresses(IEnumBstr* ppEnumAddresses);
 }
 
-@GUID("df0daf09-a289-11d1-8697-006008b0e5d2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nn-mdhcp-ienummcastscope
+@GUID("df0daf09-a289-11d1-8697-006008b0e5d2")
 interface IEnumMcastScope : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nf-mdhcp-ienummcastscope-next
@@ -7074,8 +7074,8 @@ interface IEnumMcastScope : IUnknown
     HRESULT Clone(IEnumMcastScope* ppEnum);
 }
 
-@GUID("df0daef1-a289-11d1-8697-006008b0e5d2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nn-mdhcp-imcastaddressallocation
+@GUID("df0daef1-a289-11d1-8697-006008b0e5d2")
 interface IMcastAddressAllocation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdhcp/nf-mdhcp-imcastaddressallocation-get_scopes

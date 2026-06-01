@@ -766,21 +766,27 @@ HRESULT GetDispenserManager(IDispenserManager* param0);
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/comadmincatalog
 @GUID("f618c514-dfb8-11d1-a2cf-00805fc79235")
 struct COMAdminCatalog;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/comadmincatalogobject
 @GUID("f618c515-dfb8-11d1-a2cf-00805fc79235")
 struct COMAdminCatalogObject;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/comadmincatalogcollection
 @GUID("f618c516-dfb8-11d1-a2cf-00805fc79235")
 struct COMAdminCatalogCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/securityidentity
 @GUID("ecabb0a5-7f19-11d2-978e-0000f8757e2a")
 struct SecurityIdentity;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/securitycallers
 @GUID("ecabb0a6-7f19-11d2-978e-0000f8757e2a")
 struct SecurityCallers;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/securitycallcontext
 @GUID("ecabb0a7-7f19-11d2-978e-0000f8757e2a")
 struct SecurityCallContext;
 
@@ -790,15 +796,18 @@ struct GetSecurityCallContextAppObject;
 @GUID("ecabb0a9-7f19-11d2-978e-0000f8757e2a")
 struct Dummy30040732;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/transactioncontext
 @GUID("7999fc25-d3c6-11cf-acab-00a024a55aef")
 struct TransactionContext;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/transactioncontextex
 @GUID("5cb66670-d3d4-11cf-acab-00a024a55aef")
 struct TransactionContextEx;
 
 @GUID("ecabb0aa-7f19-11d2-978e-0000f8757e2a")
 struct ByotServerEx;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/cserviceconfig
 @GUID("ecabb0c8-7f19-11d2-978e-0000f8757e2a")
 struct CServiceConfig;
 
@@ -808,12 +817,15 @@ struct ServicePool;
 @GUID("ecabb0ca-7f19-11d2-978e-0000f8757e2a")
 struct ServicePoolConfig;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/sharedproperty
 @GUID("2a005c05-a5de-11cf-9e66-00aa00a3f464")
 struct SharedProperty;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/sharedpropertygroup
 @GUID("2a005c0b-a5de-11cf-9e66-00aa00a3f464")
 struct SharedPropertyGroup;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/sharedpropertygroupmanager
 @GUID("2a005c11-a5de-11cf-9e66-00aa00a3f464")
 struct SharedPropertyGroupManager;
 
@@ -856,15 +868,17 @@ struct EventServer;
 @GUID("ecabafb9-7f19-11d2-978e-0000f8757e2a")
 struct TrackerServer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/appdomainhelper
 @GUID("ef24f689-14f8-4d92-b4af-d7b1f0e70fd4")
 struct AppDomainHelper;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/cossdk/clrassemblylocator
 @GUID("458aa3b5-265a-4b75-bc05-9bea4630cf18")
 struct ClrAssemblyLocator;
 
-@GUID("dd662187-dfc2-11d1-a2cf-00805fc79235")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nn-comadmin-icomadmincatalog
+@GUID("dd662187-dfc2-11d1-a2cf-00805fc79235")
 interface ICOMAdminCatalog : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nf-comadmin-icomadmincatalog-getcollection
@@ -931,9 +945,9 @@ interface ICOMAdminCatalog : IDispatch
                                   SAFEARRAY** ppsaVarDescriptions);
 }
 
-@GUID("790c6e0b-9194-4cc9-9426-a48a63185696")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nn-comadmin-icomadmincatalog2
+@GUID("790c6e0b-9194-4cc9-9426-a48a63185696")
 interface ICOMAdminCatalog2 : ICOMAdminCatalog
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nf-comadmin-icomadmincatalog2-getcollectionbyquery2
@@ -1012,9 +1026,9 @@ interface ICOMAdminCatalog2 : ICOMAdminCatalog
     HRESULT GetComponentVersionCount(BSTR bstrCLSIDOrProgID, int* plVersionCount);
 }
 
-@GUID("6eb22871-8a19-11d0-81b6-00a0c9231c29")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nn-comadmin-icatalogobject
+@GUID("6eb22871-8a19-11d0-81b6-00a0c9231c29")
 interface ICatalogObject : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nf-comadmin-icatalogobject-get_value
@@ -1033,9 +1047,9 @@ interface ICatalogObject : IDispatch
     HRESULT IsPropertyWriteOnly(BSTR bstrPropName, VARIANT_BOOL* pbRetVal);
 }
 
-@GUID("6eb22872-8a19-11d0-81b6-00a0c9231c29")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nn-comadmin-icatalogcollection
+@GUID("6eb22872-8a19-11d0-81b6-00a0c9231c29")
 interface ICatalogCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comadmin/nf-comadmin-icatalogcollection-get__newenum
@@ -1072,9 +1086,9 @@ interface ICatalogCollection : IDispatch
     HRESULT PopulateByQuery(BSTR bstrQueryString, int lQueryType);
 }
 
-@GUID("cafc823c-b441-11d1-b82b-0000f8757e2a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isecurityidentitycoll
+@GUID("cafc823c-b441-11d1-b82b-0000f8757e2a")
 interface ISecurityIdentityColl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isecurityidentitycoll-get_count
@@ -1085,9 +1099,9 @@ interface ISecurityIdentityColl : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnum);
 }
 
-@GUID("cafc823d-b441-11d1-b82b-0000f8757e2a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isecuritycallerscoll
+@GUID("cafc823d-b441-11d1-b82b-0000f8757e2a")
 interface ISecurityCallersColl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isecuritycallerscoll-get_count
@@ -1098,9 +1112,9 @@ interface ISecurityCallersColl : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnum);
 }
 
-@GUID("cafc823e-b441-11d1-b82b-0000f8757e2a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isecuritycallcontext
+@GUID("cafc823e-b441-11d1-b82b-0000f8757e2a")
 interface ISecurityCallContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isecuritycallcontext-get_count
@@ -1117,18 +1131,18 @@ interface ISecurityCallContext : IDispatch
     HRESULT IsUserInRole(VARIANT* pUser, BSTR bstrRole, VARIANT_BOOL* pfInRole);
 }
 
-@GUID("cafc823f-b441-11d1-b82b-0000f8757e2a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-igetsecuritycallcontext
+@GUID("cafc823f-b441-11d1-b82b-0000f8757e2a")
 interface IGetSecurityCallContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-igetsecuritycallcontext-getsecuritycallcontext
     HRESULT GetSecurityCallContext(ISecurityCallContext* ppObject);
 }
 
-@GUID("e74a7215-014d-11d1-a63c-00a0c911b4e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-securityproperty
+@GUID("e74a7215-014d-11d1-a63c-00a0c911b4e0")
 interface SecurityProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-securityproperty-getdirectcallername
@@ -1141,9 +1155,9 @@ interface SecurityProperty : IDispatch
     HRESULT GetOriginalCreatorName(BSTR* bstrUserName);
 }
 
-@GUID("19a5a02c-0ac8-11d2-b286-00c04f8ef934")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-contextinfo
+@GUID("19a5a02c-0ac8-11d2-b286-00c04f8ef934")
 interface ContextInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-contextinfo-isintransaction
@@ -1158,9 +1172,9 @@ interface ContextInfo : IDispatch
     HRESULT GetContextId(BSTR* pbstrCtxId);
 }
 
-@GUID("c99d6e75-2375-11d4-8331-00c04f605588")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-contextinfo2
+@GUID("c99d6e75-2375-11d4-8331-00c04f605588")
 interface ContextInfo2 : ContextInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-contextinfo2-getpartitionid
@@ -1171,8 +1185,8 @@ interface ContextInfo2 : ContextInfo
     HRESULT GetApplicationInstanceId(BSTR* __MIDL__ContextInfo20002);
 }
 
-@GUID("74c08646-cedb-11cf-8b49-00aa00b8a790")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-objectcontext
+@GUID("74c08646-cedb-11cf-8b49-00aa00b8a790")
 interface ObjectContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-objectcontext-createinstance
@@ -1203,9 +1217,9 @@ interface ObjectContext : IDispatch
     HRESULT get_ContextInfo(ContextInfo* ppContextInfo);
 }
 
-@GUID("7999fc22-d3c6-11cf-acab-00a024a55aef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-itransactioncontextex
+@GUID("7999fc22-d3c6-11cf-acab-00a024a55aef")
 interface ITransactionContextEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-itransactioncontextex-createinstance
@@ -1216,9 +1230,9 @@ interface ITransactionContextEx : IUnknown
     HRESULT Abort();
 }
 
-@GUID("7999fc21-d3c6-11cf-acab-00a024a55aef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-itransactioncontext
+@GUID("7999fc21-d3c6-11cf-acab-00a024a55aef")
 interface ITransactionContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-itransactioncontext-createinstance
@@ -1229,36 +1243,36 @@ interface ITransactionContext : IDispatch
     HRESULT Abort();
 }
 
-@GUID("455acf57-5345-11d2-99cf-00c04f797bc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icreatewithtransactionex
+@GUID("455acf57-5345-11d2-99cf-00c04f797bc9")
 interface ICreateWithTransactionEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icreatewithtransactionex-createinstance
     HRESULT CreateInstance(ITransaction pTransaction, const(GUID)* rclsid, const(GUID)* riid, void** pObject);
 }
 
-@GUID("227ac7a8-8423-42ce-b7cf-03061ec9aaa3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icreatewithlocaltransaction
+@GUID("227ac7a8-8423-42ce-b7cf-03061ec9aaa3")
 interface ICreateWithLocalTransaction : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icreatewithlocaltransaction-createinstancewithsystx
     HRESULT CreateInstanceWithSysTx(IUnknown pTransaction, const(GUID)* rclsid, const(GUID)* riid, void** pObject);
 }
 
-@GUID("455acf59-5345-11d2-99cf-00c04f797bc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icreatewithtiptransactionex
+@GUID("455acf59-5345-11d2-99cf-00c04f797bc9")
 interface ICreateWithTipTransactionEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icreatewithtiptransactionex-createinstance
     HRESULT CreateInstance(BSTR bstrTipUrl, const(GUID)* rclsid, const(GUID)* riid, void** pObject);
 }
 
-@GUID("605cf82c-578e-4298-975d-82babcd9e053")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomltxevents
+@GUID("605cf82c-578e-4298-975d-82babcd9e053")
 interface IComLTxEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomltxevents-onltxtransactionstart
@@ -1274,18 +1288,18 @@ interface IComLTxEvents : IUnknown
     HRESULT OnLtxTransactionPromote(COMSVCSEVENTINFO* pInfo, GUID guidLtx, GUID txnId);
 }
 
-@GUID("683130a4-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomuserevent
+@GUID("683130a4-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComUserEvent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomuserevent-onuserevent
     HRESULT OnUserEvent(COMSVCSEVENTINFO* pInfo, VARIANT* pvarEvent);
 }
 
-@GUID("683130a5-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomthreadevents
+@GUID("683130a5-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComThreadEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomthreadevents-onthreadstart
@@ -1309,9 +1323,9 @@ interface IComThreadEvents : IUnknown
     HRESULT OnThreadUnassignApartment(COMSVCSEVENTINFO* pInfo, ulong AptID);
 }
 
-@GUID("683130a6-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomappevents
+@GUID("683130a6-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComAppEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomappevents-onappactivation
@@ -1322,9 +1336,9 @@ interface IComAppEvents : IUnknown
     HRESULT OnAppForceShutdown(COMSVCSEVENTINFO* pInfo, GUID guidApp);
 }
 
-@GUID("683130a7-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icominstanceevents
+@GUID("683130a7-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComInstanceEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icominstanceevents-onobjectcreate
@@ -1334,9 +1348,9 @@ interface IComInstanceEvents : IUnknown
     HRESULT OnObjectDestroy(COMSVCSEVENTINFO* pInfo, ulong CtxtID);
 }
 
-@GUID("683130a8-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomtransactionevents
+@GUID("683130a8-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComTransactionEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomtransactionevents-ontransactionstart
@@ -1349,9 +1363,9 @@ interface IComTransactionEvents : IUnknown
     HRESULT OnTransactionCommit(COMSVCSEVENTINFO* pInfo, const(GUID)* guidTx);
 }
 
-@GUID("683130a9-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icommethodevents
+@GUID("683130a9-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComMethodEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icommethodevents-onmethodcall
@@ -1365,9 +1379,9 @@ interface IComMethodEvents : IUnknown
                               uint iMeth);
 }
 
-@GUID("683130aa-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomobjectevents
+@GUID("683130aa-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComObjectEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomobjectevents-onobjectactivate
@@ -1383,9 +1397,9 @@ interface IComObjectEvents : IUnknown
     HRESULT OnSetAbort(COMSVCSEVENTINFO* pInfo, ulong CtxtID);
 }
 
-@GUID("683130ab-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomresourceevents
+@GUID("683130ab-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComResourceEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomresourceevents-onresourcecreate
@@ -1404,9 +1418,9 @@ interface IComResourceEvents : IUnknown
                             BOOL enlisted);
 }
 
-@GUID("683130ac-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomsecurityevents
+@GUID("683130ac-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComSecurityEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomsecurityevents-onauthenticate
@@ -1419,9 +1433,9 @@ interface IComSecurityEvents : IUnknown
                                uint cbByteCur, ubyte* pSidCurrentUser, BOOL bCurrentUserInpersonatingInProc);
 }
 
-@GUID("683130ad-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomobjectpoolevents
+@GUID("683130ad-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComObjectPoolEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomobjectpoolevents-onobjpoolputobject
@@ -1438,9 +1452,9 @@ interface IComObjectPoolEvents : IUnknown
                                const(GUID)* guidTx, ulong objid);
 }
 
-@GUID("683130ae-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomobjectpoolevents2
+@GUID("683130ae-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComObjectPoolEvents2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomobjectpoolevents2-onobjpoolcreateobject
@@ -1458,9 +1472,9 @@ interface IComObjectPoolEvents2 : IUnknown
                                 uint dwTimeout);
 }
 
-@GUID("683130af-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomobjectconstructionevents
+@GUID("683130af-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComObjectConstructionEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomobjectconstructionevents-onobjectconstruct
@@ -1468,9 +1482,9 @@ interface IComObjectConstructionEvents : IUnknown
                               ulong oid);
 }
 
-@GUID("683130b0-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomactivityevents
+@GUID("683130b0-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComActivityEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomactivityevents-onactivitycreate
@@ -1491,9 +1505,9 @@ interface IComActivityEvents : IUnknown
     HRESULT OnActivityLeaveSame(COMSVCSEVENTINFO* pInfo, const(GUID)* guidCurrent, uint dwCallDepth);
 }
 
-@GUID("683130b1-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomidentityevents
+@GUID("683130b1-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComIdentityEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomidentityevents-oniisrequestinfo
@@ -1501,9 +1515,9 @@ interface IComIdentityEvents : IUnknown
                              const(PWSTR) pszServerIP, const(PWSTR) pszURL);
 }
 
-@GUID("683130b2-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomqcevents
+@GUID("683130b2-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComQCEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomqcevents-onqcrecord
@@ -1526,9 +1540,9 @@ interface IComQCEvents : IUnknown
                          HRESULT hr);
 }
 
-@GUID("683130b3-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomexceptionevents
+@GUID("683130b3-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComExceptionEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomexceptionevents-onexceptionuser
@@ -1543,9 +1557,9 @@ interface ILBEvents : IUnknown
     HRESULT EngineDefined(BSTR bstrPropName, VARIANT* varPropValue, BSTR bstrClsidEng);
 }
 
-@GUID("683130b5-2e50-11d2-98a5-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomcrmevents
+@GUID("683130b5-2e50-11d2-98a5-00c04f8ee1c4")
 interface IComCRMEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomcrmevents-oncrmrecoverystart
@@ -1581,9 +1595,9 @@ interface IComCRMEvents : IUnknown
     HRESULT OnCRMDeliver(COMSVCSEVENTINFO* pInfo, GUID guidClerkCLSID, BOOL fVariants, uint dwRecordSize);
 }
 
-@GUID("fb388aaa-567d-4024-af8e-6e93ee748573")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icommethod2events
+@GUID("fb388aaa-567d-4024-af8e-6e93ee748573")
 interface IComMethod2Events : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icommethod2events-onmethodcall2
@@ -1597,18 +1611,18 @@ interface IComMethod2Events : IUnknown
                                uint dwThread, uint iMeth);
 }
 
-@GUID("4e6cdcc9-fb25-4fd5-9cc5-c9f4b6559cec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomtrackinginfoevents
+@GUID("4e6cdcc9-fb25-4fd5-9cc5-c9f4b6559cec")
 interface IComTrackingInfoEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomtrackinginfoevents-onnewtrackinginfo
     HRESULT OnNewTrackingInfo(IUnknown pToplevelCollection);
 }
 
-@GUID("c266c677-c9ad-49ab-9fd9-d9661078588a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomtrackinginfocollection
+@GUID("c266c677-c9ad-49ab-9fd9-d9661078588a")
 interface IComTrackingInfoCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomtrackinginfocollection-type
@@ -1619,18 +1633,18 @@ interface IComTrackingInfoCollection : IUnknown
     HRESULT Item(uint ulIndex, const(GUID)* riid, void** ppv);
 }
 
-@GUID("116e42c5-d8b1-47bf-ab1e-c895ed3e2372")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomtrackinginfoobject
+@GUID("116e42c5-d8b1-47bf-ab1e-c895ed3e2372")
 interface IComTrackingInfoObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomtrackinginfoobject-getvalue
     HRESULT GetValue(PWSTR szPropertyName, VARIANT* pvarOut);
 }
 
-@GUID("789b42be-6f6b-443a-898e-67abf390aa14")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomtrackinginfoproperties
+@GUID("789b42be-6f6b-443a-898e-67abf390aa14")
 interface IComTrackingInfoProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomtrackinginfoproperties-propcount
@@ -1639,9 +1653,9 @@ interface IComTrackingInfoProperties : IUnknown
     HRESULT GetPropName(uint ulIndex, PWSTR* ppszPropName);
 }
 
-@GUID("1290bc1a-b219-418d-b078-5934ded08242")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomapp2events
+@GUID("1290bc1a-b219-418d-b078-5934ded08242")
 interface IComApp2Events : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomapp2events-onappactivation2
@@ -1656,9 +1670,9 @@ interface IComApp2Events : IUnknown
     HRESULT OnAppRecycle2(COMSVCSEVENTINFO* pInfo, GUID guidApp, GUID guidProcess, int lReason);
 }
 
-@GUID("a136f62a-2f94-4288-86e0-d8a1fa4c0299")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomtransaction2events
+@GUID("a136f62a-2f94-4288-86e0-d8a1fa4c0299")
 interface IComTransaction2Events : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomtransaction2events-ontransactionstart2
@@ -1672,9 +1686,9 @@ interface IComTransaction2Events : IUnknown
     HRESULT OnTransactionCommit2(COMSVCSEVENTINFO* pInfo, const(GUID)* guidTx);
 }
 
-@GUID("20e3bf07-b506-4ad5-a50c-d2ca5b9c158e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icominstance2events
+@GUID("20e3bf07-b506-4ad5-a50c-d2ca5b9c158e")
 interface IComInstance2Events : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icominstance2events-onobjectcreate2
@@ -1684,9 +1698,9 @@ interface IComInstance2Events : IUnknown
     HRESULT OnObjectDestroy2(COMSVCSEVENTINFO* pInfo, ulong CtxtID);
 }
 
-@GUID("65bf6534-85ea-4f64-8cf4-3d974b2ab1cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomobjectpool2events
+@GUID("65bf6534-85ea-4f64-8cf4-3d974b2ab1cf")
 interface IComObjectPool2Events : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomobjectpool2events-onobjpoolputobject2
@@ -1703,9 +1717,9 @@ interface IComObjectPool2Events : IUnknown
                                 const(GUID)* guidTx, ulong objid, const(GUID)* guidPartition);
 }
 
-@GUID("4b5a7827-8df2-45c0-8f6f-57ea1f856a9f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomobjectconstruction2events
+@GUID("4b5a7827-8df2-45c0-8f6f-57ea1f856a9f")
 interface IComObjectConstruction2Events : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomobjectconstruction2events-onobjectconstruct2
@@ -1713,9 +1727,9 @@ interface IComObjectConstruction2Events : IUnknown
                                ulong oid, const(GUID)* guidPartition);
 }
 
-@GUID("d6d48a3c-d5c5-49e7-8c74-99e4889ed52f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isystemappeventdata
+@GUID("d6d48a3c-d5c5-49e7-8c74-99e4889ed52f")
 interface ISystemAppEventData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isystemappeventdata-startup
@@ -1725,9 +1739,9 @@ interface ISystemAppEventData : IUnknown
                           ulong u64TraceHandle);
 }
 
-@GUID("bacedf4d-74ab-11d0-b162-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imtsevents
+@GUID("bacedf4d-74ab-11d0-b162-00aa00ba3258")
 interface IMtsEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imtsevents-get_packagename
@@ -1742,9 +1756,9 @@ interface IMtsEvents : IDispatch
     HRESULT GetProcessID(int* id);
 }
 
-@GUID("d56c3dc1-8482-11d0-b170-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imtseventinfo
+@GUID("d56c3dc1-8482-11d0-b170-00aa00ba3258")
 interface IMtsEventInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imtseventinfo-get_names
@@ -1759,18 +1773,18 @@ interface IMtsEventInfo : IDispatch
     HRESULT get_Value(BSTR sKey, VARIANT* pVal);
 }
 
-@GUID("d19b8bfd-7f88-11d0-b16e-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imtslocator
+@GUID("d19b8bfd-7f88-11d0-b16e-00aa00ba3258")
 interface IMTSLocator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imtslocator-geteventdispatcher
     HRESULT GetEventDispatcher(IUnknown* pUnk);
 }
 
-@GUID("4b2e958c-0393-11d1-b1ab-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imtsgrp
+@GUID("4b2e958c-0393-11d1-b1ab-00aa00ba3258")
 interface IMtsGrp : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imtsgrp-get_count
@@ -1781,9 +1795,9 @@ interface IMtsGrp : IDispatch
     HRESULT Refresh();
 }
 
-@GUID("588a085a-b795-11d1-8054-00c04fc340ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imessagemover
+@GUID("588a085a-b795-11d1-8054-00c04fc340ee")
 interface IMessageMover : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imessagemover-get_sourcepath
@@ -1810,9 +1824,9 @@ interface IEventServerTrace : IDispatch
     HRESULT EnumTraceGuid(int* plCntGuids, BSTR* pbstrGuidList);
 }
 
-@GUID("507c3ac8-3e12-4cb0-9366-653d3e050638")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-igetapptrackerdata
+@GUID("507c3ac8-3e12-4cb0-9366-653d3e050638")
 interface IGetAppTrackerData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-igetapptrackerdata-getapplicationprocesses
@@ -1841,9 +1855,9 @@ interface IGetAppTrackerData : IUnknown
     HRESULT GetSuggestedPollingInterval(uint* PollingIntervalInSeconds);
 }
 
-@GUID("5cb31e10-2b5f-11cf-be10-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-idispensermanager
+@GUID("5cb31e10-2b5f-11cf-be10-00aa00a2fa25")
 interface IDispenserManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-idispensermanager-registerdispenser
@@ -1853,9 +1867,9 @@ interface IDispenserManager : IUnknown
     HRESULT GetContext(size_t* __MIDL__IDispenserManager0002, size_t* __MIDL__IDispenserManager0003);
 }
 
-@GUID("bf6a1850-2b45-11cf-be10-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iholder
+@GUID("bf6a1850-2b45-11cf-be10-00aa00a2fa25")
 interface IHolder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iholder-allocresource
@@ -1876,9 +1890,9 @@ interface IHolder : IUnknown
     HRESULT RequestDestroyResource(const(size_t) __MIDL__IHolder0009);
 }
 
-@GUID("208b3651-2b48-11cf-be10-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-idispenserdriver
+@GUID("208b3651-2b48-11cf-be10-00aa00a2fa25")
 interface IDispenserDriver : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-idispenserdriver-createresource
@@ -1896,9 +1910,9 @@ interface IDispenserDriver : IUnknown
     HRESULT DestroyResourceS(ushort* ResId);
 }
 
-@GUID("02558374-df2e-4dae-bd6b-1d5c994f9bdc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-itransactionproxy
+@GUID("02558374-df2e-4dae-bd6b-1d5c994f9bdc")
 interface ITransactionProxy : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-itransactionproxy-commit
@@ -1930,9 +1944,9 @@ interface ITxProxyHolder : IUnknown
     void GetIdentifier(GUID* pGuidLtx);
 }
 
-@GUID("51372ae0-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectcontext
+@GUID("51372ae0-cae7-11cf-be81-00aa00a2fa25")
 interface IObjectContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectcontext-createinstance
@@ -1953,9 +1967,9 @@ interface IObjectContext : IUnknown
     HRESULT IsCallerInRole(BSTR bstrRole, BOOL* pfIsInRole);
 }
 
-@GUID("51372aec-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectcontrol
+@GUID("51372aec-cae7-11cf-be81-00aa00a2fa25")
 interface IObjectControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectcontrol-activate
@@ -1966,9 +1980,9 @@ interface IObjectControl : IUnknown
     BOOL    CanBePooled();
 }
 
-@GUID("51372af2-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-ienumnames
+@GUID("51372af2-cae7-11cf-be81-00aa00a2fa25")
 interface IEnumNames : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-ienumnames-next
@@ -1981,9 +1995,9 @@ interface IEnumNames : IUnknown
     HRESULT Clone(IEnumNames* ppenum);
 }
 
-@GUID("51372aea-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isecurityproperty
+@GUID("51372aea-cae7-11cf-be81-00aa00a2fa25")
 interface ISecurityProperty : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isecurityproperty-getdirectcreatorsid
@@ -1998,9 +2012,9 @@ interface ISecurityProperty : IUnknown
     HRESULT ReleaseSID(PSID pSID);
 }
 
-@GUID("7dc41850-0c31-11d0-8b79-00aa00b8a790")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-objectcontrol
+@GUID("7dc41850-0c31-11d0-8b79-00aa00b8a790")
 interface ObjectControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-objectcontrol-activate
@@ -2011,9 +2025,9 @@ interface ObjectControl : IUnknown
     HRESULT CanBePooled(VARIANT_BOOL* pbPoolable);
 }
 
-@GUID("2a005c01-a5de-11cf-9e66-00aa00a3f464")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isharedproperty
+@GUID("2a005c01-a5de-11cf-9e66-00aa00a3f464")
 interface ISharedProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isharedproperty-get_value
@@ -2022,9 +2036,9 @@ interface ISharedProperty : IDispatch
     HRESULT put_Value(VARIANT val);
 }
 
-@GUID("2a005c07-a5de-11cf-9e66-00aa00a3f464")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isharedpropertygroup
+@GUID("2a005c07-a5de-11cf-9e66-00aa00a3f464")
 interface ISharedPropertyGroup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isharedpropertygroup-createpropertybyposition
@@ -2037,9 +2051,9 @@ interface ISharedPropertyGroup : IDispatch
     HRESULT get_Property(BSTR Name, ISharedProperty* ppProperty);
 }
 
-@GUID("2a005c0d-a5de-11cf-9e66-00aa00a3f464")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isharedpropertygroupmanager
+@GUID("2a005c0d-a5de-11cf-9e66-00aa00a3f464")
 interface ISharedPropertyGroupManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isharedpropertygroupmanager-createpropertygroup
@@ -2051,36 +2065,36 @@ interface ISharedPropertyGroupManager : IDispatch
     HRESULT get__NewEnum(IUnknown* retval);
 }
 
-@GUID("41c4f8b3-7439-11d2-98cb-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectconstruct
+@GUID("41c4f8b3-7439-11d2-98cb-00c04f8ee1c4")
 interface IObjectConstruct : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectconstruct-construct
     HRESULT Construct(IDispatch pCtorObj);
 }
 
-@GUID("41c4f8b2-7439-11d2-98cb-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectconstructstring
+@GUID("41c4f8b2-7439-11d2-98cb-00c04f8ee1c4")
 interface IObjectConstructString : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectconstructstring-get_constructstring
     HRESULT get_ConstructString(BSTR* pVal);
 }
 
-@GUID("51372afc-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectcontextactivity
+@GUID("51372afc-cae7-11cf-be81-00aa00a2fa25")
 interface IObjectContextActivity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectcontextactivity-getactivityid
     HRESULT GetActivityId(GUID* pGUID);
 }
 
-@GUID("75b52ddb-e8ed-11d1-93ad-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectcontextinfo
+@GUID("75b52ddb-e8ed-11d1-93ad-00aa00ba3258")
 interface IObjectContextInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectcontextinfo-isintransaction
@@ -2095,9 +2109,9 @@ interface IObjectContextInfo : IUnknown
     HRESULT GetContextId(GUID* pGuid);
 }
 
-@GUID("594be71a-4bc4-438b-9197-cfd176248b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectcontextinfo2
+@GUID("594be71a-4bc4-438b-9197-cfd176248b09")
 interface IObjectContextInfo2 : IObjectContextInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectcontextinfo2-getpartitionid
@@ -2108,9 +2122,9 @@ interface IObjectContextInfo2 : IObjectContextInfo
     HRESULT GetApplicationInstanceId(GUID* pGuid);
 }
 
-@GUID("61f589e8-3724-4898-a0a4-664ae9e1d1b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-itransactionstatus
+@GUID("61f589e8-3724-4898-a0a4-664ae9e1d1b4")
 interface ITransactionStatus : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-itransactionstatus-settransactionstatus
@@ -2119,18 +2133,18 @@ interface ITransactionStatus : IUnknown
     HRESULT GetTransactionStatus(HRESULT* pHrStatus);
 }
 
-@GUID("92fd41ca-bad9-11d2-9a2d-00c04f797bc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjectcontexttip
+@GUID("92fd41ca-bad9-11d2-9a2d-00c04f797bc9")
 interface IObjectContextTip : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iobjectcontexttip-gettipurl
     HRESULT GetTipUrl(BSTR* pTipUrl);
 }
 
-@GUID("51372afd-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iplaybackcontrol
+@GUID("51372afd-cae7-11cf-be81-00aa00a2fa25")
 interface IPlaybackControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iplaybackcontrol-finalclientretry
@@ -2139,9 +2153,9 @@ interface IPlaybackControl : IUnknown
     HRESULT FinalServerRetry();
 }
 
-@GUID("51372af4-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-igetcontextproperties
+@GUID("51372af4-cae7-11cf-be81-00aa00a2fa25")
 interface IGetContextProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-igetcontextproperties-count
@@ -2152,9 +2166,9 @@ interface IGetContextProperties : IUnknown
     HRESULT EnumNames(IEnumNames* ppenum);
 }
 
-@GUID("3c05e54b-a42a-11d2-afc4-00c04f8ee1c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icontextstate
+@GUID("3c05e54b-a42a-11d2-afc4-00c04f8ee1c4")
 interface IContextState : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icontextstate-setdeactivateonreturn
@@ -2167,18 +2181,18 @@ interface IContextState : IUnknown
     HRESULT GetMyTransactionVote(TransactionVote* ptxVote);
 }
 
-@GUID("0a469861-5a91-43a0-99b6-d5e179bb0631")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-ipoolmanager
+@GUID("0a469861-5a91-43a0-99b6-d5e179bb0631")
 interface IPoolManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-ipoolmanager-shutdownpool
     HRESULT ShutdownPool(BSTR CLSIDOrProgID);
 }
 
-@GUID("dcf443f4-3f8a-4872-b9f0-369a796d12d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iselectcomlbserver
+@GUID("dcf443f4-3f8a-4872-b9f0-369a796d12d6")
 interface ISelectCOMLBServer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iselectcomlbserver-init
@@ -2187,9 +2201,9 @@ interface ISelectCOMLBServer : IUnknown
     HRESULT GetLBServer(IUnknown pUnk);
 }
 
-@GUID("3a0f150f-8ee5-4b94-b40e-aef2f9e42ed2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icomlbarguments
+@GUID("3a0f150f-8ee5-4b94-b40e-aef2f9e42ed2")
 interface ICOMLBArguments : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icomlbarguments-getclsid
@@ -2202,9 +2216,9 @@ interface ICOMLBArguments : IUnknown
     HRESULT SetMachineName(uint cchSvr, PWSTR szServerName);
 }
 
-@GUID("a0e174b3-d26e-11d2-8f84-00805fc7bcd9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmlogcontrol
+@GUID("a0e174b3-d26e-11d2-8f84-00805fc7bcd9")
 interface ICrmLogControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmlogcontrol-get_transactionuow
@@ -2224,9 +2238,9 @@ interface ICrmLogControl : IUnknown
     HRESULT WriteLogRecord(BLOB* rgBlob, uint cBlob);
 }
 
-@GUID("f0baf8e4-7804-11d1-82e9-00a0c91eede9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmcompensatorvariants
+@GUID("f0baf8e4-7804-11d1-82e9-00a0c91eede9")
 interface ICrmCompensatorVariants : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmcompensatorvariants-setlogcontrolvariants
@@ -2251,9 +2265,9 @@ interface ICrmCompensatorVariants : IUnknown
     HRESULT EndAbortVariants();
 }
 
-@GUID("bbc01830-8d3b-11d1-82ec-00a0c91eede9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmcompensator
+@GUID("bbc01830-8d3b-11d1-82ec-00a0c91eede9")
 interface ICrmCompensator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmcompensator-setlogcontrol
@@ -2278,9 +2292,9 @@ interface ICrmCompensator : IUnknown
     HRESULT EndAbort();
 }
 
-@GUID("70c8e441-c7ed-11d1-82fb-00a0c91eede9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmmonitorlogrecords
+@GUID("70c8e441-c7ed-11d1-82fb-00a0c91eede9")
 interface ICrmMonitorLogRecords : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmmonitorlogrecords-get_count
@@ -2295,9 +2309,9 @@ interface ICrmMonitorLogRecords : IUnknown
     HRESULT GetLogRecordVariants(VARIANT IndexNumber, VARIANT* pLogRecord);
 }
 
-@GUID("70c8e442-c7ed-11d1-82fb-00a0c91eede9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmmonitorclerks
+@GUID("70c8e442-c7ed-11d1-82fb-00a0c91eede9")
 interface ICrmMonitorClerks : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmmonitorclerks-item
@@ -2316,9 +2330,9 @@ interface ICrmMonitorClerks : IDispatch
     HRESULT ActivityId(VARIANT Index, VARIANT* pItem);
 }
 
-@GUID("70c8e443-c7ed-11d1-82fb-00a0c91eede9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmmonitor
+@GUID("70c8e443-c7ed-11d1-82fb-00a0c91eede9")
 interface ICrmMonitor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmmonitor-getclerks
@@ -2327,9 +2341,9 @@ interface ICrmMonitor : IUnknown
     HRESULT HoldClerk(VARIANT Index, VARIANT* pItem);
 }
 
-@GUID("9c51d821-c98b-11d1-82fb-00a0c91eede9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icrmformatlogrecords
+@GUID("9c51d821-c98b-11d1-82fb-00a0c91eede9")
 interface ICrmFormatLogRecords : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icrmformatlogrecords-getcolumncount
@@ -2342,27 +2356,27 @@ interface ICrmFormatLogRecords : IUnknown
     HRESULT GetColumnVariants(VARIANT LogRecord, VARIANT* pFormattedLogRecord);
 }
 
-@GUID("1a0cf920-d452-46f4-bc36-48118d54ea52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iserviceiisintrinsicsconfig
+@GUID("1a0cf920-d452-46f4-bc36-48118d54ea52")
 interface IServiceIISIntrinsicsConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iserviceiisintrinsicsconfig-iisintrinsicsconfig
     HRESULT IISIntrinsicsConfig(CSC_IISIntrinsicsConfig iisIntrinsicsConfig);
 }
 
-@GUID("09e6831e-04e1-4ed4-9d0f-e8b168bafeaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicecomtiintrinsicsconfig
+@GUID("09e6831e-04e1-4ed4-9d0f-e8b168bafeaf")
 interface IServiceComTIIntrinsicsConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicecomtiintrinsicsconfig-comtiintrinsicsconfig
     HRESULT ComTIIntrinsicsConfig(CSC_COMTIIntrinsicsConfig comtiIntrinsicsConfig);
 }
 
-@GUID("c7cd7379-f3f2-4634-811b-703281d73e08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicesxsconfig
+@GUID("c7cd7379-f3f2-4634-811b-703281d73e08")
 interface IServiceSxsConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicesxsconfig-sxsconfig
@@ -2373,27 +2387,27 @@ interface IServiceSxsConfig : IUnknown
     HRESULT SxsDirectory(const(PWSTR) szSxsDirectory);
 }
 
-@GUID("0ff5a96f-11fc-47d1-baa6-25dd347e7242")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-ichecksxsconfig
+@GUID("0ff5a96f-11fc-47d1-baa6-25dd347e7242")
 interface ICheckSxsConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-ichecksxsconfig-issamesxsconfig
     HRESULT IsSameSxsConfig(const(PWSTR) wszSxsName, const(PWSTR) wszSxsDirectory, const(PWSTR) wszSxsAppName);
 }
 
-@GUID("92186771-d3b4-4d77-a8ea-ee842d586f35")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iserviceinheritanceconfig
+@GUID("92186771-d3b4-4d77-a8ea-ee842d586f35")
 interface IServiceInheritanceConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iserviceinheritanceconfig-containingcontexttreatment
     HRESULT ContainingContextTreatment(CSC_InheritanceConfig inheritanceConfig);
 }
 
-@GUID("186d89bc-f277-4bcc-80d5-4df7b836ef4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicethreadpoolconfig
+@GUID("186d89bc-f277-4bcc-80d5-4df7b836ef4a")
 interface IServiceThreadPoolConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicethreadpoolconfig-selectthreadpool
@@ -2402,9 +2416,9 @@ interface IServiceThreadPoolConfig : IUnknown
     HRESULT SetBindingInfo(CSC_Binding binding);
 }
 
-@GUID("772b3fbe-6ffd-42fb-b5f8-8f9b260f3810")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicetransactionconfigbase
+@GUID("772b3fbe-6ffd-42fb-b5f8-8f9b260f3810")
 interface IServiceTransactionConfigBase : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicetransactionconfigbase-configuretransaction
@@ -2419,36 +2433,36 @@ interface IServiceTransactionConfigBase : IUnknown
     HRESULT NewTransactionDescription(const(PWSTR) szTxDesc);
 }
 
-@GUID("59f4c2a3-d3d7-4a31-b6e4-6ab3177c50b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicetransactionconfig
+@GUID("59f4c2a3-d3d7-4a31-b6e4-6ab3177c50b9")
 interface IServiceTransactionConfig : IServiceTransactionConfigBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicetransactionconfig-configurebyot
     HRESULT ConfigureBYOT(ITransaction pITxByot);
 }
 
-@GUID("33caf1a1-fcb8-472b-b45e-967448ded6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicesystxnconfig
+@GUID("33caf1a1-fcb8-472b-b45e-967448ded6d8")
 interface IServiceSysTxnConfig : IServiceTransactionConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicesystxnconfig-configurebyotsystxn
     HRESULT ConfigureBYOTSysTxn(ITransactionProxy pTxProxy);
 }
 
-@GUID("fd880e81-6dce-4c58-af83-a208846c0030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicesynchronizationconfig
+@GUID("fd880e81-6dce-4c58-af83-a208846c0030")
 interface IServiceSynchronizationConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicesynchronizationconfig-configuresynchronization
     HRESULT ConfigureSynchronization(CSC_SynchronizationConfig synchConfig);
 }
 
-@GUID("6c3a3e1d-0ba6-4036-b76f-d0404db816c9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicetrackerconfig
+@GUID("6c3a3e1d-0ba6-4036-b76f-d0404db816c9")
 interface IServiceTrackerConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicetrackerconfig-trackerconfig
@@ -2456,9 +2470,9 @@ interface IServiceTrackerConfig : IUnknown
                           const(PWSTR) szTrackerCtxName);
 }
 
-@GUID("80182d03-5ea4-4831-ae97-55beffc2e590")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicepartitionconfig
+@GUID("80182d03-5ea4-4831-ae97-55beffc2e590")
 interface IServicePartitionConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicepartitionconfig-partitionconfig
@@ -2467,27 +2481,27 @@ interface IServicePartitionConfig : IUnknown
     HRESULT PartitionID(const(GUID)* guidPartitionID);
 }
 
-@GUID("bd3e2e12-42dd-40f4-a09a-95a50c58304b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicecall
+@GUID("bd3e2e12-42dd-40f4-a09a-95a50c58304b")
 interface IServiceCall : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicecall-oncall
     HRESULT OnCall();
 }
 
-@GUID("fe6777fb-a674-4177-8f32-6d707e113484")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iasyncerrornotify
+@GUID("fe6777fb-a674-4177-8f32-6d707e113484")
 interface IAsyncErrorNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iasyncerrornotify-onerror
     HRESULT OnError(HRESULT hr);
 }
 
-@GUID("67532e0c-9e2f-4450-a354-035633944e17")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iserviceactivity
+@GUID("67532e0c-9e2f-4450-a354-035633944e17")
 interface IServiceActivity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iserviceactivity-synchronouscall
@@ -2500,9 +2514,9 @@ interface IServiceActivity : IUnknown
     HRESULT UnbindFromThread();
 }
 
-@GUID("51372af7-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-ithreadpoolknobs
+@GUID("51372af7-cae7-11cf-be81-00aa00a2fa25")
 interface IThreadPoolKnobs : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-ithreadpoolknobs-getmaxthreads
@@ -2567,9 +2581,9 @@ interface IComStaThreadPoolKnobs2 : IComStaThreadPoolKnobs
     HRESULT SetWaitTimeForThreadCleanup(int dwThreadCleanupWaitTime);
 }
 
-@GUID("1113f52d-dc7f-4943-aed6-88d04027e32a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iprocessinitializer
+@GUID("1113f52d-dc7f-4943-aed6-88d04027e32a")
 interface IProcessInitializer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iprocessinitializer-startup
@@ -2578,9 +2592,9 @@ interface IProcessInitializer : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("a9690656-5bca-470c-8451-250c1f43a33e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicepoolconfig
+@GUID("a9690656-5bca-470c-8451-250c1f43a33e")
 interface IServicePoolConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicepoolconfig-put_maxpoolsize
@@ -2605,9 +2619,9 @@ interface IServicePoolConfig : IUnknown
     HRESULT get_ClassFactory(IClassFactory* pFactory);
 }
 
-@GUID("b302df81-ea45-451e-99a2-09f9fd1b1e13")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iservicepool
+@GUID("b302df81-ea45-451e-99a2-09f9fd1b1e13")
 interface IServicePool : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iservicepool-initialize
@@ -2618,27 +2632,27 @@ interface IServicePool : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("c5da4bea-1b42-4437-8926-b6a38860a770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imanagedpooledobj
+@GUID("c5da4bea-1b42-4437-8926-b6a38860a770")
 interface IManagedPooledObj : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imanagedpooledobj-setheld
     HRESULT SetHeld(BOOL m_bHeld);
 }
 
-@GUID("da91b74e-5388-4783-949d-c1cd5fb00506")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imanagedpoolaction
+@GUID("da91b74e-5388-4783-949d-c1cd5fb00506")
 interface IManagedPoolAction : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imanagedpoolaction-lastrelease
     HRESULT LastRelease();
 }
 
-@GUID("1427c51a-4584-49d8-90a0-c50d8086cbe9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imanagedobjectinfo
+@GUID("1427c51a-4584-49d8-90a0-c50d8086cbe9")
 interface IManagedObjectInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imanagedobjectinfo-getiunknown
@@ -2651,9 +2665,9 @@ interface IManagedObjectInfo : IUnknown
     HRESULT SetWrapperStrength(BOOL bStrong);
 }
 
-@GUID("c7b67079-8255-42c6-9ec0-6994a3548780")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iappdomainhelper
+@GUID("c7b67079-8255-42c6-9ec0-6994a3548780")
 interface IAppDomainHelper : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iappdomainhelper-initialize
@@ -2662,18 +2676,18 @@ interface IAppDomainHelper : IDispatch
     HRESULT DoCallback(IUnknown pUnkAD, ptrdiff_t __MIDL__IAppDomainHelper0001, void* pPool);
 }
 
-@GUID("391ffbb9-a8ee-432a-abc8-baa238dab90f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iassemblylocator
+@GUID("391ffbb9-a8ee-432a-abc8-baa238dab90f")
 interface IAssemblyLocator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-iassemblylocator-getmodules
     HRESULT GetModules(BSTR applicationDir, BSTR applicationName, BSTR assemblyName, SAFEARRAY** pModules);
 }
 
-@GUID("a5f325af-572f-46da-b8ab-827c3d95d99e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imanagedactivationevents
+@GUID("a5f325af-572f-46da-b8ab-827c3d95d99e")
 interface IManagedActivationEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imanagedactivationevents-createmanagedstub
@@ -2682,9 +2696,9 @@ interface IManagedActivationEvents : IUnknown
     HRESULT DestroyManagedStub(IManagedObjectInfo pInfo);
 }
 
-@GUID("2732fd59-b2b4-4d44-878c-8b8f09626008")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-isendmethodevents
+@GUID("2732fd59-b2b4-4d44-878c-8b8f09626008")
 interface ISendMethodEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-isendmethodevents-sendmethodcall
@@ -2694,9 +2708,9 @@ interface ISendMethodEvents : IUnknown
                              HRESULT hrServer);
 }
 
-@GUID("c5feb7c1-346a-11d1-b1cc-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-itransactionresourcepool
+@GUID("c5feb7c1-346a-11d1-b1cc-00aa00ba3258")
 interface ITransactionResourcePool : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-itransactionresourcepool-putresource
@@ -2705,18 +2719,18 @@ interface ITransactionResourcePool : IUnknown
     HRESULT GetResource(IObjPool pPool, IUnknown* ppUnk);
 }
 
-@GUID("51372aef-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imtscall
+@GUID("51372aef-cae7-11cf-be81-00aa00a2fa25")
 interface IMTSCall : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imtscall-oncall
     HRESULT OnCall();
 }
 
-@GUID("d396da85-bf8f-11d1-bbae-00c04fc2fa5f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-icontextproperties
+@GUID("d396da85-bf8f-11d1-bbae-00c04fc2fa5f")
 interface IContextProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-icontextproperties-count
@@ -2731,9 +2745,9 @@ interface IContextProperties : IUnknown
     HRESULT RemoveProperty(BSTR name);
 }
 
-@GUID("7d8805a0-2ea7-11d1-b1cc-00aa00ba3258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-iobjpool
+@GUID("7d8805a0-2ea7-11d1-b1cc-00aa00ba3258")
 interface IObjPool : IUnknown
 {
     void Reserved1();
@@ -2746,9 +2760,9 @@ interface IObjPool : IUnknown
     void Reserved6();
 }
 
-@GUID("788ea814-87b1-11d1-bba6-00c04fc2fa5f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-itransactionproperty
+@GUID("788ea814-87b1-11d1-bba6-00c04fc2fa5f")
 interface ITransactionProperty : IUnknown
 {
     void    Reserved1();
@@ -2772,9 +2786,9 @@ interface ITransactionProperty : IUnknown
     void    Reserved17();
 }
 
-@GUID("51372af0-cae7-11cf-be81-00aa00a2fa25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nn-comsvcs-imtsactivity
+@GUID("51372af0-cae7-11cf-be81-00aa00a2fa25")
 interface IMTSActivity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/comsvcs/nf-comsvcs-imtsactivity-synchronouscall

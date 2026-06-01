@@ -1268,8 +1268,8 @@ HRESULT ColorProfileGetDeviceCapabilities(WCS_PROFILE_MANAGEMENT_SCOPE scope_, L
 
 // Interfaces
 
-@GUID("1cd63475-07c4-46fe-a903-d655316d11fd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nn-wcsplugin-idevicemodelplugin
+@GUID("1cd63475-07c4-46fe-a903-d655316d11fd")
 interface IDeviceModelPlugIn : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-initialize
@@ -1300,8 +1300,8 @@ interface IDeviceModelPlugIn : IUnknown
     HRESULT GetNeutralAxis(uint cColors, XYZColorF* pXYZColors);
 }
 
-@GUID("2dd80115-ad1e-41f6-a219-a4f4b583d1f9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nn-wcsplugin-igamutmapmodelplugin
+@GUID("2dd80115-ad1e-41f6-a219-a4f4b583d1f9")
 interface IGamutMapModelPlugIn : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-igamutmapmodelplugin-initialize

@@ -374,9 +374,9 @@ HRESULT NdfGetTraceFile(void* Handle, const(PWSTR)* TraceFileLocation);
 
 // Interfaces
 
-@GUID("c0b35746-ebf5-11d8-bbe9-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelper
+@GUID("c0b35746-ebf5-11d8-bbe9-505054503030")
 interface INetDiagHelper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-initialize
@@ -419,18 +419,18 @@ interface INetDiagHelper : IUnknown
     HRESULT Cleanup();
 }
 
-@GUID("104613fb-bc57-4178-95ba-88809698354a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperutilfactory
+@GUID("104613fb-bc57-4178-95ba-88809698354a")
 interface INetDiagHelperUtilFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperutilfactory-createutilityinstance
     HRESULT CreateUtilityInstance(const(GUID)* riid, void** ppvObject);
 }
 
-@GUID("972dab4d-e4e3-4fc6-ae54-5f65ccde4a15")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperex
+@GUID("972dab4d-e4e3-4fc6-ae54-5f65ccde4a15")
 interface INetDiagHelperEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-reconfirmlowhealth
@@ -442,9 +442,9 @@ interface INetDiagHelperEx : IUnknown
     HRESULT ReproduceFailure();
 }
 
-@GUID("c0b35747-ebf5-11d8-bbe9-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperinfo
+@GUID("c0b35747-ebf5-11d8-bbe9-505054503030")
 interface INetDiagHelperInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperinfo-getattributeinfo

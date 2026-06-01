@@ -737,9 +737,9 @@ interface IResourceManagerSink : IUnknown
     HRESULT TMDown();
 }
 
-@GUID("13741d21-87eb-11ce-8081-0080c758527e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iresourcemanager
+@GUID("13741d21-87eb-11ce-8081-0080c758527e")
 interface IResourceManager : IUnknown
 {
     HRESULT Enlist(ITransaction pTransaction, ITransactionResourceAsync pRes, BOID* pUOW, int* pisoLevel, 

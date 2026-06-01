@@ -536,9 +536,9 @@ interface IDummyMBNUCMExt : IDispatch
 {
 }
 
-@GUID("dcbbbab6-200d-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnection
+@GUID("dcbbbab6-200d-4bbb-aaee-338e368af6fa")
 interface IMbnConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnection-get_connectionid
@@ -557,9 +557,9 @@ interface IMbnConnection : IUnknown
     HRESULT GetActivationNetworkError(uint* networkError);
 }
 
-@GUID("dcbbbab6-200e-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionevents
+@GUID("dcbbbab6-200e-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionevents-onconnectcomplete
@@ -572,9 +572,9 @@ interface IMbnConnectionEvents : IUnknown
     HRESULT OnVoiceCallStateChange(IMbnConnection newConnection);
 }
 
-@GUID("dcbbbab6-2001-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbninterface
+@GUID("dcbbbab6-2001-4bbb-aaee-338e368af6fa")
 interface IMbnInterface : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbninterface-get_interfaceid
@@ -601,9 +601,9 @@ interface IMbnInterface : IUnknown
     HRESULT GetConnection(IMbnConnection* mbnConnection);
 }
 
-@GUID("dcbbbab6-2002-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbninterfaceevents
+@GUID("dcbbbab6-2002-4bbb-aaee-338e368af6fa")
 interface IMbnInterfaceEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbninterfaceevents-oninterfacecapabilityavailable
@@ -624,9 +624,9 @@ interface IMbnInterfaceEvents : IUnknown
     HRESULT OnScanNetworkComplete(IMbnInterface newInterface, uint requestID, HRESULT status);
 }
 
-@GUID("dcbbbab6-201b-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbninterfacemanager
+@GUID("dcbbbab6-201b-4bbb-aaee-338e368af6fa")
 interface IMbnInterfaceManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbninterfacemanager-getinterface
@@ -635,9 +635,9 @@ interface IMbnInterfaceManager : IUnknown
     HRESULT GetInterfaces(SAFEARRAY** mbnInterfaces);
 }
 
-@GUID("dcbbbab6-201c-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbninterfacemanagerevents
+@GUID("dcbbbab6-201c-4bbb-aaee-338e368af6fa")
 interface IMbnInterfaceManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbninterfacemanagerevents-oninterfacearrival
@@ -646,9 +646,9 @@ interface IMbnInterfaceManagerEvents : IUnknown
     HRESULT OnInterfaceRemoval(IMbnInterface oldInterface);
 }
 
-@GUID("dcbbbab6-2009-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnregistration
+@GUID("dcbbbab6-2009-4bbb-aaee-338e368af6fa")
 interface IMbnRegistration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnregistration-getregisterstate
@@ -674,9 +674,9 @@ interface IMbnRegistration : IUnknown
                             uint* requestID);
 }
 
-@GUID("dcbbbab6-200a-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnregistrationevents
+@GUID("dcbbbab6-200a-4bbb-aaee-338e368af6fa")
 interface IMbnRegistrationEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnregistrationevents-onregistermodeavailable
@@ -689,9 +689,9 @@ interface IMbnRegistrationEvents : IUnknown
     HRESULT OnSetRegisterModeComplete(IMbnRegistration newInterface, uint requestID, HRESULT status);
 }
 
-@GUID("dcbbbab6-201d-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionmanager
+@GUID("dcbbbab6-201d-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionmanager-getconnection
@@ -700,9 +700,9 @@ interface IMbnConnectionManager : IUnknown
     HRESULT GetConnections(SAFEARRAY** mbnConnections);
 }
 
-@GUID("dcbbbab6-201e-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionmanagerevents
+@GUID("dcbbbab6-201e-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionmanagerevents-onconnectionarrival
@@ -711,9 +711,9 @@ interface IMbnConnectionManagerEvents : IUnknown
     HRESULT OnConnectionRemoval(IMbnConnection oldConnection);
 }
 
-@GUID("dcbbbab6-2005-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnpinmanager
+@GUID("dcbbbab6-2005-4bbb-aaee-338e368af6fa")
 interface IMbnPinManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnpinmanager-getpinlist
@@ -724,9 +724,9 @@ interface IMbnPinManager : IUnknown
     HRESULT GetPinState(uint* requestID);
 }
 
-@GUID("dcbbbab6-2006-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnpinmanagerevents
+@GUID("dcbbbab6-2006-4bbb-aaee-338e368af6fa")
 interface IMbnPinManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnpinmanagerevents-onpinlistavailable
@@ -735,9 +735,9 @@ interface IMbnPinManagerEvents : IUnknown
     HRESULT OnGetPinStateComplete(IMbnPinManager pinManager, MBN_PIN_INFO pinInfo, uint requestID, HRESULT status);
 }
 
-@GUID("dcbbbab6-2008-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnpinevents
+@GUID("dcbbbab6-2008-4bbb-aaee-338e368af6fa")
 interface IMbnPinEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnpinevents-onenablecomplete
@@ -752,9 +752,9 @@ interface IMbnPinEvents : IUnknown
     HRESULT OnUnblockComplete(IMbnPin Pin, MBN_PIN_INFO* pinInfo, uint requestID, HRESULT status);
 }
 
-@GUID("459ecc43-bcf5-11dc-a8a8-001321f1405f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsubscriberinformation
+@GUID("459ecc43-bcf5-11dc-a8a8-001321f1405f")
 interface IMbnSubscriberInformation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsubscriberinformation-get_subscriberid
@@ -765,9 +765,9 @@ interface IMbnSubscriberInformation : IUnknown
     HRESULT get_TelephoneNumbers(SAFEARRAY** TelephoneNumbers);
 }
 
-@GUID("dcbbbab6-2003-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsignal
+@GUID("dcbbbab6-2003-4bbb-aaee-338e368af6fa")
 interface IMbnSignal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsignal-getsignalstrength
@@ -776,18 +776,18 @@ interface IMbnSignal : IUnknown
     HRESULT GetSignalError(uint* signalError);
 }
 
-@GUID("dcbbbab6-2004-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsignalevents
+@GUID("dcbbbab6-2004-4bbb-aaee-338e368af6fa")
 interface IMbnSignalEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsignalevents-onsignalstatechange
     HRESULT OnSignalStateChange(IMbnSignal newInterface);
 }
 
-@GUID("dcbbbab6-200b-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectioncontext
+@GUID("dcbbbab6-200b-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectioncontext-getprovisionedcontexts
@@ -796,9 +796,9 @@ interface IMbnConnectionContext : IUnknown
     HRESULT SetProvisionedContext(MBN_CONTEXT provisionedContexts, const(PWSTR) providerID, uint* requestID);
 }
 
-@GUID("dcbbbab6-200c-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectioncontextevents
+@GUID("dcbbbab6-200c-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionContextEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectioncontextevents-onprovisionedcontextlistchange
@@ -807,9 +807,9 @@ interface IMbnConnectionContextEvents : IUnknown
     HRESULT OnSetProvisionedContextComplete(IMbnConnectionContext newInterface, uint requestID, HRESULT status);
 }
 
-@GUID("dcbbbab6-200f-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionprofilemanager
+@GUID("dcbbbab6-200f-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionProfileManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionprofilemanager-getconnectionprofiles
@@ -821,9 +821,9 @@ interface IMbnConnectionProfileManager : IUnknown
     HRESULT CreateConnectionProfile(const(PWSTR) xmlProfile);
 }
 
-@GUID("dcbbbab6-2010-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionprofile
+@GUID("dcbbbab6-2010-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionProfile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionprofile-getprofilexmldata
@@ -834,18 +834,18 @@ interface IMbnConnectionProfile : IUnknown
     HRESULT Delete();
 }
 
-@GUID("dcbbbab6-2011-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionprofileevents
+@GUID("dcbbbab6-2011-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionProfileEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionprofileevents-onprofileupdate
     HRESULT OnProfileUpdate(IMbnConnectionProfile newProfile);
 }
 
-@GUID("dcbbbab6-2012-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsmsconfiguration
+@GUID("dcbbbab6-2012-4bbb-aaee-338e368af6fa")
 interface IMbnSmsConfiguration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsmsconfiguration-get_servicecenteraddress
@@ -862,9 +862,9 @@ interface IMbnSmsConfiguration : IUnknown
     HRESULT put_SmsFormat(MBN_SMS_FORMAT smsFormat);
 }
 
-@GUID("dcbbbab6-2013-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsmsreadmsgpdu
+@GUID("dcbbbab6-2013-4bbb-aaee-338e368af6fa")
 interface IMbnSmsReadMsgPdu : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsmsreadmsgpdu-get_index
@@ -877,9 +877,9 @@ interface IMbnSmsReadMsgPdu : IUnknown
     HRESULT get_Message(SAFEARRAY** Message);
 }
 
-@GUID("dcbbbab6-2014-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsmsreadmsgtextcdma
+@GUID("dcbbbab6-2014-4bbb-aaee-338e368af6fa")
 interface IMbnSmsReadMsgTextCdma : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsmsreadmsgtextcdma-get_index
@@ -900,9 +900,9 @@ interface IMbnSmsReadMsgTextCdma : IUnknown
     HRESULT get_Message(SAFEARRAY** Message);
 }
 
-@GUID("dcbbbab6-2015-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsms
+@GUID("dcbbbab6-2015-4bbb-aaee-338e368af6fa")
 interface IMbnSms : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsms-getsmsconfiguration
@@ -924,9 +924,9 @@ interface IMbnSms : IUnknown
     HRESULT GetSmsStatus(MBN_SMS_STATUS_INFO* smsStatusInfo);
 }
 
-@GUID("dcbbbab6-2016-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnsmsevents
+@GUID("dcbbbab6-2016-4bbb-aaee-338e368af6fa")
 interface IMbnSmsEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnsmsevents-onsmsconfigurationchange
@@ -946,18 +946,18 @@ interface IMbnSmsEvents : IUnknown
     HRESULT OnSmsStatusChange(IMbnSms sms);
 }
 
-@GUID("dcbbbab6-2017-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnserviceactivation
+@GUID("dcbbbab6-2017-4bbb-aaee-338e368af6fa")
 interface IMbnServiceActivation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnserviceactivation-activate
     HRESULT Activate(SAFEARRAY* vendorSpecificData, uint* requestID);
 }
 
-@GUID("dcbbbab6-2018-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnserviceactivationevents
+@GUID("dcbbbab6-2018-4bbb-aaee-338e368af6fa")
 interface IMbnServiceActivationEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnserviceactivationevents-onactivationcomplete
@@ -965,18 +965,18 @@ interface IMbnServiceActivationEvents : IUnknown
                                  uint requestID, HRESULT status, uint networkError);
 }
 
-@GUID("dcbbbab6-2019-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnvendorspecificoperation
+@GUID("dcbbbab6-2019-4bbb-aaee-338e368af6fa")
 interface IMbnVendorSpecificOperation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnvendorspecificoperation-setvendorspecific
     HRESULT SetVendorSpecific(SAFEARRAY* vendorSpecificData, uint* requestID);
 }
 
-@GUID("dcbbbab6-201a-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnvendorspecificevents
+@GUID("dcbbbab6-201a-4bbb-aaee-338e368af6fa")
 interface IMbnVendorSpecificEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnvendorspecificevents-oneventnotification
@@ -986,9 +986,9 @@ interface IMbnVendorSpecificEvents : IUnknown
                                         uint requestID);
 }
 
-@GUID("dcbbbab6-201f-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnconnectionprofilemanagerevents
+@GUID("dcbbbab6-201f-4bbb-aaee-338e368af6fa")
 interface IMbnConnectionProfileManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnconnectionprofilemanagerevents-onconnectionprofilearrival
@@ -997,9 +997,9 @@ interface IMbnConnectionProfileManagerEvents : IUnknown
     HRESULT OnConnectionProfileRemoval(IMbnConnectionProfile oldConnectionProfile);
 }
 
-@GUID("dccccab6-201f-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnradio
+@GUID("dccccab6-201f-4bbb-aaee-338e368af6fa")
 interface IMbnRadio : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnradio-get_softwareradiostate
@@ -1010,9 +1010,9 @@ interface IMbnRadio : IUnknown
     HRESULT SetSoftwareRadioState(MBN_RADIO radioState, uint* requestID);
 }
 
-@GUID("dcdddab6-201f-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnradioevents
+@GUID("dcdddab6-201f-4bbb-aaee-338e368af6fa")
 interface IMbnRadioEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnradioevents-onradiostatechange
@@ -1021,9 +1021,9 @@ interface IMbnRadioEvents : IUnknown
     HRESULT OnSetSoftwareRadioStateComplete(IMbnRadio newInterface, uint requestID, HRESULT status);
 }
 
-@GUID("dcbbbab6-2020-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnmulticarrier
+@GUID("dcbbbab6-2020-4bbb-aaee-338e368af6fa")
 interface IMbnMultiCarrier : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnmulticarrier-sethomeprovider
@@ -1040,9 +1040,9 @@ interface IMbnMultiCarrier : IUnknown
     HRESULT ScanNetwork(uint* requestID);
 }
 
-@GUID("dcdddab6-2021-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnmulticarrierevents
+@GUID("dcdddab6-2021-4bbb-aaee-338e368af6fa")
 interface IMbnMultiCarrierEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnmulticarrierevents-onsethomeprovidercomplete
@@ -1063,18 +1063,18 @@ interface IMbnDeviceServiceStateEvents : IUnknown
     HRESULT OnSessionsStateChange(BSTR interfaceID, MBN_DEVICE_SERVICE_SESSIONS_STATE stateChange);
 }
 
-@GUID("20a26258-6811-4478-ac1d-13324e45e41c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbndeviceservicesmanager
+@GUID("20a26258-6811-4478-ac1d-13324e45e41c")
 interface IMbnDeviceServicesManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbndeviceservicesmanager-getdeviceservicescontext
     HRESULT GetDeviceServicesContext(BSTR networkInterfaceID, IMbnDeviceServicesContext* mbnDevicesContext);
 }
 
-@GUID("fc5ac347-1592-4068-80bb-6a57580150d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbndeviceservicescontext
+@GUID("fc5ac347-1592-4068-80bb-6a57580150d8")
 interface IMbnDeviceServicesContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbndeviceservicescontext-enumeratedeviceservices
@@ -1087,9 +1087,9 @@ interface IMbnDeviceServicesContext : IUnknown
     HRESULT get_MaxDataSize(uint* maxDataSize);
 }
 
-@GUID("0a900c19-6824-4e97-b76e-cf239d0ca642")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbndeviceservicesevents
+@GUID("0a900c19-6824-4e97-b76e-cf239d0ca642")
 interface IMbnDeviceServicesEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbndeviceservicesevents-onquerysupportedcommandscomplete
@@ -1119,9 +1119,9 @@ interface IMbnDeviceServicesEvents : IUnknown
     HRESULT OnInterfaceStateChange(BSTR interfaceID, MBN_DEVICE_SERVICES_INTERFACE_STATE stateChange);
 }
 
-@GUID("b3bb9a71-dc70-4be9-a4da-7886ae8b191b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbndeviceservice
+@GUID("b3bb9a71-dc70-4be9-a4da-7886ae8b191b")
 interface IMbnDeviceService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbndeviceservice-querysupportedcommands
@@ -1150,9 +1150,9 @@ interface IMbnDeviceService : IUnknown
     HRESULT get_IsDataSessionOpen(BOOL* value);
 }
 
-@GUID("dcbbbab6-2007-4bbb-aaee-338e368af6fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nn-mbnapi-imbnpin
+@GUID("dcbbbab6-2007-4bbb-aaee-338e368af6fa")
 interface IMbnPin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mbnapi/nf-mbnapi-imbnpin-get_pintype

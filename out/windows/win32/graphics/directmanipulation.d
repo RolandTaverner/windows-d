@@ -217,9 +217,9 @@ struct DirectManipulationSharedManager;
 @GUID("79dea627-a08a-43ac-8ef5-6900b9299126")
 struct DCompManipulationCompositor;
 
-@GUID("fbf5d3b4-70c7-4163-9322-5a6f660d6fbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationmanager
+@GUID("fbf5d3b4-70c7-4163-9322-5a6f660d6fbc")
 interface IDirectManipulationManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationmanager-activate
@@ -240,27 +240,27 @@ interface IDirectManipulationManager : IUnknown
                           void** object);
 }
 
-@GUID("fa1005e9-3d16-484c-bfc9-62b61e56ec4e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationmanager2
+@GUID("fa1005e9-3d16-484c-bfc9-62b61e56ec4e")
 interface IDirectManipulationManager2 : IDirectManipulationManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationmanager2-createbehavior
     HRESULT CreateBehavior(const(GUID)* clsid, const(GUID)* riid, void** object);
 }
 
-@GUID("2cb6b33d-ffe8-488c-b750-fbdfe88dca8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationmanager3
+@GUID("2cb6b33d-ffe8-488c-b750-fbdfe88dca8c")
 interface IDirectManipulationManager3 : IDirectManipulationManager2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationmanager3-getservice
     HRESULT GetService(const(GUID)* clsid, const(GUID)* riid, void** object);
 }
 
-@GUID("28b85a3d-60a0-48bd-9ba1-5ce8d9ea3a6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationviewport
+@GUID("28b85a3d-60a0-48bd-9ba1-5ce8d9ea3a6d")
 interface IDirectManipulationViewport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationviewport-enable
@@ -321,9 +321,9 @@ interface IDirectManipulationViewport : IUnknown
     HRESULT Abandon();
 }
 
-@GUID("923ccaac-61e1-4385-b726-017af189882a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationviewport2
+@GUID("923ccaac-61e1-4385-b726-017af189882a")
 interface IDirectManipulationViewport2 : IDirectManipulationViewport
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationviewport2-addbehavior
@@ -334,9 +334,9 @@ interface IDirectManipulationViewport2 : IDirectManipulationViewport
     HRESULT RemoveAllBehaviors();
 }
 
-@GUID("952121da-d69f-45f9-b0f9-f23944321a6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationviewporteventhandler
+@GUID("952121da-d69f-45f9-b0f9-f23944321a6d")
 interface IDirectManipulationViewportEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationviewporteventhandler-onviewportstatuschanged
@@ -348,9 +348,9 @@ interface IDirectManipulationViewportEventHandler : IUnknown
     HRESULT OnContentUpdated(IDirectManipulationViewport viewport, IDirectManipulationContent content);
 }
 
-@GUID("b89962cb-3d89-442b-bb58-5098fa0f9f16")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationcontent
+@GUID("b89962cb-3d89-442b-bb58-5098fa0f9f16")
 interface IDirectManipulationContent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationcontent-getcontentrect
@@ -371,9 +371,9 @@ interface IDirectManipulationContent : IUnknown
     HRESULT SyncContentTransform(const(float)* matrix, uint pointCount);
 }
 
-@GUID("c12851e4-1698-4625-b9b1-7ca3ec18630b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationprimarycontent
+@GUID("c12851e4-1698-4625-b9b1-7ca3ec18630b")
 interface IDirectManipulationPrimaryContent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationprimarycontent-setsnapinterval
@@ -397,9 +397,9 @@ interface IDirectManipulationPrimaryContent : IUnknown
     HRESULT GetCenterPoint(float* centerX, float* centerY);
 }
 
-@GUID("1fa11b10-701b-41ae-b5f2-49e36bd595aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationdragdropeventhandler
+@GUID("1fa11b10-701b-41ae-b5f2-49e36bd595aa")
 interface IDirectManipulationDragDropEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationdragdropeventhandler-ondragdropstatuschange
@@ -408,9 +408,9 @@ interface IDirectManipulationDragDropEventHandler : IUnknown
                                    DIRECTMANIPULATION_DRAG_DROP_STATUS previous);
 }
 
-@GUID("814b5af5-c2c8-4270-a9b7-a198ce8d02fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationdragdropbehavior
+@GUID("814b5af5-c2c8-4270-a9b7-a198ce8d02fa")
 interface IDirectManipulationDragDropBehavior : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationdragdropbehavior-setconfiguration
@@ -419,27 +419,27 @@ interface IDirectManipulationDragDropBehavior : IUnknown
     HRESULT GetStatus(DIRECTMANIPULATION_DRAG_DROP_STATUS* status);
 }
 
-@GUID("e43f45b8-42b4-403e-b1f2-273b8f510830")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationinteractioneventhandler
+@GUID("e43f45b8-42b4-403e-b1f2-273b8f510830")
 interface IDirectManipulationInteractionEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationinteractioneventhandler-oninteraction
     HRESULT OnInteraction(IDirectManipulationViewport2 viewport, DIRECTMANIPULATION_INTERACTION_TYPE interaction);
 }
 
-@GUID("fb759dba-6f4c-4c01-874e-19c8a05907f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationframeinfoprovider
+@GUID("fb759dba-6f4c-4c01-874e-19c8a05907f9")
 interface IDirectManipulationFrameInfoProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationframeinfoprovider-getnextframeinfo
     HRESULT GetNextFrameInfo(ulong* time, ulong* processTime, ulong* compositionTime);
 }
 
-@GUID("537a0825-0387-4efa-b62f-71eb1f085a7e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationcompositor
+@GUID("537a0825-0387-4efa-b62f-71eb1f085a7e")
 interface IDirectManipulationCompositor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationcompositor-addcontent
@@ -453,9 +453,9 @@ interface IDirectManipulationCompositor : IUnknown
     HRESULT Flush();
 }
 
-@GUID("d38c7822-f1cb-43cb-b4b9-ac0c767a412e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationcompositor2
+@GUID("d38c7822-f1cb-43cb-b4b9-ac0c767a412e")
 interface IDirectManipulationCompositor2 : IDirectManipulationCompositor
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationcompositor2-addcontentwithcrossprocesschaining
@@ -463,18 +463,18 @@ interface IDirectManipulationCompositor2 : IDirectManipulationCompositor
                                                IUnknown parentVisual, IUnknown childVisual);
 }
 
-@GUID("790b6337-64f8-4ff5-a269-b32bc2af27a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationupdatehandler
+@GUID("790b6337-64f8-4ff5-a269-b32bc2af27a7")
 interface IDirectManipulationUpdateHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationupdatehandler-update
     HRESULT Update();
 }
 
-@GUID("b0ae62fd-be34-46e7-9caa-d361facbb9cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationupdatemanager
+@GUID("b0ae62fd-be34-46e7-9caa-d361facbb9cc")
 interface IDirectManipulationUpdateManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationupdatemanager-registerwaithandlecallback
@@ -485,9 +485,9 @@ interface IDirectManipulationUpdateManager : IUnknown
     HRESULT Update(IDirectManipulationFrameInfoProvider frameInfo);
 }
 
-@GUID("6d5954d4-2003-4356-9b31-d051c9ff0af7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationautoscrollbehavior
+@GUID("6d5954d4-2003-4356-9b31-d051c9ff0af7")
 interface IDirectManipulationAutoScrollBehavior : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationautoscrollbehavior-setconfiguration
@@ -495,9 +495,9 @@ interface IDirectManipulationAutoScrollBehavior : IUnknown
                              DIRECTMANIPULATION_AUTOSCROLL_CONFIGURATION scrollMotion);
 }
 
-@GUID("652d5c71-fe60-4a98-be70-e5f21291e7f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nn-directmanipulation-idirectmanipulationdefercontactservice
+@GUID("652d5c71-fe60-4a98-be70-e5f21291e7f1")
 interface IDirectManipulationDeferContactService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directmanipulation/nf-directmanipulation-idirectmanipulationdefercontactservice-defercontact

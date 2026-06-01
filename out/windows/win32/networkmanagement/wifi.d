@@ -5531,9 +5531,9 @@ uint WFDUpdateDeviceVisibility(ubyte** pDeviceAddress);
 @GUID("dd06a84f-83bd-4d01-8ab9-2389fea0869e")
 struct Dot11AdHocManager;
 
-@GUID("8f10cc26-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocmanager
+@GUID("8f10cc26-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-createnetwork
@@ -5551,9 +5551,9 @@ interface IDot11AdHocManager : IUnknown
     HRESULT GetNetwork(GUID* NetworkSignature, IDot11AdHocNetwork* pNetwork);
 }
 
-@GUID("8f10cc27-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocmanagernotificationsink
+@GUID("8f10cc27-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocManagerNotificationSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-onnetworkadd
@@ -5566,9 +5566,9 @@ interface IDot11AdHocManagerNotificationSink : IUnknown
     HRESULT OnInterfaceRemove(GUID* Signature);
 }
 
-@GUID("8f10cc28-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocnetworks
+@GUID("8f10cc28-cf0d-42a0-acbe-e2de7007384d")
 interface IEnumDot11AdHocNetworks : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-next
@@ -5581,9 +5581,9 @@ interface IEnumDot11AdHocNetworks : IUnknown
     HRESULT Clone(IEnumDot11AdHocNetworks* ppEnum);
 }
 
-@GUID("8f10cc29-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocnetwork
+@GUID("8f10cc29-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocNetwork : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getstatus
@@ -5613,9 +5613,9 @@ interface IDot11AdHocNetwork : IUnknown
     HRESULT Disconnect();
 }
 
-@GUID("8f10cc2a-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocnetworknotificationsink
+@GUID("8f10cc2a-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocNetworkNotificationSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetworknotificationsink-onstatuschange
@@ -5624,9 +5624,9 @@ interface IDot11AdHocNetworkNotificationSink : IUnknown
     HRESULT OnConnectFail(DOT11_ADHOC_CONNECT_FAIL_REASON eFailReason);
 }
 
-@GUID("8f10cc2b-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocinterface
+@GUID("8f10cc2b-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocInterface : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getdevicesignature
@@ -5649,9 +5649,9 @@ interface IDot11AdHocInterface : IUnknown
     HRESULT GetStatus(DOT11_ADHOC_NETWORK_CONNECTION_STATUS* pState);
 }
 
-@GUID("8f10cc2c-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocinterfaces
+@GUID("8f10cc2c-cf0d-42a0-acbe-e2de7007384d")
 interface IEnumDot11AdHocInterfaces : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-next
@@ -5664,9 +5664,9 @@ interface IEnumDot11AdHocInterfaces : IUnknown
     HRESULT Clone(IEnumDot11AdHocInterfaces* ppEnum);
 }
 
-@GUID("8f10cc2d-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocsecuritysettings
+@GUID("8f10cc2d-cf0d-42a0-acbe-e2de7007384d")
 interface IEnumDot11AdHocSecuritySettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-next
@@ -5679,9 +5679,9 @@ interface IEnumDot11AdHocSecuritySettings : IUnknown
     HRESULT Clone(IEnumDot11AdHocSecuritySettings* ppEnum);
 }
 
-@GUID("8f10cc2e-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocsecuritysettings
+@GUID("8f10cc2e-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocSecuritySettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocsecuritysettings-getdot11authalgorithm
@@ -5690,9 +5690,9 @@ interface IDot11AdHocSecuritySettings : IUnknown
     HRESULT GetDot11CipherAlgorithm(DOT11_ADHOC_CIPHER_ALGORITHM* pCipher);
 }
 
-@GUID("8f10cc2f-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocinterfacenotificationsink
+@GUID("8f10cc2f-cf0d-42a0-acbe-e2de7007384d")
 interface IDot11AdHocInterfaceNotificationSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterfacenotificationsink-onconnectionstatuschange

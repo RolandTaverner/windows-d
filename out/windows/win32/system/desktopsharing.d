@@ -347,27 +347,27 @@ interface IRDPSRAPIDebug : IUnknown
     HRESULT get_CLXCmdLine(BSTR* pCLXCmdLine);
 }
 
-@GUID("071c2533-0fa4-4e8f-ae83-9c10b4305ab5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiperfcounterlogger
+@GUID("071c2533-0fa4-4e8f-ae83-9c10b4305ab5")
 interface IRDPSRAPIPerfCounterLogger : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiperfcounterlogger-logvalue
     HRESULT LogValue(long lValue);
 }
 
-@GUID("9a512c86-ac6e-4a8e-b1a4-fcef363f6e64")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiperfcounterloggingmanager
+@GUID("9a512c86-ac6e-4a8e-b1a4-fcef363f6e64")
 interface IRDPSRAPIPerfCounterLoggingManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiperfcounterloggingmanager-createlogger
     HRESULT CreateLogger(BSTR bstrCounterName, IRDPSRAPIPerfCounterLogger* ppLogger);
 }
 
-@GUID("e3e30ef9-89c6-4541-ba3b-19336ac6d31c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiaudiostream
+@GUID("e3e30ef9-89c6-4541-ba3b-19336ac6d31c")
 interface IRDPSRAPIAudioStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiaudiostream-initialize
@@ -382,18 +382,18 @@ interface IRDPSRAPIAudioStream : IUnknown
     HRESULT FreeBuffer();
 }
 
-@GUID("d559f59a-7a27-4138-8763-247ce5f659a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiclipboarduseevents
+@GUID("d559f59a-7a27-4138-8763-247ce5f659a8")
 interface IRDPSRAPIClipboardUseEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiclipboarduseevents-onpastefromclipboard
     HRESULT OnPasteFromClipboard(uint clipboardFormat, IDispatch pAttendee, VARIANT_BOOL* pRetVal);
 }
 
-@GUID("beafe0f9-c77b-4933-ba9f-a24cddcc27cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiwindow
+@GUID("beafe0f9-c77b-4933-ba9f-a24cddcc27cf")
 interface IRDPSRAPIWindow : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiwindow-get_id
@@ -412,9 +412,9 @@ interface IRDPSRAPIWindow : IDispatch
     HRESULT get_Flags(uint* pdwFlags);
 }
 
-@GUID("8a05ce44-715a-4116-a189-a118f30a07bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiwindowlist
+@GUID("8a05ce44-715a-4116-a189-a118f30a07bd")
 interface IRDPSRAPIWindowList : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiwindowlist-get__newenum
@@ -423,9 +423,9 @@ interface IRDPSRAPIWindowList : IDispatch
     HRESULT get_Item(int item, IRDPSRAPIWindow* pWindow);
 }
 
-@GUID("41e7a09d-eb7a-436e-935d-780ca2628324")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiapplication
+@GUID("41e7a09d-eb7a-436e-935d-780ca2628324")
 interface IRDPSRAPIApplication : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiapplication-get_windows
@@ -442,9 +442,9 @@ interface IRDPSRAPIApplication : IDispatch
     HRESULT get_Flags(uint* pdwFlags);
 }
 
-@GUID("d4b4aeb3-22dc-4837-b3b6-42ea2517849a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiapplicationlist
+@GUID("d4b4aeb3-22dc-4837-b3b6-42ea2517849a")
 interface IRDPSRAPIApplicationList : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiapplicationlist-get__newenum
@@ -453,9 +453,9 @@ interface IRDPSRAPIApplicationList : IDispatch
     HRESULT get_Item(int item, IRDPSRAPIApplication* pApplication);
 }
 
-@GUID("d20f10ca-6637-4f06-b1d5-277ea7e5160d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiapplicationfilter
+@GUID("d20f10ca-6637-4f06-b1d5-277ea7e5160d")
 interface IRDPSRAPIApplicationFilter : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiapplicationfilter-get_applications
@@ -468,9 +468,9 @@ interface IRDPSRAPIApplicationFilter : IDispatch
     HRESULT put_Enabled(VARIANT_BOOL NewVal);
 }
 
-@GUID("339b24f2-9bc0-4f16-9aac-f165433d13d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapisessionproperties
+@GUID("339b24f2-9bc0-4f16-9aac-f165433d13d4")
 interface IRDPSRAPISessionProperties : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapisessionproperties-get_property
@@ -479,9 +479,9 @@ interface IRDPSRAPISessionProperties : IDispatch
     HRESULT put_Property(BSTR PropertyName, VARIANT newVal);
 }
 
-@GUID("4fac1d43-fc51-45bb-b1b4-2b53aa562fa3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiinvitation
+@GUID("4fac1d43-fc51-45bb-b1b4-2b53aa562fa3")
 interface IRDPSRAPIInvitation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiinvitation-get_connectionstring
@@ -500,9 +500,9 @@ interface IRDPSRAPIInvitation : IDispatch
     HRESULT put_Revoked(VARIANT_BOOL NewVal);
 }
 
-@GUID("4722b049-92c3-4c2d-8a65-f7348f644dcf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiinvitationmanager
+@GUID("4722b049-92c3-4c2d-8a65-f7348f644dcf")
 interface IRDPSRAPIInvitationManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiinvitationmanager-get__newenum
@@ -516,9 +516,9 @@ interface IRDPSRAPIInvitationManager : IDispatch
                              IRDPSRAPIInvitation* ppInvitation);
 }
 
-@GUID("f74049a4-3d06-4028-8193-0a8c29bc2452")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapitcpconnectioninfo
+@GUID("f74049a4-3d06-4028-8193-0a8c29bc2452")
 interface IRDPSRAPITcpConnectionInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapitcpconnectioninfo-get_protocol
@@ -533,9 +533,9 @@ interface IRDPSRAPITcpConnectionInfo : IDispatch
     HRESULT get_PeerIP(BSTR* pbstrIP);
 }
 
-@GUID("ec0671b3-1b78-4b80-a464-9132247543e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiattendee
+@GUID("ec0671b3-1b78-4b80-a464-9132247543e3")
 interface IRDPSRAPIAttendee : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiattendee-get_id
@@ -556,9 +556,9 @@ interface IRDPSRAPIAttendee : IDispatch
     HRESULT get_ConnectivityInfo(IUnknown* ppVal);
 }
 
-@GUID("ba3a37e8-33da-4749-8da0-07fa34da7944")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiattendeemanager
+@GUID("ba3a37e8-33da-4749-8da0-07fa34da7944")
 interface IRDPSRAPIAttendeeManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiattendeemanager-get__newenum
@@ -567,9 +567,9 @@ interface IRDPSRAPIAttendeeManager : IDispatch
     HRESULT get_Item(int id, IRDPSRAPIAttendee* ppItem);
 }
 
-@GUID("c187689f-447c-44a1-9c14-fffbb3b7ec17")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiattendeedisconnectinfo
+@GUID("c187689f-447c-44a1-9c14-fffbb3b7ec17")
 interface IRDPSRAPIAttendeeDisconnectInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiattendeedisconnectinfo-get_attendee
@@ -580,9 +580,9 @@ interface IRDPSRAPIAttendeeDisconnectInfo : IDispatch
     HRESULT get_Code(int* pVal);
 }
 
-@GUID("05e12f95-28b3-4c9a-8780-d0248574a1e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapivirtualchannel
+@GUID("05e12f95-28b3-4c9a-8780-d0248574a1e0")
 interface IRDPSRAPIVirtualChannel : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapivirtualchannel-senddata
@@ -597,9 +597,9 @@ interface IRDPSRAPIVirtualChannel : IDispatch
     HRESULT get_Priority(CHANNEL_PRIORITY* pPriority);
 }
 
-@GUID("0d11c661-5d0d-4ee4-89df-2166ae1fdfed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapivirtualchannelmanager
+@GUID("0d11c661-5d0d-4ee4-89df-2166ae1fdfed")
 interface IRDPSRAPIVirtualChannelManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapivirtualchannelmanager-get__newenum
@@ -611,9 +611,9 @@ interface IRDPSRAPIVirtualChannelManager : IDispatch
                                  IRDPSRAPIVirtualChannel* ppChannel);
 }
 
-@GUID("c6bfcd38-8ce9-404d-8ae8-f31d00c65cb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiviewer
+@GUID("c6bfcd38-8ce9-404d-8ae8-f31d00c65cb5")
 interface IRDPSRAPIViewer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiviewer-connect
@@ -647,9 +647,9 @@ interface IRDPSRAPIViewer : IDispatch
                                         BSTR* pbstrReverseConnectString);
 }
 
-@GUID("bb590853-a6c5-4a7b-8dd4-76b69eea12d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpviewerinputsink
+@GUID("bb590853-a6c5-4a7b-8dd4-76b69eea12d5")
 interface IRDPViewerInputSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpviewerinputsink-sendmousebuttonevent
@@ -672,9 +672,9 @@ interface IRDPViewerInputSink : IUnknown
     HRESULT EndTouchFrame();
 }
 
-@GUID("3d67e7d2-b27b-448e-81b3-c6110ed8b4be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapiframebuffer
+@GUID("3d67e7d2-b27b-448e-81b3-c6110ed8b4be")
 interface IRDPSRAPIFrameBuffer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapiframebuffer-get_width
@@ -687,9 +687,9 @@ interface IRDPSRAPIFrameBuffer : IDispatch
     HRESULT GetFrameBufferBits(int x, int y, int Width, int Heigth, SAFEARRAY** ppBits);
 }
 
-@GUID("81c80290-5085-44b0-b460-f865c39cb4a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapitransportstreambuffer
+@GUID("81c80290-5085-44b0-b460-f865c39cb4a9")
 interface IRDPSRAPITransportStreamBuffer : IUnknown
 {
     HRESULT get_Storage(ubyte** ppbStorage);
@@ -706,9 +706,9 @@ interface IRDPSRAPITransportStreamBuffer : IUnknown
     HRESULT put_Context(IUnknown pContext);
 }
 
-@GUID("ea81c254-f5af-4e40-982e-3e63bb595276")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapitransportstreamevents
+@GUID("ea81c254-f5af-4e40-982e-3e63bb595276")
 interface IRDPSRAPITransportStreamEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapitransportstreamevents-onwritecompleted
@@ -719,9 +719,9 @@ interface IRDPSRAPITransportStreamEvents : IUnknown
     void OnStreamClosed(HRESULT hrReason);
 }
 
-@GUID("36cfa065-43bb-4ef7-aed7-9b88a5053036")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapitransportstream
+@GUID("36cfa065-43bb-4ef7-aed7-9b88a5053036")
 interface IRDPSRAPITransportStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapitransportstream-allocbuffer
@@ -738,9 +738,9 @@ interface IRDPSRAPITransportStream : IUnknown
     HRESULT Close();
 }
 
-@GUID("eeb20886-e470-4cf6-842b-2739c0ec5cfb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapisharingsession
+@GUID("eeb20886-e470-4cf6-842b-2739c0ec5cfb")
 interface IRDPSRAPISharingSession : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapisharingsession-open
@@ -773,9 +773,9 @@ interface IRDPSRAPISharingSession : IDispatch
     HRESULT GetDesktopSharedRect(int* pleft, int* ptop, int* pright, int* pbottom);
 }
 
-@GUID("fee4ee57-e3e8-4205-8fb0-8fd1d0675c21")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-irdpsrapisharingsession2
+@GUID("fee4ee57-e3e8-4205-8fb0-8fd1d0675c21")
 interface IRDPSRAPISharingSession2 : IRDPSRAPISharingSession
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nf-rdpencomapi-irdpsrapisharingsession2-connectusingtransportstream
@@ -787,9 +787,9 @@ interface IRDPSRAPISharingSession2 : IRDPSRAPISharingSession
     HRESULT SendControlLevelChangeResponse(IRDPSRAPIAttendee pAttendee, CTRL_LEVEL RequestedLevel, int ReasonCode);
 }
 
-@GUID("98a97042-6698-40e9-8efd-b3200990004b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpencomapi/nn-rdpencomapi-_irdpsessionevents
+@GUID("98a97042-6698-40e9-8efd-b3200990004b")
 interface _IRDPSessionEvents : IDispatch
 {
 }

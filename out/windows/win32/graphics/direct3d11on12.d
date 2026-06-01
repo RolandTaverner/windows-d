@@ -47,9 +47,9 @@ HRESULT D3D11On12CreateDevice(IUnknown pDevice, uint Flags, const(D3D_FEATURE_LE
 
 // Interfaces
 
-@GUID("85611e73-70a9-490e-9614-a9e302777904")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11on12/nn-d3d11on12-id3d11on12device
+@GUID("85611e73-70a9-490e-9614-a9e302777904")
 interface ID3D11On12Device : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11on12/nf-d3d11on12-id3d11on12device-createwrappedresource
@@ -62,20 +62,20 @@ interface ID3D11On12Device : IUnknown
     void    AcquireWrappedResources(ID3D11Resource* ppResources, uint NumResources);
 }
 
-@GUID("bdb64df4-ea2f-4c70-b861-aaab1258bb5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.18362))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11on12/nn-d3d11on12-id3d11on12device1
+@GUID("bdb64df4-ea2f-4c70-b861-aaab1258bb5d")
 interface ID3D11On12Device1 : ID3D11On12Device
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11on12/nf-d3d11on12-id3d11on12device1-getd3d12device
     HRESULT GetD3D12Device(const(GUID)* riid, void** ppvDevice);
 }
 
-@GUID("dc90f331-4740-43fa-866e-67f12cb58223")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11on12/nn-d3d11on12-id3d11on12device2
+@GUID("dc90f331-4740-43fa-866e-67f12cb58223")
 interface ID3D11On12Device2 : ID3D11On12Device1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11on12/nf-d3d11on12-id3d11on12device2-unwrapunderlyingresource

@@ -20,9 +20,9 @@ alias UnregisterAuthoringClientFunctionType = HRESULT function(IWebApplicationHo
 
 // Interfaces
 
-@GUID("7c3f6998-1567-4bba-b52b-48d32141d613")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationscriptevents
+@GUID("7c3f6998-1567-4bba-b52b-48d32141d613")
 interface IWebApplicationScriptEvents : IUnknown
 {
     HRESULT BeforeScriptExecute(IHTMLWindow2 htmlWindow);
@@ -31,9 +31,9 @@ interface IWebApplicationScriptEvents : IUnknown
                         BOOL errorHandled);
 }
 
-@GUID("c22615d2-d318-4da2-8422-1fcaf77b10e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationnavigationevents
+@GUID("c22615d2-d318-4da2-8422-1fcaf77b10e4")
 interface IWebApplicationNavigationEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-beforenavigate
@@ -51,18 +51,18 @@ interface IWebApplicationNavigationEvents : IUnknown
     HRESULT DownloadComplete();
 }
 
-@GUID("5b2b3f99-328c-41d5-a6f7-7483ed8e71dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationuievents
+@GUID("5b2b3f99-328c-41d5-a6f7-7483ed8e71dd")
 interface IWebApplicationUIEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationuievents-securityproblem
     HRESULT SecurityProblem(uint securityProblem, HRESULT* result);
 }
 
-@GUID("3e59e6b7-c652-4daf-ad5e-16feb350cde3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationupdateevents
+@GUID("3e59e6b7-c652-4daf-ad5e-16feb350cde3")
 interface IWebApplicationUpdateEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationupdateevents-onpaint
@@ -71,9 +71,9 @@ interface IWebApplicationUpdateEvents : IUnknown
     HRESULT OnCssChanged();
 }
 
-@GUID("cecbd2c3-a3a5-4749-9681-20e9161c6794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationhost
+@GUID("cecbd2c3-a3a5-4749-9681-20e9161c6794")
 interface IWebApplicationHost : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-get_hwnd
@@ -88,18 +88,18 @@ interface IWebApplicationHost : IUnknown
     HRESULT Unadvise(uint cookie);
 }
 
-@GUID("bcdcd0de-330e-481b-b843-4898a6a8ebac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationactivation
+@GUID("bcdcd0de-330e-481b-b843-4898a6a8ebac")
 interface IWebApplicationActivation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationactivation-cancelpendingactivation
     HRESULT CancelPendingActivation();
 }
 
-@GUID("720aea93-1964-4db0-b005-29eb9e2b18a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationauthoringmode
+@GUID("720aea93-1964-4db0-b005-29eb9e2b18a9")
 interface IWebApplicationAuthoringMode : IServiceProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationauthoringmode-get_authoringclientbinary

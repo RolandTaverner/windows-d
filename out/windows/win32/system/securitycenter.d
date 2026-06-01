@@ -106,9 +106,9 @@ struct WSCProductList;
 @GUID("2981a36e-f22d-11e5-9ce9-5e5517507c66")
 struct WSCDefaultProduct;
 
-@GUID("8c38232e-3a45-4a27-92b0-1a16a975f669")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nn-iwscapi-iwscproduct
+@GUID("8c38232e-3a45-4a27-92b0-1a16a975f669")
 interface IWscProduct : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productname
@@ -142,9 +142,9 @@ interface IWscProduct3 : IWscProduct2
     HRESULT get_AntivirusDaysUntilExpired(uint* pdwDays);
 }
 
-@GUID("722a338c-6e8e-4e72-ac27-1417fb0c81c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nn-iwscapi-iwscproductlist
+@GUID("722a338c-6e8e-4e72-ac27-1417fb0c81c2")
 interface IWSCProductList : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-initialize

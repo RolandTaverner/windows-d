@@ -83,8 +83,8 @@ HRESULT DeriveAppContainerSidFromAppContainerName(const(PWSTR) pszAppContainerNa
 @GUID("bc812430-e75e-4fd1-9641-1f9f1e2d9a1f")
 struct IsolatedAppLauncher;
 
-@GUID("f686878f-7b42-4cc4-96fb-f4f3b6e3d24d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isolatedapplauncher/nn-isolatedapplauncher-iisolatedapplauncher
+@GUID("f686878f-7b42-4cc4-96fb-f4f3b6e3d24d")
 interface IIsolatedAppLauncher : IUnknown
 {
     HRESULT Launch(const(PWSTR) appUserModelId, const(PWSTR) arguments, 

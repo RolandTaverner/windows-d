@@ -75,9 +75,9 @@ struct CloudCampaignAssessment
 @GUID("098ef871-fa9f-46af-8958-c083515d7c9c")
 struct WaaSAssessor;
 
-@GUID("2347bbef-1a3b-45a4-902d-3e09c269b45e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/waasapi/nn-waasapi-iwaasassessor
+@GUID("2347bbef-1a3b-45a4-902d-3e09c269b45e")
 interface IWaaSAssessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/waasapi/nf-waasapi-iwaasassessor-getosupdateassessment

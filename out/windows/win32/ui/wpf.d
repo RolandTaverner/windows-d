@@ -69,9 +69,9 @@ struct MILMatrixF
 
 // Interfaces
 
-@GUID("f66d2e4b-b46b-42fc-859e-3da0ecdb3c43")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectconnectorinfo
+@GUID("f66d2e4b-b46b-42fc-859e-3da0ecdb3c43")
 interface IMILBitmapEffectConnectorInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectconnectorinfo-getindex
@@ -84,9 +84,9 @@ interface IMILBitmapEffectConnectorInfo : IUnknown
     HRESULT GetFormat(uint ulIndex, GUID* pFormat);
 }
 
-@GUID("476b538a-c765-4237-ba4a-d6a880ff0cfc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectconnectionsinfo
+@GUID("476b538a-c765-4237-ba4a-d6a880ff0cfc")
 interface IMILBitmapEffectConnectionsInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectconnectionsinfo-getnumberinputs
@@ -99,9 +99,9 @@ interface IMILBitmapEffectConnectionsInfo : IUnknown
     HRESULT GetOutputConnectorInfo(uint uiIndex, IMILBitmapEffectConnectorInfo* ppConnectorInfo);
 }
 
-@GUID("c2b5d861-9b1a-4374-89b0-dec4874d6a81")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectconnections
+@GUID("c2b5d861-9b1a-4374-89b0-dec4874d6a81")
 interface IMILBitmapEffectConnections : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectconnections-getinputconnector
@@ -110,9 +110,9 @@ interface IMILBitmapEffectConnections : IUnknown
     HRESULT GetOutputConnector(uint uiIndex, IMILBitmapEffectOutputConnector* ppConnector);
 }
 
-@GUID("8a6ff321-c944-4a1b-9944-9954af301258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffect
+@GUID("8a6ff321-c944-4a1b-9944-9954af301258")
 interface IMILBitmapEffect : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffect-getoutput
@@ -123,9 +123,9 @@ interface IMILBitmapEffect : IUnknown
     HRESULT SetInputSource(uint uiIndex, IWICBitmapSource pBitmapSource);
 }
 
-@GUID("cc2468f2-9936-47be-b4af-06b5df5dbcbb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectimpl
+@GUID("cc2468f2-9936-47be-b4af-06b5df5dbcbb")
 interface IMILBitmapEffectImpl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectimpl-isinplacemodificationallowed
@@ -147,9 +147,9 @@ interface IMILBitmapEffectImpl : IUnknown
     HRESULT Initialize(IUnknown pInner);
 }
 
-@GUID("2f952360-698a-4ac6-81a1-bcfdf08eb8e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectgroup
+@GUID("2f952360-698a-4ac6-81a1-bcfdf08eb8e8")
 interface IMILBitmapEffectGroup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectgroup-getinteriorinputconnector
@@ -160,9 +160,9 @@ interface IMILBitmapEffectGroup : IUnknown
     HRESULT Add(IMILBitmapEffect pEffect);
 }
 
-@GUID("78fed518-1cfc-4807-8b85-6b6e51398f62")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectgroupimpl
+@GUID("78fed518-1cfc-4807-8b85-6b6e51398f62")
 interface IMILBitmapEffectGroupImpl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectgroupimpl-preprocess
@@ -173,9 +173,9 @@ interface IMILBitmapEffectGroupImpl : IUnknown
     HRESULT GetChildren(IMILBitmapEffects* pChildren);
 }
 
-@GUID("12a2ec7e-2d33-44b2-b334-1abb7846e390")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectrendercontext
+@GUID("12a2ec7e-2d33-44b2-b334-1abb7846e390")
 interface IMILBitmapEffectRenderContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectrendercontext-setoutputpixelformat
@@ -196,9 +196,9 @@ interface IMILBitmapEffectRenderContext : IUnknown
     HRESULT SetRegionOfInterest(MilRectD* pRect);
 }
 
-@GUID("4d25accb-797d-4fd2-b128-dffeff84fcc3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectrendercontextimpl
+@GUID("4d25accb-797d-4fd2-b128-dffeff84fcc3")
 interface IMILBitmapEffectRenderContextImpl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectrendercontextimpl-getusesoftwarerenderer
@@ -213,9 +213,9 @@ interface IMILBitmapEffectRenderContextImpl : IUnknown
     HRESULT UpdateOutputBounds(MilRectD* pRect);
 }
 
-@GUID("33a9df34-a403-4ec7-b07e-bc0682370845")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectfactory
+@GUID("33a9df34-a403-4ec7-b07e-bc0682370845")
 interface IMILBitmapEffectFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectfactory-createeffect
@@ -226,9 +226,9 @@ interface IMILBitmapEffectFactory : IUnknown
     HRESULT CreateEffectOuter(IMILBitmapEffect* ppEffect);
 }
 
-@GUID("67e31025-3091-4dfc-98d6-dd494551461d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectprimitive
+@GUID("67e31025-3091-4dfc-98d6-dd494551461d")
 interface IMILBitmapEffectPrimitive : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectprimitive-getoutput
@@ -248,9 +248,9 @@ interface IMILBitmapEffectPrimitive : IUnknown
     HRESULT GetAffineMatrix(uint uiIndex, MilMatrix3x2D* pMatrix);
 }
 
-@GUID("ce41e00b-efa6-44e7-b007-dd042e3ae126")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectprimitiveimpl
+@GUID("ce41e00b-efa6-44e7-b007-dd042e3ae126")
 interface IMILBitmapEffectPrimitiveImpl : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -259,9 +259,9 @@ interface IMILBitmapEffectPrimitiveImpl : IUnknown
     HRESULT IsVolatile(uint uiOutputIndex, VARIANT_BOOL* pfVolatile);
 }
 
-@GUID("51ac3dce-67c5-448b-9180-ad3eabddd5dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffects
+@GUID("51ac3dce-67c5-448b-9180-ad3eabddd5dd")
 interface IMILBitmapEffects : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffects-_newenum
@@ -274,9 +274,9 @@ interface IMILBitmapEffects : IUnknown
     HRESULT get_Count(uint* puiCount);
 }
 
-@GUID("f59567b3-76c1-4d47-ba1e-79f955e350ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectconnector
+@GUID("f59567b3-76c1-4d47-ba1e-79f955e350ef")
 interface IMILBitmapEffectConnector : IMILBitmapEffectConnectorInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectconnector-isconnected
@@ -285,9 +285,9 @@ interface IMILBitmapEffectConnector : IMILBitmapEffectConnectorInfo
     HRESULT GetBitmapEffect(IMILBitmapEffect* ppEffect);
 }
 
-@GUID("a9b4ecaa-7a3c-45e7-8573-f4b81b60dd6c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectinputconnector
+@GUID("a9b4ecaa-7a3c-45e7-8573-f4b81b60dd6c")
 interface IMILBitmapEffectInputConnector : IMILBitmapEffectConnector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectinputconnector-connectto
@@ -296,9 +296,9 @@ interface IMILBitmapEffectInputConnector : IMILBitmapEffectConnector
     HRESULT GetConnection(IMILBitmapEffectOutputConnector* ppConnector);
 }
 
-@GUID("92957aad-841b-4866-82ec-8752468b07fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectoutputconnector
+@GUID("92957aad-841b-4866-82ec-8752468b07fd")
 interface IMILBitmapEffectOutputConnector : IMILBitmapEffectConnector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectoutputconnector-getnumberconnections
@@ -307,9 +307,9 @@ interface IMILBitmapEffectOutputConnector : IMILBitmapEffectConnector
     HRESULT GetConnection(uint uiIndex, IMILBitmapEffectInputConnector* ppConnection);
 }
 
-@GUID("21fae777-8b39-4bfa-9f2d-f3941ed36913")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectoutputconnectorimpl
+@GUID("21fae777-8b39-4bfa-9f2d-f3941ed36913")
 interface IMILBitmapEffectOutputConnectorImpl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectoutputconnectorimpl-addbacklink
@@ -318,27 +318,27 @@ interface IMILBitmapEffectOutputConnectorImpl : IUnknown
     HRESULT RemoveBackLink(IMILBitmapEffectInputConnector pConnection);
 }
 
-@GUID("20287e9e-86a2-4e15-953d-eb1438a5b842")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectinteriorinputconnector
+@GUID("20287e9e-86a2-4e15-953d-eb1438a5b842")
 interface IMILBitmapEffectInteriorInputConnector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectinteriorinputconnector-getinputconnector
     HRESULT GetInputConnector(IMILBitmapEffectInputConnector* pInputConnector);
 }
 
-@GUID("00bbb6dc-acc9-4bfc-b344-8bee383dfefa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectinterioroutputconnector
+@GUID("00bbb6dc-acc9-4bfc-b344-8bee383dfefa")
 interface IMILBitmapEffectInteriorOutputConnector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectinterioroutputconnector-getoutputconnector
     HRESULT GetOutputConnector(IMILBitmapEffectOutputConnector* pOutputConnector);
 }
 
-@GUID("2e880dd8-f8ce-457b-8199-d60bb3d7ef98")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nn-mileffects-imilbitmapeffectevents
+@GUID("2e880dd8-f8ce-457b-8199-d60bb3d7ef98")
 interface IMILBitmapEffectEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/nf-mileffects-imilbitmapeffectevents-propertychange

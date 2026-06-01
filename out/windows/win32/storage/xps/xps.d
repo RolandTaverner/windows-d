@@ -663,9 +663,9 @@ struct XpsOMThumbnailGenerator;
 @GUID("b0c43320-2315-44a2-b70a-0943a140a8ee")
 struct XpsSignatureManager;
 
-@GUID("7137398f-2fc1-454d-8c6a-2c3115a16ece")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomshareable
+@GUID("7137398f-2fc1-454d-8c6a-2c3115a16ece")
 interface IXpsOMShareable : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomshareable-getowner
@@ -674,9 +674,9 @@ interface IXpsOMShareable : IUnknown
     HRESULT GetType(XPS_OBJECT_TYPE* type);
 }
 
-@GUID("bc3e7333-fb0b-4af3-a819-0b4eaad0d2fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomvisual
+@GUID("bc3e7333-fb0b-4af3-a819-0b4eaad0d2fd")
 interface IXpsOMVisual : IXpsOMShareable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomvisual-gettransform
@@ -731,9 +731,9 @@ interface IXpsOMVisual : IXpsOMShareable
     HRESULT SetLanguage(const(PWSTR) language);
 }
 
-@GUID("74eb2f0b-a91e-4486-afac-0fabeca3dfc6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompart
+@GUID("74eb2f0b-a91e-4486-afac-0fabeca3dfc6")
 interface IXpsOMPart : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompart-getpartname
@@ -742,9 +742,9 @@ interface IXpsOMPart : IUnknown
     HRESULT SetPartName(IOpcPartUri partUri);
 }
 
-@GUID("a5ab8616-5b16-4b9f-9629-89b323ed7909")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomglyphseditor
+@GUID("a5ab8616-5b16-4b9f-9629-89b323ed7909")
 interface IXpsOMGlyphsEditor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomglyphseditor-applyedits
@@ -785,9 +785,9 @@ interface IXpsOMGlyphsEditor : IUnknown
     HRESULT SetDeviceFontName(const(PWSTR) deviceFontName);
 }
 
-@GUID("819b3199-0a5a-4b64-bec7-a9e17e780de2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomglyphs
+@GUID("819b3199-0a5a-4b64-bec7-a9e17e780de2")
 interface IXpsOMGlyphs : IXpsOMVisual
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomglyphs-getunicodestring
@@ -846,9 +846,9 @@ interface IXpsOMGlyphs : IXpsOMVisual
     HRESULT Clone(IXpsOMGlyphs* glyphs);
 }
 
-@GUID("081613f4-74eb-48f2-83b3-37a9ce2d7dc6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomdashcollection
+@GUID("081613f4-74eb-48f2-83b3-37a9ce2d7dc6")
 interface IXpsOMDashCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomdashcollection-getcount
@@ -865,9 +865,9 @@ interface IXpsOMDashCollection : IUnknown
     HRESULT Append(const(XPS_DASH)* dash);
 }
 
-@GUID("b77330ff-bb37-4501-a93e-f1b1e50bfc46")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsommatrixtransform
+@GUID("b77330ff-bb37-4501-a93e-f1b1e50bfc46")
 interface IXpsOMMatrixTransform : IXpsOMShareable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsommatrixtransform-getmatrix
@@ -878,9 +878,9 @@ interface IXpsOMMatrixTransform : IXpsOMShareable
     HRESULT Clone(IXpsOMMatrixTransform* matrixTransform);
 }
 
-@GUID("64fcf3d7-4d58-44ba-ad73-a13af6492072")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomgeometry
+@GUID("64fcf3d7-4d58-44ba-ad73-a13af6492072")
 interface IXpsOMGeometry : IXpsOMShareable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomgeometry-getfigures
@@ -903,9 +903,9 @@ interface IXpsOMGeometry : IXpsOMShareable
     HRESULT Clone(IXpsOMGeometry* geometry);
 }
 
-@GUID("d410dc83-908c-443e-8947-b1795d3c165a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomgeometryfigure
+@GUID("d410dc83-908c-443e-8947-b1795d3c165a")
 interface IXpsOMGeometryFigure : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomgeometryfigure-getowner
@@ -941,9 +941,9 @@ interface IXpsOMGeometryFigure : IUnknown
     HRESULT Clone(IXpsOMGeometryFigure* geometryFigure);
 }
 
-@GUID("fd48c3f3-a58e-4b5a-8826-1de54abe72b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomgeometryfigurecollection
+@GUID("fd48c3f3-a58e-4b5a-8826-1de54abe72b2")
 interface IXpsOMGeometryFigureCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomgeometryfigurecollection-getcount
@@ -960,9 +960,9 @@ interface IXpsOMGeometryFigureCollection : IUnknown
     HRESULT Append(IXpsOMGeometryFigure geometryFigure);
 }
 
-@GUID("37d38bb6-3ee9-4110-9312-14b194163337")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompath
+@GUID("37d38bb6-3ee9-4110-9312-14b194163337")
 interface IXpsOMPath : IXpsOMVisual
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompath-getgeometry
@@ -1041,9 +1041,9 @@ interface IXpsOMPath : IXpsOMVisual
     HRESULT Clone(IXpsOMPath* path);
 }
 
-@GUID("56a3f80c-ea4c-4187-a57b-a2a473b2b42b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsombrush
+@GUID("56a3f80c-ea4c-4187-a57b-a2a473b2b42b")
 interface IXpsOMBrush : IXpsOMShareable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsombrush-getopacity
@@ -1052,9 +1052,9 @@ interface IXpsOMBrush : IXpsOMShareable
     HRESULT SetOpacity(float opacity);
 }
 
-@GUID("c9174c3a-3cd3-4319-bda4-11a39392ceef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomgradientstopcollection
+@GUID("c9174c3a-3cd3-4319-bda4-11a39392ceef")
 interface IXpsOMGradientStopCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomgradientstopcollection-getcount
@@ -1071,9 +1071,9 @@ interface IXpsOMGradientStopCollection : IUnknown
     HRESULT Append(IXpsOMGradientStop stop);
 }
 
-@GUID("a06f9f05-3be9-4763-98a8-094fc672e488")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomsolidcolorbrush
+@GUID("a06f9f05-3be9-4763-98a8-094fc672e488")
 interface IXpsOMSolidColorBrush : IXpsOMBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomsolidcolorbrush-getcolor
@@ -1084,9 +1084,9 @@ interface IXpsOMSolidColorBrush : IXpsOMBrush
     HRESULT Clone(IXpsOMSolidColorBrush* solidColorBrush);
 }
 
-@GUID("0fc2328d-d722-4a54-b2ec-be90218a789e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomtilebrush
+@GUID("0fc2328d-d722-4a54-b2ec-be90218a789e")
 interface IXpsOMTileBrush : IXpsOMBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomtilebrush-gettransform
@@ -1113,9 +1113,9 @@ interface IXpsOMTileBrush : IXpsOMBrush
     HRESULT SetTileMode(XPS_TILE_MODE tileMode);
 }
 
-@GUID("97e294af-5b37-46b4-8057-874d2f64119b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomvisualbrush
+@GUID("97e294af-5b37-46b4-8057-874d2f64119b")
 interface IXpsOMVisualBrush : IXpsOMTileBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomvisualbrush-getvisual
@@ -1132,9 +1132,9 @@ interface IXpsOMVisualBrush : IXpsOMTileBrush
     HRESULT Clone(IXpsOMVisualBrush* visualBrush);
 }
 
-@GUID("3df0b466-d382-49ef-8550-dd94c80242e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomimagebrush
+@GUID("3df0b466-d382-49ef-8550-dd94c80242e4")
 interface IXpsOMImageBrush : IXpsOMTileBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomimagebrush-getimageresource
@@ -1149,9 +1149,9 @@ interface IXpsOMImageBrush : IXpsOMTileBrush
     HRESULT Clone(IXpsOMImageBrush* imageBrush);
 }
 
-@GUID("5cf4f5cc-3969-49b5-a70a-5550b618fe49")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomgradientstop
+@GUID("5cf4f5cc-3969-49b5-a70a-5550b618fe49")
 interface IXpsOMGradientStop : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomgradientstop-getowner
@@ -1168,9 +1168,9 @@ interface IXpsOMGradientStop : IUnknown
     HRESULT Clone(IXpsOMGradientStop* gradientStop);
 }
 
-@GUID("edb59622-61a2-42c3-bace-acf2286c06bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomgradientbrush
+@GUID("edb59622-61a2-42c3-bace-acf2286c06bf")
 interface IXpsOMGradientBrush : IXpsOMBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomgradientbrush-getgradientstops
@@ -1195,9 +1195,9 @@ interface IXpsOMGradientBrush : IXpsOMBrush
     HRESULT SetColorInterpolationMode(XPS_COLOR_INTERPOLATION colorInterpolationMode);
 }
 
-@GUID("005e279f-c30d-40ff-93ec-1950d3c528db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomlineargradientbrush
+@GUID("005e279f-c30d-40ff-93ec-1950d3c528db")
 interface IXpsOMLinearGradientBrush : IXpsOMGradientBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomlineargradientbrush-getstartpoint
@@ -1212,9 +1212,9 @@ interface IXpsOMLinearGradientBrush : IXpsOMGradientBrush
     HRESULT Clone(IXpsOMLinearGradientBrush* linearGradientBrush);
 }
 
-@GUID("75f207e5-08bf-413c-96b1-b82b4064176b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomradialgradientbrush
+@GUID("75f207e5-08bf-413c-96b1-b82b4064176b")
 interface IXpsOMRadialGradientBrush : IXpsOMGradientBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomradialgradientbrush-getcenter
@@ -1233,16 +1233,16 @@ interface IXpsOMRadialGradientBrush : IXpsOMGradientBrush
     HRESULT Clone(IXpsOMRadialGradientBrush* radialGradientBrush);
 }
 
-@GUID("da2ac0a2-73a2-4975-ad14-74097c3ff3a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomresource
+@GUID("da2ac0a2-73a2-4975-ad14-74097c3ff3a5")
 interface IXpsOMResource : IXpsOMPart
 {
 }
 
-@GUID("f4cf7729-4864-4275-99b3-a8717163ecaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompartresources
+@GUID("f4cf7729-4864-4275-99b3-a8717163ecaf")
 interface IXpsOMPartResources : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompartresources-getfontresources
@@ -1255,9 +1255,9 @@ interface IXpsOMPartResources : IUnknown
     HRESULT GetRemoteDictionaryResources(IXpsOMRemoteDictionaryResourceCollection* dictionaryResources);
 }
 
-@GUID("897c86b8-8eaf-4ae3-bdde-56419fcf4236")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomdictionary
+@GUID("897c86b8-8eaf-4ae3-bdde-56419fcf4236")
 interface IXpsOMDictionary : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomdictionary-getowner
@@ -1282,9 +1282,9 @@ interface IXpsOMDictionary : IUnknown
     HRESULT Clone(IXpsOMDictionary* dictionary);
 }
 
-@GUID("a8c45708-47d9-4af4-8d20-33b48c9b8485")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomfontresource
+@GUID("a8c45708-47d9-4af4-8d20-33b48c9b8485")
 interface IXpsOMFontResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomfontresource-getstream
@@ -1295,9 +1295,9 @@ interface IXpsOMFontResource : IXpsOMResource
     HRESULT GetEmbeddingOption(XPS_FONT_EMBEDDING* embeddingOption);
 }
 
-@GUID("70b4a6bb-88d4-4fa8-aaf9-6d9c596fdbad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomfontresourcecollection
+@GUID("70b4a6bb-88d4-4fa8-aaf9-6d9c596fdbad")
 interface IXpsOMFontResourceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomfontresourcecollection-getcount
@@ -1316,9 +1316,9 @@ interface IXpsOMFontResourceCollection : IUnknown
     HRESULT GetByPartName(IOpcPartUri partName, IXpsOMFontResource* part);
 }
 
-@GUID("3db8417d-ae50-485e-9a44-d7758f78a23f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomimageresource
+@GUID("3db8417d-ae50-485e-9a44-d7758f78a23f")
 interface IXpsOMImageResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomimageresource-getstream
@@ -1329,9 +1329,9 @@ interface IXpsOMImageResource : IXpsOMResource
     HRESULT GetImageType(XPS_IMAGE_TYPE* imageType);
 }
 
-@GUID("7a4a1a71-9cde-4b71-b33f-62de843eabfe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomimageresourcecollection
+@GUID("7a4a1a71-9cde-4b71-b33f-62de843eabfe")
 interface IXpsOMImageResourceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomimageresourcecollection-getcount
@@ -1350,9 +1350,9 @@ interface IXpsOMImageResourceCollection : IUnknown
     HRESULT GetByPartName(IOpcPartUri partName, IXpsOMImageResource* part);
 }
 
-@GUID("67bd7d69-1eef-4bb1-b5e7-6f4f87be8abe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomcolorprofileresource
+@GUID("67bd7d69-1eef-4bb1-b5e7-6f4f87be8abe")
 interface IXpsOMColorProfileResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomcolorprofileresource-getstream
@@ -1361,9 +1361,9 @@ interface IXpsOMColorProfileResource : IXpsOMResource
     HRESULT SetContent(IStream sourceStream, IOpcPartUri partName);
 }
 
-@GUID("12759630-5fba-4283-8f7d-cca849809edb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomcolorprofileresourcecollection
+@GUID("12759630-5fba-4283-8f7d-cca849809edb")
 interface IXpsOMColorProfileResourceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomcolorprofileresourcecollection-getcount
@@ -1382,9 +1382,9 @@ interface IXpsOMColorProfileResourceCollection : IUnknown
     HRESULT GetByPartName(IOpcPartUri partName, IXpsOMColorProfileResource* part);
 }
 
-@GUID("e7ff32d2-34aa-499b-bbe9-9cd4ee6c59f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomprintticketresource
+@GUID("e7ff32d2-34aa-499b-bbe9-9cd4ee6c59f7")
 interface IXpsOMPrintTicketResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomprintticketresource-getstream
@@ -1393,9 +1393,9 @@ interface IXpsOMPrintTicketResource : IXpsOMResource
     HRESULT SetContent(IStream sourceStream, IOpcPartUri partName);
 }
 
-@GUID("c9bd7cd4-e16a-4bf8-8c84-c950af7a3061")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomremotedictionaryresource
+@GUID("c9bd7cd4-e16a-4bf8-8c84-c950af7a3061")
 interface IXpsOMRemoteDictionaryResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomremotedictionaryresource-getdictionary
@@ -1404,9 +1404,9 @@ interface IXpsOMRemoteDictionaryResource : IXpsOMResource
     HRESULT SetDictionary(IXpsOMDictionary dictionary);
 }
 
-@GUID("5c38db61-7fec-464a-87bd-41e3bef018be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomremotedictionaryresourcecollection
+@GUID("5c38db61-7fec-464a-87bd-41e3bef018be")
 interface IXpsOMRemoteDictionaryResourceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomremotedictionaryresourcecollection-getcount
@@ -1425,9 +1425,9 @@ interface IXpsOMRemoteDictionaryResourceCollection : IUnknown
     HRESULT GetByPartName(IOpcPartUri partName, IXpsOMRemoteDictionaryResource* remoteDictionaryResource);
 }
 
-@GUID("ab8f5d8e-351b-4d33-aaed-fa56f0022931")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomsignatureblockresourcecollection
+@GUID("ab8f5d8e-351b-4d33-aaed-fa56f0022931")
 interface IXpsOMSignatureBlockResourceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomsignatureblockresourcecollection-getcount
@@ -1446,9 +1446,9 @@ interface IXpsOMSignatureBlockResourceCollection : IUnknown
     HRESULT GetByPartName(IOpcPartUri partName, IXpsOMSignatureBlockResource* signatureBlockResource);
 }
 
-@GUID("85febc8a-6b63-48a9-af07-7064e4ecff30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomdocumentstructureresource
+@GUID("85febc8a-6b63-48a9-af07-7064e4ecff30")
 interface IXpsOMDocumentStructureResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomdocumentstructureresource-getowner
@@ -1459,9 +1459,9 @@ interface IXpsOMDocumentStructureResource : IXpsOMResource
     HRESULT SetContent(IStream sourceStream, IOpcPartUri partName);
 }
 
-@GUID("c2b3ca09-0473-4282-87ae-1780863223f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomstoryfragmentsresource
+@GUID("c2b3ca09-0473-4282-87ae-1780863223f0")
 interface IXpsOMStoryFragmentsResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomstoryfragmentsresource-getowner
@@ -1472,9 +1472,9 @@ interface IXpsOMStoryFragmentsResource : IXpsOMResource
     HRESULT SetContent(IStream sourceStream, IOpcPartUri partName);
 }
 
-@GUID("4776ad35-2e04-4357-8743-ebf6c171a905")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomsignatureblockresource
+@GUID("4776ad35-2e04-4357-8743-ebf6c171a905")
 interface IXpsOMSignatureBlockResource : IXpsOMResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomsignatureblockresource-getowner
@@ -1485,9 +1485,9 @@ interface IXpsOMSignatureBlockResource : IXpsOMResource
     HRESULT SetContent(IStream sourceStream, IOpcPartUri partName);
 }
 
-@GUID("94d8abde-ab91-46a8-82b7-f5b05ef01a96")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomvisualcollection
+@GUID("94d8abde-ab91-46a8-82b7-f5b05ef01a96")
 interface IXpsOMVisualCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomvisualcollection-getcount
@@ -1504,9 +1504,9 @@ interface IXpsOMVisualCollection : IUnknown
     HRESULT Append(IXpsOMVisual object);
 }
 
-@GUID("221d1452-331e-47c6-87e9-6ccefb9b5ba3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomcanvas
+@GUID("221d1452-331e-47c6-87e9-6ccefb9b5ba3")
 interface IXpsOMCanvas : IXpsOMVisual
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomcanvas-getvisuals
@@ -1537,9 +1537,9 @@ interface IXpsOMCanvas : IXpsOMVisual
     HRESULT Clone(IXpsOMCanvas* canvas);
 }
 
-@GUID("d3e18888-f120-4fee-8c68-35296eae91d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompage
+@GUID("d3e18888-f120-4fee-8c68-35296eae91d4")
 interface IXpsOMPage : IXpsOMPart
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompage-getowner
@@ -1588,9 +1588,9 @@ interface IXpsOMPage : IXpsOMPart
     HRESULT Clone(IXpsOMPage* page);
 }
 
-@GUID("ed360180-6f92-4998-890d-2f208531a0a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompagereference
+@GUID("ed360180-6f92-4998-890d-2f208531a0a0")
 interface IXpsOMPageReference : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompagereference-getowner
@@ -1629,9 +1629,9 @@ interface IXpsOMPageReference : IUnknown
     HRESULT Clone(IXpsOMPageReference* pageReference);
 }
 
-@GUID("ca16ba4d-e7b9-45c5-958b-f98022473745")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompagereferencecollection
+@GUID("ca16ba4d-e7b9-45c5-958b-f98022473745")
 interface IXpsOMPageReferenceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompagereferencecollection-getcount
@@ -1648,9 +1648,9 @@ interface IXpsOMPageReferenceCollection : IUnknown
     HRESULT Append(IXpsOMPageReference pageReference);
 }
 
-@GUID("2c2c94cb-ac5f-4254-8ee9-23948309d9f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomdocument
+@GUID("2c2c94cb-ac5f-4254-8ee9-23948309d9f0")
 interface IXpsOMDocument : IXpsOMPart
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomdocument-getowner
@@ -1671,9 +1671,9 @@ interface IXpsOMDocument : IXpsOMPart
     HRESULT Clone(IXpsOMDocument* document);
 }
 
-@GUID("d1c87f0d-e947-4754-8a25-971478f7e83e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomdocumentcollection
+@GUID("d1c87f0d-e947-4754-8a25-971478f7e83e")
 interface IXpsOMDocumentCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomdocumentcollection-getcount
@@ -1690,9 +1690,9 @@ interface IXpsOMDocumentCollection : IUnknown
     HRESULT Append(IXpsOMDocument document);
 }
 
-@GUID("56492eb4-d8d5-425e-8256-4c2b64ad0264")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomdocumentsequence
+@GUID("56492eb4-d8d5-425e-8256-4c2b64ad0264")
 interface IXpsOMDocumentSequence : IXpsOMPart
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomdocumentsequence-getowner
@@ -1705,9 +1705,9 @@ interface IXpsOMDocumentSequence : IXpsOMPart
     HRESULT SetPrintTicketResource(IXpsOMPrintTicketResource printTicketResource);
 }
 
-@GUID("3340fe8f-4027-4aa1-8f5f-d35ae45fe597")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomcoreproperties
+@GUID("3340fe8f-4027-4aa1-8f5f-d35ae45fe597")
 interface IXpsOMCoreProperties : IXpsOMPart
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomcoreproperties-getowner
@@ -1780,9 +1780,9 @@ interface IXpsOMCoreProperties : IXpsOMPart
     HRESULT Clone(IXpsOMCoreProperties* coreProperties);
 }
 
-@GUID("18c3df65-81e1-4674-91dc-fc452f5a416f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompackage
+@GUID("18c3df65-81e1-4674-91dc-fc452f5a416f")
 interface IXpsOMPackage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompackage-getdocumentsequence
@@ -1808,9 +1808,9 @@ interface IXpsOMPackage : IUnknown
     HRESULT WriteToStream(ISequentialStream stream, BOOL optimizeMarkupSize);
 }
 
-@GUID("f9b2a685-a50d-4fc2-b764-b56e093ea0ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomobjectfactory
+@GUID("f9b2a685-a50d-4fc2-b764-b56e093ea0ca")
 interface IXpsOMObjectFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomobjectfactory-createpackage
@@ -1917,9 +1917,9 @@ interface IXpsOMObjectFactory : IUnknown
     HRESULT CreateReadOnlyStreamOnFile(const(PWSTR) filename, IStream* stream);
 }
 
-@GUID("4bddf8ec-c915-421b-a166-d173d25653d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomnamecollection
+@GUID("4bddf8ec-c915-421b-a166-d173d25653d2")
 interface IXpsOMNameCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomnamecollection-getcount
@@ -1928,9 +1928,9 @@ interface IXpsOMNameCollection : IUnknown
     HRESULT GetAt(uint index, PWSTR* name);
 }
 
-@GUID("57c650d4-067c-4893-8c33-f62a0633730f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomparturicollection
+@GUID("57c650d4-067c-4893-8c33-f62a0633730f")
 interface IXpsOMPartUriCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomparturicollection-getcount
@@ -1947,9 +1947,9 @@ interface IXpsOMPartUriCollection : IUnknown
     HRESULT Append(IOpcPartUri partUri);
 }
 
-@GUID("4e2aa182-a443-42c6-b41b-4f8e9de73ff9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompackagewriter
+@GUID("4e2aa182-a443-42c6-b41b-4f8e9de73ff9")
 interface IXpsOMPackageWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompackagewriter-startnewdocument
@@ -1969,9 +1969,9 @@ interface IXpsOMPackageWriter : IUnknown
     HRESULT IsClosed(BOOL* isClosed);
 }
 
-@GUID("219a9db0-4959-47d0-8034-b1ce84f41a4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsompackagetarget
+@GUID("219a9db0-4959-47d0-8034-b1ce84f41a4d")
 interface IXpsOMPackageTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsompackagetarget-createxpsompackagewriter
@@ -1980,9 +1980,9 @@ interface IXpsOMPackageTarget : IUnknown
                                      IOpcPartUri discardControlPartName, IXpsOMPackageWriter* packageWriter);
 }
 
-@GUID("15b873d5-1971-41e8-83a3-6578403064c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nn-xpsobjectmodel-ixpsomthumbnailgenerator
+@GUID("15b873d5-1971-41e8-83a3-6578403064c7")
 interface IXpsOMThumbnailGenerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel/nf-xpsobjectmodel-ixpsomthumbnailgenerator-generatethumbnail
@@ -1990,9 +1990,9 @@ interface IXpsOMThumbnailGenerator : IUnknown
                               IOpcPartUri imageResourcePartName, IXpsOMImageResource* imageResource);
 }
 
-@GUID("0a91b617-d612-4181-bf7c-be5824e9cc8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nn-xpsobjectmodel_1-ixpsomobjectfactory1
+@GUID("0a91b617-d612-4181-bf7c-be5824e9cc8f")
 interface IXpsOMObjectFactory1 : IXpsOMObjectFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nf-xpsobjectmodel_1-ixpsomobjectfactory1-getdocumenttypefromfile
@@ -2034,9 +2034,9 @@ interface IXpsOMObjectFactory1 : IXpsOMObjectFactory
                                                       IXpsOMRemoteDictionaryResource* dictionaryResource);
 }
 
-@GUID("95a9435e-12bb-461b-8e7f-c6adb04cd96a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nn-xpsobjectmodel_1-ixpsompackage1
+@GUID("95a9435e-12bb-461b-8e7f-c6adb04cd96a")
 interface IXpsOMPackage1 : IXpsOMPackage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nf-xpsobjectmodel_1-ixpsompackage1-getdocumenttype
@@ -2048,9 +2048,9 @@ interface IXpsOMPackage1 : IXpsOMPackage
     HRESULT WriteToStream1(ISequentialStream outputStream, BOOL optimizeMarkupSize, XPS_DOCUMENT_TYPE documentType);
 }
 
-@GUID("305b60ef-6892-4dda-9cbb-3aa65974508a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nn-xpsobjectmodel_1-ixpsompage1
+@GUID("305b60ef-6892-4dda-9cbb-3aa65974508a")
 interface IXpsOMPage1 : IXpsOMPage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nf-xpsobjectmodel_1-ixpsompage1-getdocumenttype
@@ -2058,9 +2058,9 @@ interface IXpsOMPage1 : IXpsOMPage
     HRESULT Write1(ISequentialStream stream, BOOL optimizeMarkupSize, XPS_DOCUMENT_TYPE documentType);
 }
 
-@GUID("3b0b6d38-53ad-41da-b212-d37637a6714e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nn-xpsobjectmodel_1-ixpsdocumentpackagetarget
+@GUID("3b0b6d38-53ad-41da-b212-d37637a6714e")
 interface IXpsDocumentPackageTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nf-xpsobjectmodel_1-ixpsdocumentpackagetarget-getxpsompackagewriter
@@ -2072,9 +2072,9 @@ interface IXpsDocumentPackageTarget : IUnknown
     HRESULT GetXpsType(XPS_DOCUMENT_TYPE* documentType);
 }
 
-@GUID("bf8fc1d4-9d46-4141-ba5f-94bb9250d041")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nn-xpsobjectmodel_1-ixpsomremotedictionaryresource1
+@GUID("bf8fc1d4-9d46-4141-ba5f-94bb9250d041")
 interface IXpsOMRemoteDictionaryResource1 : IXpsOMRemoteDictionaryResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_1/nf-xpsobjectmodel_1-ixpsomremotedictionaryresource1-getdocumenttype
@@ -2083,9 +2083,9 @@ interface IXpsOMRemoteDictionaryResource1 : IXpsOMRemoteDictionaryResource
     HRESULT Write1(ISequentialStream stream, XPS_DOCUMENT_TYPE documentType);
 }
 
-@GUID("e8a45033-640e-43fa-9bdf-fddeaa31c6a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_2/nn-xpsobjectmodel_2-ixpsompackagewriter3d
+@GUID("e8a45033-640e-43fa-9bdf-fddeaa31c6a0")
 interface IXpsOMPackageWriter3D : IXpsOMPackageWriter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_2/nf-xpsobjectmodel_2-ixpsompackagewriter3d-addmodeltexture
@@ -2094,9 +2094,9 @@ interface IXpsOMPackageWriter3D : IXpsOMPackageWriter
     HRESULT SetModelPrintTicket(IOpcPartUri printTicketPartName, IStream printTicketData);
 }
 
-@GUID("60ba71b8-3101-4984-9199-f4ea775ff01d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_2/nn-xpsobjectmodel_2-ixpsdocumentpackagetarget3d
+@GUID("60ba71b8-3101-4984-9199-f4ea775ff01d")
 interface IXpsDocumentPackageTarget3D : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsobjectmodel_2/nf-xpsobjectmodel_2-ixpsdocumentpackagetarget3d-getxpsompackagewriter3d
@@ -2107,9 +2107,9 @@ interface IXpsDocumentPackageTarget3D : IUnknown
     HRESULT GetXpsOMFactory(IXpsOMObjectFactory* xpsFactory);
 }
 
-@GUID("7718eae4-3215-49be-af5b-594fef7fcfa6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssigningoptions
+@GUID("7718eae4-3215-49be-af5b-594fef7fcfa6")
 interface IXpsSigningOptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssigningoptions-getsignatureid
@@ -2148,9 +2148,9 @@ interface IXpsSigningOptions : IUnknown
     HRESULT SetFlags(XPS_SIGN_FLAGS flags);
 }
 
-@GUID("a2d1d95d-add2-4dff-ab27-6b9c645ff322")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignaturecollection
+@GUID("a2d1d95d-add2-4dff-ab27-6b9c645ff322")
 interface IXpsSignatureCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignaturecollection-getcount
@@ -2161,9 +2161,9 @@ interface IXpsSignatureCollection : IUnknown
     HRESULT RemoveAt(uint index);
 }
 
-@GUID("6ae4c93e-1ade-42fb-898b-3a5658284857")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignature
+@GUID("6ae4c93e-1ade-42fb-898b-3a5658284857")
 interface IXpsSignature : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignature-getsignatureid
@@ -2192,9 +2192,9 @@ interface IXpsSignature : IUnknown
     HRESULT SetSignatureXml(const(ubyte)* signatureXml, uint count);
 }
 
-@GUID("23397050-fe99-467a-8dce-9237f074ffe4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignatureblockcollection
+@GUID("23397050-fe99-467a-8dce-9237f074ffe4")
 interface IXpsSignatureBlockCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignatureblockcollection-getcount
@@ -2205,9 +2205,9 @@ interface IXpsSignatureBlockCollection : IUnknown
     HRESULT RemoveAt(uint index);
 }
 
-@GUID("151fac09-0b97-4ac6-a323-5e4297d4322b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignatureblock
+@GUID("151fac09-0b97-4ac6-a323-5e4297d4322b")
 interface IXpsSignatureBlock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignatureblock-getrequests
@@ -2222,9 +2222,9 @@ interface IXpsSignatureBlock : IUnknown
     HRESULT CreateRequest(const(PWSTR) requestId, IXpsSignatureRequest* signatureRequest);
 }
 
-@GUID("f0253e68-9f19-412e-9b4f-54d3b0ac6cd9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignaturerequestcollection
+@GUID("f0253e68-9f19-412e-9b4f-54d3b0ac6cd9")
 interface IXpsSignatureRequestCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignaturerequestcollection-getcount
@@ -2235,9 +2235,9 @@ interface IXpsSignatureRequestCollection : IUnknown
     HRESULT RemoveAt(uint index);
 }
 
-@GUID("ac58950b-7208-4b2d-b2c4-951083d3b8eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignaturerequest
+@GUID("ac58950b-7208-4b2d-b2c4-951083d3b8eb")
 interface IXpsSignatureRequest : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignaturerequest-getintent
@@ -2266,9 +2266,9 @@ interface IXpsSignatureRequest : IUnknown
     HRESULT GetSignature(IXpsSignature* signature);
 }
 
-@GUID("d3e8d338-fdc4-4afc-80b5-d532a1782ee1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nn-xpsdigitalsignature-ixpssignaturemanager
+@GUID("d3e8d338-fdc4-4afc-80b5-d532a1782ee1")
 interface IXpsSignatureManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsdigitalsignature/nf-xpsdigitalsignature-ixpssignaturemanager-loadpackagefile

@@ -2959,36 +2959,46 @@ MI_Result MI_Application_InitializeV1(uint flags, const(ushort)* applicationID, 
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempath
 @GUID("cf4cc405-e2c5-4ddd-b3ce-5e7582d8c9fa")
 struct WbemDefPath;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery
 @GUID("eac8a024-21e2-4523-ad73-a71a0aa2f56a")
 struct WbemQuery;
 
 @GUID("4590f811-1d3a-11d0-891f-00aa004b2e24")
 struct WbemLocator;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcontext
 @GUID("674b6698-ee92-11d0-ad71-00c04fd8fdff")
 struct WbemContext;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iunsecuredapartment
 @GUID("49bd2028-1523-11d1-ad79-00c04fd8fdff")
 struct UnsecuredApartment;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemclassobject
 @GUID("9a653086-174f-11d2-b5f9-00104b703efd")
 struct WbemClassObject;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-imofcompiler
 @GUID("6daf9757-2e37-11d2-aec9-00c04fb68820")
 struct MofCompiler;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemstatuscodetext
 @GUID("eb87e1bd-3233-11d2-aec9-00c04fb68820")
 struct WbemStatusCodeText;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestore
 @GUID("c49e32c6-bc8b-11d2-85d4-00105a1f8304")
 struct WbemBackupRestore;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemrefresher
 @GUID("c71566f2-561e-11d1-ad87-00c04fd8fdff")
 struct WbemRefresher;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjecttextsrc
 @GUID("8d1c559d-84f0-4bb3-a7d5-56a7435a9ba6")
 struct WbemObjectTextSrc;
 
@@ -3094,9 +3104,9 @@ struct WbemUninitializedClassObject;
 @GUID("f7ce2e13-8c90-11d1-9e7b-00c04fc324a8")
 struct WbemDCOMTransport;
 
-@GUID("9ae62877-7544-4bb0-aa26-a13824659ed6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempathkeylist
+@GUID("9ae62877-7544-4bb0-aa26-a13824659ed6")
 interface IWbemPathKeyList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getcount
@@ -3123,9 +3133,9 @@ interface IWbemPathKeyList : IUnknown
     HRESULT GetText(int lFlags, uint* puBuffLength, PWSTR pszText);
 }
 
-@GUID("3bc15af2-736c-477e-9e51-238af8667dcc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempath
+@GUID("3bc15af2-736c-477e-9e51-238af8667dcc")
 interface IWbemPath : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-settext
@@ -3182,9 +3192,9 @@ interface IWbemPath : IUnknown
     BOOL    IsSameClassName(const(PWSTR) wszClass);
 }
 
-@GUID("81166f58-dd98-11d3-a120-00105a1f515a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery
+@GUID("81166f58-dd98-11d3-a120-00105a1f515a")
 interface IWbemQuery : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-empty
@@ -3203,9 +3213,9 @@ interface IWbemQuery : IUnknown
     HRESULT GetQueryInfo(uint uAnalysisType, uint uInfoId, uint uBufSize, void* pDestBuf);
 }
 
-@GUID("dc12a681-737f-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemclassobject
+@GUID("dc12a681-737f-11cf-884d-00aa004b2e24")
 interface IWbemClassObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getqualifierset
@@ -3262,9 +3272,9 @@ interface IWbemClassObject : IUnknown
     HRESULT GetMethodOrigin(const(PWSTR) wszMethodName, BSTR* pstrClassName);
 }
 
-@GUID("49353c9a-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjectaccess
+@GUID("49353c9a-516b-11d1-aea6-00c04fb68820")
 interface IWbemObjectAccess : IWbemClassObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-getpropertyhandle
@@ -3289,9 +3299,9 @@ interface IWbemObjectAccess : IWbemClassObject
     HRESULT Unlock(int lFlags);
 }
 
-@GUID("dc12a680-737f-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemqualifierset
+@GUID("dc12a680-737f-11cf-884d-00aa004b2e24")
 interface IWbemQualifierSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-get
@@ -3310,9 +3320,9 @@ interface IWbemQualifierSet : IUnknown
     HRESULT EndEnumeration();
 }
 
-@GUID("9556dc99-828c-11cf-a37e-00aa003240c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemservices
+@GUID("9556dc99-828c-11cf-a37e-00aa003240c7")
 interface IWbemServices : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-opennamespace
@@ -3386,9 +3396,9 @@ interface IWbemServices : IUnknown
                             IWbemContext pCtx, IWbemClassObject pInParams, IWbemObjectSink pResponseHandler);
 }
 
-@GUID("dc12a687-737f-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemlocator
+@GUID("dc12a687-737f-11cf-884d-00aa004b2e24")
 interface IWbemLocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemlocator-connectserver
@@ -3397,9 +3407,9 @@ interface IWbemLocator : IUnknown
                           IWbemServices* ppNamespace);
 }
 
-@GUID("7c857801-7381-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjectsink
+@GUID("7c857801-7381-11cf-884d-00aa004b2e24")
 interface IWbemObjectSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsink-indicate
@@ -3408,9 +3418,9 @@ interface IWbemObjectSink : IUnknown
     HRESULT SetStatus(int lFlags, HRESULT hResult, BSTR strParam, IWbemClassObject pObjParam);
 }
 
-@GUID("027947e1-d731-11ce-a357-000000000001")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-ienumwbemclassobject
+@GUID("027947e1-d731-11ce-a357-000000000001")
 interface IEnumWbemClassObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-ienumwbemclassobject-reset
@@ -3425,9 +3435,9 @@ interface IEnumWbemClassObject : IUnknown
     HRESULT Skip(int lTimeout, uint nCount);
 }
 
-@GUID("44aca675-e8fc-11d0-a07c-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcallresult
+@GUID("44aca675-e8fc-11d0-a07c-00c04fb68820")
 interface IWbemCallResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultobject
@@ -3440,9 +3450,9 @@ interface IWbemCallResult : IUnknown
     HRESULT GetCallStatus(int lTimeout, int* plStatus);
 }
 
-@GUID("44aca674-e8fc-11d0-a07c-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcontext
+@GUID("44aca674-e8fc-11d0-a07c-00c04fb68820")
 interface IWbemContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-clone
@@ -3465,27 +3475,27 @@ interface IWbemContext : IUnknown
     HRESULT DeleteAll();
 }
 
-@GUID("1cfaba8c-1523-11d1-ad79-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iunsecuredapartment
+@GUID("1cfaba8c-1523-11d1-ad79-00c04fd8fdff")
 interface IUnsecuredApartment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iunsecuredapartment-createobjectstub
     HRESULT CreateObjectStub(IUnknown pObject, IUnknown* ppStub);
 }
 
-@GUID("31739d04-3471-4cf4-9a7c-57a44ae71956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemunsecuredapartment
+@GUID("31739d04-3471-4cf4-9a7c-57a44ae71956")
 interface IWbemUnsecuredApartment : IUnsecuredApartment
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemunsecuredapartment-createsinkstub
     HRESULT CreateSinkStub(IWbemObjectSink pSink, uint dwFlags, const(PWSTR) wszReserved, IWbemObjectSink* ppStub);
 }
 
-@GUID("eb87e1bc-3233-11d2-aec9-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemstatuscodetext
+@GUID("eb87e1bc-3233-11d2-aec9-00c04fb68820")
 interface IWbemStatusCodeText : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemstatuscodetext-geterrorcodetext
@@ -3494,9 +3504,9 @@ interface IWbemStatusCodeText : IUnknown
     HRESULT GetFacilityCodeText(HRESULT hRes, uint LocaleId, int lFlags, BSTR* MessageText);
 }
 
-@GUID("c49e32c7-bc8b-11d2-85d4-00105a1f8304")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestore
+@GUID("c49e32c7-bc8b-11d2-85d4-00105a1f8304")
 interface IWbemBackupRestore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestore-backup
@@ -3505,9 +3515,9 @@ interface IWbemBackupRestore : IUnknown
     HRESULT Restore(const(PWSTR) strRestoreFromFile, int lFlags);
 }
 
-@GUID("a359dec5-e813-4834-8a2a-ba7f1d777d76")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestoreex
+@GUID("a359dec5-e813-4834-8a2a-ba7f1d777d76")
 interface IWbemBackupRestoreEx : IWbemBackupRestore
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestoreex-pause
@@ -3516,18 +3526,18 @@ interface IWbemBackupRestoreEx : IWbemBackupRestore
     HRESULT Resume();
 }
 
-@GUID("49353c99-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemrefresher
+@GUID("49353c99-516b-11d1-aea6-00c04fb68820")
 interface IWbemRefresher : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemrefresher-refresh
     HRESULT Refresh(int lFlags);
 }
 
-@GUID("2705c288-79ae-11d2-b348-00105a1f8177")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemhiperfenum
+@GUID("2705c288-79ae-11d2-b348-00105a1f8177")
 interface IWbemHiPerfEnum : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-addobjects
@@ -3540,9 +3550,9 @@ interface IWbemHiPerfEnum : IUnknown
     HRESULT RemoveAll(int lFlags);
 }
 
-@GUID("49353c92-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemconfigurerefresher
+@GUID("49353c92-516b-11d1-aea6-00c04fb68820")
 interface IWbemConfigureRefresher : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addobjectbypath
@@ -3560,8 +3570,8 @@ interface IWbemConfigureRefresher : IUnknown
                     IWbemHiPerfEnum* ppEnum, int* plId);
 }
 
-@GUID("e7d35cfa-348b-485e-b524-252725d697ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@GUID("e7d35cfa-348b-485e-b524-252725d697ca")
 interface IWbemObjectSinkEx : IWbemObjectSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writemessage
@@ -3577,18 +3587,18 @@ interface IWbemObjectSinkEx : IWbemObjectSink
     HRESULT WriteStreamParameter(const(BSTR) strName, VARIANT* vtValue, uint ulType, uint ulFlags);
 }
 
-@GUID("b7b31df9-d515-11d3-a11c-00105a1f515a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemshutdown
+@GUID("b7b31df9-d515-11d3-a11c-00105a1f515a")
 interface IWbemShutdown : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemshutdown-shutdown
     HRESULT Shutdown(int uReason, uint uMaxMilliseconds, IWbemContext pCtx);
 }
 
-@GUID("bfbf883a-cad7-11d3-a11b-00105a1f515a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjecttextsrc
+@GUID("bfbf883a-cad7-11d3-a11b-00105a1f515a")
 interface IWbemObjectTextSrc : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjecttextsrc-gettext
@@ -3598,9 +3608,9 @@ interface IWbemObjectTextSrc : IUnknown
                            IWbemClassObject* pNewObj);
 }
 
-@GUID("6daf974e-2e37-11d2-aec9-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-imofcompiler
+@GUID("6daf974e-2e37-11d2-aec9-00c04fb68820")
 interface IMofCompiler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-compilefile
@@ -3616,9 +3626,9 @@ interface IMofCompiler : IUnknown
                        int lClassFlags, int lInstanceFlags, WBEM_COMPILE_STATUS_INFO* pInfo);
 }
 
-@GUID("ce61e841-65bc-11d0-b6bd-00aa003240c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbempropertyprovider
+@GUID("ce61e841-65bc-11d0-b6bd-00aa003240c7")
 interface IWbemPropertyProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbempropertyprovider-getproperty
@@ -3629,27 +3639,27 @@ interface IWbemPropertyProvider : IUnknown
                         const(BSTR) strPropMapping, const(VARIANT)* pvValue);
 }
 
-@GUID("e246107b-b06e-11d0-ad61-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemunboundobjectsink
+@GUID("e246107b-b06e-11d0-ad61-00c04fd8fdff")
 interface IWbemUnboundObjectSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemunboundobjectsink-indicatetoconsumer
     HRESULT IndicateToConsumer(IWbemClassObject pLogicalConsumer, int lNumObjects, IWbemClassObject* apObjects);
 }
 
-@GUID("e245105b-b06e-11d0-ad61-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventprovider
+@GUID("e245105b-b06e-11d0-ad61-00c04fd8fdff")
 interface IWbemEventProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventprovider-provideevents
     HRESULT ProvideEvents(IWbemObjectSink pSink, int lFlags);
 }
 
-@GUID("580acaf8-fa1c-11d0-ad72-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventproviderquerysink
+@GUID("580acaf8-fa1c-11d0-ad72-00c04fd8fdff")
 interface IWbemEventProviderQuerySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventproviderquerysink-newquery
@@ -3658,36 +3668,36 @@ interface IWbemEventProviderQuerySink : IUnknown
     HRESULT CancelQuery(uint dwId);
 }
 
-@GUID("631f7d96-d993-11d2-b339-00105a1f4aaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventprovidersecurity
+@GUID("631f7d96-d993-11d2-b339-00105a1f4aaf")
 interface IWbemEventProviderSecurity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventprovidersecurity-accesscheck
     HRESULT AccessCheck(ushort* wszQueryLanguage, ushort* wszQuery, int lSidLength, const(ubyte)* pSid);
 }
 
-@GUID("e246107a-b06e-11d0-ad61-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventconsumerprovider
+@GUID("e246107a-b06e-11d0-ad61-00c04fd8fdff")
 interface IWbemEventConsumerProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventconsumerprovider-findconsumer
     HRESULT FindConsumer(IWbemClassObject pLogicalConsumer, IWbemUnboundObjectSink* ppConsumer);
 }
 
-@GUID("1be41571-91dd-11d1-aeb2-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemproviderinitsink
+@GUID("1be41571-91dd-11d1-aeb2-00c04fb68820")
 interface IWbemProviderInitSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemproviderinitsink-setstatus
     HRESULT SetStatus(int lStatus, int lFlags);
 }
 
-@GUID("1be41572-91dd-11d1-aeb2-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemproviderinit
+@GUID("1be41572-91dd-11d1-aeb2-00c04fb68820")
 interface IWbemProviderInit : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemproviderinit-initialize
@@ -3695,9 +3705,9 @@ interface IWbemProviderInit : IUnknown
                        IWbemContext pCtx, IWbemProviderInitSink pInitSink);
 }
 
-@GUID("49353c93-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemhiperfprovider
+@GUID("49353c93-516b-11d1-aea6-00c04fb68820")
 interface IWbemHiPerfProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-queryinstances
@@ -3719,9 +3729,9 @@ interface IWbemHiPerfProvider : IUnknown
                        IWbemContext pContext);
 }
 
-@GUID("1005cbcf-e64f-4646-bcd3-3a089d8a84b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemdecoupledregistrar
+@GUID("1005cbcf-e64f-4646-bcd3-3a089d8a84b4")
 interface IWbemDecoupledRegistrar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledregistrar-register
@@ -3731,18 +3741,18 @@ interface IWbemDecoupledRegistrar : IUnknown
     HRESULT UnRegister();
 }
 
-@GUID("631f7d97-d993-11d2-b339-00105a1f4aaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemprovideridentity
+@GUID("631f7d97-d993-11d2-b339-00105a1f4aaf")
 interface IWbemProviderIdentity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemprovideridentity-setregistrationobject
     HRESULT SetRegistrationObject(int lFlags, IWbemClassObject pProvReg);
 }
 
-@GUID("86336d20-ca11-4786-9ef1-bc8a946b42fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemdecoupledbasiceventprovider
+@GUID("86336d20-ca11-4786-9ef1-bc8a946b42fc")
 interface IWbemDecoupledBasicEventProvider : IWbemDecoupledRegistrar
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledbasiceventprovider-getsink
@@ -3751,9 +3761,9 @@ interface IWbemDecoupledBasicEventProvider : IWbemDecoupledRegistrar
     HRESULT GetService(int a_Flags, IWbemContext a_Context, IWbemServices* a_Service);
 }
 
-@GUID("3ae0080a-7e3a-4366-bf89-0feedc931659")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventsink
+@GUID("3ae0080a-7e3a-4366-bf89-0feedc931659")
 interface IWbemEventSink : IWbemObjectSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-setsinksecurity

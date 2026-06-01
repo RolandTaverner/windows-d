@@ -1777,9 +1777,9 @@ interface IWABObject : IUnknown
     HRESULT SetMe(IAddrBook lpIAB, uint ulFlags, SBinary sbEID, HWND hwnd);
 }
 
-@GUID("ea22ebf0-87a4-11d1-9acf-00a0c91f9c8b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wabapi/nn-wabapi-iwabextinit
+@GUID("ea22ebf0-87a4-11d1-9acf-00a0c91f9c8b")
 interface IWABExtInit : IUnknown
 {
     HRESULT Initialize(WABEXTDISPLAY* lpWABExtDisplay);

@@ -1,0 +1,84 @@
+module codegen.attributes.common;
+
+import std.exception : enforce;
+import std.format : format;
+
+import climetadata.mdcollection.attributeprops : SupportedArchitecture;
+import climetadata.mdcollection.entitytypes : CustomAttributeEntity;
+import climetadata.mdcollection.sigtnature : ElementSig;
+
+public struct CommonAttributes
+{
+    @disable this();
+
+    public this(Range)(Range r)
+    {
+        supportedArchitecture = SupportedArchitecture.All;
+        foreach(ca; r)
+        {
+            if (ca.name() == "SupportedArchitectureAttribute")
+            {
+                this.supportedArchitecture = .getSupportedArchitecture(ca);
+            }
+            else if (ca.name() == "DocumentationAttribute")
+            {
+                documentation = getDocumentationAttribute(ca);
+            }
+            else
+            {
+                unhandledAttributes ~= ca;
+            }
+        }
+    }
+
+    public SupportedArchitecture getSupportedArchitecture() const
+    {
+        return supportedArchitecture;
+    }
+
+    public string getDocumentation() const
+    {
+        return documentation;
+    }
+
+    public const(CustomAttributeEntity)[] getUnhandledAttributes() const
+    {
+        return unhandledAttributes;
+    }
+
+    private SupportedArchitecture supportedArchitecture;
+    private string documentation;
+    private const(CustomAttributeEntity)[] unhandledAttributes;
+}
+
+private SupportedArchitecture getSupportedArchitecture(scope ref const CustomAttributeEntity ca)
+{
+    assert(ca.name() == "SupportedArchitectureAttribute");
+    auto sig = ca.value();
+    
+    enforce(sig.fixed.length == 1, format("SupportedArchitectureAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
+
+    auto element = sig.fixed[0].value.peek!ElementSig;
+    assert(element != null);
+    
+    auto value = element.value.peek!uint;
+    enforce(value != null, "SupportedArchitectureAttribute: can't get uint value");
+    
+    return cast(SupportedArchitecture)(*value);
+}
+
+private string getDocumentationAttribute(scope ref const CustomAttributeEntity ca)
+{
+    assert(ca.name() == "DocumentationAttribute");
+    auto sig = ca.value();
+    
+    enforce(sig.fixed.length == 1, format("DocumentationAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
+
+    auto element = sig.fixed[0].value.peek!ElementSig;
+    assert(element != null);
+    
+    auto value = element.value.peek!string;
+    enforce(value != null, "DocumentationAttribute: can't get string value");
+    
+    return *value;
+}

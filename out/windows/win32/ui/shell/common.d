@@ -154,9 +154,9 @@ struct COMDLG_FILTERSPEC
 
 // Interfaces
 
-@GUID("92ca9dcd-5622-4bba-a805-5e9f541bd8c9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nn-objectarray-iobjectarray
+@GUID("92ca9dcd-5622-4bba-a805-5e9f541bd8c9")
 interface IObjectArray : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectarray-getcount
@@ -165,9 +165,9 @@ interface IObjectArray : IUnknown
     HRESULT GetAt(uint uiIndex, const(GUID)* riid, void** ppv);
 }
 
-@GUID("5632b1a4-e38a-400a-928a-d4cd63230295")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nn-objectarray-iobjectcollection
+@GUID("5632b1a4-e38a-400a-928a-d4cd63230295")
 interface IObjectCollection : IObjectArray
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-addobject

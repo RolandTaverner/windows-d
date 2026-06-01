@@ -2143,8 +2143,8 @@ HRESULT DMLCreateDevice1(ID3D12Device d3d12Device, DML_CREATE_DEVICE_FLAGS flags
 
 // Interfaces
 
-@GUID("c8263aac-9e0c-4a2d-9b8e-007521a3317c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlobject
+@GUID("c8263aac-9e0c-4a2d-9b8e-007521a3317c")
 interface IDMLObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-getprivatedata
@@ -2159,8 +2159,8 @@ interface IDMLObject : IUnknown
     HRESULT SetName(const(PWSTR) name);
 }
 
-@GUID("6dbd6437-96fd-423f-a98c-ae5e7c2a573f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevice
+@GUID("6dbd6437-96fd-423f-a98c-ae5e7c2a573f")
 interface IDMLDevice : IDMLObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-checkfeaturesupport
@@ -2189,50 +2189,50 @@ interface IDMLDevice : IDMLObject
     HRESULT GetParentDevice(const(GUID)* riid, void** ppv);
 }
 
-@GUID("27e83142-8165-49e3-974e-2fd66e4cb69d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevicechild
+@GUID("27e83142-8165-49e3-974e-2fd66e4cb69d")
 interface IDMLDeviceChild : IDMLObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevicechild-getdevice
     HRESULT GetDevice(const(GUID)* riid, void** ppv);
 }
 
-@GUID("b1ab0825-4542-4a4b-8617-6dde6e8f6201")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlpageable
+@GUID("b1ab0825-4542-4a4b-8617-6dde6e8f6201")
 interface IDMLPageable : IDMLDeviceChild
 {
 }
 
-@GUID("26caae7a-3081-4633-9581-226fbe57695d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmloperator
+@GUID("26caae7a-3081-4633-9581-226fbe57695d")
 interface IDMLOperator : IDMLDeviceChild
 {
 }
 
-@GUID("dcb821a8-1039-441e-9f1c-b1759c2f3cec")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldispatchable
+@GUID("dcb821a8-1039-441e-9f1c-b1759c2f3cec")
 interface IDMLDispatchable : IDMLPageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldispatchable-getbindingproperties
     DML_BINDING_PROPERTIES GetBindingProperties();
 }
 
-@GUID("6b15e56a-bf5c-4902-92d8-da3a650afea4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlcompiledoperator
+@GUID("6b15e56a-bf5c-4902-92d8-da3a650afea4")
 interface IDMLCompiledOperator : IDMLDispatchable
 {
 }
 
-@GUID("427c1113-435c-469c-8676-4d5dd072f813")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmloperatorinitializer
+@GUID("427c1113-435c-469c-8676-4d5dd072f813")
 interface IDMLOperatorInitializer : IDMLDispatchable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmloperatorinitializer-reset
     HRESULT Reset(uint operatorCount, IDMLCompiledOperator* operators);
 }
 
-@GUID("29c687dc-de74-4e3b-ab00-1168f2fc3cfc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlbindingtable
+@GUID("29c687dc-de74-4e3b-ab00-1168f2fc3cfc")
 interface IDMLBindingTable : IDMLDeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindinputs
@@ -2247,24 +2247,24 @@ interface IDMLBindingTable : IDMLDeviceChild
     HRESULT Reset(const(DML_BINDING_TABLE_DESC)* desc);
 }
 
-@GUID("e6857a76-2e3e-4fdd-bff4-5d2ba10fb453")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlcommandrecorder
+@GUID("e6857a76-2e3e-4fdd-bff4-5d2ba10fb453")
 interface IDMLCommandRecorder : IDMLDeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlcommandrecorder-recorddispatch
     void RecordDispatch(ID3D12CommandList commandList, IDMLDispatchable dispatchable, IDMLBindingTable bindings);
 }
 
-@GUID("7d6f3ac9-394a-4ac3-92a7-390cc57a8217")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldebugdevice
+@GUID("7d6f3ac9-394a-4ac3-92a7-390cc57a8217")
 interface IDMLDebugDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldebugdevice-setmutedebugoutput
     void SetMuteDebugOutput(BOOL mute);
 }
 
-@GUID("a0884f9a-d2be-4355-aa5d-5901281ad1d2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevice1
+@GUID("a0884f9a-d2be-4355-aa5d-5901281ad1d2")
 interface IDMLDevice1 : IDMLDevice
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice1-compilegraph

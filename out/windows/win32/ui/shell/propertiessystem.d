@@ -709,26 +709,26 @@ struct InMemoryPropertyStoreMarshalByValue;
 @GUID("b8967f85-58ae-4f46-9fb2-5d7904798f4b")
 struct PropertySystem;
 
-@GUID("b7d14566-0509-4cce-a71f-0a554233bd9b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iinitializewithfile
+@GUID("b7d14566-0509-4cce-a71f-0a554233bd9b")
 interface IInitializeWithFile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iinitializewithfile-initialize
     HRESULT Initialize(const(PWSTR) pszFilePath, uint grfMode);
 }
 
-@GUID("b824b49d-22ac-4161-ac8a-9916e8fa3f7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iinitializewithstream
+@GUID("b824b49d-22ac-4161-ac8a-9916e8fa3f7f")
 interface IInitializeWithStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iinitializewithstream-initialize
     HRESULT Initialize(IStream pstream, uint grfMode);
 }
 
-@GUID("886d8eeb-8cf2-4446-8d02-cdba1dbdcf99")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystore
+@GUID("886d8eeb-8cf2-4446-8d02-cdba1dbdcf99")
 interface IPropertyStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getcount
@@ -743,9 +743,9 @@ interface IPropertyStore : IUnknown
     HRESULT Commit();
 }
 
-@GUID("71604b0f-97b0-4764-8577-2f13e98a1422")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-inamedpropertystore
+@GUID("71604b0f-97b0-4764-8577-2f13e98a1422")
 interface INamedPropertyStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnamedvalue
@@ -758,9 +758,9 @@ interface INamedPropertyStore : IUnknown
     HRESULT GetNameAt(uint iProp, BSTR* pbstrName);
 }
 
-@GUID("fc0ca0a7-c316-4fd2-9031-3e628e6d4f23")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iobjectwithpropertykey
+@GUID("fc0ca0a7-c316-4fd2-9031-3e628e6d4f23")
 interface IObjectWithPropertyKey : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iobjectwithpropertykey-setpropertykey
@@ -769,18 +769,18 @@ interface IObjectWithPropertyKey : IUnknown
     HRESULT GetPropertyKey(PROPERTYKEY* pkey);
 }
 
-@GUID("f917bc8a-1bba-4478-a245-1bde03eb9431")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertychange
+@GUID("f917bc8a-1bba-4478-a245-1bde03eb9431")
 interface IPropertyChange : IObjectWithPropertyKey
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychange-applytopropvariant
     HRESULT ApplyToPropVariant(const(PROPVARIANT)* propvarIn, PROPVARIANT* ppropvarOut);
 }
 
-@GUID("380f5cad-1b5e-42f2-805d-637fd392d31e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertychangearray
+@GUID("380f5cad-1b5e-42f2-805d-637fd392d31e")
 interface IPropertyChangeArray : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-getcount
@@ -799,18 +799,18 @@ interface IPropertyChangeArray : IUnknown
     HRESULT IsKeyInArray(const(PROPERTYKEY)* key);
 }
 
-@GUID("c8e2d566-186e-4d49-bf41-6909ead56acc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorecapabilities
+@GUID("c8e2d566-186e-4d49-bf41-6909ead56acc")
 interface IPropertyStoreCapabilities : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT IsPropertyWritable(const(PROPERTYKEY)* key);
 }
 
-@GUID("3017056d-9a91-4e90-937d-746c72abbf4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorecache
+@GUID("3017056d-9a91-4e90-937d-746c72abbf4f")
 interface IPropertyStoreCache : IPropertyStore
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-getstate
@@ -822,9 +822,9 @@ interface IPropertyStoreCache : IPropertyStore
     HRESULT SetValueAndState(const(PROPERTYKEY)* key, const(PROPVARIANT)* ppropvar, PSC_STATE state);
 }
 
-@GUID("11e1fbf9-2d56-4a6b-8db3-7cd193a471f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtype
+@GUID("11e1fbf9-2d56-4a6b-8db3-7cd193a471f2")
 interface IPropertyEnumType : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getenumtype
@@ -839,18 +839,18 @@ interface IPropertyEnumType : IUnknown
     HRESULT GetDisplayText(PWSTR* ppszDisplay);
 }
 
-@GUID("9b6e051c-5ddd-4321-9070-fe2acb55e794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtype2
+@GUID("9b6e051c-5ddd-4321-9070-fe2acb55e794")
 interface IPropertyEnumType2 : IPropertyEnumType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype2-getimagereference
     HRESULT GetImageReference(PWSTR* ppszImageRes);
 }
 
-@GUID("a99400f4-3d84-4557-94ba-1242fb2cc9a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtypelist
+@GUID("a99400f4-3d84-4557-94ba-1242fb2cc9a6")
 interface IPropertyEnumTypeList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getcount
@@ -863,9 +863,9 @@ interface IPropertyEnumTypeList : IUnknown
     HRESULT FindMatchingIndex(const(PROPVARIANT)* propvarCmp, uint* pnIndex);
 }
 
-@GUID("6f79d558-3e96-4549-a1d1-7d75d2288814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescription
+@GUID("6f79d558-3e96-4549-a1d1-7d75d2288814")
 interface IPropertyDescription : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getpropertykey
@@ -913,18 +913,18 @@ interface IPropertyDescription : IUnknown
     HRESULT IsValueCanonical(const(PROPVARIANT)* propvar);
 }
 
-@GUID("57d2eded-5062-400e-b107-5dae79fe57a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescription2
+@GUID("57d2eded-5062-400e-b107-5dae79fe57a6")
 interface IPropertyDescription2 : IPropertyDescription
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription2-getimagereferenceforvalue
     HRESULT GetImageReferenceForValue(const(PROPVARIANT)* propvar, PWSTR* ppszImageRes);
 }
 
-@GUID("f67104fc-2af9-46fd-b32d-243c1404f3d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionaliasinfo
+@GUID("f67104fc-2af9-46fd-b32d-243c1404f3d1")
 interface IPropertyDescriptionAliasInfo : IPropertyDescription
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionaliasinfo-getsortbyalias
@@ -933,9 +933,9 @@ interface IPropertyDescriptionAliasInfo : IPropertyDescription
     HRESULT GetAdditionalSortByAliases(const(GUID)* riid, void** ppv);
 }
 
-@GUID("078f91bd-29a2-440f-924e-46a291524520")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionsearchinfo
+@GUID("078f91bd-29a2-440f-924e-46a291524520")
 interface IPropertyDescriptionSearchInfo : IPropertyDescription
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getsearchinfoflags
@@ -948,18 +948,18 @@ interface IPropertyDescriptionSearchInfo : IPropertyDescription
     HRESULT GetMaxSize(uint* pcbMaxSize);
 }
 
-@GUID("507393f4-2a3d-4a60-b59e-d9c75716c2dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionrelatedpropertyinfo
+@GUID("507393f4-2a3d-4a60-b59e-d9c75716c2dd")
 interface IPropertyDescriptionRelatedPropertyInfo : IPropertyDescription
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionrelatedpropertyinfo-getrelatedproperty
     HRESULT GetRelatedProperty(const(PWSTR) pszRelationshipName, const(GUID)* riid, void** ppv);
 }
 
-@GUID("ca724e8a-c3e6-442b-88a4-6fb0db8035a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertysystem
+@GUID("ca724e8a-c3e6-442b-88a4-6fb0db8035a3")
 interface IPropertySystem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescription
@@ -984,9 +984,9 @@ interface IPropertySystem : IUnknown
     HRESULT RefreshPropertySchema();
 }
 
-@GUID("1f9fc1d0-c39b-4b26-817f-011967d3440e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionlist
+@GUID("1f9fc1d0-c39b-4b26-817f-011967d3440e")
 interface IPropertyDescriptionList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionlist-getcount
@@ -995,9 +995,9 @@ interface IPropertyDescriptionList : IUnknown
     HRESULT GetAt(uint iElem, const(GUID)* riid, void** ppv);
 }
 
-@GUID("bc110b6d-57e8-4148-a9c6-91015ab2f3a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorefactory
+@GUID("bc110b6d-57e8-4148-a9c6-91015ab2f3a5")
 interface IPropertyStoreFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorefactory-getpropertystore
@@ -1007,18 +1007,18 @@ interface IPropertyStoreFactory : IUnknown
                                     const(GUID)* riid, void** ppv);
 }
 
-@GUID("40d4577f-e237-4bdb-bd69-58f089431b6a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-idelayedpropertystorefactory
+@GUID("40d4577f-e237-4bdb-bd69-58f089431b6a")
 interface IDelayedPropertyStoreFactory : IPropertyStoreFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-idelayedpropertystorefactory-getdelayedpropertystore
     HRESULT GetDelayedPropertyStore(GETPROPERTYSTOREFLAGS flags, uint dwStoreId, const(GUID)* riid, void** ppv);
 }
 
-@GUID("e318ad57-0aa0-450f-aca5-6fab7103d917")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipersistserializedpropstorage
+@GUID("e318ad57-0aa0-450f-aca5-6fab7103d917")
 interface IPersistSerializedPropStorage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-setflags
@@ -1030,9 +1030,9 @@ interface IPersistSerializedPropStorage : IUnknown
     HRESULT GetPropertyStorage(SERIALIZEDPROPSTORAGE** ppsps, uint* pcb);
 }
 
-@GUID("77effa68-4f98-4366-ba72-573b3d880571")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipersistserializedpropstorage2
+@GUID("77effa68-4f98-4366-ba72-573b3d880571")
 interface IPersistSerializedPropStorage2 : IPersistSerializedPropStorage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage2-getpropertystoragesize
@@ -1048,18 +1048,18 @@ interface IPropertySystemChangeNotify : IUnknown
     HRESULT SchemaRefreshed();
 }
 
-@GUID("75121952-e0d0-43e5-9380-1d80483acf72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-icreateobject
+@GUID("75121952-e0d0-43e5-9380-1d80483acf72")
 interface ICreateObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-icreateobject-createobject
     HRESULT CreateObject(const(GUID)* clsid, IUnknown pUnkOuter, const(GUID)* riid, void** ppv);
 }
 
-@GUID("757a7d9f-919a-4118-99d7-dbb208c8cc66")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nn-shobjidl_core-ipropertyui
+@GUID("757a7d9f-919a-4118-99d7-dbb208c8cc66")
 interface IPropertyUI : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-parsepropertyname

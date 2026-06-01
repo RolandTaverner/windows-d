@@ -19,9 +19,9 @@ enum GUID CLSID_XMLGraphBuilder = GUID("1bb05961-5fbf-11d2-a521-44df07c10000");
 
 // Interfaces
 
-@GUID("1bb05960-5fbf-11d2-a521-44df07c10000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amxmlgraphbuilder/nn-amxmlgraphbuilder-ixmlgraphbuilder
+@GUID("1bb05960-5fbf-11d2-a521-44df07c10000")
 interface IXMLGraphBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amxmlgraphbuilder/nf-amxmlgraphbuilder-ixmlgraphbuilder-buildfromxml

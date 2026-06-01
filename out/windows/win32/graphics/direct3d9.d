@@ -3832,8 +3832,8 @@ HRESULT Direct3DCreate9Ex(uint SDKVersion, IDirect3D9Ex* param1);
 
 // Interfaces
 
-@GUID("81bdcbca-64d4-426d-ae8d-ad0147f4275c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3d9
+@GUID("81bdcbca-64d4-426d-ae8d-ad0147f4275c")
 interface IDirect3D9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3d9-registersoftwaredevice
@@ -3873,8 +3873,8 @@ interface IDirect3D9 : IUnknown
                           IDirect3DDevice9* ppReturnedDeviceInterface);
 }
 
-@GUID("d0223b96-bf7a-43fd-92bd-a43b0d82b9eb")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3ddevice9
+@GUID("d0223b96-bf7a-43fd-92bd-a43b0d82b9eb")
 interface IDirect3DDevice9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3ddevice9-testcooperativelevel
@@ -4132,8 +4132,8 @@ interface IDirect3DDevice9 : IUnknown
     HRESULT CreateQuery(D3DQUERYTYPE Type, IDirect3DQuery9* ppQuery);
 }
 
-@GUID("b07c4fe5-310d-4ba8-a23c-4f0f206f218b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dstateblock9
+@GUID("b07c4fe5-310d-4ba8-a23c-4f0f206f218b")
 interface IDirect3DStateBlock9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dstateblock9-getdevice
@@ -4144,8 +4144,8 @@ interface IDirect3DStateBlock9 : IUnknown
     HRESULT Apply();
 }
 
-@GUID("794950f2-adfc-458a-905e-10a10b0b503b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dswapchain9
+@GUID("794950f2-adfc-458a-905e-10a10b0b503b")
 interface IDirect3DSwapChain9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dswapchain9-present
@@ -4165,8 +4165,8 @@ interface IDirect3DSwapChain9 : IUnknown
     HRESULT GetPresentParameters(D3DPRESENT_PARAMETERS* pPresentationParameters);
 }
 
-@GUID("05eec05d-8f7d-4362-b999-d1baf357c704")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dresource9
+@GUID("05eec05d-8f7d-4362-b999-d1baf357c704")
 interface IDirect3DResource9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dresource9-getdevice
@@ -4187,8 +4187,8 @@ interface IDirect3DResource9 : IUnknown
     D3DRESOURCETYPE GetType();
 }
 
-@GUID("dd13c59c-36fa-4098-a8fb-c7ed39dc8546")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dvertexdeclaration9
+@GUID("dd13c59c-36fa-4098-a8fb-c7ed39dc8546")
 interface IDirect3DVertexDeclaration9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dvertexdeclaration9-getdevice
@@ -4197,8 +4197,8 @@ interface IDirect3DVertexDeclaration9 : IUnknown
     HRESULT GetDeclaration(D3DVERTEXELEMENT9* pElement, uint* pNumElements);
 }
 
-@GUID("efc5557e-6265-4613-8a94-43857889eb36")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dvertexshader9
+@GUID("efc5557e-6265-4613-8a94-43857889eb36")
 interface IDirect3DVertexShader9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dvertexshader9-getdevice
@@ -4207,8 +4207,8 @@ interface IDirect3DVertexShader9 : IUnknown
     HRESULT GetFunction(void* param0, uint* pSizeOfData);
 }
 
-@GUID("6d3bdbdc-5b02-4415-b852-ce5e8bccb289")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dpixelshader9
+@GUID("6d3bdbdc-5b02-4415-b852-ce5e8bccb289")
 interface IDirect3DPixelShader9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dpixelshader9-getdevice
@@ -4217,8 +4217,8 @@ interface IDirect3DPixelShader9 : IUnknown
     HRESULT GetFunction(void* param0, uint* pSizeOfData);
 }
 
-@GUID("580ca87e-1d3c-4d54-991d-b7d3e3c298ce")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dbasetexture9
+@GUID("580ca87e-1d3c-4d54-991d-b7d3e3c298ce")
 interface IDirect3DBaseTexture9 : IDirect3DResource9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dbasetexture9-setlod
@@ -4235,8 +4235,8 @@ interface IDirect3DBaseTexture9 : IDirect3DResource9
     void    GenerateMipSubLevels();
 }
 
-@GUID("85c31227-3de5-4f00-9b3a-f11ac38c18b5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dtexture9
+@GUID("85c31227-3de5-4f00-9b3a-f11ac38c18b5")
 interface IDirect3DTexture9 : IDirect3DBaseTexture9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dtexture9-getleveldesc
@@ -4251,8 +4251,8 @@ interface IDirect3DTexture9 : IDirect3DBaseTexture9
     HRESULT AddDirtyRect(const(RECT)* pDirtyRect);
 }
 
-@GUID("2518526c-e789-4111-a7b9-47ef328d13e6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dvolumetexture9
+@GUID("2518526c-e789-4111-a7b9-47ef328d13e6")
 interface IDirect3DVolumeTexture9 : IDirect3DBaseTexture9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dvolumetexture9-getleveldesc
@@ -4267,8 +4267,8 @@ interface IDirect3DVolumeTexture9 : IDirect3DBaseTexture9
     HRESULT AddDirtyBox(const(D3DBOX)* pDirtyBox);
 }
 
-@GUID("fff32f81-d953-473a-9223-93d652aba93f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dcubetexture9
+@GUID("fff32f81-d953-473a-9223-93d652aba93f")
 interface IDirect3DCubeTexture9 : IDirect3DBaseTexture9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dcubetexture9-getleveldesc
@@ -4284,8 +4284,8 @@ interface IDirect3DCubeTexture9 : IDirect3DBaseTexture9
     HRESULT AddDirtyRect(D3DCUBEMAP_FACES FaceType, const(RECT)* pDirtyRect);
 }
 
-@GUID("b64bb1b5-fd70-4df6-bf91-19d0a12455e3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dvertexbuffer9
+@GUID("b64bb1b5-fd70-4df6-bf91-19d0a12455e3")
 interface IDirect3DVertexBuffer9 : IDirect3DResource9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dvertexbuffer9-lock
@@ -4296,8 +4296,8 @@ interface IDirect3DVertexBuffer9 : IDirect3DResource9
     HRESULT GetDesc(D3DVERTEXBUFFER_DESC* pDesc);
 }
 
-@GUID("7c9dd65e-d3f7-4529-acee-785830acde35")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dindexbuffer9
+@GUID("7c9dd65e-d3f7-4529-acee-785830acde35")
 interface IDirect3DIndexBuffer9 : IDirect3DResource9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dindexbuffer9-lock
@@ -4308,8 +4308,8 @@ interface IDirect3DIndexBuffer9 : IDirect3DResource9
     HRESULT GetDesc(D3DINDEXBUFFER_DESC* pDesc);
 }
 
-@GUID("0cfbaf3a-9ff6-429a-99b3-a2796af8b89b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dsurface9
+@GUID("0cfbaf3a-9ff6-429a-99b3-a2796af8b89b")
 interface IDirect3DSurface9 : IDirect3DResource9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dsurface9-getcontainer
@@ -4326,8 +4326,8 @@ interface IDirect3DSurface9 : IDirect3DResource9
     HRESULT ReleaseDC(HDC hdc);
 }
 
-@GUID("24f416e6-1f67-4aa7-b88e-d33f6f3128a1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dvolume9
+@GUID("24f416e6-1f67-4aa7-b88e-d33f6f3128a1")
 interface IDirect3DVolume9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dvolume9-getdevice
@@ -4348,8 +4348,8 @@ interface IDirect3DVolume9 : IUnknown
     HRESULT UnlockBox();
 }
 
-@GUID("d9771460-a695-4f26-bbd3-27b840b541cc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dquery9
+@GUID("d9771460-a695-4f26-bbd3-27b840b541cc")
 interface IDirect3DQuery9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dquery9-getdevice
@@ -4364,8 +4364,8 @@ interface IDirect3DQuery9 : IUnknown
     HRESULT GetData(void* pData, uint dwSize, uint dwGetDataFlags);
 }
 
-@GUID("02177241-69fc-400c-8ff1-93a44df6861d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3d9ex
+@GUID("02177241-69fc-400c-8ff1-93a44df6861d")
 interface IDirect3D9Ex : IDirect3D9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3d9ex-getadaptermodecountex
@@ -4383,8 +4383,8 @@ interface IDirect3D9Ex : IDirect3D9
     HRESULT GetAdapterLUID(uint Adapter, LUID* pLUID);
 }
 
-@GUID("b18b10ce-2649-405a-870f-95f777d4313a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3ddevice9ex
+@GUID("b18b10ce-2649-405a-870f-95f777d4313a")
 interface IDirect3DDevice9Ex : IDirect3DDevice9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3ddevice9ex-setconvolutionmonokernel
@@ -4427,8 +4427,8 @@ interface IDirect3DDevice9Ex : IDirect3DDevice9
     HRESULT GetDisplayModeEx(uint iSwapChain, D3DDISPLAYMODEEX* pMode, D3DDISPLAYROTATION* pRotation);
 }
 
-@GUID("91886caf-1c3d-4d2e-a0ab-3e4c7d8d3303")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dswapchain9ex
+@GUID("91886caf-1c3d-4d2e-a0ab-3e4c7d8d3303")
 interface IDirect3DSwapChain9Ex : IDirect3DSwapChain9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dswapchain9ex-getlastpresentcount

@@ -1408,8 +1408,8 @@ HRESULT WMCreateWriterPushSink(IWMWriterPushSink* ppSink);
 
 // Interfaces
 
-@GUID("e1cd3524-03d7-11d2-9eed-006097d2d7cf")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nn-wmsbuffer-inssbuffer
+@GUID("e1cd3524-03d7-11d2-9eed-006097d2d7cf")
 interface INSSBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nf-wmsbuffer-inssbuffer-getlength
@@ -1424,8 +1424,8 @@ interface INSSBuffer : IUnknown
     HRESULT GetBufferAndLength(ubyte** ppdwBuffer, uint* pdwLength);
 }
 
-@GUID("4f528693-1035-43fe-b428-757561ad3a68")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nn-wmsbuffer-inssbuffer2
+@GUID("4f528693-1035-43fe-b428-757561ad3a68")
 interface INSSBuffer2 : INSSBuffer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nn-wmsbuffer-inssbuffer2
@@ -1434,8 +1434,8 @@ interface INSSBuffer2 : INSSBuffer
     HRESULT SetSampleProperties(uint cbProperties, ubyte* pbProperties);
 }
 
-@GUID("c87ceaaf-75be-4bc4-84eb-ac2798507672")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nn-wmsbuffer-inssbuffer3
+@GUID("c87ceaaf-75be-4bc4-84eb-ac2798507672")
 interface INSSBuffer3 : INSSBuffer2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nf-wmsbuffer-inssbuffer3-setproperty
@@ -1444,8 +1444,8 @@ interface INSSBuffer3 : INSSBuffer2
     HRESULT GetProperty(GUID guidBufferProperty, void* pvBufferProperty, uint* pdwBufferPropertySize);
 }
 
-@GUID("b6b8fd5a-32e2-49d4-a910-c26cc85465ed")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nn-wmsbuffer-inssbuffer4
+@GUID("b6b8fd5a-32e2-49d4-a910-c26cc85465ed")
 interface INSSBuffer4 : INSSBuffer3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nf-wmsbuffer-inssbuffer4-getpropertycount
@@ -1455,8 +1455,8 @@ interface INSSBuffer4 : INSSBuffer3
                                uint* pdwBufferPropertySize);
 }
 
-@GUID("61103ca4-2033-11d2-9ef1-006097d2d7cf")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nn-wmsbuffer-iwmsbufferallocator
+@GUID("61103ca4-2033-11d2-9ef1-006097d2d7cf")
 interface IWMSBufferAllocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsbuffer/nf-wmsbuffer-iwmsbufferallocator-allocatebuffer
@@ -1465,8 +1465,8 @@ interface IWMSBufferAllocator : IUnknown
     HRESULT AllocatePageSizeBuffer(uint dwMaxBufferSize, INSSBuffer* ppBuffer);
 }
 
-@GUID("96406bce-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmmediaprops
+@GUID("96406bce-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMMediaProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmmediaprops-gettype
@@ -1477,8 +1477,8 @@ interface IWMMediaProps : IUnknown
     HRESULT SetMediaType(WM_MEDIA_TYPE* pType);
 }
 
-@GUID("96406bcf-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmvideomediaprops
+@GUID("96406bcf-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMVideoMediaProps : IWMMediaProps
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmvideomediaprops-getmaxkeyframespacing
@@ -1491,8 +1491,8 @@ interface IWMVideoMediaProps : IWMMediaProps
     HRESULT SetQuality(uint dwQuality);
 }
 
-@GUID("96406bd4-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriter
+@GUID("96406bd4-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriter-setprofilebyid
@@ -1523,9 +1523,9 @@ interface IWMWriter : IUnknown
     HRESULT Flush();
 }
 
-@GUID("d6ea5dd0-12a0-43f4-90ab-a3fd451e6a07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmwriter
+@GUID("d6ea5dd0-12a0-43f4-90ab-a3fd451e6a07")
 interface IWMDRMWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmwriter-generatekeyseed
@@ -1540,26 +1540,26 @@ interface IWMDRMWriter : IUnknown
                             ushort cbLength);
 }
 
-@GUID("38ee7a94-40e2-4e10-aa3f-33fd3210ed5b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmwriter2
+@GUID("38ee7a94-40e2-4e10-aa3f-33fd3210ed5b")
 interface IWMDRMWriter2 : IWMDRMWriter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmwriter2-setwmdrmnetencryption
     HRESULT SetWMDRMNetEncryption(BOOL fSamplesEncrypted, ubyte* pbKeyID, uint cbKeyID);
 }
 
-@GUID("a7184082-a4aa-4dde-ac9c-e75dbd1117ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmwriter3
+@GUID("a7184082-a4aa-4dde-ac9c-e75dbd1117ce")
 interface IWMDRMWriter3 : IWMDRMWriter2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmwriter3-setprotectstreamsamples
     HRESULT SetProtectStreamSamples(WMDRM_IMPORT_INIT_STRUCT* pImportInitStruct);
 }
 
-@GUID("96406bd5-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwminputmediaprops
+@GUID("96406bd5-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMInputMediaProps : IWMMediaProps
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwminputmediaprops-getconnectionname
@@ -1568,8 +1568,8 @@ interface IWMInputMediaProps : IWMMediaProps
     HRESULT GetGroupName(PWSTR pwszName, ushort* pcchName);
 }
 
-@GUID("72995a79-5090-42a4-9c8c-d9d0b6d34be5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmpropertyvault
+@GUID("72995a79-5090-42a4-9c8c-d9d0b6d34be5")
 interface IWMPropertyVault : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmpropertyvault-getpropertycount
@@ -1587,16 +1587,16 @@ interface IWMPropertyVault : IUnknown
     HRESULT Clear();
 }
 
-@GUID("6816dad3-2b4b-4c8e-8149-874c3483a753")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmistreamprops
+@GUID("6816dad3-2b4b-4c8e-8149-874c3483a753")
 interface IWMIStreamProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmistreamprops-getproperty
     HRESULT GetProperty(const(PWSTR) pszName, WMT_ATTR_DATATYPE* pType, ubyte* pValue, uint* pdwSize);
 }
 
-@GUID("96406bd6-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreader
+@GUID("96406bd6-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreader-open
@@ -1623,8 +1623,8 @@ interface IWMReader : IUnknown
     HRESULT Resume();
 }
 
-@GUID("9397f121-7705-4dc9-b049-98b698188414")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmsyncreader
+@GUID("9397f121-7705-4dc9-b049-98b698188414")
 interface IWMSyncReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmsyncreader-open
@@ -1674,8 +1674,8 @@ interface IWMSyncReader : IUnknown
     HRESULT OpenStream(IStream pStream);
 }
 
-@GUID("faed3d21-1b6b-4af7-8cb6-3e189bbc187b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmsyncreader2
+@GUID("faed3d21-1b6b-4af7-8cb6-3e189bbc187b")
 interface IWMSyncReader2 : IWMSyncReader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmsyncreader2-setrangebytimecode
@@ -1693,8 +1693,8 @@ interface IWMSyncReader2 : IWMSyncReader
     HRESULT GetAllocateForStream(ushort dwSreamNum, IWMReaderAllocatorEx* ppAllocator);
 }
 
-@GUID("96406bd7-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmoutputmediaprops
+@GUID("96406bd7-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMOutputMediaProps : IWMMediaProps
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmoutputmediaprops-getstreamgroupname
@@ -1703,16 +1703,16 @@ interface IWMOutputMediaProps : IWMMediaProps
     HRESULT GetConnectionName(PWSTR pwszName, ushort* pcchName);
 }
 
-@GUID("6d7cdc70-9888-11d3-8edc-00c04f6109cf")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmstatuscallback
+@GUID("6d7cdc70-9888-11d3-8edc-00c04f6109cf")
 interface IWMStatusCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmstatuscallback-onstatus
     HRESULT OnStatus(WMT_STATUS Status, HRESULT hr, WMT_ATTR_DATATYPE dwType, ubyte* pValue, void* pvContext);
 }
 
-@GUID("96406bd8-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreadercallback
+@GUID("96406bd8-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMReaderCallback : IWMStatusCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreadercallback-onsample
@@ -1720,8 +1720,8 @@ interface IWMReaderCallback : IWMStatusCallback
                      INSSBuffer pSample, void* pvContext);
 }
 
-@GUID("342e0eb7-e651-450c-975b-2ace2c90c48e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmcredentialcallback
+@GUID("342e0eb7-e651-450c-975b-2ace2c90c48e")
 interface IWMCredentialCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmcredentialcallback-acquirecredentials
@@ -1729,8 +1729,8 @@ interface IWMCredentialCallback : IUnknown
                                uint cchPassword, HRESULT hrStatus, uint* pdwFlags);
 }
 
-@GUID("96406bd9-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmmetadataeditor
+@GUID("96406bd9-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMMetadataEditor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmmetadataeditor-open
@@ -1741,25 +1741,25 @@ interface IWMMetadataEditor : IUnknown
     HRESULT Flush();
 }
 
-@GUID("203cffe3-2e18-4fdf-b59d-6e71530534cf")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmmetadataeditor2
+@GUID("203cffe3-2e18-4fdf-b59d-6e71530534cf")
 interface IWMMetadataEditor2 : IWMMetadataEditor
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmmetadataeditor2-openex
     HRESULT OpenEx(const(PWSTR) pwszFilename, uint dwDesiredAccess, uint dwShareMode);
 }
 
-@GUID("ff130ebc-a6c3-42a6-b401-c3382c3e08b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmeditor
+@GUID("ff130ebc-a6c3-42a6-b401-c3382c3e08b3")
 interface IWMDRMEditor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmeditor-getdrmproperty
     HRESULT GetDRMProperty(const(PWSTR) pwstrName, WMT_ATTR_DATATYPE* pdwType, ubyte* pValue, ushort* pcbLength);
 }
 
-@GUID("96406bda-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmheaderinfo
+@GUID("96406bda-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMHeaderInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmheaderinfo-getattributecount
@@ -1792,8 +1792,8 @@ interface IWMHeaderInfo : IUnknown
     HRESULT RemoveScript(ushort wIndex);
 }
 
-@GUID("15cf9781-454e-482e-b393-85fae487a810")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmheaderinfo2
+@GUID("15cf9781-454e-482e-b393-85fae487a810")
 interface IWMHeaderInfo2 : IWMHeaderInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmheaderinfo2-getcodecinfocount
@@ -1804,8 +1804,8 @@ interface IWMHeaderInfo2 : IWMHeaderInfo
                          ubyte* pbCodecInfo);
 }
 
-@GUID("15cc68e3-27cc-4ecd-b222-3f5d02d80bd5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmheaderinfo3
+@GUID("15cc68e3-27cc-4ecd-b222-3f5d02d80bd5")
 interface IWMHeaderInfo3 : IWMHeaderInfo2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmheaderinfo3-getattributecountex
@@ -1829,8 +1829,8 @@ interface IWMHeaderInfo3 : IWMHeaderInfo2
                          ubyte* pbCodecInfo);
 }
 
-@GUID("d16679f2-6ca0-472d-8d31-2f5d55aee155")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmprofilemanager
+@GUID("d16679f2-6ca0-472d-8d31-2f5d55aee155")
 interface IWMProfileManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmprofilemanager-createemptyprofile
@@ -1847,8 +1847,8 @@ interface IWMProfileManager : IUnknown
     HRESULT LoadSystemProfile(uint dwProfileIndex, IWMProfile* ppProfile);
 }
 
-@GUID("7a924e51-73c1-494d-8019-23d37ed9b89a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmprofilemanager2
+@GUID("7a924e51-73c1-494d-8019-23d37ed9b89a")
 interface IWMProfileManager2 : IWMProfileManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmprofilemanager2-getsystemprofileversion
@@ -1857,8 +1857,8 @@ interface IWMProfileManager2 : IWMProfileManager
     HRESULT SetSystemProfileVersion(WMT_VERSION dwVersion);
 }
 
-@GUID("ba4dcc78-7ee0-4ab8-b27a-dbce8bc51454")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmprofilemanagerlanguage
+@GUID("ba4dcc78-7ee0-4ab8-b27a-dbce8bc51454")
 interface IWMProfileManagerLanguage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmprofilemanagerlanguage-getuserlanguageid
@@ -1867,8 +1867,8 @@ interface IWMProfileManagerLanguage : IUnknown
     HRESULT SetUserLanguageID(ushort wLangID);
 }
 
-@GUID("96406bdb-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmprofile
+@GUID("96406bdb-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMProfile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmprofile-getversion
@@ -1909,16 +1909,16 @@ interface IWMProfile : IUnknown
     HRESULT CreateNewMutualExclusion(IWMMutualExclusion* ppME);
 }
 
-@GUID("07e72d33-d94e-4be7-8843-60ae5ff7e5f5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmprofile2
+@GUID("07e72d33-d94e-4be7-8843-60ae5ff7e5f5")
 interface IWMProfile2 : IWMProfile
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmprofile2-getprofileid
     HRESULT GetProfileID(GUID* pguidID);
 }
 
-@GUID("00ef96cc-a461-4546-8bcd-c9a28f0e06f5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmprofile3
+@GUID("00ef96cc-a461-4546-8bcd-c9a28f0e06f5")
 interface IWMProfile3 : IWMProfile2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmprofile3-getstorageformat
@@ -1947,8 +1947,8 @@ interface IWMProfile3 : IWMProfile2
     HRESULT GetExpectedPacketCount(ulong msDuration, ulong* pcPackets);
 }
 
-@GUID("96406bdc-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmstreamconfig
+@GUID("96406bdc-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMStreamConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmstreamconfig-getstreamtype
@@ -1975,8 +1975,8 @@ interface IWMStreamConfig : IUnknown
     HRESULT SetBufferWindow(uint msBufferWindow);
 }
 
-@GUID("7688d8cb-fc0d-43bd-9459-5a8dec200cfa")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmstreamconfig2
+@GUID("7688d8cb-fc0d-43bd-9459-5a8dec200cfa")
 interface IWMStreamConfig2 : IWMStreamConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmstreamconfig2-gettransporttype
@@ -1996,8 +1996,8 @@ interface IWMStreamConfig2 : IWMStreamConfig
     HRESULT RemoveAllDataUnitExtensions();
 }
 
-@GUID("cb164104-3aa9-45a7-9ac9-4daee131d6e1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmstreamconfig3
+@GUID("cb164104-3aa9-45a7-9ac9-4daee131d6e1")
 interface IWMStreamConfig3 : IWMStreamConfig2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmstreamconfig3-getlanguage
@@ -2006,8 +2006,8 @@ interface IWMStreamConfig3 : IWMStreamConfig2
     HRESULT SetLanguage(PWSTR pwszLanguageString);
 }
 
-@GUID("cdfb97ab-188f-40b3-b643-5b7903975c59")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmpacketsize
+@GUID("cdfb97ab-188f-40b3-b643-5b7903975c59")
 interface IWMPacketSize : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmpacketsize-getmaxpacketsize
@@ -2016,8 +2016,8 @@ interface IWMPacketSize : IUnknown
     HRESULT SetMaxPacketSize(uint dwMaxPacketSize);
 }
 
-@GUID("8bfc2b9e-b646-4233-a877-1c6a079669dc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmpacketsize2
+@GUID("8bfc2b9e-b646-4233-a877-1c6a079669dc")
 interface IWMPacketSize2 : IWMPacketSize
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmpacketsize2-getminpacketsize
@@ -2026,8 +2026,8 @@ interface IWMPacketSize2 : IWMPacketSize
     HRESULT SetMinPacketSize(uint dwMinPacketSize);
 }
 
-@GUID("96406bdd-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmstreamlist
+@GUID("96406bdd-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMStreamList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmstreamlist-getstreams
@@ -2038,8 +2038,8 @@ interface IWMStreamList : IUnknown
     HRESULT RemoveStream(ushort wStreamNum);
 }
 
-@GUID("96406bde-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmmutualexclusion
+@GUID("96406bde-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMMutualExclusion : IWMStreamList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmmutualexclusion-gettype
@@ -2048,8 +2048,8 @@ interface IWMMutualExclusion : IWMStreamList
     HRESULT SetType(const(GUID)* guidType);
 }
 
-@GUID("0302b57d-89d1-4ba2-85c9-166f2c53eb91")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmmutualexclusion2
+@GUID("0302b57d-89d1-4ba2-85c9-166f2c53eb91")
 interface IWMMutualExclusion2 : IWMMutualExclusion
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmmutualexclusion2-getname
@@ -2074,8 +2074,8 @@ interface IWMMutualExclusion2 : IWMMutualExclusion
     HRESULT RemoveStreamForRecord(ushort wRecordNumber, ushort wStreamNumber);
 }
 
-@GUID("ad694af1-f8d9-42f8-bc47-70311b0c4f9e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmbandwidthsharing
+@GUID("ad694af1-f8d9-42f8-bc47-70311b0c4f9e")
 interface IWMBandwidthSharing : IWMStreamList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmbandwidthsharing-gettype
@@ -2088,8 +2088,8 @@ interface IWMBandwidthSharing : IWMStreamList
     HRESULT SetBandwidth(uint dwBitrate, uint msBufferWindow);
 }
 
-@GUID("8c1c6090-f9a8-4748-8ec3-dd1108ba1e77")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmstreamprioritization
+@GUID("8c1c6090-f9a8-4748-8ec3-dd1108ba1e77")
 interface IWMStreamPrioritization : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmstreamprioritization-getpriorityrecords
@@ -2098,8 +2098,8 @@ interface IWMStreamPrioritization : IUnknown
     HRESULT SetPriorityRecords(WM_STREAM_PRIORITY_RECORD* pRecordArray, ushort cRecords);
 }
 
-@GUID("96406be3-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriteradvanced
+@GUID("96406be3-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMWriterAdvanced : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriteradvanced-getsinkcount
@@ -2127,8 +2127,8 @@ interface IWMWriterAdvanced : IUnknown
     HRESULT GetSyncTolerance(uint* pmsWindow);
 }
 
-@GUID("962dc1ec-c046-4db8-9cc7-26ceae500817")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriteradvanced2
+@GUID("962dc1ec-c046-4db8-9cc7-26ceae500817")
 interface IWMWriterAdvanced2 : IWMWriterAdvanced
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriteradvanced2-getinputsetting
@@ -2139,8 +2139,8 @@ interface IWMWriterAdvanced2 : IWMWriterAdvanced
                             ushort cbLength);
 }
 
-@GUID("2cd6492d-7c37-4e76-9d3b-59261183a22e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriteradvanced3
+@GUID("2cd6492d-7c37-4e76-9d3b-59261183a22e")
 interface IWMWriterAdvanced3 : IWMWriterAdvanced2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriteradvanced3-getstatisticsex
@@ -2149,8 +2149,8 @@ interface IWMWriterAdvanced3 : IWMWriterAdvanced2
     HRESULT SetNonBlocking();
 }
 
-@GUID("fc54a285-38c4-45b5-aa23-85b9f7cb424b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterpreprocess
+@GUID("fc54a285-38c4-45b5-aa23-85b9f7cb424b")
 interface IWMWriterPreprocess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterpreprocess-getmaxpreprocessingpasses
@@ -2165,8 +2165,8 @@ interface IWMWriterPreprocess : IUnknown
     HRESULT EndPreprocessingPass(uint dwInputNum, uint dwFlags);
 }
 
-@GUID("d9d6549d-a193-4f24-b308-03123d9b7f8d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterpostviewcallback
+@GUID("d9d6549d-a193-4f24-b308-03123d9b7f8d")
 interface IWMWriterPostViewCallback : IWMStatusCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterpostviewcallback-onpostviewsample
@@ -2176,8 +2176,8 @@ interface IWMWriterPostViewCallback : IWMStatusCallback
     HRESULT AllocateForPostView(ushort wStreamNum, uint cbBuffer, INSSBuffer* ppBuffer, void* pvContext);
 }
 
-@GUID("81e20ce4-75ef-491a-8004-fc53c45bdc3e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterpostview
+@GUID("81e20ce4-75ef-491a-8004-fc53c45bdc3e")
 interface IWMWriterPostView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterpostview-setpostviewcallback
@@ -2200,8 +2200,8 @@ interface IWMWriterPostView : IUnknown
     HRESULT GetAllocateForPostView(ushort wStreamNumber, BOOL* pfAllocate);
 }
 
-@GUID("96406be4-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwritersink
+@GUID("96406be4-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMWriterSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwritersink-onheader
@@ -2216,8 +2216,8 @@ interface IWMWriterSink : IUnknown
     HRESULT OnEndWriting();
 }
 
-@GUID("cf4b1f99-4de2-4e49-a363-252740d99bc1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmregistercallback
+@GUID("cf4b1f99-4de2-4e49-a363-252740d99bc1")
 interface IWMRegisterCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmregistercallback-advise
@@ -2226,16 +2226,16 @@ interface IWMRegisterCallback : IUnknown
     HRESULT Unadvise(IWMStatusCallback pCallback, void* pvContext);
 }
 
-@GUID("96406be5-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterfilesink
+@GUID("96406be5-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMWriterFileSink : IWMWriterSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterfilesink-open
     HRESULT Open(const(PWSTR) pwszFilename);
 }
 
-@GUID("14282ba7-4aef-4205-8ce5-c229035a05bc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterfilesink2
+@GUID("14282ba7-4aef-4205-8ce5-c229035a05bc")
 interface IWMWriterFileSink2 : IWMWriterFileSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterfilesink2-start
@@ -2254,8 +2254,8 @@ interface IWMWriterFileSink2 : IWMWriterFileSink
     HRESULT IsClosed(BOOL* pfClosed);
 }
 
-@GUID("3fea4feb-2945-47a7-a1dd-c53a8fc4c45c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterfilesink3
+@GUID("3fea4feb-2945-47a7-a1dd-c53a8fc4c45c")
 interface IWMWriterFileSink3 : IWMWriterFileSink2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterfilesink3-setautoindexing
@@ -2276,8 +2276,8 @@ interface IWMWriterFileSink3 : IWMWriterFileSink2
     HRESULT CompleteOperations();
 }
 
-@GUID("96406be7-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriternetworksink
+@GUID("96406be7-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMWriterNetworkSink : IWMWriterSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriternetworksink-setmaximumclients
@@ -2298,8 +2298,8 @@ interface IWMWriterNetworkSink : IWMWriterSink
     HRESULT Close();
 }
 
-@GUID("73c66010-a299-41df-b1f0-ccf03b09c1c6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmclientconnections
+@GUID("73c66010-a299-41df-b1f0-ccf03b09c1c6")
 interface IWMClientConnections : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmclientconnections-getclientcount
@@ -2308,8 +2308,8 @@ interface IWMClientConnections : IUnknown
     HRESULT GetClientProperties(uint dwClientNum, WM_CLIENT_PROPERTIES* pClientProperties);
 }
 
-@GUID("4091571e-4701-4593-bb3d-d5f5f0c74246")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmclientconnections2
+@GUID("4091571e-4701-4593-bb3d-d5f5f0c74246")
 interface IWMClientConnections2 : IWMClientConnections
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmclientconnections2-getclientinfo
@@ -2317,8 +2317,8 @@ interface IWMClientConnections2 : IWMClientConnections
                           uint* pcchPort, PWSTR pwszDNSName, uint* pcchDNSName);
 }
 
-@GUID("96406bea-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderadvanced
+@GUID("96406bea-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMReaderAdvanced : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderadvanced-setuserprovidedclock
@@ -2363,8 +2363,8 @@ interface IWMReaderAdvanced : IUnknown
     HRESULT NotifyLateDelivery(ulong cnsLateness);
 }
 
-@GUID("ae14a945-b90c-4d0d-9127-80d665f7d73e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderadvanced2
+@GUID("ae14a945-b90c-4d0d-9127-80d665f7d73e")
 interface IWMReaderAdvanced2 : IWMReaderAdvanced
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderadvanced2-setplaymode
@@ -2401,8 +2401,8 @@ interface IWMReaderAdvanced2 : IWMReaderAdvanced
     HRESULT OpenStream(IStream pStream, IWMReaderCallback pCallback, void* pvContext);
 }
 
-@GUID("5dc0674b-f04b-4a4e-9f2a-b1afde2c8100")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderadvanced3
+@GUID("5dc0674b-f04b-4a4e-9f2a-b1afde2c8100")
 interface IWMReaderAdvanced3 : IWMReaderAdvanced2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderadvanced3-stopnetstreaming
@@ -2412,8 +2412,8 @@ interface IWMReaderAdvanced3 : IWMReaderAdvanced2
                             WMT_OFFSET_FORMAT dwOffsetFormat, float fRate, void* pvContext);
 }
 
-@GUID("945a76a2-12ae-4d48-bd3c-cd1d90399b85")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderadvanced4
+@GUID("945a76a2-12ae-4d48-bd3c-cd1d90399b85")
 interface IWMReaderAdvanced4 : IWMReaderAdvanced3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderadvanced4-getlanguagecount
@@ -2437,16 +2437,16 @@ interface IWMReaderAdvanced4 : IWMReaderAdvanced3
     HRESULT GetURL(PWSTR pwszURL, uint* pcchURL);
 }
 
-@GUID("24c44db0-55d1-49ae-a5cc-f13815e36363")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderadvanced5
+@GUID("24c44db0-55d1-49ae-a5cc-f13815e36363")
 interface IWMReaderAdvanced5 : IWMReaderAdvanced4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderadvanced5-setplayerhook
     HRESULT SetPlayerHook(uint dwOutputNum, IWMPlayerHook pHook);
 }
 
-@GUID("18a2e7f8-428f-4acd-8a00-e64639bc93de")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderadvanced6
+@GUID("18a2e7f8-428f-4acd-8a00-e64639bc93de")
 interface IWMReaderAdvanced6 : IWMReaderAdvanced5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderadvanced6-setprotectstreamsamples
@@ -2454,16 +2454,16 @@ interface IWMReaderAdvanced6 : IWMReaderAdvanced5
                                     ubyte* pbInitializationVector, uint* pcbInitializationVector);
 }
 
-@GUID("e5b7ca9a-0f1c-4f66-9002-74ec50d8b304")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmplayerhook
+@GUID("e5b7ca9a-0f1c-4f66-9002-74ec50d8b304")
 interface IWMPlayerHook : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmplayerhook-predecode
     HRESULT PreDecode();
 }
 
-@GUID("9f762fa7-a22e-428d-93c9-ac82f3aafe5a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderallocatorex
+@GUID("9f762fa7-a22e-428d-93c9-ac82f3aafe5a")
 interface IWMReaderAllocatorEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderallocatorex-allocateforstreamex
@@ -2474,16 +2474,16 @@ interface IWMReaderAllocatorEx : IUnknown
                                 ulong cnsSampleTime, ulong cnsSampleDuration, void* pvContext);
 }
 
-@GUID("fdbe5592-81a1-41ea-93bd-735cad1adc05")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreadertypenegotiation
+@GUID("fdbe5592-81a1-41ea-93bd-735cad1adc05")
 interface IWMReaderTypeNegotiation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreadertypenegotiation-tryoutputprops
     HRESULT TryOutputProps(uint dwOutputNum, IWMOutputMediaProps pOutput);
 }
 
-@GUID("96406beb-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreadercallbackadvanced
+@GUID("96406beb-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMReaderCallbackAdvanced : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreadercallbackadvanced-onstreamsample
@@ -2502,9 +2502,9 @@ interface IWMReaderCallbackAdvanced : IUnknown
     HRESULT AllocateForOutput(uint dwOutputNum, uint cbBuffer, INSSBuffer* ppBuffer, void* pvContext);
 }
 
-@GUID("d2827540-3ee7-432c-b14c-dc17f085d3b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmreader
+@GUID("d2827540-3ee7-432c-b14c-dc17f085d3b3")
 interface IWMDRMReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmreader-acquirelicense
@@ -2525,9 +2525,9 @@ interface IWMDRMReader : IUnknown
     HRESULT GetDRMProperty(const(PWSTR) pwstrName, WMT_ATTR_DATATYPE* pdwType, ubyte* pValue, ushort* pcbLength);
 }
 
-@GUID("befe7a75-9f1d-4075-b9d9-a3c37bda49a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmreader2
+@GUID("befe7a75-9f1d-4075-b9d9-a3c37bda49a0")
 interface IWMDRMReader2 : IWMDRMReader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmreader2-setevaluateoutputlevellicenses
@@ -2540,17 +2540,17 @@ interface IWMDRMReader2 : IWMDRMReader
     HRESULT TryNextLicense();
 }
 
-@GUID("e08672de-f1e7-4ff4-a0a3-fc4b08e4caf8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmreader3
+@GUID("e08672de-f1e7-4ff4-a0a3-fc4b08e4caf8")
 interface IWMDRMReader3 : IWMDRMReader2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmreader3-getinclusionlist
     HRESULT GetInclusionList(GUID** ppGuids, uint* pcGuids);
 }
 
-@GUID("f28c0300-9baa-4477-a846-1744d9cbf533")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderplaylistburn
+@GUID("f28c0300-9baa-4477-a846-1744d9cbf533")
 interface IWMReaderPlaylistBurn : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderplaylistburn-initplaylistburn
@@ -2563,8 +2563,8 @@ interface IWMReaderPlaylistBurn : IUnknown
     HRESULT EndPlaylistBurn(HRESULT hrBurnResult);
 }
 
-@GUID("96406bec-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreadernetworkconfig
+@GUID("96406bec-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMReaderNetworkConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreadernetworkconfig-getbufferingtime
@@ -2635,8 +2635,8 @@ interface IWMReaderNetworkConfig : IUnknown
     HRESULT ResetLoggingUrlList();
 }
 
-@GUID("d979a853-042b-4050-8387-c939db22013f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreadernetworkconfig2
+@GUID("d979a853-042b-4050-8387-c939db22013f")
 interface IWMReaderNetworkConfig2 : IWMReaderNetworkConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreadernetworkconfig2-getenablecontentcaching
@@ -2667,8 +2667,8 @@ interface IWMReaderNetworkConfig2 : IWMReaderNetworkConfig
     HRESULT GetMaxNetPacketSize(uint* pdwMaxNetPacketSize);
 }
 
-@GUID("96406bed-2b2b-11d3-b36b-00c04f6108ff")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderstreamclock
+@GUID("96406bed-2b2b-11d3-b36b-00c04f6108ff")
 interface IWMReaderStreamClock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderstreamclock-gettime
@@ -2679,8 +2679,8 @@ interface IWMReaderStreamClock : IUnknown
     HRESULT KillTimer(uint dwTimerId);
 }
 
-@GUID("6d7cdc71-9888-11d3-8edc-00c04f6109cf")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmindexer
+@GUID("6d7cdc71-9888-11d3-8edc-00c04f6109cf")
 interface IWMIndexer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmindexer-startindexing
@@ -2689,17 +2689,17 @@ interface IWMIndexer : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("b70f1e42-6255-4df0-a6b9-02b212d9e2bb")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmindexer2
+@GUID("b70f1e42-6255-4df0-a6b9-02b212d9e2bb")
 interface IWMIndexer2 : IWMIndexer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmindexer2-configure
     HRESULT Configure(ushort wStreamNum, WMT_INDEXER_TYPE nIndexerType, void* pvInterval, void* pvIndexType);
 }
 
-@GUID("05e5ac9f-3fb6-4508-bb43-a4067ba1ebe8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmlicensebackup
+@GUID("05e5ac9f-3fb6-4508-bb43-a4067ba1ebe8")
 interface IWMLicenseBackup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmlicensebackup-backuplicenses
@@ -2708,9 +2708,9 @@ interface IWMLicenseBackup : IUnknown
     HRESULT CancelLicenseBackup();
 }
 
-@GUID("c70b6334-a22e-4efb-a245-15e65a004a13")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmlicenserestore
+@GUID("c70b6334-a22e-4efb-a245-15e65a004a13")
 interface IWMLicenseRestore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmlicenserestore-restorelicenses
@@ -2719,9 +2719,9 @@ interface IWMLicenseRestore : IUnknown
     HRESULT CancelLicenseRestore();
 }
 
-@GUID("3c8e0da6-996f-4ff3-a1af-4838f9377e2e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmbackuprestoreprops
+@GUID("3c8e0da6-996f-4ff3-a1af-4838f9377e2e")
 interface IWMBackupRestoreProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmbackuprestoreprops-getpropcount
@@ -2739,8 +2739,8 @@ interface IWMBackupRestoreProps : IUnknown
     HRESULT RemoveAllProps();
 }
 
-@GUID("a970f41e-34de-4a98-b3ba-e4b3ca7528f0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmcodecinfo
+@GUID("a970f41e-34de-4a98-b3ba-e4b3ca7528f0")
 interface IWMCodecInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmcodecinfo-getcodecinfocount
@@ -2752,8 +2752,8 @@ interface IWMCodecInfo : IUnknown
                            IWMStreamConfig* ppIStreamConfig);
 }
 
-@GUID("aa65e273-b686-4056-91ec-dd768d4df710")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmcodecinfo2
+@GUID("aa65e273-b686-4056-91ec-dd768d4df710")
 interface IWMCodecInfo2 : IWMCodecInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmcodecinfo2-getcodecname
@@ -2763,8 +2763,8 @@ interface IWMCodecInfo2 : IWMCodecInfo
                                IWMStreamConfig* ppIStreamConfig, PWSTR wszDesc, uint* pcchDesc);
 }
 
-@GUID("7e51f487-4d93-4f98-8ab4-27d0565adc51")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmcodecinfo3
+@GUID("7e51f487-4d93-4f98-8ab4-27d0565adc51")
 interface IWMCodecInfo3 : IWMCodecInfo2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmcodecinfo3-getcodecformatprop
@@ -2781,8 +2781,8 @@ interface IWMCodecInfo3 : IWMCodecInfo2
                                        WMT_ATTR_DATATYPE* pType, ubyte* pValue, uint* pdwSize);
 }
 
-@GUID("df683f00-2d49-4d8e-92b7-fb19f6a0dc57")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmlanguagelist
+@GUID("df683f00-2d49-4d8e-92b7-fb19f6a0dc57")
 interface IWMLanguageList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmlanguagelist-getlanguagecount
@@ -2793,8 +2793,8 @@ interface IWMLanguageList : IUnknown
     HRESULT AddLanguageByRFC1766String(PWSTR pwszLanguageString, ushort* pwIndex);
 }
 
-@GUID("dc10e6a5-072c-467d-bf57-6330a9dde12a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwriterpushsink
+@GUID("dc10e6a5-072c-467d-bf57-6330a9dde12a")
 interface IWMWriterPushSink : IWMWriterSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwriterpushsink-connect
@@ -2805,9 +2805,9 @@ interface IWMWriterPushSink : IWMWriterSink
     HRESULT EndSession();
 }
 
-@GUID("f6211f03-8d21-4e94-93e6-8510805f2d99")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdeviceregistration
+@GUID("f6211f03-8d21-4e94-93e6-8510805f2d99")
 interface IWMDeviceRegistration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdeviceregistration-registerdevice
@@ -2826,8 +2826,8 @@ interface IWMDeviceRegistration : IUnknown
                                     DRM_VAL16 SerialNumber, IWMRegisteredDevice* ppDevice);
 }
 
-@GUID("a4503bec-5508-4148-97ac-bfa75760a70d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmregistereddevice
+@GUID("a4503bec-5508-4148-97ac-bfa75760a70d")
 interface IWMRegisteredDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmregistereddevice-getdeviceserialnumber
@@ -2860,9 +2860,9 @@ interface IWMRegisteredDevice : IUnknown
     HRESULT Close();
 }
 
-@GUID("6a9fd8ee-b651-4bf0-b849-7d4ece79a2b1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmproximitydetection
+@GUID("6a9fd8ee-b651-4bf0-b849-7d4ece79a2b1")
 interface IWMProximityDetection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmproximitydetection-startdetection
@@ -2871,9 +2871,9 @@ interface IWMProximityDetection : IUnknown
                            IWMStatusCallback pCallback, void* pvContext);
 }
 
-@GUID("a73a0072-25a0-4c99-b4a5-ede8101a6c39")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmmessageparser
+@GUID("a73a0072-25a0-4c99-b4a5-ede8101a6c39")
 interface IWMDRMMessageParser : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmmessageparser-parseregistrationreqmsg
@@ -2884,9 +2884,9 @@ interface IWMDRMMessageParser : IUnknown
                                    DRM_VAL16* pDeviceSerialNumber, BSTR* pbstrAction);
 }
 
-@GUID("69059850-6e6f-4bb2-806f-71863ddfc471")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmdrmtranscryptor
+@GUID("69059850-6e6f-4bb2-806f-71863ddfc471")
 interface IWMDRMTranscryptor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmdrmtranscryptor-initialize
@@ -2916,8 +2916,8 @@ interface IWMDRMTranscryptionManager : IUnknown
     HRESULT CreateTranscryptor(IWMDRMTranscryptor* ppTranscryptor);
 }
 
-@GUID("6f497062-f2e2-4624-8ea7-9dd40d81fc8d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmwatermarkinfo
+@GUID("6f497062-f2e2-4624-8ea7-9dd40d81fc8d")
 interface IWMWatermarkInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmwatermarkinfo-getwatermarkentrycount
@@ -2926,8 +2926,8 @@ interface IWMWatermarkInfo : IUnknown
     HRESULT GetWatermarkEntry(WMT_WATERMARK_ENTRY_TYPE wmetType, uint dwEntryNum, WMT_WATERMARK_ENTRY* pEntry);
 }
 
-@GUID("bddc4d08-944d-4d52-a612-46c3fda07dd4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreaderaccelerator
+@GUID("bddc4d08-944d-4d52-a612-46c3fda07dd4")
 interface IWMReaderAccelerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreaderaccelerator-getcodecinterface
@@ -2936,8 +2936,8 @@ interface IWMReaderAccelerator : IUnknown
     HRESULT Notify(uint dwOutputNum, WM_MEDIA_TYPE* pSubtype);
 }
 
-@GUID("f369e2f0-e081-4fe6-8450-b810b2f410d1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmreadertimecode
+@GUID("f369e2f0-e081-4fe6-8450-b810b2f410d1")
 interface IWMReaderTimecode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmreadertimecode-gettimecoderangecount
@@ -2946,8 +2946,8 @@ interface IWMReaderTimecode : IUnknown
     HRESULT GetTimecodeRangeBounds(ushort wStreamNum, ushort wRangeNum, uint* pStartTimecode, uint* pEndTimecode);
 }
 
-@GUID("bb3c6389-1633-4e92-af14-9f3173ba39d0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmaddressaccess
+@GUID("bb3c6389-1633-4e92-af14-9f3173ba39d0")
 interface IWMAddressAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmaddressaccess-getaccessentrycount
@@ -2960,8 +2960,8 @@ interface IWMAddressAccess : IUnknown
     HRESULT RemoveAccessEntry(WM_AETYPE aeType, uint dwEntryNum);
 }
 
-@GUID("65a83fc2-3e98-4d4d-81b5-2a742886b33d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmaddressaccess2
+@GUID("65a83fc2-3e98-4d4d-81b5-2a742886b33d")
 interface IWMAddressAccess2 : IWMAddressAccess
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmaddressaccess2-getaccessentryex
@@ -2970,8 +2970,8 @@ interface IWMAddressAccess2 : IWMAddressAccess
     HRESULT AddAccessEntryEx(WM_AETYPE aeType, BSTR bstrAddress, BSTR bstrMask);
 }
 
-@GUID("9f0aa3b6-7267-4d89-88f2-ba915aa5c4c6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmimageinfo
+@GUID("9f0aa3b6-7267-4d89-88f2-ba915aa5c4c6")
 interface IWMImageInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmimageinfo-getimagecount
@@ -2981,8 +2981,8 @@ interface IWMImageInfo : IUnknown
                      PWSTR pwszDescription, ushort* pImageType, uint* pcbImageData, ubyte* pbImageData);
 }
 
-@GUID("6967f2c9-4e26-4b57-8894-799880f7ac7b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nn-wmsdkidl-iwmlicenserevocationagent
+@GUID("6967f2c9-4e26-4b57-8894-799880f7ac7b")
 interface IWMLicenseRevocationAgent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/nf-wmsdkidl-iwmlicenserevocationagent-getlrbchallenge
@@ -2992,9 +2992,9 @@ interface IWMLicenseRevocationAgent : IUnknown
     HRESULT ProcessLRB(ubyte* pSignedLRB, uint dwSignedLRBLength, ubyte* pSignedACK, uint* pdwSignedACKLength);
 }
 
-@GUID("d9b67d36-a9ad-4eb4-baef-db284ef5504c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsecure/nn-wmsecure-iwmauthorizer
+@GUID("d9b67d36-a9ad-4eb4-baef-db284ef5504c")
 interface IWMAuthorizer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsecure/nf-wmsecure-iwmauthorizer-getcertcount
@@ -3005,9 +3005,9 @@ interface IWMAuthorizer : IUnknown
     HRESULT GetSharedData(uint dwCertIndex, const(ubyte)* pbSharedData, ubyte* pbCert, ubyte** ppbSharedData);
 }
 
-@GUID("2720598a-d0f2-4189-bd10-91c46ef0936f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsecure/nn-wmsecure-iwmsecurechannel
+@GUID("2720598a-d0f2-4189-bd10-91c46ef0936f")
 interface IWMSecureChannel : IWMAuthorizer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsecure/nf-wmsecure-iwmsecurechannel-wmsc_addcertificate
@@ -3034,17 +3034,17 @@ interface IWMSecureChannel : IWMAuthorizer
     HRESULT WMSC_SetSharedData(uint dwCertIndex, const(ubyte)* pbSharedData);
 }
 
-@GUID("94bc0598-c3d2-11d3-bedf-00c04f612986")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsecure/nn-wmsecure-iwmgetsecurechannel
+@GUID("94bc0598-c3d2-11d3-bedf-00c04f612986")
 interface IWMGetSecureChannel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsecure/nf-wmsecure-iwmgetsecurechannel-getpeersecurechannelinterface
     HRESULT GetPeerSecureChannelInterface(IWMSecureChannel* ppPeer);
 }
 
-@GUID("0c0e4080-9081-11d2-beec-0060082f2054")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmnetsourcecreator/nn-wmnetsourcecreator-insnetsourcecreator
+@GUID("0c0e4080-9081-11d2-beec-0060082f2054")
 interface INSNetSourceCreator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmnetsourcecreator/nf-wmnetsourcecreator-insnetsourcecreator-initialize
@@ -3066,16 +3066,16 @@ interface INSNetSourceCreator : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("28580dda-d98e-48d0-b7ae-69e473a02825")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdxva/nn-wmdxva-iwmplayertimestamphook
+@GUID("28580dda-d98e-48d0-b7ae-69e473a02825")
 interface IWMPlayerTimestampHook : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdxva/nf-wmdxva-iwmplayertimestamphook-maptimestamp
     HRESULT MapTimestamp(long rtIn, long* prtOut);
 }
 
-@GUID("8bb23e5f-d127-4afb-8d02-ae5b66d54c78")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsinternaladminnetsource/nn-wmsinternaladminnetsource-iwmsinternaladminnetsource
+@GUID("8bb23e5f-d127-4afb-8d02-ae5b66d54c78")
 interface IWMSInternalAdminNetSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsinternaladminnetsource/nn-wmsinternaladminnetsource-iwmsinternaladminnetsource
@@ -3104,8 +3104,8 @@ interface IWMSInternalAdminNetSource : IUnknown
     HRESULT IsUsingIE(uint dwProxyContext, BOOL* pfIsUsingIE);
 }
 
-@GUID("e74d58c3-cf77-4b51-af17-744687c43eae")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsinternaladminnetsource/nn-wmsinternaladminnetsource-iwmsinternaladminnetsource2
+@GUID("e74d58c3-cf77-4b51-af17-744687c43eae")
 interface IWMSInternalAdminNetSource2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsinternaladminnetsource/nf-wmsinternaladminnetsource-iwmsinternaladminnetsource2-setcredentialsex
@@ -3122,8 +3122,8 @@ interface IWMSInternalAdminNetSource2 : IUnknown
                               BSTR* pbstrProxyServer, uint* pdwProxyPort, uint* pdwProxyContext);
 }
 
-@GUID("6b63d08e-4590-44af-9eb3-57ff1e73bf80")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsinternaladminnetsource/nn-wmsinternaladminnetsource-iwmsinternaladminnetsource3
+@GUID("6b63d08e-4590-44af-9eb3-57ff1e73bf80")
 interface IWMSInternalAdminNetSource3 : IWMSInternalAdminNetSource2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsinternaladminnetsource/nn-wmsinternaladminnetsource-iwmsinternaladminnetsource3

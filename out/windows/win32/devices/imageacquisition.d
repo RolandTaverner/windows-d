@@ -2132,9 +2132,9 @@ struct WiaLog;
 @GUID("3908c3cd-4478-4536-af2f-10c25d4ef89a")
 struct WiaVideo;
 
-@GUID("5eb2502a-8cf1-11d1-bf92-0060081ed811")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiadevmgr
+@GUID("5eb2502a-8cf1-11d1-bf92-0060081ed811")
 interface IWiaDevMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwiadevmgr-enumdeviceinfo
@@ -2162,9 +2162,9 @@ interface IWiaDevMgr : IUnknown
     HRESULT AddDeviceDlg(HWND hwndParent, int lFlags);
 }
 
-@GUID("5e38b83c-8cf1-11d1-bf92-0060081ed811")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-ienumwia_dev_info
+@GUID("5e38b83c-8cf1-11d1-bf92-0060081ed811")
 interface IEnumWIA_DEV_INFO : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-ienumwia_dev_info-next
@@ -2179,9 +2179,9 @@ interface IEnumWIA_DEV_INFO : IUnknown
     HRESULT GetCount(uint* celt);
 }
 
-@GUID("ae6287b0-0084-11d2-973b-00a0c9068f2e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiaeventcallback
+@GUID("ae6287b0-0084-11d2-973b-00a0c9068f2e")
 interface IWiaEventCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwiaeventcallback-imageeventcallback
@@ -2190,9 +2190,9 @@ interface IWiaEventCallback : IUnknown
                                uint* pulEventType, uint ulReserved);
 }
 
-@GUID("a558a866-a5b0-11d2-a08f-00c04f72dc3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiadatacallback
+@GUID("a558a866-a5b0-11d2-a08f-00c04f72dc3c")
 interface IWiaDataCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwiadatacallback-bandeddatacallback
@@ -2200,9 +2200,9 @@ interface IWiaDataCallback : IUnknown
                                int lReserved, int lResLength, ubyte* pbBuffer);
 }
 
-@GUID("a6cef998-a5b0-11d2-a08f-00c04f72dc3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiadatatransfer
+@GUID("a6cef998-a5b0-11d2-a08f-00c04f72dc3c")
 interface IWiaDataTransfer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwiadatatransfer-idtgetdata
@@ -2217,9 +2217,9 @@ interface IWiaDataTransfer : IUnknown
     HRESULT idtGetExtendedTransferInfo(WIA_EXTENDED_TRANSFER_INFO* pExtendedTransferInfo);
 }
 
-@GUID("4db1ad10-3391-11d2-9a33-00c04fa36145")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiaitem
+@GUID("4db1ad10-3391-11d2-9a33-00c04fa36145")
 interface IWiaItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwiaitem-getitemtype
@@ -2254,9 +2254,9 @@ interface IWiaItem : IUnknown
     HRESULT Diagnostic(uint ulSize, ubyte* pBuffer);
 }
 
-@GUID("98b5e8a0-29cc-491a-aac0-e6db4fdcceb6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiapropertystorage
+@GUID("98b5e8a0-29cc-491a-aac0-e6db4fdcceb6")
 interface IWiaPropertyStorage : IUnknown
 {
     HRESULT ReadMultiple(uint cpspec, const(PROPSPEC)* rgpspec, PROPVARIANT* rgpropvar);
@@ -2282,9 +2282,9 @@ interface IWiaPropertyStorage : IUnknown
     HRESULT SetPropertyStream(GUID* pCompatibilityId, IStream pIStream);
 }
 
-@GUID("5e8383fc-3391-11d2-9a33-00c04fa36145")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-ienumwiaitem
+@GUID("5e8383fc-3391-11d2-9a33-00c04fa36145")
 interface IEnumWiaItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-ienumwiaitem-next
@@ -2299,9 +2299,9 @@ interface IEnumWiaItem : IUnknown
     HRESULT GetCount(uint* celt);
 }
 
-@GUID("1fcc4287-aca6-11d2-a093-00c04f72dc3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-ienumwia_dev_caps
+@GUID("1fcc4287-aca6-11d2-a093-00c04f72dc3c")
 interface IEnumWIA_DEV_CAPS : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-ienumwia_dev_caps-next
@@ -2316,9 +2316,9 @@ interface IEnumWIA_DEV_CAPS : IUnknown
     HRESULT GetCount(uint* pcelt);
 }
 
-@GUID("81befc5b-656d-44f1-b24c-d41d51b4dc81")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-ienumwia_format_info
+@GUID("81befc5b-656d-44f1-b24c-d41d51b4dc81")
 interface IEnumWIA_FORMAT_INFO : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-ienumwia_format_info-next
@@ -2333,9 +2333,9 @@ interface IEnumWIA_FORMAT_INFO : IUnknown
     HRESULT GetCount(uint* pcelt);
 }
 
-@GUID("a00c10b6-82a1-452f-8b6c-86062aad6890")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwialog
+@GUID("a00c10b6-82a1-452f-8b6c-86062aad6890")
 interface IWiaLog : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwialog-initializelog
@@ -2346,9 +2346,9 @@ interface IWiaLog : IUnknown
     HRESULT Log(int lFlags, int lResID, int lDetail, BSTR bstrText);
 }
 
-@GUID("af1f22ac-7a40-4787-b421-aeb47a1fbd0b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwialogex
+@GUID("af1f22ac-7a40-4787-b421-aeb47a1fbd0b")
 interface IWiaLogEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwialogex-initializelogex
@@ -2363,18 +2363,18 @@ interface IWiaLogEx : IUnknown
     HRESULT LogEx(int lMethodId, int lFlags, int lResID, int lDetail, BSTR bstrText);
 }
 
-@GUID("70681ea0-e7bf-4291-9fb1-4e8813a3f78e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwianotifydevmgr
+@GUID("70681ea0-e7bf-4291-9fb1-4e8813a3f78e")
 interface IWiaNotifyDevMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwianotifydevmgr-newdevicearrival
     HRESULT NewDeviceArrival();
 }
 
-@GUID("6291ef2c-36ef-4532-876a-8e132593778d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nn-wia_xp-iwiaitemextras
+@GUID("6291ef2c-36ef-4532-876a-8e132593778d")
 interface IWiaItemExtras : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/nf-wia_xp-iwiaitemextras-getextendederrorinfo
@@ -2386,8 +2386,8 @@ interface IWiaItemExtras : IUnknown
     HRESULT CancelPendingIO();
 }
 
-@GUID("6c16186c-d0a6-400c-80f4-d26986a0e734")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaapperrorhandler
+@GUID("6c16186c-d0a6-400c-80f4-d26986a0e734")
 interface IWiaAppErrorHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaapperrorhandler-getwindow
@@ -2396,8 +2396,8 @@ interface IWiaAppErrorHandler : IUnknown
     HRESULT ReportStatus(int lFlags, IWiaItem2 pWiaItem2, HRESULT hrStatus, int lPercentComplete);
 }
 
-@GUID("0e4a51b1-bc1f-443d-a835-72e890759ef3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaerrorhandler
+@GUID("0e4a51b1-bc1f-443d-a835-72e890759ef3")
 interface IWiaErrorHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaerrorhandler-reportstatus
@@ -2406,8 +2406,8 @@ interface IWiaErrorHandler : IUnknown
     HRESULT GetStatusDescription(int lFlags, IWiaItem2 pWiaItem2, HRESULT hrStatus, BSTR* pbstrDescription);
 }
 
-@GUID("c39d6942-2f4e-4d04-92fe-4ef4d3a1de5a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiatransfer
+@GUID("c39d6942-2f4e-4d04-92fe-4ef4d3a1de5a")
 interface IWiaTransfer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiatransfer-download
@@ -2420,8 +2420,8 @@ interface IWiaTransfer : IUnknown
     HRESULT EnumWIA_FORMAT_INFO(IEnumWIA_FORMAT_INFO* ppEnum);
 }
 
-@GUID("27d4eaaf-28a6-4ca5-9aab-e678168b9527")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiatransfercallback
+@GUID("27d4eaaf-28a6-4ca5-9aab-e678168b9527")
 interface IWiaTransferCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiatransfercallback-transfercallback
@@ -2430,16 +2430,16 @@ interface IWiaTransferCallback : IUnknown
     HRESULT GetNextStream(int lFlags, BSTR bstrItemName, BSTR bstrFullItemName, IStream* ppDestination);
 }
 
-@GUID("ec46a697-ac04-4447-8f65-ff63d5154b21")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiasegmentationfilter
+@GUID("ec46a697-ac04-4447-8f65-ff63d5154b21")
 interface IWiaSegmentationFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiasegmentationfilter-detectregions
     HRESULT DetectRegions(int lFlags, IStream pInputStream, IWiaItem2 pWiaItem2);
 }
 
-@GUID("a8a79ffa-450b-41f1-8f87-849ccd94ebf6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaimagefilter
+@GUID("a8a79ffa-450b-41f1-8f87-849ccd94ebf6")
 interface IWiaImageFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaimagefilter-initializefilter
@@ -2452,8 +2452,8 @@ interface IWiaImageFilter : IUnknown
     HRESULT ApplyProperties(IWiaPropertyStorage pWiaPropertyStorage);
 }
 
-@GUID("95c2b4fd-33f2-4d86-ad40-9431f0df08f7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiapreview
+@GUID("95c2b4fd-33f2-4d86-ad40-9431f0df08f7")
 interface IWiaPreview : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiapreview-getnewpreview
@@ -2466,8 +2466,8 @@ interface IWiaPreview : IUnknown
     HRESULT Clear();
 }
 
-@GUID("59970af4-cd0d-44d9-ab24-52295630e582")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-ienumwiaitem2
+@GUID("59970af4-cd0d-44d9-ab24-52295630e582")
 interface IEnumWiaItem2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-ienumwiaitem2-next
@@ -2482,8 +2482,8 @@ interface IEnumWiaItem2 : IUnknown
     HRESULT GetCount(uint* cElt);
 }
 
-@GUID("6cba0075-1287-407d-9b77-cf0e030435cc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaitem2
+@GUID("6cba0075-1287-407d-9b77-cf0e030435cc")
 interface IWiaItem2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiaitem2-createchilditem
@@ -2521,8 +2521,8 @@ interface IWiaItem2 : IUnknown
     HRESULT Diagnostic(uint ulSize, ubyte* pBuffer);
 }
 
-@GUID("79c07cf1-cbdd-41ee-8ec3-f00080cada7a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiadevmgr2
+@GUID("79c07cf1-cbdd-41ee-8ec3-f00080cada7a")
 interface IWiaDevMgr2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiadevmgr2-enumdeviceinfo
@@ -2627,9 +2627,9 @@ interface IWiaDrvItem : IUnknown
     HRESULT DumpItemData(BSTR* __MIDL__IWiaDrvItem0015);
 }
 
-@GUID("d52920aa-db88-41f0-946c-e00dc0a19cfa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wiavideo/nn-wiavideo-iwiavideo
+@GUID("d52920aa-db88-41f0-946c-e00dc0a19cfa")
 interface IWiaVideo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wiavideo/nf-wiavideo-iwiavideo-get_previewvisible
@@ -2663,8 +2663,8 @@ interface IWiaVideo : IUnknown
     HRESULT GetCurrentState(WIAVIDEO_STATE* pState);
 }
 
-@GUID("305600d7-5088-46d7-9a15-b77b09cdba7a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiauiextension2
+@GUID("305600d7-5088-46d7-9a15-b77b09cdba7a")
 interface IWiaUIExtension2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiauiextension2-devicedialog
@@ -2673,8 +2673,8 @@ interface IWiaUIExtension2 : IUnknown
     HRESULT GetDeviceIcon(BSTR bstrDeviceId, HICON* phIcon, uint nSize);
 }
 
-@GUID("da319113-50ee-4c80-b460-57d005d44a2c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiauiextension
+@GUID("da319113-50ee-4c80-b460-57d005d44a2c")
 interface IWiaUIExtension : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wia/-wia-iwiauiextension-devicedialog

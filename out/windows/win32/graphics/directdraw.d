@@ -5618,8 +5618,8 @@ interface IDirectDraw4 : IUnknown
     HRESULT GetDeviceIdentifier(DDDEVICEIDENTIFIER* param0, uint param1);
 }
 
-@GUID("15e65ec0-3b9c-11d2-b92f-00609797ea5b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdraw7
+@GUID("15e65ec0-3b9c-11d2-b92f-00609797ea5b")
 interface IDirectDraw7 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-compact
@@ -5678,8 +5678,8 @@ interface IDirectDraw7 : IUnknown
     HRESULT EvaluateMode(uint param0, uint* param1);
 }
 
-@GUID("6c14db84-a733-11ce-a521-0020af0be560")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawpalette
+@GUID("6c14db84-a733-11ce-a521-0020af0be560")
 interface IDirectDrawPalette : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-getcaps
@@ -5692,8 +5692,8 @@ interface IDirectDrawPalette : IUnknown
     HRESULT SetEntries(uint param0, uint param1, uint param2, PALETTEENTRY* param3);
 }
 
-@GUID("6c14db85-a733-11ce-a521-0020af0be560")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawclipper
+@GUID("6c14db85-a733-11ce-a521-0020af0be560")
 interface IDirectDrawClipper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-getcliplist
@@ -5878,8 +5878,8 @@ interface IDirectDrawSurface4 : IUnknown
     HRESULT ChangeUniquenessValue();
 }
 
-@GUID("06675a80-3b9b-11d2-b92f-00609797ea5b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawsurface7
+@GUID("06675a80-3b9b-11d2-b92f-00609797ea5b")
 interface IDirectDrawSurface7 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-addattachedsurface
@@ -5976,8 +5976,8 @@ interface IDirectDrawSurface7 : IUnknown
     HRESULT GetLOD(uint* param0);
 }
 
-@GUID("4b9f0ee0-0d7e-11d0-9b06-00a0c903a3b8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawcolorcontrol
+@GUID("4b9f0ee0-0d7e-11d0-9b06-00a0c903a3b8")
 interface IDirectDrawColorControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawcolorcontrol-getcolorcontrols
@@ -5986,8 +5986,8 @@ interface IDirectDrawColorControl : IUnknown
     HRESULT SetColorControls(DDCOLORCONTROL* param0);
 }
 
-@GUID("69c11c3e-b46b-11d1-ad7a-00c04fc29b4e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawgammacontrol
+@GUID("69c11c3e-b46b-11d1-ad7a-00c04fc29b4e")
 interface IDirectDrawGammaControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawgammacontrol-getgammaramp
@@ -6032,8 +6032,8 @@ interface IDirectDrawVideoPortNotify : IUnknown
     HRESULT ReleaseNotification(HANDLE param0);
 }
 
-@GUID("8d56c120-6a08-11d0-9b06-00a0c903a3b8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nn-ddkernel-idirectdrawkernel
+@GUID("8d56c120-6a08-11d0-9b06-00a0c903a3b8")
 interface IDirectDrawKernel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-getcaps
@@ -6044,8 +6044,8 @@ interface IDirectDrawKernel : IUnknown
     HRESULT ReleaseKernelHandle();
 }
 
-@GUID("60755da0-6a40-11d0-9b06-00a0c903a3b8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nn-ddkernel-idirectdrawsurfacekernel
+@GUID("60755da0-6a40-11d0-9b06-00a0c903a3b8")
 interface IDirectDrawSurfaceKernel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawsurfacekernel-getkernelhandle

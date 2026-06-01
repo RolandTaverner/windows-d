@@ -3806,24 +3806,30 @@ void DsGetDcCloseW(HANDLE GetDcContextHandle);
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyentry
 @GUID("72d3edc2-a4c4-11d0-8533-00c04fd8d503")
 struct PropertyEntry;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue
 @GUID("7b9e38b0-a97c-11d0-8534-00c04fd8d503")
 struct PropertyValue;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrolentry
 @GUID("b75ac000-9bdd-11d0-852c-00c04fd8d503")
 struct AccessControlEntry;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrollist
 @GUID("b85ea052-9bdd-11d0-852c-00c04fd8d503")
 struct AccessControlList;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/TaskSchd/taskschedulerschema-securitydescriptor-registrationinfotype-element
 @GUID("b958f73c-9bdd-11d0-852c-00c04fd8d503")
 struct SecurityDescriptor;
 
 @GUID("927971f5-0939-11d1-8be1-00c04fd8d503")
 struct LargeInteger;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnametranslate
 @GUID("274fae1f-3626-11d1-a3a4-00c04fb950dc")
 struct NameTranslate;
 
@@ -3833,57 +3839,70 @@ struct CaseIgnoreList;
 @GUID("a5062215-4681-11d1-a3b4-00c04fb950dc")
 struct FaxNumber;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnetaddress
 @GUID("b0b71247-4080-11d1-a3ac-00c04fb950dc")
 struct NetAddress;
 
 @GUID("1241400f-4680-11d1-a3b4-00c04fb950dc")
 struct OctetList;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsemail
 @GUID("8f92a857-478e-11d1-a3b4-00c04fb950dc")
 struct Email;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/path-element
 @GUID("b2538919-4080-11d1-a3ac-00c04fb950dc")
 struct Path;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsreplicapointer
 @GUID("f5d1badf-4080-11d1-a3ac-00c04fb950dc")
 struct ReplicaPointer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstimestamp
 @GUID("b2bed2eb-4080-11d1-a3ac-00c04fb950dc")
 struct Timestamp;
 
 @GUID("0a75afcd-4680-11d1-a3b4-00c04fb950dc")
 struct PostalAddress;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsbacklink
 @GUID("fcbf906f-4080-11d1-a3ac-00c04fb950dc")
 struct BackLink;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstypedname
 @GUID("b33143cb-4080-11d1-a3ac-00c04fb950dc")
 struct TypedName;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadshold
 @GUID("b3ad3e13-4080-11d1-a3ac-00c04fb950dc")
 struct Hold;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspathname
 @GUID("080d0d78-f421-11d0-a36e-00c04fb950dc")
 struct Pathname;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsadsysteminfo
 @GUID("50b6327f-afd1-11d2-9cb9-0000f87a369e")
 struct ADSystemInfo;
 
 @GUID("66182ec4-afd1-11d2-9cb9-0000f87a369e")
 struct WinNTSystemInfo;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithbinary
 @GUID("7e99c0a3-f935-11d2-ba96-00c04fb6d0d1")
 struct DNWithBinary;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithstring
 @GUID("334857cc-f934-11d2-ba96-00c04fb6d0d1")
 struct DNWithString;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecuritydescriptor
 @GUID("f270c64a-ffb8-4ae4-85fe-3a75e5347966")
 struct ADsSecurityUtility;
 
-@GUID("8cfcee30-39bd-11d0-b8d1-00a024ab2dbb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-iqueryform
+@GUID("8cfcee30-39bd-11d0-b8d1-00a024ab2dbb")
 interface IQueryForm : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-initialize
@@ -3894,9 +3913,9 @@ interface IQueryForm : IUnknown
     HRESULT AddPages(LPCQADDPAGESPROC pAddPagesProc, LPARAM lParam);
 }
 
-@GUID("1a3114b8-a62e-11d0-a6c5-00a0c906af45")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-ipersistquery
+@GUID("1a3114b8-a62e-11d0-a6c5-00a0c906af45")
 interface IPersistQuery : IPersist
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writestring
@@ -3915,18 +3934,18 @@ interface IPersistQuery : IPersist
     HRESULT Clear();
 }
 
-@GUID("ab50dec0-6f1d-11d0-a1c4-00aa00c16e65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-icommonquery
+@GUID("ab50dec0-6f1d-11d0-a1c4-00aa00c16e65")
 interface ICommonQuery : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-icommonquery-openquerywindow
     HRESULT OpenQueryWindow(HWND hwndParent, OPENQUERYWINDOW* pQueryWnd, IDataObject* ppDataObject);
 }
 
-@GUID("fd8256d0-fd15-11ce-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iads
+@GUID("fd8256d0-fd15-11ce-abc4-02608c9e7553")
 interface IADs : IDispatch
 {
     HRESULT get_Name(BSTR* retval);
@@ -3951,9 +3970,9 @@ interface IADs : IDispatch
     HRESULT GetInfoEx(VARIANT vProperties, int lnReserved);
 }
 
-@GUID("001677d0-fd16-11ce-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscontainer
+@GUID("001677d0-fd16-11ce-abc4-02608c9e7553")
 interface IADsContainer : IDispatch
 {
     HRESULT get_Count(int* retval);
@@ -3975,9 +3994,9 @@ interface IADsContainer : IDispatch
     HRESULT MoveHere(BSTR SourceName, BSTR NewName, IDispatch* ppObject);
 }
 
-@GUID("72b945e0-253b-11cf-a988-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscollection
+@GUID("72b945e0-253b-11cf-a988-00aa006bc149")
 interface IADsCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-get__newenum
@@ -3990,9 +4009,9 @@ interface IADsCollection : IDispatch
     HRESULT GetObject(BSTR bstrName, VARIANT* pvItem);
 }
 
-@GUID("451a0030-72ec-11cf-b03b-00aa006e0975")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsmembers
+@GUID("451a0030-72ec-11cf-b03b-00aa006e0975")
 interface IADsMembers : IDispatch
 {
     HRESULT get_Count(int* plCount);
@@ -4002,9 +4021,9 @@ interface IADsMembers : IDispatch
     HRESULT put_Filter(VARIANT pvFilter);
 }
 
-@GUID("c6f602b6-8f69-11d0-8528-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertylist
+@GUID("c6f602b6-8f69-11d0-8528-00c04fd8d503")
 interface IADsPropertyList : IDispatch
 {
     HRESULT get_PropertyCount(int* plCount);
@@ -4026,9 +4045,9 @@ interface IADsPropertyList : IDispatch
     HRESULT PurgePropertyList();
 }
 
-@GUID("05792c8e-941f-11d0-8529-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyentry
+@GUID("05792c8e-941f-11d0-8529-00c04fd8d503")
 interface IADsPropertyEntry : IDispatch
 {
     HRESULT Clear();
@@ -4042,9 +4061,9 @@ interface IADsPropertyEntry : IDispatch
     HRESULT put_Values(VARIANT vValues);
 }
 
-@GUID("79fa9ad0-a97c-11d0-8534-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue
+@GUID("79fa9ad0-a97c-11d0-8534-00c04fd8d503")
 interface IADsPropertyValue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue-clear
@@ -4075,9 +4094,9 @@ interface IADsPropertyValue : IDispatch
     HRESULT put_UTCTime(double daUTCTime);
 }
 
-@GUID("306e831c-5bc7-11d1-a3b8-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue2
+@GUID("306e831c-5bc7-11d1-a3b8-00c04fb950dc")
 interface IADsPropertyValue2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue2-getobjectproperty
@@ -4104,9 +4123,9 @@ interface IPrivateUnknown : IUnknown
     HRESULT ADSIReleaseObject();
 }
 
-@GUID("3d35553c-d2b0-11d1-b17b-0000f87593a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsextension
+@GUID("3d35553c-d2b0-11d1-b17b-0000f87593a0")
 interface IADsExtension : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-operate
@@ -4118,27 +4137,27 @@ interface IADsExtension : IUnknown
                           VARIANT* pvarResult, EXCEPINFO* pexcepinfo, uint* puArgErr);
 }
 
-@GUID("b2bd0902-8878-11d1-8c21-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdeleteops
+@GUID("b2bd0902-8878-11d1-8c21-00c04fd8d503")
 interface IADsDeleteOps : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsdeleteops-deleteobject
     HRESULT DeleteObject(int lnFlags);
 }
 
-@GUID("28b96ba0-b330-11cf-a9ad-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnamespaces
+@GUID("28b96ba0-b330-11cf-a9ad-00aa006bc149")
 interface IADsNamespaces : IADs
 {
     HRESULT get_DefaultContainer(BSTR* retval);
     HRESULT put_DefaultContainer(BSTR bstrDefaultContainer);
 }
 
-@GUID("c8f93dd0-4ae0-11cf-9e73-00aa004a5691")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsclass
+@GUID("c8f93dd0-4ae0-11cf-9e73-00aa004a5691")
 interface IADsClass : IADs
 {
     HRESULT get_PrimaryInterface(BSTR* retval);
@@ -4174,9 +4193,9 @@ interface IADsClass : IADs
     HRESULT Qualifiers(IADsCollection* ppQualifiers);
 }
 
-@GUID("c8f93dd3-4ae0-11cf-9e73-00aa004a5691")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsproperty
+@GUID("c8f93dd3-4ae0-11cf-9e73-00aa004a5691")
 interface IADsProperty : IADs
 {
     HRESULT get_OID(BSTR* retval);
@@ -4193,18 +4212,18 @@ interface IADsProperty : IADs
     HRESULT Qualifiers(IADsCollection* ppQualifiers);
 }
 
-@GUID("c8f93dd2-4ae0-11cf-9e73-00aa004a5691")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssyntax
+@GUID("c8f93dd2-4ae0-11cf-9e73-00aa004a5691")
 interface IADsSyntax : IADs
 {
     HRESULT get_OleAutoDataType(int* retval);
     HRESULT put_OleAutoDataType(int lnOleAutoDataType);
 }
 
-@GUID("a05e03a2-effe-11cf-8abc-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadslocality
+@GUID("a05e03a2-effe-11cf-8abc-00c04fd8d503")
 interface IADsLocality : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4217,9 +4236,9 @@ interface IADsLocality : IADs
     HRESULT put_SeeAlso(VARIANT vSeeAlso);
 }
 
-@GUID("a1cd2dc6-effe-11cf-8abc-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadso
+@GUID("a1cd2dc6-effe-11cf-8abc-00c04fd8d503")
 interface IADsO : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4236,9 +4255,9 @@ interface IADsO : IADs
     HRESULT put_SeeAlso(VARIANT vSeeAlso);
 }
 
-@GUID("a2f733b8-effe-11cf-8abc-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsou
+@GUID("a2f733b8-effe-11cf-8abc-00c04fd8d503")
 interface IADsOU : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4257,9 +4276,9 @@ interface IADsOU : IADs
     HRESULT put_BusinessCategory(BSTR bstrBusinessCategory);
 }
 
-@GUID("00e4c220-fd16-11ce-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdomain
+@GUID("00e4c220-fd16-11ce-abc4-02608c9e7553")
 interface IADsDomain : IADs
 {
     HRESULT get_IsWorkgroup(VARIANT_BOOL* retval);
@@ -4281,9 +4300,9 @@ interface IADsDomain : IADs
     HRESULT put_LockoutObservationInterval(int lnLockoutObservationInterval);
 }
 
-@GUID("efe3cc70-1d9f-11cf-b1f3-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscomputer
+@GUID("efe3cc70-1d9f-11cf-b1f3-02608c9e7553")
 interface IADsComputer : IADs
 {
     HRESULT get_ComputerID(BSTR* retval);
@@ -4320,9 +4339,9 @@ interface IADsComputer : IADs
     HRESULT put_NetAddresses(VARIANT vNetAddresses);
 }
 
-@GUID("ef497680-1d9f-11cf-b1f3-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscomputeroperations
+@GUID("ef497680-1d9f-11cf-b1f3-02608c9e7553")
 interface IADsComputerOperations : IADs
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscomputeroperations-status
@@ -4331,9 +4350,9 @@ interface IADsComputerOperations : IADs
     HRESULT Shutdown(VARIANT_BOOL bReboot);
 }
 
-@GUID("27636b00-410f-11cf-b1ff-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsgroup
+@GUID("27636b00-410f-11cf-b1ff-02608c9e7553")
 interface IADsGroup : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4348,9 +4367,9 @@ interface IADsGroup : IADs
     HRESULT Remove(BSTR bstrItemToBeRemoved);
 }
 
-@GUID("3e37e320-17e2-11cf-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsuser
+@GUID("3e37e320-17e2-11cf-abc4-02608c9e7553")
 interface IADsUser : IADs
 {
     HRESULT get_BadLoginAddress(BSTR* retval);
@@ -4449,9 +4468,9 @@ interface IADsUser : IADs
     HRESULT ChangePassword(BSTR bstrOldPassword, BSTR bstrNewPassword);
 }
 
-@GUID("b15160d0-1226-11cf-a985-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintqueue
+@GUID("b15160d0-1226-11cf-a985-00aa006bc149")
 interface IADsPrintQueue : IADs
 {
     HRESULT get_PrinterPath(BSTR* retval);
@@ -4482,9 +4501,9 @@ interface IADsPrintQueue : IADs
     HRESULT put_NetAddresses(VARIANT vNetAddresses);
 }
 
-@GUID("124be5c0-156e-11cf-a986-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintqueueoperations
+@GUID("124be5c0-156e-11cf-a986-00aa006bc149")
 interface IADsPrintQueueOperations : IADs
 {
     HRESULT get_Status(int* retval);
@@ -4498,9 +4517,9 @@ interface IADsPrintQueueOperations : IADs
     HRESULT Purge();
 }
 
-@GUID("32fb6780-1ed0-11cf-a988-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintjob
+@GUID("32fb6780-1ed0-11cf-a988-00aa006bc149")
 interface IADsPrintJob : IADs
 {
     HRESULT get_HostPrintQueue(BSTR* retval);
@@ -4523,9 +4542,9 @@ interface IADsPrintJob : IADs
     HRESULT put_NotifyPath(BSTR bstrNotifyPath);
 }
 
-@GUID("9a52db30-1ecf-11cf-a988-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintjoboperations
+@GUID("9a52db30-1ecf-11cf-a988-00aa006bc149")
 interface IADsPrintJobOperations : IADs
 {
     HRESULT get_Status(int* retval);
@@ -4539,9 +4558,9 @@ interface IADsPrintJobOperations : IADs
     HRESULT Resume();
 }
 
-@GUID("68af66e0-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsservice
+@GUID("68af66e0-31ca-11cf-a98a-00aa006bc149")
 interface IADsService : IADs
 {
     HRESULT get_HostComputer(BSTR* retval);
@@ -4570,9 +4589,9 @@ interface IADsService : IADs
     HRESULT put_Dependencies(VARIANT vDependencies);
 }
 
-@GUID("5d7b33f0-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsserviceoperations
+@GUID("5d7b33f0-31ca-11cf-a98a-00aa006bc149")
 interface IADsServiceOperations : IADs
 {
     HRESULT get_Status(int* retval);
@@ -4588,9 +4607,9 @@ interface IADsServiceOperations : IADs
     HRESULT SetPassword(BSTR bstrNewPassword);
 }
 
-@GUID("a89d1900-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileservice
+@GUID("a89d1900-31ca-11cf-a98a-00aa006bc149")
 interface IADsFileService : IADsService
 {
     HRESULT get_Description(BSTR* retval);
@@ -4599,9 +4618,9 @@ interface IADsFileService : IADsService
     HRESULT put_MaxUserCount(int lnMaxUserCount);
 }
 
-@GUID("a02ded10-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileserviceoperations
+@GUID("a02ded10-31ca-11cf-a98a-00aa006bc149")
 interface IADsFileServiceOperations : IADsServiceOperations
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsfileserviceoperations-sessions
@@ -4610,9 +4629,9 @@ interface IADsFileServiceOperations : IADsServiceOperations
     HRESULT Resources(IADsCollection* ppResources);
 }
 
-@GUID("eb6dcaf0-4b83-11cf-a995-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileshare
+@GUID("eb6dcaf0-4b83-11cf-a995-00aa006bc149")
 interface IADsFileShare : IADs
 {
     HRESULT get_CurrentUserCount(int* retval);
@@ -4626,9 +4645,9 @@ interface IADsFileShare : IADs
     HRESULT put_MaxUserCount(int lnMaxUserCount);
 }
 
-@GUID("398b7da0-4aab-11cf-ae2c-00aa006ebfb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssession
+@GUID("398b7da0-4aab-11cf-ae2c-00aa006ebfb9")
 interface IADsSession : IADs
 {
     HRESULT get_User(BSTR* retval);
@@ -4639,9 +4658,9 @@ interface IADsSession : IADs
     HRESULT get_IdleTime(int* retval);
 }
 
-@GUID("34a05b20-4aab-11cf-ae2c-00aa006ebfb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsresource
+@GUID("34a05b20-4aab-11cf-ae2c-00aa006ebfb9")
 interface IADsResource : IADs
 {
     HRESULT get_User(BSTR* retval);
@@ -4650,9 +4669,9 @@ interface IADsResource : IADs
     HRESULT get_LockCount(int* retval);
 }
 
-@GUID("ddf2891e-0f9c-11d0-8ad4-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsopendsobject
+@GUID("ddf2891e-0f9c-11d0-8ad4-00c04fd8d503")
 interface IADsOpenDSObject : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsopendsobject-opendsobject
@@ -4660,9 +4679,9 @@ interface IADsOpenDSObject : IDispatch
                          IDispatch* ppOleDsObj);
 }
 
-@GUID("e798de2c-22e4-11d0-84fe-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryobject
+@GUID("e798de2c-22e4-11d0-84fe-00c04fd8d503")
 interface IDirectoryObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-getobjectinformation
@@ -4680,9 +4699,9 @@ interface IDirectoryObject : IUnknown
     HRESULT DeleteDSObject(PWSTR pszRDNName);
 }
 
-@GUID("109ba8ec-92f0-11d0-a790-00c04fd8d5a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectorysearch
+@GUID("109ba8ec-92f0-11d0-a790-00c04fd8d5a8")
 interface IDirectorySearch : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-setsearchpreference
@@ -4708,9 +4727,9 @@ interface IDirectorySearch : IUnknown
     HRESULT CloseSearchHandle(ADS_SEARCH_HANDLE hSearchResult);
 }
 
-@GUID("75db3b9c-a4d8-11d0-a79c-00c04fd8d5a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
+@GUID("75db3b9c-a4d8-11d0-a79c-00c04fd8d5a8")
 interface IDirectorySchemaMgmt : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
@@ -4749,9 +4768,9 @@ interface IADsAggregator : IUnknown
     HRESULT DisconnectAsAggregator();
 }
 
-@GUID("b4f3a14c-9bdd-11d0-852c-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrolentry
+@GUID("b4f3a14c-9bdd-11d0-852c-00c04fd8d503")
 interface IADsAccessControlEntry : IDispatch
 {
     HRESULT get_AccessMask(int* retval);
@@ -4770,9 +4789,9 @@ interface IADsAccessControlEntry : IDispatch
     HRESULT put_Trustee(BSTR bstrTrustee);
 }
 
-@GUID("b7ee91cc-9bdd-11d0-852c-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrollist
+@GUID("b7ee91cc-9bdd-11d0-852c-00c04fd8d503")
 interface IADsAccessControlList : IDispatch
 {
     HRESULT get_AclRevision(int* retval);
@@ -4789,9 +4808,9 @@ interface IADsAccessControlList : IDispatch
     HRESULT get__NewEnum(IUnknown* retval);
 }
 
-@GUID("b8c787ca-9bdd-11d0-852c-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecuritydescriptor
+@GUID("b8c787ca-9bdd-11d0-852c-00c04fd8d503")
 interface IADsSecurityDescriptor : IDispatch
 {
     HRESULT get_Revision(int* retval);
@@ -4818,9 +4837,9 @@ interface IADsSecurityDescriptor : IDispatch
     HRESULT CopySecurityDescriptor(IDispatch* ppSecurityDescriptor);
 }
 
-@GUID("9068270b-0939-11d1-8be1-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadslargeinteger
+@GUID("9068270b-0939-11d1-8be1-00c04fd8d503")
 interface IADsLargeInteger : IDispatch
 {
     HRESULT get_HighPart(int* retval);
@@ -4829,9 +4848,9 @@ interface IADsLargeInteger : IDispatch
     HRESULT put_LowPart(int lnLowPart);
 }
 
-@GUID("b1b272a3-3625-11d1-a3a4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnametranslate
+@GUID("b1b272a3-3625-11d1-a3a4-00c04fb950dc")
 interface IADsNameTranslate : IDispatch
 {
     HRESULT put_ChaseReferral(int lnChaseReferral);
@@ -4849,18 +4868,18 @@ interface IADsNameTranslate : IDispatch
     HRESULT GetEx(int lnFormatType, VARIANT* pvar);
 }
 
-@GUID("7b66b533-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscaseignorelist
+@GUID("7b66b533-4680-11d1-a3b4-00c04fb950dc")
 interface IADsCaseIgnoreList : IDispatch
 {
     HRESULT get_CaseIgnoreList(VARIANT* retval);
     HRESULT put_CaseIgnoreList(VARIANT vCaseIgnoreList);
 }
 
-@GUID("a910dea9-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfaxnumber
+@GUID("a910dea9-4680-11d1-a3b4-00c04fb950dc")
 interface IADsFaxNumber : IDispatch
 {
     HRESULT get_TelephoneNumber(BSTR* retval);
@@ -4869,9 +4888,9 @@ interface IADsFaxNumber : IDispatch
     HRESULT put_Parameters(VARIANT vParameters);
 }
 
-@GUID("b21a50a9-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnetaddress
+@GUID("b21a50a9-4080-11d1-a3ac-00c04fb950dc")
 interface IADsNetAddress : IDispatch
 {
     HRESULT get_AddressType(int* retval);
@@ -4880,18 +4899,18 @@ interface IADsNetAddress : IDispatch
     HRESULT put_Address(VARIANT vAddress);
 }
 
-@GUID("7b28b80f-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsoctetlist
+@GUID("7b28b80f-4680-11d1-a3b4-00c04fb950dc")
 interface IADsOctetList : IDispatch
 {
     HRESULT get_OctetList(VARIANT* retval);
     HRESULT put_OctetList(VARIANT vOctetList);
 }
 
-@GUID("97af011a-478e-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsemail
+@GUID("97af011a-478e-11d1-a3b4-00c04fb950dc")
 interface IADsEmail : IDispatch
 {
     HRESULT get_Type(int* retval);
@@ -4900,9 +4919,9 @@ interface IADsEmail : IDispatch
     HRESULT put_Address(BSTR bstrAddress);
 }
 
-@GUID("b287fcd5-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspath
+@GUID("b287fcd5-4080-11d1-a3ac-00c04fb950dc")
 interface IADsPath : IDispatch
 {
     HRESULT get_Type(int* retval);
@@ -4913,9 +4932,9 @@ interface IADsPath : IDispatch
     HRESULT put_Path(BSTR bstrPath);
 }
 
-@GUID("f60fb803-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsreplicapointer
+@GUID("f60fb803-4080-11d1-a3ac-00c04fb950dc")
 interface IADsReplicaPointer : IDispatch
 {
     HRESULT get_ServerName(BSTR* retval);
@@ -4930,9 +4949,9 @@ interface IADsReplicaPointer : IDispatch
     HRESULT put_ReplicaAddressHints(VARIANT vReplicaAddressHints);
 }
 
-@GUID("8452d3ab-0869-11d1-a377-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsacl
+@GUID("8452d3ab-0869-11d1-a377-00c04fb950dc")
 interface IADsAcl : IDispatch
 {
     HRESULT get_ProtectedAttrName(BSTR* retval);
@@ -4945,9 +4964,9 @@ interface IADsAcl : IDispatch
     HRESULT CopyAcl(IDispatch* ppAcl);
 }
 
-@GUID("b2f5a901-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstimestamp
+@GUID("b2f5a901-4080-11d1-a3ac-00c04fb950dc")
 interface IADsTimestamp : IDispatch
 {
     HRESULT get_WholeSeconds(int* retval);
@@ -4956,18 +4975,18 @@ interface IADsTimestamp : IDispatch
     HRESULT put_EventID(int lnEventID);
 }
 
-@GUID("7adecf29-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspostaladdress
+@GUID("7adecf29-4680-11d1-a3b4-00c04fb950dc")
 interface IADsPostalAddress : IDispatch
 {
     HRESULT get_PostalAddress(VARIANT* retval);
     HRESULT put_PostalAddress(VARIANT vPostalAddress);
 }
 
-@GUID("fd1302bd-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsbacklink
+@GUID("fd1302bd-4080-11d1-a3ac-00c04fb950dc")
 interface IADsBackLink : IDispatch
 {
     HRESULT get_RemoteID(int* retval);
@@ -4976,9 +4995,9 @@ interface IADsBackLink : IDispatch
     HRESULT put_ObjectName(BSTR bstrObjectName);
 }
 
-@GUID("b371a349-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstypedname
+@GUID("b371a349-4080-11d1-a3ac-00c04fb950dc")
 interface IADsTypedName : IDispatch
 {
     HRESULT get_ObjectName(BSTR* retval);
@@ -4989,9 +5008,9 @@ interface IADsTypedName : IDispatch
     HRESULT put_Interval(int lnInterval);
 }
 
-@GUID("b3eb3b37-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadshold
+@GUID("b3eb3b37-4080-11d1-a3ac-00c04fb950dc")
 interface IADsHold : IDispatch
 {
     HRESULT get_ObjectName(BSTR* retval);
@@ -5000,9 +5019,9 @@ interface IADsHold : IDispatch
     HRESULT put_Amount(int lnAmount);
 }
 
-@GUID("46f14fda-232b-11d1-a808-00c04fd8d5a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsobjectoptions
+@GUID("46f14fda-232b-11d1-a808-00c04fd8d5a8")
 interface IADsObjectOptions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsobjectoptions-getoption
@@ -5011,9 +5030,9 @@ interface IADsObjectOptions : IDispatch
     HRESULT SetOption(int lnOption, VARIANT vValue);
 }
 
-@GUID("d592aed4-f420-11d0-a36e-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspathname
+@GUID("d592aed4-f420-11d0-a36e-00c04fb950dc")
 interface IADsPathname : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-set
@@ -5038,9 +5057,9 @@ interface IADsPathname : IDispatch
     HRESULT put_EscapedMode(int lnEscapedMode);
 }
 
-@GUID("5bb11929-afd1-11d2-9cb9-0000f87a369e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsadsysteminfo
+@GUID("5bb11929-afd1-11d2-9cb9-0000f87a369e")
 interface IADsADSystemInfo : IDispatch
 {
     HRESULT get_UserName(BSTR* retval);
@@ -5062,9 +5081,9 @@ interface IADsADSystemInfo : IDispatch
     HRESULT GetTrees(VARIANT* pvTrees);
 }
 
-@GUID("6c6d65dc-afd1-11d2-9cb9-0000f87a369e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadswinntsysteminfo
+@GUID("6c6d65dc-afd1-11d2-9cb9-0000f87a369e")
 interface IADsWinNTSystemInfo : IDispatch
 {
     HRESULT get_UserName(BSTR* retval);
@@ -5073,9 +5092,9 @@ interface IADsWinNTSystemInfo : IDispatch
     HRESULT get_PDC(BSTR* retval);
 }
 
-@GUID("7e99c0a2-f935-11d2-ba96-00c04fb6d0d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithbinary
+@GUID("7e99c0a2-f935-11d2-ba96-00c04fb6d0d1")
 interface IADsDNWithBinary : IDispatch
 {
     HRESULT get_BinaryValue(VARIANT* retval);
@@ -5084,9 +5103,9 @@ interface IADsDNWithBinary : IDispatch
     HRESULT put_DNString(BSTR bstrDNString);
 }
 
-@GUID("370df02e-f934-11d2-ba96-00c04fb6d0d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithstring
+@GUID("370df02e-f934-11d2-ba96-00c04fb6d0d1")
 interface IADsDNWithString : IDispatch
 {
     HRESULT get_StringValue(BSTR* retval);
@@ -5095,9 +5114,9 @@ interface IADsDNWithString : IDispatch
     HRESULT put_DNString(BSTR bstrDNString);
 }
 
-@GUID("a63251b2-5f21-474b-ab52-4a8efad10895")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecurityutility
+@GUID("a63251b2-5f21-474b-ab52-4a8efad10895")
 interface IADsSecurityUtility : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-getsecuritydescriptor
@@ -5112,9 +5131,9 @@ interface IADsSecurityUtility : IDispatch
     HRESULT put_SecurityMask(int lnSecurityMask);
 }
 
-@GUID("7cabcf1e-78f5-11d2-960c-00c04fa31a86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nn-dsclient-idsbrowsedomaintree
+@GUID("7cabcf1e-78f5-11d2-960c-00c04fa31a86")
 interface IDsBrowseDomainTree : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-browseto
@@ -5129,9 +5148,9 @@ interface IDsBrowseDomainTree : IUnknown
     HRESULT SetComputer(const(PWSTR) pszComputerName, const(PWSTR) pszUserName, const(PWSTR) pszPassword);
 }
 
-@GUID("1ab4a8c0-6a0b-11d2-ad49-00c04fa31a86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nn-dsclient-idsdisplayspecifier
+@GUID("1ab4a8c0-6a0b-11d2-ad49-00c04fa31a86")
 interface IDsDisplaySpecifier : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-setserver
@@ -5159,9 +5178,9 @@ interface IDsDisplaySpecifier : IUnknown
     ADSTYPE GetAttributeADsType(const(PWSTR) pszAttributeName);
 }
 
-@GUID("0c87e64e-3b7a-11d2-b9e0-00c04fd8dbf7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nn-objsel-idsobjectpicker
+@GUID("0c87e64e-3b7a-11d2-b9e0-00c04fd8dbf7")
 interface IDsObjectPicker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpicker-initialize
@@ -5170,18 +5189,18 @@ interface IDsObjectPicker : IUnknown
     HRESULT InvokeDialog(HWND hwndParent, IDataObject* ppdoSelections);
 }
 
-@GUID("e2d3ec9b-d041-445a-8f16-4748de8fb1cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nn-objsel-idsobjectpickercredentials
+@GUID("e2d3ec9b-d041-445a-8f16-4748de8fb1cf")
 interface IDsObjectPickerCredentials : IDsObjectPicker
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpickercredentials-setcredentials
     HRESULT SetCredentials(const(PWSTR) szUserName, const(PWSTR) szPassword);
 }
 
-@GUID("53554a38-f902-11d2-82b9-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadmincreateobj
+@GUID("53554a38-f902-11d2-82b9-00c04f68928b")
 interface IDsAdminCreateObj : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadmincreateobj-initialize
@@ -5190,9 +5209,9 @@ interface IDsAdminCreateObj : IUnknown
     HRESULT CreateModal(HWND hwndParent, IADs* ppADsObj);
 }
 
-@GUID("f2573587-e6fc-11d2-82af-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobj
+@GUID("f2573587-e6fc-11d2-82af-00c04f68928b")
 interface IDsAdminNewObj : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobj-setbuttons
@@ -5201,9 +5220,9 @@ interface IDsAdminNewObj : IUnknown
     HRESULT GetPageCounts(int* pnTotal, int* pnStartIndex);
 }
 
-@GUID("be2b487e-f904-11d2-82b9-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobjprimarysite
+@GUID("be2b487e-f904-11d2-82b9-00c04f68928b")
 interface IDsAdminNewObjPrimarySite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjprimarysite-createnew
@@ -5212,9 +5231,9 @@ interface IDsAdminNewObjPrimarySite : IUnknown
     HRESULT Commit();
 }
 
-@GUID("6088eae2-e7bf-11d2-82af-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobjext
+@GUID("6088eae2-e7bf-11d2-82af-00c04f68928b")
 interface IDsAdminNewObjExt : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-initialize
@@ -5232,9 +5251,9 @@ interface IDsAdminNewObjExt : IUnknown
     HRESULT GetSummaryInfo(BSTR* pBstrText);
 }
 
-@GUID("e4a2b8b3-5a18-11d2-97c1-00a0c9a06d2d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnotifyhandler
+@GUID("e4a2b8b3-5a18-11d2-97c1-00a0c9a06d2d")
 interface IDsAdminNotifyHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-initialize

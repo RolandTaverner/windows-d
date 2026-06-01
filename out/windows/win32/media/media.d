@@ -294,9 +294,9 @@ uint timeKillEvent(uint uTimerID);
 
 // Interfaces
 
-@GUID("56a86897-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/ireferenceclock
+@GUID("56a86897-0ad4-11ce-b03a-0020af0ba770")
 interface IReferenceClock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/ireferenceclock-gettime
@@ -309,9 +309,9 @@ interface IReferenceClock : IUnknown
     HRESULT Unadvise(size_t dwAdviseCookie);
 }
 
-@GUID("ebec459c-2eca-4d42-a8af-30df557614b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ireferenceclocktimercontrol
+@GUID("ebec459c-2eca-4d42-a8af-30df557614b8")
 interface IReferenceClockTimerControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ireferenceclocktimercontrol-setdefaulttimerresolution

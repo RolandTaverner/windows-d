@@ -499,8 +499,8 @@ struct APO_NOTIFICATION_DESCRIPTOR
 
 // Interfaces
 
-@GUID("4e997f73-b71f-4798-873b-ed7dfcf15b4d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nn-audiomediatype-iaudiomediatype
+@GUID("4e997f73-b71f-4798-873b-ed7dfcf15b4d")
 interface IAudioMediaType : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-iscompressedformat
@@ -513,8 +513,8 @@ interface IAudioMediaType : IUnknown
     HRESULT GetUncompressedAudioFormat(UNCOMPRESSEDAUDIOFORMAT* pUncompressedAudioFormat);
 }
 
-@GUID("9e1d6a6d-ddbc-4e95-a4c7-ad64ba37846c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobjectrt
+@GUID("9e1d6a6d-ddbc-4e95-a4c7-ad64ba37846c")
 interface IAudioProcessingObjectRT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-apoprocess
@@ -533,8 +533,8 @@ interface IAudioProcessingObjectVBR : IUnknown
     HRESULT CalcMaxOutputFrames(uint u32MaxInputFrameCount, uint* pu32OutputFrameCount);
 }
 
-@GUID("0e5ed805-aba6-49c3-8f9a-2b8c889c4fa8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobjectconfiguration
+@GUID("0e5ed805-aba6-49c3-8f9a-2b8c889c4fa8")
 interface IAudioProcessingObjectConfiguration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectconfiguration-lockforprocess
@@ -544,8 +544,8 @@ interface IAudioProcessingObjectConfiguration : IUnknown
     HRESULT UnlockForProcess();
 }
 
-@GUID("fd7f2b29-24d0-4b5c-b177-592c39f9ca10")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobject
+@GUID("fd7f2b29-24d0-4b5c-b177-592c39f9ca10")
 interface IAudioProcessingObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-reset
@@ -566,30 +566,30 @@ interface IAudioProcessingObject : IUnknown
     HRESULT GetInputChannelCount(uint* pu32ChannelCount);
 }
 
-@GUID("98f37dac-d0b6-49f5-896a-aa4d169a4c48")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiodevicemodulesclient
+@GUID("98f37dac-d0b6-49f5-896a-aa4d169a4c48")
 interface IAudioDeviceModulesClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiodevicemodulesclient-setaudiodevicemodulesmanager
     HRESULT SetAudioDeviceModulesManager(IUnknown pAudioDeviceModulesManager);
 }
 
-@GUID("5fa00f27-add6-499a-8a9d-6b98521fa75b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffects
+@GUID("5fa00f27-add6-499a-8a9d-6b98521fa75b")
 interface IAudioSystemEffects : IUnknown
 {
 }
 
-@GUID("bafe99d2-7436-44ce-9e0e-4d89afbfff56")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffects2
+@GUID("bafe99d2-7436-44ce-9e0e-4d89afbfff56")
 interface IAudioSystemEffects2 : IAudioSystemEffects
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffects2-geteffectslist
     HRESULT GetEffectsList(GUID** ppEffectsIds, uint* pcEffects, HANDLE Event);
 }
 
-@GUID("b1176e34-bb7f-4f05-bebd-1b18a534e097")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffectscustomformats
+@GUID("b1176e34-bb7f-4f05-bebd-1b18a534e097")
 interface IAudioSystemEffectsCustomFormats : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformatcount
@@ -600,8 +600,8 @@ interface IAudioSystemEffectsCustomFormats : IUnknown
     HRESULT GetFormatRepresentation(uint nFormat, PWSTR* ppwstrFormatRep);
 }
 
-@GUID("4ceb0aab-fa19-48ed-a857-87771ae1b768")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoauxiliaryinputconfiguration
+@GUID("4ceb0aab-fa19-48ed-a857-87771ae1b768")
 interface IApoAuxiliaryInputConfiguration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-addauxiliaryinput
@@ -613,16 +613,16 @@ interface IApoAuxiliaryInputConfiguration : IUnknown
     HRESULT IsInputFormatSupported(IAudioMediaType pRequestedInputFormat, IAudioMediaType* ppSupportedInputFormat);
 }
 
-@GUID("f851809c-c177-49a0-b1b2-b66f017943ab")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoauxiliaryinputrt
+@GUID("f851809c-c177-49a0-b1b2-b66f017943ab")
 interface IApoAuxiliaryInputRT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputrt-acceptinput
     void AcceptInput(uint dwInputId, const(APO_CONNECTION_PROPERTY)* pInputConnection);
 }
 
-@GUID("25385759-3236-4101-a943-25693dfb5d2d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoacousticechocancellation
+@GUID("25385759-3236-4101-a943-25693dfb5d2d")
 interface IApoAcousticEchoCancellation : IUnknown
 {
 }
@@ -633,8 +633,8 @@ interface IApoAcousticEchoCancellation2 : IApoAcousticEchoCancellation
     HRESULT GetDesiredReferenceStreamProperties(APO_REFERENCE_STREAM_PROPERTIES* pProperties);
 }
 
-@GUID("c58b31cd-fc6a-4255-bc1f-ad29bb0a4a17")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudiosystemeffects3
+@GUID("c58b31cd-fc6a-4255-bc1f-ad29bb0a4a17")
 interface IAudioSystemEffects3 : IAudioSystemEffects2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudiosystemeffects3-getcontrollablesystemeffectslist
@@ -643,16 +643,16 @@ interface IAudioSystemEffects3 : IAudioSystemEffects2
     HRESULT SetAudioSystemEffectState(GUID effectId, AUDIO_SYSTEMEFFECT_STATE state);
 }
 
-@GUID("acd65e2f-955b-4b57-b9bf-ac297bb752c9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectrtqueueservice
+@GUID("acd65e2f-955b-4b57-b9bf-ac297bb752c9")
 interface IAudioProcessingObjectRTQueueService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectrtqueueservice-getrealtimeworkqueue
     HRESULT GetRealTimeWorkQueue(uint* workQueueId);
 }
 
-@GUID("698f0107-1745-4708-95a5-d84478a62a65")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectloggingservice
+@GUID("698f0107-1745-4708-95a5-d84478a62a65")
 interface IAudioProcessingObjectLoggingService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectloggingservice-apolog
@@ -666,8 +666,8 @@ interface IAudioProcessingObjectPreferredFormatSupport : IUnknown
     HRESULT GetPreferredOutputFormat(IAudioMediaType inputFormat, IAudioMediaType* preferredFormat);
 }
 
-@GUID("56b0c76f-02fd-4b21-a52e-9f8219fc86e4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectnotifications
+@GUID("56b0c76f-02fd-4b21-a52e-9f8219fc86e4")
 interface IAudioProcessingObjectNotifications : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications-getaponotificationregistrationinfo
@@ -676,8 +676,8 @@ interface IAudioProcessingObjectNotifications : IUnknown
     void    HandleNotification(APO_NOTIFICATION* apoNotification);
 }
 
-@GUID("ca2cfbde-a9d6-4eb0-bc95-c4d026b380f0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectnotifications2
+@GUID("ca2cfbde-a9d6-4eb0-bc95-c4d026b380f0")
 interface IAudioProcessingObjectNotifications2 : IAudioProcessingObjectNotifications
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications2-getaponotificationregistrationinfo2

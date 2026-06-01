@@ -7771,8 +7771,8 @@ interface IDirectInputEffect : IUnknown
     HRESULT Escape(DIEFFESCAPE* param0);
 }
 
-@GUID("5944e681-c92e-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("5944e681-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDeviceW : IUnknown
 {
     HRESULT GetCapabilities(DIDEVCAPS* param0);
@@ -7792,8 +7792,8 @@ interface IDirectInputDeviceW : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1, const(GUID)* param2);
 }
 
-@GUID("5944e680-c92e-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("5944e680-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDeviceA : IUnknown
 {
     HRESULT GetCapabilities(DIDEVCAPS* param0);
@@ -7813,8 +7813,8 @@ interface IDirectInputDeviceA : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1, const(GUID)* param2);
 }
 
-@GUID("5944e683-c92e-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("5944e683-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDevice2W : IDirectInputDeviceW
 {
     HRESULT CreateEffect(const(GUID)* param0, DIEFFECT* param1, IDirectInputEffect* param2, IUnknown param3);
@@ -7828,8 +7828,8 @@ interface IDirectInputDevice2W : IDirectInputDeviceW
     HRESULT SendDeviceData(uint param0, DIDEVICEOBJECTDATA* param1, uint* param2, uint param3);
 }
 
-@GUID("5944e682-c92e-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("5944e682-c92e-11cf-bfc7-444553540000")
 interface IDirectInputDevice2A : IDirectInputDeviceA
 {
     HRESULT CreateEffect(const(GUID)* param0, DIEFFECT* param1, IDirectInputEffect* param2, IUnknown param3);
@@ -7843,24 +7843,24 @@ interface IDirectInputDevice2A : IDirectInputDeviceA
     HRESULT SendDeviceData(uint param0, DIDEVICEOBJECTDATA* param1, uint* param2, uint param3);
 }
 
-@GUID("57d7c6bd-2356-11d3-8e9d-00c04f6844ae")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("57d7c6bd-2356-11d3-8e9d-00c04f6844ae")
 interface IDirectInputDevice7W : IDirectInputDevice2W
 {
     HRESULT EnumEffectsInFile(const(PWSTR) param0, LPDIENUMEFFECTSINFILECALLBACK param1, void* param2, uint param3);
     HRESULT WriteEffectToFile(const(PWSTR) param0, uint param1, DIFILEEFFECT* param2, uint param3);
 }
 
-@GUID("57d7c6bc-2356-11d3-8e9d-00c04f6844ae")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("57d7c6bc-2356-11d3-8e9d-00c04f6844ae")
 interface IDirectInputDevice7A : IDirectInputDevice2A
 {
     HRESULT EnumEffectsInFile(const(PSTR) param0, LPDIENUMEFFECTSINFILECALLBACK param1, void* param2, uint param3);
     HRESULT WriteEffectToFile(const(PSTR) param0, uint param1, DIFILEEFFECT* param2, uint param3);
 }
 
-@GUID("54d41081-dc15-4833-a41b-748f73a38179")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("54d41081-dc15-4833-a41b-748f73a38179")
 interface IDirectInputDevice8W : IUnknown
 {
     HRESULT GetCapabilities(DIDEVCAPS* param0);
@@ -7894,8 +7894,8 @@ interface IDirectInputDevice8W : IUnknown
     HRESULT GetImageInfo(DIDEVICEIMAGEINFOHEADERW* param0);
 }
 
-@GUID("54d41080-dc15-4833-a41b-748f73a38179")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("54d41080-dc15-4833-a41b-748f73a38179")
 interface IDirectInputDevice8A : IUnknown
 {
     HRESULT GetCapabilities(DIDEVCAPS* param0);
@@ -7929,8 +7929,8 @@ interface IDirectInputDevice8A : IUnknown
     HRESULT GetImageInfo(DIDEVICEIMAGEINFOHEADERA* param0);
 }
 
-@GUID("89521361-aa8a-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("89521361-aa8a-11cf-bfc7-444553540000")
 interface IDirectInputW : IUnknown
 {
     HRESULT CreateDevice(const(GUID)* param0, IDirectInputDeviceW* param1, IUnknown param2);
@@ -7940,8 +7940,8 @@ interface IDirectInputW : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1);
 }
 
-@GUID("89521360-aa8a-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("89521360-aa8a-11cf-bfc7-444553540000")
 interface IDirectInputA : IUnknown
 {
     HRESULT CreateDevice(const(GUID)* param0, IDirectInputDeviceA* param1, IUnknown param2);
@@ -7951,36 +7951,36 @@ interface IDirectInputA : IUnknown
     HRESULT Initialize(HINSTANCE param0, uint param1);
 }
 
-@GUID("5944e663-aa8a-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("5944e663-aa8a-11cf-bfc7-444553540000")
 interface IDirectInput2W : IDirectInputW
 {
     HRESULT FindDevice(const(GUID)* param0, const(PWSTR) param1, GUID* param2);
 }
 
-@GUID("5944e662-aa8a-11cf-bfc7-444553540000")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("5944e662-aa8a-11cf-bfc7-444553540000")
 interface IDirectInput2A : IDirectInputA
 {
     HRESULT FindDevice(const(GUID)* param0, const(PSTR) param1, GUID* param2);
 }
 
-@GUID("9a4cb685-236d-11d3-8e9d-00c04f6844ae")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("9a4cb685-236d-11d3-8e9d-00c04f6844ae")
 interface IDirectInput7W : IDirectInput2W
 {
     HRESULT CreateDeviceEx(const(GUID)* param0, const(GUID)* param1, void** param2, IUnknown param3);
 }
 
-@GUID("9a4cb684-236d-11d3-8e9d-00c04f6844ae")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("9a4cb684-236d-11d3-8e9d-00c04f6844ae")
 interface IDirectInput7A : IDirectInput2A
 {
     HRESULT CreateDeviceEx(const(GUID)* param0, const(GUID)* param1, void** param2, IUnknown param3);
 }
 
-@GUID("bf798031-483a-4da2-aa99-5d64ed369700")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("bf798031-483a-4da2-aa99-5d64ed369700")
 interface IDirectInput8W : IUnknown
 {
     HRESULT CreateDevice(const(GUID)* param0, IDirectInputDevice8W* param1, IUnknown param2);
@@ -7995,8 +7995,8 @@ interface IDirectInput8W : IUnknown
                              void* param3);
 }
 
-@GUID("bf798030-483a-4da2-aa99-5d64ed369700")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("bf798030-483a-4da2-aa99-5d64ed369700")
 interface IDirectInput8A : IUnknown
 {
     HRESULT CreateDevice(const(GUID)* param0, IDirectInputDevice8A* param1, IUnknown param2);
@@ -8011,8 +8011,8 @@ interface IDirectInput8A : IUnknown
                              void* param3);
 }
 
-@GUID("02538130-898f-11d0-9ad0-00a0c9a06e35")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dinputd/nn-dinputd-idirectinputeffectdriver
+@GUID("02538130-898f-11d0-9ad0-00a0c9a06e35")
 interface IDirectInputEffectDriver : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dinputd/nf-dinputd-idirectinputeffectdriver-deviceid
@@ -8061,8 +8061,8 @@ interface IDirectInputJoyConfig : IUnknown
     HRESULT OpenConfigKey(uint param0, uint param1, HKEY* param2);
 }
 
-@GUID("eb0d7dfa-1990-4f27-b4d6-edf2eec4a44c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dinputd/nn-dinputd-idirectinputjoyconfig8
+@GUID("eb0d7dfa-1990-4f27-b4d6-edf2eec4a44c")
 interface IDirectInputJoyConfig8 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dinputd/nf-dinputd-idirectinputjoyconfig8-acquire

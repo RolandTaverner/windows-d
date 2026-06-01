@@ -183,9 +183,9 @@ struct NLM_SIMULATED_PROFILE_INFO
 @GUID("dcb00c01-570f-4a9b-8d69-199fdba5723b")
 struct NetworkListManager;
 
-@GUID("dcb00000-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworklistmanager
+@GUID("dcb00000-570f-4a9b-8d69-199fdba5723b")
 interface INetworkListManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworklistmanager-getnetworks
@@ -208,18 +208,18 @@ interface INetworkListManager : IDispatch
     HRESULT ClearSimulatedProfileInfo();
 }
 
-@GUID("dcb00001-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworklistmanagerevents
+@GUID("dcb00001-570f-4a9b-8d69-199fdba5723b")
 interface INetworkListManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworklistmanagerevents-connectivitychanged
     HRESULT ConnectivityChanged(NLM_CONNECTIVITY newConnectivity);
 }
 
-@GUID("dcb00002-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetwork
+@GUID("dcb00002-570f-4a9b-8d69-199fdba5723b")
 interface INetwork : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetwork-getname
@@ -251,17 +251,17 @@ interface INetwork : IDispatch
     HRESULT SetCategory(NLM_NETWORK_CATEGORY NewCategory);
 }
 
-@GUID("b5550abb-3391-4310-804f-25dcc325ed81")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetwork2
+@GUID("b5550abb-3391-4310-804f-25dcc325ed81")
 interface INetwork2 : INetwork
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetwork2-isdomainauthenticatedby
     HRESULT IsDomainAuthenticatedBy(NLM_DOMAIN_AUTHENTICATION_KIND domainAuthenticationKind, BOOL* pValue);
 }
 
-@GUID("dcb00003-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-ienumnetworks
+@GUID("dcb00003-570f-4a9b-8d69-199fdba5723b")
 interface IEnumNetworks : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-ienumnetworks-get__newenum
@@ -276,9 +276,9 @@ interface IEnumNetworks : IDispatch
     HRESULT Clone(IEnumNetworks* ppEnumNetwork);
 }
 
-@GUID("dcb00004-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkevents
+@GUID("dcb00004-570f-4a9b-8d69-199fdba5723b")
 interface INetworkEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkevents-networkadded
@@ -291,9 +291,9 @@ interface INetworkEvents : IUnknown
     HRESULT NetworkPropertyChanged(GUID networkId, NLM_NETWORK_PROPERTY_CHANGE flags);
 }
 
-@GUID("dcb00005-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkconnection
+@GUID("dcb00005-570f-4a9b-8d69-199fdba5723b")
 interface INetworkConnection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkconnection-getnetwork
@@ -312,17 +312,17 @@ interface INetworkConnection : IDispatch
     HRESULT GetDomainType(NLM_DOMAIN_TYPE* pDomainType);
 }
 
-@GUID("00e676ed-5a35-4738-92eb-8581738d0f0a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkconnection2
+@GUID("00e676ed-5a35-4738-92eb-8581738d0f0a")
 interface INetworkConnection2 : INetworkConnection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkconnection2-isdomainauthenticatedby
     HRESULT IsDomainAuthenticatedBy(NLM_DOMAIN_AUTHENTICATION_KIND domainAuthenticationKind, BOOL* pValue);
 }
 
-@GUID("dcb00006-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-ienumnetworkconnections
+@GUID("dcb00006-570f-4a9b-8d69-199fdba5723b")
 interface IEnumNetworkConnections : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-ienumnetworkconnections-get__newenum
@@ -337,9 +337,9 @@ interface IEnumNetworkConnections : IDispatch
     HRESULT Clone(IEnumNetworkConnections* ppEnumNetwork);
 }
 
-@GUID("dcb00007-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkconnectionevents
+@GUID("dcb00007-570f-4a9b-8d69-199fdba5723b")
 interface INetworkConnectionEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkconnectionevents-networkconnectionconnectivitychanged
@@ -348,9 +348,9 @@ interface INetworkConnectionEvents : IUnknown
     HRESULT NetworkConnectionPropertyChanged(GUID connectionId, NLM_CONNECTION_PROPERTY_CHANGE flags);
 }
 
-@GUID("dcb00008-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkcostmanager
+@GUID("dcb00008-570f-4a9b-8d69-199fdba5723b")
 interface INetworkCostManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkcostmanager-getcost
@@ -361,9 +361,9 @@ interface INetworkCostManager : IUnknown
     HRESULT SetDestinationAddresses(uint length, NLM_SOCKADDR* pDestIPAddrList, VARIANT_BOOL bAppend);
 }
 
-@GUID("dcb00009-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkcostmanagerevents
+@GUID("dcb00009-570f-4a9b-8d69-199fdba5723b")
 interface INetworkCostManagerEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkcostmanagerevents-costchanged
@@ -372,9 +372,9 @@ interface INetworkCostManagerEvents : IUnknown
     HRESULT DataPlanStatusChanged(NLM_SOCKADDR* pDestAddr);
 }
 
-@GUID("dcb0000a-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkconnectioncost
+@GUID("dcb0000a-570f-4a9b-8d69-199fdba5723b")
 interface INetworkConnectionCost : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkconnectioncost-getcost
@@ -383,9 +383,9 @@ interface INetworkConnectionCost : IUnknown
     HRESULT GetDataPlanStatus(NLM_DATAPLAN_STATUS* pDataPlanStatus);
 }
 
-@GUID("dcb0000b-570f-4a9b-8d69-199fdba5723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nn-netlistmgr-inetworkconnectioncostevents
+@GUID("dcb0000b-570f-4a9b-8d69-199fdba5723b")
 interface INetworkConnectionCostEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netlistmgr/nf-netlistmgr-inetworkconnectioncostevents-connectioncostchanged

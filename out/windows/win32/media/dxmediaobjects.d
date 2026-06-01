@@ -225,8 +225,8 @@ HRESULT MoDuplicateMediaType(DMO_MEDIA_TYPE** ppmtDest, const(DMO_MEDIA_TYPE)* p
 
 // Interfaces
 
-@GUID("59eff8b9-938c-4a26-82f2-95cb84cdc837")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediabuffer
+@GUID("59eff8b9-938c-4a26-82f2-95cb84cdc837")
 interface IMediaBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-setlength
@@ -237,8 +237,8 @@ interface IMediaBuffer : IUnknown
     HRESULT GetBufferAndLength(ubyte** ppBuffer, uint* pcbLength);
 }
 
-@GUID("d8ad0f58-5494-4102-97c5-ec798e59bcf4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediaobject
+@GUID("d8ad0f58-5494-4102-97c5-ec798e59bcf4")
 interface IMediaObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getstreamcount
@@ -287,8 +287,8 @@ interface IMediaObject : IUnknown
     HRESULT Lock(int bLock);
 }
 
-@GUID("2c3cd98a-2bfa-4a53-9c27-5249ba64ba0f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-ienumdmo
+@GUID("2c3cd98a-2bfa-4a53-9c27-5249ba64ba0f")
 interface IEnumDMO : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-next
@@ -301,8 +301,8 @@ interface IEnumDMO : IUnknown
     HRESULT Clone(IEnumDMO* ppEnum);
 }
 
-@GUID("651b9ad0-0fc7-4aa9-9538-d89931010741")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediaobjectinplace
+@GUID("651b9ad0-0fc7-4aa9-9538-d89931010741")
 interface IMediaObjectInPlace : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-process
@@ -315,8 +315,8 @@ interface IMediaObjectInPlace : IUnknown
     HRESULT GetLatency(long* pLatencyTime);
 }
 
-@GUID("65abea96-cf36-453f-af8a-705e98f16260")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-idmoqualitycontrol
+@GUID("65abea96-cf36-453f-af8a-705e98f16260")
 interface IDMOQualityControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-setnow
@@ -327,8 +327,8 @@ interface IDMOQualityControl : IUnknown
     HRESULT GetStatus(uint* pdwFlags);
 }
 
-@GUID("be8f4f4e-5b16-4d29-b350-7f6b5d9298ac")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-idmovideooutputoptimizations
+@GUID("be8f4f4e-5b16-4d29-b350-7f6b5d9298ac")
 interface IDMOVideoOutputOptimizations : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-queryoperationmodepreferences

@@ -7197,9 +7197,9 @@ HRESULT D3D12GetInterface(const(GUID)* rclsid, const(GUID)* riid, void** ppvDebu
 
 // Interfaces
 
-@GUID("c4fec28f-7966-4e95-9f94-f431cb56c3b8")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12object
+@GUID("c4fec28f-7966-4e95-9f94-f431cb56c3b8")
 interface ID3D12Object : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-getprivatedata
@@ -7214,24 +7214,24 @@ interface ID3D12Object : IUnknown
     HRESULT SetName(const(PWSTR) Name);
 }
 
-@GUID("905db94b-a00c-4140-9df5-2b64ca9ea357")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12devicechild
+@GUID("905db94b-a00c-4140-9df5-2b64ca9ea357")
 interface ID3D12DeviceChild : ID3D12Object
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12devicechild-getdevice
     HRESULT GetDevice(const(GUID)* riid, void** ppvDevice);
 }
 
-@GUID("c54a6b66-72df-4ee8-8be5-a946a1429214")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12rootsignature
+@GUID("c54a6b66-72df-4ee8-8be5-a946a1429214")
 interface ID3D12RootSignature : ID3D12DeviceChild
 {
 }
 
-@GUID("c390bd7d-9142-4a95-b072-6d3439ade5c4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c390bd7d-9142-4a95-b072-6d3439ade5c4")
 interface ID3D12RootSignature1 : ID3D12RootSignature
 {
     size_t  GetSerializedSize();
@@ -7239,18 +7239,18 @@ interface ID3D12RootSignature1 : ID3D12RootSignature
                               size_t Size);
 }
 
-@GUID("34ab647b-3cc8-46ac-841b-c0965645c046")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12rootsignaturedeserializer
+@GUID("34ab647b-3cc8-46ac-841b-c0965645c046")
 interface ID3D12RootSignatureDeserializer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12rootsignaturedeserializer-getrootsignaturedesc
     D3D12_ROOT_SIGNATURE_DESC* GetRootSignatureDesc();
 }
 
-@GUID("7f91ce67-090c-4bb7-b78e-ed8ff2e31da0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12versionedrootsignaturedeserializer
+@GUID("7f91ce67-090c-4bb7-b78e-ed8ff2e31da0")
 interface ID3D12VersionedRootSignatureDeserializer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12versionedrootsignaturedeserializer-getrootsignaturedescatversion
@@ -7260,25 +7260,25 @@ interface ID3D12VersionedRootSignatureDeserializer : IUnknown
     D3D12_VERSIONED_ROOT_SIGNATURE_DESC* GetUnconvertedRootSignatureDesc();
 }
 
-@GUID("63ee58fb-1268-4835-86da-f008ce62f0d6")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pageable
+@GUID("63ee58fb-1268-4835-86da-f008ce62f0d6")
 interface ID3D12Pageable : ID3D12DeviceChild
 {
 }
 
-@GUID("6b3b2502-6e51-45b3-90ee-9884265e8df3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12heap
+@GUID("6b3b2502-6e51-45b3-90ee-9884265e8df3")
 interface ID3D12Heap : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d12/id3d12heap-getdesc
     D3D12_HEAP_DESC GetDesc();
 }
 
-@GUID("696442be-a72e-4059-bc79-5b5c98040fad")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12resource
+@GUID("696442be-a72e-4059-bc79-5b5c98040fad")
 interface ID3D12Resource : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-map
@@ -7299,18 +7299,18 @@ interface ID3D12Resource : ID3D12Pageable
     HRESULT GetHeapProperties(D3D12_HEAP_PROPERTIES* pHeapProperties, D3D12_HEAP_FLAGS* pHeapFlags);
 }
 
-@GUID("6102dee4-af59-4b09-b999-b44d73f09b24")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandallocator
+@GUID("6102dee4-af59-4b09-b999-b44d73f09b24")
 interface ID3D12CommandAllocator : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandallocator-reset
     HRESULT Reset();
 }
 
-@GUID("0a753dcf-c4d8-4b91-adf6-be5a60d95a76")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12fence
+@GUID("0a753dcf-c4d8-4b91-adf6-be5a60d95a76")
 interface ID3D12Fence : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-getcompletedvalue
@@ -7321,34 +7321,34 @@ interface ID3D12Fence : ID3D12Pageable
     HRESULT Signal(ulong Value);
 }
 
-@GUID("433685fe-e22b-4ca0-a8db-b5b4f4dd0e4a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12fence1
+@GUID("433685fe-e22b-4ca0-a8db-b5b4f4dd0e4a")
 interface ID3D12Fence1 : ID3D12Fence
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence1-getcreationflags
     D3D12_FENCE_FLAGS GetCreationFlags();
 }
 
-@GUID("765a30f3-f624-4c6f-a828-ace948622445")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinestate
+@GUID("765a30f3-f624-4c6f-a828-ace948622445")
 interface ID3D12PipelineState : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinestate-getcachedblob
     HRESULT GetCachedBlob(ID3DBlob* ppBlob);
 }
 
-@GUID("5646804c-9638-48f7-9182-b3ee5a6b60fb")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("5646804c-9638-48f7-9182-b3ee5a6b60fb")
 interface ID3D12PipelineState1 : ID3D12PipelineState
 {
     HRESULT GetRootSignature(const(GUID)* riid, void** ppvRootSignature);
 }
 
-@GUID("8efb471d-616c-4f49-90f7-127bb763fa51")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12descriptorheap
+@GUID("8efb471d-616c-4f49-90f7-127bb763fa51")
 interface ID3D12DescriptorHeap : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getdesc
@@ -7359,32 +7359,32 @@ interface ID3D12DescriptorHeap : ID3D12Pageable
     D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandleForHeapStart();
 }
 
-@GUID("0d9658ae-ed45-469e-a61d-970ec583cab4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12queryheap
+@GUID("0d9658ae-ed45-469e-a61d-970ec583cab4")
 interface ID3D12QueryHeap : ID3D12Pageable
 {
 }
 
-@GUID("c36a797c-ec80-4f0a-8985-a7b2475082d1")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandsignature
+@GUID("c36a797c-ec80-4f0a-8985-a7b2475082d1")
 interface ID3D12CommandSignature : ID3D12Pageable
 {
 }
 
-@GUID("7116d91c-e7e4-47ce-b8c6-ec8168f437e5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandlist
+@GUID("7116d91c-e7e4-47ce-b8c6-ec8168f437e5")
 interface ID3D12CommandList : ID3D12DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandlist-gettype
     D3D12_COMMAND_LIST_TYPE GetType();
 }
 
-@GUID("5b160d0f-ac1b-4185-8ba8-b3ae42a5a455")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist
+@GUID("5b160d0f-ac1b-4185-8ba8-b3ae42a5a455")
 interface ID3D12GraphicsCommandList : ID3D12CommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-close
@@ -7517,9 +7517,9 @@ interface ID3D12GraphicsCommandList : ID3D12CommandList
                             ulong CountBufferOffset);
 }
 
-@GUID("553103fb-1fe7-4557-bb38-946d7d0e7ca7")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist1
+@GUID("553103fb-1fe7-4557-bb38-946d7d0e7ca7")
 interface ID3D12GraphicsCommandList1 : ID3D12GraphicsCommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-atomiccopybufferuint
@@ -7542,9 +7542,9 @@ interface ID3D12GraphicsCommandList1 : ID3D12GraphicsCommandList
     void SetViewInstanceMask(uint Mask);
 }
 
-@GUID("38c3e585-ff17-412c-9150-4fc6f9d72a28")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist2
+@GUID("38c3e585-ff17-412c-9150-4fc6f9d72a28")
 interface ID3D12GraphicsCommandList2 : ID3D12GraphicsCommandList1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist2-writebufferimmediate
@@ -7552,9 +7552,9 @@ interface ID3D12GraphicsCommandList2 : ID3D12GraphicsCommandList1
                               const(D3D12_WRITEBUFFERIMMEDIATE_MODE)* pModes);
 }
 
-@GUID("0ec870a6-5d7e-4c22-8cfc-5baae07616ed")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandqueue
+@GUID("0ec870a6-5d7e-4c22-8cfc-5baae07616ed")
 interface ID3D12CommandQueue : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-updatetilemappings
@@ -7593,8 +7593,8 @@ interface ID3D12CommandQueue : ID3D12Pageable
     D3D12_COMMAND_QUEUE_DESC GetDesc();
 }
 
-@GUID("3a3c3165-0ee7-4b8e-a0af-6356b4c3bbb9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("3a3c3165-0ee7-4b8e-a0af-6356b4c3bbb9")
 interface ID3D12CommandQueue1 : ID3D12CommandQueue
 {
     HRESULT SetProcessPriority(D3D12_COMMAND_QUEUE_PROCESS_PRIORITY Priority);
@@ -7603,9 +7603,9 @@ interface ID3D12CommandQueue1 : ID3D12CommandQueue
     HRESULT GetGlobalPriority(D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY* pOutValue);
 }
 
-@GUID("189819f1-1db6-4b57-be54-1821339b85f7")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device
+@GUID("189819f1-1db6-4b57-be54-1821339b85f7")
 interface ID3D12Device : ID3D12Object
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getnodecount
@@ -7721,9 +7721,9 @@ interface ID3D12Device : ID3D12Object
     LUID    GetAdapterLuid();
 }
 
-@GUID("c64226a8-9201-46af-b4cc-53fb9ff7414f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinelibrary
+@GUID("c64226a8-9201-46af-b4cc-53fb9ff7414f")
 interface ID3D12PipelineLibrary : ID3D12DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-storepipeline
@@ -7740,9 +7740,9 @@ interface ID3D12PipelineLibrary : ID3D12DeviceChild
     HRESULT Serialize(void* pData, size_t DataSizeInBytes);
 }
 
-@GUID("80eabf42-2568-4e5e-bd82-c37f86961dc3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinelibrary1
+@GUID("80eabf42-2568-4e5e-bd82-c37f86961dc3")
 interface ID3D12PipelineLibrary1 : ID3D12PipelineLibrary
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary1-loadpipeline
@@ -7750,9 +7750,9 @@ interface ID3D12PipelineLibrary1 : ID3D12PipelineLibrary
                          void** ppPipelineState);
 }
 
-@GUID("77acce80-638e-4e65-8895-c1f23386863e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device1
+@GUID("77acce80-638e-4e65-8895-c1f23386863e")
 interface ID3D12Device1 : ID3D12Device
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-createpipelinelibrary
@@ -7766,9 +7766,9 @@ interface ID3D12Device1 : ID3D12Device
                                  const(D3D12_RESIDENCY_PRIORITY)* pPriorities);
 }
 
-@GUID("30baa41e-b15b-475c-a0bb-1af5c5b64328")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device2
+@GUID("30baa41e-b15b-475c-a0bb-1af5c5b64328")
 interface ID3D12Device2 : ID3D12Device1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device2-createpipelinestate
@@ -7776,9 +7776,9 @@ interface ID3D12Device2 : ID3D12Device1
                                 void** ppPipelineState);
 }
 
-@GUID("81dadc15-2bad-4392-93c5-101345c4aa98")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device3
+@GUID("81dadc15-2bad-4392-93c5-101345c4aa98")
 interface ID3D12Device3 : ID3D12Device2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-openexistingheapfromaddress
@@ -7790,9 +7790,9 @@ interface ID3D12Device3 : ID3D12Device2
                                 ID3D12Fence pFenceToSignal, ulong FenceValueToSignal);
 }
 
-@GUID("a1533d18-0ac1-4084-85b9-89a96116806b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedsession
+@GUID("a1533d18-0ac1-4084-85b9-89a96116806b")
 interface ID3D12ProtectedSession : ID3D12DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedsession-getstatusfence
@@ -7801,18 +7801,18 @@ interface ID3D12ProtectedSession : ID3D12DeviceChild
     D3D12_PROTECTED_SESSION_STATUS GetSessionStatus();
 }
 
-@GUID("6cd696f4-f289-40cc-8091-5a6c0a099c3d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedresourcesession
+@GUID("6cd696f4-f289-40cc-8091-5a6c0a099c3d")
 interface ID3D12ProtectedResourceSession : ID3D12ProtectedSession
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedresourcesession-getdesc
     D3D12_PROTECTED_RESOURCE_SESSION_DESC GetDesc();
 }
 
-@GUID("e865df17-a9ee-46f9-a463-3098315aa2e5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device4
+@GUID("e865df17-a9ee-46f9-a463-3098315aa2e5")
 interface ID3D12Device4 : ID3D12Device3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createcommandlist1
@@ -7841,17 +7841,17 @@ interface ID3D12Device4 : ID3D12Device3
                                                               D3D12_RESOURCE_ALLOCATION_INFO1* pResourceAllocationInfo1);
 }
 
-@GUID("e667af9f-cd56-4f46-83ce-032e595d70a8")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12lifetimeowner
+@GUID("e667af9f-cd56-4f46-83ce-032e595d70a8")
 interface ID3D12LifetimeOwner : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12lifetimeowner-lifetimestateupdated
     void LifetimeStateUpdated(D3D12_LIFETIME_STATE NewState);
 }
 
-@GUID("f1df64b6-57fd-49cd-8807-c0eb88b45c8f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("f1df64b6-57fd-49cd-8807-c0eb88b45c8f")
 interface ID3D12SwapChainAssistant : IUnknown
 {
     LUID    GetLUID();
@@ -7861,25 +7861,25 @@ interface ID3D12SwapChainAssistant : IUnknown
     HRESULT InsertImplicitSync();
 }
 
-@GUID("3fd03d36-4eb1-424a-a582-494ecb8ba813")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12lifetimetracker
+@GUID("3fd03d36-4eb1-424a-a582-494ecb8ba813")
 interface ID3D12LifetimeTracker : ID3D12DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12lifetimetracker-destroyownedobject
     HRESULT DestroyOwnedObject(ID3D12DeviceChild pObject);
 }
 
-@GUID("47016943-fca8-4594-93ea-af258b55346d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12stateobject
+@GUID("47016943-fca8-4594-93ea-af258b55346d")
 interface ID3D12StateObject : ID3D12Pageable
 {
 }
 
-@GUID("de5fa827-9bf9-4f26-89ff-d7f56fde3860")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12stateobjectproperties
+@GUID("de5fa827-9bf9-4f26-89ff-d7f56fde3860")
 interface ID3D12StateObjectProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getshaderidentifier
@@ -7892,23 +7892,23 @@ interface ID3D12StateObjectProperties : IUnknown
     void  SetPipelineStackSize(ulong PipelineStackSizeInBytes);
 }
 
-@GUID("460caac7-1d24-446a-a184-ca67db494138")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("460caac7-1d24-446a-a184-ca67db494138")
 interface ID3D12StateObjectProperties1 : ID3D12StateObjectProperties
 {
     D3D12_PROGRAM_IDENTIFIER GetProgramIdentifier(const(PWSTR) pProgramName);
 }
 
-@GUID("d5e82917-f0f1-44cf-ae5e-ce222dd0b884")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("d5e82917-f0f1-44cf-ae5e-ce222dd0b884")
 interface ID3D12StateObjectProperties2 : ID3D12StateObjectProperties1
 {
     HRESULT GetGlobalRootSignatureForProgram(const(PWSTR) pProgramName, const(GUID)* riid, void** ppvRootSignature);
     HRESULT GetGlobalRootSignatureForShader(const(PWSTR) pExportName, const(GUID)* riid, void** ppvRootSignature);
 }
 
-@GUID("065acf71-f863-4b89-82f4-02e4d5886757")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("065acf71-f863-4b89-82f4-02e4d5886757")
 interface ID3D12WorkGraphProperties : IUnknown
 {
     uint  GetNumWorkGraphs();
@@ -7927,10 +7927,10 @@ interface ID3D12WorkGraphProperties : IUnknown
     uint  GetEntrypointRecordAlignmentInBytes(uint WorkGraphIndex, uint EntrypointIndex);
 }
 
-@GUID("8b4f173b-2fea-4b80-8f58-4307191ab95d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device5
+@GUID("8b4f173b-2fea-4b80-8f58-4307191ab95d")
 interface ID3D12Device5 : ID3D12Device4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createlifetimetracker
@@ -7957,9 +7957,9 @@ interface ID3D12Device5 : ID3D12Device4
                                                                           const(D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER)* pIdentifierToCheck);
 }
 
-@GUID("82bc481c-6b9b-4030-aedb-7ee3d1df1e63")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12deviceremovedextendeddatasettings
+@GUID("82bc481c-6b9b-4030-aedb-7ee3d1df1e63")
 interface ID3D12DeviceRemovedExtendedDataSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setautobreadcrumbsenablement
@@ -7970,23 +7970,23 @@ interface ID3D12DeviceRemovedExtendedDataSettings : IUnknown
     void SetWatsonDumpEnablement(D3D12_DRED_ENABLEMENT Enablement);
 }
 
-@GUID("dbd5ae51-3317-4f0a-adf9-1d7cedcaae0b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("dbd5ae51-3317-4f0a-adf9-1d7cedcaae0b")
 interface ID3D12DeviceRemovedExtendedDataSettings1 : ID3D12DeviceRemovedExtendedDataSettings
 {
     void SetBreadcrumbContextEnablement(D3D12_DRED_ENABLEMENT Enablement);
 }
 
-@GUID("61552388-01ab-4008-a436-83db189566ea")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("61552388-01ab-4008-a436-83db189566ea")
 interface ID3D12DeviceRemovedExtendedDataSettings2 : ID3D12DeviceRemovedExtendedDataSettings1
 {
     void UseMarkersOnlyAutoBreadcrumbs(BOOL MarkersOnly);
 }
 
-@GUID("98931d33-5ae8-4791-aa3c-1a73a2934e71")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12deviceremovedextendeddata
+@GUID("98931d33-5ae8-4791-aa3c-1a73a2934e71")
 interface ID3D12DeviceRemovedExtendedData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddata-getautobreadcrumbsoutput
@@ -7995,25 +7995,25 @@ interface ID3D12DeviceRemovedExtendedData : IUnknown
     HRESULT GetPageFaultAllocationOutput(D3D12_DRED_PAGE_FAULT_OUTPUT* pOutput);
 }
 
-@GUID("9727a022-cf1d-4dda-9eba-effa653fc506")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("9727a022-cf1d-4dda-9eba-effa653fc506")
 interface ID3D12DeviceRemovedExtendedData1 : ID3D12DeviceRemovedExtendedData
 {
     HRESULT GetAutoBreadcrumbsOutput1(D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT1* pOutput);
     HRESULT GetPageFaultAllocationOutput1(D3D12_DRED_PAGE_FAULT_OUTPUT1* pOutput);
 }
 
-@GUID("67fc5816-e4ca-4915-bf18-42541272da54")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("67fc5816-e4ca-4915-bf18-42541272da54")
 interface ID3D12DeviceRemovedExtendedData2 : ID3D12DeviceRemovedExtendedData1
 {
     HRESULT GetPageFaultAllocationOutput2(D3D12_DRED_PAGE_FAULT_OUTPUT2* pOutput);
     D3D12_DRED_DEVICE_STATE GetDeviceState();
 }
 
-@GUID("c70b221b-40e4-4a17-89af-025a0727a6dc")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device6
+@GUID("c70b221b-40e4-4a17-89af-025a0727a6dc")
 interface ID3D12Device6 : ID3D12Device5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device6-setbackgroundprocessingmode
@@ -8022,18 +8022,18 @@ interface ID3D12Device6 : ID3D12Device5
                                         HANDLE hEventToSignalUponCompletion, BOOL* pbFurtherMeasurementsDesired);
 }
 
-@GUID("d6f12dd6-76fb-406e-8961-4296eefc0409")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedresourcesession1
+@GUID("d6f12dd6-76fb-406e-8961-4296eefc0409")
 interface ID3D12ProtectedResourceSession1 : ID3D12ProtectedResourceSession
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedresourcesession1-getdesc1
     D3D12_PROTECTED_RESOURCE_SESSION_DESC1 GetDesc1();
 }
 
-@GUID("5c014b53-68a1-4b9b-8bd1-dd6046b9358b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device7
+@GUID("5c014b53-68a1-4b9b-8bd1-dd6046b9358b")
 interface ID3D12Device7 : ID3D12Device6
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device7-addtostateobject
@@ -8044,9 +8044,9 @@ interface ID3D12Device7 : ID3D12Device6
                                             const(GUID)* riid, void** ppSession);
 }
 
-@GUID("9218e6bb-f944-4f7e-a75c-b1b2c7b701f3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device8
+@GUID("9218e6bb-f944-4f7e-a75c-b1b2c7b701f3")
 interface ID3D12Device8 : ID3D12Device7
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-getresourceallocationinfo2
@@ -8074,48 +8074,48 @@ interface ID3D12Device8 : ID3D12Device7
                                    ulong* pRowSizeInBytes, ulong* pTotalBytes);
 }
 
-@GUID("9d5e227a-4430-4161-88b3-3eca6bb16e19")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("9d5e227a-4430-4161-88b3-3eca6bb16e19")
 interface ID3D12Resource1 : ID3D12Resource
 {
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("be36ec3b-ea85-4aeb-a45a-e9d76404a495")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("be36ec3b-ea85-4aeb-a45a-e9d76404a495")
 interface ID3D12Resource2 : ID3D12Resource1
 {
     D3D12_RESOURCE_DESC1 GetDesc1();
 }
 
-@GUID("572f7389-2168-49e3-9693-d6df5871bf6d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("572f7389-2168-49e3-9693-d6df5871bf6d")
 interface ID3D12Heap1 : ID3D12Heap
 {
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("6fda83a7-b84c-4e38-9ac8-c7bd22016b3d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist3
+@GUID("6fda83a7-b84c-4e38-9ac8-c7bd22016b3d")
 interface ID3D12GraphicsCommandList3 : ID3D12GraphicsCommandList2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist3-setprotectedresourcesession
     void SetProtectedResourceSession(ID3D12ProtectedResourceSession pProtectedResourceSession);
 }
 
-@GUID("dbb84c27-36ce-4fc9-b801-f048c46ac570")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12metacommand
+@GUID("dbb84c27-36ce-4fc9-b801-f048c46ac570")
 interface ID3D12MetaCommand : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12metacommand-getrequiredparameterresourcesize
     ulong GetRequiredParameterResourceSize(D3D12_META_COMMAND_PARAMETER_STAGE Stage, uint ParameterIndex);
 }
 
-@GUID("8754318e-d3a9-4541-98cf-645b50dc4874")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist4
+@GUID("8754318e-d3a9-4541-98cf-645b50dc4874")
 interface ID3D12GraphicsCommandList4 : ID3D12GraphicsCommandList3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-beginrenderpass
@@ -8149,9 +8149,9 @@ interface ID3D12GraphicsCommandList4 : ID3D12GraphicsCommandList3
     void DispatchRays(const(D3D12_DISPATCH_RAYS_DESC)* pDesc);
 }
 
-@GUID("28e2495d-0f64-4ae4-a6ec-129255dc49a8")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12shadercachesession
+@GUID("28e2495d-0f64-4ae4-a6ec-129255dc49a8")
 interface ID3D12ShaderCacheSession : ID3D12DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-findvalue
@@ -8170,9 +8170,9 @@ interface ID3D12ShaderCacheSession : ID3D12DeviceChild
     D3D12_SHADER_CACHE_SESSION_DESC GetDesc();
 }
 
-@GUID("4c80e962-f032-4f60-bc9e-ebc2cfa1d83c")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device9
+@GUID("4c80e962-f032-4f60-bc9e-ebc2cfa1d83c")
 interface ID3D12Device9 : ID3D12Device8
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-createshadercachesession
@@ -8185,9 +8185,9 @@ interface ID3D12Device9 : ID3D12Device8
                                 void** ppCommandQueue);
 }
 
-@GUID("517f8718-aa66-49f9-b02b-a7ab89c06031")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device10
+@GUID("517f8718-aa66-49f9-b02b-a7ab89c06031")
 interface ID3D12Device10 : ID3D12Device9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createcommittedresource3
@@ -8209,15 +8209,15 @@ interface ID3D12Device10 : ID3D12Device9
                                     const(DXGI_FORMAT)* pCastableFormats, const(GUID)* riid, void** ppvResource);
 }
 
-@GUID("5405c344-d457-444e-b4dd-2366e45aee39")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("5405c344-d457-444e-b4dd-2366e45aee39")
 interface ID3D12Device11 : ID3D12Device10
 {
     void CreateSampler2(const(D3D12_SAMPLER_DESC2)* pDesc, D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
 }
 
-@GUID("5af5c532-4c91-4cd0-b541-15a405395fc5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("5af5c532-4c91-4cd0-b541-15a405395fc5")
 interface ID3D12Device12 : ID3D12Device11
 {
     D3D12_RESOURCE_ALLOCATION_INFO GetResourceAllocationInfo3(uint visibleMask, uint numResourceDescs, 
@@ -8227,15 +8227,15 @@ interface ID3D12Device12 : ID3D12Device11
                                                               D3D12_RESOURCE_ALLOCATION_INFO1* pResourceAllocationInfo1);
 }
 
-@GUID("14eecffc-4df8-40f7-a118-5c816f45695e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("14eecffc-4df8-40f7-a118-5c816f45695e")
 interface ID3D12Device13 : ID3D12Device12
 {
     HRESULT OpenExistingHeapFromAddress1(const(void)* pAddress, size_t size, const(GUID)* riid, void** ppvHeap);
 }
 
-@GUID("5f6e592d-d895-44c2-8e4a-88ad4926d323")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("5f6e592d-d895-44c2-8e4a-88ad4926d323")
 interface ID3D12Device14 : ID3D12Device13
 {
     HRESULT CreateRootSignatureFromSubobjectInLibrary(uint nodeMask, const(void)* pLibraryBlob, 
@@ -8243,8 +8243,8 @@ interface ID3D12Device14 : ID3D12Device13
                                                       const(GUID)* riid, void** ppvRootSignature);
 }
 
-@GUID("76cff76f-1e9b-4450-8cdc-34f1af788e5b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("76cff76f-1e9b-4450-8cdc-34f1af788e5b")
 interface ID3D12Device15 : ID3D12Device14
 {
     HRESULT RegisterTrimNotificationCallback(D3D12_REGISTER_TRIM_NOTIFICATION* pData);
@@ -8270,8 +8270,8 @@ interface ID3D12Device15 : ID3D12Device14
                              void* pResolvedQueryData);
 }
 
-@GUID("c56060b7-b5fc-4135-98e0-a1e9997eace0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c56060b7-b5fc-4135-98e0-a1e9997eace0")
 interface ID3D12StateObjectDatabase : IUnknown
 {
     HRESULT SetApplicationDesc(const(D3D12_APPLICATION_DESC)* pApplicationDesc);
@@ -8287,9 +8287,9 @@ interface ID3D12StateObjectDatabase : IUnknown
     HRESULT FindObjectVersion(const(void)* pKey, uint KeySize, uint* pVersion);
 }
 
-@GUID("bc66d368-7373-4943-8757-fc87dc79e476")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12virtualizationguestdevice
+@GUID("bc66d368-7373-4943-8757-fc87dc79e476")
 interface ID3D12VirtualizationGuestDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12virtualizationguestdevice-sharewithhost
@@ -8298,9 +8298,9 @@ interface ID3D12VirtualizationGuestDevice : IUnknown
     HRESULT CreateFenceFd(ID3D12Fence pFence, ulong FenceValue, int* pFenceFd);
 }
 
-@GUID("7071e1f0-e84b-4b33-974f-12fa49de65c5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12tools
+@GUID("7071e1f0-e84b-4b33-974f-12fa49de65c5")
 interface ID3D12Tools : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12tools-enableshaderinstrumentation
@@ -8309,63 +8309,63 @@ interface ID3D12Tools : IUnknown
     BOOL ShaderInstrumentationEnabled();
 }
 
-@GUID("e4fbc019-dd3c-43e1-8f32-7f649575f0a0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("e4fbc019-dd3c-43e1-8f32-7f649575f0a0")
 interface ID3D12Tools1 : ID3D12Tools
 {
     HRESULT ReserveGPUVARangesAtCreate(D3D12_GPU_VIRTUAL_ADDRESS_RANGE* pRanges, uint uiNumRanges);
     void    ClearReservedGPUVARangesList();
 }
 
-@GUID("01d393c5-c9b0-42a1-958c-c26b02d4d097")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("01d393c5-c9b0-42a1-958c-c26b02d4d097")
 interface ID3D12Tools2 : ID3D12Tools1
 {
     HRESULT SetApplicationSpecificDriverState(IUnknown pAdapter, ID3DBlob pBlob);
 }
 
-@GUID("c706c811-3663-4bf1-91b9-1e8a7c114ab9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c706c811-3663-4bf1-91b9-1e8a7c114ab9")
 interface ID3D12RuntimeValidationControl : IUnknown
 {
     void DisableFailuresFromStricterValidationInAppLocalRuntime(BOOL bDisable);
     BOOL FailuresFromStricterValidationInAppLocalRuntimeDisabled();
 }
 
-@GUID("8f1359db-d8d1-42f9-b5cf-79f4cbad0d3d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("8f1359db-d8d1-42f9-b5cf-79f4cbad0d3d")
 interface ID3D12PageableTools : IUnknown
 {
     HRESULT GetAllocation(D3D12_GPU_VIRTUAL_ADDRESS_RANGE* pAllocation);
 }
 
-@GUID("2ea68e9c-19c3-4e47-a109-6cdadff0aca9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("2ea68e9c-19c3-4e47-a109-6cdadff0aca9")
 interface ID3D12DeviceTools : IUnknown
 {
     void SetNextAllocationAddress(ulong nextAllocationVirtualAddress);
 }
 
-@GUID("e30e9fc7-e641-4d6e-8a81-9dd9206ec47a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("e30e9fc7-e641-4d6e-8a81-9dd9206ec47a")
 interface ID3D12DeviceTools1 : ID3D12DeviceTools
 {
     HRESULT GetApplicationSpecificDriverState(ID3DBlob* ppBlob);
     D3D12_APPLICATION_SPECIFIC_DRIVER_BLOB_STATUS GetApplicationSpecificDriverBlobStatus();
 }
 
-@GUID("344488b7-6846-474b-b989-f027448245e0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug
+@GUID("344488b7-6846-474b-b989-f027448245e0")
 interface ID3D12Debug : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug-enabledebuglayer
     void EnableDebugLayer();
 }
 
-@GUID("affaa4ca-63fe-4d8e-b8ad-159000af4304")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug1
+@GUID("affaa4ca-63fe-4d8e-b8ad-159000af4304")
 interface ID3D12Debug1 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-enabledebuglayer
@@ -8376,18 +8376,18 @@ interface ID3D12Debug1 : IUnknown
     void SetEnableSynchronizedCommandQueueValidation(BOOL Enable);
 }
 
-@GUID("93a665c4-a3b2-4e5d-b692-a26ae14e3374")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug2
+@GUID("93a665c4-a3b2-4e5d-b692-a26ae14e3374")
 interface ID3D12Debug2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug2-setgpubasedvalidationflags
     void SetGPUBasedValidationFlags(D3D12_GPU_BASED_VALIDATION_FLAGS Flags);
 }
 
-@GUID("5cf4e58f-f671-4ff1-a542-3686e3d153d1")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug3
+@GUID("5cf4e58f-f671-4ff1-a542-3686e3d153d1")
 interface ID3D12Debug3 : ID3D12Debug
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setenablegpubasedvalidation
@@ -8398,36 +8398,36 @@ interface ID3D12Debug3 : ID3D12Debug
     void SetGPUBasedValidationFlags(D3D12_GPU_BASED_VALIDATION_FLAGS Flags);
 }
 
-@GUID("014b816e-9ec5-4a2f-a845-ffbe441ce13a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug4
+@GUID("014b816e-9ec5-4a2f-a845-ffbe441ce13a")
 interface ID3D12Debug4 : ID3D12Debug3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug4-disabledebuglayer
     void DisableDebugLayer();
 }
 
-@GUID("548d6b12-09fa-40e0-9069-5dcd589a52c9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug5
+@GUID("548d6b12-09fa-40e0-9069-5dcd589a52c9")
 interface ID3D12Debug5 : ID3D12Debug4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug5-setenableautoname
     void SetEnableAutoName(BOOL Enable);
 }
 
-@GUID("82a816d6-5d01-4157-97d0-4975463fd1ed")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug6
+@GUID("82a816d6-5d01-4157-97d0-4975463fd1ed")
 interface ID3D12Debug6 : ID3D12Debug5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug6-setforcelegacybarriervalidation
     void SetForceLegacyBarrierValidation(BOOL Enable);
 }
 
-@GUID("a9b71770-d099-4a65-a698-3dee10020f88")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugdevice1
+@GUID("a9b71770-d099-4a65-a698-3dee10020f88")
 interface ID3D12DebugDevice1 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-setdebugparameter
@@ -8442,9 +8442,9 @@ interface ID3D12DebugDevice1 : IUnknown
     HRESULT ReportLiveDeviceObjects(D3D12_RLDO_FLAGS Flags);
 }
 
-@GUID("3febd6dd-4973-4787-8194-e45f9e28923e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugdevice
+@GUID("3febd6dd-4973-4787-8194-e45f9e28923e")
 interface ID3D12DebugDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-setfeaturemask
@@ -8455,8 +8455,8 @@ interface ID3D12DebugDevice : IUnknown
     HRESULT ReportLiveDeviceObjects(D3D12_RLDO_FLAGS Flags);
 }
 
-@GUID("60eccbc1-378d-4df1-894c-f8ac5ce4d7dd")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("60eccbc1-378d-4df1-894c-f8ac5ce4d7dd")
 interface ID3D12DebugDevice2 : ID3D12DebugDevice
 {
     HRESULT SetDebugParameter(D3D12_DEBUG_DEVICE_PARAMETER_TYPE Type, 
@@ -8467,26 +8467,26 @@ interface ID3D12DebugDevice2 : ID3D12DebugDevice
                               uint DataSize);
 }
 
-@GUID("09e0bf36-54ac-484f-8847-4baeeab6053a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandqueue
+@GUID("09e0bf36-54ac-484f-8847-4baeeab6053a")
 interface ID3D12DebugCommandQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandqueue-assertresourcestate
     BOOL AssertResourceState(ID3D12Resource pResource, uint Subresource, uint State);
 }
 
-@GUID("16be35a2-bfd6-49f2-bcae-eaae4aff862d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("16be35a2-bfd6-49f2-bcae-eaae4aff862d")
 interface ID3D12DebugCommandQueue1 : ID3D12DebugCommandQueue
 {
     void AssertResourceAccess(ID3D12Resource pResource, uint Subresource, D3D12_BARRIER_ACCESS Access);
     void AssertTextureLayout(ID3D12Resource pResource, uint Subresource, D3D12_BARRIER_LAYOUT Layout);
 }
 
-@GUID("102ca951-311b-4b01-b11f-ecb83e061b37")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandlist1
+@GUID("102ca951-311b-4b01-b11f-ecb83e061b37")
 interface ID3D12DebugCommandList1 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-assertresourcestate
@@ -8501,9 +8501,9 @@ interface ID3D12DebugCommandList1 : IUnknown
                               uint DataSize);
 }
 
-@GUID("09e0bf36-54ac-484f-8847-4baeeab6053f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandlist
+@GUID("09e0bf36-54ac-484f-8847-4baeeab6053f")
 interface ID3D12DebugCommandList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-assertresourcestate
@@ -8514,8 +8514,8 @@ interface ID3D12DebugCommandList : IUnknown
     D3D12_DEBUG_FEATURE GetFeatureMask();
 }
 
-@GUID("aeb575cf-4e06-48be-ba3b-c450fc96652e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("aeb575cf-4e06-48be-ba3b-c450fc96652e")
 interface ID3D12DebugCommandList2 : ID3D12DebugCommandList
 {
     HRESULT SetDebugParameter(D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE Type, 
@@ -8526,17 +8526,17 @@ interface ID3D12DebugCommandList2 : ID3D12DebugCommandList
                               uint DataSize);
 }
 
-@GUID("197d5e15-4d37-4d34-af78-724cd70fdb1f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("197d5e15-4d37-4d34-af78-724cd70fdb1f")
 interface ID3D12DebugCommandList3 : ID3D12DebugCommandList2
 {
     void AssertResourceAccess(ID3D12Resource pResource, uint Subresource, D3D12_BARRIER_ACCESS Access);
     void AssertTextureLayout(ID3D12Resource pResource, uint Subresource, D3D12_BARRIER_LAYOUT Layout);
 }
 
-@GUID("0adf7d52-929c-4e61-addb-ffed30de66ef")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12sharingcontract
+@GUID("0adf7d52-929c-4e61-addb-ffed30de66ef")
 interface ID3D12SharingContract : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12sharingcontract-present
@@ -8547,16 +8547,16 @@ interface ID3D12SharingContract : IUnknown
     void EndCapturableWork(const(GUID)* guid);
 }
 
-@GUID("86ca3b85-49ad-4b6e-aed5-eddb18540f41")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("86ca3b85-49ad-4b6e-aed5-eddb18540f41")
 interface ID3D12ManualWriteTrackingResource : IUnknown
 {
     void TrackWrite(uint Subresource, const(D3D12_RANGE)* pWrittenRange);
 }
 
-@GUID("0742a90b-c387-483f-b946-30a7e4e61458")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12infoqueue
+@GUID("0742a90b-c387-483f-b946-30a7e4e61458")
 interface ID3D12InfoQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setmessagecountlimit
@@ -8636,8 +8636,8 @@ interface ID3D12InfoQueue : IUnknown
     BOOL    GetMuteDebugOutput();
 }
 
-@GUID("2852dd88-b484-4c0c-b6b1-67168500e600")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("2852dd88-b484-4c0c-b6b1-67168500e600")
 interface ID3D12InfoQueue1 : ID3D12InfoQueue
 {
     HRESULT RegisterMessageCallback(D3D12MessageFunc CallbackFunc, 
@@ -8646,25 +8646,25 @@ interface ID3D12InfoQueue1 : ID3D12InfoQueue
     HRESULT UnregisterMessageCallback(uint CallbackCookie);
 }
 
-@GUID("e9eb5314-33aa-42b2-a718-d77f58b1f1c7")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12sdkconfiguration
+@GUID("e9eb5314-33aa-42b2-a718-d77f58b1f1c7")
 interface ID3D12SDKConfiguration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12sdkconfiguration-setsdkversion
     HRESULT SetSDKVersion(uint SDKVersion, const(PSTR) SDKPath);
 }
 
-@GUID("8aaf9303-ad25-48b9-9a57-d9c37e009d9f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("8aaf9303-ad25-48b9-9a57-d9c37e009d9f")
 interface ID3D12SDKConfiguration1 : ID3D12SDKConfiguration
 {
     HRESULT CreateDeviceFactory(uint SDKVersion, const(PSTR) SDKPath, const(GUID)* riid, void** ppvFactory);
     void    FreeUnusedSDKs();
 }
 
-@GUID("61f307d3-d34e-4e7c-8374-3ba4de23cccb")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("61f307d3-d34e-4e7c-8374-3ba4de23cccb")
 interface ID3D12DeviceFactory : IUnknown
 {
     HRESULT InitializeFromGlobalState();
@@ -8677,8 +8677,8 @@ interface ID3D12DeviceFactory : IUnknown
     HRESULT CreateDevice(IUnknown adapter, D3D_FEATURE_LEVEL FeatureLevel, const(GUID)* riid, void** ppvDevice);
 }
 
-@GUID("78dbf87b-f766-422b-a61c-c8c446bdb9ad")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("78dbf87b-f766-422b-a61c-c8c446bdb9ad")
 interface ID3D12DeviceConfiguration : IUnknown
 {
     D3D12_DEVICE_CONFIGURATION_DESC GetDesc();
@@ -8689,8 +8689,8 @@ interface ID3D12DeviceConfiguration : IUnknown
                                                      size_t Size, const(GUID)* riid, void** ppvDeserializer);
 }
 
-@GUID("ed342442-6343-4e16-bb82-a3a577874e56")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("ed342442-6343-4e16-bb82-a3a577874e56")
 interface ID3D12DeviceConfiguration1 : ID3D12DeviceConfiguration
 {
     HRESULT CreateVersionedRootSignatureDeserializerFromSubobjectInLibrary(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pLibraryBlob, 
@@ -8699,24 +8699,24 @@ interface ID3D12DeviceConfiguration1 : ID3D12DeviceConfiguration
                                                                            const(GUID)* riid, void** ppvDeserializer);
 }
 
-@GUID("f5b066f0-648a-4611-bd41-27fd0948b9eb")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("f5b066f0-648a-4611-bd41-27fd0948b9eb")
 interface ID3D12StateObjectDatabaseFactory : IUnknown
 {
     HRESULT CreateStateObjectDatabaseFromFile(const(PWSTR) pDatabaseFile, D3D12_STATE_OBJECT_DATABASE_FLAGS flags, 
                                               const(GUID)* riid, void** ppvStateObjectDatabase);
 }
 
-@GUID("82dc6c85-727b-4a8d-9169-db6ce3e975a0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("82dc6c85-727b-4a8d-9169-db6ce3e975a0")
 interface ID3D12ApplicationIdentity : IUnknown
 {
     HRESULT SetApplicationIdentity(const(D3D12_APPLICATION_DESC)* pDesc, const(GUID)* AppId);
 }
 
-@GUID("55050859-4024-474c-87f5-6472eaee44ea")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist5
+@GUID("55050859-4024-474c-87f5-6472eaee44ea")
 interface ID3D12GraphicsCommandList5 : ID3D12GraphicsCommandList4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist5-rssetshadingrate
@@ -8725,54 +8725,54 @@ interface ID3D12GraphicsCommandList5 : ID3D12GraphicsCommandList4
     void RSSetShadingRateImage(ID3D12Resource shadingRateImage);
 }
 
-@GUID("c3827890-e548-4cfa-96cf-5689a9370f80")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c3827890-e548-4cfa-96cf-5689a9370f80")
 interface ID3D12GraphicsCommandList6 : ID3D12GraphicsCommandList5
 {
     void DispatchMesh(uint ThreadGroupCountX, uint ThreadGroupCountY, uint ThreadGroupCountZ);
 }
 
-@GUID("dd171223-8b61-4769-90e3-160ccde4e2c1")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist7
+@GUID("dd171223-8b61-4769-90e3-160ccde4e2c1")
 interface ID3D12GraphicsCommandList7 : ID3D12GraphicsCommandList6
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist7-barrier
     void Barrier(uint NumBarrierGroups, const(D3D12_BARRIER_GROUP)* pBarrierGroups);
 }
 
-@GUID("ee936ef9-599d-4d28-938e-23c4ad05ce51")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("ee936ef9-599d-4d28-938e-23c4ad05ce51")
 interface ID3D12GraphicsCommandList8 : ID3D12GraphicsCommandList7
 {
     void OMSetFrontAndBackStencilRef(uint FrontStencilRef, uint BackStencilRef);
 }
 
-@GUID("34ed2808-ffe6-4c2b-b11a-cabd2b0c59e1")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("34ed2808-ffe6-4c2b-b11a-cabd2b0c59e1")
 interface ID3D12GraphicsCommandList9 : ID3D12GraphicsCommandList8
 {
     void RSSetDepthBias(float DepthBias, float DepthBiasClamp, float SlopeScaledDepthBias);
     void IASetIndexBufferStripCutValue(D3D12_INDEX_BUFFER_STRIP_CUT_VALUE IBStripCutValue);
 }
 
-@GUID("7013c015-d161-4b63-a08c-238552dd8acc")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("7013c015-d161-4b63-a08c-238552dd8acc")
 interface ID3D12GraphicsCommandList10 : ID3D12GraphicsCommandList9
 {
     void SetProgram(const(D3D12_SET_PROGRAM_DESC)* pDesc);
     void DispatchGraph(const(D3D12_DISPATCH_GRAPH_DESC)* pDesc);
 }
 
-@GUID("f343d1a0-afe3-439f-b13d-cd87a43b70ca")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("f343d1a0-afe3-439f-b13d-cd87a43b70ca")
 interface ID3D12DSRDeviceFactory : IUnknown
 {
     HRESULT CreateDSRDevice(ID3D12Device pD3D12Device, uint NodeMask, const(GUID)* riid, void** ppvDSRDevice);
 }
 
-@GUID("597985ab-9b75-4dbb-be23-0761195bebee")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("597985ab-9b75-4dbb-be23-0761195bebee")
 interface ID3D12GBVDiagnostics : IUnknown
 {
     HRESULT GetGBVEntireSubresourceStatesData(ID3D12Resource pResource, 
@@ -8786,16 +8786,16 @@ interface ID3D12GBVDiagnostics : IUnknown
     void    GBVReserved1();
 }
 
-@GUID("3d5ca1a8-a39e-4619-95e0-f9b0a40340f5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("3d5ca1a8-a39e-4619-95e0-f9b0a40340f5")
 interface ID3D12DeviceStatistics : IUnknown
 {
     HRESULT GetStateObjectStatistics(D3D12_STATE_OBJECT_STATISTICS* pStatistics);
 }
 
-@GUID("e913c351-783d-48ca-a1d1-4f306284ad56")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectiontype
+@GUID("e913c351-783d-48ca-a1d1-4f306284ad56")
 interface ID3D12ShaderReflectionType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getdesc
@@ -8822,9 +8822,9 @@ interface ID3D12ShaderReflectionType
     HRESULT ImplementsInterface(ID3D12ShaderReflectionType pBase);
 }
 
-@GUID("8337a8a6-a216-444a-b2f4-314733a73aea")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectionvariable
+@GUID("8337a8a6-a216-444a-b2f4-314733a73aea")
 interface ID3D12ShaderReflectionVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getdesc
@@ -8837,9 +8837,9 @@ interface ID3D12ShaderReflectionVariable
     uint    GetInterfaceSlot(uint uArrayIndex);
 }
 
-@GUID("c59598b4-48b3-4869-b9b1-b1618b14a8b7")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectionconstantbuffer
+@GUID("c59598b4-48b3-4869-b9b1-b1618b14a8b7")
 interface ID3D12ShaderReflectionConstantBuffer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getdesc
@@ -8850,9 +8850,9 @@ interface ID3D12ShaderReflectionConstantBuffer
     ID3D12ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
 }
 
-@GUID("5a58797d-a72c-478d-8ba2-efc6b0efe88e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflection
+@GUID("5a58797d-a72c-478d-8ba2-efc6b0efe88e")
 interface ID3D12ShaderReflection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getdesc
@@ -8895,9 +8895,9 @@ interface ID3D12ShaderReflection : IUnknown
     ulong   GetRequiresFlags();
 }
 
-@GUID("8e349d19-54db-4a56-9dc9-119d87bdb804")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12libraryreflection
+@GUID("8e349d19-54db-4a56-9dc9-119d87bdb804")
 interface ID3D12LibraryReflection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12libraryreflection-getdesc
@@ -8906,9 +8906,9 @@ interface ID3D12LibraryReflection : IUnknown
     ID3D12FunctionReflection GetFunctionByIndex(int FunctionIndex);
 }
 
-@GUID("1108795c-2772-4ba9-b2a8-d464dc7e2799")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12functionreflection
+@GUID("1108795c-2772-4ba9-b2a8-d464dc7e2799")
 interface ID3D12FunctionReflection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getdesc
@@ -8927,24 +8927,24 @@ interface ID3D12FunctionReflection
     ID3D12FunctionParameterReflection GetFunctionParameter(int ParameterIndex);
 }
 
-@GUID("ec25f42d-7006-4f2b-b33e-02cc3375733f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12functionparameterreflection
+@GUID("ec25f42d-7006-4f2b-b33e-02cc3375733f")
 interface ID3D12FunctionParameterReflection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionparameterreflection-getdesc
     HRESULT GetDesc(D3D12_PARAMETER_DESC* pDesc);
 }
 
-@GUID("e0d06420-9f31-47e8-ae9a-dd2ba25ac0bc")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("e0d06420-9f31-47e8-ae9a-dd2ba25ac0bc")
 interface ID3D12CompilerFactoryChild : IUnknown
 {
     HRESULT GetFactory(const(GUID)* riid, void** ppCompilerFactory);
 }
 
-@GUID("5704e5e6-054b-4738-b661-7b0d68d8dde2")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("5704e5e6-054b-4738-b661-7b0d68d8dde2")
 interface ID3D12CompilerCacheSession : ID3D12CompilerFactoryChild
 {
     HRESULT FindGroup(const(D3D12_COMPILER_CACHE_GROUP_KEY)* pGroupKey, uint* pGroupVersion);
@@ -8966,15 +8966,15 @@ interface ID3D12CompilerCacheSession : ID3D12CompilerFactoryChild
                        const(D3D12_COMPILER_CACHE_TYPED_CONST_VALUE)* pTypedValues, uint NumTypedValues);
 }
 
-@GUID("5981cca4-e8ae-44ca-9b92-4fa86f5a3a3a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("5981cca4-e8ae-44ca-9b92-4fa86f5a3a3a")
 interface ID3D12CompilerStateObject : IUnknown
 {
     HRESULT GetCompiler(const(GUID)* riid, void** ppCompiler);
 }
 
-@GUID("8c403c12-993b-4583-80f1-6824138fa68e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("8c403c12-993b-4583-80f1-6824138fa68e")
 interface ID3D12Compiler : ID3D12CompilerFactoryChild
 {
     HRESULT CompilePipelineState(const(D3D12_COMPILER_CACHE_GROUP_KEY)* pGroupKey, uint GroupVersion, 
@@ -8989,8 +8989,8 @@ interface ID3D12Compiler : ID3D12CompilerFactoryChild
     HRESULT GetCacheSession(const(GUID)* riid, void** ppCompilerCacheSession);
 }
 
-@GUID("c1ee4b59-3f59-47a5-9b4e-a855c858a878")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c1ee4b59-3f59-47a5-9b4e-a855c858a878")
 interface ID3D12CompilerFactory : IUnknown
 {
     HRESULT EnumerateAdapterFamilies(uint AdapterFamilyIndex, D3D12_ADAPTER_FAMILY* pAdapterFamily);

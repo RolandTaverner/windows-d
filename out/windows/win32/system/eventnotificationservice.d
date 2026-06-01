@@ -89,9 +89,9 @@ BOOL IsNetworkAlive(uint* lpdwFlags);
 @GUID("d597cafe-5b9f-11d1-8dd2-00aa004abd5e")
 struct SENS;
 
-@GUID("d597bab1-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isensnetwork
+@GUID("d597bab1-5b9f-11d1-8dd2-00aa004abd5e")
 interface ISensNetwork : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionmade
@@ -104,9 +104,9 @@ interface ISensNetwork : IDispatch
     HRESULT DestinationReachableNoQOCInfo(BSTR bstrDestination, BSTR bstrConnection, uint ulType);
 }
 
-@GUID("d597bab2-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isensonnow
+@GUID("d597bab2-5b9f-11d1-8dd2-00aa004abd5e")
 interface ISensOnNow : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-onacpower
@@ -117,9 +117,9 @@ interface ISensOnNow : IDispatch
     HRESULT BatteryLow(uint dwBatteryLifePercent);
 }
 
-@GUID("d597bab3-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isenslogon
+@GUID("d597bab3-5b9f-11d1-8dd2-00aa004abd5e")
 interface ISensLogon : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-logon
@@ -138,9 +138,9 @@ interface ISensLogon : IDispatch
     HRESULT StopScreenSaver(BSTR bstrUserName);
 }
 
-@GUID("d597bab4-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isenslogon2
+@GUID("d597bab4-5b9f-11d1-8dd2-00aa004abd5e")
 interface ISensLogon2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-logon

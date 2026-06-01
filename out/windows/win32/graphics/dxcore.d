@@ -261,8 +261,8 @@ HRESULT DXCoreCreateAdapterFactory(const(GUID)* riid, void** ppvFactory);
 
 // Interfaces
 
-@GUID("f0db4c7f-fe5a-42a2-bd62-f2a6cf6fc83e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapter
+@GUID("f0db4c7f-fe5a-42a2-bd62-f2a6cf6fc83e")
 interface IDXCoreAdapter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isvalid
@@ -303,8 +303,8 @@ interface IDXCoreAdapter1 : IDXCoreAdapter
                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* outputBuffer);
 }
 
-@GUID("526c7776-40e9-459b-b711-f32ad76dfc28")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapterlist
+@GUID("526c7776-40e9-459b-b711-f32ad76dfc28")
 interface IDXCoreAdapterList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getadapter
@@ -321,8 +321,8 @@ interface IDXCoreAdapterList : IUnknown
     bool    IsAdapterPreferenceSupported(DXCoreAdapterPreference preference);
 }
 
-@GUID("78ee5945-c36e-4b13-a669-005dd11c0f06")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapterfactory
+@GUID("78ee5945-c36e-4b13-a669-005dd11c0f06")
 interface IDXCoreAdapterFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-createadapterlist

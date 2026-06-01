@@ -5506,10 +5506,10 @@ HRESULT D3DX11CreateFFT3DComplex(ID3D11DeviceContext pDeviceContext, uint X, uin
 
 // Interfaces
 
-@GUID("1841e5c8-16b0-489b-bcc8-44cfb0d5deae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11devicechild
+@GUID("1841e5c8-16b0-489b-bcc8-44cfb0d5deae")
 interface ID3D11DeviceChild : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-getdevice
@@ -5524,40 +5524,40 @@ interface ID3D11DeviceChild : IUnknown
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
 }
 
-@GUID("03823efb-8d8f-4e1c-9aa2-f64bb2cbfdf1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilstate
+@GUID("03823efb-8d8f-4e1c-9aa2-f64bb2cbfdf1")
 interface ID3D11DepthStencilState : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11depthstencilstate-getdesc
     void GetDesc(D3D11_DEPTH_STENCIL_DESC* pDesc);
 }
 
-@GUID("75b68faa-347d-4159-8f45-a0640f01cd9a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11blendstate
+@GUID("75b68faa-347d-4159-8f45-a0640f01cd9a")
 interface ID3D11BlendState : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11blendstate-getdesc
     void GetDesc(D3D11_BLEND_DESC* pDesc);
 }
 
-@GUID("9bb4ab81-ab1a-4d8f-b506-fc04200b6ee7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11rasterizerstate
+@GUID("9bb4ab81-ab1a-4d8f-b506-fc04200b6ee7")
 interface ID3D11RasterizerState : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11rasterizerstate-getdesc
     void GetDesc(D3D11_RASTERIZER_DESC* pDesc);
 }
 
-@GUID("dc8e63f3-d12b-4952-b47b-5e45026a862d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11resource
+@GUID("dc8e63f3-d12b-4952-b47b-5e45026a862d")
 interface ID3D11Resource : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-gettype
@@ -5568,204 +5568,204 @@ interface ID3D11Resource : ID3D11DeviceChild
     uint GetEvictionPriority();
 }
 
-@GUID("48570b85-d1ee-4fcd-a250-eb350722b037")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11buffer
+@GUID("48570b85-d1ee-4fcd-a250-eb350722b037")
 interface ID3D11Buffer : ID3D11Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11buffer-getdesc
     void GetDesc(D3D11_BUFFER_DESC* pDesc);
 }
 
-@GUID("f8fb5c27-c6b3-4f75-a4c8-439af2ef564c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture1d
+@GUID("f8fb5c27-c6b3-4f75-a4c8-439af2ef564c")
 interface ID3D11Texture1D : ID3D11Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture1d-getdesc
     void GetDesc(D3D11_TEXTURE1D_DESC* pDesc);
 }
 
-@GUID("6f15aaf2-d208-4e89-9ab4-489535d34f9c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture2d
+@GUID("6f15aaf2-d208-4e89-9ab4-489535d34f9c")
 interface ID3D11Texture2D : ID3D11Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture2d-getdesc
     void GetDesc(D3D11_TEXTURE2D_DESC* pDesc);
 }
 
-@GUID("037e866e-f56d-4357-a8af-9dabbe6e250e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture3d
+@GUID("037e866e-f56d-4357-a8af-9dabbe6e250e")
 interface ID3D11Texture3D : ID3D11Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture3d-getdesc
     void GetDesc(D3D11_TEXTURE3D_DESC* pDesc);
 }
 
-@GUID("839d1216-bb2e-412b-b7f4-a9dbebe08ed1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11view
+@GUID("839d1216-bb2e-412b-b7f4-a9dbebe08ed1")
 interface ID3D11View : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11view-getresource
     void GetResource(ID3D11Resource* ppResource);
 }
 
-@GUID("b0e06fe0-8192-4e1a-b1ca-36d7414710b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11shaderresourceview
+@GUID("b0e06fe0-8192-4e1a-b1ca-36d7414710b2")
 interface ID3D11ShaderResourceView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11shaderresourceview-getdesc
     void GetDesc(D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc);
 }
 
-@GUID("dfdba067-0b8d-4865-875b-d7b4516cc164")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11rendertargetview
+@GUID("dfdba067-0b8d-4865-875b-d7b4516cc164")
 interface ID3D11RenderTargetView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11rendertargetview-getdesc
     void GetDesc(D3D11_RENDER_TARGET_VIEW_DESC* pDesc);
 }
 
-@GUID("9fdac92a-1876-48c3-afad-25b94f84a9b6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilview
+@GUID("9fdac92a-1876-48c3-afad-25b94f84a9b6")
 interface ID3D11DepthStencilView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11depthstencilview-getdesc
     void GetDesc(D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc);
 }
 
-@GUID("28acf509-7f5c-48f6-8611-f316010a6380")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11unorderedaccessview
+@GUID("28acf509-7f5c-48f6-8611-f316010a6380")
 interface ID3D11UnorderedAccessView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11unorderedaccessview-getdesc
     void GetDesc(D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc);
 }
 
-@GUID("3b301d64-d678-4289-8897-22f8928b72f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11vertexshader
+@GUID("3b301d64-d678-4289-8897-22f8928b72f3")
 interface ID3D11VertexShader : ID3D11DeviceChild
 {
 }
 
-@GUID("8e5c6061-628a-4c8e-8264-bbe45cb3d5dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11hullshader
+@GUID("8e5c6061-628a-4c8e-8264-bbe45cb3d5dd")
 interface ID3D11HullShader : ID3D11DeviceChild
 {
 }
 
-@GUID("f582c508-0f36-490c-9977-31eece268cfa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11domainshader
+@GUID("f582c508-0f36-490c-9977-31eece268cfa")
 interface ID3D11DomainShader : ID3D11DeviceChild
 {
 }
 
-@GUID("38325b96-effb-4022-ba02-2e795b70275c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11geometryshader
+@GUID("38325b96-effb-4022-ba02-2e795b70275c")
 interface ID3D11GeometryShader : ID3D11DeviceChild
 {
 }
 
-@GUID("ea82e40d-51dc-4f33-93d4-db7c9125ae8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11pixelshader
+@GUID("ea82e40d-51dc-4f33-93d4-db7c9125ae8c")
 interface ID3D11PixelShader : ID3D11DeviceChild
 {
 }
 
-@GUID("4f5b196e-c2bd-495e-bd01-1fded38e4969")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11computeshader
+@GUID("4f5b196e-c2bd-495e-bd01-1fded38e4969")
 interface ID3D11ComputeShader : ID3D11DeviceChild
 {
 }
 
-@GUID("e4819ddc-4cf0-4025-bd26-5de82a3e07b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11inputlayout
+@GUID("e4819ddc-4cf0-4025-bd26-5de82a3e07b7")
 interface ID3D11InputLayout : ID3D11DeviceChild
 {
 }
 
-@GUID("da6fea51-564c-4487-9810-f0d0f9b4e3a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11samplerstate
+@GUID("da6fea51-564c-4487-9810-f0d0f9b4e3a5")
 interface ID3D11SamplerState : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11samplerstate-getdesc
     void GetDesc(D3D11_SAMPLER_DESC* pDesc);
 }
 
-@GUID("4b35d0cd-1e15-4258-9c98-1b1333f6dd3b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11asynchronous
+@GUID("4b35d0cd-1e15-4258-9c98-1b1333f6dd3b")
 interface ID3D11Asynchronous : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11asynchronous-getdatasize
     uint GetDataSize();
 }
 
-@GUID("d6c00747-87b7-425e-b84d-44d108560afd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11query
+@GUID("d6c00747-87b7-425e-b84d-44d108560afd")
 interface ID3D11Query : ID3D11Asynchronous
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11query-getdesc
     void GetDesc(D3D11_QUERY_DESC* pDesc);
 }
 
-@GUID("9eb576dd-9f77-4d86-81aa-8bab5fe490e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11predicate
+@GUID("9eb576dd-9f77-4d86-81aa-8bab5fe490e2")
 interface ID3D11Predicate : ID3D11Query
 {
 }
 
-@GUID("6e8c49fb-a371-4770-b440-29086022b741")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11counter
+@GUID("6e8c49fb-a371-4770-b440-29086022b741")
 interface ID3D11Counter : ID3D11Asynchronous
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11counter-getdesc
     void GetDesc(D3D11_COUNTER_DESC* pDesc);
 }
 
-@GUID("a6cd7faa-b0b7-4a2f-9436-8662a65797cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11classinstance
+@GUID("a6cd7faa-b0b7-4a2f-9436-8662a65797cb")
 interface ID3D11ClassInstance : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getclasslinkage
@@ -5778,10 +5778,10 @@ interface ID3D11ClassInstance : ID3D11DeviceChild
     void GetTypeName(PSTR pTypeName, size_t* pBufferLength);
 }
 
-@GUID("ddf57cba-9543-46e4-a12b-f207a0fe7fed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11classlinkage
+@GUID("ddf57cba-9543-46e4-a12b-f207a0fe7fed")
 interface ID3D11ClassLinkage : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classlinkage-getclassinstance
@@ -5791,20 +5791,20 @@ interface ID3D11ClassLinkage : ID3D11DeviceChild
                                 uint TextureOffset, uint SamplerOffset, ID3D11ClassInstance* ppInstance);
 }
 
-@GUID("a24bc4d1-769e-43f7-8013-98ff566c18e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11commandlist
+@GUID("a24bc4d1-769e-43f7-8013-98ff566c18e2")
 interface ID3D11CommandList : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11commandlist-getcontextflags
     uint GetContextFlags();
 }
 
-@GUID("c0bfa96c-e089-44fb-8eaf-26f8796190da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11devicecontext
+@GUID("c0bfa96c-e089-44fb-8eaf-26f8796190da")
 interface ID3D11DeviceContext : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetconstantbuffers
@@ -6062,10 +6062,10 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
     HRESULT FinishCommandList(BOOL RestoreDeferredContextState, ID3D11CommandList* ppCommandList);
 }
 
-@GUID("3c9c5b51-995d-48d1-9b8d-fa5caeded65c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodecoder
+@GUID("3c9c5b51-995d-48d1-9b8d-fa5caeded65c")
 interface ID3D11VideoDecoder : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoder-getcreationparameters
@@ -6074,10 +6074,10 @@ interface ID3D11VideoDecoder : ID3D11DeviceChild
     HRESULT GetDriverHandle(HANDLE* pDriverHandle);
 }
 
-@GUID("31627037-53ab-4200-9061-05faa9ab45f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessorenumerator
+@GUID("31627037-53ab-4200-9061-05faa9ab45f9")
 interface ID3D11VideoProcessorEnumerator : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcontentdesc
@@ -6096,10 +6096,10 @@ interface ID3D11VideoProcessorEnumerator : ID3D11DeviceChild
                                          D3D11_VIDEO_PROCESSOR_FILTER_RANGE* pRange);
 }
 
-@GUID("1d7b0652-185f-41c6-85ce-0c5be3d4ae6c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessor
+@GUID("1d7b0652-185f-41c6-85ce-0c5be3d4ae6c")
 interface ID3D11VideoProcessor : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessor-getcontentdesc
@@ -6108,10 +6108,10 @@ interface ID3D11VideoProcessor : ID3D11DeviceChild
     void GetRateConversionCaps(D3D11_VIDEO_PROCESSOR_RATE_CONVERSION_CAPS* pCaps);
 }
 
-@GUID("3015a308-dcbd-47aa-a747-192486d14d4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11authenticatedchannel
+@GUID("3015a308-dcbd-47aa-a747-192486d14d4a")
 interface ID3D11AuthenticatedChannel : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getcertificatesize
@@ -6123,10 +6123,10 @@ interface ID3D11AuthenticatedChannel : ID3D11DeviceChild
     void    GetChannelHandle(HANDLE* pChannelHandle);
 }
 
-@GUID("9b32f9ad-bdcc-40a6-a39d-d5c865845720")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11cryptosession
+@GUID("9b32f9ad-bdcc-40a6-a39d-d5c865845720")
 interface ID3D11CryptoSession : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcryptotype
@@ -6142,40 +6142,40 @@ interface ID3D11CryptoSession : ID3D11DeviceChild
     void    GetCryptoSessionHandle(HANDLE* pCryptoSessionHandle);
 }
 
-@GUID("c2931aea-2a85-4f20-860f-fba1fd256e18")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodecoderoutputview
+@GUID("c2931aea-2a85-4f20-860f-fba1fd256e18")
 interface ID3D11VideoDecoderOutputView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoderoutputview-getdesc
     void GetDesc(D3D11_VIDEO_DECODER_OUTPUT_VIEW_DESC* pDesc);
 }
 
-@GUID("11ec5a5f-51dc-4945-ab34-6e8c21300ea5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessorinputview
+@GUID("11ec5a5f-51dc-4945-ab34-6e8c21300ea5")
 interface ID3D11VideoProcessorInputView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorinputview-getdesc
     void GetDesc(D3D11_VIDEO_PROCESSOR_INPUT_VIEW_DESC* pDesc);
 }
 
-@GUID("a048285e-25a9-4527-bd93-d68b68c44254")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessoroutputview
+@GUID("a048285e-25a9-4527-bd93-d68b68c44254")
 interface ID3D11VideoProcessorOutputView : ID3D11View
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessoroutputview-getdesc
     void GetDesc(D3D11_VIDEO_PROCESSOR_OUTPUT_VIEW_DESC* pDesc);
 }
 
-@GUID("61f21c45-3c0e-4a74-9cea-67100d9ad5e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videocontext
+@GUID("61f21c45-3c0e-4a74-9cea-67100d9ad5e4")
 interface ID3D11VideoContext : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-getdecoderbuffer
@@ -6365,10 +6365,10 @@ interface ID3D11VideoContext : ID3D11DeviceChild
                                             D3D11_VIDEO_PROCESSOR_ROTATION* pRotation);
 }
 
-@GUID("10ec4d5b-975a-4689-b9e4-d0aac30fe333")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodevice
+@GUID("10ec4d5b-975a-4689-b9e4-d0aac30fe333")
 interface ID3D11VideoDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideodecoder
@@ -6422,10 +6422,10 @@ interface ID3D11VideoDevice : IUnknown
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
 }
 
-@GUID("db6f6ddb-ac77-4e88-8253-819df9bbf140")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11device
+@GUID("db6f6ddb-ac77-4e88-8253-819df9bbf140")
 interface ID3D11Device : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createbuffer
@@ -6538,10 +6538,10 @@ interface ID3D11Device : IUnknown
     uint    GetExceptionMode();
 }
 
-@GUID("79cf2233-7536-4948-9d36-1e4692dc5760")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11debug
+@GUID("79cf2233-7536-4948-9d36-1e4692dc5760")
 interface ID3D11Debug : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setfeaturemask
@@ -6564,10 +6564,10 @@ interface ID3D11Debug : IUnknown
     HRESULT ValidateContextForDispatch(ID3D11DeviceContext pContext);
 }
 
-@GUID("1ef337e3-58e7-4f83-a692-db221f5ed47e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11switchtoref
+@GUID("1ef337e3-58e7-4f83-a692-db221f5ed47e")
 interface ID3D11SwitchToRef : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11switchtoref-setuseref
@@ -6576,10 +6576,10 @@ interface ID3D11SwitchToRef : IUnknown
     BOOL GetUseRef();
 }
 
-@GUID("1911c771-1587-413e-a7e0-fb26c3de0268")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11tracingdevice
+@GUID("1911c771-1587-413e-a7e0-fb26c3de0268")
 interface ID3D11TracingDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11tracingdevice-setshadertrackingoptionsbytype
@@ -6588,30 +6588,30 @@ interface ID3D11TracingDevice : IUnknown
     HRESULT SetShaderTrackingOptions(IUnknown pShader, uint Options);
 }
 
-@GUID("193dacdf-0db2-4c05-a55c-ef06cac56fd9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11reftrackingoptions
+@GUID("193dacdf-0db2-4c05-a55c-ef06cac56fd9")
 interface ID3D11RefTrackingOptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11reftrackingoptions-settrackingoptions
     HRESULT SetTrackingOptions(uint uOptions);
 }
 
-@GUID("03916615-c644-418c-9bf4-75db5be63ca0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11refdefaulttrackingoptions
+@GUID("03916615-c644-418c-9bf4-75db5be63ca0")
 interface ID3D11RefDefaultTrackingOptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11refdefaulttrackingoptions-settrackingoptions
     HRESULT SetTrackingOptions(uint ResourceTypeFlags, uint Options);
 }
 
-@GUID("6543dbb6-1b48-42f5-ab82-e97ec74326f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11infoqueue
+@GUID("6543dbb6-1b48-42f5-ab82-e97ec74326f6")
 interface ID3D11InfoQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setmessagecountlimit
@@ -6691,38 +6691,38 @@ interface ID3D11InfoQueue : IUnknown
     BOOL    GetMuteDebugOutput();
 }
 
-@GUID("cc86fabe-da55-401d-85e7-e3c9de2877e9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11blendstate1
+@GUID("cc86fabe-da55-401d-85e7-e3c9de2877e9")
 interface ID3D11BlendState1 : ID3D11BlendState
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11blendstate1-getdesc1
     void GetDesc1(D3D11_BLEND_DESC1* pDesc);
 }
 
-@GUID("1217d7a6-5039-418c-b042-9cbe256afd6e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11rasterizerstate1
+@GUID("1217d7a6-5039-418c-b042-9cbe256afd6e")
 interface ID3D11RasterizerState1 : ID3D11RasterizerState
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11rasterizerstate1-getdesc1
     void GetDesc1(D3D11_RASTERIZER_DESC1* pDesc);
 }
 
-@GUID("5c1e0d8a-7c23-48f9-8c59-a92958ceff11")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3ddevicecontextstate
+@GUID("5c1e0d8a-7c23-48f9-8c59-a92958ceff11")
 interface ID3DDeviceContextState : ID3D11DeviceChild
 {
 }
 
-@GUID("bb2c6faa-b5fb-4082-8e6b-388b8cfa90e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11devicecontext1
+@GUID("bb2c6faa-b5fb-4082-8e6b-388b8cfa90e1")
 interface ID3D11DeviceContext1 : ID3D11DeviceContext
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-copysubresourceregion1
@@ -6780,10 +6780,10 @@ interface ID3D11DeviceContext1 : ID3D11DeviceContext
     void DiscardView1(ID3D11View pResourceView, const(RECT)* pRects, uint NumRects);
 }
 
-@GUID("a7f026da-a5f8-4487-a564-15e34357651e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videocontext1
+@GUID("a7f026da-a5f8-4487-a564-15e34357651e")
 interface ID3D11VideoContext1 : ID3D11VideoContext
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-submitdecoderbuffers1
@@ -6828,10 +6828,10 @@ interface ID3D11VideoContext1 : ID3D11VideoContext
                                            uint* pBehaviorHints);
 }
 
-@GUID("29da1d51-1321-4454-804b-f5fc9f861f0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videodevice1
+@GUID("29da1d51-1321-4454-804b-f5fc9f861f0f")
 interface ID3D11VideoDevice1 : ID3D11VideoDevice
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-getcryptosessionprivatedatasize
@@ -6857,10 +6857,10 @@ interface ID3D11VideoDevice1 : ID3D11VideoDevice
                                                       D3D11_VIDEO_SAMPLE_DESC* pRecommendedOutputDesc);
 }
 
-@GUID("465217f2-5568-43cf-b5b9-f61d54531ca1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videoprocessorenumerator1
+@GUID("465217f2-5568-43cf-b5b9-f61d54531ca1")
 interface ID3D11VideoProcessorEnumerator1 : ID3D11VideoProcessorEnumerator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videoprocessorenumerator1-checkvideoprocessorformatconversion
@@ -6869,10 +6869,10 @@ interface ID3D11VideoProcessorEnumerator1 : ID3D11VideoProcessorEnumerator
                                                 BOOL* pSupported);
 }
 
-@GUID("a04bfb29-08ef-43d6-a49c-a9bdbdcbe686")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11device1
+@GUID("a04bfb29-08ef-43d6-a49c-a9bdbdcbe686")
 interface ID3D11Device1 : ID3D11Device
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-getimmediatecontext1
@@ -6895,10 +6895,10 @@ interface ID3D11Device1 : ID3D11Device
                                      void** ppResource);
 }
 
-@GUID("b2daad8b-03d4-4dbf-95eb-32ab4b63d0ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3duserdefinedannotation
+@GUID("b2daad8b-03d4-4dbf-95eb-32ab4b63d0ab")
 interface ID3DUserDefinedAnnotation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-beginevent
@@ -6911,10 +6911,10 @@ interface ID3DUserDefinedAnnotation : IUnknown
     BOOL GetStatus();
 }
 
-@GUID("420d5b32-b90c-4da4-bef0-359f6a24a83a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nn-d3d11_2-id3d11devicecontext2
+@GUID("420d5b32-b90c-4da4-bef0-359f6a24a83a")
 interface ID3D11DeviceContext2 : ID3D11DeviceContext1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-updatetilemappings
@@ -6953,10 +6953,10 @@ interface ID3D11DeviceContext2 : ID3D11DeviceContext1
     void    EndEvent();
 }
 
-@GUID("9d06dffa-d1e5-4d07-83a8-1bb123f2f841")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nn-d3d11_2-id3d11device2
+@GUID("9d06dffa-d1e5-4d07-83a8-1bb123f2f841")
 interface ID3D11Device2 : ID3D11Device1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-getimmediatecontext2
@@ -6974,79 +6974,79 @@ interface ID3D11Device2 : ID3D11Device1
                                            uint* pNumQualityLevels);
 }
 
-@GUID("51218251-1e33-4617-9ccb-4d3a4367e7bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11texture2d1
+@GUID("51218251-1e33-4617-9ccb-4d3a4367e7bb")
 interface ID3D11Texture2D1 : ID3D11Texture2D
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11texture2d1-getdesc1
     void GetDesc1(D3D11_TEXTURE2D_DESC1* pDesc);
 }
 
-@GUID("0c711683-2853-4846-9bb0-f3e60639e46a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11texture3d1
+@GUID("0c711683-2853-4846-9bb0-f3e60639e46a")
 interface ID3D11Texture3D1 : ID3D11Texture3D
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11texture3d1-getdesc1
     void GetDesc1(D3D11_TEXTURE3D_DESC1* pDesc);
 }
 
-@GUID("6fbd02fb-209f-46c4-b059-2ed15586a6ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11rasterizerstate2
+@GUID("6fbd02fb-209f-46c4-b059-2ed15586a6ac")
 interface ID3D11RasterizerState2 : ID3D11RasterizerState1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11rasterizerstate2-getdesc2
     void GetDesc2(D3D11_RASTERIZER_DESC2* pDesc);
 }
 
-@GUID("91308b87-9040-411d-8c67-c39253ce3802")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11shaderresourceview1
+@GUID("91308b87-9040-411d-8c67-c39253ce3802")
 interface ID3D11ShaderResourceView1 : ID3D11ShaderResourceView
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11shaderresourceview1-getdesc1
     void GetDesc1(D3D11_SHADER_RESOURCE_VIEW_DESC1* pDesc1);
 }
 
-@GUID("ffbe2e23-f011-418a-ac56-5ceed7c5b94b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11rendertargetview1
+@GUID("ffbe2e23-f011-418a-ac56-5ceed7c5b94b")
 interface ID3D11RenderTargetView1 : ID3D11RenderTargetView
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11rendertargetview1-getdesc1
     void GetDesc1(D3D11_RENDER_TARGET_VIEW_DESC1* pDesc1);
 }
 
-@GUID("7b3b6153-a886-4544-ab37-6537c8500403")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11unorderedaccessview1
+@GUID("7b3b6153-a886-4544-ab37-6537c8500403")
 interface ID3D11UnorderedAccessView1 : ID3D11UnorderedAccessView
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11unorderedaccessview1-getdesc1
     void GetDesc1(D3D11_UNORDERED_ACCESS_VIEW_DESC1* pDesc1);
 }
 
-@GUID("631b4766-36dc-461d-8db6-c47e13e60916")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11query1
+@GUID("631b4766-36dc-461d-8db6-c47e13e60916")
 interface ID3D11Query1 : ID3D11Query
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11query1-getdesc1
     void GetDesc1(D3D11_QUERY_DESC1* pDesc1);
 }
 
-@GUID("b4e3c01d-e79e-4637-91b2-510e9f4c9b8f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11devicecontext3
+@GUID("b4e3c01d-e79e-4637-91b2-510e9f4c9b8f")
 interface ID3D11DeviceContext3 : ID3D11DeviceContext2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-flush1
@@ -7057,9 +7057,9 @@ interface ID3D11DeviceContext3 : ID3D11DeviceContext2
     void GetHardwareProtectionState(BOOL* pHwProtectionEnable);
 }
 
-@GUID("affde9d1-1df7-4bb7-8a34-0f46251dab80")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11fence
+@GUID("affde9d1-1df7-4bb7-8a34-0f46251dab80")
 interface ID3D11Fence : ID3D11DeviceChild
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-createsharedhandle
@@ -7071,9 +7071,9 @@ interface ID3D11Fence : ID3D11DeviceChild
     HRESULT SetEventOnCompletion(ulong Value, HANDLE hEvent);
 }
 
-@GUID("917600da-f58c-4c33-98d8-3e15b390fa24")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11devicecontext4
+@GUID("917600da-f58c-4c33-98d8-3e15b390fa24")
 interface ID3D11DeviceContext4 : ID3D11DeviceContext3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext4-signal
@@ -7082,10 +7082,10 @@ interface ID3D11DeviceContext4 : ID3D11DeviceContext3
     HRESULT Wait(ID3D11Fence pFence, ulong Value);
 }
 
-@GUID("a05c8c37-d2c6-4732-b3a0-9ce0b0dc9ae6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11device3
+@GUID("a05c8c37-d2c6-4732-b3a0-9ce0b0dc9ae6")
 interface ID3D11Device3 : ID3D11Device2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createtexture2d1
@@ -7120,9 +7120,9 @@ interface ID3D11Device3 : ID3D11Device2
                                 uint SrcSubresource, const(D3D11_BOX)* pSrcBox);
 }
 
-@GUID("8992ab71-02e6-4b8d-ba48-b056dcda42c4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11device4
+@GUID("8992ab71-02e6-4b8d-ba48-b056dcda42c4")
 interface ID3D11Device4 : ID3D11Device3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device4-registerdeviceremovedevent
@@ -7131,9 +7131,9 @@ interface ID3D11Device4 : ID3D11Device3
     void    UnregisterDeviceRemoved(uint dwCookie);
 }
 
-@GUID("8ffde202-a0e7-45df-9e01-e837801b5ea0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11device5
+@GUID("8ffde202-a0e7-45df-9e01-e837801b5ea0")
 interface ID3D11Device5 : ID3D11Device4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device5-opensharedfence
@@ -7142,9 +7142,9 @@ interface ID3D11Device5 : ID3D11Device4
     HRESULT CreateFence(ulong InitialValue, D3D11_FENCE_FLAG Flags, const(GUID)* ReturnedInterface, void** ppFence);
 }
 
-@GUID("9b7e4e00-342c-4106-a19f-4f2704f689f0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11multithread
+@GUID("9b7e4e00-342c-4106-a19f-4f2704f689f0")
 interface ID3D11Multithread : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-enter
@@ -7157,10 +7157,10 @@ interface ID3D11Multithread : IUnknown
     BOOL GetMultithreadProtected();
 }
 
-@GUID("c4e7374c-6243-4d1b-ae87-52b4f740e261")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videocontext2
+@GUID("c4e7374c-6243-4d1b-ae87-52b4f740e261")
 interface ID3D11VideoContext2 : ID3D11VideoContext1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorsetoutputhdrmetadata
@@ -7181,9 +7181,9 @@ interface ID3D11VideoContext2 : ID3D11VideoContext1
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pMetaData);
 }
 
-@GUID("59c0cb01-35f0-4a70-8f67-87905c906a53")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videodevice2
+@GUID("59c0cb01-35f0-4a70-8f67-87905c906a53")
 interface ID3D11VideoDevice2 : ID3D11VideoDevice1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videodevice2-checkfeaturesupport
@@ -7195,9 +7195,9 @@ interface ID3D11VideoDevice2 : ID3D11VideoDevice1
                                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData);
 }
 
-@GUID("a9e2faa0-cb39-418f-a0b7-d8aad4de672e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videocontext3
+@GUID("a9e2faa0-cb39-418f-a0b7-d8aad4de672e")
 interface ID3D11VideoContext3 : ID3D11VideoContext2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext3-decoderbeginframe1
@@ -7210,9 +7210,9 @@ interface ID3D11VideoContext3 : ID3D11VideoContext2
                                   const(D3D11_VIDEO_DECODER_BUFFER_DESC2)* pBufferDesc);
 }
 
-@GUID("6e6ffa6a-9bae-4613-a51e-91652d508c21")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectiontype
+@GUID("6e6ffa6a-9bae-4613-a51e-91652d508c21")
 interface ID3D11ShaderReflectionType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getdesc
@@ -7239,9 +7239,9 @@ interface ID3D11ShaderReflectionType
     HRESULT ImplementsInterface(ID3D11ShaderReflectionType pBase);
 }
 
-@GUID("51f23923-f3e5-4bd1-91cb-606177d8db4c")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectionvariable
+@GUID("51f23923-f3e5-4bd1-91cb-606177d8db4c")
 interface ID3D11ShaderReflectionVariable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getdesc
@@ -7254,9 +7254,9 @@ interface ID3D11ShaderReflectionVariable
     uint    GetInterfaceSlot(uint uArrayIndex);
 }
 
-@GUID("eb62d63d-93dd-4318-8ae8-c6f83ad371b8")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectionconstantbuffer
+@GUID("eb62d63d-93dd-4318-8ae8-c6f83ad371b8")
 interface ID3D11ShaderReflectionConstantBuffer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getdesc
@@ -7267,10 +7267,10 @@ interface ID3D11ShaderReflectionConstantBuffer
     ID3D11ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
 }
 
-@GUID("8d536ca1-0cca-4956-a837-786963755584")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflection
+@GUID("8d536ca1-0cca-4956-a837-786963755584")
 interface ID3D11ShaderReflection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getdesc
@@ -7313,9 +7313,9 @@ interface ID3D11ShaderReflection : IUnknown
     ulong   GetRequiresFlags();
 }
 
-@GUID("54384f1b-5b3e-4bb7-ae01-60ba3097cbb6")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11libraryreflection
+@GUID("54384f1b-5b3e-4bb7-ae01-60ba3097cbb6")
 interface ID3D11LibraryReflection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11libraryreflection-getdesc
@@ -7324,9 +7324,9 @@ interface ID3D11LibraryReflection : IUnknown
     ID3D11FunctionReflection GetFunctionByIndex(int FunctionIndex);
 }
 
-@GUID("207bcecb-d683-4a06-a8a3-9b149b9f73a4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionreflection
+@GUID("207bcecb-d683-4a06-a8a3-9b149b9f73a4")
 interface ID3D11FunctionReflection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getdesc
@@ -7345,18 +7345,18 @@ interface ID3D11FunctionReflection
     ID3D11FunctionParameterReflection GetFunctionParameter(int ParameterIndex);
 }
 
-@GUID("42757488-334f-47fe-982e-1a65d08cc462")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionparameterreflection
+@GUID("42757488-334f-47fe-982e-1a65d08cc462")
 interface ID3D11FunctionParameterReflection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionparameterreflection-getdesc
     HRESULT GetDesc(D3D11_PARAMETER_DESC* pDesc);
 }
 
-@GUID("469e07f7-045a-48d5-aa12-68a478cdf75d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11moduleinstance
+@GUID("469e07f7-045a-48d5-aa12-68a478cdf75d")
 interface ID3D11ModuleInstance : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindconstantbuffer
@@ -7381,18 +7381,18 @@ interface ID3D11ModuleInstance : IUnknown
     HRESULT BindResourceAsUnorderedAccessViewByName(const(PSTR) pSrvName, uint uDstUavSlot, uint uCount);
 }
 
-@GUID("cac701ee-80fc-4122-8242-10b39c8cec34")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11module
+@GUID("cac701ee-80fc-4122-8242-10b39c8cec34")
 interface ID3D11Module : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11module-createinstance
     HRESULT CreateInstance(const(PSTR) pNamespace, ID3D11ModuleInstance* ppModuleInstance);
 }
 
-@GUID("59a6cd0e-e10d-4c1f-88c0-63aba1daf30e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11linker
+@GUID("59a6cd0e-e10d-4c1f-88c0-63aba1daf30e")
 interface ID3D11Linker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-link
@@ -7404,16 +7404,16 @@ interface ID3D11Linker : IUnknown
     HRESULT AddClipPlaneFromCBuffer(uint uCBufferSlot, uint uCBufferEntry);
 }
 
-@GUID("d80dd70c-8d2f-4751-94a1-03c79b3556db")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11linkingnode
+@GUID("d80dd70c-8d2f-4751-94a1-03c79b3556db")
 interface ID3D11LinkingNode : IUnknown
 {
 }
 
-@GUID("54133220-1ce8-43d3-8236-9855c5ceecff")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionlinkinggraph
+@GUID("54133220-1ce8-43d3-8236-9855c5ceecff")
 interface ID3D11FunctionLinkingGraph : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-createmoduleinstance
@@ -7439,10 +7439,10 @@ interface ID3D11FunctionLinkingGraph : IUnknown
     HRESULT GenerateHlsl(uint uFlags, ID3DBlob* ppBuffer);
 }
 
-@GUID("36b013e6-2811-4845-baa7-d623fe0df104")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nn-d3d11shadertracing-id3d11shadertrace
+@GUID("36b013e6-2811-4845-baa7-d623fe0df104")
 interface ID3D11ShaderTrace : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-traceready
@@ -7465,10 +7465,10 @@ interface ID3D11ShaderTrace : IUnknown
                             D3D11_TRACE_VALUE* pValue);
 }
 
-@GUID("1fbad429-66ab-41cc-9617-667ac10e4459")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nn-d3d11shadertracing-id3d11shadertracefactory
+@GUID("1fbad429-66ab-41cc-9617-667ac10e4459")
 interface ID3D11ShaderTraceFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertracefactory-createshadertrace
@@ -7476,9 +7476,9 @@ interface ID3D11ShaderTraceFactory : IUnknown
                               ID3D11ShaderTrace* ppShaderTrace);
 }
 
-@GUID("5089b68f-e71d-4d38-be8e-f363b95a9405")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11scan
+@GUID("5089b68f-e71d-4d38-be8e-f363b95a9405")
 interface ID3DX11Scan : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-setscandirection
@@ -7492,9 +7492,9 @@ interface ID3DX11Scan : IUnknown
                       ID3D11UnorderedAccessView pDst);
 }
 
-@GUID("a915128c-d954-4c79-bfe1-64db923194d6")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11segmentedscan
+@GUID("a915128c-d954-4c79-bfe1-64db923194d6")
 interface ID3DX11SegmentedScan : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11segmentedscan-setscandirection
@@ -7505,9 +7505,9 @@ interface ID3DX11SegmentedScan : IUnknown
                     ID3D11UnorderedAccessView pDst);
 }
 
-@GUID("b3f7a938-4c93-4310-a675-b30d6de50553")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11fft
+@GUID("b3f7a938-4c93-4310-a675-b30d6de50553")
 interface ID3DX11FFT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-setforwardscale

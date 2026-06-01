@@ -949,8 +949,8 @@ struct WMDMStorageEnum;
 @GUID("110a3202-5a79-11d3-8d78-444553540000")
 struct WMDMLogger;
 
-@GUID("ec3b0663-0951-460a-9a80-0dceed3c043c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmmetadata
+@GUID("ec3b0663-0951-460a-9a80-0dceed3c043c")
 interface IWMDMMetaData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-additem
@@ -964,8 +964,8 @@ interface IWMDMMetaData : IUnknown
     HRESULT GetItemCount(uint* iCount);
 }
 
-@GUID("1dcb3a00-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager
+@GUID("1dcb3a00-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDeviceManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-getrevision
@@ -976,8 +976,8 @@ interface IWMDeviceManager : IUnknown
     HRESULT EnumDevices(IWMDMEnumDevice* ppEnumDevice);
 }
 
-@GUID("923e5249-8731-4c5b-9b1c-b8b60b6e46af")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager2
+@GUID("923e5249-8731-4c5b-9b1c-b8b60b6e46af")
 interface IWMDeviceManager2 : IWMDeviceManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-getdevicefromcanonicalname
@@ -988,16 +988,16 @@ interface IWMDeviceManager2 : IWMDeviceManager
     HRESULT Reinitialize();
 }
 
-@GUID("af185c41-100d-46ed-be2e-9ce8c44594ef")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager3
+@GUID("af185c41-100d-46ed-be2e-9ce8c44594ef")
 interface IWMDeviceManager3 : IWMDeviceManager2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager3-setdeviceenumpreference
     HRESULT SetDeviceEnumPreference(uint dwEnumPref);
 }
 
-@GUID("1dcb3a07-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorageglobals
+@GUID("1dcb3a07-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMStorageGlobals : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getcapabilities
@@ -1016,8 +1016,8 @@ interface IWMDMStorageGlobals : IUnknown
     HRESULT Initialize(uint fuMode, IWMDMProgress pProgress);
 }
 
-@GUID("1dcb3a06-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage
+@GUID("1dcb3a06-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMStorage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-setattributes
@@ -1040,8 +1040,8 @@ interface IWMDMStorage : IUnknown
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
-@GUID("1ed5a144-5cd5-4683-9eff-72cbdb2d9533")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage2
+@GUID("1ed5a144-5cd5-4683-9eff-72cbdb2d9533")
 interface IWMDMStorage2 : IWMDMStorage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-getstorage
@@ -1054,8 +1054,8 @@ interface IWMDMStorage2 : IWMDMStorage
                            VIDEOINFOHEADER* pVideoFormat);
 }
 
-@GUID("97717eea-926a-464e-96a4-247b0216026e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage3
+@GUID("97717eea-926a-464e-96a4-247b0216026e")
 interface IWMDMStorage3 : IWMDMStorage2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-getmetadata
@@ -1068,8 +1068,8 @@ interface IWMDMStorage3 : IWMDMStorage2
     HRESULT SetEnumPreference(WMDM_STORAGE_ENUM_MODE* pMode, uint nViews, WMDMMetadataView* pViews);
 }
 
-@GUID("c225bac5-a03a-40b8-9a23-91cf478c64a6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage4
+@GUID("c225bac5-a03a-40b8-9a23-91cf478c64a6")
 interface IWMDMStorage4 : IWMDMStorage3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-setreferences
@@ -1086,8 +1086,8 @@ interface IWMDMStorage4 : IWMDMStorage3
     HRESULT GetParent(IWMDMStorage* ppStorage);
 }
 
-@GUID("1dcb3a0b-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation
+@GUID("1dcb3a0b-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMOperation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-beginread
@@ -1112,8 +1112,8 @@ interface IWMDMOperation : IUnknown
     HRESULT End(HRESULT* phCompletionCode, IUnknown pNewObject);
 }
 
-@GUID("33445b48-7df7-425c-ad8f-0fc6d82f9f75")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation2
+@GUID("33445b48-7df7-425c-ad8f-0fc6d82f9f75")
 interface IWMDMOperation2 : IWMDMOperation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation2-setobjectattributes2
@@ -1124,16 +1124,16 @@ interface IWMDMOperation2 : IWMDMOperation
                                  VIDEOINFOHEADER* pVideoFormat);
 }
 
-@GUID("d1f9b46a-9ca8-46d8-9d0f-1ec9bae54919")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation3
+@GUID("d1f9b46a-9ca8-46d8-9d0f-1ec9bae54919")
 interface IWMDMOperation3 : IWMDMOperation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation3-transferobjectdataonclearchannel
     HRESULT TransferObjectDataOnClearChannel(ubyte* pData, uint* pdwSize);
 }
 
-@GUID("1dcb3a0c-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress
+@GUID("1dcb3a0c-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMProgress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-begin
@@ -1144,16 +1144,16 @@ interface IWMDMProgress : IUnknown
     HRESULT End();
 }
 
-@GUID("3a43f550-b383-4e92-b04a-e6bbc660fefc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress2
+@GUID("3a43f550-b383-4e92-b04a-e6bbc660fefc")
 interface IWMDMProgress2 : IWMDMProgress
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress2-end2
     HRESULT End2(HRESULT hrCompletionCode);
 }
 
-@GUID("21de01cb-3bb4-4929-b21a-17af3f80f658")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress3
+@GUID("21de01cb-3bb4-4929-b21a-17af3f80f658")
 interface IWMDMProgress3 : IWMDMProgress2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-begin3
@@ -1164,8 +1164,8 @@ interface IWMDMProgress3 : IWMDMProgress2
     HRESULT End3(GUID EventId, HRESULT hrCompletionCode, OPAQUECOMMAND* pContext);
 }
 
-@GUID("1dcb3a02-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice
+@GUID("1dcb3a02-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getname
@@ -1193,8 +1193,8 @@ interface IWMDMDevice : IUnknown
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
-@GUID("e34f3d37-9d67-4fc1-9252-62d28b2f8b55")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice2
+@GUID("e34f3d37-9d67-4fc1-9252-62d28b2f8b55")
 interface IWMDMDevice2 : IWMDMDevice
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getstorage
@@ -1210,8 +1210,8 @@ interface IWMDMDevice2 : IWMDMDevice
     HRESULT GetCanonicalName(PWSTR pwszPnPName, uint nMaxChars);
 }
 
-@GUID("6c03e4fe-05db-4dda-9e3c-06233a6d5d65")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice3
+@GUID("6c03e4fe-05db-4dda-9e3c-06233a6d5d65")
 interface IWMDMDevice3 : IWMDMDevice2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-getproperty
@@ -1227,8 +1227,8 @@ interface IWMDMDevice3 : IWMDMDevice2
     HRESULT FindStorage(WMDM_FIND_SCOPE findScope, const(PWSTR) pwszUniqueID, IWMDMStorage* ppStorage);
 }
 
-@GUID("82af0a65-9d96-412c-83e5-3c43e4b06cc7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevicesession
+@GUID("82af0a65-9d96-412c-83e5-3c43e4b06cc7")
 interface IWMDMDeviceSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicesession-beginsession
@@ -1237,8 +1237,8 @@ interface IWMDMDeviceSession : IUnknown
     HRESULT EndSession(WMDM_SESSION_TYPE type, ubyte* pCtx, uint dwSizeCtx);
 }
 
-@GUID("1dcb3a01-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmenumdevice
+@GUID("1dcb3a01-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMEnumDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-next
@@ -1251,8 +1251,8 @@ interface IWMDMEnumDevice : IUnknown
     HRESULT Clone(IWMDMEnumDevice* ppEnumDevice);
 }
 
-@GUID("1dcb3a04-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevicecontrol
+@GUID("1dcb3a04-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMDeviceControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-getstatus
@@ -1273,8 +1273,8 @@ interface IWMDMDeviceControl : IUnknown
     HRESULT Seek(uint fuMode, int nOffset);
 }
 
-@GUID("1dcb3a05-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmenumstorage
+@GUID("1dcb3a05-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMEnumStorage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-next
@@ -1287,8 +1287,8 @@ interface IWMDMEnumStorage : IUnknown
     HRESULT Clone(IWMDMEnumStorage* ppEnumStorage);
 }
 
-@GUID("1dcb3a08-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol
+@GUID("1dcb3a08-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMStorageControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-insert
@@ -1304,8 +1304,8 @@ interface IWMDMStorageControl : IUnknown
     HRESULT Move(uint fuMode, IWMDMStorage pTargetObject, IWMDMProgress pProgress);
 }
 
-@GUID("972c2e88-bd6c-4125-8e09-84f837e637b6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol2
+@GUID("972c2e88-bd6c-4125-8e09-84f837e637b6")
 interface IWMDMStorageControl2 : IWMDMStorageControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol2-insert2
@@ -1313,8 +1313,8 @@ interface IWMDMStorageControl2 : IWMDMStorageControl
                     IWMDMProgress pProgress, IUnknown pUnknown, IWMDMStorage* ppNewObject);
 }
 
-@GUID("b3266365-d4f3-4696-8d53-bd27ec60993a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol3
+@GUID("b3266365-d4f3-4696-8d53-bd27ec60993a")
 interface IWMDMStorageControl3 : IWMDMStorageControl2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol3-insert3
@@ -1322,8 +1322,8 @@ interface IWMDMStorageControl3 : IWMDMStorageControl2
                     IWMDMProgress pProgress, IWMDMMetaData pMetaData, IUnknown pUnknown, IWMDMStorage* ppNewObject);
 }
 
-@GUID("1dcb3a09-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmobjectinfo
+@GUID("1dcb3a09-33ed-11d3-8470-00c04f79dbc0")
 interface IWMDMObjectInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getplaylength
@@ -1342,24 +1342,24 @@ interface IWMDMObjectInfo : IUnknown
     HRESULT GetLongestPlayPosition(uint* pdwLongestPos);
 }
 
-@GUID("ebeccedb-88ee-4e55-b6a4-8d9f07d696aa")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmrevoked
+@GUID("ebeccedb-88ee-4e55-b6a4-8d9f07d696aa")
 interface IWMDMRevoked : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmrevoked-getrevocationurl
     HRESULT GetRevocationURL(PWSTR* ppwszRevocationURL, uint* pdwBufferLen, uint* pdwRevokedBitFlag);
 }
 
-@GUID("3f5e95c0-0f43-4ed4-93d2-c89a45d59b81")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmnotification
+@GUID("3f5e95c0-0f43-4ed4-93d2-c89a45d59b81")
 interface IWMDMNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmnotification-wmdmmessage
     HRESULT WMDMMessage(uint dwMessageType, const(PWSTR) pwszCanonicalName);
 }
 
-@GUID("1dcb3a10-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider
+@GUID("1dcb3a10-33ed-11d3-8470-00c04f79dbc0")
 interface IMDServiceProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider-getdevicecount
@@ -1368,24 +1368,24 @@ interface IMDServiceProvider : IUnknown
     HRESULT EnumDevices(IMDSPEnumDevice* ppEnumDevice);
 }
 
-@GUID("b2fa24b7-cda3-4694-9862-413ae1a34819")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider2
+@GUID("b2fa24b7-cda3-4694-9862-413ae1a34819")
 interface IMDServiceProvider2 : IMDServiceProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider2-createdevice
     HRESULT CreateDevice(const(PWSTR) pwszDevicePath, uint* pdwCount, IMDSPDevice** pppDeviceArray);
 }
 
-@GUID("4ed13ef3-a971-4d19-9f51-0e1826b2da57")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider3
+@GUID("4ed13ef3-a971-4d19-9f51-0e1826b2da57")
 interface IMDServiceProvider3 : IMDServiceProvider2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider3-setdeviceenumpreference
     HRESULT SetDeviceEnumPreference(uint dwEnumPref);
 }
 
-@GUID("1dcb3a11-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspenumdevice
+@GUID("1dcb3a11-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPEnumDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-next
@@ -1398,8 +1398,8 @@ interface IMDSPEnumDevice : IUnknown
     HRESULT Clone(IMDSPEnumDevice* ppEnumDevice);
 }
 
-@GUID("1dcb3a12-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice
+@GUID("1dcb3a12-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getname
@@ -1427,8 +1427,8 @@ interface IMDSPDevice : IUnknown
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
-@GUID("420d16ad-c97d-4e00-82aa-00e9f4335ddd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice2
+@GUID("420d16ad-c97d-4e00-82aa-00e9f4335ddd")
 interface IMDSPDevice2 : IMDSPDevice
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getstorage
@@ -1444,8 +1444,8 @@ interface IMDSPDevice2 : IMDSPDevice
     HRESULT GetCanonicalName(PWSTR pwszPnPName, uint nMaxChars);
 }
 
-@GUID("1a839845-fc55-487c-976f-ee38ac0e8c4e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice3
+@GUID("1a839845-fc55-487c-976f-ee38ac0e8c4e")
 interface IMDSPDevice3 : IMDSPDevice2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-getproperty
@@ -1461,8 +1461,8 @@ interface IMDSPDevice3 : IMDSPDevice2
     HRESULT FindStorage(WMDM_FIND_SCOPE findScope, const(PWSTR) pwszUniqueID, IMDSPStorage* ppStorage);
 }
 
-@GUID("1dcb3a14-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevicecontrol
+@GUID("1dcb3a14-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPDeviceControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-getdcstatus
@@ -1483,8 +1483,8 @@ interface IMDSPDeviceControl : IUnknown
     HRESULT Seek(uint fuMode, int nOffset);
 }
 
-@GUID("1dcb3a15-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspenumstorage
+@GUID("1dcb3a15-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPEnumStorage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-next
@@ -1497,8 +1497,8 @@ interface IMDSPEnumStorage : IUnknown
     HRESULT Clone(IMDSPEnumStorage* ppEnumStorage);
 }
 
-@GUID("1dcb3a16-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage
+@GUID("1dcb3a16-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPStorage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-setattributes
@@ -1523,8 +1523,8 @@ interface IMDSPStorage : IUnknown
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
-@GUID("0a5e07a5-6454-4451-9c36-1c6ae7e2b1d6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage2
+@GUID("0a5e07a5-6454-4451-9c36-1c6ae7e2b1d6")
 interface IMDSPStorage2 : IMDSPStorage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-getstorage
@@ -1541,8 +1541,8 @@ interface IMDSPStorage2 : IMDSPStorage
                            VIDEOINFOHEADER* pVideoFormat);
 }
 
-@GUID("6c669867-97ed-4a67-9706-1c5529d2a414")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage3
+@GUID("6c669867-97ed-4a67-9706-1c5529d2a414")
 interface IMDSPStorage3 : IMDSPStorage2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage3-getmetadata
@@ -1551,8 +1551,8 @@ interface IMDSPStorage3 : IMDSPStorage2
     HRESULT SetMetadata(IWMDMMetaData pMetadata);
 }
 
-@GUID("3133b2c4-515c-481b-b1ce-39327ecb4f74")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage4
+@GUID("3133b2c4-515c-481b-b1ce-39327ecb4f74")
 interface IMDSPStorage4 : IMDSPStorage3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-setreferences
@@ -1570,8 +1570,8 @@ interface IMDSPStorage4 : IMDSPStorage3
     HRESULT GetParent(IMDSPStorage* ppStorage);
 }
 
-@GUID("1dcb3a17-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorageglobals
+@GUID("1dcb3a17-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPStorageGlobals : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getcapabilities
@@ -1594,8 +1594,8 @@ interface IMDSPStorageGlobals : IUnknown
     HRESULT GetRootStorage(IMDSPStorage* ppRoot);
 }
 
-@GUID("1dcb3a19-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobjectinfo
+@GUID("1dcb3a19-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPObjectInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getplaylength
@@ -1614,8 +1614,8 @@ interface IMDSPObjectInfo : IUnknown
     HRESULT GetLongestPlayPosition(uint* pdwLongestPos);
 }
 
-@GUID("1dcb3a18-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobject
+@GUID("1dcb3a18-33ed-11d3-8470-00c04f79dbc0")
 interface IMDSPObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-open
@@ -1636,8 +1636,8 @@ interface IMDSPObject : IUnknown
     HRESULT Close();
 }
 
-@GUID("3f34cd3e-5907-4341-9af9-97f4187c3aa5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobject2
+@GUID("3f34cd3e-5907-4341-9af9-97f4187c3aa5")
 interface IMDSPObject2 : IMDSPObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject2-readonclearchannel
@@ -1646,8 +1646,8 @@ interface IMDSPObject2 : IMDSPObject
     HRESULT WriteOnClearChannel(ubyte* pData, uint* pdwSize);
 }
 
-@GUID("c2fe57a8-9304-478c-9ee4-47e397b912d7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdirecttransfer
+@GUID("c2fe57a8-9304-478c-9ee4-47e397b912d7")
 interface IMDSPDirectTransfer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdirecttransfer-transfertodevice
@@ -1656,32 +1656,32 @@ interface IMDSPDirectTransfer : IUnknown
                              IWMDMProgress pTransferProgress, IMDSPStorage* ppNewObject);
 }
 
-@GUID("a4e8f2d4-3f31-464d-b53d-4fc335998184")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdsprevoked
+@GUID("a4e8f2d4-3f31-464d-b53d-4fc335998184")
 interface IMDSPRevoked : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdsprevoked-getrevocationurl
     HRESULT GetRevocationURL(PWSTR* ppwszRevocationURL, uint* pdwBufferLen);
 }
 
-@GUID("1dcb3a0f-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureauthenticate
+@GUID("1dcb3a0f-33ed-11d3-8470-00c04f79dbc0")
 interface ISCPSecureAuthenticate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureauthenticate-getsecurequery
     HRESULT GetSecureQuery(ISCPSecureQuery* ppSecureQuery);
 }
 
-@GUID("b580cfae-1672-47e2-acaa-44bbecbcae5b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureauthenticate2
+@GUID("b580cfae-1672-47e2-acaa-44bbecbcae5b")
 interface ISCPSecureAuthenticate2 : ISCPSecureAuthenticate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureauthenticate2-getscpsession
     HRESULT GetSCPSession(ISCPSession* ppSCPSession);
 }
 
-@GUID("1dcb3a0d-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery
+@GUID("1dcb3a0d-33ed-11d3-8470-00c04f79dbc0")
 interface ISCPSecureQuery : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-getdatademands
@@ -1698,8 +1698,8 @@ interface ISCPSecureQuery : IUnknown
                       IMDSPStorageGlobals pStgGlobals, WMDMRIGHTS** ppRights, uint* pnRightsCount, ubyte* abMac);
 }
 
-@GUID("ebe17e25-4fd7-4632-af46-6d93d4fcc72e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery2
+@GUID("ebe17e25-4fd7-4632-af46-6d93d4fcc72e")
 interface ISCPSecureQuery2 : ISCPSecureQuery
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery2-makedecision2
@@ -1710,8 +1710,8 @@ interface ISCPSecureQuery2 : ISCPSecureQuery
                           IUnknown pUnknown, ISCPSecureExchange* ppExchange, ubyte* abMac);
 }
 
-@GUID("1dcb3a0e-33ed-11d3-8470-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange
+@GUID("1dcb3a0e-33ed-11d3-8470-00c04f79dbc0")
 interface ISCPSecureExchange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-transfercontainerdata
@@ -1722,8 +1722,8 @@ interface ISCPSecureExchange : IUnknown
     HRESULT TransferComplete();
 }
 
-@GUID("6c62fc7b-2690-483f-9d44-0a20cb35577c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange2
+@GUID("6c62fc7b-2690-483f-9d44-0a20cb35577c")
 interface ISCPSecureExchange2 : ISCPSecureExchange
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange2-transfercontainerdata2
@@ -1731,8 +1731,8 @@ interface ISCPSecureExchange2 : ISCPSecureExchange
                                    uint* pfuReadyFlags, ubyte* abMac);
 }
 
-@GUID("ab4e77e4-8908-4b17-bd2a-b1dbe6dd69e1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange3
+@GUID("ab4e77e4-8908-4b17-bd2a-b1dbe6dd69e1")
 interface ISCPSecureExchange3 : ISCPSecureExchange2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange3-transfercontainerdataonclearchannel
@@ -1743,8 +1743,8 @@ interface ISCPSecureExchange3 : ISCPSecureExchange2
     HRESULT TransferCompleteForDevice(IMDSPDevice pDevice);
 }
 
-@GUID("88a3e6ed-eee4-4619-bbb3-fd4fb62715d1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsession
+@GUID("88a3e6ed-eee4-4619-bbb3-fd4fb62715d1")
 interface ISCPSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-beginsession
@@ -1755,8 +1755,8 @@ interface ISCPSession : IUnknown
     HRESULT GetSecureQuery(ISCPSecureQuery* ppSecureQuery);
 }
 
-@GUID("b7edd1a2-4dab-484b-b3c5-ad39b8b4c0b1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery3
+@GUID("b7edd1a2-4dab-484b-b3c5-ad39b8b4c0b1")
 interface ISCPSecureQuery3 : ISCPSecureQuery2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery3-getrightsonclearchannel
@@ -1773,8 +1773,8 @@ interface ISCPSecureQuery3 : ISCPSecureQuery2
                                        ISCPSecureExchange* ppExchange);
 }
 
-@GUID("a9889c00-6d2b-11d3-8496-00c04f79dbc0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-icomponentauthenticate
+@GUID("a9889c00-6d2b-11d3-8496-00c04f79dbc0")
 interface IComponentAuthenticate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-icomponentauthenticate-sacauth
@@ -1784,8 +1784,8 @@ interface IComponentAuthenticate : IUnknown
     HRESULT SACGetProtocols(uint** ppdwProtocols, uint* pdwProtocolCount);
 }
 
-@GUID("110a3200-5a79-11d3-8d78-444553540000")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nn-wmdmlog-iwmdmlogger
+@GUID("110a3200-5a79-11d3-8d78-444553540000")
 interface IWMDMLogger : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-isenabled

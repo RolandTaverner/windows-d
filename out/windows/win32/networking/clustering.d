@@ -6859,6 +6859,7 @@ struct ClusPropertyValueData;
 @GUID("f2e6071f-2631-11d1-89f1-00a0c90d061e")
 struct ClusPartition;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/nn-msclus-iscluspartitionex
 @GUID("53d51d26-b51b-4a79-b2c3-5048d93a98fc")
 struct ClusPartitionEx;
 
@@ -6883,9 +6884,9 @@ struct ClusCryptoKeys;
 @GUID("f2e6072d-2631-11d1-89f1-00a0c90d061e")
 struct ClusResDependents;
 
-@GUID("97dede50-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusteruiinfo
+@GUID("97dede50-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterUIInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getclustername
@@ -6898,9 +6899,9 @@ interface IGetClusterUIInfo : IUnknown
     HICON   GetIcon();
 }
 
-@GUID("97dede51-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterdatainfo
+@GUID("97dede51-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterDataInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getclustername
@@ -6911,9 +6912,9 @@ interface IGetClusterDataInfo : IUnknown
     int      GetObjectCount();
 }
 
-@GUID("97dede52-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterobjectinfo
+@GUID("97dede52-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterObjectInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterobjectinfo-getobjectname
@@ -6922,27 +6923,27 @@ interface IGetClusterObjectInfo : IUnknown
     CLUADMEX_OBJECT_TYPE GetObjectType(int lObjIndex);
 }
 
-@GUID("97dede53-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternodeinfo
+@GUID("97dede53-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterNodeInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternodeinfo-getnodehandle
     HNODE GetNodeHandle(int lObjIndex);
 }
 
-@GUID("97dede54-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclustergroupinfo
+@GUID("97dede54-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterGroupInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclustergroupinfo-getgrouphandle
     HGROUP GetGroupHandle(int lObjIndex);
 }
 
-@GUID("97dede55-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterresourceinfo
+@GUID("97dede55-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterResourceInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcehandle
@@ -6953,45 +6954,45 @@ interface IGetClusterResourceInfo : IUnknown
     BOOL    GetResourceNetworkName(int lObjIndex, BSTR lpszNetName, uint* pcchNetName);
 }
 
-@GUID("97dede56-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternetworkinfo
+@GUID("97dede56-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterNetworkInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternetworkinfo-getnetworkhandle
     HNETWORK GetNetworkHandle(int lObjIndex);
 }
 
-@GUID("97dede57-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternetinterfaceinfo
+@GUID("97dede57-fc6b-11cf-b5f5-00a0c90ab505")
 interface IGetClusterNetInterfaceInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternetinterfaceinfo-getnetinterfacehandle
     HNETINTERFACE GetNetInterfaceHandle(int lObjIndex);
 }
 
-@GUID("97dede60-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcpropertysheetcallback
+@GUID("97dede60-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWCPropertySheetCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcpropertysheetcallback-addpropertysheetpage
     HRESULT AddPropertySheetPage(int* hpage);
 }
 
-@GUID("97dede61-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendpropertysheet
+@GUID("97dede61-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWEExtendPropertySheet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendpropertysheet-createpropertysheetpages
     HRESULT CreatePropertySheetPages(IUnknown piData, IWCPropertySheetCallback piCallback);
 }
 
-@GUID("97dede62-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcwizardcallback
+@GUID("97dede62-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWCWizardCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizardcallback-addwizardpage
@@ -7000,18 +7001,18 @@ interface IWCWizardCallback : IUnknown
     HRESULT EnableNext(int* hpage, BOOL bEnable);
 }
 
-@GUID("97dede63-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendwizard
+@GUID("97dede63-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWEExtendWizard : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendwizard-createwizardpages
     HRESULT CreateWizardPages(IUnknown piData, IWCWizardCallback piCallback);
 }
 
-@GUID("97dede64-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwccontextmenucallback
+@GUID("97dede64-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWCContextMenuCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwccontextmenucallback-addextensionmenuitem
@@ -7019,27 +7020,27 @@ interface IWCContextMenuCallback : IUnknown
                                  uint uFlags);
 }
 
-@GUID("97dede65-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendcontextmenu
+@GUID("97dede65-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWEExtendContextMenu : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendcontextmenu-addcontextmenuitems
     HRESULT AddContextMenuItems(IUnknown piData, IWCContextMenuCallback piCallback);
 }
 
-@GUID("97dede66-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweinvokecommand
+@GUID("97dede66-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWEInvokeCommand : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweinvokecommand-invokecommand
     HRESULT InvokeCommand(uint nCommandID, IUnknown piData);
 }
 
-@GUID("97dede67-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcwizard97callback
+@GUID("97dede67-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWCWizard97Callback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizard97callback-addwizard97page
@@ -7048,9 +7049,9 @@ interface IWCWizard97Callback : IUnknown
     HRESULT EnableNext(int* hpage, BOOL bEnable);
 }
 
-@GUID("97dede68-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendwizard97
+@GUID("97dede68-fc6b-11cf-b5f5-00a0c90ab505")
 interface IWEExtendWizard97 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendwizard97-createwizard97pages
@@ -7487,9 +7488,9 @@ interface ISClusPartition : IDispatch
     HRESULT get_FileSystem(BSTR* pbstrFileSystem);
 }
 
-@GUID("8802d4fe-b32e-4ad1-9dbd-64f18e1166ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/nn-msclus-iscluspartitionex
+@GUID("8802d4fe-b32e-4ad1-9dbd-64f18e1166ce")
 interface ISClusPartitionEx : ISClusPartition
 {
     HRESULT get_TotalSize(int* plTotalSize);

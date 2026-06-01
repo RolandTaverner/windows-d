@@ -21815,9 +21815,9 @@ interface DispDOMException : IDispatch
 {
 }
 
-@GUID("3051072d-98b5-11cf-bb82-00aa00bdce0b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irangeexception
+@GUID("3051072d-98b5-11cf-bb82-00aa00bdce0b")
 interface IRangeException : IDispatch
 {
     HRESULT put_code(int v);

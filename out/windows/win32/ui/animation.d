@@ -167,9 +167,9 @@ struct UIAnimationTransitionFactory2;
 @GUID("bfcd4a0c-06b6-4384-b768-0daa792c380e")
 struct UIAnimationTimer;
 
-@GUID("9169896c-ac8d-4e7d-94e5-67fa4dc2f2e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationmanager
+@GUID("9169896c-ac8d-4e7d-94e5-67fa4dc2f2e8")
 interface IUIAnimationManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationmanager-createanimationvariable
@@ -212,9 +212,9 @@ interface IUIAnimationManager : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("8ceeb155-2849-4ce5-9448-91ff70e1e4d9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariable
+@GUID("8ceeb155-2849-4ce5-9448-91ff70e1e4d9")
 interface IUIAnimationVariable : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariable-getvalue
@@ -247,9 +247,9 @@ interface IUIAnimationVariable : IUnknown
     HRESULT SetVariableIntegerChangeHandler(IUIAnimationVariableIntegerChangeHandler handler);
 }
 
-@GUID("a8ff128f-9bf9-4af1-9e67-e5e410defb84")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationstoryboard
+@GUID("a8ff128f-9bf9-4af1-9e67-e5e410defb84")
 interface IUIAnimationStoryboard : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationstoryboard-addtransition
@@ -292,9 +292,9 @@ interface IUIAnimationStoryboard : IUnknown
     HRESULT SetStoryboardEventHandler(IUIAnimationStoryboardEventHandler handler);
 }
 
-@GUID("dc6ce252-f731-41cf-b610-614b6ca049ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtransition
+@GUID("dc6ce252-f731-41cf-b610-614b6ca049ad")
 interface IUIAnimationTransition : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtransition-setinitialvalue
@@ -307,9 +307,9 @@ interface IUIAnimationTransition : IUnknown
     HRESULT GetDuration(double* duration);
 }
 
-@GUID("783321ed-78a3-4366-b574-6af607a64788")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationmanagereventhandler
+@GUID("783321ed-78a3-4366-b574-6af607a64788")
 interface IUIAnimationManagerEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationmanagereventhandler-onmanagerstatuschanged
@@ -317,9 +317,9 @@ interface IUIAnimationManagerEventHandler : IUnknown
                                    UI_ANIMATION_MANAGER_STATUS previousStatus);
 }
 
-@GUID("6358b7ba-87d2-42d5-bf71-82e919dd5862")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariablechangehandler
+@GUID("6358b7ba-87d2-42d5-bf71-82e919dd5862")
 interface IUIAnimationVariableChangeHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariablechangehandler-onvaluechanged
@@ -327,9 +327,9 @@ interface IUIAnimationVariableChangeHandler : IUnknown
                            double previousValue);
 }
 
-@GUID("bb3e1550-356e-44b0-99da-85ac6017865e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariableintegerchangehandler
+@GUID("bb3e1550-356e-44b0-99da-85ac6017865e")
 interface IUIAnimationVariableIntegerChangeHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariableintegerchangehandler-onintegervaluechanged
@@ -337,9 +337,9 @@ interface IUIAnimationVariableIntegerChangeHandler : IUnknown
                                   int previousValue);
 }
 
-@GUID("3d5c9008-ec7c-4364-9f8a-9af3c58cbae6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationstoryboardeventhandler
+@GUID("3d5c9008-ec7c-4364-9f8a-9af3c58cbae6")
 interface IUIAnimationStoryboardEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationstoryboardeventhandler-onstoryboardstatuschanged
@@ -349,9 +349,9 @@ interface IUIAnimationStoryboardEventHandler : IUnknown
     HRESULT OnStoryboardUpdated(IUIAnimationStoryboard storyboard);
 }
 
-@GUID("83fa9b74-5f86-4618-bc6a-a2fac19b3f44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationprioritycomparison
+@GUID("83fa9b74-5f86-4618-bc6a-a2fac19b3f44")
 interface IUIAnimationPriorityComparison : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationprioritycomparison-haspriority
@@ -359,9 +359,9 @@ interface IUIAnimationPriorityComparison : IUnknown
                         UI_ANIMATION_PRIORITY_EFFECT priorityEffect);
 }
 
-@GUID("ca5a14b1-d24f-48b8-8fe4-c78169ba954e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtransitionlibrary
+@GUID("ca5a14b1-d24f-48b8-8fe4-c78169ba954e")
 interface IUIAnimationTransitionLibrary : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtransitionlibrary-createinstantaneoustransition
@@ -398,9 +398,9 @@ interface IUIAnimationTransitionLibrary : IUnknown
                                                       IUIAnimationTransition* transition);
 }
 
-@GUID("7815cbba-ddf7-478c-a46c-7b6c738b7978")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationinterpolator
+@GUID("7815cbba-ddf7-478c-a46c-7b6c738b7978")
 interface IUIAnimationInterpolator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationinterpolator-setinitialvalueandvelocity
@@ -421,18 +421,18 @@ interface IUIAnimationInterpolator : IUnknown
                             UI_ANIMATION_DEPENDENCIES* durationDependencies);
 }
 
-@GUID("fcd91e03-3e3b-45ad-bbb1-6dfc8153743d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtransitionfactory
+@GUID("fcd91e03-3e3b-45ad-bbb1-6dfc8153743d")
 interface IUIAnimationTransitionFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtransitionfactory-createtransition
     HRESULT CreateTransition(IUIAnimationInterpolator interpolator, IUIAnimationTransition* transition);
 }
 
-@GUID("6b0efad1-a053-41d6-9085-33a689144665")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtimer
+@GUID("6b0efad1-a053-41d6-9085-33a689144665")
 interface IUIAnimationTimer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtimer-settimerupdatehandler
@@ -452,9 +452,9 @@ interface IUIAnimationTimer : IUnknown
     HRESULT SetFrameRateThreshold(uint framesPerSecond);
 }
 
-@GUID("195509b7-5d5e-4e3e-b278-ee3759b367ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtimerupdatehandler
+@GUID("195509b7-5d5e-4e3e-b278-ee3759b367ad")
 interface IUIAnimationTimerUpdateHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtimerupdatehandler-onupdate
@@ -465,9 +465,9 @@ interface IUIAnimationTimerUpdateHandler : IUnknown
     HRESULT ClearTimerClientEventHandler();
 }
 
-@GUID("bedb4db6-94fa-4bfb-a47f-ef2d9e408c25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtimerclienteventhandler
+@GUID("bedb4db6-94fa-4bfb-a47f-ef2d9e408c25")
 interface IUIAnimationTimerClientEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtimerclienteventhandler-ontimerclientstatuschanged
@@ -475,9 +475,9 @@ interface IUIAnimationTimerClientEventHandler : IUnknown
                                        UI_ANIMATION_TIMER_CLIENT_STATUS previousStatus);
 }
 
-@GUID("274a7dea-d771-4095-abbd-8df7abd23ce3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtimereventhandler
+@GUID("274a7dea-d771-4095-abbd-8df7abd23ce3")
 interface IUIAnimationTimerEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtimereventhandler-onpreupdate
@@ -488,9 +488,9 @@ interface IUIAnimationTimerEventHandler : IUnknown
     HRESULT OnRenderingTooSlow(uint framesPerSecond);
 }
 
-@GUID("d8b6f7d4-4109-4d3f-acee-879926968cb1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationmanager2
+@GUID("d8b6f7d4-4109-4d3f-acee-879926968cb1")
 interface IUIAnimationManager2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationmanager2-createanimationvectorvariable
@@ -538,9 +538,9 @@ interface IUIAnimationManager2 : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("4914b304-96ab-44d9-9e77-d5109b7e7466")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariable2
+@GUID("4914b304-96ab-44d9-9e77-d5109b7e7466")
 interface IUIAnimationVariable2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariable2-getdimension
@@ -599,9 +599,9 @@ interface IUIAnimationVariable2 : IUnknown
     HRESULT SetVariableCurveChangeHandler(IUIAnimationVariableCurveChangeHandler2 handler);
 }
 
-@GUID("62ff9123-a85a-4e9b-a218-435a93e268fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtransition2
+@GUID("62ff9123-a85a-4e9b-a218-435a93e268fd")
 interface IUIAnimationTransition2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtransition2-getdimension
@@ -620,9 +620,9 @@ interface IUIAnimationTransition2 : IUnknown
     HRESULT GetDuration(double* duration);
 }
 
-@GUID("f6e022ba-bff3-42ec-9033-e073f33e83c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationmanagereventhandler2
+@GUID("f6e022ba-bff3-42ec-9033-e073f33e83c3")
 interface IUIAnimationManagerEventHandler2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationmanagereventhandler2-onmanagerstatuschanged
@@ -630,9 +630,9 @@ interface IUIAnimationManagerEventHandler2 : IUnknown
                                    UI_ANIMATION_MANAGER_STATUS previousStatus);
 }
 
-@GUID("63acc8d2-6eae-4bb0-b879-586dd8cfbe42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariablechangehandler2
+@GUID("63acc8d2-6eae-4bb0-b879-586dd8cfbe42")
 interface IUIAnimationVariableChangeHandler2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariablechangehandler2-onvaluechanged
@@ -640,9 +640,9 @@ interface IUIAnimationVariableChangeHandler2 : IUnknown
                            double* previousValue, uint cDimension);
 }
 
-@GUID("829b6cf1-4f3a-4412-ae09-b243eb4c6b58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariableintegerchangehandler2
+@GUID("829b6cf1-4f3a-4412-ae09-b243eb4c6b58")
 interface IUIAnimationVariableIntegerChangeHandler2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariableintegerchangehandler2-onintegervaluechanged
@@ -650,18 +650,18 @@ interface IUIAnimationVariableIntegerChangeHandler2 : IUnknown
                                   int* newValue, int* previousValue, uint cDimension);
 }
 
-@GUID("72895e91-0145-4c21-9192-5aab40eddf80")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationvariablecurvechangehandler2
+@GUID("72895e91-0145-4c21-9192-5aab40eddf80")
 interface IUIAnimationVariableCurveChangeHandler2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationvariablecurvechangehandler2-oncurvechanged
     HRESULT OnCurveChanged(IUIAnimationVariable2 variable);
 }
 
-@GUID("bac5f55a-ba7c-414c-b599-fbf850f553c6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationstoryboardeventhandler2
+@GUID("bac5f55a-ba7c-414c-b599-fbf850f553c6")
 interface IUIAnimationStoryboardEventHandler2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationstoryboardeventhandler2-onstoryboardstatuschanged
@@ -671,9 +671,9 @@ interface IUIAnimationStoryboardEventHandler2 : IUnknown
     HRESULT OnStoryboardUpdated(IUIAnimationStoryboard2 storyboard);
 }
 
-@GUID("2d3b15a4-4762-47ab-a030-b23221df3ae0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationloopiterationchangehandler2
+@GUID("2d3b15a4-4762-47ab-a030-b23221df3ae0")
 interface IUIAnimationLoopIterationChangeHandler2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationloopiterationchangehandler2-onloopiterationchanged
@@ -681,9 +681,9 @@ interface IUIAnimationLoopIterationChangeHandler2 : IUnknown
                                    uint oldIterationCount);
 }
 
-@GUID("5b6d7a37-4621-467c-8b05-70131de62ddb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationprioritycomparison2
+@GUID("5b6d7a37-4621-467c-8b05-70131de62ddb")
 interface IUIAnimationPriorityComparison2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationprioritycomparison2-haspriority
@@ -691,9 +691,9 @@ interface IUIAnimationPriorityComparison2 : IUnknown
                         UI_ANIMATION_PRIORITY_EFFECT priorityEffect);
 }
 
-@GUID("03cfae53-9580-4ee3-b363-2ece51b4af6a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtransitionlibrary2
+@GUID("03cfae53-9580-4ee3-b363-2ece51b4af6a")
 interface IUIAnimationTransitionLibrary2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtransitionlibrary2-createinstantaneoustransition
@@ -752,9 +752,9 @@ interface IUIAnimationTransitionLibrary2 : IUnknown
                                                     IUIAnimationTransition2* ppTransition);
 }
 
-@GUID("bab20d63-4361-45da-a24f-ab8508846b5b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationprimitiveinterpolation
+@GUID("bab20d63-4361-45da-a24f-ab8508846b5b")
 interface IUIAnimationPrimitiveInterpolation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationprimitiveinterpolation-addcubic
@@ -765,9 +765,9 @@ interface IUIAnimationPrimitiveInterpolation : IUnknown
                           float phase);
 }
 
-@GUID("ea76aff8-ea22-4a23-a0ef-a6a966703518")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationinterpolator2
+@GUID("ea76aff8-ea22-4a23-a0ef-a6a966703518")
 interface IUIAnimationInterpolator2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationinterpolator2-getdimension
@@ -792,17 +792,17 @@ interface IUIAnimationInterpolator2 : IUnknown
                             UI_ANIMATION_DEPENDENCIES* durationDependencies);
 }
 
-@GUID("937d4916-c1a6-42d5-88d8-30344d6efe31")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationtransitionfactory2
+@GUID("937d4916-c1a6-42d5-88d8-30344d6efe31")
 interface IUIAnimationTransitionFactory2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationtransitionfactory2-createtransition
     HRESULT CreateTransition(IUIAnimationInterpolator2 interpolator, IUIAnimationTransition2* transition);
 }
 
-@GUID("ae289cd2-12d4-4945-9419-9e41be034df2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nn-uianimation-iuianimationstoryboard2
+@GUID("ae289cd2-12d4-4945-9419-9e41be034df2")
 interface IUIAnimationStoryboard2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uianimation/nf-uianimation-iuianimationstoryboard2-addtransition

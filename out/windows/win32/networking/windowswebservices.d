@@ -4819,9 +4819,9 @@ HRESULT WsCreateServiceEndpointFromTemplate(WS_CHANNEL_TYPE channelType,
 
 // Interfaces
 
-@GUID("1b35a14a-6094-4799-a60e-e474e15d4dc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nn-icontentprefetchertasktrigger-icontentprefetchertasktrigger
+@GUID("1b35a14a-6094-4799-a60e-e474e15d4dc9")
 interface IContentPrefetcherTaskTrigger : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-triggercontentprefetchertask

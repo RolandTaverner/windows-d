@@ -2372,9 +2372,9 @@ struct EnhancedStorageSilo;
 @GUID("886d29dd-b506-466b-9fbf-b44ff383fb3f")
 struct EnhancedStorageSiloAction;
 
-@GUID("09b224bd-1335-4631-a7ff-cfd3a92646d7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nn-ehstorapi-ienumenhancedstorageact
+@GUID("09b224bd-1335-4631-a7ff-cfd3a92646d7")
 interface IEnumEnhancedStorageACT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nf-ehstorapi-ienumenhancedstorageact-getacts
@@ -2383,9 +2383,9 @@ interface IEnumEnhancedStorageACT : IUnknown
     HRESULT GetMatchingACT(const(PWSTR) szVolume, IEnhancedStorageACT* ppIEnhancedStorageACT);
 }
 
-@GUID("6e7781f4-e0f2-4239-b976-a01abab52930")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nn-ehstorapi-ienhancedstorageact
+@GUID("6e7781f4-e0f2-4239-b976-a01abab52930")
 interface IEnhancedStorageACT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nf-ehstorapi-ienhancedstorageact-authorize
@@ -2402,9 +2402,9 @@ interface IEnhancedStorageACT : IUnknown
     HRESULT GetSilos(IEnhancedStorageSilo** pppIEnhancedStorageSilos, uint* pcEnhancedStorageSilos);
 }
 
-@GUID("4da57d2e-8eb3-41f6-a07e-98b52b88242b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nn-ehstorapi-ienhancedstorageact2
+@GUID("4da57d2e-8eb3-41f6-a07e-98b52b88242b")
 interface IEnhancedStorageACT2 : IEnhancedStorageACT
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nf-ehstorapi-ienhancedstorageact2-getdevicename
@@ -2421,9 +2421,9 @@ interface IEnhancedStorageACT3 : IEnhancedStorageACT2
     HRESULT GetShellExtSupport(BOOL* pShellExtSupport);
 }
 
-@GUID("5aef78c6-2242-4703-bf49-44b29357a359")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nn-ehstorapi-ienhancedstoragesilo
+@GUID("5aef78c6-2242-4703-bf49-44b29357a359")
 interface IEnhancedStorageSilo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nf-ehstorapi-ienhancedstoragesilo-getinfo
@@ -2440,9 +2440,9 @@ interface IEnhancedStorageSilo : IUnknown
     HRESULT GetDevicePath(PWSTR* ppwszSiloDevicePath);
 }
 
-@GUID("b6f7f311-206f-4ff8-9c4b-27efee77a86f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nn-ehstorapi-ienhancedstoragesiloaction
+@GUID("b6f7f311-206f-4ff8-9c4b-27efee77a86f")
 interface IEnhancedStorageSiloAction : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ehstorapi/nf-ehstorapi-ienhancedstoragesiloaction-getname

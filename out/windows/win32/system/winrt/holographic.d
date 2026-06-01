@@ -15,8 +15,8 @@ extern(Windows) @nogc nothrow:
 
 // Interfaces
 
-@GUID("7cc1f9c5-6d02-41fa-9500-e1809eb48eec")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nn-windows-graphics-holographic-interop-iholographiccamerainterop
+@GUID("7cc1f9c5-6d02-41fa-9500-e1809eb48eec")
 interface IHolographicCameraInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nf-windows-graphics-holographic-interop-iholographiccamerainterop-createdirect3d12backbufferresource
@@ -36,8 +36,8 @@ interface IHolographicCameraInterop : IInspectable
     HRESULT UnacquireDirect3D12BufferResource(ID3D12Resource pResourceToUnacquire);
 }
 
-@GUID("f75b68d6-d1fd-4707-aafd-fa6f4c0e3bf4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nn-windows-graphics-holographic-interop-iholographiccamerarenderingparametersinterop
+@GUID("f75b68d6-d1fd-4707-aafd-fa6f4c0e3bf4")
 interface IHolographicCameraRenderingParametersInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nf-windows-graphics-holographic-interop-iholographiccamerarenderingparametersinterop-commitdirect3d12resource
@@ -52,8 +52,8 @@ interface IHolographicCameraRenderingParametersInterop : IInspectable
                                                   ulong depthResourceFenceSignalValue);
 }
 
-@GUID("cfa688f0-639e-4a47-83d7-6b7f5ebf7fed")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nn-windows-graphics-holographic-interop-iholographicquadlayerinterop
+@GUID("cfa688f0-639e-4a47-83d7-6b7f5ebf7fed")
 interface IHolographicQuadLayerInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nf-windows-graphics-holographic-interop-iholographicquadlayerinterop-createdirect3d12contentbufferresource
@@ -73,8 +73,8 @@ interface IHolographicQuadLayerInterop : IInspectable
     HRESULT UnacquireDirect3D12BufferResource(ID3D12Resource pResourceToUnacquire);
 }
 
-@GUID("e5f549cd-c909-444f-8809-7cc18a9c8920")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nn-windows-graphics-holographic-interop-iholographicquadlayerupdateparametersinterop
+@GUID("e5f549cd-c909-444f-8809-7cc18a9c8920")
 interface IHolographicQuadLayerUpdateParametersInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.holographic.interop/nf-windows-graphics-holographic-interop-iholographicquadlayerupdateparametersinterop-commitdirect3d12resource

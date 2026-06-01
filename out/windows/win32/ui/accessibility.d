@@ -2715,9 +2715,9 @@ struct CUIAutomation;
 @GUID("e22ad333-b25f-460c-83d0-0581107395c9")
 struct CUIAutomation8;
 
-@GUID("618736e0-3c3d-11cf-810c-00aa00389b71")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nn-oleacc-iaccessible
+@GUID("618736e0-3c3d-11cf-810c-00aa00389b71")
 interface IAccessible : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nf-oleacc-iaccessible-get_accparent
@@ -2764,18 +2764,18 @@ interface IAccessible : IDispatch
     HRESULT put_accValue(VARIANT varChild, BSTR szValue);
 }
 
-@GUID("03022430-abc4-11d0-bde2-00aa001a1953")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nn-oleacc-iaccessiblehandler
+@GUID("03022430-abc4-11d0-bde2-00aa001a1953")
 interface IAccessibleHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nf-oleacc-iaccessiblehandler-accessibleobjectfromid
     HRESULT AccessibleObjectFromID(int hwnd, int lObjectID, IAccessible* pIAccessible);
 }
 
-@GUID("bf3abd9c-76da-4389-9eb6-1427d25abab7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nn-oleacc-iaccessiblewindowlesssite
+@GUID("bf3abd9c-76da-4389-9eb6-1427d25abab7")
 interface IAccessibleWindowlessSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nf-oleacc-iaccessiblewindowlesssite-acquireobjectidrange
@@ -2788,18 +2788,18 @@ interface IAccessibleWindowlessSite : IUnknown
     HRESULT GetParentAccessible(IAccessible* ppParent);
 }
 
-@GUID("7852b78d-1cfd-41c1-a615-9c0c85960b5f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nn-oleacc-iaccidentity
+@GUID("7852b78d-1cfd-41c1-a615-9c0c85960b5f")
 interface IAccIdentity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nf-oleacc-iaccidentity-getidentitystring
     HRESULT GetIdentityString(uint dwIDChild, ubyte** ppIDString, uint* pdwIDStringLen);
 }
 
-@GUID("76c0dbbb-15e0-4e7b-b61b-20eeea2001e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nn-oleacc-iaccpropserver
+@GUID("76c0dbbb-15e0-4e7b-b61b-20eeea2001e0")
 interface IAccPropServer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nf-oleacc-iaccpropserver-getpropvalue
@@ -2807,9 +2807,9 @@ interface IAccPropServer : IUnknown
                          BOOL* pfHasProp);
 }
 
-@GUID("6e26e776-04f0-495d-80e4-3330352e3169")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nn-oleacc-iaccpropservices
+@GUID("6e26e776-04f0-495d-80e4-3330352e3169")
 interface IAccPropServices : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleacc/nf-oleacc-iaccpropservices-setpropvalue
@@ -2850,9 +2850,9 @@ interface IAccPropServices : IUnknown
                                          uint* pidChild);
 }
 
-@GUID("d6dd68d1-86fd-4332-8666-9abedea2d24c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementprovidersimple
+@GUID("d6dd68d1-86fd-4332-8666-9abedea2d24c")
 interface IRawElementProviderSimple : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementprovidersimple-get_provideroptions
@@ -2865,9 +2865,9 @@ interface IRawElementProviderSimple : IUnknown
     HRESULT get_HostRawElementProvider(IRawElementProviderSimple* pRetVal);
 }
 
-@GUID("f8b80ada-2c44-48d0-89be-5ff23c9cd875")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iaccessibleex
+@GUID("f8b80ada-2c44-48d0-89be-5ff23c9cd875")
 interface IAccessibleEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iaccessibleex-getobjectforchild
@@ -2880,27 +2880,27 @@ interface IAccessibleEx : IUnknown
     HRESULT ConvertReturnedElement(IRawElementProviderSimple pIn, IAccessibleEx* ppRetValOut);
 }
 
-@GUID("a0a839a9-8da1-4a82-806a-8e0d44e79f56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementprovidersimple2
+@GUID("a0a839a9-8da1-4a82-806a-8e0d44e79f56")
 interface IRawElementProviderSimple2 : IRawElementProviderSimple
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementprovidersimple2-showcontextmenu
     HRESULT ShowContextMenu();
 }
 
-@GUID("fcf5d820-d7ec-4613-bdf6-42a84ce7daaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementprovidersimple3
+@GUID("fcf5d820-d7ec-4613-bdf6-42a84ce7daaf")
 interface IRawElementProviderSimple3 : IRawElementProviderSimple2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementprovidersimple3-getmetadatavalue
     HRESULT GetMetadataValue(int targetId, UIA_METADATA_ID metadataId, VARIANT* returnVal);
 }
 
-@GUID("620ce2a5-ab8f-40a9-86cb-de3c75599b58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementproviderfragmentroot
+@GUID("620ce2a5-ab8f-40a9-86cb-de3c75599b58")
 interface IRawElementProviderFragmentRoot : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementproviderfragmentroot-elementproviderfrompoint
@@ -2909,9 +2909,9 @@ interface IRawElementProviderFragmentRoot : IUnknown
     HRESULT GetFocus(IRawElementProviderFragment* pRetVal);
 }
 
-@GUID("f7063da8-8359-439c-9297-bbc5299a7d87")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementproviderfragment
+@GUID("f7063da8-8359-439c-9297-bbc5299a7d87")
 interface IRawElementProviderFragment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementproviderfragment-navigate
@@ -2928,9 +2928,9 @@ interface IRawElementProviderFragment : IUnknown
     HRESULT get_FragmentRoot(IRawElementProviderFragmentRoot* pRetVal);
 }
 
-@GUID("a407b27b-0f6d-4427-9292-473c7bf93258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementprovideradviseevents
+@GUID("a407b27b-0f6d-4427-9292-473c7bf93258")
 interface IRawElementProviderAdviseEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementprovideradviseevents-adviseeventadded
@@ -2939,18 +2939,18 @@ interface IRawElementProviderAdviseEvents : IUnknown
     HRESULT AdviseEventRemoved(UIA_EVENT_ID eventId, SAFEARRAY* propertyIDs);
 }
 
-@GUID("1d5df27c-8947-4425-b8d9-79787bb460b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementproviderhwndoverride
+@GUID("1d5df27c-8947-4425-b8d9-79787bb460b8")
 interface IRawElementProviderHwndOverride : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementproviderhwndoverride-getoverrideproviderforhwnd
     HRESULT GetOverrideProviderForHwnd(HWND hwnd, IRawElementProviderSimple* pRetVal);
 }
 
-@GUID("4fd82b78-a43e-46ac-9803-0a6969c7c183")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iproxyproviderwineventsink
+@GUID("4fd82b78-a43e-46ac-9803-0a6969c7c183")
 interface IProxyProviderWinEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iproxyproviderwineventsink-addautomationpropertychangedevent
@@ -2963,9 +2963,9 @@ interface IProxyProviderWinEventSink : IUnknown
                                      SAFEARRAY* runtimeId);
 }
 
-@GUID("89592ad4-f4e0-43d5-a3b6-bad7e111b435")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iproxyproviderwineventhandler
+@GUID("89592ad4-f4e0-43d5-a3b6-bad7e111b435")
 interface IProxyProviderWinEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iproxyproviderwineventhandler-respondtowinevent
@@ -2973,9 +2973,9 @@ interface IProxyProviderWinEventHandler : IUnknown
                               IProxyProviderWinEventSink pSink);
 }
 
-@GUID("0a2a93cc-bfad-42ac-9b2e-0991fb0d3ea0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementproviderwindowlesssite
+@GUID("0a2a93cc-bfad-42ac-9b2e-0991fb0d3ea0")
 interface IRawElementProviderWindowlessSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementproviderwindowlesssite-getadjacentfragment
@@ -2984,9 +2984,9 @@ interface IRawElementProviderWindowlessSite : IUnknown
     HRESULT GetRuntimeIdPrefix(SAFEARRAY** pRetVal);
 }
 
-@GUID("33ac331b-943e-4020-b295-db37784974a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iaccessiblehostingelementproviders
+@GUID("33ac331b-943e-4020-b295-db37784974a3")
 interface IAccessibleHostingElementProviders : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iaccessiblehostingelementproviders-getembeddedfragmentroots
@@ -2995,18 +2995,18 @@ interface IAccessibleHostingElementProviders : IUnknown
     HRESULT GetObjectIdForProvider(IRawElementProviderSimple pProvider, int* pidObject);
 }
 
-@GUID("24be0b07-d37d-487a-98cf-a13ed465e9b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irawelementproviderhostingaccessibles
+@GUID("24be0b07-d37d-487a-98cf-a13ed465e9b3")
 interface IRawElementProviderHostingAccessibles : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irawelementproviderhostingaccessibles-getembeddedaccessibles
     HRESULT GetEmbeddedAccessibles(SAFEARRAY** pRetVal);
 }
 
-@GUID("159bc72c-4ad3-485e-9637-d7052edf0146")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-idockprovider
+@GUID("159bc72c-4ad3-485e-9637-d7052edf0146")
 interface IDockProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-idockprovider-setdockposition
@@ -3015,9 +3015,9 @@ interface IDockProvider : IUnknown
     HRESULT get_DockPosition(DockPosition* pRetVal);
 }
 
-@GUID("d847d3a5-cab0-4a98-8c32-ecb45c59ad24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iexpandcollapseprovider
+@GUID("d847d3a5-cab0-4a98-8c32-ecb45c59ad24")
 interface IExpandCollapseProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iexpandcollapseprovider-expand
@@ -3028,9 +3028,9 @@ interface IExpandCollapseProvider : IUnknown
     HRESULT get_ExpandCollapseState(ExpandCollapseState* pRetVal);
 }
 
-@GUID("b17d6187-0907-464b-a168-0ef17a1572b1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-igridprovider
+@GUID("b17d6187-0907-464b-a168-0ef17a1572b1")
 interface IGridProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-igridprovider-getitem
@@ -3041,9 +3041,9 @@ interface IGridProvider : IUnknown
     HRESULT get_ColumnCount(int* pRetVal);
 }
 
-@GUID("d02541f1-fb81-4d64-ae32-f520f8a6dbd1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-igriditemprovider
+@GUID("d02541f1-fb81-4d64-ae32-f520f8a6dbd1")
 interface IGridItemProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-igriditemprovider-get_row
@@ -3058,18 +3058,18 @@ interface IGridItemProvider : IUnknown
     HRESULT get_ContainingGrid(IRawElementProviderSimple* pRetVal);
 }
 
-@GUID("54fcb24b-e18e-47a2-b4d3-eccbe77599a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iinvokeprovider
+@GUID("54fcb24b-e18e-47a2-b4d3-eccbe77599a2")
 interface IInvokeProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iinvokeprovider-invoke
     HRESULT Invoke();
 }
 
-@GUID("6278cab1-b556-4a1a-b4e0-418acc523201")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-imultipleviewprovider
+@GUID("6278cab1-b556-4a1a-b4e0-418acc523201")
 interface IMultipleViewProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-imultipleviewprovider-getviewname
@@ -3082,9 +3082,9 @@ interface IMultipleViewProvider : IUnknown
     HRESULT GetSupportedViews(SAFEARRAY** pRetVal);
 }
 
-@GUID("36dc7aef-33e6-4691-afe1-2be7274b3d33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-irangevalueprovider
+@GUID("36dc7aef-33e6-4691-afe1-2be7274b3d33")
 interface IRangeValueProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-irangevalueprovider-setvalue
@@ -3103,18 +3103,18 @@ interface IRangeValueProvider : IUnknown
     HRESULT get_SmallChange(double* pRetVal);
 }
 
-@GUID("2360c714-4bf1-4b26-ba65-9b21316127eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iscrollitemprovider
+@GUID("2360c714-4bf1-4b26-ba65-9b21316127eb")
 interface IScrollItemProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iscrollitemprovider-scrollintoview
     HRESULT ScrollIntoView();
 }
 
-@GUID("fb8b03af-3bdf-48d4-bd36-1a65793be168")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iselectionprovider
+@GUID("fb8b03af-3bdf-48d4-bd36-1a65793be168")
 interface ISelectionProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iselectionprovider-getselection
@@ -3125,9 +3125,9 @@ interface ISelectionProvider : IUnknown
     HRESULT get_IsSelectionRequired(BOOL* pRetVal);
 }
 
-@GUID("14f68475-ee1c-44f6-a869-d239381f0fe7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.16299))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iselectionprovider2
+@GUID("14f68475-ee1c-44f6-a869-d239381f0fe7")
 interface ISelectionProvider2 : ISelectionProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iselectionprovider2-get_firstselecteditem
@@ -3140,9 +3140,9 @@ interface ISelectionProvider2 : ISelectionProvider
     HRESULT get_ItemCount(int* retVal);
 }
 
-@GUID("b38b8077-1fc3-42a5-8cae-d40c2215055a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iscrollprovider
+@GUID("b38b8077-1fc3-42a5-8cae-d40c2215055a")
 interface IScrollProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iscrollprovider-scroll
@@ -3163,9 +3163,9 @@ interface IScrollProvider : IUnknown
     HRESULT get_VerticallyScrollable(BOOL* pRetVal);
 }
 
-@GUID("2acad808-b2d4-452d-a407-91ff1ad167b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iselectionitemprovider
+@GUID("2acad808-b2d4-452d-a407-91ff1ad167b2")
 interface ISelectionItemProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iselectionitemprovider-select
@@ -3180,9 +3180,9 @@ interface ISelectionItemProvider : IUnknown
     HRESULT get_SelectionContainer(IRawElementProviderSimple* pRetVal);
 }
 
-@GUID("29db1a06-02ce-4cf7-9b42-565d4fab20ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-isynchronizedinputprovider
+@GUID("29db1a06-02ce-4cf7-9b42-565d4fab20ee")
 interface ISynchronizedInputProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-isynchronizedinputprovider-startlistening
@@ -3191,9 +3191,9 @@ interface ISynchronizedInputProvider : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("9c860395-97b3-490a-b52a-858cc22af166")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itableprovider
+@GUID("9c860395-97b3-490a-b52a-858cc22af166")
 interface ITableProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itableprovider-getrowheaders
@@ -3204,9 +3204,9 @@ interface ITableProvider : IUnknown
     HRESULT get_RowOrColumnMajor(RowOrColumnMajor* pRetVal);
 }
 
-@GUID("b9734fa6-771f-4d78-9c90-2517999349cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itableitemprovider
+@GUID("b9734fa6-771f-4d78-9c90-2517999349cd")
 interface ITableItemProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itableitemprovider-getrowheaderitems
@@ -3215,9 +3215,9 @@ interface ITableItemProvider : IUnknown
     HRESULT GetColumnHeaderItems(SAFEARRAY** pRetVal);
 }
 
-@GUID("56d00bd0-c4f4-433c-a836-1a52a57e0892")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itoggleprovider
+@GUID("56d00bd0-c4f4-433c-a836-1a52a57e0892")
 interface IToggleProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itoggleprovider-toggle
@@ -3226,9 +3226,9 @@ interface IToggleProvider : IUnknown
     HRESULT get_ToggleState(ToggleState* pRetVal);
 }
 
-@GUID("6829ddc4-4f91-4ffa-b86f-bd3e2987cb4c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itransformprovider
+@GUID("6829ddc4-4f91-4ffa-b86f-bd3e2987cb4c")
 interface ITransformProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itransformprovider-move
@@ -3245,9 +3245,9 @@ interface ITransformProvider : IUnknown
     HRESULT get_CanRotate(BOOL* pRetVal);
 }
 
-@GUID("c7935180-6fb3-4201-b174-7df73adbf64a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-ivalueprovider
+@GUID("c7935180-6fb3-4201-b174-7df73adbf64a")
 interface IValueProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-ivalueprovider-setvalue
@@ -3258,9 +3258,9 @@ interface IValueProvider : IUnknown
     HRESULT get_IsReadOnly(BOOL* pRetVal);
 }
 
-@GUID("987df77b-db06-4d77-8f8a-86a9c3bb90b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iwindowprovider
+@GUID("987df77b-db06-4d77-8f8a-86a9c3bb90b9")
 interface IWindowProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iwindowprovider-setvisualstate
@@ -3283,9 +3283,9 @@ interface IWindowProvider : IUnknown
     HRESULT get_IsTopmost(BOOL* pRetVal);
 }
 
-@GUID("e44c3566-915d-4070-99c6-047bff5a08f5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-ilegacyiaccessibleprovider
+@GUID("e44c3566-915d-4070-99c6-047bff5a08f5")
 interface ILegacyIAccessibleProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-ilegacyiaccessibleprovider-select
@@ -3318,9 +3318,9 @@ interface ILegacyIAccessibleProvider : IUnknown
     HRESULT get_DefaultAction(BSTR* pszDefaultAction);
 }
 
-@GUID("e747770b-39ce-4382-ab30-d8fb3f336f24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iitemcontainerprovider
+@GUID("e747770b-39ce-4382-ab30-d8fb3f336f24")
 interface IItemContainerProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iitemcontainerprovider-finditembyproperty
@@ -3328,27 +3328,27 @@ interface IItemContainerProvider : IUnknown
                                IRawElementProviderSimple* pFound);
 }
 
-@GUID("cb98b665-2d35-4fac-ad35-f3c60d0c0b8b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-ivirtualizeditemprovider
+@GUID("cb98b665-2d35-4fac-ad35-f3c60d0c0b8b")
 interface IVirtualizedItemProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-ivirtualizeditemprovider-realize
     HRESULT Realize();
 }
 
-@GUID("3ad86ebd-f5ef-483d-bb18-b1042a475d64")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iobjectmodelprovider
+@GUID("3ad86ebd-f5ef-483d-bb18-b1042a475d64")
 interface IObjectModelProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iobjectmodelprovider-getunderlyingobjectmodel
     HRESULT GetUnderlyingObjectModel(IUnknown* ppUnknown);
 }
 
-@GUID("f95c7e80-bd63-4601-9782-445ebff011fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iannotationprovider
+@GUID("f95c7e80-bd63-4601-9782-445ebff011fc")
 interface IAnnotationProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iannotationprovider-get_annotationtypeid
@@ -3363,9 +3363,9 @@ interface IAnnotationProvider : IUnknown
     HRESULT get_Target(IRawElementProviderSimple* retVal);
 }
 
-@GUID("19b6b649-f5d7-4a6d-bdcb-129252be588a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-istylesprovider
+@GUID("19b6b649-f5d7-4a6d-bdcb-129252be588a")
 interface IStylesProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-istylesprovider-get_styleid
@@ -3384,18 +3384,18 @@ interface IStylesProvider : IUnknown
     HRESULT get_ExtendedProperties(BSTR* retVal);
 }
 
-@GUID("6f6b5d35-5525-4f80-b758-85473832ffc7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-ispreadsheetprovider
+@GUID("6f6b5d35-5525-4f80-b758-85473832ffc7")
 interface ISpreadsheetProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-ispreadsheetprovider-getitembyname
     HRESULT GetItemByName(const(PWSTR) name, IRawElementProviderSimple* pRetVal);
 }
 
-@GUID("eaed4660-7b3d-4879-a2e6-365ce603f3d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-ispreadsheetitemprovider
+@GUID("eaed4660-7b3d-4879-a2e6-365ce603f3d0")
 interface ISpreadsheetItemProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-ispreadsheetitemprovider-get_formula
@@ -3406,9 +3406,9 @@ interface ISpreadsheetItemProvider : IUnknown
     HRESULT GetAnnotationTypes(SAFEARRAY** pRetVal);
 }
 
-@GUID("4758742f-7ac2-460c-bc48-09fc09308a93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itransformprovider2
+@GUID("4758742f-7ac2-460c-bc48-09fc09308a93")
 interface ITransformProvider2 : ITransformProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itransformprovider2-zoom
@@ -3425,9 +3425,9 @@ interface ITransformProvider2 : ITransformProvider
     HRESULT ZoomByUnit(ZoomUnit zoomUnit);
 }
 
-@GUID("6aa7bbbb-7ff9-497d-904f-d20b897929d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-idragprovider
+@GUID("6aa7bbbb-7ff9-497d-904f-d20b897929d8")
 interface IDragProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-idragprovider-get_isgrabbed
@@ -3440,9 +3440,9 @@ interface IDragProvider : IUnknown
     HRESULT GetGrabbedItems(SAFEARRAY** pRetVal);
 }
 
-@GUID("bae82bfd-358a-481c-85a0-d8b4d90a5d61")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-idroptargetprovider
+@GUID("bae82bfd-358a-481c-85a0-d8b4d90a5d61")
 interface IDropTargetProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-idroptargetprovider-get_droptargeteffect
@@ -3451,9 +3451,9 @@ interface IDropTargetProvider : IUnknown
     HRESULT get_DropTargetEffects(SAFEARRAY** pRetVal);
 }
 
-@GUID("5347ad7b-c355-46f8-aff5-909033582f63")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itextrangeprovider
+@GUID("5347ad7b-c355-46f8-aff5-909033582f63")
 interface ITextRangeProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itextrangeprovider-clone
@@ -3497,9 +3497,9 @@ interface ITextRangeProvider : IUnknown
     HRESULT GetChildren(SAFEARRAY** pRetVal);
 }
 
-@GUID("3589c92c-63f3-4367-99bb-ada653b77cf2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itextprovider
+@GUID("3589c92c-63f3-4367-99bb-ada653b77cf2")
 interface ITextProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itextprovider-getselection
@@ -3516,9 +3516,9 @@ interface ITextProvider : IUnknown
     HRESULT get_SupportedTextSelection(SupportedTextSelection* pRetVal);
 }
 
-@GUID("0dc5e6ed-3e16-4bf1-8f9a-a979878bc195")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itextprovider2
+@GUID("0dc5e6ed-3e16-4bf1-8f9a-a979878bc195")
 interface ITextProvider2 : ITextProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itextprovider2-rangefromannotation
@@ -3527,9 +3527,9 @@ interface ITextProvider2 : ITextProvider
     HRESULT GetCaretRange(BOOL* isActive, ITextRangeProvider* pRetVal);
 }
 
-@GUID("ea3605b4-3a05-400e-b5f9-4e91b40f6176")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itexteditprovider
+@GUID("ea3605b4-3a05-400e-b5f9-4e91b40f6176")
 interface ITextEditProvider : ITextProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itexteditprovider-getactivecomposition
@@ -3538,18 +3538,18 @@ interface ITextEditProvider : ITextProvider
     HRESULT GetConversionTarget(ITextRangeProvider* pRetVal);
 }
 
-@GUID("9bbce42c-1921-4f18-89ca-dba1910a0386")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itextrangeprovider2
+@GUID("9bbce42c-1921-4f18-89ca-dba1910a0386")
 interface ITextRangeProvider2 : ITextRangeProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itextrangeprovider2-showcontextmenu
     HRESULT ShowContextMenu();
 }
 
-@GUID("4c2de2b9-c88f-4f88-a111-f1d336b7d1a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-itextchildprovider
+@GUID("4c2de2b9-c88f-4f88-a111-f1d336b7d1a9")
 interface ITextChildProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-itextchildprovider-get_textcontainer
@@ -3564,9 +3564,9 @@ interface ICustomNavigationProvider : IUnknown
     HRESULT Navigate(NavigateDirection direction, IRawElementProviderSimple* pRetVal);
 }
 
-@GUID("c03a7fe4-9431-409f-bed8-ae7c2299bc8d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iuiautomationpatterninstance
+@GUID("c03a7fe4-9431-409f-bed8-ae7c2299bc8d")
 interface IUIAutomationPatternInstance : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iuiautomationpatterninstance-getproperty
@@ -3575,9 +3575,9 @@ interface IUIAutomationPatternInstance : IUnknown
     HRESULT CallMethod(uint index, const(UIAutomationParameter)* pParams, uint cParams);
 }
 
-@GUID("d97022f3-a947-465e-8b2a-ac4315fa54e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iuiautomationpatternhandler
+@GUID("d97022f3-a947-465e-8b2a-ac4315fa54e8")
 interface IUIAutomationPatternHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iuiautomationpatternhandler-createclientwrapper
@@ -3586,9 +3586,9 @@ interface IUIAutomationPatternHandler : IUnknown
     HRESULT Dispatch(IUnknown pTarget, uint index, const(UIAutomationParameter)* pParams, uint cParams);
 }
 
-@GUID("8609c4ec-4a1a-4d88-a357-5a66e060e1cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nn-uiautomationcore-iuiautomationregistrar
+@GUID("8609c4ec-4a1a-4d88-a357-5a66e060e1cf")
 interface IUIAutomationRegistrar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationcore/nf-uiautomationcore-iuiautomationregistrar-registerproperty
@@ -3623,9 +3623,9 @@ interface IUIAutomationClientInfoSource : IUnknown
     HRESULT GetConnectedClients(SAFEARRAY** clients);
 }
 
-@GUID("d22108aa-8ac5-49a5-837b-37bbb3d7591e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement
+@GUID("d22108aa-8ac5-49a5-837b-37bbb3d7591e")
 interface IUIAutomationElement : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement-setfocus
@@ -3796,9 +3796,9 @@ interface IUIAutomationElement : IUnknown
     HRESULT GetClickablePoint(POINT* clickable, BOOL* gotClickable);
 }
 
-@GUID("14314595-b4bc-4055-95f2-58f2e42c9855")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelementarray
+@GUID("14314595-b4bc-4055-95f2-58f2e42c9855")
 interface IUIAutomationElementArray : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelementarray-get_length
@@ -3807,25 +3807,25 @@ interface IUIAutomationElementArray : IUnknown
     HRESULT GetElement(int index, IUIAutomationElement* element);
 }
 
-@GUID("352ffba8-0973-437c-a61f-f64cafd81df9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationcondition
+@GUID("352ffba8-0973-437c-a61f-f64cafd81df9")
 interface IUIAutomationCondition : IUnknown
 {
 }
 
-@GUID("1b4e1f2e-75eb-4d0b-8952-5a69988e2307")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationboolcondition
+@GUID("1b4e1f2e-75eb-4d0b-8952-5a69988e2307")
 interface IUIAutomationBoolCondition : IUIAutomationCondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationboolcondition-get_booleanvalue
     HRESULT get_BooleanValue(BOOL* boolVal);
 }
 
-@GUID("99ebf2cb-5578-4267-9ad4-afd6ea77e94b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationpropertycondition
+@GUID("99ebf2cb-5578-4267-9ad4-afd6ea77e94b")
 interface IUIAutomationPropertyCondition : IUIAutomationCondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationpropertycondition-get_propertyid
@@ -3836,9 +3836,9 @@ interface IUIAutomationPropertyCondition : IUIAutomationCondition
     HRESULT get_PropertyConditionFlags(PropertyConditionFlags* flags);
 }
 
-@GUID("a7d0af36-b912-45fe-9855-091ddc174aec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationandcondition
+@GUID("a7d0af36-b912-45fe-9855-091ddc174aec")
 interface IUIAutomationAndCondition : IUIAutomationCondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationandcondition-get_childcount
@@ -3849,9 +3849,9 @@ interface IUIAutomationAndCondition : IUIAutomationCondition
     HRESULT GetChildren(SAFEARRAY** childArray);
 }
 
-@GUID("8753f032-3db1-47b5-a1fc-6e34a266c712")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationorcondition
+@GUID("8753f032-3db1-47b5-a1fc-6e34a266c712")
 interface IUIAutomationOrCondition : IUIAutomationCondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationorcondition-get_childcount
@@ -3862,18 +3862,18 @@ interface IUIAutomationOrCondition : IUIAutomationCondition
     HRESULT GetChildren(SAFEARRAY** childArray);
 }
 
-@GUID("f528b657-847b-498c-8896-d52b565407a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationnotcondition
+@GUID("f528b657-847b-498c-8896-d52b565407a1")
 interface IUIAutomationNotCondition : IUIAutomationCondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationnotcondition-getchild
     HRESULT GetChild(IUIAutomationCondition* condition);
 }
 
-@GUID("b32a92b5-bc25-4078-9c08-d7ee95c48e03")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationcacherequest
+@GUID("b32a92b5-bc25-4078-9c08-d7ee95c48e03")
 interface IUIAutomationCacheRequest : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationcacherequest-addproperty
@@ -3896,9 +3896,9 @@ interface IUIAutomationCacheRequest : IUnknown
     HRESULT put_AutomationElementMode(AutomationElementMode mode);
 }
 
-@GUID("4042c624-389c-4afc-a630-9df854a541fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtreewalker
+@GUID("4042c624-389c-4afc-a630-9df854a541fc")
 interface IUIAutomationTreeWalker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtreewalker-getparentelement
@@ -3936,27 +3936,27 @@ interface IUIAutomationTreeWalker : IUnknown
     HRESULT get_Condition(IUIAutomationCondition* condition);
 }
 
-@GUID("146c3c17-f12e-4e22-8c27-f894b9b79c69")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationeventhandler
+@GUID("146c3c17-f12e-4e22-8c27-f894b9b79c69")
 interface IUIAutomationEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationeventhandler-handleautomationevent
     HRESULT HandleAutomationEvent(IUIAutomationElement sender, UIA_EVENT_ID eventId);
 }
 
-@GUID("40cd37d4-c756-4b0c-8c6f-bddfeeb13b50")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationpropertychangedeventhandler
+@GUID("40cd37d4-c756-4b0c-8c6f-bddfeeb13b50")
 interface IUIAutomationPropertyChangedEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationpropertychangedeventhandler-handlepropertychangedevent
     HRESULT HandlePropertyChangedEvent(IUIAutomationElement sender, UIA_PROPERTY_ID propertyId, VARIANT newValue);
 }
 
-@GUID("e81d1b4e-11c5-42f8-9754-e7036c79f054")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationstructurechangedeventhandler
+@GUID("e81d1b4e-11c5-42f8-9754-e7036c79f054")
 interface IUIAutomationStructureChangedEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationstructurechangedeventhandler-handlestructurechangedevent
@@ -3964,18 +3964,18 @@ interface IUIAutomationStructureChangedEventHandler : IUnknown
                                         SAFEARRAY* runtimeId);
 }
 
-@GUID("c270f6b5-5c69-4290-9745-7a7f97169468")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationfocuschangedeventhandler
+@GUID("c270f6b5-5c69-4290-9745-7a7f97169468")
 interface IUIAutomationFocusChangedEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationfocuschangedeventhandler-handlefocuschangedevent
     HRESULT HandleFocusChangedEvent(IUIAutomationElement sender);
 }
 
-@GUID("92faa680-e704-4156-931a-e32d5bb38f3f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextedittextchangedeventhandler
+@GUID("92faa680-e704-4156-931a-e32d5bb38f3f")
 interface IUIAutomationTextEditTextChangedEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextedittextchangedeventhandler-handletextedittextchangedevent
@@ -3983,18 +3983,18 @@ interface IUIAutomationTextEditTextChangedEventHandler : IUnknown
                                            SAFEARRAY* eventStrings);
 }
 
-@GUID("58edca55-2c3e-4980-b1b9-56c17f27a2a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationchangeseventhandler
+@GUID("58edca55-2c3e-4980-b1b9-56c17f27a2a0")
 interface IUIAutomationChangesEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationchangeseventhandler-handlechangesevent
     HRESULT HandleChangesEvent(IUIAutomationElement sender, UiaChangeInfo* uiaChanges, int changesCount);
 }
 
-@GUID("c7cb2637-e6c2-4d0c-85de-4948c02175c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.16299))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationnotificationeventhandler
+@GUID("c7cb2637-e6c2-4d0c-85de-4948c02175c7")
 interface IUIAutomationNotificationEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationnotificationeventhandler-handlenotificationevent
@@ -4003,18 +4003,18 @@ interface IUIAutomationNotificationEventHandler : IUnknown
                                     BSTR activityId);
 }
 
-@GUID("fb377fbe-8ea6-46d5-9c73-6499642d3059")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationinvokepattern
+@GUID("fb377fbe-8ea6-46d5-9c73-6499642d3059")
 interface IUIAutomationInvokePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationinvokepattern-invoke
     HRESULT Invoke();
 }
 
-@GUID("fde5ef97-1464-48f6-90bf-43d0948e86ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationdockpattern
+@GUID("fde5ef97-1464-48f6-90bf-43d0948e86ec")
 interface IUIAutomationDockPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationdockpattern-setdockposition
@@ -4025,9 +4025,9 @@ interface IUIAutomationDockPattern : IUnknown
     HRESULT get_CachedDockPosition(DockPosition* retVal);
 }
 
-@GUID("619be086-1f4e-4ee4-bafa-210128738730")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationexpandcollapsepattern
+@GUID("619be086-1f4e-4ee4-bafa-210128738730")
 interface IUIAutomationExpandCollapsePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationexpandcollapsepattern-expand
@@ -4040,9 +4040,9 @@ interface IUIAutomationExpandCollapsePattern : IUnknown
     HRESULT get_CachedExpandCollapseState(ExpandCollapseState* retVal);
 }
 
-@GUID("414c3cdc-856b-4f5b-8538-3131c6302550")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationgridpattern
+@GUID("414c3cdc-856b-4f5b-8538-3131c6302550")
 interface IUIAutomationGridPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationgridpattern-getitem
@@ -4057,9 +4057,9 @@ interface IUIAutomationGridPattern : IUnknown
     HRESULT get_CachedColumnCount(int* retVal);
 }
 
-@GUID("78f8ef57-66c3-4e09-bd7c-e79b2004894d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationgriditempattern
+@GUID("78f8ef57-66c3-4e09-bd7c-e79b2004894d")
 interface IUIAutomationGridItemPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationgriditempattern-get_currentcontaininggrid
@@ -4084,9 +4084,9 @@ interface IUIAutomationGridItemPattern : IUnknown
     HRESULT get_CachedColumnSpan(int* retVal);
 }
 
-@GUID("8d253c91-1dc5-4bb5-b18f-ade16fa495e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationmultipleviewpattern
+@GUID("8d253c91-1dc5-4bb5-b18f-ade16fa495e8")
 interface IUIAutomationMultipleViewPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationmultipleviewpattern-getviewname
@@ -4103,18 +4103,18 @@ interface IUIAutomationMultipleViewPattern : IUnknown
     HRESULT GetCachedSupportedViews(SAFEARRAY** retVal);
 }
 
-@GUID("71c284b3-c14d-4d14-981e-19751b0d756d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationobjectmodelpattern
+@GUID("71c284b3-c14d-4d14-981e-19751b0d756d")
 interface IUIAutomationObjectModelPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationobjectmodelpattern-getunderlyingobjectmodel
     HRESULT GetUnderlyingObjectModel(IUnknown* retVal);
 }
 
-@GUID("59213f4f-7346-49e5-b120-80555987a148")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationrangevaluepattern
+@GUID("59213f4f-7346-49e5-b120-80555987a148")
 interface IUIAutomationRangeValuePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationrangevaluepattern-setvalue
@@ -4145,9 +4145,9 @@ interface IUIAutomationRangeValuePattern : IUnknown
     HRESULT get_CachedSmallChange(double* retVal);
 }
 
-@GUID("88f4d42a-e881-459d-a77c-73bbbb7e02dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationscrollpattern
+@GUID("88f4d42a-e881-459d-a77c-73bbbb7e02dc")
 interface IUIAutomationScrollPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationscrollpattern-scroll
@@ -4180,18 +4180,18 @@ interface IUIAutomationScrollPattern : IUnknown
     HRESULT get_CachedVerticallyScrollable(BOOL* retVal);
 }
 
-@GUID("b488300f-d015-4f19-9c29-bb595e3645ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationscrollitempattern
+@GUID("b488300f-d015-4f19-9c29-bb595e3645ef")
 interface IUIAutomationScrollItemPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationscrollitempattern-scrollintoview
     HRESULT ScrollIntoView();
 }
 
-@GUID("5ed5202e-b2ac-47a6-b638-4b0bf140d78e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationselectionpattern
+@GUID("5ed5202e-b2ac-47a6-b638-4b0bf140d78e")
 interface IUIAutomationSelectionPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationselectionpattern-getcurrentselection
@@ -4208,9 +4208,9 @@ interface IUIAutomationSelectionPattern : IUnknown
     HRESULT get_CachedIsSelectionRequired(BOOL* retVal);
 }
 
-@GUID("0532bfae-c011-4e32-a343-6d642d798555")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.16299))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationselectionpattern2
+@GUID("0532bfae-c011-4e32-a343-6d642d798555")
 interface IUIAutomationSelectionPattern2 : IUIAutomationSelectionPattern
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationselectionpattern2-get_currentfirstselecteditem
@@ -4231,9 +4231,9 @@ interface IUIAutomationSelectionPattern2 : IUIAutomationSelectionPattern
     HRESULT get_CachedItemCount(int* retVal);
 }
 
-@GUID("a8efa66a-0fda-421a-9194-38021f3578ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationselectionitempattern
+@GUID("a8efa66a-0fda-421a-9194-38021f3578ea")
 interface IUIAutomationSelectionItemPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationselectionitempattern-select
@@ -4252,9 +4252,9 @@ interface IUIAutomationSelectionItemPattern : IUnknown
     HRESULT get_CachedSelectionContainer(IUIAutomationElement* retVal);
 }
 
-@GUID("2233be0b-afb7-448b-9fda-3b378aa5eae1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationsynchronizedinputpattern
+@GUID("2233be0b-afb7-448b-9fda-3b378aa5eae1")
 interface IUIAutomationSynchronizedInputPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationsynchronizedinputpattern-startlistening
@@ -4263,9 +4263,9 @@ interface IUIAutomationSynchronizedInputPattern : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("620e691c-ea96-4710-a850-754b24ce2417")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtablepattern
+@GUID("620e691c-ea96-4710-a850-754b24ce2417")
 interface IUIAutomationTablePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtablepattern-getcurrentrowheaders
@@ -4282,9 +4282,9 @@ interface IUIAutomationTablePattern : IUnknown
     HRESULT get_CachedRowOrColumnMajor(RowOrColumnMajor* retVal);
 }
 
-@GUID("0b964eb3-ef2e-4464-9c79-61d61737a27e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtableitempattern
+@GUID("0b964eb3-ef2e-4464-9c79-61d61737a27e")
 interface IUIAutomationTableItemPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtableitempattern-getcurrentrowheaderitems
@@ -4297,9 +4297,9 @@ interface IUIAutomationTableItemPattern : IUnknown
     HRESULT GetCachedColumnHeaderItems(IUIAutomationElementArray* retVal);
 }
 
-@GUID("94cf8058-9b8d-4ab9-8bfd-4cd0a33c8c70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtogglepattern
+@GUID("94cf8058-9b8d-4ab9-8bfd-4cd0a33c8c70")
 interface IUIAutomationTogglePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtogglepattern-toggle
@@ -4310,9 +4310,9 @@ interface IUIAutomationTogglePattern : IUnknown
     HRESULT get_CachedToggleState(ToggleState* retVal);
 }
 
-@GUID("a9b55844-a55d-4ef0-926d-569c16ff89bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtransformpattern
+@GUID("a9b55844-a55d-4ef0-926d-569c16ff89bb")
 interface IUIAutomationTransformPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtransformpattern-move
@@ -4335,9 +4335,9 @@ interface IUIAutomationTransformPattern : IUnknown
     HRESULT get_CachedCanRotate(BOOL* retVal);
 }
 
-@GUID("a94cd8b1-0844-4cd6-9d2d-640537ab39e9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationvaluepattern
+@GUID("a94cd8b1-0844-4cd6-9d2d-640537ab39e9")
 interface IUIAutomationValuePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationvaluepattern-setvalue
@@ -4352,9 +4352,9 @@ interface IUIAutomationValuePattern : IUnknown
     HRESULT get_CachedIsReadOnly(BOOL* retVal);
 }
 
-@GUID("0faef453-9208-43ef-bbb2-3b485177864f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationwindowpattern
+@GUID("0faef453-9208-43ef-bbb2-3b485177864f")
 interface IUIAutomationWindowPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationwindowpattern-close
@@ -4389,9 +4389,9 @@ interface IUIAutomationWindowPattern : IUnknown
     HRESULT get_CachedWindowInteractionState(WindowInteractionState* retVal);
 }
 
-@GUID("a543cc6a-f4ae-494b-8239-c814481187a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrange
+@GUID("a543cc6a-f4ae-494b-8239-c814481187a8")
 interface IUIAutomationTextRange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextrange-clone
@@ -4434,18 +4434,18 @@ interface IUIAutomationTextRange : IUnknown
     HRESULT GetChildren(IUIAutomationElementArray* children);
 }
 
-@GUID("bb9b40e0-5e04-46bd-9be0-4b601b9afad4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrange2
+@GUID("bb9b40e0-5e04-46bd-9be0-4b601b9afad4")
 interface IUIAutomationTextRange2 : IUIAutomationTextRange
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextrange2-showcontextmenu
     HRESULT ShowContextMenu();
 }
 
-@GUID("6a315d69-5512-4c2e-85f0-53fce6dd4bc2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrange3
+@GUID("6a315d69-5512-4c2e-85f0-53fce6dd4bc2")
 interface IUIAutomationTextRange3 : IUIAutomationTextRange2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextrange3-getenclosingelementbuildcache
@@ -4458,9 +4458,9 @@ interface IUIAutomationTextRange3 : IUIAutomationTextRange2
                                SAFEARRAY** attributeValues);
 }
 
-@GUID("ce4ae76a-e717-4c98-81ea-47371d028eb6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrangearray
+@GUID("ce4ae76a-e717-4c98-81ea-47371d028eb6")
 interface IUIAutomationTextRangeArray : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextrangearray-get_length
@@ -4469,9 +4469,9 @@ interface IUIAutomationTextRangeArray : IUnknown
     HRESULT GetElement(int index, IUIAutomationTextRange* element);
 }
 
-@GUID("32eba289-3583-42c9-9c59-3b6d9a1e9b6a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextpattern
+@GUID("32eba289-3583-42c9-9c59-3b6d9a1e9b6a")
 interface IUIAutomationTextPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextpattern-rangefrompoint
@@ -4488,9 +4488,9 @@ interface IUIAutomationTextPattern : IUnknown
     HRESULT get_SupportedTextSelection(SupportedTextSelection* supportedTextSelection);
 }
 
-@GUID("506a921a-fcc9-409f-b23b-37eb74106872")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextpattern2
+@GUID("506a921a-fcc9-409f-b23b-37eb74106872")
 interface IUIAutomationTextPattern2 : IUIAutomationTextPattern
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextpattern2-rangefromannotation
@@ -4499,9 +4499,9 @@ interface IUIAutomationTextPattern2 : IUIAutomationTextPattern
     HRESULT GetCaretRange(BOOL* isActive, IUIAutomationTextRange* range);
 }
 
-@GUID("17e21576-996c-4870-99d9-bff323380c06")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtexteditpattern
+@GUID("17e21576-996c-4870-99d9-bff323380c06")
 interface IUIAutomationTextEditPattern : IUIAutomationTextPattern
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtexteditpattern-getactivecomposition
@@ -4510,27 +4510,27 @@ interface IUIAutomationTextEditPattern : IUIAutomationTextPattern
     HRESULT GetConversionTarget(IUIAutomationTextRange* range);
 }
 
-@GUID("01ea217a-1766-47ed-a6cc-acf492854b1f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationcustomnavigationpattern
+@GUID("01ea217a-1766-47ed-a6cc-acf492854b1f")
 interface IUIAutomationCustomNavigationPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationcustomnavigationpattern-navigate
     HRESULT Navigate(NavigateDirection direction, IUIAutomationElement* pRetVal);
 }
 
-@GUID("f97933b0-8dae-4496-8997-5ba015fe0d82")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationactivetextpositionchangedeventhandler
+@GUID("f97933b0-8dae-4496-8997-5ba015fe0d82")
 interface IUIAutomationActiveTextPositionChangedEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationactivetextpositionchangedeventhandler-handleactivetextpositionchangedevent
     HRESULT HandleActiveTextPositionChangedEvent(IUIAutomationElement sender, IUIAutomationTextRange range);
 }
 
-@GUID("828055ad-355b-4435-86d5-3b51c14a9b1b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationlegacyiaccessiblepattern
+@GUID("828055ad-355b-4435-86d5-3b51c14a9b1b")
 interface IUIAutomationLegacyIAccessiblePattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationlegacyiaccessiblepattern-select
@@ -4583,9 +4583,9 @@ interface IUIAutomationLegacyIAccessiblePattern : IUnknown
     HRESULT GetIAccessible(IAccessible* ppAccessible);
 }
 
-@GUID("c690fdb2-27a8-423c-812d-429773c9084e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationitemcontainerpattern
+@GUID("c690fdb2-27a8-423c-812d-429773c9084e")
 interface IUIAutomationItemContainerPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationitemcontainerpattern-finditembyproperty
@@ -4593,18 +4593,18 @@ interface IUIAutomationItemContainerPattern : IUnknown
                                IUIAutomationElement* pFound);
 }
 
-@GUID("6ba3d7a6-04cf-4f11-8793-a8d1cde9969f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationvirtualizeditempattern
+@GUID("6ba3d7a6-04cf-4f11-8793-a8d1cde9969f")
 interface IUIAutomationVirtualizedItemPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationvirtualizeditempattern-realize
     HRESULT Realize();
 }
 
-@GUID("9a175b21-339e-41b1-8e8b-623f6b681098")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationannotationpattern
+@GUID("9a175b21-339e-41b1-8e8b-623f6b681098")
 interface IUIAutomationAnnotationPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationannotationpattern-get_currentannotationtypeid
@@ -4629,9 +4629,9 @@ interface IUIAutomationAnnotationPattern : IUnknown
     HRESULT get_CachedTarget(IUIAutomationElement* retVal);
 }
 
-@GUID("85b5f0a2-bd79-484a-ad2b-388c9838d5fb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationstylespattern
+@GUID("85b5f0a2-bd79-484a-ad2b-388c9838d5fb")
 interface IUIAutomationStylesPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationstylespattern-get_currentstyleid
@@ -4664,18 +4664,18 @@ interface IUIAutomationStylesPattern : IUnknown
     HRESULT GetCachedExtendedPropertiesAsArray(ExtendedProperty** propertyArray, int* propertyCount);
 }
 
-@GUID("7517a7c8-faae-4de9-9f08-29b91e8595c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationspreadsheetpattern
+@GUID("7517a7c8-faae-4de9-9f08-29b91e8595c1")
 interface IUIAutomationSpreadsheetPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationspreadsheetpattern-getitembyname
     HRESULT GetItemByName(BSTR name, IUIAutomationElement* element);
 }
 
-@GUID("7d4fb86c-8d34-40e1-8e83-62c15204e335")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationspreadsheetitempattern
+@GUID("7d4fb86c-8d34-40e1-8e83-62c15204e335")
 interface IUIAutomationSpreadsheetItemPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationspreadsheetitempattern-get_currentformula
@@ -4692,9 +4692,9 @@ interface IUIAutomationSpreadsheetItemPattern : IUnknown
     HRESULT GetCachedAnnotationTypes(SAFEARRAY** retVal);
 }
 
-@GUID("6d74d017-6ecb-4381-b38b-3c17a48ff1c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtransformpattern2
+@GUID("6d74d017-6ecb-4381-b38b-3c17a48ff1c2")
 interface IUIAutomationTransformPattern2 : IUIAutomationTransformPattern
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtransformpattern2-zoom
@@ -4719,9 +4719,9 @@ interface IUIAutomationTransformPattern2 : IUIAutomationTransformPattern
     HRESULT get_CachedZoomMaximum(double* retVal);
 }
 
-@GUID("6552b038-ae05-40c8-abfd-aa08352aab86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextchildpattern
+@GUID("6552b038-ae05-40c8-abfd-aa08352aab86")
 interface IUIAutomationTextChildPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationtextchildpattern-get_textcontainer
@@ -4730,9 +4730,9 @@ interface IUIAutomationTextChildPattern : IUnknown
     HRESULT get_TextRange(IUIAutomationTextRange* range);
 }
 
-@GUID("1dc7b570-1f54-4bad-bcda-d36a722fb7bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationdragpattern
+@GUID("1dc7b570-1f54-4bad-bcda-d36a722fb7bd")
 interface IUIAutomationDragPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationdragpattern-get_currentisgrabbed
@@ -4753,9 +4753,9 @@ interface IUIAutomationDragPattern : IUnknown
     HRESULT GetCachedGrabbedItems(IUIAutomationElementArray* retVal);
 }
 
-@GUID("69a095f7-eee4-430e-a46b-fb73b1ae39a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationdroptargetpattern
+@GUID("69a095f7-eee4-430e-a46b-fb73b1ae39a5")
 interface IUIAutomationDropTargetPattern : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationdroptargetpattern-get_currentdroptargeteffect
@@ -4768,9 +4768,9 @@ interface IUIAutomationDropTargetPattern : IUnknown
     HRESULT get_CachedDropTargetEffects(SAFEARRAY** retVal);
 }
 
-@GUID("6749c683-f70d-4487-a698-5f79d55290d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement2
+@GUID("6749c683-f70d-4487-a698-5f79d55290d6")
 interface IUIAutomationElement2 : IUIAutomationElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement2-get_currentoptimizeforvisualcontent
@@ -4787,9 +4787,9 @@ interface IUIAutomationElement2 : IUIAutomationElement
     HRESULT get_CachedFlowsFrom(IUIAutomationElementArray* retVal);
 }
 
-@GUID("8471df34-aee0-4a01-a7de-7db9af12c296")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement3
+@GUID("8471df34-aee0-4a01-a7de-7db9af12c296")
 interface IUIAutomationElement3 : IUIAutomationElement2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement3-showcontextmenu
@@ -4800,9 +4800,9 @@ interface IUIAutomationElement3 : IUIAutomationElement2
     HRESULT get_CachedIsPeripheral(BOOL* retVal);
 }
 
-@GUID("3b6e233c-52fb-4063-a4c9-77c075c2a06b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement4
+@GUID("3b6e233c-52fb-4063-a4c9-77c075c2a06b")
 interface IUIAutomationElement4 : IUIAutomationElement3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement4-get_currentpositioninset
@@ -4827,9 +4827,9 @@ interface IUIAutomationElement4 : IUIAutomationElement3
     HRESULT get_CachedAnnotationObjects(IUIAutomationElementArray* retVal);
 }
 
-@GUID("98141c1d-0d0e-4175-bbe2-6bff455842a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement5
+@GUID("98141c1d-0d0e-4175-bbe2-6bff455842a7")
 interface IUIAutomationElement5 : IUIAutomationElement4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement5-get_currentlandmarktype
@@ -4842,9 +4842,9 @@ interface IUIAutomationElement5 : IUIAutomationElement4
     HRESULT get_CachedLocalizedLandmarkType(BSTR* retVal);
 }
 
-@GUID("4780d450-8bca-4977-afa5-a4a517f555e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement6
+@GUID("4780d450-8bca-4977-afa5-a4a517f555e3")
 interface IUIAutomationElement6 : IUIAutomationElement5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement6-get_currentfulldescription
@@ -4853,9 +4853,9 @@ interface IUIAutomationElement6 : IUIAutomationElement5
     HRESULT get_CachedFullDescription(BSTR* retVal);
 }
 
-@GUID("204e8572-cfc3-4c11-b0c8-7da7420750b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement7
+@GUID("204e8572-cfc3-4c11-b0c8-7da7420750b7")
 interface IUIAutomationElement7 : IUIAutomationElement6
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement7-findfirstwithoptions
@@ -4880,9 +4880,9 @@ interface IUIAutomationElement7 : IUIAutomationElement6
     HRESULT GetCurrentMetadataValue(int targetId, UIA_METADATA_ID metadataId, VARIANT* returnVal);
 }
 
-@GUID("8c60217d-5411-4cde-bcc0-1ceda223830c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement8
+@GUID("8c60217d-5411-4cde-bcc0-1ceda223830c")
 interface IUIAutomationElement8 : IUIAutomationElement7
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement8-get_currentheadinglevel
@@ -4891,9 +4891,9 @@ interface IUIAutomationElement8 : IUIAutomationElement7
     HRESULT get_CachedHeadingLevel(UIA_HEADINGLEVEL_ID* retVal);
 }
 
-@GUID("39325fac-039d-440e-a3a3-5eb81a5cecc3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationelement9
+@GUID("39325fac-039d-440e-a3a3-5eb81a5cecc3")
 interface IUIAutomationElement9 : IUIAutomationElement8
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationelement9-get_currentisdialog
@@ -4902,9 +4902,9 @@ interface IUIAutomationElement9 : IUIAutomationElement8
     HRESULT get_CachedIsDialog(BOOL* retVal);
 }
 
-@GUID("85b94ecd-849d-42b6-b94d-d6db23fdf5a4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationproxyfactory
+@GUID("85b94ecd-849d-42b6-b94d-d6db23fdf5a4")
 interface IUIAutomationProxyFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationproxyfactory-createprovider
@@ -4913,9 +4913,9 @@ interface IUIAutomationProxyFactory : IUnknown
     HRESULT get_ProxyFactoryId(BSTR* factoryId);
 }
 
-@GUID("d50e472e-b64b-490c-bca1-d30696f9f289")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationproxyfactoryentry
+@GUID("d50e472e-b64b-490c-bca1-d30696f9f289")
 interface IUIAutomationProxyFactoryEntry : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationproxyfactoryentry-get_proxyfactory
@@ -4946,9 +4946,9 @@ interface IUIAutomationProxyFactoryEntry : IUnknown
     HRESULT GetWinEventsForAutomationEvent(UIA_EVENT_ID eventId, UIA_PROPERTY_ID propertyId, SAFEARRAY** winEvents);
 }
 
-@GUID("09e31e18-872d-4873-93d1-1e541ec133fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationproxyfactorymapping
+@GUID("09e31e18-872d-4873-93d1-1e541ec133fd")
 interface IUIAutomationProxyFactoryMapping : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationproxyfactorymapping-get_count
@@ -4971,9 +4971,9 @@ interface IUIAutomationProxyFactoryMapping : IUnknown
     HRESULT RestoreDefaultTable();
 }
 
-@GUID("c9ee12f2-c13b-4408-997c-639914377f4e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationeventhandlergroup
+@GUID("c9ee12f2-c13b-4408-997c-639914377f4e")
 interface IUIAutomationEventHandlerGroup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomationeventhandlergroup-addactivetextpositionchangedeventhandler
@@ -5001,9 +5001,9 @@ interface IUIAutomationEventHandlerGroup : IUnknown
                                                IUIAutomationTextEditTextChangedEventHandler handler);
 }
 
-@GUID("30cbe57d-d9d0-452a-ab13-7ac5ac4825ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomation
+@GUID("30cbe57d-d9d0-452a-ab13-7ac5ac4825ee")
 interface IUIAutomation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomation-compareelements
@@ -5143,9 +5143,9 @@ interface IUIAutomation : IUnknown
                                              IUIAutomationCacheRequest cacheRequest, IUIAutomationElement* element);
 }
 
-@GUID("34723aff-0c9d-49d0-9896-7ab52df8cd8a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomation2
+@GUID("34723aff-0c9d-49d0-9896-7ab52df8cd8a")
 interface IUIAutomation2 : IUIAutomation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomation2-get_autosetfocus
@@ -5162,9 +5162,9 @@ interface IUIAutomation2 : IUIAutomation
     HRESULT put_TransactionTimeout(uint timeout);
 }
 
-@GUID("73d768da-9b51-4b89-936e-c209290973e7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomation3
+@GUID("73d768da-9b51-4b89-936e-c209290973e7")
 interface IUIAutomation3 : IUIAutomation2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomation3-addtextedittextchangedeventhandler
@@ -5177,9 +5177,9 @@ interface IUIAutomation3 : IUIAutomation2
                                                   IUIAutomationTextEditTextChangedEventHandler handler);
 }
 
-@GUID("1189c02a-05f8-4319-8e21-e817e3db2860")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomation4
+@GUID("1189c02a-05f8-4319-8e21-e817e3db2860")
 interface IUIAutomation4 : IUIAutomation3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomation4-addchangeseventhandler
@@ -5190,9 +5190,9 @@ interface IUIAutomation4 : IUIAutomation3
     HRESULT RemoveChangesEventHandler(IUIAutomationElement element, IUIAutomationChangesEventHandler handler);
 }
 
-@GUID("25f700c8-d816-4057-a9dc-3cbdee77e256")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomation5
+@GUID("25f700c8-d816-4057-a9dc-3cbdee77e256")
 interface IUIAutomation5 : IUIAutomation4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiautomationclient/nf-uiautomationclient-iuiautomation5-addnotificationeventhandler
@@ -5204,18 +5204,18 @@ interface IUIAutomation5 : IUIAutomation4
                                            IUIAutomationNotificationEventHandler handler);
 }
 
-@GUID("983e572d-20cd-460b-9104-83111592dd10")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nn-textserv-iricheditwindowlessaccessibility
+@GUID("983e572d-20cd-460b-9104-83111592dd10")
 interface IRicheditWindowlessAccessibility : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-iricheditwindowlessaccessibility-createprovider
     HRESULT CreateProvider(IRawElementProviderWindowlessSite pSite, IRawElementProviderSimple* ppProvider);
 }
 
-@GUID("23969a9d-8546-4032-a1bb-73750cbf3333")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nn-textserv-irichedituiainformation
+@GUID("23969a9d-8546-4032-a1bb-73750cbf3333")
 interface IRichEditUiaInformation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-irichedituiainformation-getboundaryrectangle

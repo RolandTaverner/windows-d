@@ -6809,9 +6809,9 @@ interface IPrinterScriptContext : IDispatch
     HRESULT get_UserProperties(IPrinterScriptablePropertyBag* ppPropertyBag);
 }
 
-@GUID("77cf513e-5d49-4789-9f30-d0822b335c0d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifydataobject
+@GUID("77cf513e-5d49-4789-9f30-d0822b335c0d")
 interface IPrintAsyncNotifyDataObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifydataobject-acquiredata
@@ -6820,9 +6820,9 @@ interface IPrintAsyncNotifyDataObject : IUnknown
     HRESULT ReleaseData();
 }
 
-@GUID("4a5031b1-1f3f-4db0-a462-4530ed8b0451")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifychannel
+@GUID("4a5031b1-1f3f-4db0-a462-4530ed8b0451")
 interface IPrintAsyncNotifyChannel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifychannel-sendnotification
@@ -6831,9 +6831,9 @@ interface IPrintAsyncNotifyChannel : IUnknown
     HRESULT CloseChannel(IPrintAsyncNotifyDataObject pData);
 }
 
-@GUID("7def34c1-9d92-4c99-b3b3-db94a9d4191b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifycallback
+@GUID("7def34c1-9d92-4c99-b3b3-db94a9d4191b")
 interface IPrintAsyncNotifyCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifycallback-oneventnotify

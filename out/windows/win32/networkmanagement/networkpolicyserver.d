@@ -956,9 +956,9 @@ struct RADIUS_EXTENSION_CONTROL_BLOCK
 @GUID("e9218ae7-9e91-11d1-bf60-0080c7846bc0")
 struct SdoMachine;
 
-@GUID("479f6e75-49a2-11d2-8eca-00c04fc2f519")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nn-sdoias-isdomachine
+@GUID("479f6e75-49a2-11d2-8eca-00c04fc2f519")
 interface ISdoMachine : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nf-sdoias-isdomachine-attach
@@ -991,9 +991,9 @@ interface ISdoMachine2 : ISdoMachine
     HRESULT Reload();
 }
 
-@GUID("479f6e74-49a2-11d2-8eca-00c04fc2f519")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nn-sdoias-isdoservicecontrol
+@GUID("479f6e74-49a2-11d2-8eca-00c04fc2f519")
 interface ISdoServiceControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nf-sdoias-isdoservicecontrol-startservice
@@ -1006,9 +1006,9 @@ interface ISdoServiceControl : IDispatch
     HRESULT ResetService();
 }
 
-@GUID("56bc53de-96db-11d1-bf3f-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nn-sdoias-isdo
+@GUID("56bc53de-96db-11d1-bf3f-000000000000")
 interface ISdo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nf-sdoias-isdo-getpropertyinfo
@@ -1027,9 +1027,9 @@ interface ISdo : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumVARIANT);
 }
 
-@GUID("56bc53e2-96db-11d1-bf3f-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nn-sdoias-isdocollection
+@GUID("56bc53e2-96db-11d1-bf3f-000000000000")
 interface ISdoCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nf-sdoias-isdocollection-get_count
@@ -1058,9 +1058,9 @@ interface ITemplateSdo : ISdo
     HRESULT AddToSdoAsProperty(IDispatch pSdoTarget, int id);
 }
 
-@GUID("d432e5f4-53d8-11d2-9a3a-00c04fb998ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nn-sdoias-isdodictionaryold
+@GUID("d432e5f4-53d8-11d2-9a3a-00c04fb998ac")
 interface ISdoDictionaryOld : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/nf-sdoias-isdodictionaryold-enumattributes

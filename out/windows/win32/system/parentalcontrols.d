@@ -665,9 +665,9 @@ struct WpcProviderSupport;
 @GUID("e77cc89b-7401-4c04-8ced-149db35add04")
 struct WindowsParentalControls;
 
-@GUID("50b6a267-c4bd-450b-adb5-759073837c9e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcproviderstate
+@GUID("50b6a267-c4bd-450b-adb5-759073837c9e")
 interface IWPCProviderState : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderstate-enable
@@ -676,9 +676,9 @@ interface IWPCProviderState : IUnknown
     HRESULT Disable();
 }
 
-@GUID("bef54196-2d02-4a26-b6e5-d65af295d0f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcproviderconfig
+@GUID("bef54196-2d02-4a26-b6e5-d65af295d0f1")
 interface IWPCProviderConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-getusersummary
@@ -690,9 +690,9 @@ interface IWPCProviderConfig : IUnknown
                             /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WPCFLAG_RESTRICTION))], [])*/uint dwFlags);
 }
 
-@GUID("8fdf6ca1-0189-47e4-b670-1a8a4636e340")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcsettings
+@GUID("8fdf6ca1-0189-47e4-b670-1a8a4636e340")
 interface IWPCSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-isloggingrequired
@@ -703,18 +703,18 @@ interface IWPCSettings : IUnknown
     HRESULT GetRestrictions(WPCFLAG_RESTRICTION* pdwRestrictions);
 }
 
-@GUID("95e87780-e158-489e-b452-bbb850790715")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcgamessettings
+@GUID("95e87780-e158-489e-b452-bbb850790715")
 interface IWPCGamesSettings : IWPCSettings
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcgamessettings-isblocked
     HRESULT IsBlocked(GUID guidAppID, uint* pdwReasons);
 }
 
-@GUID("ffccbdb8-0992-4c30-b0f1-1cbb09c240aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcwebsettings
+@GUID("ffccbdb8-0992-4c30-b0f1-1cbb09c240aa")
 interface IWPCWebSettings : IWPCSettings
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcwebsettings-getsettings
@@ -724,9 +724,9 @@ interface IWPCWebSettings : IWPCSettings
                                BOOL* pfChanged);
 }
 
-@GUID("4ff40a0f-3f3b-4d7c-a41b-4f39d7b44d05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwindowsparentalcontrolscore
+@GUID("4ff40a0f-3f3b-4d7c-a41b-4f39d7b44d05")
 interface IWindowsParentalControlsCore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getvisibility
@@ -739,18 +739,18 @@ interface IWindowsParentalControlsCore : IUnknown
     HRESULT GetWebFilterInfo(GUID* pguidID, PWSTR* ppszName);
 }
 
-@GUID("28b4d88b-e072-49e6-804d-26edbe21a7b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwindowsparentalcontrols
+@GUID("28b4d88b-e072-49e6-804d-26edbe21a7b9")
 interface IWindowsParentalControls : IWindowsParentalControlsCore
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrols-getgamessettings
     HRESULT GetGamesSettings(const(PWSTR) pcszSID, IWPCGamesSettings* ppSettings);
 }
 
-@GUID("41eba572-23ed-4779-bec1-8df96206c44c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcprovidersupport
+@GUID("41eba572-23ed-4779-bec1-8df96206c44c")
 interface IWPCProviderSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcprovidersupport-getcurrent

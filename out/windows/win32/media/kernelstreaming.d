@@ -5948,7 +5948,6 @@ HRESULT KsGetMediaType(int Position, AM_MEDIA_TYPE* AmMediaType, HANDLE FilterHa
 
 // Interfaces
 
-@GUID("00000000-0000-0000-0000-000000000000")
 struct GUID_NULL;
 
 @GUID("97e99ba0-bdea-11cf-a5d6-28db04c10000")
@@ -7535,8 +7534,8 @@ struct KSNOTIFICATIONID_AudioModule;
 @GUID("17cca71b-ecd7-11d0-b908-00a0c9223196")
 struct CLSID_Proxy;
 
-@GUID("31efac30-515c-11d0-a9aa-00aa0061be93")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectShow/ikspropertyset
+@GUID("31efac30-515c-11d0-a9aa-00aa0061be93")
 interface IKsPropertySet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectShow/ikspropertyset-set
@@ -7555,9 +7554,9 @@ interface IKsPropertySet : IUnknown
     HRESULT QuerySupported(const(GUID)* guidPropSet, uint dwPropID, uint* pTypeSupport);
 }
 
-@GUID("720d4ac0-7533-11d0-a5d6-28db04c10000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nn-vidcap-ikstopologyinfo
+@GUID("720d4ac0-7533-11d0-a5d6-28db04c10000")
 interface IKsTopologyInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nf-vidcap-ikstopologyinfo-get_numcategories
@@ -7580,9 +7579,9 @@ interface IKsTopologyInfo : IUnknown
     HRESULT CreateNodeInstance(uint dwNodeId, const(GUID)* iid, void** ppvObject);
 }
 
-@GUID("11737c14-24a7-4bb5-81a0-0d003813b0c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nn-vidcap-iksnodecontrol
+@GUID("11737c14-24a7-4bb5-81a0-0d003813b0c4")
 interface IKsNodeControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nf-vidcap-iksnodecontrol-put_nodeid
@@ -7601,9 +7600,9 @@ interface IKsControl : IUnknown
     HRESULT KsEvent(KSIDENTIFIER* Event, uint EventLength, void* EventData, uint DataLength, uint* BytesReturned);
 }
 
-@GUID("3cb4a69d-bb6f-4d2b-95b7-452d2c155db5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iksformatsupport
+@GUID("3cb4a69d-bb6f-4d2b-95b7-452d2c155db5")
 interface IKsFormatSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iksformatsupport-isformatsupported
@@ -7612,9 +7611,9 @@ interface IKsFormatSupport : IUnknown
     HRESULT GetDevicePreferredFormat(KSDATAFORMAT** ppKsFormat);
 }
 
-@GUID("4509f757-2d46-4637-8e62-ce7db944f57b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iksjackdescription
+@GUID("4509f757-2d46-4637-8e62-ce7db944f57b")
 interface IKsJackDescription : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iksjackdescription-getjackcount
@@ -7623,9 +7622,9 @@ interface IKsJackDescription : IUnknown
     HRESULT GetJackDescription(uint nJack, KSJACK_DESCRIPTION* pDescription);
 }
 
-@GUID("478f3a9b-e0c9-4827-9228-6f5505ffe76a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iksjackdescription2
+@GUID("478f3a9b-e0c9-4827-9228-6f5505ffe76a")
 interface IKsJackDescription2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iksjackdescription2-getjackcount
@@ -7641,9 +7640,9 @@ interface IKsJackDescription3 : IUnknown
     HRESULT GetJackDescription3(uint nJack, KSJACK_DESCRIPTION3* pDescription3);
 }
 
-@GUID("d9bd72ed-290f-4581-9ff3-61027a8fe532")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iksjacksinkinformation
+@GUID("d9bd72ed-290f-4581-9ff3-61027a8fe532")
 interface IKsJackSinkInformation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iksjacksinkinformation-getjacksinkinformation
@@ -7689,8 +7688,8 @@ interface IKsAllocatorEx : IKsAllocator
     HANDLE KsCreateAllocatorAndGetHandle(IKsPin KsPin);
 }
 
-@GUID("b61178d1-a2d9-11cf-9e53-00aa00a216a1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectShow/ikspin
+@GUID("b61178d1-a2d9-11cf-9e53-00aa00a216a1")
 interface IKsPin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectShow/ikspin-ksquerymediums

@@ -311,8 +311,8 @@ interface IGameExplorer2 : IUnknown
     HRESULT CheckAccess(const(PWSTR) binaryGDFPath, BOOL* pHasAccess);
 }
 
-@GUID("eb5ddb08-8bbf-449b-ac21-b02ddeb3b136")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nn-xblidpauthmanager-ixblidpauthmanager
+@GUID("eb5ddb08-8bbf-449b-ac21-b02ddeb3b136")
 interface IXblIdpAuthManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-setgameraccount
@@ -343,8 +343,8 @@ interface IXblIdpAuthManager2 : IUnknown
                                                         IXblIdpAuthTokenResult* result);
 }
 
-@GUID("46ce0225-f267-4d68-b299-b2762552dec1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nn-xblidpauthmanager-ixblidpauthtokenresult
+@GUID("46ce0225-f267-4d68-b299-b2762552dec1")
 interface IXblIdpAuthTokenResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getstatus

@@ -2649,9 +2649,9 @@ struct ADsTSUserEx;
 @GUID("4f1dfca6-3aad-48e1-8406-4bc21a501d7c")
 struct Workspace;
 
-@GUID("30a99515-1527-4451-af9f-00c5f0234daf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nn-audioengineendpoint-iaudioendpoint
+@GUID("30a99515-1527-4451-af9f-00c5f0234daf")
 interface IAudioEndpoint : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nf-audioengineendpoint-iaudioendpoint-getframeformat
@@ -2666,9 +2666,9 @@ interface IAudioEndpoint : IUnknown
     HRESULT SetEventHandle(HANDLE eventHandle);
 }
 
-@GUID("dfd2005f-a6e5-4d39-a265-939ada9fbb4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nn-audioengineendpoint-iaudioendpointrt
+@GUID("dfd2005f-a6e5-4d39-a265-939ada9fbb4d")
 interface IAudioEndpointRT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nf-audioengineendpoint-iaudioendpointrt-getcurrentpadding
@@ -2681,9 +2681,9 @@ interface IAudioEndpointRT : IUnknown
     HRESULT SetPinActive();
 }
 
-@GUID("8026ab61-92b2-43c1-a1df-5c37ebd08d82")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nn-audioengineendpoint-iaudioinputendpointrt
+@GUID("8026ab61-92b2-43c1-a1df-5c37ebd08d82")
 interface IAudioInputEndpointRT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nf-audioengineendpoint-iaudioinputendpointrt-getinputdatapointer
@@ -2694,9 +2694,9 @@ interface IAudioInputEndpointRT : IUnknown
     void PulseEndpoint();
 }
 
-@GUID("8fa906e4-c31c-4e31-932e-19a66385e9aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nn-audioengineendpoint-iaudiooutputendpointrt
+@GUID("8fa906e4-c31c-4e31-932e-19a66385e9aa")
 interface IAudioOutputEndpointRT : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nf-audioengineendpoint-iaudiooutputendpointrt-getoutputdatapointer
@@ -2707,9 +2707,9 @@ interface IAudioOutputEndpointRT : IUnknown
     void   PulseEndpoint();
 }
 
-@GUID("d4952f5a-a0b2-4cc4-8b82-9358488dd8ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nn-audioengineendpoint-iaudiodeviceendpoint
+@GUID("d4952f5a-a0b2-4cc4-8b82-9358488dd8ac")
 interface IAudioDeviceEndpoint : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nf-audioengineendpoint-iaudiodeviceendpoint-setbuffer
@@ -2724,9 +2724,9 @@ interface IAudioDeviceEndpoint : IUnknown
                                                        uint* pu32SharedMemorySize, size_t* phSharedMemory);
 }
 
-@GUID("c684b72a-6df4-4774-bdf9-76b77509b653")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nn-audioengineendpoint-iaudioendpointcontrol
+@GUID("c684b72a-6df4-4774-bdf9-76b77509b653")
 interface IAudioEndpointControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineendpoint/nf-audioengineendpoint-iaudioendpointcontrol-start
@@ -2737,9 +2737,9 @@ interface IAudioEndpointControl : IUnknown
     HRESULT Stop();
 }
 
-@GUID("c4930e79-2989-4462-8a60-2fcf2f2955ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsuserex/nn-tsuserex-iadstsuserex
+@GUID("c4930e79-2989-4462-8a60-2fcf2f2955ef")
 interface IADsTSUserEx : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsuserex/nf-tsuserex-iadstsuserex-get_terminalservicesprofilepath
@@ -2804,9 +2804,9 @@ interface IADsTSUserEx : IDispatch
     HRESULT put_TerminalServicesInitialProgram(BSTR pNewVal);
 }
 
-@GUID("c27ece33-7781-4318-98ef-1cf2da7b7005")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nn-tsgpolicyengine-itsgauthorizeconnectionsink
+@GUID("c27ece33-7781-4318-98ef-1cf2da7b7005")
 interface ITSGAuthorizeConnectionSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nf-tsgpolicyengine-itsgauthorizeconnectionsink-onconnectionauthorized
@@ -2816,9 +2816,9 @@ interface ITSGAuthorizeConnectionSink : IUnknown
                                    uint* policyAttributes);
 }
 
-@GUID("feddfcd4-fa12-4435-ae55-7ad1a9779af7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nn-tsgpolicyengine-itsgauthorizeresourcesink
+@GUID("feddfcd4-fa12-4435-ae55-7ad1a9779af7")
 interface ITSGAuthorizeResourceSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nf-tsgpolicyengine-itsgauthorizeresourcesink-onchannelauthorized
@@ -2826,9 +2826,9 @@ interface ITSGAuthorizeResourceSink : IUnknown
                                 uint numAllowedResourceNames, BSTR* failedResourceNames, uint numFailedResourceNames);
 }
 
-@GUID("8bc24f08-6223-42f4-a5b4-8e37cd135bbd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nn-tsgpolicyengine-itsgpolicyengine
+@GUID("8bc24f08-6223-42f4-a5b4-8e37cd135bbd")
 interface ITSGPolicyEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nf-tsgpolicyengine-itsgpolicyengine-authorizeconnection
@@ -2846,18 +2846,18 @@ interface ITSGPolicyEngine : IUnknown
     HRESULT IsQuarantineEnabled(BOOL* quarantineEnabled);
 }
 
-@GUID("4ce2a0c9-e874-4f1a-86f4-06bbb9115338")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nn-tsgpolicyengine-itsgaccountingengine
+@GUID("4ce2a0c9-e874-4f1a-86f4-06bbb9115338")
 interface ITSGAccountingEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgpolicyengine/nf-tsgpolicyengine-itsgaccountingengine-doaccounting
     HRESULT DoAccounting(AAAccountingDataType accountingDataType, AAAccountingData accountingData);
 }
 
-@GUID("2c3e2e73-a782-47f9-8dfb-77ee1ed27a03")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgauthenticationengine/nn-tsgauthenticationengine-itsgauthenticateusersink
+@GUID("2c3e2e73-a782-47f9-8dfb-77ee1ed27a03")
 interface ITSGAuthenticateUserSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgauthenticationengine/nf-tsgauthenticationengine-itsgauthenticateusersink-onuserauthenticated
@@ -2870,9 +2870,9 @@ interface ITSGAuthenticateUserSink : IUnknown
     HRESULT DisconnectUser(size_t context);
 }
 
-@GUID("9ee3e5bf-04ab-4691-998c-d7f622321a56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgauthenticationengine/nn-tsgauthenticationengine-itsgauthenticationengine
+@GUID("9ee3e5bf-04ab-4691-998c-d7f622321a56")
 interface ITSGAuthenticationEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsgauthenticationengine/nf-tsgauthenticationengine-itsgauthenticationengine-authenticateuser
@@ -2882,9 +2882,9 @@ interface ITSGAuthenticationEngine : IUnknown
     HRESULT CancelAuthentication(GUID mainSessionId, size_t context);
 }
 
-@GUID("dc44be78-b18d-4399-b210-641bf67a002c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tssbx/nn-tssbx-iwtssbplugin
+@GUID("dc44be78-b18d-4399-b210-641bf67a002c")
 interface IWTSSBPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tssbx/nf-tssbx-iwtssbplugin-initialize
@@ -2906,9 +2906,9 @@ interface IWTSSBPlugin : IUnknown
                                           WTSSBX_MACHINE_CONNECT_INFO* pMachineConnectInfo);
 }
 
-@GUID("12b952f4-41ca-4f21-a829-a6d07d9a16e5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntimeclientext/nn-workspaceruntimeclientext-iworkspaceclientext
+@GUID("12b952f4-41ca-4f21-a829-a6d07d9a16e5")
 interface IWorkspaceClientExt : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntimeclientext/nf-workspaceruntimeclientext-iworkspaceclientext-getresourceid
@@ -2919,9 +2919,9 @@ interface IWorkspaceClientExt : IUnknown
     HRESULT IssueDisconnect();
 }
 
-@GUID("b922bbb8-4c55-4fea-8496-beb0b44285e5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspace
+@GUID("b922bbb8-4c55-4fea-8496-beb0b44285e5")
 interface IWorkspace : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspace-getworkspacenames
@@ -2932,9 +2932,9 @@ interface IWorkspace : IUnknown
     HRESULT GetProcessId(uint* pulProcessId);
 }
 
-@GUID("96d8d7cf-783e-4286-834c-ebc0e95f783c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspace2
+@GUID("96d8d7cf-783e-4286-834c-ebc0e95f783c")
 interface IWorkspace2 : IWorkspace
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspace2-startremoteapplicationex
@@ -2943,9 +2943,9 @@ interface IWorkspace2 : IWorkspace
                                      BSTR bstrImmersiveClientActivationContext, SAFEARRAY* psaParams);
 }
 
-@GUID("1becbe4a-d654-423b-afeb-be8d532c13c6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspace3
+@GUID("1becbe4a-d654-423b-afeb-be8d532c13c6")
 interface IWorkspace3 : IWorkspace2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspace3-getclaimstoken2
@@ -2955,9 +2955,9 @@ interface IWorkspace3 : IWorkspace2
     HRESULT SetClaimsToken(BSTR bstrAccessToken, ulong ullAccessTokenExpiration, BSTR bstrRefreshToken);
 }
 
-@GUID("b922bbb8-4c55-4fea-8496-beb0b44285e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspaceregistration
+@GUID("b922bbb8-4c55-4fea-8496-beb0b44285e6")
 interface IWorkspaceRegistration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspaceregistration-addresource
@@ -2966,9 +2966,9 @@ interface IWorkspaceRegistration : IUnknown
     HRESULT RemoveResource(uint dwCookieConnection);
 }
 
-@GUID("cf59f654-39bb-44d8-94d0-4635728957e9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspaceregistration2
+@GUID("cf59f654-39bb-44d8-94d0-4635728957e9")
 interface IWorkspaceRegistration2 : IWorkspaceRegistration
 {
     HRESULT AddResourceEx(IWorkspaceClientExt pUnk, BSTR bstrEventLogUploadAddress, uint* pdwCookie, 
@@ -2976,9 +2976,9 @@ interface IWorkspaceRegistration2 : IWorkspaceRegistration
     HRESULT RemoveResourceEx(uint dwCookieConnection, GUID correlationId);
 }
 
-@GUID("efea49a2-dda5-429d-8f42-b23b92c4c347")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspacescriptable
+@GUID("efea49a2-dda5-429d-8f42-b23b92c4c347")
 interface IWorkspaceScriptable : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspacescriptable-disconnectworkspace
@@ -2999,9 +2999,9 @@ interface IWorkspaceScriptable : IDispatch
     HRESULT DisconnectWorkspaceByFriendlyName(BSTR bstrWorkspaceFriendlyName);
 }
 
-@GUID("efea49a2-dda5-429d-8f42-b33ba2c4c348")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspacescriptable2
+@GUID("efea49a2-dda5-429d-8f42-b33ba2c4c348")
 interface IWorkspaceScriptable2 : IWorkspaceScriptable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspacescriptable2-startworkspaceex
@@ -3012,9 +3012,9 @@ interface IWorkspaceScriptable2 : IWorkspaceScriptable
     HRESULT ResourceDismissed(BSTR bstrWorkspaceId, BSTR bstrWorkspaceFriendlyName);
 }
 
-@GUID("531e6512-2cbf-4bd2-80a5-d90a71636a9a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspacescriptable3
+@GUID("531e6512-2cbf-4bd2-80a5-d90a71636a9a")
 interface IWorkspaceScriptable3 : IWorkspaceScriptable2
 {
     HRESULT StartWorkspaceEx2(BSTR bstrWorkspaceId, BSTR bstrWorkspaceFriendlyName, BSTR bstrRedirectorName, 
@@ -3022,9 +3022,9 @@ interface IWorkspaceScriptable3 : IWorkspaceScriptable2
                               int lTimeout, int lFlags, BSTR bstrEventLogUploadAddress, GUID correlationId);
 }
 
-@GUID("a7c06739-500f-4e8c-99a8-2bd6955899eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nn-workspaceruntime-iworkspacereportmessage
+@GUID("a7c06739-500f-4e8c-99a8-2bd6955899eb")
 interface IWorkspaceReportMessage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceruntime/nf-workspaceruntime-iworkspacereportmessage-registererrorlogmessage
@@ -3041,9 +3041,9 @@ interface _ITSWkspEvents : IDispatch
 {
 }
 
-@GUID("48cd7406-caab-465f-a5d6-baa863b9ea4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbplugin
+@GUID("48cd7406-caab-465f-a5d6-baa863b9ea4f")
 interface ITsSbPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbplugin-initialize
@@ -3053,16 +3053,16 @@ interface ITsSbPlugin : IUnknown
     HRESULT Terminate(HRESULT hr);
 }
 
-@GUID("ea8db42c-98ed-4535-a88b-2a164f35490f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbresourceplugin
+@GUID("ea8db42c-98ed-4535-a88b-2a164f35490f")
 interface ITsSbResourcePlugin : ITsSbPlugin
 {
 }
 
-@GUID("86cb68ae-86e0-4f57-8a64-bb7406bc5550")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbservicenotification
+@GUID("86cb68ae-86e0-4f57-8a64-bb7406bc5550")
 interface ITsSbServiceNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbservicenotification-notifyservicefailure
@@ -3071,27 +3071,27 @@ interface ITsSbServiceNotification : IUnknown
     HRESULT NotifyServiceSuccess();
 }
 
-@GUID("24329274-9eb7-11dc-ae98-f2b456d89593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbloadbalancing
+@GUID("24329274-9eb7-11dc-ae98-f2b456d89593")
 interface ITsSbLoadBalancing : ITsSbPlugin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbloadbalancing-getmostsuitabletarget
     HRESULT GetMostSuitableTarget(ITsSbClientConnection pConnection, ITsSbLoadBalancingNotifySink pLBSink);
 }
 
-@GUID("daadee5f-6d32-480e-9e36-ddab2329f06d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbplacement
+@GUID("daadee5f-6d32-480e-9e36-ddab2329f06d")
 interface ITsSbPlacement : ITsSbPlugin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbplacement-queryenvironmentfortarget
     HRESULT QueryEnvironmentForTarget(ITsSbClientConnection pConnection, ITsSbPlacementNotifySink pPlacementSink);
 }
 
-@GUID("64fc1172-9eb7-11dc-8b00-3aba56d89593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssborchestration
+@GUID("64fc1172-9eb7-11dc-8b00-3aba56d89593")
 interface ITsSbOrchestration : ITsSbPlugin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssborchestration-preparetargetforconnect
@@ -3099,9 +3099,9 @@ interface ITsSbOrchestration : ITsSbPlugin
                                     ITsSbOrchestrationNotifySink pOrchestrationNotifySink);
 }
 
-@GUID("8c87f7f7-bf51-4a5c-87bf-8e94fb6e2256")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbenvironment
+@GUID("8c87f7f7-bf51-4a5c-87bf-8e94fb6e2256")
 interface ITsSbEnvironment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbenvironment-get_name
@@ -3114,18 +3114,18 @@ interface ITsSbEnvironment : IUnknown
     HRESULT put_EnvironmentPropertySet(ITsSbEnvironmentPropertySet pVal);
 }
 
-@GUID("24fdb7ac-fea6-11dc-9672-9a8956d89593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbloadbalanceresult
+@GUID("24fdb7ac-fea6-11dc-9672-9a8956d89593")
 interface ITsSbLoadBalanceResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbloadbalanceresult-get_targetname
     HRESULT get_TargetName(BSTR* pVal);
 }
 
-@GUID("16616ecc-272d-411d-b324-126893033856")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbtarget
+@GUID("16616ecc-272d-411d-b324-126893033856")
 interface ITsSbTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbtarget-get_targetname
@@ -3168,9 +3168,9 @@ interface ITsSbTarget : IUnknown
     HRESULT get_TargetLoad(uint* pTargetLoad);
 }
 
-@GUID("d453aac7-b1d8-4c5e-ba34-9afb4c8c5510")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbsession
+@GUID("d453aac7-b1d8-4c5e-ba34-9afb4c8c5510")
 interface ITsSbSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbsession-get_sessionid
@@ -3208,9 +3208,9 @@ interface ITsSbSession : IUnknown
     HRESULT put_ProtocolType(uint Val);
 }
 
-@GUID("65d3e85a-c39b-11dc-b92d-3cd255d89593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbresourcenotification
+@GUID("65d3e85a-c39b-11dc-b92d-3cd255d89593")
 interface ITsSbResourceNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbresourcenotification-notifysessionchange
@@ -3222,9 +3222,9 @@ interface ITsSbResourceNotification : IUnknown
                                               ITsSbClientConnection pConnection);
 }
 
-@GUID("a8a47fde-ca91-44d2-b897-3aa28a43b2b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbresourcenotificationex
+@GUID("a8a47fde-ca91-44d2-b897-3aa28a43b2b7")
 interface ITsSbResourceNotificationEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbresourcenotificationex-notifysessionchangeex
@@ -3237,9 +3237,9 @@ interface ITsSbResourceNotificationEx : IUnknown
                                                 BSTR targetName, CONNECTION_CHANGE_NOTIFICATION connectionChangeType);
 }
 
-@GUID("523d1083-89be-48dd-99ea-04e82ffa7265")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbtaskinfo
+@GUID("523d1083-89be-48dd-99ea-04e82ffa7265")
 interface ITsSbTaskInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbtaskinfo-get_targetid
@@ -3262,9 +3262,9 @@ interface ITsSbTaskInfo : IUnknown
     HRESULT get_Status(RDV_TASK_STATUS* pStatus);
 }
 
-@GUID("fa22ef0f-8705-41be-93bc-44bdbcf1c9c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbtaskplugin
+@GUID("fa22ef0f-8705-41be-93bc-44bdbcf1c9c4")
 interface ITsSbTaskPlugin : ITsSbPlugin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbtaskplugin-initializetaskplugin
@@ -3273,44 +3273,44 @@ interface ITsSbTaskPlugin : ITsSbPlugin
     HRESULT SetTaskQueue(BSTR pszHostName, uint SbTaskInfoSize, ITsSbTaskInfo* pITsSbTaskInfo);
 }
 
-@GUID("5c025171-bb1e-4baf-a212-6d5e9774b33b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbpropertyset
+@GUID("5c025171-bb1e-4baf-a212-6d5e9774b33b")
 interface ITsSbPropertySet : IPropertyBag
 {
 }
 
-@GUID("95006e34-7eff-4b6c-bb40-49a4fda7cea6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbpluginpropertyset
+@GUID("95006e34-7eff-4b6c-bb40-49a4fda7cea6")
 interface ITsSbPluginPropertySet : ITsSbPropertySet
 {
 }
 
-@GUID("e51995b0-46d6-11dd-aa21-cedc55d89593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbclientconnectionpropertyset
+@GUID("e51995b0-46d6-11dd-aa21-cedc55d89593")
 interface ITsSbClientConnectionPropertySet : ITsSbPropertySet
 {
 }
 
-@GUID("f7bda5d6-994c-4e11-a079-2763b61830ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbtargetpropertyset
+@GUID("f7bda5d6-994c-4e11-a079-2763b61830ac")
 interface ITsSbTargetPropertySet : ITsSbPropertySet
 {
 }
 
-@GUID("d0d1bf7e-7acf-11dd-a243-e51156d89593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbenvironmentpropertyset
+@GUID("d0d1bf7e-7acf-11dd-a243-e51156d89593")
 interface ITsSbEnvironmentPropertySet : ITsSbPropertySet
 {
 }
 
-@GUID("808a6537-1282-4989-9e09-f43938b71722")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbbasenotifysink
+@GUID("808a6537-1282-4989-9e09-f43938b71722")
 interface ITsSbBaseNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbbasenotifysink-onerror
@@ -3319,9 +3319,9 @@ interface ITsSbBaseNotifySink : IUnknown
     HRESULT OnReportStatus(CLIENT_MESSAGE_TYPE messageType, uint messageID);
 }
 
-@GUID("44dfe30b-c3be-40f5-bf82-7a95bb795adf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbpluginnotifysink
+@GUID("44dfe30b-c3be-40f5-bf82-7a95bb795adf")
 interface ITsSbPluginNotifySink : ITsSbBaseNotifySink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbpluginnotifysink-oninitialized
@@ -3330,36 +3330,36 @@ interface ITsSbPluginNotifySink : ITsSbBaseNotifySink
     HRESULT OnTerminated();
 }
 
-@GUID("5f8a8297-3244-4e6a-958a-27c822c1e141")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbloadbalancingnotifysink
+@GUID("5f8a8297-3244-4e6a-958a-27c822c1e141")
 interface ITsSbLoadBalancingNotifySink : ITsSbBaseNotifySink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbloadbalancingnotifysink-ongetmostsuitabletarget
     HRESULT OnGetMostSuitableTarget(ITsSbLoadBalanceResult pLBResult, BOOL fIsNewConnection);
 }
 
-@GUID("68a0c487-2b4f-46c2-94a1-6ce685183634")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbplacementnotifysink
+@GUID("68a0c487-2b4f-46c2-94a1-6ce685183634")
 interface ITsSbPlacementNotifySink : ITsSbBaseNotifySink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbplacementnotifysink-onqueryenvironmentcompleted
     HRESULT OnQueryEnvironmentCompleted(ITsSbEnvironment pEnvironment);
 }
 
-@GUID("36c37d61-926b-442f-bca5-118c6d50dcf2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssborchestrationnotifysink
+@GUID("36c37d61-926b-442f-bca5-118c6d50dcf2")
 interface ITsSbOrchestrationNotifySink : ITsSbBaseNotifySink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssborchestrationnotifysink-onreadytoconnect
     HRESULT OnReadyToConnect(ITsSbTarget pTarget);
 }
 
-@GUID("6aaf899e-c2ec-45ee-aa37-45e60895261a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbtaskpluginnotifysink
+@GUID("6aaf899e-c2ec-45ee-aa37-45e60895261a")
 interface ITsSbTaskPluginNotifySink : ITsSbBaseNotifySink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbtaskpluginnotifysink-onsettasktime
@@ -3374,9 +3374,9 @@ interface ITsSbTaskPluginNotifySink : ITsSbBaseNotifySink
     HRESULT OnReportTasks(BSTR szHostName);
 }
 
-@GUID("18857499-ad61-4b1b-b7df-cbcd41fb8338")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbclientconnection
+@GUID("18857499-ad61-4b1b-b7df-cbcd41fb8338")
 interface ITsSbClientConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbclientconnection-get_username
@@ -3411,9 +3411,9 @@ interface ITsSbClientConnection : IUnknown
     HRESULT GetDisconnectedSession(ITsSbSession* ppSession);
 }
 
-@GUID("87a4098f-6d7b-44dd-bc17-8ce44e370d52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbprovider
+@GUID("87a4098f-6d7b-44dd-bc17-8ce44e370d52")
 interface ITsSbProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbprovider-createtargetobject
@@ -3444,9 +3444,9 @@ interface ITsSbProvider : IUnknown
     HRESULT CreateEnvironmentPropertySetObject(ITsSbEnvironmentPropertySet* ppPropertySet);
 }
 
-@GUID("5c38f65f-bcf1-4036-a6bf-9e3cccae0b63")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbresourcepluginstore
+@GUID("5c38f65f-bcf1-4036-a6bf-9e3cccae0b63")
 interface ITsSbResourcePluginStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbresourcepluginstore-querytarget
@@ -3511,9 +3511,9 @@ interface ITsSbResourcePluginStore : IUnknown
     HRESULT SetServerDrainMode(BSTR ServerFQDN, uint DrainMode);
 }
 
-@GUID("85b44b0f-ed78-413f-9702-fa6d3b5ee755")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbfilterpluginstore
+@GUID("85b44b0f-ed78-413f-9702-fa6d3b5ee755")
 interface ITsSbFilterPluginStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbfilterpluginstore-saveproperties
@@ -3524,9 +3524,9 @@ interface ITsSbFilterPluginStore : IUnknown
     HRESULT DeleteProperties(BSTR propertyName);
 }
 
-@GUID("9ab60f7b-bd72-4d9f-8a3a-a0ea5574e635")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbglobalstore
+@GUID("9ab60f7b-bd72-4d9f-8a3a-a0ea5574e635")
 interface ITsSbGlobalStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbglobalstore-querytarget
@@ -3547,9 +3547,9 @@ interface ITsSbGlobalStore : IUnknown
     HRESULT GetFarmProperty(BSTR farmName, BSTR propertyName, VARIANT* pVarValue);
 }
 
-@GUID("aca87a8e-818b-4581-a032-49c3dfb9c701")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbprovisioningpluginnotifysink
+@GUID("aca87a8e-818b-4581-a032-49c3dfb9c701")
 interface ITsSbProvisioningPluginNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbprovisioningpluginnotifysink-onjobcreated
@@ -3568,9 +3568,9 @@ interface ITsSbProvisioningPluginNotifySink : IUnknown
                                               HRESULT ErrorCode, BSTR ErrorDescr);
 }
 
-@GUID("2f6f0dbb-9e4f-462b-9c3f-fccc3dcb6232")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbprovisioning
+@GUID("2f6f0dbb-9e4f-462b-9c3f-fccc3dcb6232")
 interface ITsSbProvisioning : ITsSbPlugin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbprovisioning-createvirtualmachines
@@ -3584,9 +3584,9 @@ interface ITsSbProvisioning : ITsSbPlugin
     HRESULT CancelJob(BSTR JobGuid);
 }
 
-@GUID("4c4c8c4f-300b-46ad-9164-8468a7e7568c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2016))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nn-sbtsv-itssbgenericnotifysink
+@GUID("4c4c8c4f-300b-46ad-9164-8468a7e7568c")
 interface ITsSbGenericNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbtsv/nf-sbtsv-itssbgenericnotifysink-oncompleted
@@ -3595,9 +3595,9 @@ interface ITsSbGenericNotifySink : IUnknown
     HRESULT GetWaitTimeout(FILETIME* pftTimeout);
 }
 
-@GUID("70c04b05-f347-412b-822f-36c99c54ca45")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tspubplugincom/nn-tspubplugincom-itspubplugin
+@GUID("70c04b05-f347-412b-822f-36c99c54ca45")
 interface ItsPubPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tspubplugincom/nf-tspubplugincom-itspubplugin-getresourcelist
@@ -3615,9 +3615,9 @@ interface ItsPubPlugin : IUnknown
                             PWSTR alias_);
 }
 
-@GUID("fa4ce418-aad7-4ec6-bad1-0a321ba465d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tspubplugin2com/nn-tspubplugin2com-itspubplugin2
+@GUID("fa4ce418-aad7-4ec6-bad1-0a321ba465d5")
 interface ItsPubPlugin2 : ItsPubPlugin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tspubplugin2com/nf-tspubplugin2com-itspubplugin2-getresource2list
@@ -3632,9 +3632,9 @@ interface ItsPubPlugin2 : ItsPubPlugin
     HRESULT DeletePersonalDesktopAssignment(const(PWSTR) userId, const(PWSTR) poolId, const(PWSTR) endpointName);
 }
 
-@GUID("1d428c79-6e2e-4351-a361-c0401a03a0ba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceax/nn-workspaceax-iworkspacerestyperegistry
+@GUID("1d428c79-6e2e-4351-a361-c0401a03a0ba")
 interface IWorkspaceResTypeRegistry : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/workspaceax/nf-workspaceax-iworkspacerestyperegistry-addresourcetype
@@ -3649,9 +3649,9 @@ interface IWorkspaceResTypeRegistry : IDispatch
     HRESULT ModifyResourceType(VARIANT_BOOL fMachineWide, BSTR bstrFileExtension, BSTR bstrLauncher);
 }
 
-@GUID("a1230201-1439-4e62-a414-190d0ac3d40e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsplugin
+@GUID("a1230201-1439-4e62-a414-190d0ac3d40e")
 interface IWTSPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsplugin-initialize
@@ -3664,18 +3664,18 @@ interface IWTSPlugin : IUnknown
     HRESULT Terminated();
 }
 
-@GUID("a1230206-9a39-4d58-8674-cdb4dff4e73b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtslistener
+@GUID("a1230206-9a39-4d58-8674-cdb4dff4e73b")
 interface IWTSListener : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtslistener-getconfiguration
     HRESULT GetConfiguration(IPropertyBag* ppPropertyBag);
 }
 
-@GUID("a1230203-d6a7-11d8-b9fd-000bdbd1f198")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtslistenercallback
+@GUID("a1230203-d6a7-11d8-b9fd-000bdbd1f198")
 interface IWTSListenerCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtslistenercallback-onnewchannelconnection
@@ -3683,9 +3683,9 @@ interface IWTSListenerCallback : IUnknown
                                    IWTSVirtualChannelCallback* ppCallback);
 }
 
-@GUID("a1230204-d6a7-11d8-b9fd-000bdbd1f198")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsvirtualchannelcallback
+@GUID("a1230204-d6a7-11d8-b9fd-000bdbd1f198")
 interface IWTSVirtualChannelCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsvirtualchannelcallback-ondatareceived
@@ -3694,9 +3694,9 @@ interface IWTSVirtualChannelCallback : IUnknown
     HRESULT OnClose();
 }
 
-@GUID("a1230205-d6a7-11d8-b9fd-000bdbd1f198")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsvirtualchannelmanager
+@GUID("a1230205-d6a7-11d8-b9fd-000bdbd1f198")
 interface IWTSVirtualChannelManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsvirtualchannelmanager-createlistener
@@ -3704,9 +3704,9 @@ interface IWTSVirtualChannelManager : IUnknown
                            IWTSListener* ppListener);
 }
 
-@GUID("a1230207-d6a7-11d8-b9fd-000bdbd1f198")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsvirtualchannel
+@GUID("a1230207-d6a7-11d8-b9fd-000bdbd1f198")
 interface IWTSVirtualChannel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsvirtualchannel-write
@@ -3715,18 +3715,18 @@ interface IWTSVirtualChannel : IUnknown
     HRESULT Close();
 }
 
-@GUID("d3e07363-087c-476c-86a7-dbb15f46ddb4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtspluginserviceprovider
+@GUID("d3e07363-087c-476c-86a7-dbb15f46ddb4")
 interface IWTSPluginServiceProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtspluginserviceprovider-getservice
     HRESULT GetService(GUID ServiceId, IUnknown* ppunkObject);
 }
 
-@GUID("5b7acc97-f3c9-46f7-8c5b-fa685d3441b1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsbitmaprenderer
+@GUID("5b7acc97-f3c9-46f7-8c5b-fa685d3441b1")
 interface IWTSBitmapRenderer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsbitmaprenderer-render
@@ -3738,18 +3738,18 @@ interface IWTSBitmapRenderer : IUnknown
     HRESULT RemoveMapping();
 }
 
-@GUID("d782928e-fe4e-4e77-ae90-9cd0b3e3b353")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsbitmaprenderercallback
+@GUID("d782928e-fe4e-4e77-ae90-9cd0b3e3b353")
 interface IWTSBitmapRendererCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsbitmaprenderercallback-ontargetsizechanged
     HRESULT OnTargetSizeChanged(RECT rcNewSize);
 }
 
-@GUID("ea326091-05fe-40c1-b49c-3d2ef4626a0e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nn-tsvirtualchannels-iwtsbitmaprenderservice
+@GUID("ea326091-05fe-40c1-b49c-3d2ef4626a0e")
 interface IWTSBitmapRenderService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tsvirtualchannels/nf-tsvirtualchannels-iwtsbitmaprenderservice-getmappedrenderer
@@ -3757,9 +3757,9 @@ interface IWTSBitmapRenderService : IUnknown
                               IWTSBitmapRenderer* ppMappedRenderer);
 }
 
-@GUID("67f2368c-d674-4fae-66a5-d20628a640d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wrdsgraphicschannels/nn-wrdsgraphicschannels-iwrdsgraphicschannelevents
+@GUID("67f2368c-d674-4fae-66a5-d20628a640d2")
 interface IWRdsGraphicsChannelEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wrdsgraphicschannels/nf-wrdsgraphicschannels-iwrdsgraphicschannelevents-ondatareceived
@@ -3774,9 +3774,9 @@ interface IWRdsGraphicsChannelEvents : IUnknown
     HRESULT OnMetricsUpdate(uint bandwidth, uint RTT, ulong lastSentByteIndex);
 }
 
-@GUID("684b7a0b-edff-43ad-d5a2-4a8d5388f401")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wrdsgraphicschannels/nn-wrdsgraphicschannels-iwrdsgraphicschannel
+@GUID("684b7a0b-edff-43ad-d5a2-4a8d5388f401")
 interface IWRdsGraphicsChannel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wrdsgraphicschannels/nf-wrdsgraphicschannels-iwrdsgraphicschannel-write
@@ -3787,9 +3787,9 @@ interface IWRdsGraphicsChannel : IUnknown
     HRESULT Open(IWRdsGraphicsChannelEvents pChannelEvents, IUnknown pOpenContext);
 }
 
-@GUID("0fd57159-e83e-476a-a8b9-4a7976e71e18")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wrdsgraphicschannels/nn-wrdsgraphicschannels-iwrdsgraphicschannelmanager
+@GUID("0fd57159-e83e-476a-a8b9-4a7976e71e18")
 interface IWRdsGraphicsChannelManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wrdsgraphicschannels/nf-wrdsgraphicschannels-iwrdsgraphicschannelmanager-createchannel
@@ -3797,9 +3797,9 @@ interface IWRdsGraphicsChannelManager : IUnknown
                           IWRdsGraphicsChannel* ppVirtualChannel);
 }
 
-@GUID("f9eaf6cc-ed79-4f01-821d-1f881b9f66cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocolmanager
+@GUID("f9eaf6cc-ed79-4f01-821d-1f881b9f66cc")
 interface IWTSProtocolManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocolmanager-createlistener
@@ -3814,9 +3814,9 @@ interface IWTSProtocolManager : IUnknown
     HRESULT NotifySessionStateChange(WTS_SESSION_ID* SessionId, uint EventId);
 }
 
-@GUID("23083765-45f0-4394-8f69-32b2bc0ef4ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocollistener
+@GUID("23083765-45f0-4394-8f69-32b2bc0ef4ca")
 interface IWTSProtocolListener : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocollistener-startlisten
@@ -3825,18 +3825,18 @@ interface IWTSProtocolListener : IUnknown
     HRESULT StopListen();
 }
 
-@GUID("23083765-1a2d-4de2-97de-4a35f260f0b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocollistenercallback
+@GUID("23083765-1a2d-4de2-97de-4a35f260f0b3")
 interface IWTSProtocolListenerCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocollistenercallback-onconnected
     HRESULT OnConnected(IWTSProtocolConnection pConnection, IWTSProtocolConnectionCallback* pCallback);
 }
 
-@GUID("23083765-9095-4648-98bf-ef81c914032d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocolconnection
+@GUID("23083765-9095-4648-98bf-ef81c914032d")
 interface IWTSProtocolConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocolconnection-getlogonerrorredirector
@@ -3890,9 +3890,9 @@ interface IWTSProtocolConnection : IUnknown
     HRESULT GetShadowConnection(IWTSProtocolShadowConnection* ppShadowConnection);
 }
 
-@GUID("23083765-75eb-41fe-b4fb-e086242afa0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocolconnectioncallback
+@GUID("23083765-75eb-41fe-b4fb-e086242afa0f")
 interface IWTSProtocolConnectionCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocolconnectioncallback-onready
@@ -3907,9 +3907,9 @@ interface IWTSProtocolConnectionCallback : IUnknown
     HRESULT DisplayIOCtl(WTS_DISPLAY_IOCTL* DisplayIOCtl);
 }
 
-@GUID("ee3b0c14-37fb-456b-bab3-6d6cd51e13bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocolshadowconnection
+@GUID("ee3b0c14-37fb-456b-bab3-6d6cd51e13bf")
 interface IWTSProtocolShadowConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocolshadowconnection-start
@@ -3922,9 +3922,9 @@ interface IWTSProtocolShadowConnection : IUnknown
                      uint Param3Size, ubyte* pParam4, uint Param4Size, PWSTR pClientName);
 }
 
-@GUID("503a2504-aae5-4ab1-93e0-6d1c4bc6f71a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocolshadowcallback
+@GUID("503a2504-aae5-4ab1-93e0-6d1c4bc6f71a")
 interface IWTSProtocolShadowCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocolshadowcallback-stopshadow
@@ -3935,9 +3935,9 @@ interface IWTSProtocolShadowCallback : IUnknown
                                uint Param4Size, PWSTR pClientName);
 }
 
-@GUID("23083765-178c-4079-8e4a-fea6496a4d70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocollicenseconnection
+@GUID("23083765-178c-4079-8e4a-fea6496a4d70")
 interface IWTSProtocolLicenseConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocollicenseconnection-requestlicensingcapabilities
@@ -3951,9 +3951,9 @@ interface IWTSProtocolLicenseConnection : IUnknown
     HRESULT ProtocolComplete(uint ulComplete);
 }
 
-@GUID("fd9b61a7-2916-4627-8dee-4328711ad6cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwtsprotocollogonerrorredirector
+@GUID("fd9b61a7-2916-4627-8dee-4328711ad6cb")
 interface IWTSProtocolLogonErrorRedirector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwtsprotocollogonerrorredirector-onbeginpainting
@@ -3968,9 +3968,9 @@ interface IWTSProtocolLogonErrorRedirector : IUnknown
                                uint uType, WTS_LOGON_ERROR_REDIRECTOR_RESPONSE* pResponse);
 }
 
-@GUID("654a5a6a-2550-47eb-b6f7-ebd637475265")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocolsettings
+@GUID("654a5a6a-2550-47eb-b6f7-ebd637475265")
 interface IWRdsProtocolSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocolsettings-getsettings
@@ -3981,9 +3981,9 @@ interface IWRdsProtocolSettings : IUnknown
                           WRDS_CONNECTION_SETTINGS* pWRdsConnectionSettings);
 }
 
-@GUID("dc796967-3abb-40cd-a446-105276b58950")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocolmanager
+@GUID("dc796967-3abb-40cd-a446-105276b58950")
 interface IWRdsProtocolManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocolmanager-initialize
@@ -4004,9 +4004,9 @@ interface IWRdsProtocolManager : IUnknown
     HRESULT Uninitialize();
 }
 
-@GUID("fcbc131b-c686-451d-a773-e279e230f540")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocollistener
+@GUID("fcbc131b-c686-451d-a773-e279e230f540")
 interface IWRdsProtocolListener : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocollistener-getsettings
@@ -4018,9 +4018,9 @@ interface IWRdsProtocolListener : IUnknown
     HRESULT StopListen();
 }
 
-@GUID("3ab27e5b-4449-4dc1-b74a-91621d4fe984")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocollistenercallback
+@GUID("3ab27e5b-4449-4dc1-b74a-91621d4fe984")
 interface IWRdsProtocolListenerCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocollistenercallback-onconnected
@@ -4028,9 +4028,9 @@ interface IWRdsProtocolListenerCallback : IUnknown
                         IWRdsProtocolConnectionCallback* pCallback);
 }
 
-@GUID("324ed94f-fdaf-4ff6-81a8-42abe755830b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocolconnection
+@GUID("324ed94f-fdaf-4ff6-81a8-42abe755830b")
 interface IWRdsProtocolConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocolconnection-getlogonerrorredirector
@@ -4086,9 +4086,9 @@ interface IWRdsProtocolConnection : IUnknown
     HRESULT NotifyCommandProcessCreated(uint SessionId);
 }
 
-@GUID("f1d70332-d070-4ef1-a088-78313536c2d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocolconnectioncallback
+@GUID("f1d70332-d070-4ef1-a088-78313536c2d6")
 interface IWRdsProtocolConnectionCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocolconnectioncallback-onready
@@ -4103,9 +4103,9 @@ interface IWRdsProtocolConnectionCallback : IUnknown
     HRESULT GetConnectionId(uint* pConnectionId);
 }
 
-@GUID("9ae85ce6-cade-4548-8feb-99016597f60a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocolshadowconnection
+@GUID("9ae85ce6-cade-4548-8feb-99016597f60a")
 interface IWRdsProtocolShadowConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocolshadowconnection-start
@@ -4118,9 +4118,9 @@ interface IWRdsProtocolShadowConnection : IUnknown
                      uint Param3Size, ubyte* pParam4, uint Param4Size, PWSTR pClientName);
 }
 
-@GUID("e0667ce0-0372-40d6-adb2-a0f3322674d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocolshadowcallback
+@GUID("e0667ce0-0372-40d6-adb2-a0f3322674d6")
 interface IWRdsProtocolShadowCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocolshadowcallback-stopshadow
@@ -4131,9 +4131,9 @@ interface IWRdsProtocolShadowCallback : IUnknown
                                uint Param4Size, PWSTR pClientName);
 }
 
-@GUID("1d6a145f-d095-4424-957a-407fae822d84")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocollicenseconnection
+@GUID("1d6a145f-d095-4424-957a-407fae822d84")
 interface IWRdsProtocolLicenseConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocollicenseconnection-requestlicensingcapabilities
@@ -4147,9 +4147,9 @@ interface IWRdsProtocolLicenseConnection : IUnknown
     HRESULT ProtocolComplete(uint ulComplete);
 }
 
-@GUID("519fe83b-142a-4120-a3d5-a405d315281a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsprotocollogonerrorredirector
+@GUID("519fe83b-142a-4120-a3d5-a405d315281a")
 interface IWRdsProtocolLogonErrorRedirector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsprotocollogonerrorredirector-onbeginpainting
@@ -4164,8 +4164,8 @@ interface IWRdsProtocolLogonErrorRedirector : IUnknown
                                uint uType, WTS_LOGON_ERROR_REDIRECTOR_RESPONSE* pResponse);
 }
 
-@GUID("1382df4d-a289-43d1-a184-144726f9af90")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdswddmiddprops
+@GUID("1382df4d-a289-43d1-a184-144726f9af90")
 interface IWRdsWddmIddProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdswddmiddprops-gethardwareid
@@ -4193,8 +4193,8 @@ interface IWRdsProtocolConnectionSettings : IUnknown
     HRESULT GetConnectionSetting(GUID PropertyID, WTS_PROPERTY_VALUE* pPropertyEntriesOut);
 }
 
-@GUID("5718ae9b-47f2-499f-b634-d8175bd51131")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nn-wtsprotocol-iwrdsenhancedfastreconnectarbitrator
+@GUID("5718ae9b-47f2-499f-b634-d8175bd51131")
 interface IWRdsEnhancedFastReconnectArbitrator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsprotocol/nf-wtsprotocol-iwrdsenhancedfastreconnectarbitrator-getsessionforenhancedfastreconnect
@@ -4207,9 +4207,9 @@ interface IWRdsProtocolConnection2 : IWRdsProtocolConnection
     HRESULT GetSerializedUserCredential(WTS_SERIALIZED_USER_CREDENTIAL** userCredential);
 }
 
-@GUID("48a0f2a7-2713-431f-bbac-6f4558e7d64d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nn-rdpappcontainerclient-iremotedesktopclientsettings
+@GUID("48a0f2a7-2713-431f-bbac-6f4558e7d64d")
 interface IRemoteDesktopClientSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nf-rdpappcontainerclient-iremotedesktopclientsettings-applysettings
@@ -4222,9 +4222,9 @@ interface IRemoteDesktopClientSettings : IDispatch
     HRESULT SetRdpProperty(BSTR propertyName, VARIANT value);
 }
 
-@GUID("7d54bc4e-1028-45d4-8b0a-b9b6bffba176")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nn-rdpappcontainerclient-iremotedesktopclientactions
+@GUID("7d54bc4e-1028-45d4-8b0a-b9b6bffba176")
 interface IRemoteDesktopClientActions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nf-rdpappcontainerclient-iremotedesktopclientactions-suspendscreenupdates
@@ -4238,9 +4238,9 @@ interface IRemoteDesktopClientActions : IDispatch
                         uint snapshotWidth, uint snapshotHeight, BSTR* snapshotData);
 }
 
-@GUID("260ec22d-8cbc-44b5-9e88-2a37f6c93ae9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nn-rdpappcontainerclient-iremotedesktopclienttouchpointer
+@GUID("260ec22d-8cbc-44b5-9e88-2a37f6c93ae9")
 interface IRemoteDesktopClientTouchPointer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nf-rdpappcontainerclient-iremotedesktopclienttouchpointer-put_enabled
@@ -4256,9 +4256,9 @@ interface IRemoteDesktopClientTouchPointer : IDispatch
     HRESULT get_PointerSpeed(uint* pointerSpeed);
 }
 
-@GUID("57d25668-625a-4905-be4e-304caa13f89c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nn-rdpappcontainerclient-iremotedesktopclient
+@GUID("57d25668-625a-4905-be4e-304caa13f89c")
 interface IRemoteDesktopClient : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rdpappcontainerclient/nf-rdpappcontainerclient-iremotedesktopclient-connect

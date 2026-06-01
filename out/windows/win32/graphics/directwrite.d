@@ -1596,10 +1596,10 @@ HRESULT DWriteCreateFactory(DWRITE_FACTORY_TYPE factoryType, const(GUID)* iid, v
 
 // Interfaces
 
-@GUID("727cad4e-d6af-4c9e-8a08-d695b11caa49")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfileloader
+@GUID("727cad4e-d6af-4c9e-8a08-d695b11caa49")
 interface IDWriteFontFileLoader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileloader-createstreamfromkey
@@ -1607,9 +1607,9 @@ interface IDWriteFontFileLoader : IUnknown
                                 uint fontFileReferenceKeySize, IDWriteFontFileStream* fontFileStream);
 }
 
-@GUID("b2d9f3ec-c9fe-4a11-a2ec-d86208f7c0a2")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader
+@GUID("b2d9f3ec-c9fe-4a11-a2ec-d86208f7c0a2")
 interface IDWriteLocalFontFileLoader : IDWriteFontFileLoader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getfilepathlengthfromkey
@@ -1623,10 +1623,10 @@ interface IDWriteLocalFontFileLoader : IDWriteFontFileLoader
                                     uint fontFileReferenceKeySize, FILETIME* lastWriteTime);
 }
 
-@GUID("6d4865fe-0ab8-4d91-8f62-5dd6be34a3e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfilestream
+@GUID("6d4865fe-0ab8-4d91-8f62-5dd6be34a3e0")
 interface IDWriteFontFileStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-readfilefragment
@@ -1640,10 +1640,10 @@ interface IDWriteFontFileStream : IUnknown
     HRESULT GetLastWriteTime(ulong* lastWriteTime);
 }
 
-@GUID("739d886a-cef5-47dc-8769-1a8b41bebbb0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfile
+@GUID("739d886a-cef5-47dc-8769-1a8b41bebbb0")
 interface IDWriteFontFile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-getreferencekey
@@ -1655,10 +1655,10 @@ interface IDWriteFontFile : IUnknown
                     DWRITE_FONT_FACE_TYPE* fontFaceType, uint* numberOfFaces);
 }
 
-@GUID("2f0da53a-2add-47cd-82ee-d9ec34688e75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriterenderingparams
+@GUID("2f0da53a-2add-47cd-82ee-d9ec34688e75")
 interface IDWriteRenderingParams : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getgamma
@@ -1673,10 +1673,10 @@ interface IDWriteRenderingParams : IUnknown
     DWRITE_RENDERING_MODE GetRenderingMode();
 }
 
-@GUID("5f49804d-7024-4d43-bfa9-d25984f53849")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontface
+@GUID("5f49804d-7024-4d43-bfa9-d25984f53849")
 interface IDWriteFontFace : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-gettype
@@ -1719,10 +1719,10 @@ interface IDWriteFontFace : IUnknown
                                          DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways);
 }
 
-@GUID("cca920e4-52f0-492b-bfa8-29c72ee0a468")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontcollectionloader
+@GUID("cca920e4-52f0-492b-bfa8-29c72ee0a468")
 interface IDWriteFontCollectionLoader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollectionloader-createenumeratorfromkey
@@ -1731,10 +1731,10 @@ interface IDWriteFontCollectionLoader : IUnknown
                                     uint collectionKeySize, IDWriteFontFileEnumerator* fontFileEnumerator);
 }
 
-@GUID("72755049-5ff7-435d-8348-4be97cfa6c7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfileenumerator
+@GUID("72755049-5ff7-435d-8348-4be97cfa6c7c")
 interface IDWriteFontFileEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileenumerator-movenext
@@ -1743,10 +1743,10 @@ interface IDWriteFontFileEnumerator : IUnknown
     HRESULT GetCurrentFontFile(IDWriteFontFile* fontFile);
 }
 
-@GUID("08256209-099a-4b34-b86d-c22b110e7771")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritelocalizedstrings
+@GUID("08256209-099a-4b34-b86d-c22b110e7771")
 interface IDWriteLocalizedStrings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getcount
@@ -1763,10 +1763,10 @@ interface IDWriteLocalizedStrings : IUnknown
     HRESULT GetString(uint index, PWSTR stringBuffer, uint size);
 }
 
-@GUID("a84cee02-3eea-4eee-a827-87c1a02a0fcc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontcollection
+@GUID("a84cee02-3eea-4eee-a827-87c1a02a0fcc")
 interface IDWriteFontCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfamilycount
@@ -1779,10 +1779,10 @@ interface IDWriteFontCollection : IUnknown
     HRESULT GetFontFromFontFace(IDWriteFontFace fontFace, IDWriteFont* font);
 }
 
-@GUID("1a0d8438-1d97-4ec1-aef9-a2fb86ed6acb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontlist
+@GUID("1a0d8438-1d97-4ec1-aef9-a2fb86ed6acb")
 interface IDWriteFontList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfontcollection
@@ -1793,10 +1793,10 @@ interface IDWriteFontList : IUnknown
     HRESULT GetFont(uint index, IDWriteFont* font);
 }
 
-@GUID("da20d8ef-812a-4c43-9802-62ec4abd7add")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfamily
+@GUID("da20d8ef-812a-4c43-9802-62ec4abd7add")
 interface IDWriteFontFamily : IDWriteFontList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getfamilynames
@@ -1809,10 +1809,10 @@ interface IDWriteFontFamily : IDWriteFontList
                              IDWriteFontList* matchingFonts);
 }
 
-@GUID("acd16696-8c14-4f5d-877e-fe3fc1d32737")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefont
+@GUID("acd16696-8c14-4f5d-877e-fe3fc1d32737")
 interface IDWriteFont : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getfontfamily
@@ -1840,10 +1840,10 @@ interface IDWriteFont : IUnknown
     HRESULT CreateFontFace(IDWriteFontFace* fontFace);
 }
 
-@GUID("9c906818-31d7-4fd3-a151-7c5e225db55a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextformat
+@GUID("9c906818-31d7-4fd3-a151-7c5e225db55a")
 interface IDWriteTextFormat : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-settextalignment
@@ -1898,10 +1898,10 @@ interface IDWriteTextFormat : IUnknown
     HRESULT GetLocaleName(PWSTR localeName, uint nameSize);
 }
 
-@GUID("55f1112b-1dc2-4b3c-9541-f46894ed85b6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetypography
+@GUID("55f1112b-1dc2-4b3c-9541-f46894ed85b6")
 interface IDWriteTypography : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-addfontfeature
@@ -1912,17 +1912,17 @@ interface IDWriteTypography : IUnknown
     HRESULT GetFontFeature(uint fontFeatureIndex, DWRITE_FONT_FEATURE* fontFeature);
 }
 
-@GUID("14885cc9-bab0-4f90-b6ed-5c366a2cd03d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritenumbersubstitution
+@GUID("14885cc9-bab0-4f90-b6ed-5c366a2cd03d")
 interface IDWriteNumberSubstitution : IUnknown
 {
 }
 
-@GUID("688e1a58-5094-47c8-adc8-fbcea60ae92b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalysissource
+@GUID("688e1a58-5094-47c8-adc8-fbcea60ae92b")
 interface IDWriteTextAnalysisSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-gettextatposition
@@ -1938,10 +1938,10 @@ interface IDWriteTextAnalysisSource : IUnknown
                                   IDWriteNumberSubstitution* numberSubstitution);
 }
 
-@GUID("5810cd44-0ca0-4701-b3fa-bec5182ae4f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalysissink
+@GUID("5810cd44-0ca0-4701-b3fa-bec5182ae4f6")
 interface IDWriteTextAnalysisSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setscriptanalysis
@@ -1954,10 +1954,10 @@ interface IDWriteTextAnalysisSink : IUnknown
     HRESULT SetNumberSubstitution(uint textPosition, uint textLength, IDWriteNumberSubstitution numberSubstitution);
 }
 
-@GUID("b7e6163e-7f46-43b4-84b3-e4e6249c365d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalyzer
+@GUID("b7e6163e-7f46-43b4-84b3-e4e6249c365d")
 interface IDWriteTextAnalyzer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzescript
@@ -2001,10 +2001,10 @@ interface IDWriteTextAnalyzer : IUnknown
                                             float* glyphAdvances, DWRITE_GLYPH_OFFSET* glyphOffsets);
 }
 
-@GUID("8339fde3-106f-47ab-8373-1c6295eb10b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriteinlineobject
+@GUID("8339fde3-106f-47ab-8373-1c6295eb10b3")
 interface IDWriteInlineObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-draw
@@ -2019,10 +2019,10 @@ interface IDWriteInlineObject : IUnknown
                                DWRITE_BREAK_CONDITION* breakConditionAfter);
 }
 
-@GUID("eaf3a2da-ecf4-4d24-b644-b34f6842024b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritepixelsnapping
+@GUID("eaf3a2da-ecf4-4d24-b644-b34f6842024b")
 interface IDWritePixelSnapping : IUnknown
 {
     HRESULT IsPixelSnappingDisabled(void* clientDrawingContext, BOOL* isDisabled);
@@ -2032,10 +2032,10 @@ interface IDWritePixelSnapping : IUnknown
     HRESULT GetPixelsPerDip(void* clientDrawingContext, float* pixelsPerDip);
 }
 
-@GUID("ef8a8135-5cc6-45fe-8825-c5a0724eb819")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextrenderer
+@GUID("ef8a8135-5cc6-45fe-8825-c5a0724eb819")
 interface IDWriteTextRenderer : IDWritePixelSnapping
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawglyphrun
@@ -2054,10 +2054,10 @@ interface IDWriteTextRenderer : IDWritePixelSnapping
                              IUnknown clientDrawingEffect);
 }
 
-@GUID("53737037-6d14-410b-9bfe-0b182bb70961")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextlayout
+@GUID("53737037-6d14-410b-9bfe-0b182bb70961")
 interface IDWriteTextLayout : IDWriteTextFormat
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setmaxwidth
@@ -2147,10 +2147,10 @@ interface IDWriteTextLayout : IDWriteTextFormat
                              uint* actualHitTestMetricsCount);
 }
 
-@GUID("5e5a32a3-8dff-4773-9ff6-0696eab77267")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritebitmaprendertarget
+@GUID("5e5a32a3-8dff-4773-9ff6-0696eab77267")
 interface IDWriteBitmapRenderTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-drawglyphrun
@@ -2173,10 +2173,10 @@ interface IDWriteBitmapRenderTarget : IUnknown
     HRESULT Resize(uint width, uint height);
 }
 
-@GUID("1edd9491-9853-4299-898f-6432983b6f3a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritegdiinterop
+@GUID("1edd9491-9853-4299-898f-6432983b6f3a")
 interface IDWriteGdiInterop : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createfontfromlogfont
@@ -2191,10 +2191,10 @@ interface IDWriteGdiInterop : IUnknown
     HRESULT CreateBitmapRenderTarget(HDC hdc, uint width, uint height, IDWriteBitmapRenderTarget* renderTarget);
 }
 
-@GUID("7d97dbf7-e085-42d4-81e3-6a883bded118")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriteglyphrunanalysis
+@GUID("7d97dbf7-e085-42d4-81e3-6a883bded118")
 interface IDWriteGlyphRunAnalysis : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-getalphatexturebounds
@@ -2208,10 +2208,10 @@ interface IDWriteGlyphRunAnalysis : IUnknown
                                 float* blendEnhancedContrast, float* blendClearTypeLevel);
 }
 
-@GUID("b859ee5a-d838-4b5b-a2e8-1adc7d93db48")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefactory
+@GUID("b859ee5a-d838-4b5b-a2e8-1adc7d93db48")
 interface IDWriteFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-getsystemfontcollection
@@ -2278,10 +2278,10 @@ interface IDWriteFactory : IUnknown
                                    IDWriteGlyphRunAnalysis* glyphRunAnalysis);
 }
 
-@GUID("30572f99-dac6-41db-a16e-0486307e606a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefactory1
+@GUID("30572f99-dac6-41db-a16e-0486307e606a")
 interface IDWriteFactory1 : IDWriteFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefactory1-geteudcfontcollection
@@ -2293,10 +2293,10 @@ interface IDWriteFactory1 : IDWriteFactory
                                         IDWriteRenderingParams1* renderingParams);
 }
 
-@GUID("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefontface1
+@GUID("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf")
 interface IDWriteFontFace1 : IDWriteFontFace
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getmetrics
@@ -2332,10 +2332,10 @@ interface IDWriteFontFace1 : IDWriteFontFace
     BOOL    HasVerticalGlyphVariants();
 }
 
-@GUID("acd16696-8c14-4f5d-877e-fe3fc1d32738")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefont1
+@GUID("acd16696-8c14-4f5d-877e-fe3fc1d32738")
 interface IDWriteFont1 : IDWriteFont
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getmetrics
@@ -2348,20 +2348,20 @@ interface IDWriteFont1 : IDWriteFont
     BOOL    IsMonospacedFont();
 }
 
-@GUID("94413cf4-a6fc-4248-8b50-6674348fcad3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwriterenderingparams1
+@GUID("94413cf4-a6fc-4248-8b50-6674348fcad3")
 interface IDWriteRenderingParams1 : IDWriteRenderingParams
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwriterenderingparams1-getgrayscaleenhancedcontrast
     float GetGrayscaleEnhancedContrast();
 }
 
-@GUID("80dad800-e21f-4e83-96ce-bfcce500db7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalyzer1
+@GUID("80dad800-e21f-4e83-96ce-bfcce500db7c")
 interface IDWriteTextAnalyzer1 : IDWriteTextAnalyzer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-applycharacterspacing
@@ -2407,10 +2407,10 @@ interface IDWriteTextAnalyzer1 : IDWriteTextAnalyzer
                                float* modifiedGlyphAdvances, DWRITE_GLYPH_OFFSET* modifiedGlyphOffsets);
 }
 
-@GUID("639cfad8-0fb4-4b21-a58a-067920120009")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalysissource1
+@GUID("639cfad8-0fb4-4b21-a58a-067920120009")
 interface IDWriteTextAnalysisSource1 : IDWriteTextAnalysisSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalysissource1-getverticalglyphorientation
@@ -2418,10 +2418,10 @@ interface IDWriteTextAnalysisSource1 : IDWriteTextAnalysisSource
                                         DWRITE_VERTICAL_GLYPH_ORIENTATION* glyphOrientation, ubyte* bidiLevel);
 }
 
-@GUID("b0d941a0-85e7-4d8b-9fd3-5ced9934482a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalysissink1
+@GUID("b0d941a0-85e7-4d8b-9fd3-5ced9934482a")
 interface IDWriteTextAnalysisSink1 : IDWriteTextAnalysisSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalysissink1-setglyphorientation
@@ -2430,10 +2430,10 @@ interface IDWriteTextAnalysisSink1 : IDWriteTextAnalysisSink
                                 BOOL isSideways, BOOL isRightToLeft);
 }
 
-@GUID("9064d822-80a7-465c-a986-df65f78b8feb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextlayout1
+@GUID("9064d822-80a7-465c-a986-df65f78b8feb")
 interface IDWriteTextLayout1 : IDWriteTextLayout
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-setpairkerning
@@ -2448,10 +2448,10 @@ interface IDWriteTextLayout1 : IDWriteTextLayout
                                 float* minimumAdvanceWidth, DWRITE_TEXT_RANGE* textRange);
 }
 
-@GUID("791e8298-3ef3-4230-9880-c9bdecc42064")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritebitmaprendertarget1
+@GUID("791e8298-3ef3-4230-9880-c9bdecc42064")
 interface IDWriteBitmapRenderTarget1 : IDWriteBitmapRenderTarget
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritebitmaprendertarget1-gettextantialiasmode
@@ -2460,10 +2460,10 @@ interface IDWriteBitmapRenderTarget1 : IDWriteBitmapRenderTarget
     HRESULT SetTextAntialiasMode(DWRITE_TEXT_ANTIALIAS_MODE antialiasMode);
 }
 
-@GUID("d3e0e934-22a0-427e-aae4-7d9574b59db1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritetextrenderer1
+@GUID("d3e0e934-22a0-427e-aae4-7d9574b59db1")
 interface IDWriteTextRenderer1 : IDWriteTextRenderer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawglyphrun
@@ -2485,10 +2485,10 @@ interface IDWriteTextRenderer1 : IDWriteTextRenderer
                              BOOL isSideways, BOOL isRightToLeft, IUnknown clientDrawingEffect);
 }
 
-@GUID("5f174b49-0d8b-4cfb-8bca-f1cce9d06c67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat1
+@GUID("5f174b49-0d8b-4cfb-8bca-f1cce9d06c67")
 interface IDWriteTextFormat1 : IDWriteTextFormat
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setverticalglyphorientation
@@ -2509,10 +2509,10 @@ interface IDWriteTextFormat1 : IDWriteTextFormat
     HRESULT GetFontFallback(IDWriteFontFallback* fontFallback);
 }
 
-@GUID("1093c18f-8d5e-43f0-b064-0917311b525e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout2
+@GUID("1093c18f-8d5e-43f0-b064-0917311b525e")
 interface IDWriteTextLayout2 : IDWriteTextLayout1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout2-getmetrics
@@ -2535,10 +2535,10 @@ interface IDWriteTextLayout2 : IDWriteTextLayout1
     HRESULT GetFontFallback(IDWriteFontFallback* fontFallback);
 }
 
-@GUID("553a9ff3-5693-4df7-b52b-74806f7f2eb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextanalyzer2
+@GUID("553a9ff3-5693-4df7-b52b-74806f7f2eb9")
 interface IDWriteTextAnalyzer2 : IDWriteTextAnalyzer1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-getglyphorientationtransform
@@ -2554,10 +2554,10 @@ interface IDWriteTextAnalyzer2 : IDWriteTextAnalyzer1
                                     const(ushort)* glyphIndices, ubyte* featureApplies);
 }
 
-@GUID("efa008f9-f7a1-48bf-b05c-f224713cc0ff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritefontfallback
+@GUID("efa008f9-f7a1-48bf-b05c-f224713cc0ff")
 interface IDWriteFontFallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallback-mapcharacters
@@ -2567,10 +2567,10 @@ interface IDWriteFontFallback : IUnknown
                           DWRITE_FONT_STRETCH baseStretch, uint* mappedLength, IDWriteFont* mappedFont, float* scale);
 }
 
-@GUID("fd882d06-8aba-4fb8-b849-8be8b73e14de")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallbackbuilder
+@GUID("fd882d06-8aba-4fb8-b849-8be8b73e14de")
 interface IDWriteFontFallbackBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallbackbuilder-addmapping
@@ -2583,20 +2583,20 @@ interface IDWriteFontFallbackBuilder : IUnknown
     HRESULT CreateFontFallback(IDWriteFontFallback* fontFallback);
 }
 
-@GUID("29748ed6-8c9c-4a6a-be0b-d912e8538944")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefont2
+@GUID("29748ed6-8c9c-4a6a-be0b-d912e8538944")
 interface IDWriteFont2 : IDWriteFont1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefont2-iscolorfont
     BOOL IsColorFont();
 }
 
-@GUID("d8b768ff-64bc-4e66-982b-ec8e87f693f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritefontface2
+@GUID("d8b768ff-64bc-4e66-982b-ec8e87f693f7")
 interface IDWriteFontFace2 : IDWriteFontFace1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-iscolorfont
@@ -2615,10 +2615,10 @@ interface IDWriteFontFace2 : IDWriteFontFace1
                                         DWRITE_RENDERING_MODE* renderingMode, DWRITE_GRID_FIT_MODE* gridFitMode);
 }
 
-@GUID("d31fbe17-f157-41a2-8d24-cb779e0560e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritecolorglyphrunenumerator
+@GUID("d31fbe17-f157-41a2-8d24-cb779e0560e8")
 interface IDWriteColorGlyphRunEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritecolorglyphrunenumerator-movenext
@@ -2627,20 +2627,20 @@ interface IDWriteColorGlyphRunEnumerator : IUnknown
     HRESULT GetCurrentRun(const(DWRITE_COLOR_GLYPH_RUN)** colorGlyphRun);
 }
 
-@GUID("f9d711c3-9777-40ae-87e8-3e5af9bf0948")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwriterenderingparams2
+@GUID("f9d711c3-9777-40ae-87e8-3e5af9bf0948")
 interface IDWriteRenderingParams2 : IDWriteRenderingParams1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwriterenderingparams2-getgridfitmode
     DWRITE_GRID_FIT_MODE GetGridFitMode();
 }
 
-@GUID("0439fc60-ca44-4994-8dee-3a9af7b732ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2
+@GUID("0439fc60-ca44-4994-8dee-3a9af7b732ec")
 interface IDWriteFactory2 : IDWriteFactory1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-getsystemfontfallback
@@ -2665,20 +2665,20 @@ interface IDWriteFactory2 : IDWriteFactory1
                                    IDWriteGlyphRunAnalysis* glyphRunAnalysis);
 }
 
-@GUID("b7924baa-391b-412a-8c5c-e44cc2d867dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriterenderingparams3
+@GUID("b7924baa-391b-412a-8c5c-e44cc2d867dc")
 interface IDWriteRenderingParams3 : IDWriteRenderingParams2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriterenderingparams3-getrenderingmode1
     DWRITE_RENDERING_MODE1 GetRenderingMode1();
 }
 
-@GUID("9a1b41c3-d3bb-466a-87fc-fe67556a3b65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory3
+@GUID("9a1b41c3-d3bb-466a-87fc-fe67556a3b65")
 interface IDWriteFactory3 : IDWriteFactory2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createglyphrunanalysis
@@ -2713,10 +2713,10 @@ interface IDWriteFactory3 : IDWriteFactory2
     HRESULT GetFontDownloadQueue(IDWriteFontDownloadQueue* fontDownloadQueue);
 }
 
-@GUID("53585141-d9f8-4095-8321-d73cf6bd116b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset
+@GUID("53585141-d9f8-4095-8321-d73cf6bd116b")
 interface IDWriteFontSet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getfontcount
@@ -2746,9 +2746,9 @@ interface IDWriteFontSet : IUnknown
                              IDWriteFontSet* filteredSet);
 }
 
-@GUID("2f642afe-9c68-4f40-b8be-457401afcb3d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder
+@GUID("2f642afe-9c68-4f40-b8be-457401afcb3d")
 interface IDWriteFontSetBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontfacereference(idwritefontfacereference)
@@ -2762,10 +2762,10 @@ interface IDWriteFontSetBuilder : IUnknown
     HRESULT CreateFontSet(IDWriteFontSet* fontSet);
 }
 
-@GUID("53585141-d9f8-4095-8321-d73cf6bd116c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection1
+@GUID("53585141-d9f8-4095-8321-d73cf6bd116c")
 interface IDWriteFontCollection1 : IDWriteFontCollection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection1-getfontset
@@ -2773,10 +2773,10 @@ interface IDWriteFontCollection1 : IDWriteFontCollection
     HRESULT GetFontFamily(uint index, IDWriteFontFamily1* fontFamily);
 }
 
-@GUID("da20d8ef-812a-4c43-9802-62ec4abd7adf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfamily1
+@GUID("da20d8ef-812a-4c43-9802-62ec4abd7adf")
 interface IDWriteFontFamily1 : IDWriteFontFamily
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfontlocality
@@ -2787,10 +2787,10 @@ interface IDWriteFontFamily1 : IDWriteFontFamily
     HRESULT GetFontFaceReference(uint listIndex, IDWriteFontFaceReference* fontFaceReference);
 }
 
-@GUID("da20d8ef-812a-4c43-9802-62ec4abd7ade")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontlist1
+@GUID("da20d8ef-812a-4c43-9802-62ec4abd7ade")
 interface IDWriteFontList1 : IDWriteFontList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfontlocality
@@ -2801,10 +2801,10 @@ interface IDWriteFontList1 : IDWriteFontList
     HRESULT GetFontFaceReference(uint listIndex, IDWriteFontFaceReference* fontFaceReference);
 }
 
-@GUID("5e7fa7ca-dde3-424c-89f0-9fcd6fed58cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfacereference
+@GUID("5e7fa7ca-dde3-424c-89f0-9fcd6fed58cd")
 interface IDWriteFontFaceReference : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-createfontface
@@ -2837,10 +2837,10 @@ interface IDWriteFontFaceReference : IUnknown
     HRESULT EnqueueFileFragmentDownloadRequest(ulong fileOffset, ulong fragmentSize);
 }
 
-@GUID("29748ed6-8c9c-4a6a-be0b-d912e8538944")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefont3
+@GUID("29748ed6-8c9c-4a6a-be0b-d912e8538944")
 interface IDWriteFont3 : IDWriteFont2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-createfontface
@@ -2854,10 +2854,10 @@ interface IDWriteFont3 : IDWriteFont2
     DWRITE_LOCALITY GetLocality();
 }
 
-@GUID("d37d7598-09be-4222-a236-2081341cc1f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface3
+@GUID("d37d7598-09be-4222-a236-2081341cc1f2")
 interface IDWriteFontFace3 : IDWriteFontFace2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfontfacereference
@@ -2894,9 +2894,9 @@ interface IDWriteFontFace3 : IDWriteFontFace2
     HRESULT AreGlyphsLocal(const(ushort)* glyphIndices, uint glyphCount, BOOL enqueueIfNotLocal, BOOL* isLocal);
 }
 
-@GUID("cfee3140-1157-47ca-8b85-31bfcf3f2d0e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritestringlist
+@GUID("cfee3140-1157-47ca-8b85-31bfcf3f2d0e")
 interface IDWriteStringList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getcount
@@ -2911,20 +2911,20 @@ interface IDWriteStringList : IUnknown
     HRESULT GetString(uint listIndex, PWSTR stringBuffer, uint stringBufferSize);
 }
 
-@GUID("b06fe5b9-43ec-4393-881b-dbe4dc72fda7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontdownloadlistener
+@GUID("b06fe5b9-43ec-4393-881b-dbe4dc72fda7")
 interface IDWriteFontDownloadListener : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadlistener-downloadcompleted
     void DownloadCompleted(IDWriteFontDownloadQueue downloadQueue, IUnknown context, HRESULT downloadResult);
 }
 
-@GUID("b71e6052-5aea-4fa3-832e-f60d431f7e91")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontdownloadqueue
+@GUID("b71e6052-5aea-4fa3-832e-f60d431f7e91")
 interface IDWriteFontDownloadQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-addlistener
@@ -2941,9 +2941,9 @@ interface IDWriteFontDownloadQueue : IUnknown
     ulong   GetGenerationCount();
 }
 
-@GUID("4556be70-3abd-4f70-90be-421780a6f515")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritegdiinterop1
+@GUID("4556be70-3abd-4f70-90be-421780a6f515")
 interface IDWriteGdiInterop1 : IDWriteGdiInterop
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-createfontfromlogfont
@@ -2958,10 +2958,10 @@ interface IDWriteGdiInterop1 : IDWriteGdiInterop
                                       IDWriteFontSet* filteredSet);
 }
 
-@GUID("f67e0edd-9e3d-4ecc-8c32-4183253dfe70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat2
+@GUID("f67e0edd-9e3d-4ecc-8c32-4183253dfe70")
 interface IDWriteTextFormat2 : IDWriteTextFormat1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat2-setlinespacing
@@ -2970,10 +2970,10 @@ interface IDWriteTextFormat2 : IDWriteTextFormat1
     HRESULT GetLineSpacing(DWRITE_LINE_SPACING* lineSpacingOptions);
 }
 
-@GUID("07ddcd52-020e-4de8-ac33-6c953d83f92d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3
+@GUID("07ddcd52-020e-4de8-ac33-6c953d83f92d")
 interface IDWriteTextLayout3 : IDWriteTextLayout2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-invalidatelayout
@@ -2986,18 +2986,18 @@ interface IDWriteTextLayout3 : IDWriteTextLayout2
     HRESULT GetLineMetrics(DWRITE_LINE_METRICS1* lineMetrics, uint maxLineCount, uint* actualLineCount);
 }
 
-@GUID("7c5f86da-c7a1-4f05-b8e1-55a179fe5a35")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritecolorglyphrunenumerator1
+@GUID("7c5f86da-c7a1-4f05-b8e1-55a179fe5a35")
 interface IDWriteColorGlyphRunEnumerator1 : IDWriteColorGlyphRunEnumerator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritecolorglyphrunenumerator1-getcurrentrun
     HRESULT GetCurrentRun(const(DWRITE_COLOR_GLYPH_RUN1)** colorGlyphRun);
 }
 
-@GUID("27f2a904-4eb8-441d-9678-0563f53e3e2f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface4
+@GUID("27f2a904-4eb8-441d-9678-0563f53e3e2f")
 interface IDWriteFontFace4 : IDWriteFontFace3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimageformats
@@ -3012,9 +3012,9 @@ interface IDWriteFontFace4 : IDWriteFontFace3
     void    ReleaseGlyphImageData(void* glyphDataContext);
 }
 
-@GUID("4b0b5bd3-0797-4549-8ac5-fe915cc53856")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory4
+@GUID("4b0b5bd3-0797-4549-8ac5-fe915cc53856")
 interface IDWriteFactory4 : IDWriteFactory3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-translatecolorglyphrun
@@ -3032,18 +3032,18 @@ interface IDWriteFactory4 : IDWriteFactory3
                                 D2D_POINT_2F* glyphOrigins);
 }
 
-@GUID("3ff7715f-3cdc-4dc6-9b72-ec5621dccafd")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder1
+@GUID("3ff7715f-3cdc-4dc6-9b72-ec5621dccafd")
 interface IDWriteFontSetBuilder1 : IDWriteFontSetBuilder
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder1-addfontfile
     HRESULT AddFontFile(IDWriteFontFile fontFile);
 }
 
-@GUID("ce25f8fd-863b-4d13-9651-c1f88dc73fe2")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteasyncresult
+@GUID("ce25f8fd-863b-4d13-9651-c1f88dc73fe2")
 interface IDWriteAsyncResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteasyncresult-getwaithandle
@@ -3052,9 +3052,9 @@ interface IDWriteAsyncResult : IUnknown
     HRESULT GetResult();
 }
 
-@GUID("4db3757a-2c72-4ed9-b2b6-1ababe1aff9c")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteremotefontfilestream
+@GUID("4db3757a-2c72-4ed9-b2b6-1ababe1aff9c")
 interface IDWriteRemoteFontFileStream : IDWriteFontFileStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getlocalfilesize
@@ -3068,9 +3068,9 @@ interface IDWriteRemoteFontFileStream : IDWriteFontFileStream
                           uint fragmentCount, IDWriteAsyncResult* asyncResult);
 }
 
-@GUID("68648c83-6ede-46c0-ab46-20083a887fde")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteremotefontfileloader
+@GUID("68648c83-6ede-46c0-ab46-20083a887fde")
 interface IDWriteRemoteFontFileLoader : IDWriteFontFileLoader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-createremotestreamfromkey
@@ -3084,9 +3084,9 @@ interface IDWriteRemoteFontFileLoader : IDWriteFontFileLoader
                                            IDWriteFontFile* fontFile);
 }
 
-@GUID("dc102f47-a12d-4b1c-822d-9e117e33043f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteinmemoryfontfileloader
+@GUID("dc102f47-a12d-4b1c-822d-9e117e33043f")
 interface IDWriteInMemoryFontFileLoader : IDWriteFontFileLoader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteinmemoryfontfileloader-createinmemoryfontfilereference
@@ -3097,9 +3097,9 @@ interface IDWriteInMemoryFontFileLoader : IDWriteFontFileLoader
     uint    GetFileCount();
 }
 
-@GUID("958db99a-be2a-4f09-af7d-65189803d1d3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory5
+@GUID("958db99a-be2a-4f09-af7d-65189803d1d3")
 interface IDWriteFactory5 : IDWriteFactory4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createfontsetbuilder
@@ -3118,9 +3118,9 @@ interface IDWriteFactory5 : IDWriteFactory4
                            uint fileDataSize, IDWriteFontFileStream* unpackedFontStream);
 }
 
-@GUID("f3744d80-21f7-42eb-b35d-995bc72fc223")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory6
+@GUID("f3744d80-21f7-42eb-b35d-995bc72fc223")
 interface IDWriteFactory6 : IDWriteFactory5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontfacereference
@@ -3146,9 +3146,9 @@ interface IDWriteFactory6 : IDWriteFactory5
                              const(PWSTR) localeName, IDWriteTextFormat3* textFormat);
 }
 
-@GUID("98eff3a5-b667-479a-b145-e2fa5b9fdc29")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface5
+@GUID("98eff3a5-b667-479a-b145-e2fa5b9fdc29")
 interface IDWriteFontFace5 : IDWriteFontFace4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontaxisvaluecount
@@ -3163,9 +3163,9 @@ interface IDWriteFontFace5 : IDWriteFontFace4
     BOOL    Equals(IDWriteFontFace fontFace);
 }
 
-@GUID("1f803a76-6871-48e8-987f-b975551c50f2")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontresource
+@GUID("1f803a76-6871-48e8-987f-b975551c50f2")
 interface IDWriteFontResource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontfile
@@ -3198,9 +3198,9 @@ interface IDWriteFontResource : IUnknown
                                     IDWriteFontFaceReference1* fontFaceReference);
 }
 
-@GUID("c081fe77-2fd1-41ac-a5a3-34983c4ba61a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfacereference1
+@GUID("c081fe77-2fd1-41ac-a5a3-34983c4ba61a")
 interface IDWriteFontFaceReference1 : IDWriteFontFaceReference
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-createfontface
@@ -3211,9 +3211,9 @@ interface IDWriteFontFaceReference1 : IDWriteFontFaceReference
     HRESULT GetFontAxisValues(DWRITE_FONT_AXIS_VALUE* fontAxisValues, uint fontAxisValueCount);
 }
 
-@GUID("ee5ba612-b131-463c-8f4f-3189b9401e45")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder2
+@GUID("ee5ba612-b131-463c-8f4f-3189b9401e45")
 interface IDWriteFontSetBuilder2 : IDWriteFontSetBuilder1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder2-addfont
@@ -3225,9 +3225,9 @@ interface IDWriteFontSetBuilder2 : IDWriteFontSetBuilder1
     HRESULT AddFontFile(const(PWSTR) filePath);
 }
 
-@GUID("7e9fda85-6c92-4053-bc47-7ae3530db4d3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset1
+@GUID("7e9fda85-6c92-4053-bc47-7ae3530db4d3")
 interface IDWriteFontSet1 : IDWriteFontSet
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getmatchingfonts
@@ -3266,18 +3266,18 @@ interface IDWriteFontSet1 : IDWriteFontSet
     DWRITE_LOCALITY GetFontLocality(uint listIndex);
 }
 
-@GUID("c0763a34-77af-445a-b735-08c37b0a5bf5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontlist2
+@GUID("c0763a34-77af-445a-b735-08c37b0a5bf5")
 interface IDWriteFontList2 : IDWriteFontList1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist2-getfontset
     HRESULT GetFontSet(IDWriteFontSet1* fontSet);
 }
 
-@GUID("3ed49e77-a398-4261-b9cf-c126c2131ef3")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfamily2
+@GUID("3ed49e77-a398-4261-b9cf-c126c2131ef3")
 interface IDWriteFontFamily2 : IDWriteFontFamily1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily2-getmatchingfonts
@@ -3287,9 +3287,9 @@ interface IDWriteFontFamily2 : IDWriteFontFamily1
     HRESULT GetFontSet(IDWriteFontSet1* fontSet);
 }
 
-@GUID("514039c6-4617-4064-bf8b-92ea83e506e0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection2
+@GUID("514039c6-4617-4064-bf8b-92ea83e506e0")
 interface IDWriteFontCollection2 : IDWriteFontCollection1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontfamily
@@ -3303,9 +3303,9 @@ interface IDWriteFontCollection2 : IDWriteFontCollection1
     HRESULT GetFontSet(IDWriteFontSet1* fontSet);
 }
 
-@GUID("05a9bf42-223f-4441-b5fb-8263685f55e9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritetextlayout4
+@GUID("05a9bf42-223f-4441-b5fb-8263685f55e9")
 interface IDWriteTextLayout4 : IDWriteTextLayout3
 {
     HRESULT SetFontAxisValues(const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
@@ -3317,9 +3317,9 @@ interface IDWriteTextLayout4 : IDWriteTextLayout3
     HRESULT SetAutomaticFontAxes(DWRITE_AUTOMATIC_FONT_AXES automaticFontAxes);
 }
 
-@GUID("6d3b5641-e550-430d-a85b-b7bf48a93427")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritetextformat3
+@GUID("6d3b5641-e550-430d-a85b-b7bf48a93427")
 interface IDWriteTextFormat3 : IDWriteTextFormat2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-setfontaxisvalues
@@ -3334,9 +3334,9 @@ interface IDWriteTextFormat3 : IDWriteTextFormat2
     HRESULT SetAutomaticFontAxes(DWRITE_AUTOMATIC_FONT_AXES automaticFontAxes);
 }
 
-@GUID("2397599d-dd0d-4681-bd6a-f4f31eaade77")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfallback1
+@GUID("2397599d-dd0d-4681-bd6a-f4f31eaade77")
 interface IDWriteFontFallback1 : IDWriteFontFallback
 {
     HRESULT MapCharacters(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
@@ -3345,27 +3345,27 @@ interface IDWriteFontFallback1 : IDWriteFontFallback
                           float* scale, IDWriteFontFace5* mappedFontFace);
 }
 
-@GUID("dc7ead19-e54c-43af-b2da-4e2b79ba3f7f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset2
+@GUID("dc7ead19-e54c-43af-b2da-4e2b79ba3f7f")
 interface IDWriteFontSet2 : IDWriteFontSet1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset2-getexpirationevent
     HANDLE GetExpirationEvent();
 }
 
-@GUID("a4d055a6-f9e3-4e25-93b7-9e309f3af8e9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection3
+@GUID("a4d055a6-f9e3-4e25-93b7-9e309f3af8e9")
 interface IDWriteFontCollection3 : IDWriteFontCollection2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection3-getexpirationevent
     HANDLE GetExpirationEvent();
 }
 
-@GUID("35d0e0b3-9076-4d2e-a016-a91b568a06b4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory7
+@GUID("35d0e0b3-9076-4d2e-a016-a91b568a06b4")
 interface IDWriteFactory7 : IDWriteFactory6
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory7-getsystemfontset
@@ -3375,9 +3375,9 @@ interface IDWriteFactory7 : IDWriteFactory6
                                     IDWriteFontCollection3* fontCollection);
 }
 
-@GUID("7c073ef2-a7f4-4045-8c32-8ab8ae640f90")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset3
+@GUID("7c073ef2-a7f4-4045-8c32-8ab8ae640f90")
 interface IDWriteFontSet3 : IDWriteFontSet2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcetype
@@ -3388,17 +3388,17 @@ interface IDWriteFontSet3 : IDWriteFontSet2
     HRESULT GetFontSourceName(uint listIndex, PWSTR stringBuffer, uint stringBufferSize);
 }
 
-@GUID("c4b1fe1b-6e84-47d5-b54c-a597981b06ad")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c4b1fe1b-6e84-47d5-b54c-a597981b06ad")
 interface IDWriteFontFace6 : IDWriteFontFace5
 {
     HRESULT GetFamilyNames(DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteLocalizedStrings* names);
     HRESULT GetFaceNames(DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteLocalizedStrings* names);
 }
 
-@GUID("eec175fc-bea9-4c86-8b53-ccbdd7df0c82")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset4
+@GUID("eec175fc-bea9-4c86-8b53-ccbdd7df0c82")
 interface IDWriteFontSet4 : IDWriteFontSet3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset4-convertweightstretchstyletofontaxisvalues
@@ -3412,15 +3412,15 @@ interface IDWriteFontSet4 : IDWriteFontSet3
                              IDWriteFontSet4* matchingFonts);
 }
 
-@GUID("c553a742-fc01-44da-a66e-b8b9ed6c3995")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("c553a742-fc01-44da-a66e-b8b9ed6c3995")
 interface IDWriteBitmapRenderTarget2 : IDWriteBitmapRenderTarget1
 {
     HRESULT GetBitmapData(DWRITE_BITMAP_DATA_BGRA32* bitmapData);
 }
 
-@GUID("8128e912-3b97-42a5-ab6c-24aad3a86e54")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("8128e912-3b97-42a5-ab6c-24aad3a86e54")
 interface IDWritePaintReader : IUnknown
 {
     HRESULT SetCurrentGlyph(uint glyphIndex, 
@@ -3440,8 +3440,8 @@ interface IDWritePaintReader : IUnknown
                                   DWRITE_PAINT_COLOR* gradientStopColors);
 }
 
-@GUID("3945b85b-bc95-40f7-b72c-8b73bfc7e13b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("3945b85b-bc95-40f7-b72c-8b73bfc7e13b")
 interface IDWriteFontFace7 : IDWriteFontFace6
 {
     DWRITE_PAINT_FEATURE_LEVEL GetPaintFeatureLevel(DWRITE_GLYPH_IMAGE_FORMATS glyphImageFormat);
@@ -3449,8 +3449,8 @@ interface IDWriteFontFace7 : IDWriteFontFace6
                               DWRITE_PAINT_FEATURE_LEVEL paintFeatureLevel, IDWritePaintReader* paintReader);
 }
 
-@GUID("ee0a7fb5-def4-4c23-a454-c9c7dc878398")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("ee0a7fb5-def4-4c23-a454-c9c7dc878398")
 interface IDWriteFactory8 : IDWriteFactory7
 {
     HRESULT TranslateColorGlyphRun(D2D_POINT_2F baselineOrigin, const(DWRITE_GLYPH_RUN)* glyphRun, 
@@ -3461,8 +3461,8 @@ interface IDWriteFactory8 : IDWriteFactory7
                                    IDWriteColorGlyphRunEnumerator1* colorEnumerator);
 }
 
-@GUID("aeec37db-c337-40f1-8e2a-9a41b167b238")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("aeec37db-c337-40f1-8e2a-9a41b167b238")
 interface IDWriteBitmapRenderTarget3 : IDWriteBitmapRenderTarget2
 {
     DWRITE_PAINT_FEATURE_LEVEL GetPaintFeatureLevel();

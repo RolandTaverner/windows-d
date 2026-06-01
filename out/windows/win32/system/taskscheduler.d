@@ -335,9 +335,9 @@ struct TaskHandlerPS;
 @GUID("9f15266d-d7ba-48f0-93c1-e6895f6fe5ac")
 struct TaskHandlerStatusPS;
 
-@GUID("148bd52b-a2ab-11ce-b11f-00aa00530503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nn-mstask-itasktrigger
+@GUID("148bd52b-a2ab-11ce-b11f-00aa00530503")
 interface ITaskTrigger : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nf-mstask-itasktrigger-settrigger
@@ -348,9 +348,9 @@ interface ITaskTrigger : IUnknown
     HRESULT GetTriggerString(PWSTR* ppwszTrigger);
 }
 
-@GUID("a6b952f0-a4b1-11d0-997d-00aa006887ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nn-mstask-ischeduledworkitem
+@GUID("a6b952f0-a4b1-11d0-997d-00aa006887ec")
 interface IScheduledWorkItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nf-mstask-ischeduledworkitem-createtrigger
@@ -414,9 +414,9 @@ interface IScheduledWorkItem : IUnknown
     HRESULT GetAccountInformation(PWSTR* ppwszAccountName);
 }
 
-@GUID("148bd524-a2ab-11ce-b11f-00aa00530503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nn-mstask-itask
+@GUID("148bd524-a2ab-11ce-b11f-00aa00530503")
 interface ITask : IScheduledWorkItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nf-mstask-itask-setapplicationname
@@ -445,9 +445,9 @@ interface ITask : IScheduledWorkItem
     HRESULT GetMaxRunTime(uint* pdwMaxRunTimeMS);
 }
 
-@GUID("148bd528-a2ab-11ce-b11f-00aa00530503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nn-mstask-ienumworkitems
+@GUID("148bd528-a2ab-11ce-b11f-00aa00530503")
 interface IEnumWorkItems : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -460,9 +460,9 @@ interface IEnumWorkItems : IUnknown
     HRESULT Clone(IEnumWorkItems* ppEnumWorkItems);
 }
 
-@GUID("148bd527-a2ab-11ce-b11f-00aa00530503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nn-mstask-itaskscheduler
+@GUID("148bd527-a2ab-11ce-b11f-00aa00530503")
 interface ITaskScheduler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nf-mstask-itaskscheduler-settargetcomputer
@@ -483,18 +483,18 @@ interface ITaskScheduler : IUnknown
     HRESULT IsOfType(const(PWSTR) pwszName, const(GUID)* riid);
 }
 
-@GUID("4086658a-cbbb-11cf-b604-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nn-mstask-iprovidetaskpage
+@GUID("4086658a-cbbb-11cf-b604-00c04fd8d565")
 interface IProvideTaskPage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstask/nf-mstask-iprovidetaskpage-getpage
     HRESULT GetPage(TASKPAGE tpType, BOOL fPersistChanges, HPROPSHEETPAGE* phPage);
 }
 
-@GUID("79184a66-8664-423f-97f1-637356a5d812")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskfoldercollection
+@GUID("79184a66-8664-423f-97f1-637356a5d812")
 interface ITaskFolderCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskfoldercollection-get_count
@@ -505,9 +505,9 @@ interface ITaskFolderCollection : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnum);
 }
 
-@GUID("2faba4c7-4da9-4013-9697-20cc3fd40f85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskservice
+@GUID("2faba4c7-4da9-4013-9697-20cc3fd40f85")
 interface ITaskService : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskservice-getfolder
@@ -530,9 +530,9 @@ interface ITaskService : IDispatch
     HRESULT get_HighestVersion(uint* pVersion);
 }
 
-@GUID("839d7762-5121-4009-9234-4f0d19394f04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskhandler
+@GUID("839d7762-5121-4009-9234-4f0d19394f04")
 interface ITaskHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskhandler-start
@@ -545,9 +545,9 @@ interface ITaskHandler : IUnknown
     HRESULT Resume();
 }
 
-@GUID("eaec7a8f-27a0-4ddc-8675-14726a01a38a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskhandlerstatus
+@GUID("eaec7a8f-27a0-4ddc-8675-14726a01a38a")
 interface ITaskHandlerStatus : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskhandlerstatus-updatestatus
@@ -556,9 +556,9 @@ interface ITaskHandlerStatus : IUnknown
     HRESULT TaskCompleted(HRESULT taskErrCode);
 }
 
-@GUID("3e4c9351-d966-4b8b-bb87-ceba68bb0107")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskvariables
+@GUID("3e4c9351-d966-4b8b-bb87-ceba68bb0107")
 interface ITaskVariables : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskvariables-getinput
@@ -569,9 +569,9 @@ interface ITaskVariables : IUnknown
     HRESULT GetContext(BSTR* pContext);
 }
 
-@GUID("39038068-2b46-4afd-8662-7bb6f868d221")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itasknamedvaluepair
+@GUID("39038068-2b46-4afd-8662-7bb6f868d221")
 interface ITaskNamedValuePair : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itasknamedvaluepair-get_name
@@ -584,9 +584,9 @@ interface ITaskNamedValuePair : IDispatch
     HRESULT put_Value(BSTR value);
 }
 
-@GUID("b4ef826b-63c3-46e4-a504-ef69e4f7ea4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itasknamedvaluecollection
+@GUID("b4ef826b-63c3-46e4-a504-ef69e4f7ea4d")
 interface ITaskNamedValueCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itasknamedvaluecollection-get_count
@@ -603,9 +603,9 @@ interface ITaskNamedValueCollection : IDispatch
     HRESULT Clear();
 }
 
-@GUID("653758fb-7b9a-4f1e-a471-beeb8e9b834e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-irunningtask
+@GUID("653758fb-7b9a-4f1e-a471-beeb8e9b834e")
 interface IRunningTask : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-irunningtask-get_name
@@ -626,9 +626,9 @@ interface IRunningTask : IDispatch
     HRESULT get_EnginePID(uint* pPID);
 }
 
-@GUID("6a67614b-6828-4fec-aa54-6d52e8f1f2db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-irunningtaskcollection
+@GUID("6a67614b-6828-4fec-aa54-6d52e8f1f2db")
 interface IRunningTaskCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-irunningtaskcollection-get_count
@@ -639,9 +639,9 @@ interface IRunningTaskCollection : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnum);
 }
 
-@GUID("9c86f320-dee3-4dd1-b972-a303f26b061e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iregisteredtask
+@GUID("9c86f320-dee3-4dd1-b972-a303f26b061e")
 interface IRegisteredTask : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iregisteredtask-get_name
@@ -683,9 +683,9 @@ interface IRegisteredTask : IDispatch
                         SYSTEMTIME** pRunTimes);
 }
 
-@GUID("09941815-ea89-4b5b-89e0-2a773801fac3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itrigger
+@GUID("09941815-ea89-4b5b-89e0-2a773801fac3")
 interface ITrigger : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itrigger-get_type
@@ -716,16 +716,16 @@ interface ITrigger : IDispatch
     HRESULT put_Enabled(VARIANT_BOOL enabled);
 }
 
-@GUID("d537d2b0-9fb3-4d34-9739-1ff5ce7b1ef3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iidletrigger
+@GUID("d537d2b0-9fb3-4d34-9739-1ff5ce7b1ef3")
 interface IIdleTrigger : ITrigger
 {
 }
 
-@GUID("72dade38-fae4-4b3e-baf4-5d009af02b1c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-ilogontrigger
+@GUID("72dade38-fae4-4b3e-baf4-5d009af02b1c")
 interface ILogonTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-ilogontrigger-get_delay
@@ -738,9 +738,9 @@ interface ILogonTrigger : ITrigger
     HRESULT put_UserId(BSTR user);
 }
 
-@GUID("754da71b-4385-4475-9dd9-598294fa3641")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-isessionstatechangetrigger
+@GUID("754da71b-4385-4475-9dd9-598294fa3641")
 interface ISessionStateChangeTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-isessionstatechangetrigger-get_delay
@@ -757,9 +757,9 @@ interface ISessionStateChangeTrigger : ITrigger
     HRESULT put_StateChange(TASK_SESSION_STATE_CHANGE_TYPE type);
 }
 
-@GUID("d45b0167-9653-4eef-b94f-0732ca7af251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-ieventtrigger
+@GUID("d45b0167-9653-4eef-b94f-0732ca7af251")
 interface IEventTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-ieventtrigger-get_subscription
@@ -776,9 +776,9 @@ interface IEventTrigger : ITrigger
     HRESULT put_ValueQueries(ITaskNamedValueCollection pNamedXPaths);
 }
 
-@GUID("b45747e0-eba7-4276-9f29-85c5bb300006")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itimetrigger
+@GUID("b45747e0-eba7-4276-9f29-85c5bb300006")
 interface ITimeTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itimetrigger-get_randomdelay
@@ -787,9 +787,9 @@ interface ITimeTrigger : ITrigger
     HRESULT put_RandomDelay(BSTR randomDelay);
 }
 
-@GUID("126c5cd8-b288-41d5-8dbf-e491446adc5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-idailytrigger
+@GUID("126c5cd8-b288-41d5-8dbf-e491446adc5c")
 interface IDailyTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-idailytrigger-get_daysinterval
@@ -802,9 +802,9 @@ interface IDailyTrigger : ITrigger
     HRESULT put_RandomDelay(BSTR randomDelay);
 }
 
-@GUID("5038fc98-82ff-436d-8728-a512a57c9dc1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iweeklytrigger
+@GUID("5038fc98-82ff-436d-8728-a512a57c9dc1")
 interface IWeeklyTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iweeklytrigger-get_daysofweek
@@ -821,9 +821,9 @@ interface IWeeklyTrigger : ITrigger
     HRESULT put_RandomDelay(BSTR randomDelay);
 }
 
-@GUID("97c45ef1-6b02-4a1a-9c0e-1ebfba1500ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-imonthlytrigger
+@GUID("97c45ef1-6b02-4a1a-9c0e-1ebfba1500ac")
 interface IMonthlyTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-imonthlytrigger-get_daysofmonth
@@ -844,9 +844,9 @@ interface IMonthlyTrigger : ITrigger
     HRESULT put_RandomDelay(BSTR randomDelay);
 }
 
-@GUID("77d025a3-90fa-43aa-b52e-cda5499b946a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-imonthlydowtrigger
+@GUID("77d025a3-90fa-43aa-b52e-cda5499b946a")
 interface IMonthlyDOWTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-imonthlydowtrigger-get_daysofweek
@@ -871,9 +871,9 @@ interface IMonthlyDOWTrigger : ITrigger
     HRESULT put_RandomDelay(BSTR randomDelay);
 }
 
-@GUID("2a9c35da-d357-41f4-bbc1-207ac1b1f3cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iboottrigger
+@GUID("2a9c35da-d357-41f4-bbc1-207ac1b1f3cb")
 interface IBootTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iboottrigger-get_delay
@@ -882,9 +882,9 @@ interface IBootTrigger : ITrigger
     HRESULT put_Delay(BSTR delay);
 }
 
-@GUID("4c8fec3a-c218-4e0c-b23d-629024db91a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iregistrationtrigger
+@GUID("4c8fec3a-c218-4e0c-b23d-629024db91a2")
 interface IRegistrationTrigger : ITrigger
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iregistrationtrigger-get_delay
@@ -893,9 +893,9 @@ interface IRegistrationTrigger : ITrigger
     HRESULT put_Delay(BSTR delay);
 }
 
-@GUID("bae54997-48b1-4cbe-9965-d6be263ebea4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iaction
+@GUID("bae54997-48b1-4cbe-9965-d6be263ebea4")
 interface IAction : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iaction-get_id
@@ -906,9 +906,9 @@ interface IAction : IDispatch
     HRESULT get_Type(TASK_ACTION_TYPE* pType);
 }
 
-@GUID("4c3d624d-fd6b-49a3-b9b7-09cb3cd3f047")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iexecaction
+@GUID("4c3d624d-fd6b-49a3-b9b7-09cb3cd3f047")
 interface IExecAction : IAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iexecaction-get_path
@@ -932,9 +932,9 @@ interface IExecAction2 : IExecAction
     HRESULT put_HideAppWindow(VARIANT_BOOL hideAppWindow);
 }
 
-@GUID("505e9e68-af89-46b8-a30f-56162a83d537")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-ishowmessageaction
+@GUID("505e9e68-af89-46b8-a30f-56162a83d537")
 interface IShowMessageAction : IAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-ishowmessageaction-get_title
@@ -947,9 +947,9 @@ interface IShowMessageAction : IAction
     HRESULT put_MessageBody(BSTR messageBody);
 }
 
-@GUID("6d2fd252-75c5-4f66-90ba-2a7d8cc3039f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-icomhandleraction
+@GUID("6d2fd252-75c5-4f66-90ba-2a7d8cc3039f")
 interface IComHandlerAction : IAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-icomhandleraction-get_classid
@@ -962,9 +962,9 @@ interface IComHandlerAction : IAction
     HRESULT put_Data(BSTR data);
 }
 
-@GUID("10f62c64-7e16-4314-a0c2-0c3683f99d40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iemailaction
+@GUID("10f62c64-7e16-4314-a0c2-0c3683f99d40")
 interface IEmailAction : IAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iemailaction-get_server
@@ -1009,9 +1009,9 @@ interface IEmailAction : IAction
     HRESULT put_Attachments(SAFEARRAY* pAttachements);
 }
 
-@GUID("85df5081-1b24-4f32-878a-d9d14df4cb77")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itriggercollection
+@GUID("85df5081-1b24-4f32-878a-d9d14df4cb77")
 interface ITriggerCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itriggercollection-get_count
@@ -1028,9 +1028,9 @@ interface ITriggerCollection : IDispatch
     HRESULT Clear();
 }
 
-@GUID("02820e19-7b98-4ed2-b2e8-fdccceff619b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iactioncollection
+@GUID("02820e19-7b98-4ed2-b2e8-fdccceff619b")
 interface IActionCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iactioncollection-get_count
@@ -1055,9 +1055,9 @@ interface IActionCollection : IDispatch
     HRESULT put_Context(BSTR context);
 }
 
-@GUID("d98d51e5-c9b4-496a-a9c1-18980261cf0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iprincipal
+@GUID("d98d51e5-c9b4-496a-a9c1-18980261cf0f")
 interface IPrincipal : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iprincipal-get_id
@@ -1086,9 +1086,9 @@ interface IPrincipal : IDispatch
     HRESULT put_RunLevel(TASK_RUNLEVEL_TYPE runLevel);
 }
 
-@GUID("248919ae-e345-4a6d-8aeb-e0d3165c904e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iprincipal2
+@GUID("248919ae-e345-4a6d-8aeb-e0d3165c904e")
 interface IPrincipal2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iprincipal2-get_processtokensidtype
@@ -1103,9 +1103,9 @@ interface IPrincipal2 : IDispatch
     HRESULT AddRequiredPrivilege(BSTR privilege);
 }
 
-@GUID("416d8b73-cb41-4ea1-805c-9be9a5ac4a74")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iregistrationinfo
+@GUID("416d8b73-cb41-4ea1-805c-9be9a5ac4a74")
 interface IRegistrationInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iregistrationinfo-get_description
@@ -1146,9 +1146,9 @@ interface IRegistrationInfo : IDispatch
     HRESULT put_Source(BSTR source);
 }
 
-@GUID("f5bc8fc5-536d-4f77-b852-fbc1356fdeb6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskdefinition
+@GUID("f5bc8fc5-536d-4f77-b852-fbc1356fdeb6")
 interface ITaskDefinition : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskdefinition-get_registrationinfo
@@ -1181,9 +1181,9 @@ interface ITaskDefinition : IDispatch
     HRESULT put_XmlText(BSTR xml);
 }
 
-@GUID("8fd4711d-2d02-4c8c-87e3-eff699de127e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itasksettings
+@GUID("8fd4711d-2d02-4c8c-87e3-eff699de127e")
 interface ITaskSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itasksettings-get_allowdemandstart
@@ -1267,9 +1267,9 @@ interface ITaskSettings : IDispatch
     HRESULT put_NetworkSettings(INetworkSettings pNetworkSettings);
 }
 
-@GUID("2c05c3f0-6eed-4c05-a15f-ed7d7a98a369")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itasksettings2
+@GUID("2c05c3f0-6eed-4c05-a15f-ed7d7a98a369")
 interface ITaskSettings2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itasksettings2-get_disallowstartonremoteappsession
@@ -1282,8 +1282,8 @@ interface ITaskSettings2 : IDispatch
     HRESULT put_UseUnifiedSchedulingEngine(VARIANT_BOOL useUnifiedEngine);
 }
 
-@GUID("0ad9d0d7-0c7f-4ebb-9a5f-d1c648dca528")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itasksettings3
+@GUID("0ad9d0d7-0c7f-4ebb-9a5f-d1c648dca528")
 interface ITaskSettings3 : ITaskSettings
 {
     HRESULT get_DisallowStartOnRemoteAppSession(VARIANT_BOOL* pDisallowStart);
@@ -1301,8 +1301,8 @@ interface ITaskSettings3 : ITaskSettings
     HRESULT put_Volatile(VARIANT_BOOL Volatile);
 }
 
-@GUID("a6024fa8-9652-4adb-a6bf-5cfcd877a7ba")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-imaintenancesettings
+@GUID("a6024fa8-9652-4adb-a6bf-5cfcd877a7ba")
 interface IMaintenanceSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-imaintenancesettings-put_period
@@ -1319,9 +1319,9 @@ interface IMaintenanceSettings : IDispatch
     HRESULT get_Exclusive(VARIANT_BOOL* target);
 }
 
-@GUID("86627eb4-42a7-41e4-a4d9-ac33a72f2d52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iregisteredtaskcollection
+@GUID("86627eb4-42a7-41e4-a4d9-ac33a72f2d52")
 interface IRegisteredTaskCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iregisteredtaskcollection-get_count
@@ -1332,9 +1332,9 @@ interface IRegisteredTaskCollection : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnum);
 }
 
-@GUID("8cfac062-a080-4c15-9a88-aa7c2af80dfc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-itaskfolder
+@GUID("8cfac062-a080-4c15-9a88-aa7c2af80dfc")
 interface ITaskFolder : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-itaskfolder-get_name
@@ -1368,9 +1368,9 @@ interface ITaskFolder : IDispatch
     HRESULT SetSecurityDescriptor(BSTR sddl, int flags);
 }
 
-@GUID("84594461-0053-4342-a8fd-088fabf11f32")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-iidlesettings
+@GUID("84594461-0053-4342-a8fd-088fabf11f32")
 interface IIdleSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-iidlesettings-get_idleduration
@@ -1391,9 +1391,9 @@ interface IIdleSettings : IDispatch
     HRESULT put_RestartOnIdle(VARIANT_BOOL restart);
 }
 
-@GUID("9f7dea84-c30b-4245-80b6-00e9f646f1b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-inetworksettings
+@GUID("9f7dea84-c30b-4245-80b6-00e9f646f1b4")
 interface INetworkSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-inetworksettings-get_name
@@ -1406,9 +1406,9 @@ interface INetworkSettings : IDispatch
     HRESULT put_Id(BSTR id);
 }
 
-@GUID("7fb9acf1-26be-400e-85b5-294b9c75dfd6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nn-taskschd-irepetitionpattern
+@GUID("7fb9acf1-26be-400e-85b5-294b9c75dfd6")
 interface IRepetitionPattern : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/taskschd/nf-taskschd-irepetitionpattern-get_interval

@@ -60,27 +60,27 @@ enum : int
 
 // Interfaces
 
-@GUID("332e5848-2e15-458e-85c4-c911c0c3d6f4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nn-windowsstoragecom-irandomaccessstreamfileaccessmode
+@GUID("332e5848-2e15-458e-85c4-c911c0c3d6f4")
 interface IRandomAccessStreamFileAccessMode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nf-windowsstoragecom-irandomaccessstreamfileaccessmode-getmode
     HRESULT GetMode(uint* fileAccessMode);
 }
 
-@GUID("d1019a0e-6243-4329-8497-2e75894d7710")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nn-windowsstoragecom-iunbufferedfilehandleoplockcallback
+@GUID("d1019a0e-6243-4329-8497-2e75894d7710")
 interface IUnbufferedFileHandleOplockCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nf-windowsstoragecom-iunbufferedfilehandleoplockcallback-onbrokencallback
     HRESULT OnBrokenCallback();
 }
 
-@GUID("a65c9109-42ab-4b94-a7b1-dd2e4e68515e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nn-windowsstoragecom-iunbufferedfilehandleprovider
+@GUID("a65c9109-42ab-4b94-a7b1-dd2e4e68515e")
 interface IUnbufferedFileHandleProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nf-windowsstoragecom-iunbufferedfilehandleprovider-openunbufferedfilehandle
@@ -89,18 +89,18 @@ interface IUnbufferedFileHandleProvider : IUnknown
     HRESULT CloseUnbufferedFileHandle();
 }
 
-@GUID("826abe3d-3acd-47d3-84f2-88aaedcf6304")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nn-windowsstoragecom-ioplockbreakinghandler
+@GUID("826abe3d-3acd-47d3-84f2-88aaedcf6304")
 interface IOplockBreakingHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nf-windowsstoragecom-ioplockbreakinghandler-oplockbreaking
     HRESULT OplockBreaking();
 }
 
-@GUID("5ca296b2-2c25-4d22-b785-b885c8201e6a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nn-windowsstoragecom-istorageitemhandleaccess
+@GUID("5ca296b2-2c25-4d22-b785-b885c8201e6a")
 interface IStorageItemHandleAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nf-windowsstoragecom-istorageitemhandleaccess-create
@@ -108,9 +108,9 @@ interface IStorageItemHandleAccess : IUnknown
                    HANDLE_OPTIONS options, IOplockBreakingHandler oplockBreakingHandler, HANDLE* interopHandle);
 }
 
-@GUID("df19938f-5462-48a0-be65-d2a3271a08d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nn-windowsstoragecom-istoragefolderhandleaccess
+@GUID("df19938f-5462-48a0-be65-d2a3271a08d6")
 interface IStorageFolderHandleAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windowsstoragecom/nf-windowsstoragecom-istoragefolderhandleaccess-create

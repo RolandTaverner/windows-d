@@ -301,9 +301,9 @@ struct SyncProviderConfigUIConfiguration
 @GUID("f82b4ef1-93a9-4dde-8015-f7950a1a6e31")
 struct SyncProviderRegistration;
 
-@GUID("e71c4250-adf8-4a07-8fae-5669596909c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iclockvectorelement
+@GUID("e71c4250-adf8-4a07-8fae-5669596909c1")
 interface IClockVectorElement : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iclockvectorelement-getreplicakey
@@ -312,9 +312,9 @@ interface IClockVectorElement : IUnknown
     HRESULT GetTickCount(ulong* pullTickCount);
 }
 
-@GUID("a40b46d2-e97b-4156-b6da-991f501b0f05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ifeedclockvectorelement
+@GUID("a40b46d2-e97b-4156-b6da-991f501b0f05")
 interface IFeedClockVectorElement : IClockVectorElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ifeedclockvectorelement-getsynctime
@@ -323,9 +323,9 @@ interface IFeedClockVectorElement : IClockVectorElement
     HRESULT GetFlags(ubyte* pbFlags);
 }
 
-@GUID("14b2274a-8698-4cc6-9333-f89bd1d47bc4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iclockvector
+@GUID("14b2274a-8698-4cc6-9333-f89bd1d47bc4")
 interface IClockVector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iclockvector-getclockvectorelements
@@ -334,9 +334,9 @@ interface IClockVector : IUnknown
     HRESULT GetClockVectorElementCount(uint* pdwCount);
 }
 
-@GUID("8d1d98d1-9fb8-4ec9-a553-54dd924e0f67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ifeedclockvector
+@GUID("8d1d98d1-9fb8-4ec9-a553-54dd924e0f67")
 interface IFeedClockVector : IClockVector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ifeedclockvector-getupdatecount
@@ -345,9 +345,9 @@ interface IFeedClockVector : IClockVector
     HRESULT IsNoConflictsSpecified(BOOL* pfIsNoConflictsSpecified);
 }
 
-@GUID("525844db-2837-4799-9e80-81a66e02220c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumclockvector
+@GUID("525844db-2837-4799-9e80-81a66e02220c")
 interface IEnumClockVector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumclockvector-next
@@ -360,9 +360,9 @@ interface IEnumClockVector : IUnknown
     HRESULT Clone(IEnumClockVector* ppiEnum);
 }
 
-@GUID("550f763d-146a-48f6-abeb-6c88c7f70514")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumfeedclockvector
+@GUID("550f763d-146a-48f6-abeb-6c88c7f70514")
 interface IEnumFeedClockVector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumfeedclockvector-next
@@ -375,9 +375,9 @@ interface IEnumFeedClockVector : IUnknown
     HRESULT Clone(IEnumFeedClockVector* ppiEnum);
 }
 
-@GUID("613b2ab5-b304-47d9-9c31-ce6c54401a15")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-icorefragment
+@GUID("613b2ab5-b304-47d9-9c31-ce6c54401a15")
 interface ICoreFragment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-icorefragment-nextcolumn
@@ -392,9 +392,9 @@ interface ICoreFragment : IUnknown
     HRESULT GetRangeCount(uint* pRangeCount);
 }
 
-@GUID("f7fcc5fd-ae26-4679-ba16-96aac583c134")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-icorefragmentinspector
+@GUID("f7fcc5fd-ae26-4679-ba16-96aac583c134")
 interface ICoreFragmentInspector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-icorefragmentinspector-nextcorefragments
@@ -403,9 +403,9 @@ interface ICoreFragmentInspector : IUnknown
     HRESULT Reset();
 }
 
-@GUID("75ae8777-6848-49f7-956c-a3a92f5096e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irangeexception
+@GUID("75ae8777-6848-49f7-956c-a3a92f5096e8")
 interface IRangeException : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-irangeexception-getclosedrangestart
@@ -416,9 +416,9 @@ interface IRangeException : IUnknown
     HRESULT GetClockVector(const(GUID)* riid, void** ppUnk);
 }
 
-@GUID("0944439f-ddb1-4176-b703-046ff22a2386")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumrangeexceptions
+@GUID("0944439f-ddb1-4176-b703-046ff22a2386")
 interface IEnumRangeExceptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumrangeexceptions-next
@@ -431,9 +431,9 @@ interface IEnumRangeExceptions : IUnknown
     HRESULT Clone(IEnumRangeExceptions* ppEnum);
 }
 
-@GUID("892fb9b0-7c55-4a18-9316-fdf449569b64")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isingleitemexception
+@GUID("892fb9b0-7c55-4a18-9316-fdf449569b64")
 interface ISingleItemException : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isingleitemexception-getitemid
@@ -442,9 +442,9 @@ interface ISingleItemException : IUnknown
     HRESULT GetClockVector(const(GUID)* riid, void** ppUnk);
 }
 
-@GUID("e563381c-1b4d-4c66-9796-c86faccdcd40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumsingleitemexceptions
+@GUID("e563381c-1b4d-4c66-9796-c86faccdcd40")
 interface IEnumSingleItemExceptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumsingleitemexceptions-next
@@ -457,9 +457,9 @@ interface IEnumSingleItemExceptions : IUnknown
     HRESULT Clone(IEnumSingleItemExceptions* ppEnum);
 }
 
-@GUID("0cd7ee7c-fec0-4021-99ee-f0e5348f2a5f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ichangeunitexception
+@GUID("0cd7ee7c-fec0-4021-99ee-f0e5348f2a5f")
 interface IChangeUnitException : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ichangeunitexception-getitemid
@@ -470,9 +470,9 @@ interface IChangeUnitException : IUnknown
     HRESULT GetClockVector(const(GUID)* riid, void** ppUnk);
 }
 
-@GUID("3074e802-9319-4420-be21-1022e2e21da8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumchangeunitexceptions
+@GUID("3074e802-9319-4420-be21-1022e2e21da8")
 interface IEnumChangeUnitExceptions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumchangeunitexceptions-next
@@ -485,9 +485,9 @@ interface IEnumChangeUnitExceptions : IUnknown
     HRESULT Clone(IEnumChangeUnitExceptions* ppEnum);
 }
 
-@GUID("2209f4fc-fd10-4ff0-84a8-f0a1982e440e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ireplicakeymap
+@GUID("2209f4fc-fd10-4ff0-84a8-f0a1982e440e")
 interface IReplicaKeyMap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ireplicakeymap-lookupreplicakey
@@ -498,18 +498,18 @@ interface IReplicaKeyMap : IUnknown
     HRESULT Serialize(ubyte* pbReplicaKeyMap, uint* pcbReplicaKeyMap);
 }
 
-@GUID("ded10970-ec85-4115-b52c-4405845642a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iconstructreplicakeymap
+@GUID("ded10970-ec85-4115-b52c-4405845642a5")
 interface IConstructReplicaKeyMap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iconstructreplicakeymap-findoraddreplica
     HRESULT FindOrAddReplica(const(ubyte)* pbReplicaId, uint* pdwReplicaKey);
 }
 
-@GUID("615bbb53-c945-4203-bf4b-2cb65919a0aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncknowledge
+@GUID("615bbb53-c945-4203-bf4b-2cb65919a0aa")
 interface ISyncKnowledge : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncknowledge-getownerreplicaid
@@ -568,18 +568,18 @@ interface ISyncKnowledge : IUnknown
     HRESULT GetVersion(uint* pdwVersion);
 }
 
-@GUID("456e0f96-6036-452b-9f9d-bcc4b4a85db2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iforgottenknowledge
+@GUID("456e0f96-6036-452b-9f9d-bcc4b4a85db2")
 interface IForgottenKnowledge : ISyncKnowledge
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iforgottenknowledge-forgettoversion
     HRESULT ForgetToVersion(ISyncKnowledge pKnowledge, const(SYNC_VERSION)* pVersion);
 }
 
-@GUID("ed0addc0-3b4b-46a1-9a45-45661d2114c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncknowledge2
+@GUID("ed0addc0-3b4b-46a1-9a45-45661d2114c8")
 interface ISyncKnowledge2 : ISyncKnowledge
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncknowledge2-getidparameters
@@ -616,9 +616,9 @@ interface ISyncKnowledge2 : ISyncKnowledge
     HRESULT CompareToKnowledgeCookie(IUnknown pKnowledgeCookie, KNOWLEDGE_COOKIE_COMPARISON_RESULT* pResult);
 }
 
-@GUID("b37c4a0a-4b7d-4c2d-9711-3b00d119b1c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irecoverableerrordata
+@GUID("b37c4a0a-4b7d-4c2d-9711-3b00d119b1c8")
 interface IRecoverableErrorData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-irecoverableerrordata-initialize
@@ -629,9 +629,9 @@ interface IRecoverableErrorData : IUnknown
     HRESULT GetErrorDescription(PWSTR pszErrorDescription, uint* pcchErrorDescription);
 }
 
-@GUID("0f5625e8-0a7b-45ee-9637-1ce13645909e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irecoverableerror
+@GUID("0f5625e8-0a7b-45ee-9637-1ce13645909e")
 interface IRecoverableError : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-irecoverableerror-getstage
@@ -647,9 +647,9 @@ interface IRecoverableError : IUnknown
                                                  IRecoverableErrorData* ppErrorData);
 }
 
-@GUID("014ebf97-9f20-4f7a-bdd4-25979c77c002")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ichangeconflict
+@GUID("014ebf97-9f20-4f7a-bdd4-25979c77c002")
 interface IChangeConflict : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ichangeconflict-getdestinationproviderconflictingchange
@@ -689,9 +689,9 @@ interface IConstraintConflict : IUnknown
     HRESULT IsTemporary();
 }
 
-@GUID("0599797f-5ed9-485c-ae36-0c5d1bf2e7a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isynccallback
+@GUID("0599797f-5ed9-485c-ae36-0c5d1bf2e7a5")
 interface ISyncCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isynccallback-onprogress
@@ -707,9 +707,9 @@ interface ISyncCallback : IUnknown
     HRESULT OnRecoverableError(IRecoverableError pRecoverableError);
 }
 
-@GUID("47ce84af-7442-4ead-8630-12015e030ad7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isynccallback2
+@GUID("47ce84af-7442-4ead-8630-12015e030ad7")
 interface ISyncCallback2 : ISyncCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isynccallback2-onchangeapplied
@@ -724,18 +724,18 @@ interface ISyncConstraintCallback : IUnknown
     HRESULT OnConstraintConflict(IConstraintConflict pConflict);
 }
 
-@GUID("8f657056-2bce-4a17-8c68-c7bb7898b56f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncprovider
+@GUID("8f657056-2bce-4a17-8c68-c7bb7898b56f")
 interface ISyncProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncprovider-getidparameters
     HRESULT GetIdParameters(ID_PARAMETERS* pIdParameters);
 }
 
-@GUID("b8a940fe-9f01-483b-9434-c37d361225d9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncsessionstate
+@GUID("b8a940fe-9f01-483b-9434-c37d361225d9")
 interface ISyncSessionState : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncsessionstate-iscanceled
@@ -755,18 +755,18 @@ interface ISyncSessionState : IUnknown
                        uint dwTotalWork);
 }
 
-@GUID("326c6810-790a-409b-b741-6999388761eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncsessionextendederrorinfo
+@GUID("326c6810-790a-409b-b741-6999388761eb")
 interface ISyncSessionExtendedErrorInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncsessionextendederrorinfo-getsyncproviderwitherror
     HRESULT GetSyncProviderWithError(ISyncProvider* ppProviderWithError);
 }
 
-@GUID("9e37cfa3-9e38-4c61-9ca3-ffe810b45ca2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncsessionstate2
+@GUID("9e37cfa3-9e38-4c61-9ca3-ffe810b45ca2")
 interface ISyncSessionState2 : ISyncSessionState
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncsessionstate2-setproviderwitherror
@@ -775,27 +775,27 @@ interface ISyncSessionState2 : ISyncSessionState
     HRESULT GetSessionErrorStatus(HRESULT* phrSessionError);
 }
 
-@GUID("794eaaf8-3f2e-47e6-9728-17e6fcf94cb7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncfilterinfo
+@GUID("794eaaf8-3f2e-47e6-9728-17e6fcf94cb7")
 interface ISyncFilterInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncfilterinfo-serialize
     HRESULT Serialize(ubyte* pbBuffer, uint* pcbBuffer);
 }
 
-@GUID("19b394ba-e3d0-468c-934d-321968b2ab34")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncfilterinfo2
+@GUID("19b394ba-e3d0-468c-934d-321968b2ab34")
 interface ISyncFilterInfo2 : ISyncFilterInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncfilterinfo2-getflags
     HRESULT GetFlags(uint* pdwFlags);
 }
 
-@GUID("f2837671-0bdf-43fa-b502-232375fb50c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ichangeunitlistfilterinfo
+@GUID("f2837671-0bdf-43fa-b502-232375fb50c2")
 interface IChangeUnitListFilterInfo : ISyncFilterInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ichangeunitlistfilterinfo-initialize
@@ -833,9 +833,9 @@ interface ICombinedFilterInfo : ISyncFilterInfo
     HRESULT GetFilterCombinationType(FILTER_COMBINATION_TYPE* pFilterCombinationType);
 }
 
-@GUID("5f86be4a-5e78-4e32-ac1c-c24fd223ef85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumsyncchanges
+@GUID("5f86be4a-5e78-4e32-ac1c-c24fd223ef85")
 interface IEnumSyncChanges : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumsyncchanges-next
@@ -848,9 +848,9 @@ interface IEnumSyncChanges : IUnknown
     HRESULT Clone(IEnumSyncChanges* ppEnum);
 }
 
-@GUID("56f14771-8677-484f-a170-e386e418a676")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangebuilder
+@GUID("56f14771-8677-484f-a170-e386e418a676")
 interface ISyncChangeBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangebuilder-addchangeunitmetadata
@@ -864,9 +864,9 @@ interface IFilterTrackingSyncChangeBuilder : IUnknown
     HRESULT SetAllChangeUnitsPresentFlag();
 }
 
-@GUID("52f6e694-6a71-4494-a184-a8311bf5d227")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangebatchbase
+@GUID("52f6e694-6a71-4494-a184-a8311bf5d227")
 interface ISyncChangeBatchBase : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangebatchbase-getchangeenumerator
@@ -901,9 +901,9 @@ interface ISyncChangeBatchBase : IUnknown
     HRESULT Serialize(ubyte* pbChangeBatch, uint* pcbChangeBatch);
 }
 
-@GUID("70c64dee-380f-4c2e-8f70-31c55bd5f9b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangebatch
+@GUID("70c64dee-380f-4c2e-8f70-31c55bd5f9b3")
 interface ISyncChangeBatch : ISyncChangeBatchBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangebatch-beginunorderedgroup
@@ -917,9 +917,9 @@ interface ISyncChangeBatch : ISyncChangeBatchBase
                               ISyncChangeBuilder* ppChangeBuilder);
 }
 
-@GUID("ef64197d-4f44-4ea2-b355-4524713e3bed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncfullenumerationchangebatch
+@GUID("ef64197d-4f44-4ea2-b355-4524713e3bed")
 interface ISyncFullEnumerationChangeBatch : ISyncChangeBatchBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncfullenumerationchangebatch-getlearnedknowledgeafterrecoverycomplete
@@ -930,9 +930,9 @@ interface ISyncFullEnumerationChangeBatch : ISyncChangeBatchBase
     HRESULT GetClosedUpperBoundItemId(ubyte* pbClosedUpperBoundItemId, uint* pcbIdSize);
 }
 
-@GUID("097f13be-5b92-4048-b3f2-7b42a2515e07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangebatchwithprerequisite
+@GUID("097f13be-5b92-4048-b3f2-7b42a2515e07")
 interface ISyncChangeBatchWithPrerequisite : ISyncChangeBatchBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangebatchwithprerequisite-setprerequisiteknowledge
@@ -944,9 +944,9 @@ interface ISyncChangeBatchWithPrerequisite : ISyncChangeBatchBase
     HRESULT GetLearnedForgottenKnowledge(IForgottenKnowledge* ppLearnedForgottenKnowledge);
 }
 
-@GUID("6fdb596a-d755-4584-bd0c-c0c23a548fbf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangebatchbase2
+@GUID("6fdb596a-d755-4584-bd0c-c0c23a548fbf")
 interface ISyncChangeBatchBase2 : ISyncChangeBatchBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangebatchbase2-serializewithoptions
@@ -954,9 +954,9 @@ interface ISyncChangeBatchBase2 : ISyncChangeBatchBase
                                  uint* pdwSerializedSize);
 }
 
-@GUID("0f1a4995-cbc8-421d-b550-5d0bebf3e9a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangebatchadvanced
+@GUID("0f1a4995-cbc8-421d-b550-5d0bebf3e9a5")
 interface ISyncChangeBatchAdvanced : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangebatchadvanced-getfilterinfo
@@ -991,9 +991,9 @@ interface ISyncFullEnumerationChangeBatch2 : ISyncFullEnumerationChangeBatch
                                              ISyncChangeBuilder* ppChangeBuilder);
 }
 
-@GUID("43434a49-8da4-47f2-8172-ad7b8b024978")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iknowledgesyncprovider
+@GUID("43434a49-8da4-47f2-8172-ad7b8b024978")
 interface IKnowledgeSyncProvider : ISyncProvider
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iknowledgesyncprovider-beginsession
@@ -1021,9 +1021,9 @@ interface IKnowledgeSyncProvider : ISyncProvider
     HRESULT EndSession(ISyncSessionState pSessionState);
 }
 
-@GUID("60edd8ca-7341-4bb7-95ce-fab6394b51cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangeunit
+@GUID("60edd8ca-7341-4bb7-95ce-fab6394b51cb")
 interface ISyncChangeUnit : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangeunit-getitemchange
@@ -1034,9 +1034,9 @@ interface ISyncChangeUnit : IUnknown
     HRESULT GetChangeUnitVersion(const(ubyte)* pbCurrentReplicaId, SYNC_VERSION* pVersion);
 }
 
-@GUID("346b35f1-8703-4c6d-ab1a-4dbca2cff97f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ienumsyncchangeunits
+@GUID("346b35f1-8703-4c6d-ab1a-4dbca2cff97f")
 interface IEnumSyncChangeUnits : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ienumsyncchangeunits-next
@@ -1049,9 +1049,9 @@ interface IEnumSyncChangeUnits : IUnknown
     HRESULT Clone(IEnumSyncChangeUnits* ppEnum);
 }
 
-@GUID("a1952beb-0f6b-4711-b136-01da85b968a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchange
+@GUID("a1952beb-0f6b-4711-b136-01da85b968a6")
 interface ISyncChange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchange-getownerreplicaid
@@ -1076,9 +1076,9 @@ interface ISyncChange : IUnknown
     HRESULT SetWorkEstimate(uint dwWork);
 }
 
-@GUID("9e38382f-1589-48c3-92e4-05ecdcb4f3f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncchangewithprerequisite
+@GUID("9e38382f-1589-48c3-92e4-05ecdcb4f3f7")
 interface ISyncChangeWithPrerequisite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncchangewithprerequisite-getprerequisiteknowledge
@@ -1088,9 +1088,9 @@ interface ISyncChangeWithPrerequisite : IUnknown
                                                 ISyncKnowledge* ppLearnedKnowledgeWithPrerequisite);
 }
 
-@GUID("9785e0bd-bdff-40c4-98c5-b34b2f1991b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isyncfullenumerationchange
+@GUID("9785e0bd-bdff-40c4-98c5-b34b2f1991b3")
 interface ISyncFullEnumerationChange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isyncfullenumerationchange-getlearnedknowledgeafterrecoverycomplete
@@ -1163,9 +1163,9 @@ interface ISyncChangeBatchWithFilterKeyMap : IUnknown
                                                                     ISyncKnowledge* ppLearnedFilterForgottenKnowledge);
 }
 
-@GUID("71b4863b-f969-4676-bbc3-3d9fdc3fb2c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-idataretrievercallback
+@GUID("71b4863b-f969-4676-bbc3-3d9fdc3fb2c7")
 interface IDataRetrieverCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-idataretrievercallback-loadchangedatacomplete
@@ -1174,9 +1174,9 @@ interface IDataRetrieverCallback : IUnknown
     HRESULT LoadChangeDataError(HRESULT hrError);
 }
 
-@GUID("44a4aaca-ec39-46d5-b5c9-d633c0ee67e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iloadchangecontext
+@GUID("44a4aaca-ec39-46d5-b5c9-d633c0ee67e2")
 interface ILoadChangeContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iloadchangecontext-getsyncchange
@@ -1188,9 +1188,9 @@ interface ILoadChangeContext : IUnknown
                                             IRecoverableErrorData pErrorData);
 }
 
-@GUID("9b22f2a9-a4cd-4648-9d8e-3a510d4da04b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isynchronousdataretriever
+@GUID("9b22f2a9-a4cd-4648-9d8e-3a510d4da04b")
 interface ISynchronousDataRetriever : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isynchronousdataretriever-getidparameters
@@ -1199,9 +1199,9 @@ interface ISynchronousDataRetriever : IUnknown
     HRESULT LoadChangeData(ILoadChangeContext pLoadChangeContext, IUnknown* ppUnkData);
 }
 
-@GUID("9fc7e470-61ea-4a88-9be4-df56a27cfef2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iasynchronousdataretriever
+@GUID("9fc7e470-61ea-4a88-9be4-df56a27cfef2")
 interface IAsynchronousDataRetriever : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iasynchronousdataretriever-getidparameters
@@ -1214,27 +1214,27 @@ interface IAsynchronousDataRetriever : IUnknown
     HRESULT LoadChangeData(ILoadChangeContext pLoadChangeContext);
 }
 
-@GUID("82df8873-6360-463a-a8a1-ede5e1a1594d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-ifilterrequestcallback
+@GUID("82df8873-6360-463a-a8a1-ede5e1a1594d")
 interface IFilterRequestCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-ifilterrequestcallback-requestfilter
     HRESULT RequestFilter(IUnknown pFilter, FILTERING_TYPE filteringType);
 }
 
-@GUID("2e020184-6d18-46a7-a32a-da4aeb06696c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irequestfilteredsync
+@GUID("2e020184-6d18-46a7-a32a-da4aeb06696c")
 interface IRequestFilteredSync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-irequestfilteredsync-specifyfilter
     HRESULT SpecifyFilter(IFilterRequestCallback pCallback);
 }
 
-@GUID("3d128ded-d555-4e0d-bf4b-fb213a8a9302")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isupportfilteredsync
+@GUID("3d128ded-d555-4e0d-bf4b-fb213a8a9302")
 interface ISupportFilteredSync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isupportfilteredsync-addfilter
@@ -1254,9 +1254,9 @@ interface IFilterTrackingProvider : IUnknown
     HRESULT AddTrackedFilter(ISyncFilter pFilter);
 }
 
-@GUID("eadf816f-d0bd-43ca-8f40-5acdc6c06f7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-isupportlastwritetime
+@GUID("eadf816f-d0bd-43ca-8f40-5acdc6c06f7a")
 interface ISupportLastWriteTime : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-isupportlastwritetime-getitemchangetime
@@ -1265,9 +1265,9 @@ interface ISupportLastWriteTime : IUnknown
     HRESULT GetChangeUnitChangeTime(const(ubyte)* pbItemId, const(ubyte)* pbChangeUnitId, ulong* pullTimestamp);
 }
 
-@GUID("809b7276-98cf-4957-93a5-0ebdd3dddffd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-iproviderconverter
+@GUID("809b7276-98cf-4957-93a5-0ebdd3dddffd")
 interface IProviderConverter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nf-winsync-iproviderconverter-initialize
@@ -1287,9 +1287,9 @@ interface ISyncDataConverter : IUnknown
                                         IUnknown* ppUnkDataout);
 }
 
-@GUID("cb45953b-7624-47bc-a472-eb8cac6b222e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-isyncproviderregistration
+@GUID("cb45953b-7624-47bc-a472-eb8cac6b222e")
 interface ISyncProviderRegistration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-isyncproviderregistration-createsyncproviderconfiguiregistrationinstance
@@ -1334,9 +1334,9 @@ interface ISyncProviderRegistration : IUnknown
     HRESULT GetChange(HANDLE hEvent, ISyncRegistrationChange* ppChange);
 }
 
-@GUID("f6be2602-17c6-4658-a2d7-68ed3330f641")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-ienumsyncproviderconfiguiinfos
+@GUID("f6be2602-17c6-4658-a2d7-68ed3330f641")
 interface IEnumSyncProviderConfigUIInfos : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-ienumsyncproviderconfiguiinfos-next
@@ -1349,9 +1349,9 @@ interface IEnumSyncProviderConfigUIInfos : IUnknown
     HRESULT Clone(IEnumSyncProviderConfigUIInfos* ppEnum);
 }
 
-@GUID("a04ba850-5eb1-460d-a973-393fcb608a11")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-ienumsyncproviderinfos
+@GUID("a04ba850-5eb1-460d-a973-393fcb608a11")
 interface IEnumSyncProviderInfos : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-ienumsyncproviderinfos-next
@@ -1364,27 +1364,27 @@ interface IEnumSyncProviderInfos : IUnknown
     HRESULT Clone(IEnumSyncProviderInfos* ppEnum);
 }
 
-@GUID("1ee135de-88a4-4504-b0d0-f7920d7e5ba6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-isyncproviderinfo
+@GUID("1ee135de-88a4-4504-b0d0-f7920d7e5ba6")
 interface ISyncProviderInfo : IPropertyStore
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-isyncproviderinfo-getsyncprovider
     HRESULT GetSyncProvider(uint dwClsContext, IRegisteredSyncProvider* ppSyncProvider);
 }
 
-@GUID("214141ae-33d7-4d8d-8e37-f227e880ce50")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-isyncproviderconfiguiinfo
+@GUID("214141ae-33d7-4d8d-8e37-f227e880ce50")
 interface ISyncProviderConfigUIInfo : IPropertyStore
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-isyncproviderconfiguiinfo-getsyncproviderconfigui
     HRESULT GetSyncProviderConfigUI(uint dwClsContext, ISyncProviderConfigUI* ppSyncProviderConfigUI);
 }
 
-@GUID("7b0705f6-cbcd-4071-ab05-3bdc364d4a0c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-isyncproviderconfigui
+@GUID("7b0705f6-cbcd-4071-ab05-3bdc364d4a0c")
 interface ISyncProviderConfigUI : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-isyncproviderconfigui-init
@@ -1399,9 +1399,9 @@ interface ISyncProviderConfigUI : IUnknown
     HRESULT ModifySyncProvider(HWND hwndParent, IUnknown pUnkContext, ISyncProviderInfo pProviderInfo);
 }
 
-@GUID("913bcf76-47c1-40b5-a896-5e8a9c414c14")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-iregisteredsyncprovider
+@GUID("913bcf76-47c1-40b5-a896-5e8a9c414c14")
 interface IRegisteredSyncProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-iregisteredsyncprovider-init
@@ -1412,9 +1412,9 @@ interface IRegisteredSyncProvider : IUnknown
     HRESULT Reset();
 }
 
-@GUID("eea0d9ae-6b29-43b4-9e70-e3ae33bb2c3b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nn-syncregistration-isyncregistrationchange
+@GUID("eea0d9ae-6b29-43b4-9e70-e3ae33bb2c3b")
 interface ISyncRegistrationChange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/syncregistration/nf-syncregistration-isyncregistrationchange-getevent

@@ -19,15 +19,15 @@ enum GUID CLSID_SoftwareBitmapNativeFactory = GUID("84e65691-8602-4a84-be46-708b
 
 // Interfaces
 
-@GUID("94bc8415-04ea-4b2e-af13-4de95aa898eb")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.imaging.interop/nn-windows-graphics-imaging-interop-isoftwarebitmapnative
+@GUID("94bc8415-04ea-4b2e-af13-4de95aa898eb")
 interface ISoftwareBitmapNative : IInspectable
 {
     HRESULT GetData(const(GUID)* riid, void** ppv);
 }
 
-@GUID("c3c181ec-2914-4791-af02-02d224a10b43")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.imaging.interop/nn-windows-graphics-imaging-interop-isoftwarebitmapnativefactory
+@GUID("c3c181ec-2914-4791-af02-02d224a10b43")
 interface ISoftwareBitmapNativeFactory : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.imaging.interop/nf-windows-graphics-imaging-interop-isoftwarebitmapnativefactory-createfromwicbitmap

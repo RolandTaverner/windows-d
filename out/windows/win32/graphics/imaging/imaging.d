@@ -1338,9 +1338,9 @@ HRESULT WICGetMetadataContentSize(const(GUID)* guidContainerFormat, IWICMetadata
 
 // Interfaces
 
-@GUID("00000040-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicpalette
+@GUID("00000040-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICPalette : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicpalette-initializepredefined
@@ -1365,9 +1365,9 @@ interface IWICPalette : IUnknown
     HRESULT HasAlpha(BOOL* pfHasAlpha);
 }
 
-@GUID("00000120-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapsource
+@GUID("00000120-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICBitmapSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapsource-getsize
@@ -1382,9 +1382,9 @@ interface IWICBitmapSource : IUnknown
     HRESULT CopyPixels(const(WICRect)* prc, uint cbStride, uint cbBufferSize, ubyte* pbBuffer);
 }
 
-@GUID("00000301-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicformatconverter
+@GUID("00000301-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICFormatConverter : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicformatconverter-initialize
@@ -1394,9 +1394,9 @@ interface IWICFormatConverter : IWICBitmapSource
     HRESULT CanConvert(GUID* srcPixelFormat, GUID* dstPixelFormat, BOOL* pfCanConvert);
 }
 
-@GUID("bebee9cb-83b0-4dcc-8132-b0aaa55eac96")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicplanarformatconverter
+@GUID("bebee9cb-83b0-4dcc-8132-b0aaa55eac96")
 interface IWICPlanarFormatConverter : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicplanarformatconverter-initialize
@@ -1406,27 +1406,27 @@ interface IWICPlanarFormatConverter : IWICBitmapSource
     HRESULT CanConvert(const(GUID)* pSrcPixelFormats, uint cSrcPlanes, GUID* dstPixelFormat, BOOL* pfCanConvert);
 }
 
-@GUID("00000302-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapscaler
+@GUID("00000302-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICBitmapScaler : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapscaler-initialize
     HRESULT Initialize(IWICBitmapSource pISource, uint uiWidth, uint uiHeight, WICBitmapInterpolationMode mode);
 }
 
-@GUID("e4fbcf03-223d-4e81-9333-d635556dd1b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapclipper
+@GUID("e4fbcf03-223d-4e81-9333-d635556dd1b5")
 interface IWICBitmapClipper : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapclipper-initialize
     HRESULT Initialize(IWICBitmapSource pISource, const(WICRect)* prc);
 }
 
-@GUID("5009834f-2d6a-41ce-9e1b-17c5aff7a782")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapfliprotator
+@GUID("5009834f-2d6a-41ce-9e1b-17c5aff7a782")
 interface IWICBitmapFlipRotator : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapfliprotator-initialize
@@ -1441,9 +1441,9 @@ interface IWICBitmapToneMapper : IWICBitmapSource
     HRESULT InitializeForSdrTarget(IWICBitmapSource pISource, GUID* guidDstFormat, WICBitmapToneMappingMode mode);
 }
 
-@GUID("00000123-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmaplock
+@GUID("00000123-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICBitmapLock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmaplock-getsize
@@ -1456,9 +1456,9 @@ interface IWICBitmapLock : IUnknown
     HRESULT GetPixelFormat(GUID* pPixelFormat);
 }
 
-@GUID("00000121-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmap
+@GUID("00000121-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICBitmap : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmap-lock
@@ -1469,9 +1469,9 @@ interface IWICBitmap : IWICBitmapSource
     HRESULT SetResolution(double dpiX, double dpiY);
 }
 
-@GUID("3c613a02-34b2-44ea-9a7c-45aea9c6fd6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwiccolorcontext
+@GUID("3c613a02-34b2-44ea-9a7c-45aea9c6fd6d")
 interface IWICColorContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwiccolorcontext-initializefromfilename
@@ -1488,9 +1488,9 @@ interface IWICColorContext : IUnknown
     HRESULT GetExifColorSpace(uint* pValue);
 }
 
-@GUID("b66f034f-d0e2-40ab-b436-6de39e321a94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwiccolortransform
+@GUID("b66f034f-d0e2-40ab-b436-6de39e321a94")
 interface IWICColorTransform : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwiccolortransform-initialize
@@ -1498,9 +1498,9 @@ interface IWICColorTransform : IWICBitmapSource
                        IWICColorContext pIContextDest, GUID* pixelFmtDest);
 }
 
-@GUID("b84e2c09-78c9-4ac4-8bd3-524ae1663a2f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicfastmetadataencoder
+@GUID("b84e2c09-78c9-4ac4-8bd3-524ae1663a2f")
 interface IWICFastMetadataEncoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicfastmetadataencoder-commit
@@ -1509,9 +1509,9 @@ interface IWICFastMetadataEncoder : IUnknown
     HRESULT GetMetadataQueryWriter(IWICMetadataQueryWriter* ppIMetadataQueryWriter);
 }
 
-@GUID("135ff860-22b7-4ddf-b0f6-218f4f299a43")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicstream
+@GUID("135ff860-22b7-4ddf-b0f6-218f4f299a43")
 interface IWICStream : IStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicstream-initializefromistream
@@ -1524,9 +1524,9 @@ interface IWICStream : IStream
     HRESULT InitializeFromIStreamRegion(IStream pIStream, ulong ulOffset, ulong ulMaxSize);
 }
 
-@GUID("dc2bb46d-3f07-481e-8625-220c4aedbb33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicenummetadataitem
+@GUID("dc2bb46d-3f07-481e-8625-220c4aedbb33")
 interface IWICEnumMetadataItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicenummetadataitem-next
@@ -1540,9 +1540,9 @@ interface IWICEnumMetadataItem : IUnknown
     HRESULT Clone(IWICEnumMetadataItem* ppIEnumMetadataItem);
 }
 
-@GUID("30989668-e1c9-4597-b395-458eedb808df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicmetadataqueryreader
+@GUID("30989668-e1c9-4597-b395-458eedb808df")
 interface IWICMetadataQueryReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicmetadataqueryreader-getcontainerformat
@@ -1555,9 +1555,9 @@ interface IWICMetadataQueryReader : IUnknown
     HRESULT GetEnumerator(IEnumString* ppIEnumString);
 }
 
-@GUID("a721791a-0def-4d06-bd91-2118bf1db10b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicmetadataquerywriter
+@GUID("a721791a-0def-4d06-bd91-2118bf1db10b")
 interface IWICMetadataQueryWriter : IWICMetadataQueryReader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicmetadataquerywriter-setmetadatabyname
@@ -1566,8 +1566,8 @@ interface IWICMetadataQueryWriter : IWICMetadataQueryReader
     HRESULT RemoveMetadataByName(const(PWSTR) wzName);
 }
 
-@GUID("00000103-a8f2-4877-ba0a-fd2b6645fb94")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapencoder
+@GUID("00000103-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICBitmapEncoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapencoder-initialize
@@ -1592,9 +1592,9 @@ interface IWICBitmapEncoder : IUnknown
     HRESULT GetMetadataQueryWriter(IWICMetadataQueryWriter* ppIMetadataQueryWriter);
 }
 
-@GUID("00000105-a8f2-4877-ba0a-fd2b6645fb94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapframeencode
+@GUID("00000105-a8f2-4877-ba0a-fd2b6645fb94")
 interface IWICBitmapFrameEncode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapframeencode-initialize
@@ -1621,9 +1621,9 @@ interface IWICBitmapFrameEncode : IUnknown
     HRESULT GetMetadataQueryWriter(IWICMetadataQueryWriter* ppIMetadataQueryWriter);
 }
 
-@GUID("f928b7b8-2221-40c1-b72e-7e82f1974d1a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicplanarbitmapframeencode
+@GUID("f928b7b8-2221-40c1-b72e-7e82f1974d1a")
 interface IWICPlanarBitmapFrameEncode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicplanarbitmapframeencode-writepixels
@@ -1632,9 +1632,9 @@ interface IWICPlanarBitmapFrameEncode : IUnknown
     HRESULT WriteSource(IWICBitmapSource* ppPlanes, uint cPlanes, WICRect* prcSource);
 }
 
-@GUID("9edde9e7-8dee-47ea-99df-e6faf2ed44bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapdecoder
+@GUID("9edde9e7-8dee-47ea-99df-e6faf2ed44bf")
 interface IWICBitmapDecoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapdecoder-querycapability
@@ -1661,9 +1661,9 @@ interface IWICBitmapDecoder : IUnknown
     HRESULT GetFrame(uint index, IWICBitmapFrameDecode* ppIBitmapFrame);
 }
 
-@GUID("3b16811b-6a43-4ec9-b713-3d5a0c13b940")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapsourcetransform
+@GUID("3b16811b-6a43-4ec9-b713-3d5a0c13b940")
 interface IWICBitmapSourceTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapsourcetransform-copypixels
@@ -1684,9 +1684,9 @@ interface IWICBitmapSourceTransform2 : IWICBitmapSourceTransform
                                            uint* pcActualCount);
 }
 
-@GUID("3aff9cce-be95-4303-b927-e7d16ff4a613")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicplanarbitmapsourcetransform
+@GUID("3aff9cce-be95-4303-b927-e7d16ff4a613")
 interface IWICPlanarBitmapSourceTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicplanarbitmapsourcetransform-doessupporttransform
@@ -1699,9 +1699,9 @@ interface IWICPlanarBitmapSourceTransform : IUnknown
                        const(WICBitmapPlane)* pDstPlanes, uint cPlanes);
 }
 
-@GUID("3b16811b-6a43-4ec9-a813-3d930c13b940")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapframedecode
+@GUID("3b16811b-6a43-4ec9-a813-3d930c13b940")
 interface IWICBitmapFrameDecode : IWICBitmapSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapframedecode-getmetadataqueryreader
@@ -1727,9 +1727,9 @@ interface IWICBitmapFrameChainWriter : IUnknown
     HRESULT DoesSupportChainType(WICBitmapChainType chainType, BOOL* pfIsSupported);
 }
 
-@GUID("daac296f-7aa5-4dbf-8d15-225c5976f891")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicprogressivelevelcontrol
+@GUID("daac296f-7aa5-4dbf-8d15-225c5976f891")
 interface IWICProgressiveLevelControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicprogressivelevelcontrol-getlevelcount
@@ -1769,18 +1769,18 @@ interface IWICD3DTextureSource : IUnknown
     HRESULT GetD3DTextureOptions(IPropertyBag2* ppID3DTextureOptions);
 }
 
-@GUID("4776f9cd-9517-45fa-bf24-e89c5ec5c60c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicprogresscallback
+@GUID("4776f9cd-9517-45fa-bf24-e89c5ec5c60c")
 interface IWICProgressCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicprogresscallback-notify
     HRESULT Notify(uint uFrameNum, WICProgressOperation operation, double dblProgress);
 }
 
-@GUID("64c1024e-c3cf-4462-8078-88c2b11c46d9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapcodecprogressnotification
+@GUID("64c1024e-c3cf-4462-8078-88c2b11c46d9")
 interface IWICBitmapCodecProgressNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapcodecprogressnotification-registerprogressnotification
@@ -1788,9 +1788,9 @@ interface IWICBitmapCodecProgressNotification : IUnknown
                                          uint dwProgressFlags);
 }
 
-@GUID("23bc3f0a-698b-4357-886b-f24d50671334")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwiccomponentinfo
+@GUID("23bc3f0a-698b-4357-886b-f24d50671334")
 interface IWICComponentInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwiccomponentinfo-getcomponenttype
@@ -1811,9 +1811,9 @@ interface IWICComponentInfo : IUnknown
     HRESULT GetFriendlyName(uint cchFriendlyName, PWSTR wzFriendlyName, uint* pcchActual);
 }
 
-@GUID("9f34fb65-13f4-4f15-bc57-3726b5e53d9f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicformatconverterinfo
+@GUID("9f34fb65-13f4-4f15-bc57-3726b5e53d9f")
 interface IWICFormatConverterInfo : IWICComponentInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicformatconverterinfo-getpixelformats
@@ -1822,9 +1822,9 @@ interface IWICFormatConverterInfo : IWICComponentInfo
     HRESULT CreateInstance(IWICFormatConverter* ppIConverter);
 }
 
-@GUID("e87a44c4-b76e-4c47-8b09-298eb12a2714")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapcodecinfo
+@GUID("e87a44c4-b76e-4c47-8b09-298eb12a2714")
 interface IWICBitmapCodecInfo : IWICComponentInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapcodecinfo-getcontainerformat
@@ -1854,18 +1854,18 @@ interface IWICBitmapCodecInfo : IWICComponentInfo
     HRESULT MatchesMimeType(const(PWSTR) wzMimeType, BOOL* pfMatches);
 }
 
-@GUID("94c9b4ee-a09f-4f92-8a1e-4a9bce7e76fb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapencoderinfo
+@GUID("94c9b4ee-a09f-4f92-8a1e-4a9bce7e76fb")
 interface IWICBitmapEncoderInfo : IWICBitmapCodecInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapencoderinfo-createinstance
     HRESULT CreateInstance(IWICBitmapEncoder* ppIBitmapEncoder);
 }
 
-@GUID("d8cd007f-d08f-4191-9bfc-236ea7f0e4b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicbitmapdecoderinfo
+@GUID("d8cd007f-d08f-4191-9bfc-236ea7f0e4b5")
 interface IWICBitmapDecoderInfo : IWICBitmapCodecInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicbitmapdecoderinfo-getpatterns
@@ -1878,9 +1878,9 @@ interface IWICBitmapDecoderInfo : IWICBitmapCodecInfo
     HRESULT CreateInstance(IWICBitmapDecoder* ppIBitmapDecoder);
 }
 
-@GUID("e8eda601-3d48-431a-ab44-69059be88bbe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicpixelformatinfo
+@GUID("e8eda601-3d48-431a-ab44-69059be88bbe")
 interface IWICPixelFormatInfo : IWICComponentInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicpixelformatinfo-getformatguid
@@ -1895,9 +1895,9 @@ interface IWICPixelFormatInfo : IWICComponentInfo
     HRESULT GetChannelMask(uint uiChannelIndex, uint cbMaskBuffer, ubyte* pbMaskBuffer, uint* pcbActual);
 }
 
-@GUID("a9db33a2-af5f-43c7-b679-74f5984b5aa4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicpixelformatinfo2
+@GUID("a9db33a2-af5f-43c7-b679-74f5984b5aa4")
 interface IWICPixelFormatInfo2 : IWICPixelFormatInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicpixelformatinfo2-supportstransparency
@@ -1906,9 +1906,9 @@ interface IWICPixelFormatInfo2 : IWICPixelFormatInfo
     HRESULT GetNumericRepresentation(WICPixelFormatNumericRepresentation* pNumericRepresentation);
 }
 
-@GUID("ec5ec8a9-c395-4314-9c77-54d7a935ff70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimagingfactory
+@GUID("ec5ec8a9-c395-4314-9c77-54d7a935ff70")
 interface IWICImagingFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimagingfactory-createdecoderfromfilename
@@ -1978,18 +1978,18 @@ interface IWICImagingFactory : IUnknown
                                         IWICMetadataQueryWriter* ppIQueryWriter);
 }
 
-@GUID("95c75a6e-3e8c-4ec2-85a8-aebcc551e59b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicdeveloprawnotificationcallback
+@GUID("95c75a6e-3e8c-4ec2-85a8-aebcc551e59b")
 interface IWICDevelopRawNotificationCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicdeveloprawnotificationcallback-notify
     HRESULT Notify(uint NotificationMask);
 }
 
-@GUID("fbec5e44-f7be-4b65-b7f8-c0c81fef026d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicdevelopraw
+@GUID("fbec5e44-f7be-4b65-b7f8-c0c81fef026d")
 interface IWICDevelopRaw : IWICBitmapFrameDecode
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicdevelopraw-queryrawcapabilitiesinfo
@@ -2061,9 +2061,9 @@ interface IWICDevelopRaw : IWICBitmapFrameDecode
     HRESULT SetNotificationCallback(IWICDevelopRawNotificationCallback pCallback);
 }
 
-@GUID("409cd537-8532-40cb-9774-e2feb2df4e9c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicddsdecoder
+@GUID("409cd537-8532-40cb-9774-e2feb2df4e9c")
 interface IWICDdsDecoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicddsdecoder-getparameters
@@ -2072,9 +2072,9 @@ interface IWICDdsDecoder : IUnknown
     HRESULT GetFrame(uint arrayIndex, uint mipLevel, uint sliceIndex, IWICBitmapFrameDecode* ppIBitmapFrame);
 }
 
-@GUID("5cacdb4c-407e-41b3-b936-d0f010cd6732")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicddsencoder
+@GUID("5cacdb4c-407e-41b3-b936-d0f010cd6732")
 interface IWICDdsEncoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicddsencoder-setparameters
@@ -2086,9 +2086,9 @@ interface IWICDdsEncoder : IUnknown
                            uint* pSliceIndex);
 }
 
-@GUID("3d4c0c61-18a4-41e4-bd80-481a4fc9f464")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicddsframedecode
+@GUID("3d4c0c61-18a4-41e4-bd80-481a4fc9f464")
 interface IWICDdsFrameDecode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicddsframedecode-getsizeinblocks
@@ -2099,9 +2099,9 @@ interface IWICDdsFrameDecode : IUnknown
     HRESULT CopyBlocks(const(WICRect)* prcBoundsInBlocks, uint cbStride, uint cbBufferSize, ubyte* pbBuffer);
 }
 
-@GUID("8939f66e-c46a-4c21-a9d1-98b327ce1679")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicjpegframedecode
+@GUID("8939f66e-c46a-4c21-a9d1-98b327ce1679")
 interface IWICJpegFrameDecode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicjpegframedecode-doessupportindexing
@@ -2125,9 +2125,9 @@ interface IWICJpegFrameDecode : IUnknown
     HRESULT CopyMinimalStream(uint streamOffset, uint cbStreamData, ubyte* pbStreamData, uint* pcbStreamDataActual);
 }
 
-@GUID("2f0c601f-d2c6-468c-abfa-49495d983ed1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicjpegframeencode
+@GUID("2f0c601f-d2c6-468c-abfa-49495d983ed1")
 interface IWICJpegFrameEncode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicjpegframeencode-getachuffmantable
@@ -2140,9 +2140,9 @@ interface IWICJpegFrameEncode : IUnknown
     HRESULT WriteScan(uint cbScanData, const(ubyte)* pbScanData);
 }
 
-@GUID("feaa2a8d-b3f3-43e4-b25c-d1de990a1ae1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatablockreader
+@GUID("feaa2a8d-b3f3-43e4-b25c-d1de990a1ae1")
 interface IWICMetadataBlockReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatablockreader-getcontainerformat
@@ -2155,9 +2155,9 @@ interface IWICMetadataBlockReader : IUnknown
     HRESULT GetEnumerator(IEnumUnknown* ppIEnumMetadata);
 }
 
-@GUID("08fb9676-b444-41e8-8dbe-6a53a542bff1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatablockwriter
+@GUID("08fb9676-b444-41e8-8dbe-6a53a542bff1")
 interface IWICMetadataBlockWriter : IWICMetadataBlockReader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatablockwriter-initializefromblockreader
@@ -2172,9 +2172,9 @@ interface IWICMetadataBlockWriter : IWICMetadataBlockReader
     HRESULT RemoveWriterByIndex(uint nIndex);
 }
 
-@GUID("9204fe99-d8fc-4fd5-a001-9536b067a899")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatareader
+@GUID("9204fe99-d8fc-4fd5-a001-9536b067a899")
 interface IWICMetadataReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatareader-getmetadataformat
@@ -2191,9 +2191,9 @@ interface IWICMetadataReader : IUnknown
     HRESULT GetEnumerator(IWICEnumMetadataItem* ppIEnumMetadata);
 }
 
-@GUID("f7836e16-3be0-470b-86bb-160d0aecd7de")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatawriter
+@GUID("f7836e16-3be0-470b-86bb-160d0aecd7de")
 interface IWICMetadataWriter : IWICMetadataReader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatawriter-setvalue
@@ -2207,9 +2207,9 @@ interface IWICMetadataWriter : IWICMetadataReader
     HRESULT RemoveValueByIndex(uint nIndex);
 }
 
-@GUID("449494bc-b468-4927-96d7-ba90d31ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicstreamprovider
+@GUID("449494bc-b468-4927-96d7-ba90d31ab505")
 interface IWICStreamProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicstreamprovider-getstream
@@ -2222,9 +2222,9 @@ interface IWICStreamProvider : IUnknown
     HRESULT RefreshStream();
 }
 
-@GUID("00675040-6908-45f8-86a3-49c7dfd6d9ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicpersiststream
+@GUID("00675040-6908-45f8-86a3-49c7dfd6d9ad")
 interface IWICPersistStream : IPersistStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicpersiststream-loadex
@@ -2233,9 +2233,9 @@ interface IWICPersistStream : IPersistStream
     HRESULT SaveEx(IStream pIStream, uint dwPersistOptions, BOOL fClearDirty);
 }
 
-@GUID("aba958bf-c672-44d1-8d61-ce6df2e682c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatahandlerinfo
+@GUID("aba958bf-c672-44d1-8d61-ce6df2e682c2")
 interface IWICMetadataHandlerInfo : IWICComponentInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatahandlerinfo-getmetadataformat
@@ -2254,9 +2254,9 @@ interface IWICMetadataHandlerInfo : IWICComponentInfo
     HRESULT DoesRequireFixedSize(BOOL* pfFixedSize);
 }
 
-@GUID("eebf1f5b-07c1-4447-a3ab-22acaf78a804")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatareaderinfo
+@GUID("eebf1f5b-07c1-4447-a3ab-22acaf78a804")
 interface IWICMetadataReaderInfo : IWICMetadataHandlerInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatareaderinfo-getpatterns
@@ -2269,9 +2269,9 @@ interface IWICMetadataReaderInfo : IWICMetadataHandlerInfo
     HRESULT CreateInstance(IWICMetadataReader* ppIReader);
 }
 
-@GUID("b22e3fba-3925-4323-b5c1-9ebfc430f236")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwicmetadatawriterinfo
+@GUID("b22e3fba-3925-4323-b5c1-9ebfc430f236")
 interface IWICMetadataWriterInfo : IWICMetadataHandlerInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwicmetadatawriterinfo-getheader
@@ -2282,9 +2282,9 @@ interface IWICMetadataWriterInfo : IWICMetadataHandlerInfo
     HRESULT CreateInstance(IWICMetadataWriter* ppIWriter);
 }
 
-@GUID("412d0c3a-9650-44fa-af5b-dd2a06c8e8fb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nn-wincodecsdk-iwiccomponentfactory
+@GUID("412d0c3a-9650-44fa-af5b-dd2a06c8e8fb")
 interface IWICComponentFactory : IWICImagingFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodecsdk/nf-wincodecsdk-iwiccomponentfactory-createmetadatareader

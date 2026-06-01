@@ -10224,6 +10224,7 @@ struct LeafCondition;
 @GUID("e03e85b0-7be3-4000-ba98-6c13de9fa486")
 struct ConditionFactory;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/TaskSchd/taskschedulerschema-interval-restarttype-element
 @GUID("d957171f-4bf9-4de2-bcd5-c70a7ca55836")
 struct Interval;
 
@@ -10272,8 +10273,8 @@ struct PDPO;
 @GUID("ff151822-b0bf-11d1-a80d-000000000000")
 struct RootBinder;
 
-@GUID("cc907054-c058-101a-b554-08002b33b0e6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink
+@GUID("cc907054-c058-101a-b554-08002b33b0e6")
 interface IWordSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink-putword
@@ -10288,9 +10289,9 @@ interface IWordSink : IUnknown
     HRESULT PutBreak(WORDREP_BREAK_TYPE breakType);
 }
 
-@GUID("d53552c8-77e3-101a-b552-08002b33b0e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iwordbreaker
+@GUID("d53552c8-77e3-101a-b552-08002b33b0e6")
 interface IWordBreaker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-init
@@ -10304,9 +10305,9 @@ interface IWordBreaker : IUnknown
     HRESULT GetLicenseToUse(const(ushort)** ppwcsLicense);
 }
 
-@GUID("fe77c330-7f42-11ce-be57-00aa0051fe20")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iwordformsink
+@GUID("fe77c330-7f42-11ce-be57-00aa0051fe20")
 interface IWordFormSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordformsink-putphrase
@@ -10315,9 +10316,9 @@ interface IWordFormSink : IUnknown
     HRESULT PutWord(const(PWSTR) pwcInBuf, uint cwc);
 }
 
-@GUID("efbaf140-7f42-11ce-be57-00aa0051fe20")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-istemmer
+@GUID("efbaf140-7f42-11ce-be57-00aa0051fe20")
 interface IStemmer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-init
@@ -10328,8 +10329,8 @@ interface IStemmer : IUnknown
     HRESULT GetLicenseToUse(const(ushort)** ppwcsLicense);
 }
 
-@GUID("5e341ab7-02d0-11d1-900c-00a0c9063796")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-isimplecommandcreator
+@GUID("5e341ab7-02d0-11d1-900c-00a0c9063796")
 interface ISimpleCommandCreator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-createicommand
@@ -10340,8 +10341,8 @@ interface ISimpleCommandCreator : IUnknown
     HRESULT GetDefaultCatalog(PWSTR pwszCatalogName, uint cwcIn, uint* pcwcOut);
 }
 
-@GUID("0b63e37a-9ccc-11d0-bcdb-00805fccce04")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-icolumnmapper
+@GUID("0b63e37a-9ccc-11d0-bcdb-00805fccce04")
 interface IColumnMapper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-getpropinfofromname
@@ -10354,8 +10355,8 @@ interface IColumnMapper : IUnknown
     HRESULT IsMapUpToDate();
 }
 
-@GUID("0b63e37b-9ccc-11d0-bcdb-00805fccce04")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-icolumnmappercreator
+@GUID("0b63e37b-9ccc-11d0-bcdb-00805fccce04")
 interface IColumnMapperCreator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmappercreator-getcolumnmapper
@@ -10363,9 +10364,9 @@ interface IColumnMapperCreator : IUnknown
                             IColumnMapper* ppColumnMapper);
 }
 
-@GUID("c7310722-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/nn-filtereg-iloadfilter
+@GUID("c7310722-ac80-11d1-8df3-00c04fb6ef4f")
 interface ILoadFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilter
@@ -10389,18 +10390,18 @@ interface ILoadFilterWithPrivateComActivation : ILoadFilter
                                                 IFilter* filterObj);
 }
 
-@GUID("4fdef69c-dbc9-454e-9910-b34f3c64b510")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-irichchunk
+@GUID("4fdef69c-dbc9-454e-9910-b34f3c64b510")
 interface IRichChunk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-irichchunk-getdata
     HRESULT GetData(uint* pFirstPos, uint* pLength, PWSTR* ppsz, PROPVARIANT* pValue);
 }
 
-@GUID("0fc988d4-c935-4b97-a973-46282ea175c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-icondition
+@GUID("0fc988d4-c935-4b97-a973-46282ea175c8")
 interface ICondition : IPersistStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getconditiontype
@@ -10419,9 +10420,9 @@ interface ICondition : IPersistStream
     HRESULT Clone(ICondition* ppc);
 }
 
-@GUID("0db8851d-2e5b-47eb-9208-d28c325a01d7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-icondition2
+@GUID("0db8851d-2e5b-47eb-9208-d28c325a01d7")
 interface ICondition2 : ICondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition2-getlocale
@@ -11092,9 +11093,9 @@ interface IRowsetBookmark : IUnknown
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(ubyte)* pBookmark);
 }
 
-@GUID("2ebdee67-3505-43f8-9946-ea44abc8e5b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iqueryparser
+@GUID("2ebdee67-3505-43f8-9946-ea44abc8e5b0")
 interface IQueryParser : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-parse
@@ -11118,9 +11119,9 @@ interface IQueryParser : IUnknown
                                          PWSTR* ppszQueryString);
 }
 
-@GUID("a5efe073-b16f-474f-9f3e-9f8b497a3e08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditionfactory
+@GUID("a5efe073-b16f-474f-9f3e-9f8b497a3e08")
 interface IConditionFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makenot
@@ -11136,9 +11137,9 @@ interface IConditionFactory : IUnknown
                     ICondition* ppcResolved);
 }
 
-@GUID("d6ebc66b-8921-4193-afdd-a1789fb7ff57")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iquerysolution
+@GUID("d6ebc66b-8921-4193-afdd-a1789fb7ff57")
 interface IQuerySolution : IConditionFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-getquery
@@ -11150,9 +11151,9 @@ interface IQuerySolution : IConditionFactory
                            IUnknown* ppWordBreaker);
 }
 
-@GUID("71d222e1-432f-429e-8c13-b6dafde5077a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditionfactory2
+@GUID("71d222e1-432f-429e-8c13-b6dafde5077a")
 interface IConditionFactory2 : IConditionFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createtruefalse
@@ -11185,9 +11186,9 @@ interface IConditionFactory2 : IConditionFactory
                              const(SYSTEMTIME)* pstReferenceTime, const(GUID)* riid, void** ppv);
 }
 
-@GUID("92d2cc58-4386-45a3-b98c-7e0ce64a4117")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditiongenerator
+@GUID("92d2cc58-4386-45a3-b98c-7e0ce64a4117")
 interface IConditionGenerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-initialize
@@ -11206,9 +11207,9 @@ interface IConditionGenerator : IUnknown
                           PWSTR* ppszPhrase);
 }
 
-@GUID("6bf0a714-3c18-430b-8b5d-83b1c234d3db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iinterval
+@GUID("6bf0a714-3c18-430b-8b5d-83b1c234d3db")
 interface IInterval : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iinterval-getlimits
@@ -11216,18 +11217,18 @@ interface IInterval : IUnknown
                       PROPVARIANT* ppropvarUpper);
 }
 
-@GUID("780102b0-c43b-4876-bc7b-5e9ba5c88794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-imetadata
+@GUID("780102b0-c43b-4876-bc7b-5e9ba5c88794")
 interface IMetaData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-imetadata-getdata
     HRESULT GetData(PWSTR* ppszKey, PWSTR* ppszValue);
 }
 
-@GUID("24264891-e80b-4fd3-b7ce-4ff2fae8931f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ientity
+@GUID("24264891-e80b-4fd3-b7ce-4ff2fae8931f")
 interface IEntity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-name
@@ -11248,9 +11249,9 @@ interface IEntity : IUnknown
     HRESULT DefaultPhrase(PWSTR* ppszPhrase);
 }
 
-@GUID("2769280b-5108-498c-9c7f-a51239b63147")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-irelationship
+@GUID("2769280b-5108-498c-9c7f-a51239b63147")
 interface IRelationship : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-name
@@ -11265,9 +11266,9 @@ interface IRelationship : IUnknown
     HRESULT DefaultPhrase(PWSTR* ppszPhrase);
 }
 
-@GUID("abdbd0b1-7d54-49fb-ab5c-bff4130004cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-inamedentity
+@GUID("abdbd0b1-7d54-49fb-ab5c-bff4130004cd")
 interface INamedEntity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentity-getvalue
@@ -11276,9 +11277,9 @@ interface INamedEntity : IUnknown
     HRESULT DefaultPhrase(PWSTR* ppszPhrase);
 }
 
-@GUID("8cf89bcb-394c-49b2-ae28-a59dd4ed7f68")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ischemaprovider
+@GUID("8cf89bcb-394c-49b2-ae28-a59dd4ed7f68")
 interface ISchemaProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-entities
@@ -11299,9 +11300,9 @@ interface ISchemaProvider : IUnknown
                                       PWSTR* ppszValue);
 }
 
-@GUID("22d8b4f2-f577-4adb-a335-c2ae88416fab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-itokencollection
+@GUID("22d8b4f2-f577-4adb-a335-c2ae88416fab")
 interface ITokenCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-itokencollection-numberoftokens
@@ -11310,9 +11311,9 @@ interface ITokenCollection : IUnknown
     HRESULT GetToken(uint i, uint* pBegin, uint* pLength, PWSTR* ppsz);
 }
 
-@GUID("af2440f6-8afc-47d0-9a7f-396a0acfb43d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-inamedentitycollector
+@GUID("af2440f6-8afc-47d0-9a7f-396a0acfb43d")
 interface INamedEntityCollector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentitycollector-add
@@ -11320,18 +11321,18 @@ interface INamedEntityCollector : IUnknown
                 const(PWSTR) pszValue, NAMED_ENTITY_CERTAINTY certainty);
 }
 
-@GUID("ca3fdca2-bfbe-4eed-90d7-0caef0a1bda1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ischemalocalizersupport
+@GUID("ca3fdca2-bfbe-4eed-90d7-0caef0a1bda1")
 interface ISchemaLocalizerSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemalocalizersupport-localize
     HRESULT Localize(const(PWSTR) pszGlobalString, PWSTR* ppszLocalString);
 }
 
-@GUID("a879e3c4-af77-44fb-8f37-ebd1487cf920")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iqueryparsermanager
+@GUID("a879e3c4-af77-44fb-8f37-ebd1487cf920")
 interface IQueryParserManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-createloadedparser
@@ -11343,9 +11344,9 @@ interface IQueryParserManager : IUnknown
     HRESULT SetOption(QUERY_PARSER_MANAGER_OPTION option, const(PROPVARIANT)* pOptionValue);
 }
 
-@GUID("0b63e318-9ccc-11d0-bcdb-00805fccce04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor
+@GUID("0b63e318-9ccc-11d0-bcdb-00805fccce04")
 interface IUrlAccessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-addrequestparameter
@@ -11376,9 +11377,9 @@ interface IUrlAccessor : IUnknown
     HRESULT BindToFilter(IFilter* ppFilter);
 }
 
-@GUID("c7310734-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor2
+@GUID("c7310734-ac80-11d1-8df3-00c04fb6ef4f")
 interface IUrlAccessor2 : IUrlAccessor
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-getdisplayurl
@@ -11389,18 +11390,18 @@ interface IUrlAccessor2 : IUrlAccessor
     HRESULT GetCodePage(PWSTR wszCodePage, uint dwSize, uint* pdwLength);
 }
 
-@GUID("6fbc7005-0455-4874-b8ff-7439450241a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor3
+@GUID("6fbc7005-0455-4874-b8ff-7439450241a3")
 interface IUrlAccessor3 : IUrlAccessor2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor3-getimpersonationsidblobs
     HRESULT GetImpersonationSidBlobs(const(PWSTR) pcwszURL, uint* pcSidCount, BLOB** ppSidBlobs);
 }
 
-@GUID("5cc51041-c8d2-41d7-bca3-9e9e286297dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor4
+@GUID("5cc51041-c8d2-41d7-bca3-9e9e286297dc")
 interface IUrlAccessor4 : IUrlAccessor3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor4-shouldindexitemcontent
@@ -11409,9 +11410,9 @@ interface IUrlAccessor4 : IUrlAccessor3
     HRESULT ShouldIndexProperty(const(PROPERTYKEY)* key, BOOL* pfIndexProperty);
 }
 
-@GUID("c731065d-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ioplockstatus
+@GUID("c731065d-ac80-11d1-8df3-00c04fb6ef4f")
 interface IOpLockStatus : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-isoplockvalid
@@ -11422,9 +11423,9 @@ interface IOpLockStatus : IUnknown
     HRESULT GetOplockEventHandle(HANDLE* phOplockEv);
 }
 
-@GUID("c73106e1-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocolthreadcontext
+@GUID("c73106e1-ac80-11d1-8df3-00c04fb6ef4f")
 interface ISearchProtocolThreadContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadinit
@@ -11435,9 +11436,9 @@ interface ISearchProtocolThreadContext : IUnknown
     HRESULT ThreadIdle(uint dwTimeElaspedSinceLastCallInMS);
 }
 
-@GUID("c73106ba-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocol
+@GUID("c73106ba-ac80-11d1-8df3-00c04fb6ef4f")
 interface ISearchProtocol : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-init
@@ -11452,9 +11453,9 @@ interface ISearchProtocol : IUnknown
     HRESULT ShutDown();
 }
 
-@GUID("7789f0b2-b5b2-4722-8b65-5dbd150697a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocol2
+@GUID("7789f0b2-b5b2-4722-8b65-5dbd150697a9")
 interface ISearchProtocol2 : ISearchProtocol
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol2-createaccessorex
@@ -11463,9 +11464,9 @@ interface ISearchProtocol2 : ISearchProtocol
                              const(BLOB)* pUserData, IUrlAccessor* ppAccessor);
 }
 
-@GUID("0b63e385-9ccc-11d0-bcdb-00805fccce04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iprotocolhandlersite
+@GUID("0b63e385-9ccc-11d0-bcdb-00805fccce04")
 interface IProtocolHandlerSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iprotocolhandlersite-getfilter
@@ -11473,9 +11474,9 @@ interface IProtocolHandlerSite : IUnknown
                       IFilter* ppFilter);
 }
 
-@GUID("04c18ccf-1f57-4cbd-88cc-3900f5195ce3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchroot
+@GUID("04c18ccf-1f57-4cbd-88cc-3900f5195ce3")
 interface ISearchRoot : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_schedule
@@ -11524,9 +11525,9 @@ interface ISearchRoot : IUnknown
     HRESULT get_Password(PWSTR* ppszPassword);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ienumsearchroots
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef52")
 interface IEnumSearchRoots : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-next
@@ -11539,9 +11540,9 @@ interface IEnumSearchRoots : IUnknown
     HRESULT Clone(IEnumSearchRoots* ppenum);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchscoperule
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef53")
 interface ISearchScopeRule : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_patternorurl
@@ -11554,9 +11555,9 @@ interface ISearchScopeRule : IUnknown
     HRESULT get_FollowFlags(uint* pFollowFlags);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ienumsearchscoperules
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef54")
 interface IEnumSearchScopeRules : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-next
@@ -11569,9 +11570,9 @@ interface IEnumSearchScopeRules : IUnknown
     HRESULT Clone(IEnumSearchScopeRules* ppenum);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef55")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcrawlscopemanager
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef55")
 interface ISearchCrawlScopeManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-adddefaultscoperule
@@ -11608,18 +11609,18 @@ interface ISearchCrawlScopeManager : IUnknown
     HRESULT RemoveDefaultScopeRule(const(PWSTR) pszURL);
 }
 
-@GUID("6292f7ad-4e19-4717-a534-8fc22bcd5ccd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcrawlscopemanager2
+@GUID("6292f7ad-4e19-4717-a534-8fc22bcd5ccd")
 interface ISearchCrawlScopeManager2 : ISearchCrawlScopeManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager2-getversion
     HRESULT GetVersion(int** plVersion, HANDLE* phFileMapping);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchitemschangedsink
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef58")
 interface ISearchItemsChangedSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-startedmonitoringscope
@@ -11631,9 +11632,9 @@ interface ISearchItemsChangedSink : IUnknown
                            HRESULT* rghrCompletionCodes);
 }
 
-@GUID("a2ffdf9b-4758-4f84-b729-df81a1a0612f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchpersistentitemschangedsink
+@GUID("a2ffdf9b-4758-4f84-b729-df81a1a0612f")
 interface ISearchPersistentItemsChangedSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-startedmonitoringscope
@@ -11645,18 +11646,18 @@ interface ISearchPersistentItemsChangedSink : IUnknown
                            HRESULT* hrCompletionCodes);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchviewchangedsink
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef65")
 interface ISearchViewChangedSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchviewchangedsink-onchange
     HRESULT OnChange(int* pdwDocID, SEARCH_ITEM_CHANGE* pChange, BOOL* pfInView);
 }
 
-@GUID("b5702e61-e75c-4b64-82a1-6cb4f832fccf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchnotifyinlinesite
+@GUID("b5702e61-e75c-4b64-82a1-6cb4f832fccf")
 interface ISearchNotifyInlineSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchnotifyinlinesite-onitemindexedstatuschange
@@ -11667,9 +11668,9 @@ interface ISearchNotifyInlineSite : IUnknown
                                   uint dwLastCheckPointNumber);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef50")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcatalogmanager
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef50")
 interface ISearchCatalogManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_name
@@ -11729,9 +11730,9 @@ interface ISearchCatalogManager : IUnknown
     HRESULT GetCrawlScopeManager(ISearchCrawlScopeManager* ppCrawlScopeManager);
 }
 
-@GUID("7ac3286d-4d1d-4817-84fc-c1c85e3af0d9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcatalogmanager2
+@GUID("7ac3286d-4d1d-4817-84fc-c1c85e3af0d9")
 interface ISearchCatalogManager2 : ISearchCatalogManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager2-prioritizematchingurls
@@ -11744,9 +11745,9 @@ interface ISearchCatalogManager3 : ISearchCatalogManager2
     HRESULT IsContainsSemanticSupported(BOOL* isContainsSemanticSupported);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef63")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchqueryhelper
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef63")
 interface ISearchQueryHelper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_connectionstring
@@ -11794,9 +11795,9 @@ interface ISearchQueryHelper : IUnknown
     HRESULT get_QueryMaxResults(int* pcMaxResults);
 }
 
-@GUID("42811652-079d-481b-87a2-09a69ecc5f44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-irowsetprioritization
+@GUID("42811652-079d-481b-87a2-09a69ecc5f44")
 interface IRowsetPrioritization : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-setscopepriority
@@ -11807,9 +11808,9 @@ interface IRowsetPrioritization : IUnknown
     HRESULT GetScopeStatistics(uint* indexedDocumentCount, uint* oustandingAddCount, uint* oustandingModifyCount);
 }
 
-@GUID("1551aea5-5d66-4b11-86f5-d5634cb211b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-irowsetevents
+@GUID("1551aea5-5d66-4b11-86f5-d5634cb211b9")
 interface IRowsetEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onnewitem
@@ -11823,9 +11824,9 @@ interface IRowsetEvents : IUnknown
     HRESULT OnRowsetEvent(ROWSETEVENT_TYPE eventType, const(PROPVARIANT)* eventData);
 }
 
-@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef69")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchmanager
+@GUID("ab310581-ac80-11d1-8df3-00c04fb6ef69")
 interface ISearchManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getindexerversionstr
@@ -11857,9 +11858,9 @@ interface ISearchManager : IUnknown
     HRESULT get_PortNumber(uint* pdwPortNumber);
 }
 
-@GUID("dbab3f73-db19-4a79-bfc0-a61a93886ddf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchmanager2
+@GUID("dbab3f73-db19-4a79-bfc0-a61a93886ddf")
 interface ISearchManager2 : ISearchManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager2-createcatalog
@@ -11868,9 +11869,9 @@ interface ISearchManager2 : ISearchManager
     HRESULT DeleteCatalog(const(PWSTR) pszCatalog);
 }
 
-@GUID("24c3cbaa-ebc1-491a-9ef1-9f6d8deb1b8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchlanguagesupport
+@GUID("24c3cbaa-ebc1-491a-9ef1-9f6d8deb1b8f")
 interface ISearchLanguageSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-setdiacriticsensitivity

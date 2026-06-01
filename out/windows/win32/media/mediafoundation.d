@@ -14158,6 +14158,7 @@ struct CODECAPI_AVEncCommonQuality;
 @GUID("98332df8-03cd-476b-89fa-3f9e442dec9f")
 struct CODECAPI_AVEncCommonQualityVsSpeed;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avenccommontranscodeencodingprofile
 @GUID("6947787c-f508-4ea9-b1e9-a1fe3a49fbc9")
 struct CODECAPI_AVEncCommonTranscodeEncodingProfile;
 
@@ -14212,15 +14213,19 @@ struct CODECAPI_AVDecVideoProcDeinterlaceCSC;
 @GUID("2efd8eee-1150-4328-9cf5-66dce933fcf4")
 struct CODECAPI_AVDecVideoThumbnailGenerationMode;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avdecvideomaxcodedwidth
 @GUID("5ae557b8-77af-41f5-9fa6-4db2fe1d4bca")
 struct CODECAPI_AVDecVideoMaxCodedWidth;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avdecvideomaxcodedheight
 @GUID("7262a16a-d2dc-4e75-9ba8-65c0c6d32b13")
 struct CODECAPI_AVDecVideoMaxCodedHeight;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avdecnumworkerthreads
 @GUID("9561c3e8-ea9e-4435-9b1e-a93e691894d8")
 struct CODECAPI_AVDecNumWorkerThreads;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avdecsoftwaredynamicformatchange
 @GUID("862e2f0a-507b-47ff-af47-01e2624298b7")
 struct CODECAPI_AVDecSoftwareDynamicFormatChange;
 
@@ -14236,6 +14241,7 @@ struct CODECAPI_AVDecVideoSoftwareDeinterlaceMode;
 @GUID("6b529f7d-d3b1-49c6-a999-9ec6911bedbf")
 struct CODECAPI_AVDecVideoFastDecodeMode;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avlowlatencymode
 @GUID("9c27891a-ed7a-40e1-88e8-b22727a024ee")
 struct CODECAPI_AVLowLatencyMode;
 
@@ -14362,30 +14368,39 @@ struct CODECAPI_AVEncVideoCodedVideoAccessUnitSize;
 @GUID("2987123a-ba93-4704-b489-ec1e5f25292c")
 struct CODECAPI_AVEncVideoMaxKeyframeDistance;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avench264cabacenable
 @GUID("ee6cad62-d305-4248-a50e-e1b255f7caf8")
 struct CODECAPI_AVEncH264CABACEnable;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideocontenttype
 @GUID("66117aca-eb77-459d-930c-a48d9d0683fc")
 struct CODECAPI_AVEncVideoContentType;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencnumworkerthreads
 @GUID("b0c8bf60-16f7-4951-a30b-1db1609293d6")
 struct CODECAPI_AVEncNumWorkerThreads;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoencodeqp
 @GUID("2cb5696b-23fb-4ce1-a0f9-ef5b90fd55ca")
 struct CODECAPI_AVEncVideoEncodeQP;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideominqp
 @GUID("0ee22c6a-a37c-4568-b5f1-9d4c2b3ab886")
 struct CODECAPI_AVEncVideoMinQP;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoforcekeyframe
 @GUID("398c1b98-8353-475a-9ef2-8f265d260345")
 struct CODECAPI_AVEncVideoForceKeyFrame;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avench264spsid
 @GUID("50f38f51-2b79-40e3-b39c-7e9fa0770501")
 struct CODECAPI_AVEncH264SPSID;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avench264ppsid
 @GUID("bfe29ec2-056c-4d68-a38d-ae5944c8582e")
 struct CODECAPI_AVEncH264PPSID;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencadaptivemode
 @GUID("4419b185-da1f-4f53-bc76-097d0c1efb1e")
 struct CODECAPI_AVEncAdaptiveMode;
 
@@ -14404,6 +14419,7 @@ struct CODECAPI_AVEncVideoMaxCTBSize;
 @GUID("d47db8b2-e73b-4cb9-8c3e-bd877d06d77b")
 struct CODECAPI_AVEncVideoCTBSize;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-videoencoderdisplaycontenttype
 @GUID("79b90b27-f4b1-42dc-9dd7-cdaf8135c400")
 struct CODECAPI_VideoEncoderDisplayContentType;
 
@@ -14440,57 +14456,73 @@ struct CODECAPI_AVEncLowPowerEncoder;
 @GUID("d2e8e399-0623-4bf3-92a8-4d1818529ded")
 struct CODECAPI_AVEnableInLoopDeblockFilter;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoselectlayer
 @GUID("eb1084f5-6aaa-4914-bb2f-6147227f12e7")
 struct CODECAPI_AVEncVideoSelectLayer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideotemporallayercount
 @GUID("19caebff-b74d-4cfd-8c27-c2f9d97d5f52")
 struct CODECAPI_AVEncVideoTemporalLayerCount;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideousage
 @GUID("1f636849-5dc1-49f1-b1d8-ce3cf62ea385")
 struct CODECAPI_AVEncVideoUsage;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoratecontrolparams
 @GUID("87d43767-7645-44ec-b438-d3322fbca29f")
 struct CODECAPI_AVEncVideoRateControlParams;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideosupportedcontrols
 @GUID("d3f40fdd-77b9-473d-8196-061259e69cff")
 struct CODECAPI_AVEncVideoSupportedControls;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoencodeframetypeqp
 @GUID("aa70b610-e03f-450c-ad07-07314e639ce7")
 struct CODECAPI_AVEncVideoEncodeFrameTypeQP;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencslicecontrolmode
 @GUID("e9e782ef-5f18-44c9-a90b-e9c3c2c17b0b")
 struct CODECAPI_AVEncSliceControlMode;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencslicecontrolsize
 @GUID("92f51df3-07a5-4172-aefe-c69ca3b60e35")
 struct CODECAPI_AVEncSliceControlSize;
 
 @GUID("8a6bc67f-9497-4286-b46b-02db8d60edbc")
 struct CODECAPI_AVEncSliceGenerationMode;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideomaxnumrefframe
 @GUID("964829ed-94f9-43b4-b74d-ef40944b69a0")
 struct CODECAPI_AVEncVideoMaxNumRefFrame;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideomeanabsolutedifference
 @GUID("e5c0c10f-81a4-422d-8c3f-b474a4581336")
 struct CODECAPI_AVEncVideoMeanAbsoluteDifference;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideomaxqp
 @GUID("3daf6f66-a6a7-45e0-a8e5-f2743f46a3a2")
 struct CODECAPI_AVEncVideoMaxQP;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoltrbuffercontrol
 @GUID("a4a0e93d-4cbc-444c-89f4-826d310e92a7")
 struct CODECAPI_AVEncVideoLTRBufferControl;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideomarkltrframe
 @GUID("e42f4748-a06d-4ef9-8cea-3d05fde3bd3b")
 struct CODECAPI_AVEncVideoMarkLTRFrame;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideouseltrframe
 @GUID("00752db8-55f7-4f80-895b-27639195f2ad")
 struct CODECAPI_AVEncVideoUseLTRFrame;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencvideoroienabled
 @GUID("d74f7f18-44dd-4b85-aba3-05d9f42a8280")
 struct CODECAPI_AVEncVideoROIEnabled;
 
 @GUID("8acb8fdd-5e0c-4c66-8729-b8f629ab04fb")
 struct CODECAPI_AVEncVideoDirtyRectEnabled;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencmaxframerate
 @GUID("b98e1b31-19fa-4d4f-9931-d6a5b8aab93c")
 struct CODECAPI_AVEncMaxFrameRate;
 
@@ -14947,6 +14979,7 @@ struct CODECAPI_AVDecDDDynamicRangeScaleHigh;
 @GUID("044e62e4-11a5-42d5-a3b2-3bb2c7c2d7cf")
 struct CODECAPI_AVDecDDDynamicRangeScaleLow;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avdecddstereodownmixmode
 @GUID("6ce4122c-3ee9-4182-b4ae-c10fc088649d")
 struct CODECAPI_AVDecDDStereoDownMixMode;
 
@@ -14977,6 +15010,7 @@ struct CODECAPI_AVEncProgressiveUpdateTime;
 @GUID("4b4fd998-4274-40bb-8ee4-07553e7e2d3a")
 struct CODECAPI_AVEncChromaUpdateTime;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/codecapi-avencaacenablevbr
 @GUID("e836bb98-fca3-44b6-9a39-24786be41be1")
 struct CODECAPI_AVEncAACEnableVBR;
 
@@ -15016,9 +15050,9 @@ struct CODECAPI_AVEncVideoInputAbsoluteQPBlockSettings;
 @GUID("06f414bb-f43a-4fe2-a566-774b4c81f0db")
 struct KSPROPSETID_OPMVideoOutput;
 
-@GUID("901db4c7-31ce-41a2-85dc-8fa0bf41b8da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-icodecapi
+@GUID("901db4c7-31ce-41a2-85dc-8fa0bf41b8da")
 interface ICodecAPI : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-icodecapi-issupported
@@ -15053,9 +15087,9 @@ interface ICodecAPI : IUnknown
     HRESULT SetAllSettingsWithNotify(IStream __MIDL__ICodecAPI0002, GUID** ChangedParam, uint* ChangedParamCount);
 }
 
-@GUID("187aeb13-aaf5-4c59-876d-e059088c0df8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3d9exoverlayextension
+@GUID("187aeb13-aaf5-4c59-876d-e059088c0df8")
 interface IDirect3D9ExOverlayExtension : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3d9exoverlayextension-checkdeviceoverlaytype
@@ -15064,9 +15098,9 @@ interface IDirect3D9ExOverlayExtension : IUnknown
                                    D3DDISPLAYROTATION DisplayRotation, D3DOVERLAYCAPS* pOverlayCaps);
 }
 
-@GUID("26dc4561-a1ee-4ae7-96da-118a36c0ec95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3ddevice9video
+@GUID("26dc4561-a1ee-4ae7-96da-118a36c0ec95")
 interface IDirect3DDevice9Video : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3ddevice9video-getcontentprotectioncaps
@@ -15081,9 +15115,9 @@ interface IDirect3DDevice9Video : IUnknown
                                 IDirect3DCryptoSession9* ppCryptoSession, HANDLE* pCryptoHandle);
 }
 
-@GUID("ff24beee-da21-4beb-98b5-d2f899f98af9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dauthenticatedchannel9
+@GUID("ff24beee-da21-4beb-98b5-d2f899f98af9")
 interface IDirect3DAuthenticatedChannel9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dauthenticatedchannel9-getcertificatesize
@@ -15098,9 +15132,9 @@ interface IDirect3DAuthenticatedChannel9 : IUnknown
     HRESULT Configure(uint InputSize, const(void)* pInput, D3DAUTHENTICATEDCHANNEL_CONFIGURE_OUTPUT* pOutput);
 }
 
-@GUID("fa0ab799-7a9c-48ca-8c5b-237e71a54434")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nn-d3d9-idirect3dcryptosession9
+@GUID("fa0ab799-7a9c-48ca-8c5b-237e71a54434")
 interface IDirect3DCryptoSession9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d9/nf-d3d9-idirect3dcryptosession9-getcertificatesize
@@ -15125,18 +15159,18 @@ interface IDirect3DCryptoSession9 : IUnknown
     HRESULT GetEncryptionBltKey(void* pReadbackKey, uint KeySize);
 }
 
-@GUID("0946b7c9-ebf6-4047-bb73-8683e27dbb1f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecoderheap
+@GUID("0946b7c9-ebf6-4047-bb73-8683e27dbb1f")
 interface ID3D12VideoDecoderHeap : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecoderheap-getdesc
     D3D12_VIDEO_DECODER_HEAP_DESC GetDesc();
 }
 
-@GUID("1f052807-0b46-4acc-8a89-364f793718a4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodevice
+@GUID("1f052807-0b46-4acc-8a89-364f793718a4")
 interface ID3D12VideoDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodevice-checkfeaturesupport
@@ -15155,18 +15189,18 @@ interface ID3D12VideoDevice : IUnknown
                                  void** ppVideoProcessor);
 }
 
-@GUID("c59b6bdc-7720-4074-a136-17a156037470")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecoder
+@GUID("c59b6bdc-7720-4074-a136-17a156037470")
 interface ID3D12VideoDecoder : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecoder-getdesc
     D3D12_VIDEO_DECODER_DESC GetDesc();
 }
 
-@GUID("304fdb32-bede-410a-8545-943ac6a46138")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoprocessor
+@GUID("304fdb32-bede-410a-8545-943ac6a46138")
 interface ID3D12VideoProcessor : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoprocessor-getnodemask
@@ -15179,9 +15213,9 @@ interface ID3D12VideoProcessor : ID3D12Pageable
     D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC GetOutputStreamDesc();
 }
 
-@GUID("3b60536e-ad29-4e64-a269-f853837e5e53")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecodecommandlist
+@GUID("3b60536e-ad29-4e64-a269-f853837e5e53")
 interface ID3D12VideoDecodeCommandList : ID3D12CommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecodecommandlist-close
@@ -15222,9 +15256,9 @@ interface ID3D12VideoDecodeCommandList : ID3D12CommandList
                                  const(D3D12_WRITEBUFFERIMMEDIATE_MODE)* pModes);
 }
 
-@GUID("aeb2543a-167f-4682-acc8-d159ed4a6209")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoprocesscommandlist
+@GUID("aeb2543a-167f-4682-acc8-d159ed4a6209")
 interface ID3D12VideoProcessCommandList : ID3D12CommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoprocesscommandlist-close
@@ -15265,9 +15299,9 @@ interface ID3D12VideoProcessCommandList : ID3D12CommandList
                                  const(D3D12_WRITEBUFFERIMMEDIATE_MODE)* pModes);
 }
 
-@GUID("d52f011b-b56e-453c-a05a-a7f311c8f472")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecodecommandlist1
+@GUID("d52f011b-b56e-453c-a05a-a7f311c8f472")
 interface ID3D12VideoDecodeCommandList1 : ID3D12VideoDecodeCommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecodecommandlist1-decodeframe1
@@ -15276,9 +15310,9 @@ interface ID3D12VideoDecodeCommandList1 : ID3D12VideoDecodeCommandList
                       const(D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS)* pInputArguments);
 }
 
-@GUID("542c5c4d-7596-434f-8c93-4efa6766f267")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoprocesscommandlist1
+@GUID("542c5c4d-7596-434f-8c93-4efa6766f267")
 interface ID3D12VideoProcessCommandList1 : ID3D12VideoProcessCommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoprocesscommandlist1-processframes1
@@ -15287,10 +15321,10 @@ interface ID3D12VideoProcessCommandList1 : ID3D12VideoProcessCommandList
                         const(D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS1)* pInputArguments);
 }
 
-@GUID("33fdae0e-098b-428f-87bb-34b695de08f8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videomotionestimator
+@GUID("33fdae0e-098b-428f-87bb-34b695de08f8")
 interface ID3D12VideoMotionEstimator : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videomotionestimator-getdesc
@@ -15299,10 +15333,10 @@ interface ID3D12VideoMotionEstimator : ID3D12Pageable
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("5be17987-743a-4061-834b-23d22daea505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videomotionvectorheap
+@GUID("5be17987-743a-4061-834b-23d22daea505")
 interface ID3D12VideoMotionVectorHeap : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videomotionvectorheap-getdesc
@@ -15311,9 +15345,9 @@ interface ID3D12VideoMotionVectorHeap : ID3D12Pageable
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("981611ad-a144-4c83-9890-f30e26d658ab")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodevice1
+@GUID("981611ad-a144-4c83-9890-f30e26d658ab")
 interface ID3D12VideoDevice1 : ID3D12VideoDevice
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodevice1-createvideomotionestimator
@@ -15326,10 +15360,10 @@ interface ID3D12VideoDevice1 : ID3D12VideoDevice
                                         void** ppVideoMotionVectorHeap);
 }
 
-@GUID("8455293a-0cbd-4831-9b39-fbdbab724723")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoencodecommandlist
+@GUID("8455293a-0cbd-4831-9b39-fbdbab724723")
 interface ID3D12VideoEncodeCommandList : ID3D12CommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoencodecommandlist-close
@@ -15375,38 +15409,38 @@ interface ID3D12VideoEncodeCommandList : ID3D12CommandList
     void    SetProtectedResourceSession(ID3D12ProtectedResourceSession pProtectedResourceSession);
 }
 
-@GUID("79a2e5fb-ccd2-469a-9fde-195d10951f7e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecoder1
+@GUID("79a2e5fb-ccd2-469a-9fde-195d10951f7e")
 interface ID3D12VideoDecoder1 : ID3D12VideoDecoder
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecoder1-getprotectedresourcesession
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("da1d98c5-539f-41b2-bf6b-1198a03b6d26")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecoderheap1
+@GUID("da1d98c5-539f-41b2-bf6b-1198a03b6d26")
 interface ID3D12VideoDecoderHeap1 : ID3D12VideoDecoderHeap
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecoderheap1-getprotectedresourcesession
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("f3cfe615-553f-425c-86d8-ee8c1b1fb01c")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoprocessor1
+@GUID("f3cfe615-553f-425c-86d8-ee8c1b1fb01c")
 interface ID3D12VideoProcessor1 : ID3D12VideoProcessor
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoprocessor1-getprotectedresourcesession
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("554e41e8-ae8e-4a8c-b7d2-5b4f274a30e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoextensioncommand
+@GUID("554e41e8-ae8e-4a8c-b7d2-5b4f274a30e4")
 interface ID3D12VideoExtensionCommand : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoextensioncommand-getdesc
@@ -15415,9 +15449,9 @@ interface ID3D12VideoExtensionCommand : ID3D12Pageable
     HRESULT GetProtectedResourceSession(const(GUID)* riid, void** ppProtectedSession);
 }
 
-@GUID("f019ac49-f838-4a95-9b17-579437c8f513")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodevice2
+@GUID("f019ac49-f838-4a95-9b17-579437c8f513")
 interface ID3D12VideoDevice2 : ID3D12VideoDevice1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodevice2-createvideodecoder1
@@ -15448,9 +15482,9 @@ interface ID3D12VideoDevice2 : ID3D12VideoDevice1
                                     size_t OutputDataSizeInBytes);
 }
 
-@GUID("6e120880-c114-4153-8036-d247051e1729")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecodecommandlist2
+@GUID("6e120880-c114-4153-8036-d247051e1729")
 interface ID3D12VideoDecodeCommandList2 : ID3D12VideoDecodeCommandList1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecodecommandlist2-setprotectedresourcesession
@@ -15465,18 +15499,18 @@ interface ID3D12VideoDecodeCommandList2 : ID3D12VideoDecodeCommandList1
                                  size_t ExecutionParametersSizeInBytes);
 }
 
-@GUID("2aee8c37-9562-42da-8abf-61efeb2e4513")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodecodecommandlist3
+@GUID("2aee8c37-9562-42da-8abf-61efeb2e4513")
 interface ID3D12VideoDecodeCommandList3 : ID3D12VideoDecodeCommandList2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodecodecommandlist3-barrier
     void Barrier(uint NumBarrierGroups, const(D3D12_BARRIER_GROUP)* pBarrierGroups);
 }
 
-@GUID("db525ae4-6ad6-473c-baa7-59b2e37082e4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoprocesscommandlist2
+@GUID("db525ae4-6ad6-473c-baa7-59b2e37082e4")
 interface ID3D12VideoProcessCommandList2 : ID3D12VideoProcessCommandList1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoprocesscommandlist2-setprotectedresourcesession
@@ -15491,18 +15525,18 @@ interface ID3D12VideoProcessCommandList2 : ID3D12VideoProcessCommandList1
                                  size_t ExecutionParametersSizeInBytes);
 }
 
-@GUID("1a0a4ca4-9f08-40ce-9558-b411fd2666ff")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoprocesscommandlist3
+@GUID("1a0a4ca4-9f08-40ce-9558-b411fd2666ff")
 interface ID3D12VideoProcessCommandList3 : ID3D12VideoProcessCommandList2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoprocesscommandlist3-barrier
     void Barrier(uint NumBarrierGroups, const(D3D12_BARRIER_GROUP)* pBarrierGroups);
 }
 
-@GUID("94971eca-2bdb-4769-88cf-3675ea757ebc")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoencodecommandlist1
+@GUID("94971eca-2bdb-4769-88cf-3675ea757ebc")
 interface ID3D12VideoEncodeCommandList1 : ID3D12VideoEncodeCommandList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoencodecommandlist1-initializeextensioncommand
@@ -15515,9 +15549,9 @@ interface ID3D12VideoEncodeCommandList1 : ID3D12VideoEncodeCommandList
                                  size_t ExecutionParametersSizeInBytes);
 }
 
-@GUID("2e0d212d-8df9-44a6-a770-bb289b182737")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoencoder
+@GUID("2e0d212d-8df9-44a6-a770-bb289b182737")
 interface ID3D12VideoEncoder : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoencoder-getnodemask
@@ -15536,9 +15570,9 @@ interface ID3D12VideoEncoder : ID3D12Pageable
     D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE GetMaxMotionEstimationPrecision();
 }
 
-@GUID("22b35d96-876a-44c0-b25e-fb8c9c7f1c4a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoencoderheap
+@GUID("22b35d96-876a-44c0-b25e-fb8c9c7f1c4a")
 interface ID3D12VideoEncoderHeap : ID3D12Pageable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoencoderheap-getnodemask
@@ -15558,9 +15592,9 @@ interface ID3D12VideoEncoderHeap : ID3D12Pageable
                               D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC* pResolutionList);
 }
 
-@GUID("4243adb4-3a32-4666-973c-0ccc5625dc44")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videodevice3
+@GUID("4243adb4-3a32-4666-973c-0ccc5625dc44")
 interface ID3D12VideoDevice3 : ID3D12VideoDevice2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videodevice3-createvideoencoder
@@ -15570,9 +15604,9 @@ interface ID3D12VideoDevice3 : ID3D12VideoDevice2
                                    void** ppVideoEncoderHeap);
 }
 
-@GUID("895491e2-e701-46a9-9a1f-8d3480ed867a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoencodecommandlist2
+@GUID("895491e2-e701-46a9-9a1f-8d3480ed867a")
 interface ID3D12VideoEncodeCommandList2 : ID3D12VideoEncodeCommandList1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoencodecommandlist2-encodeframe
@@ -15584,32 +15618,32 @@ interface ID3D12VideoEncodeCommandList2 : ID3D12VideoEncodeCommandList1
                                       const(D3D12_VIDEO_ENCODER_RESOLVE_METADATA_OUTPUT_ARGUMENTS)* pOutputArguments);
 }
 
-@GUID("7f027b22-1515-4e85-aa0d-026486580576")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nn-d3d12video-id3d12videoencodecommandlist3
+@GUID("7f027b22-1515-4e85-aa0d-026486580576")
 interface ID3D12VideoEncodeCommandList3 : ID3D12VideoEncodeCommandList2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12video/nf-d3d12video-id3d12videoencodecommandlist3-barrier
     void Barrier(uint NumBarrierGroups, const(D3D12_BARRIER_GROUP)* pBarrierGroups);
 }
 
-@GUID("ea8f1968-4aa0-43a4-9d30-ba86ec84d4f9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("ea8f1968-4aa0-43a4-9d30-ba86ec84d4f9")
 interface ID3D12VideoEncoderHeap1 : ID3D12VideoEncoderHeap
 {
     uint GetPow2DownscaleFactor();
 }
 
-@GUID("e59ad09e-f1ae-42bb-8983-9f6e5586c4eb")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("e59ad09e-f1ae-42bb-8983-9f6e5586c4eb")
 interface ID3D12VideoDevice4 : ID3D12VideoDevice3
 {
     HRESULT CreateVideoEncoderHeap1(const(D3D12_VIDEO_ENCODER_HEAP_DESC1)* pDesc, const(GUID)* riid, 
                                     void** ppVideoEncoderHeap);
 }
 
-@GUID("69aeb5b7-55f2-4012-8b73-3a88d65a204c")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("69aeb5b7-55f2-4012-8b73-3a88d65a204c")
 interface ID3D12VideoEncodeCommandList4 : ID3D12VideoEncodeCommandList3
 {
     void EncodeFrame1(ID3D12VideoEncoder pEncoder, ID3D12VideoEncoderHeap1 pHeap, 
@@ -15634,9 +15668,9 @@ interface IValidateBinding : IUnknown
                           uint* pcbBlobSize);
 }
 
-@GUID("352bb3bd-2d4d-4323-9e71-dcdcfbd53ca6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmvideodecoderhurryup
+@GUID("352bb3bd-2d4d-4323-9e71-dcdcfbd53ca6")
 interface IWMVideoDecoderHurryup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmvideodecoderhurryup-sethurryup
@@ -15645,18 +15679,18 @@ interface IWMVideoDecoderHurryup : IUnknown
     HRESULT GetHurryup(int* plHurryup);
 }
 
-@GUID("9f8496be-5b9a-41b9-a9e8-f21cd80596c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmvideoforcekeyframe
+@GUID("9f8496be-5b9a-41b9-a9e8-f21cd80596c2")
 interface IWMVideoForceKeyFrame : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmvideoforcekeyframe-setkeyframe
     HRESULT SetKeyFrame();
 }
 
-@GUID("a7b2504b-e58a-47fb-958b-cac7165a057d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmcodecstrings
+@GUID("a7b2504b-e58a-47fb-958b-cac7165a057d")
 interface IWMCodecStrings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmcodecstrings-getname
@@ -15665,9 +15699,9 @@ interface IWMCodecStrings : IUnknown
     HRESULT GetDescription(DMO_MEDIA_TYPE* pmt, uint cchLength, PWSTR szDescription, uint* pcchLength);
 }
 
-@GUID("2573e11a-f01a-4fdd-a98d-63b8e0ba9589")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmcodecprops
+@GUID("2573e11a-f01a-4fdd-a98d-63b8e0ba9589")
 interface IWMCodecProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmcodecprops-getformatprop
@@ -15678,9 +15712,9 @@ interface IWMCodecProps : IUnknown
                          uint* pdwSize);
 }
 
-@GUID("a81ba647-6227-43b7-b231-c7b15135dd7d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmcodecleakybucket
+@GUID("a81ba647-6227-43b7-b231-c7b15135dd7d")
 interface IWMCodecLeakyBucket : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmcodecleakybucket-setbuffersizebits
@@ -15693,18 +15727,18 @@ interface IWMCodecLeakyBucket : IUnknown
     HRESULT GetBufferFullnessBits(uint* pulBufferFullness);
 }
 
-@GUID("b72adf95-7adc-4a72-bc05-577d8ea6bf68")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmcodecoutputtimestamp
+@GUID("b72adf95-7adc-4a72-bc05-577d8ea6bf68")
 interface IWMCodecOutputTimestamp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmcodecoutputtimestamp-getnextoutputtime
     HRESULT GetNextOutputTime(long* prtTime);
 }
 
-@GUID("45bda2ac-88e2-4923-98ba-3949080711a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmvideodecoderreconbuffer
+@GUID("45bda2ac-88e2-4923-98ba-3949080711a3")
 interface IWMVideoDecoderReconBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmvideodecoderreconbuffer-getreconstructedvideoframesize
@@ -15715,9 +15749,9 @@ interface IWMVideoDecoderReconBuffer : IUnknown
     HRESULT SetReconstructedVideoFrame(IMediaBuffer pBuf);
 }
 
-@GUID("73f0be8e-57f7-4f01-aa66-9f57340cfe0e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmcodecprivatedata
+@GUID("73f0be8e-57f7-4f01-aa66-9f57340cfe0e")
 interface IWMCodecPrivateData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmcodecprivatedata-setpartialoutputtype
@@ -15726,18 +15760,18 @@ interface IWMCodecPrivateData : IUnknown
     HRESULT GetPrivateData(ubyte* pbData, uint* pcbData);
 }
 
-@GUID("9bca9884-0604-4c2a-87da-793ff4d586c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmsampleextensionsupport
+@GUID("9bca9884-0604-4c2a-87da-793ff4d586c3")
 interface IWMSampleExtensionSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmsampleextensionsupport-setusesampleextensions
     HRESULT SetUseSampleExtensions(BOOL fUseExtensions);
 }
 
-@GUID("e7e9984f-f09f-4da4-903f-6e2e0efe56b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmresamplerprops
+@GUID("e7e9984f-f09f-4da4-903f-6e2e0efe56b5")
 interface IWMResamplerProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmresamplerprops-sethalffilterlength
@@ -15746,9 +15780,9 @@ interface IWMResamplerProps : IUnknown
     HRESULT SetUserChannelMtx(float* userChannelMtx);
 }
 
-@GUID("57665d4c-0414-4faa-905b-10e546f81c33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmresizerprops
+@GUID("57665d4c-0414-4faa-905b-10e546f81c33")
 interface IWMResizerProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmresizerprops-setresizerquality
@@ -15788,9 +15822,9 @@ interface IWMFrameInterpProps : IUnknown
     HRESULT SetComplexityLevel(int iComplexity);
 }
 
-@GUID("e6a49e22-c099-421d-aad3-c061fb4ae85b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-iwmcolorconvprops
+@GUID("e6a49e22-c099-421d-aad3-c061fb4ae85b")
 interface IWMColorConvProps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-iwmcolorconvprops-setmode
@@ -15800,9 +15834,9 @@ interface IWMColorConvProps : IUnknown
                                  int lCropWidth, int lCropHeight);
 }
 
-@GUID("f22f5e06-585c-4def-8523-6555cfbc0cb3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-itocentry
+@GUID("f22f5e06-585c-4def-8523-6555cfbc0cb3")
 interface ITocEntry : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-itocentry-settitle
@@ -15823,9 +15857,9 @@ interface ITocEntry : IUnknown
     HRESULT GetDescriptionData(uint* pdwDescriptionDataSize, ubyte* pbtDescriptionData, GUID* pGuidType);
 }
 
-@GUID("3a8cccbd-0efd-43a3-b838-f38a552ba237")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-itocentrylist
+@GUID("3a8cccbd-0efd-43a3-b838-f38a552ba237")
 interface ITocEntryList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-itocentrylist-getentrycount
@@ -15840,9 +15874,9 @@ interface ITocEntryList : IUnknown
     HRESULT RemoveEntryByIndex(uint dwEntryIndex);
 }
 
-@GUID("d6f05441-a919-423b-91a0-89d5b4a8ab77")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-itoc
+@GUID("d6f05441-a919-423b-91a0-89d5b4a8ab77")
 interface IToc : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-itoc-setdescriptor
@@ -15869,9 +15903,9 @@ interface IToc : IUnknown
     HRESULT RemoveEntryListByIndex(ushort wEntryListIndex);
 }
 
-@GUID("23fee831-ae96-42df-b170-25a04847a3ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-itoccollection
+@GUID("23fee831-ae96-42df-b170-25a04847a3ca")
 interface ITocCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-itoccollection-getentrycount
@@ -15886,9 +15920,9 @@ interface ITocCollection : IUnknown
     HRESULT RemoveEntryByIndex(uint dwEntryIndex);
 }
 
-@GUID("ecfb9a55-9298-4f49-887f-0b36206599d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nn-wmcodecdsp-itocparser
+@GUID("ecfb9a55-9298-4f49-887f-0b36206599d2")
 interface ITocParser : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcodecdsp/nf-wmcodecdsp-itocparser-init
@@ -15940,9 +15974,9 @@ interface IClusterDetector : IUnknown
                    IToc* ppDstToc);
 }
 
-@GUID("95f12dfd-d77e-49be-815f-57d579634d6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxvahd/nn-dxvahd-idxvahd_device
+@GUID("95f12dfd-d77e-49be-815f-57d579634d6d")
 interface IDXVAHD_Device : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxvahd/nf-dxvahd-idxvahd_device-createvideosurface
@@ -15965,9 +15999,9 @@ interface IDXVAHD_Device : IUnknown
     HRESULT CreateVideoProcessor(const(GUID)* pVPGuid, IDXVAHD_VideoProcessor* ppVideoProcessor);
 }
 
-@GUID("95f4edf4-6e03-4cd7-be1b-3075d665aa52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxvahd/nn-dxvahd-idxvahd_videoprocessor
+@GUID("95f4edf4-6e03-4cd7-be1b-3075d665aa52")
 interface IDXVAHD_VideoProcessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxvahd/nf-dxvahd-idxvahd_videoprocessor-setvideoprocessbltstate
@@ -15987,9 +16021,9 @@ interface IDXVAHD_VideoProcessor : IUnknown
                               const(DXVAHD_STREAM_DATA)* pStreams);
 }
 
-@GUID("a0cade0f-06d5-4cf4-a1c7-f3cdd725aa75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirect3ddevicemanager9
+@GUID("a0cade0f-06d5-4cf4-a1c7-f3cdd725aa75")
 interface IDirect3DDeviceManager9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirect3ddevicemanager9-resetdevice
@@ -16008,9 +16042,9 @@ interface IDirect3DDeviceManager9 : IUnknown
     HRESULT GetVideoService(HANDLE hDevice, const(GUID)* riid, void** ppService);
 }
 
-@GUID("fc51a550-d5e7-11d9-af55-00054e43ff02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirectxvideoaccelerationservice
+@GUID("fc51a550-d5e7-11d9-af55-00054e43ff02")
 interface IDirectXVideoAccelerationService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirectxvideoaccelerationservice-createsurface
@@ -16019,9 +16053,9 @@ interface IDirectXVideoAccelerationService : IUnknown
                           IDirect3DSurface9* ppSurface, HANDLE* pSharedHandle);
 }
 
-@GUID("fc51a551-d5e7-11d9-af55-00054e43ff02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirectxvideodecoderservice
+@GUID("fc51a551-d5e7-11d9-af55-00054e43ff02")
 interface IDirectXVideoDecoderService : IDirectXVideoAccelerationService
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirectxvideodecoderservice-getdecoderdeviceguids
@@ -16038,9 +16072,9 @@ interface IDirectXVideoDecoderService : IDirectXVideoAccelerationService
                                uint NumRenderTargets, IDirectXVideoDecoder* ppDecode);
 }
 
-@GUID("fc51a552-d5e7-11d9-af55-00054e43ff02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirectxvideoprocessorservice
+@GUID("fc51a552-d5e7-11d9-af55-00054e43ff02")
 interface IDirectXVideoProcessorService : IDirectXVideoAccelerationService
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirectxvideoprocessorservice-registervideoprocessorsoftwaredevice
@@ -16068,9 +16102,9 @@ interface IDirectXVideoProcessorService : IDirectXVideoAccelerationService
                                  IDirectXVideoProcessor* ppVidProcess);
 }
 
-@GUID("f2b0810a-fd00-43c9-918c-df94e2d8ef7d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirectxvideodecoder
+@GUID("f2b0810a-fd00-43c9-918c-df94e2d8ef7d")
 interface IDirectXVideoDecoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirectxvideodecoder-getvideodecoderservice
@@ -16092,9 +16126,9 @@ interface IDirectXVideoDecoder : IUnknown
     HRESULT Execute(const(DXVA2_DecodeExecuteParams)* pExecuteParams);
 }
 
-@GUID("8c3a39f0-916e-4690-804f-4c8001355d25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirectxvideoprocessor
+@GUID("8c3a39f0-916e-4690-804f-4c8001355d25")
 interface IDirectXVideoProcessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirectxvideoprocessor-getvideoprocessorservice
@@ -16113,9 +16147,9 @@ interface IDirectXVideoProcessor : IUnknown
                             const(DXVA2_VideoSample)* pSamples, uint NumSamples, HANDLE* pHandleComplete);
 }
 
-@GUID("b7f916dd-db3b-49c1-84d7-e45ef99ec726")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nn-dxva2api-idirectxvideomemoryconfiguration
+@GUID("b7f916dd-db3b-49c1-84d7-e45ef99ec726")
 interface IDirectXVideoMemoryConfiguration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/nf-dxva2api-idirectxvideomemoryconfiguration-getavailablesurfacetypebyindex
@@ -16124,9 +16158,9 @@ interface IDirectXVideoMemoryConfiguration : IUnknown
     HRESULT SetSurfaceType(DXVA2_SurfaceType dwType);
 }
 
-@GUID("0a15159d-41c7-4456-93e1-284cd61d4e8d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/opmapi/nn-opmapi-iopmvideooutput
+@GUID("0a15159d-41c7-4456-93e1-284cd61d4e8d")
 interface IOPMVideoOutput : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/opmapi/nf-opmapi-iopmvideooutput-startinitialization
@@ -16145,9 +16179,9 @@ interface IOPMVideoOutput : IUnknown
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(ubyte)* pbAdditionalParameters);
 }
 
-@GUID("2cd2d921-c447-44a7-a13c-4adabfc247e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfattributes
+@GUID("2cd2d921-c447-44a7-a13c-4adabfc247e3")
 interface IMFAttributes : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfattributes-getitem
@@ -16212,9 +16246,9 @@ interface IMFAttributes : IUnknown
     HRESULT CopyAllItems(IMFAttributes pDest);
 }
 
-@GUID("045fa593-8799-42b8-bc8d-8968c6453507")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmediabuffer
+@GUID("045fa593-8799-42b8-bc8d-8968c6453507")
 interface IMFMediaBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmediabuffer-lock
@@ -16229,9 +16263,9 @@ interface IMFMediaBuffer : IUnknown
     HRESULT GetMaxLength(uint* pcbMaxLength);
 }
 
-@GUID("c40a00f2-b93a-4d80-ae8c-5a1c634f58e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfsample
+@GUID("c40a00f2-b93a-4d80-ae8c-5a1c634f58e4")
 interface IMFSample : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfsample-getsampleflags
@@ -16264,9 +16298,9 @@ interface IMFSample : IMFAttributes
     HRESULT CopyToBuffer(IMFMediaBuffer pBuffer);
 }
 
-@GUID("7dc9d5f9-9ed9-44ec-9bbf-0600bb589fbb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imf2dbuffer
+@GUID("7dc9d5f9-9ed9-44ec-9bbf-0600bb589fbb")
 interface IMF2DBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imf2dbuffer-lock2d
@@ -16287,9 +16321,9 @@ interface IMF2DBuffer : IUnknown
                                uint cbSrcBuffer);
 }
 
-@GUID("33ae5ea6-4316-436f-8ddd-d73d22f829ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imf2dbuffer2
+@GUID("33ae5ea6-4316-436f-8ddd-d73d22f829ec")
 interface IMF2DBuffer2 : IMF2DBuffer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imf2dbuffer2-lock2dsize
@@ -16299,9 +16333,9 @@ interface IMF2DBuffer2 : IMF2DBuffer
     HRESULT Copy2DTo(IMF2DBuffer2 pDestBuffer);
 }
 
-@GUID("e7174cfa-1c9e-48b1-8866-626226bfc258")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfdxgibuffer
+@GUID("e7174cfa-1c9e-48b1-8866-626226bfc258")
 interface IMFDXGIBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfdxgibuffer-getresource
@@ -16323,9 +16357,9 @@ interface IMFDXGICrossAdapterBuffer : IUnknown
     HRESULT SetUnknownForDevice(IUnknown pUnkDevice, const(GUID)* guid, IUnknown pUnkData);
 }
 
-@GUID("44ae0fa8-ea31-4109-8d2e-4cae4997c555")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmediatype
+@GUID("44ae0fa8-ea31-4109-8d2e-4cae4997c555")
 interface IMFMediaType : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmediatype-getmajortype
@@ -16340,18 +16374,18 @@ interface IMFMediaType : IMFAttributes
     HRESULT FreeRepresentation(GUID guidRepresentation, void* pvRepresentation);
 }
 
-@GUID("26a0adc3-ce26-4672-9304-69552edd3faf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfaudiomediatype
+@GUID("26a0adc3-ce26-4672-9304-69552edd3faf")
 interface IMFAudioMediaType : IMFMediaType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfaudiomediatype-getaudioformat
     WAVEFORMATEX* GetAudioFormat();
 }
 
-@GUID("b99f381f-a8f9-47a2-a5af-ca3a225a3890")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfvideomediatype
+@GUID("b99f381f-a8f9-47a2-a5af-ca3a225a3890")
 interface IMFVideoMediaType : IMFMediaType
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfvideomediatype-getvideoformat
@@ -16360,9 +16394,9 @@ interface IMFVideoMediaType : IMFMediaType
     HRESULT GetVideoRepresentation(GUID guidRepresentation, void** ppvRepresentation, int lStride);
 }
 
-@GUID("ac6b7889-0740-4d51-8619-905994a55cc6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfasyncresult
+@GUID("ac6b7889-0740-4d51-8619-905994a55cc6")
 interface IMFAsyncResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfasyncresult-getstate
@@ -16377,9 +16411,9 @@ interface IMFAsyncResult : IUnknown
     IUnknown GetStateNoAddRef();
 }
 
-@GUID("a27003cf-2354-4f2a-8d6a-ab7cff15437e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfasynccallback
+@GUID("a27003cf-2354-4f2a-8d6a-ab7cff15437e")
 interface IMFAsyncCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfasynccallback-getparameters
@@ -16388,9 +16422,9 @@ interface IMFAsyncCallback : IUnknown
     HRESULT Invoke(IMFAsyncResult pAsyncResult);
 }
 
-@GUID("c7a4dca1-f5f0-47b6-b92b-bf0106d25791")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfasynccallbacklogging
+@GUID("c7a4dca1-f5f0-47b6-b92b-bf0106d25791")
 interface IMFAsyncCallbackLogging : IMFAsyncCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfasynccallbacklogging-getobjectpointer
@@ -16399,9 +16433,9 @@ interface IMFAsyncCallbackLogging : IMFAsyncCallback
     uint  GetObjectTag();
 }
 
-@GUID("df598932-f10c-4e39-bba2-c308f101daa3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmediaevent
+@GUID("df598932-f10c-4e39-bba2-c308f101daa3")
 interface IMFMediaEvent : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmediaevent-gettype
@@ -16414,9 +16448,9 @@ interface IMFMediaEvent : IMFAttributes
     HRESULT GetValue(PROPVARIANT* pvValue);
 }
 
-@GUID("2cd0bd52-bcd5-4b89-b62c-eadc0c031e7d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmediaeventgenerator
+@GUID("2cd0bd52-bcd5-4b89-b62c-eadc0c031e7d")
 interface IMFMediaEventGenerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmediaeventgenerator-getevent
@@ -16429,18 +16463,18 @@ interface IMFMediaEventGenerator : IUnknown
     HRESULT QueueEvent(uint met, const(GUID)* guidExtendedType, HRESULT hrStatus, const(PROPVARIANT)* pvValue);
 }
 
-@GUID("a27003d0-2354-4f2a-8d6a-ab7cff15437e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfremoteasynccallback
+@GUID("a27003d0-2354-4f2a-8d6a-ab7cff15437e")
 interface IMFRemoteAsyncCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfremoteasynccallback
     HRESULT Invoke(HRESULT hr, IUnknown pRemoteResult);
 }
 
-@GUID("ad4c1b00-4bf7-422f-9175-756693d9130d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfbytestream
+@GUID("ad4c1b00-4bf7-422f-9175-756693d9130d")
 interface IMFByteStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfbytestream-getcapabilities
@@ -16478,9 +16512,9 @@ interface IMFByteStream : IUnknown
     HRESULT Close();
 }
 
-@GUID("a6b43f84-5c0a-42e8-a44d-b1857a76992f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfbytestreamproxyclassfactory
+@GUID("a6b43f84-5c0a-42e8-a44d-b1857a76992f")
 interface IMFByteStreamProxyClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfbytestreamproxyclassfactory-createbytestreamproxy
@@ -16488,9 +16522,9 @@ interface IMFByteStreamProxyClassFactory : IUnknown
                                   void** ppvObject);
 }
 
-@GUID("8feed468-6f7e-440d-869a-49bdd283ad0d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfsampleoutputstream
+@GUID("8feed468-6f7e-440d-869a-49bdd283ad0d")
 interface IMFSampleOutputStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfsampleoutputstream-beginwritesample
@@ -16500,9 +16534,9 @@ interface IMFSampleOutputStream : IUnknown
     HRESULT Close();
 }
 
-@GUID("5bc8a76b-869a-46a3-9b03-fa218a66aebe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfcollection
+@GUID("5bc8a76b-869a-46a3-9b03-fa218a66aebe")
 interface IMFCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfcollection-getelementcount
@@ -16519,9 +16553,9 @@ interface IMFCollection : IUnknown
     HRESULT RemoveAllElements();
 }
 
-@GUID("36f846fc-2256-48b6-b58e-e2b638316581")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmediaeventqueue
+@GUID("36f846fc-2256-48b6-b58e-e2b638316581")
 interface IMFMediaEventQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmediaeventqueue-getevent
@@ -16541,9 +16575,9 @@ interface IMFMediaEventQueue : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("7fee9e9a-4a89-47a6-899c-b6a53a70fb67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfactivate
+@GUID("7fee9e9a-4a89-47a6-899c-b6a53a70fb67")
 interface IMFActivate : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfactivate-activateobject
@@ -16554,9 +16588,9 @@ interface IMFActivate : IMFAttributes
     HRESULT DetachObject();
 }
 
-@GUID("5c6c44bf-1db6-435b-9249-e8cd10fdec96")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfplugincontrol
+@GUID("5c6c44bf-1db6-435b-9249-e8cd10fdec96")
 interface IMFPluginControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfplugincontrol-getpreferredclsid
@@ -16573,18 +16607,18 @@ interface IMFPluginControl : IUnknown
     HRESULT SetDisabled(uint pluginType, const(GUID)* clsid, BOOL disabled);
 }
 
-@GUID("c6982083-3ddc-45cb-af5e-0f7a8ce4de77")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfplugincontrol2
+@GUID("c6982083-3ddc-45cb-af5e-0f7a8ce4de77")
 interface IMFPluginControl2 : IMFPluginControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfplugincontrol2-setpolicy
     HRESULT SetPolicy(MF_PLUGIN_CONTROL_POLICY policy);
 }
 
-@GUID("eb533d5d-2db6-40f8-97a9-494692014f07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfdxgidevicemanager
+@GUID("eb533d5d-2db6-40f8-97a9-494692014f07")
 interface IMFDXGIDeviceManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfdxgidevicemanager-closedevicehandle
@@ -16603,9 +16637,9 @@ interface IMFDXGIDeviceManager : IUnknown
     HRESULT UnlockDevice(HANDLE hDevice, BOOL fSaveState);
 }
 
-@GUID("ce8bd576-e440-43b3-be34-1e53f565f7e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmuxstreamattributesmanager
+@GUID("ce8bd576-e440-43b3-be34-1e53f565f7e8")
 interface IMFMuxStreamAttributesManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmuxstreamattributesmanager-getstreamcount
@@ -16614,9 +16648,9 @@ interface IMFMuxStreamAttributesManager : IUnknown
     HRESULT GetAttributes(uint dwMuxStreamIndex, IMFAttributes* ppStreamAttributes);
 }
 
-@GUID("505a2c72-42f7-4690-aeab-8f513d0ffdb8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmuxstreammediatypemanager
+@GUID("505a2c72-42f7-4690-aeab-8f513d0ffdb8")
 interface IMFMuxStreamMediaTypeManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmuxstreammediatypemanager-getstreamcount
@@ -16633,9 +16667,9 @@ interface IMFMuxStreamMediaTypeManager : IUnknown
     HRESULT GetStreamConfiguration(uint ulIndex, ulong* pullStreamMask);
 }
 
-@GUID("74abbc19-b1cc-4e41-bb8b-9d9b86a8f6ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nn-mfobjects-imfmuxstreamsamplemanager
+@GUID("74abbc19-b1cc-4e41-bb8b-9d9b86a8f6ca")
 interface IMFMuxStreamSampleManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/nf-mfobjects-imfmuxstreamsamplemanager-getstreamcount
@@ -16652,9 +16686,9 @@ interface IMFSecureBuffer : IUnknown
     HRESULT GetIdentifier(GUID* pGuidIdentifier);
 }
 
-@GUID("bf94c121-5b05-4e6f-8000-ba598961414d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mftransform/nn-mftransform-imftransform
+@GUID("bf94c121-5b05-4e6f-8000-ba598961414d")
 interface IMFTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mftransform/nf-mftransform-imftransform-getstreamlimits
@@ -16707,9 +16741,9 @@ interface IMFTransform : IUnknown
                           uint* pdwStatus);
 }
 
-@GUID("d818fbd8-fc46-42f2-87ac-1ea2d1f9bf32")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mftransform/nn-mftransform-imfdevicetransform
+@GUID("d818fbd8-fc46-42f2-87ac-1ea2d1f9bf32")
 interface IMFDeviceTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mftransform/nf-mftransform-imfdevicetransform-initializetransform
@@ -16762,18 +16796,18 @@ interface IMFDeviceTransform2 : IMFDeviceTransform
     HRESULT GetTransformAttributes(IMFAttributes* ppAttributes);
 }
 
-@GUID("6d5cb646-29ec-41fb-8179-8c4c6d750811")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mftransform/nn-mftransform-imfdevicetransformcallback
+@GUID("6d5cb646-29ec-41fb-8179-8c4c6d750811")
 interface IMFDeviceTransformCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mftransform/nf-mftransform-imfdevicetransformcallback-onbuffersent
     HRESULT OnBufferSent(IMFAttributes pCallbackAttributes, uint pinId);
 }
 
-@GUID("90377834-21d0-4dee-8214-ba2e3e6c1127")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasession
+@GUID("90377834-21d0-4dee-8214-ba2e3e6c1127")
 interface IMFMediaSession : IMFMediaEventGenerator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasession-settopology
@@ -16798,9 +16832,9 @@ interface IMFMediaSession : IMFMediaEventGenerator
     HRESULT GetFullTopology(uint dwGetFullTopologyFlags, ulong TopoId, IMFTopology* ppFullTopology);
 }
 
-@GUID("fbe5a32d-a497-4b61-bb85-97b1a848a6e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsourceresolver
+@GUID("fbe5a32d-a497-4b61-bb85-97b1a848a6e3")
 interface IMFSourceResolver : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsourceresolver-createobjectfromurl
@@ -16825,9 +16859,9 @@ interface IMFSourceResolver : IUnknown
     HRESULT CancelObjectCreation(IUnknown pIUnknownCancelCookie);
 }
 
-@GUID("279a808d-aec7-40c8-9c6b-a6b492c78a66")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasource
+@GUID("279a808d-aec7-40c8-9c6b-a6b492c78a66")
 interface IMFMediaSource : IMFMediaEventGenerator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasource-getcharacteristics
@@ -16845,9 +16879,9 @@ interface IMFMediaSource : IMFMediaEventGenerator
     HRESULT Shutdown();
 }
 
-@GUID("3c9b2eb9-86d5-4514-a394-f56664f9f0d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasourceex
+@GUID("3c9b2eb9-86d5-4514-a394-f56664f9f0d8")
 interface IMFMediaSourceEx : IMFMediaSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasourceex-getsourceattributes
@@ -16858,9 +16892,9 @@ interface IMFMediaSourceEx : IMFMediaSource
     HRESULT SetD3DManager(IUnknown pManager);
 }
 
-@GUID("6ef2a662-47c0-4666-b13d-cbb717f2fa2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfclockconsumer
+@GUID("6ef2a662-47c0-4666-b13d-cbb717f2fa2c")
 interface IMFClockConsumer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfclockconsumer-setpresentationclock
@@ -16869,9 +16903,9 @@ interface IMFClockConsumer : IUnknown
     HRESULT GetPresentationClock(IMFPresentationClock* ppPresentationClock);
 }
 
-@GUID("d182108f-4ec6-443f-aa42-a71106ec825f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediastream
+@GUID("d182108f-4ec6-443f-aa42-a71106ec825f")
 interface IMFMediaStream : IMFMediaEventGenerator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediastream-getmediasource
@@ -16882,9 +16916,9 @@ interface IMFMediaStream : IMFMediaEventGenerator
     HRESULT RequestSample(IUnknown pToken);
 }
 
-@GUID("6ef2a660-47c0-4666-b13d-cbb717f2fa2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasink
+@GUID("6ef2a660-47c0-4666-b13d-cbb717f2fa2c")
 interface IMFMediaSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasink-getcharacteristics
@@ -16907,9 +16941,9 @@ interface IMFMediaSink : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("0a97b3cf-8e7c-4a3d-8f8c-0c843dc247fb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfstreamsink
+@GUID("0a97b3cf-8e7c-4a3d-8f8c-0c843dc247fb")
 interface IMFStreamSink : IMFMediaEventGenerator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfstreamsink-getmediasink
@@ -16927,9 +16961,9 @@ interface IMFStreamSink : IMFMediaEventGenerator
     HRESULT Flush();
 }
 
-@GUID("86cbc910-e533-4751-8e3b-f19b5b806a03")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideosampleallocator
+@GUID("86cbc910-e533-4751-8e3b-f19b5b806a03")
 interface IMFVideoSampleAllocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideosampleallocator-setdirectxmanager
@@ -16942,27 +16976,27 @@ interface IMFVideoSampleAllocator : IUnknown
     HRESULT AllocateSample(IMFSample* ppSample);
 }
 
-@GUID("a792cdbe-c374-4e89-8335-278e7b9956a4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideosampleallocatornotify
+@GUID("a792cdbe-c374-4e89-8335-278e7b9956a4")
 interface IMFVideoSampleAllocatorNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideosampleallocatornotify-notifyrelease
     HRESULT NotifyRelease();
 }
 
-@GUID("3978aa1a-6d5b-4b7f-a340-90899189ae34")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideosampleallocatornotifyex
+@GUID("3978aa1a-6d5b-4b7f-a340-90899189ae34")
 interface IMFVideoSampleAllocatorNotifyEx : IMFVideoSampleAllocatorNotify
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideosampleallocatornotifyex-notifyprune
     HRESULT NotifyPrune(IMFSample __MIDL__IMFVideoSampleAllocatorNotifyEx0000);
 }
 
-@GUID("992388b4-3372-4f67-8b6f-c84c071f4751")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideosampleallocatorcallback
+@GUID("992388b4-3372-4f67-8b6f-c84c071f4751")
 interface IMFVideoSampleAllocatorCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideosampleallocatorcallback-setcallback
@@ -16971,9 +17005,9 @@ interface IMFVideoSampleAllocatorCallback : IUnknown
     HRESULT GetFreeSampleCount(int* plSamples);
 }
 
-@GUID("545b3a48-3283-4f62-866f-a62d8f598f9f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideosampleallocatorex
+@GUID("545b3a48-3283-4f62-866f-a62d8f598f9f")
 interface IMFVideoSampleAllocatorEx : IMFVideoSampleAllocator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideosampleallocatorex-initializesampleallocatorex
@@ -16981,18 +17015,18 @@ interface IMFVideoSampleAllocatorEx : IMFVideoSampleAllocator
                                         IMFMediaType pMediaType);
 }
 
-@GUID("20bc074b-7a8d-4609-8c3b-64a0a3b5d7ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/imfdxgidevicemanagersource
+@GUID("20bc074b-7a8d-4609-8c3b-64a0a3b5d7ce")
 interface IMFDXGIDeviceManagerSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/imfdxgidevicemanagersource-getmanager
     HRESULT GetManager(IMFDXGIDeviceManager* ppManager);
 }
 
-@GUID("a3f675d5-6119-4f7f-a100-1d8b280f0efb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideoprocessorcontrol
+@GUID("a3f675d5-6119-4f7f-a100-1d8b280f0efb")
 interface IMFVideoProcessorControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideoprocessorcontrol-setbordercolor
@@ -17009,9 +17043,9 @@ interface IMFVideoProcessorControl : IUnknown
     HRESULT SetConstrictionSize(SIZE* pConstrictionSize);
 }
 
-@GUID("bde633d3-e1dc-4a7f-a693-bbae399c4a20")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideoprocessorcontrol2
+@GUID("bde633d3-e1dc-4a7f-a693-bbae399c4a20")
 interface IMFVideoProcessorControl2 : IMFVideoProcessorControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideoprocessorcontrol2-setrotationoverride
@@ -17038,9 +17072,9 @@ interface IMFVideoRendererEffectControl : IUnknown
     HRESULT OnAppServiceConnectionEstablished(IUnknown pAppServiceConnection);
 }
 
-@GUID("83cf873a-f6da-4bc8-823f-bacfd55dc433")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftopology
+@GUID("83cf873a-f6da-4bc8-823f-bacfd55dc433")
 interface IMFTopology : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftopology-gettopologyid
@@ -17065,9 +17099,9 @@ interface IMFTopology : IMFAttributes
     HRESULT GetOutputNodeCollection(IMFCollection* ppCollection);
 }
 
-@GUID("83cf873a-f6da-4bc8-823f-bacfd55dc430")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftopologynode
+@GUID("83cf873a-f6da-4bc8-823f-bacfd55dc430")
 interface IMFTopologyNode : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftopologynode-setobject
@@ -17104,18 +17138,18 @@ interface IMFTopologyNode : IMFAttributes
     HRESULT CloneFrom(IMFTopologyNode pNode);
 }
 
-@GUID("fa993888-4383-415a-a930-dd472a8cf6f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfgetservice
+@GUID("fa993888-4383-415a-a930-dd472a8cf6f7")
 interface IMFGetService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfgetservice-getservice
     HRESULT GetService(const(GUID)* guidService, const(GUID)* riid, void** ppvObject);
 }
 
-@GUID("2eb1e945-18b8-4139-9b1a-d5d584818530")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfclock
+@GUID("2eb1e945-18b8-4139-9b1a-d5d584818530")
 interface IMFClock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfclock-getclockcharacteristics
@@ -17130,9 +17164,9 @@ interface IMFClock : IUnknown
     HRESULT GetProperties(MFCLOCK_PROPERTIES* pClockProperties);
 }
 
-@GUID("868ce85c-8ea9-4f55-ab82-b009a910a805")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpresentationclock
+@GUID("868ce85c-8ea9-4f55-ab82-b009a910a805")
 interface IMFPresentationClock : IMFClock
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpresentationclock-settimesource
@@ -17153,18 +17187,18 @@ interface IMFPresentationClock : IMFClock
     HRESULT Pause();
 }
 
-@GUID("7ff12cce-f76f-41c2-863b-1666c8e5e139")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpresentationtimesource
+@GUID("7ff12cce-f76f-41c2-863b-1666c8e5e139")
 interface IMFPresentationTimeSource : IMFClock
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpresentationtimesource-getunderlyingclock
     HRESULT GetUnderlyingClock(IMFClock* ppClock);
 }
 
-@GUID("f6696e82-74f7-4f3d-a178-8a5e09c3659f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfclockstatesink
+@GUID("f6696e82-74f7-4f3d-a178-8a5e09c3659f")
 interface IMFClockStateSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfclockstatesink-onclockstart
@@ -17179,9 +17213,9 @@ interface IMFClockStateSink : IUnknown
     HRESULT OnClockSetRate(long hnsSystemTime, float flRate);
 }
 
-@GUID("03cb2711-24d7-4db6-a17f-f3a7a479a536")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpresentationdescriptor
+@GUID("03cb2711-24d7-4db6-a17f-f3a7a479a536")
 interface IMFPresentationDescriptor : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpresentationdescriptor-getstreamdescriptorcount
@@ -17196,9 +17230,9 @@ interface IMFPresentationDescriptor : IMFAttributes
     HRESULT Clone(IMFPresentationDescriptor* ppPresentationDescriptor);
 }
 
-@GUID("56c03d9c-9dbb-45f5-ab4b-d80f47c05938")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfstreamdescriptor
+@GUID("56c03d9c-9dbb-45f5-ab4b-d80f47c05938")
 interface IMFStreamDescriptor : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfstreamdescriptor-getstreamidentifier
@@ -17207,9 +17241,9 @@ interface IMFStreamDescriptor : IMFAttributes
     HRESULT GetMediaTypeHandler(IMFMediaTypeHandler* ppMediaTypeHandler);
 }
 
-@GUID("e93dcf6c-4b07-4e1e-8123-aa16ed6eadf5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediatypehandler
+@GUID("e93dcf6c-4b07-4e1e-8123-aa16ed6eadf5")
 interface IMFMediaTypeHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediatypehandler-ismediatypesupported
@@ -17226,9 +17260,9 @@ interface IMFMediaTypeHandler : IUnknown
     HRESULT GetMajorType(GUID* pguidMajorType);
 }
 
-@GUID("e56e4cbd-8f70-49d8-a0f8-edb3d6ab9bf2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftimer
+@GUID("e56e4cbd-8f70-49d8-a0f8-edb3d6ab9bf2")
 interface IMFTimer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftimer-settimer
@@ -17238,9 +17272,9 @@ interface IMFTimer : IUnknown
     HRESULT CancelTimer(IUnknown punkKey);
 }
 
-@GUID("97ec2ea4-0e42-4937-97ac-9d6d328824e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfshutdown
+@GUID("97ec2ea4-0e42-4937-97ac-9d6d328824e1")
 interface IMFShutdown : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfshutdown-shutdown
@@ -17249,18 +17283,18 @@ interface IMFShutdown : IUnknown
     HRESULT GetShutdownStatus(MFSHUTDOWN_STATUS* pStatus);
 }
 
-@GUID("de9a6157-f660-4643-b56a-df9f7998c7cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftopoloader
+@GUID("de9a6157-f660-4643-b56a-df9f7998c7cd")
 interface IMFTopoLoader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftopoloader-load
     HRESULT Load(IMFTopology pInputTopo, IMFTopology* ppOutputTopo, IMFTopology pCurrentTopo);
 }
 
-@GUID("acf92459-6a61-42bd-b57c-b43e51203cb0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcontentprotectionmanager
+@GUID("acf92459-6a61-42bd-b57c-b43e51203cb0")
 interface IMFContentProtectionManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcontentprotectionmanager-beginenablecontent
@@ -17270,9 +17304,9 @@ interface IMFContentProtectionManager : IUnknown
     HRESULT EndEnableContent(IMFAsyncResult pResult);
 }
 
-@GUID("d3c4ef59-49ce-4381-9071-d5bcd044c770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcontentenabler
+@GUID("d3c4ef59-49ce-4381-9071-d5bcd044c770")
 interface IMFContentEnabler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcontentenabler-getenabletype
@@ -17291,9 +17325,9 @@ interface IMFContentEnabler : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("f88cfb8c-ef16-4991-b450-cb8c69e51704")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmetadata
+@GUID("f88cfb8c-ef16-4991-b450-cb8c69e51704")
 interface IMFMetadata : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmetadata-setlanguage
@@ -17312,9 +17346,9 @@ interface IMFMetadata : IUnknown
     HRESULT GetAllPropertyNames(PROPVARIANT* ppvNames);
 }
 
-@GUID("56181d2d-e221-4adb-b1c8-3cee6a53f76f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmetadataprovider
+@GUID("56181d2d-e221-4adb-b1c8-3cee6a53f76f")
 interface IMFMetadataProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmetadataprovider-getmfmetadata
@@ -17322,9 +17356,9 @@ interface IMFMetadataProvider : IUnknown
                           IMFMetadata* ppMFMetadata);
 }
 
-@GUID("0a9ccdbc-d797-4563-9667-94ec5d79292d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfratesupport
+@GUID("0a9ccdbc-d797-4563-9667-94ec5d79292d")
 interface IMFRateSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfratesupport-getslowestrate
@@ -17335,9 +17369,9 @@ interface IMFRateSupport : IUnknown
     HRESULT IsRateSupported(BOOL fThin, float flRate, float* pflNearestSupportedRate);
 }
 
-@GUID("88ddcd21-03c3-4275-91ed-55ee3929328f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfratecontrol
+@GUID("88ddcd21-03c3-4275-91ed-55ee3929328f")
 interface IMFRateControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfratecontrol-setrate
@@ -17346,9 +17380,9 @@ interface IMFRateControl : IUnknown
     HRESULT GetRate(BOOL* pfThin, float* pflRate);
 }
 
-@GUID("ab9d8661-f7e8-4ef4-9861-89f334f94e74")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftimecodetranslate
+@GUID("ab9d8661-f7e8-4ef4-9861-89f334f94e74")
 interface IMFTimecodeTranslate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftimecodetranslate-beginconverttimecodetohns
@@ -17362,9 +17396,9 @@ interface IMFTimecodeTranslate : IUnknown
     HRESULT EndConvertHNSToTimecode(IMFAsyncResult pResult, PROPVARIANT* pPropVarTimecode);
 }
 
-@GUID("26afea53-d9ed-42b5-ab80-e64f9ee34779")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfseekinfo
+@GUID("26afea53-d9ed-42b5-ab80-e64f9ee34779")
 interface IMFSeekInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfseekinfo-getnearestkeyframes
@@ -17372,9 +17406,9 @@ interface IMFSeekInfo : IUnknown
                                 PROPVARIANT* pvarPreviousKeyFrame, PROPVARIANT* pvarNextKeyFrame);
 }
 
-@GUID("089edf13-cf71-4338-8d13-9e569dbdc319")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsimpleaudiovolume
+@GUID("089edf13-cf71-4338-8d13-9e569dbdc319")
 interface IMFSimpleAudioVolume : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsimpleaudiovolume-setmastervolume
@@ -17387,9 +17421,9 @@ interface IMFSimpleAudioVolume : IUnknown
     HRESULT GetMute(BOOL* pbMute);
 }
 
-@GUID("76b1bbdb-4ec8-4f36-b106-70a9316df593")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfaudiostreamvolume
+@GUID("76b1bbdb-4ec8-4f36-b106-70a9316df593")
 interface IMFAudioStreamVolume : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfaudiostreamvolume-getchannelcount
@@ -17404,9 +17438,9 @@ interface IMFAudioStreamVolume : IUnknown
     HRESULT GetAllVolumes(uint dwCount, float* pfVolumes);
 }
 
-@GUID("a0638c2b-6465-4395-9ae7-a321a9fd2856")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfaudiopolicy
+@GUID("a0638c2b-6465-4395-9ae7-a321a9fd2856")
 interface IMFAudioPolicy : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfaudiopolicy-setgroupingparam
@@ -17423,9 +17457,9 @@ interface IMFAudioPolicy : IUnknown
     HRESULT GetIconPath(PWSTR* pszPath);
 }
 
-@GUID("8c7b80bf-ee42-4b59-b1df-55668e1bdca8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsamplegrabbersinkcallback
+@GUID("8c7b80bf-ee42-4b59-b1df-55668e1bdca8")
 interface IMFSampleGrabberSinkCallback : IMFClockStateSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsamplegrabbersinkcallback-onsetpresentationclock
@@ -17439,9 +17473,9 @@ interface IMFSampleGrabberSinkCallback : IMFClockStateSink
     HRESULT OnShutdown();
 }
 
-@GUID("ca86aa50-c46e-429e-ab27-16d6ac6844cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsamplegrabbersinkcallback2
+@GUID("ca86aa50-c46e-429e-ab27-16d6ac6844cb")
 interface IMFSampleGrabberSinkCallback2 : IMFSampleGrabberSinkCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsamplegrabbersinkcallback2-onprocesssampleex
@@ -17451,9 +17485,9 @@ interface IMFSampleGrabberSinkCallback2 : IMFSampleGrabberSinkCallback
                               uint dwSampleSize, IMFAttributes pAttributes);
 }
 
-@GUID("35fe1bb8-a3a9-40fe-bbec-eb569c9ccca3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfworkqueueservices
+@GUID("35fe1bb8-a3a9-40fe-bbec-eb569c9ccca3")
 interface IMFWorkQueueServices : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfworkqueueservices-beginregistertopologyworkqueueswithmmcss
@@ -17484,9 +17518,9 @@ interface IMFWorkQueueServices : IUnknown
     HRESULT GetPlatformWorkQueueMMCSSTaskId(uint dwPlatformWorkQueueId, uint* pdwTaskId);
 }
 
-@GUID("96bf961b-40fe-42f1-ba9d-320238b49700")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfworkqueueservicesex
+@GUID("96bf961b-40fe-42f1-ba9d-320238b49700")
 interface IMFWorkQueueServicesEx : IMFWorkQueueServices
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfworkqueueservicesex-gettopologyworkqueuemmcsspriority
@@ -17499,9 +17533,9 @@ interface IMFWorkQueueServicesEx : IMFWorkQueueServices
     HRESULT GetPlatformWorkQueueMMCSSPriority(uint dwPlatformWorkQueueId, int* plPriority);
 }
 
-@GUID("8d009d86-5b9f-4115-b1fc-9f80d52ab8ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfqualitymanager
+@GUID("8d009d86-5b9f-4115-b1fc-9f80d52ab8ab")
 interface IMFQualityManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfqualitymanager-notifytopology
@@ -17518,9 +17552,9 @@ interface IMFQualityManager : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("ec15e2e9-e36b-4f7c-8758-77d452ef4ce7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfqualityadvise
+@GUID("ec15e2e9-e36b-4f7c-8758-77d452ef4ce7")
 interface IMFQualityAdvise : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfqualityadvise-setdropmode
@@ -17535,18 +17569,18 @@ interface IMFQualityAdvise : IUnknown
     HRESULT DropTime(long hnsAmountToDrop);
 }
 
-@GUID("f3706f0d-8ea2-4886-8000-7155e9ec2eae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfqualityadvise2
+@GUID("f3706f0d-8ea2-4886-8000-7155e9ec2eae")
 interface IMFQualityAdvise2 : IMFQualityAdvise
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfqualityadvise2-notifyqualityevent
     HRESULT NotifyQualityEvent(IMFMediaEvent pEvent, uint* pdwFlags);
 }
 
-@GUID("dfcd8e4d-30b5-4567-acaa-8eb5b7853dc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfqualityadviselimits
+@GUID("dfcd8e4d-30b5-4567-acaa-8eb5b7853dc9")
 interface IMFQualityAdviseLimits : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfqualityadviselimits-getmaximumdropmode
@@ -17555,9 +17589,9 @@ interface IMFQualityAdviseLimits : IUnknown
     HRESULT GetMinimumQualityLevel(MF_QUALITY_LEVEL* peQualityLevel);
 }
 
-@GUID("2347d60b-3fb5-480c-8803-8df3adcd3ef0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfrealtimeclient
+@GUID("2347d60b-3fb5-480c-8803-8df3adcd3ef0")
 interface IMFRealTimeClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfrealtimeclient-registerthreads
@@ -17568,9 +17602,9 @@ interface IMFRealTimeClient : IUnknown
     HRESULT SetWorkQueue(uint dwWorkQueueId);
 }
 
-@GUID("03910848-ab16-4611-b100-17b88ae2f248")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfrealtimeclientex
+@GUID("03910848-ab16-4611-b100-17b88ae2f248")
 interface IMFRealTimeClientEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfrealtimeclientex-registerthreadsex
@@ -17581,9 +17615,9 @@ interface IMFRealTimeClientEx : IUnknown
     HRESULT SetWorkQueueEx(uint dwMultithreadedWorkQueueId, int lWorkItemBasePriority);
 }
 
-@GUID("197cd219-19cb-4de1-a64c-acf2edcbe59e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsequencersource
+@GUID("197cd219-19cb-4de1-a64c-acf2edcbe59e")
 interface IMFSequencerSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsequencersource-appendtopology
@@ -17598,36 +17632,36 @@ interface IMFSequencerSource : IUnknown
     HRESULT UpdateTopologyFlags(uint dwId, uint dwFlags);
 }
 
-@GUID("0e1d6009-c9f3-442d-8c51-a42d2d49452f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasourcetopologyprovider
+@GUID("0e1d6009-c9f3-442d-8c51-a42d2d49452f")
 interface IMFMediaSourceTopologyProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasourcetopologyprovider-getmediasourcetopology
     HRESULT GetMediaSourceTopology(IMFPresentationDescriptor pPresentationDescriptor, IMFTopology* ppTopology);
 }
 
-@GUID("0e1d600a-c9f3-442d-8c51-a42d2d49452f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasourcepresentationprovider
+@GUID("0e1d600a-c9f3-442d-8c51-a42d2d49452f")
 interface IMFMediaSourcePresentationProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasourcepresentationprovider-forceendofpresentation
     HRESULT ForceEndOfPresentation(IMFPresentationDescriptor pPresentationDescriptor);
 }
 
-@GUID("676aa6dd-238a-410d-bb99-65668d01605a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftopologynodeattributeeditor
+@GUID("676aa6dd-238a-410d-bb99-65668d01605a")
 interface IMFTopologyNodeAttributeEditor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftopologynodeattributeeditor-updatenodeattributes
     HRESULT UpdateNodeAttributes(ulong TopoId, uint cUpdates, MFTOPONODE_ATTRIBUTE_UPDATE* pUpdates);
 }
 
-@GUID("6d66d782-1d4f-4db7-8c63-cb8c77f1ef5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfbytestreambuffering
+@GUID("6d66d782-1d4f-4db7-8c63-cb8c77f1ef5e")
 interface IMFByteStreamBuffering : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfbytestreambuffering-setbufferingparams
@@ -17638,18 +17672,18 @@ interface IMFByteStreamBuffering : IUnknown
     HRESULT StopBuffering();
 }
 
-@GUID("f5042ea4-7a96-4a75-aa7b-2be1ef7f88d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfbytestreamcachecontrol
+@GUID("f5042ea4-7a96-4a75-aa7b-2be1ef7f88d5")
 interface IMFByteStreamCacheControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfbytestreamcachecontrol-stopbackgroundtransfer
     HRESULT StopBackgroundTransfer();
 }
 
-@GUID("64976bfa-fb61-4041-9069-8c9a5f659beb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfbytestreamtimeseek
+@GUID("64976bfa-fb61-4041-9069-8c9a5f659beb")
 interface IMFByteStreamTimeSeek : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfbytestreamtimeseek-istimeseeksupported
@@ -17660,9 +17694,9 @@ interface IMFByteStreamTimeSeek : IUnknown
     HRESULT GetTimeSeekResult(ulong* pqwStartTime, ulong* pqwStopTime, ulong* pqwDuration);
 }
 
-@GUID("71ce469c-f34b-49ea-a56b-2d2a10e51149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfbytestreamcachecontrol2
+@GUID("71ce469c-f34b-49ea-a56b-2d2a10e51149")
 interface IMFByteStreamCacheControl2 : IMFByteStreamCacheControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfbytestreamcachecontrol2-getbyteranges
@@ -17673,9 +17707,9 @@ interface IMFByteStreamCacheControl2 : IMFByteStreamCacheControl
     HRESULT IsBackgroundTransferActive(BOOL* pfActive);
 }
 
-@GUID("5b87ef6a-7ed8-434f-ba0e-184fac1628d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetcredential
+@GUID("5b87ef6a-7ed8-434f-ba0e-184fac1628d1")
 interface IMFNetCredential : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetcredential-setuser
@@ -17692,9 +17726,9 @@ interface IMFNetCredential : IUnknown
     HRESULT LoggedOnUser(BOOL* pfLoggedOnUser);
 }
 
-@GUID("5b87ef6b-7ed8-434f-ba0e-184fac1628d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetcredentialmanager
+@GUID("5b87ef6b-7ed8-434f-ba0e-184fac1628d1")
 interface IMFNetCredentialManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetcredentialmanager-begingetcredentials
@@ -17706,9 +17740,9 @@ interface IMFNetCredentialManager : IUnknown
     HRESULT SetGood(IMFNetCredential pCred, BOOL fGood);
 }
 
-@GUID("5b87ef6c-7ed8-434f-ba0e-184fac1628d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetcredentialcache
+@GUID("5b87ef6c-7ed8-434f-ba0e-184fac1628d1")
 interface IMFNetCredentialCache : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetcredentialcache-getcredential
@@ -17720,9 +17754,9 @@ interface IMFNetCredentialCache : IUnknown
     HRESULT SetUserOptions(IMFNetCredential pCred, uint dwOptionsFlags);
 }
 
-@GUID("61f7d887-1230-4a8b-aeba-8ad434d1a64d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsslcertificatemanager
+@GUID("61f7d887-1230-4a8b-aeba-8ad434d1a64d")
 interface IMFSSLCertificateManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsslcertificatemanager-getclientcertificate
@@ -17740,9 +17774,9 @@ interface IMFSSLCertificateManager : IUnknown
                                 uint cbData, BOOL* pfIsGood);
 }
 
-@GUID("091878a3-bf11-4a5c-bc9f-33995b06ef2d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetresourcefilter
+@GUID("091878a3-bf11-4a5c-bc9f-33995b06ef2d")
 interface IMFNetResourceFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetresourcefilter-onredirect
@@ -17751,18 +17785,18 @@ interface IMFNetResourceFilter : IUnknown
     HRESULT OnSendingRequest(const(PWSTR) pszUrl);
 }
 
-@GUID("059054b3-027c-494c-a27d-9113291cf87f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsourceopenmonitor
+@GUID("059054b3-027c-494c-a27d-9113291cf87f")
 interface IMFSourceOpenMonitor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsourceopenmonitor-onsourceevent
     HRESULT OnSourceEvent(IMFMediaEvent pEvent);
 }
 
-@GUID("e9cd0383-a268-4bb4-82de-658d53574d41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetproxylocator
+@GUID("e9cd0383-a268-4bb4-82de-658d53574d41")
 interface IMFNetProxyLocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetproxylocator-findfirstproxy
@@ -17777,18 +17811,18 @@ interface IMFNetProxyLocator : IUnknown
     HRESULT Clone(IMFNetProxyLocator* ppProxyLocator);
 }
 
-@GUID("e9cd0384-a268-4bb4-82de-658d53574d41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetproxylocatorfactory
+@GUID("e9cd0384-a268-4bb4-82de-658d53574d41")
 interface IMFNetProxyLocatorFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetproxylocatorfactory-createproxylocator
     HRESULT CreateProxyLocator(const(PWSTR) pszProtocol, IMFNetProxyLocator* ppProxyLocator);
 }
 
-@GUID("e9931663-80bf-4c6e-98af-5dcf58747d1f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsavejob
+@GUID("e9931663-80bf-4c6e-98af-5dcf58747d1f")
 interface IMFSaveJob : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsavejob-beginsave
@@ -17801,9 +17835,9 @@ interface IMFSaveJob : IUnknown
     HRESULT GetProgress(uint* pdwPercentComplete);
 }
 
-@GUID("7be19e73-c9bf-468a-ac5a-a5e8653bec87")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetschemehandlerconfig
+@GUID("7be19e73-c9bf-468a-ac5a-a5e8653bec87")
 interface IMFNetSchemeHandlerConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetschemehandlerconfig-getnumberofsupportedprotocols
@@ -17814,9 +17848,9 @@ interface IMFNetSchemeHandlerConfig : IUnknown
     HRESULT ResetProtocolRolloverSettings();
 }
 
-@GUID("6d4c7b74-52a0-4bb7-b0db-55f29f47a668")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfschemehandler
+@GUID("6d4c7b74-52a0-4bb7-b0db-55f29f47a668")
 interface IMFSchemeHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfschemehandler-begincreateobject
@@ -17828,9 +17862,9 @@ interface IMFSchemeHandler : IUnknown
     HRESULT CancelObjectCreation(IUnknown pIUnknownCancelCookie);
 }
 
-@GUID("bb420aa4-765b-4a1f-91fe-d6a8a143924c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfbytestreamhandler
+@GUID("bb420aa4-765b-4a1f-91fe-d6a8a143924c")
 interface IMFByteStreamHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfbytestreamhandler-begincreateobject
@@ -17844,18 +17878,18 @@ interface IMFByteStreamHandler : IUnknown
     HRESULT GetMaxNumberOfBytesRequiredForResolution(ulong* pqwBytes);
 }
 
-@GUID("542612c4-a1b8-4632-b521-de11ea64a0b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftrustedinput
+@GUID("542612c4-a1b8-4632-b521-de11ea64a0b0")
 interface IMFTrustedInput : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftrustedinput-getinputtrustauthority
     HRESULT GetInputTrustAuthority(uint dwStreamID, const(GUID)* riid, IUnknown* ppunkObject);
 }
 
-@GUID("d19f8e98-b126-4446-890c-5dcb7ad71453")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfinputtrustauthority
+@GUID("d19f8e98-b126-4446-890c-5dcb7ad71453")
 interface IMFInputTrustAuthority : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfinputtrustauthority-getdecrypter
@@ -17872,9 +17906,9 @@ interface IMFInputTrustAuthority : IUnknown
     HRESULT Reset();
 }
 
-@GUID("d19f8e95-b126-4446-890c-5dcb7ad71453")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftrustedoutput
+@GUID("d19f8e95-b126-4446-890c-5dcb7ad71453")
 interface IMFTrustedOutput : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftrustedoutput-getoutputtrustauthoritycount
@@ -17885,9 +17919,9 @@ interface IMFTrustedOutput : IUnknown
     HRESULT IsFinal(BOOL* pfIsFinal);
 }
 
-@GUID("d19f8e94-b126-4446-890c-5dcb7ad71453")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfoutputtrustauthority
+@GUID("d19f8e94-b126-4446-890c-5dcb7ad71453")
 interface IMFOutputTrustAuthority : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfoutputtrustauthority-getaction
@@ -17896,9 +17930,9 @@ interface IMFOutputTrustAuthority : IUnknown
     HRESULT SetPolicy(IMFOutputPolicy* ppPolicy, uint nPolicy, ubyte** ppbTicket, uint* pcbTicket);
 }
 
-@GUID("7f00f10a-daed-41af-ab26-5fdfa4dfba3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfoutputpolicy
+@GUID("7f00f10a-daed-41af-ab26-5fdfa4dfba3c")
 interface IMFOutputPolicy : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfoutputpolicy-generaterequiredschemas
@@ -17911,9 +17945,9 @@ interface IMFOutputPolicy : IMFAttributes
     HRESULT GetMinimumGRLVersion(uint* pdwMinimumGRLVersion);
 }
 
-@GUID("7be0fc5b-abd9-44fb-a5c8-f50136e71599")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfoutputschema
+@GUID("7be0fc5b-abd9-44fb-a5c8-f50136e71599")
 interface IMFOutputSchema : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfoutputschema-getschematype
@@ -17924,9 +17958,9 @@ interface IMFOutputSchema : IMFAttributes
     HRESULT GetOriginatorID(GUID* pguidOriginatorID);
 }
 
-@GUID("d0ae555d-3b12-4d97-b060-0990bc5aeb67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsecurechannel
+@GUID("d0ae555d-3b12-4d97-b060-0990bc5aeb67")
 interface IMFSecureChannel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsecurechannel-getcertificate
@@ -17936,9 +17970,9 @@ interface IMFSecureChannel : IUnknown
                          uint cbSessionKey);
 }
 
-@GUID("8e36395f-c7b9-43c4-a54d-512b4af63c95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsampleprotection
+@GUID("8e36395f-c7b9-43c4-a54d-512b4af63c95")
 interface IMFSampleProtection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsampleprotection-getinputprotectionversion
@@ -17954,18 +17988,18 @@ interface IMFSampleProtection : IUnknown
     HRESULT InitInputProtection(uint dwVersion, uint dwInputId, ubyte* pbSeed, uint cbSeed);
 }
 
-@GUID("5dfd4b2a-7674-4110-a4e6-8a68fd5f3688")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfmediasinkpreroll
+@GUID("5dfd4b2a-7674-4110-a4e6-8a68fd5f3688")
 interface IMFMediaSinkPreroll : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfmediasinkpreroll-notifypreroll
     HRESULT NotifyPreroll(long hnsUpcomingStartTime);
 }
 
-@GUID("eaecb74a-9a50-42ce-9541-6a7f57aa4ad7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imffinalizablemediasink
+@GUID("eaecb74a-9a50-42ce-9541-6a7f57aa4ad7")
 interface IMFFinalizableMediaSink : IMFMediaSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imffinalizablemediasink-beginfinalize
@@ -17974,18 +18008,18 @@ interface IMFFinalizableMediaSink : IMFMediaSink
     HRESULT EndFinalize(IMFAsyncResult pResult);
 }
 
-@GUID("9db7aa41-3cc5-40d4-8509-555804ad34cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfstreamingsinkconfig
+@GUID("9db7aa41-3cc5-40d4-8509-555804ad34cc")
 interface IMFStreamingSinkConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfstreamingsinkconfig-startstreaming
     HRESULT StartStreaming(BOOL fSeekOffsetIsByteOffset, ulong qwSeekOffset);
 }
 
-@GUID("994e23ad-1cc2-493c-b9fa-46f1cb040fa4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfremoteproxy
+@GUID("994e23ad-1cc2-493c-b9fa-46f1cb040fa4")
 interface IMFRemoteProxy : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfremoteproxy-getremoteobject
@@ -17994,9 +18028,9 @@ interface IMFRemoteProxy : IUnknown
     HRESULT GetRemoteHost(const(GUID)* riid, void** ppv);
 }
 
-@GUID("09ef5be3-c8a7-469e-8b70-73bf25bb193f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfobjectreferencestream
+@GUID("09ef5be3-c8a7-469e-8b70-73bf25bb193f")
 interface IMFObjectReferenceStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfobjectreferencestream-savereference
@@ -18005,9 +18039,9 @@ interface IMFObjectReferenceStream : IUnknown
     HRESULT LoadReference(const(GUID)* riid, void** ppv);
 }
 
-@GUID("f70ca1a9-fdc7-4782-b994-adffb1c98606")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpmphost
+@GUID("f70ca1a9-fdc7-4782-b994-adffb1c98606")
 interface IMFPMPHost : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpmphost-lockprocess
@@ -18018,18 +18052,18 @@ interface IMFPMPHost : IUnknown
     HRESULT CreateObjectByCLSID(const(GUID)* clsid, IStream pStream, const(GUID)* riid, void** ppv);
 }
 
-@GUID("6c4e655d-ead8-4421-b6b9-54dcdbbdf820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpmpclient
+@GUID("6c4e655d-ead8-4421-b6b9-54dcdbbdf820")
 interface IMFPMPClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpmpclient-setpmphost
     HRESULT SetPMPHost(IMFPMPHost pPMPHost);
 }
 
-@GUID("994e23af-1cc2-493c-b9fa-46f1cb040fa4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpmpserver
+@GUID("994e23af-1cc2-493c-b9fa-46f1cb040fa4")
 interface IMFPMPServer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpmpserver-lockprocess
@@ -18040,18 +18074,18 @@ interface IMFPMPServer : IUnknown
     HRESULT CreateObjectByCLSID(const(GUID)* clsid, const(GUID)* riid, void** ppObject);
 }
 
-@GUID("1cde6309-cae0-4940-907e-c1ec9c3d1d4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfremotedesktopplugin
+@GUID("1cde6309-cae0-4940-907e-c1ec9c3d1d4a")
 interface IMFRemoteDesktopPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfremotedesktopplugin-updatetopology
     HRESULT UpdateTopology(IMFTopology pTopology);
 }
 
-@GUID("a7e025dd-5303-4a62-89d6-e747e1efac73")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsamistyle
+@GUID("a7e025dd-5303-4a62-89d6-e747e1efac73")
 interface IMFSAMIStyle : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsamistyle-getstylecount
@@ -18064,9 +18098,9 @@ interface IMFSAMIStyle : IUnknown
     HRESULT GetSelectedStyle(PWSTR* ppwszStyle);
 }
 
-@GUID("4adfdba3-7ab0-4953-a62b-461e7ff3da1e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftranscodeprofile
+@GUID("4adfdba3-7ab0-4953-a62b-461e7ff3da1e")
 interface IMFTranscodeProfile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftranscodeprofile-setaudioattributes
@@ -18083,9 +18117,9 @@ interface IMFTranscodeProfile : IUnknown
     HRESULT GetContainerAttributes(IMFAttributes* ppAttrs);
 }
 
-@GUID("8cffcd2e-5a03-4a3a-aff7-edcd107c620e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftranscodesinkinfoprovider
+@GUID("8cffcd2e-5a03-4a3a-aff7-edcd107c620e")
 interface IMFTranscodeSinkInfoProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftranscodesinkinfoprovider-setoutputfile
@@ -18098,18 +18132,18 @@ interface IMFTranscodeSinkInfoProvider : IUnknown
     HRESULT GetSinkInfo(MF_TRANSCODE_SINK_INFO* pSinkInfo);
 }
 
-@GUID("508e71d3-ec66-4fc3-8775-b4b9ed6ba847")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imffieldofusemftunlock
+@GUID("508e71d3-ec66-4fc3-8775-b4b9ed6ba847")
 interface IMFFieldOfUseMFTUnlock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imffieldofusemftunlock-unlock
     HRESULT Unlock(IUnknown pUnkMFT);
 }
 
-@GUID("149c4d73-b4be-4f8d-8b87-079e926b6add")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imflocalmftregistration
+@GUID("149c4d73-b4be-4f8d-8b87-079e926b6add")
 interface IMFLocalMFTRegistration : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imflocalmftregistration-registermfts
@@ -18124,9 +18158,9 @@ interface IMFCapturePhotoConfirmation : IUnknown
     HRESULT GetPixelFormat(GUID* subtype);
 }
 
-@GUID("84d2054a-3aa1-4728-a3b0-440a418cf49c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpmphostapp
+@GUID("84d2054a-3aa1-4728-a3b0-440a418cf49c")
 interface IMFPMPHostApp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpmphostapp-lockprocess
@@ -18137,36 +18171,36 @@ interface IMFPMPHostApp : IUnknown
     HRESULT ActivateClassById(const(PWSTR) id, IStream pStream, const(GUID)* riid, void** ppv);
 }
 
-@GUID("c004f646-be2c-48f3-93a2-a0983eba1108")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfpmpclientapp
+@GUID("c004f646-be2c-48f3-93a2-a0983eba1108")
 interface IMFPMPClientApp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfpmpclientapp-setpmphost
     HRESULT SetPMPHost(IMFPMPHostApp pPMPHost);
 }
 
-@GUID("380b9af9-a85b-4e78-a2af-ea5ce645c6b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/imfmediastreamsourcesamplerequest
+@GUID("380b9af9-a85b-4e78-a2af-ea5ce645c6b4")
 interface IMFMediaStreamSourceSampleRequest : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/imfmediastreamsourcesamplerequest-setsample
     HRESULT SetSample(IMFSample value);
 }
 
-@GUID("245bf8e9-0755-40f7-88a5-ae0f18d55e17")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imftrackedsample
+@GUID("245bf8e9-0755-40f7-88a5-ae0f18d55e17")
 interface IMFTrackedSample : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imftrackedsample-setallocator
     HRESULT SetAllocator(IMFAsyncCallback pSampleAllocator, IUnknown pUnkState);
 }
 
-@GUID("ef5dc845-f0d9-4ec9-b00c-cb5183d38434")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfprotectedenvironmentaccess
+@GUID("ef5dc845-f0d9-4ec9-b00c-cb5183d38434")
 interface IMFProtectedEnvironmentAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfprotectedenvironmentaccess-call
@@ -18178,18 +18212,18 @@ interface IMFProtectedEnvironmentAccess : IUnknown
     HRESULT ReadGRL(uint* outputLength, ubyte** output);
 }
 
-@GUID("4a724bca-ff6a-4c07-8e0d-7a358421cf06")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsignedlibrary
+@GUID("4a724bca-ff6a-4c07-8e0d-7a358421cf06")
 interface IMFSignedLibrary : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsignedlibrary-getprocedureaddress
     HRESULT GetProcedureAddress(const(PSTR) name, void** address);
 }
 
-@GUID("fff4af3a-1fc1-4ef9-a29b-d26c49e2f31a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsystemid
+@GUID("fff4af3a-1fc1-4ef9-a29b-d26c49e2f31a")
 interface IMFSystemId : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsystemid-getdata
@@ -18200,9 +18234,9 @@ interface IMFSystemId : IUnknown
                   uint* pcbOut, ubyte** ppbOut);
 }
 
-@GUID("e6257174-a060-4c9a-a088-3b1b471cad28")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcontentprotectiondevice
+@GUID("e6257174-a060-4c9a-a088-3b1b471cad28")
 interface IMFContentProtectionDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcontentprotectiondevice-invokefunction
@@ -18214,9 +18248,9 @@ interface IMFContentProtectionDevice : IUnknown
     HRESULT GetPrivateDataByteCount(uint* PrivateInputByteCount, uint* PrivateOutputByteCount);
 }
 
-@GUID("7ec4b1bd-43fb-4763-85d2-64fcb5c5f4cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcontentdecryptorcontext
+@GUID("7ec4b1bd-43fb-4763-85d2-64fcb5c5f4cb")
 interface IMFContentDecryptorContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcontentdecryptorcontext-initializehardwarekey
@@ -18224,9 +18258,9 @@ interface IMFContentDecryptorContext : IUnknown
                                   ulong* OutputPrivateData);
 }
 
-@GUID("bc2b7d44-a72d-49d5-8376-1480dee58b22")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfnetcrossoriginsupport
+@GUID("bc2b7d44-a72d-49d5-8376-1480dee58b22")
 interface IMFNetCrossOriginSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfnetcrossoriginsupport-getcrossoriginpolicy
@@ -18236,9 +18270,9 @@ interface IMFNetCrossOriginSupport : IUnknown
     HRESULT IsSameOrigin(const(PWSTR) wszURL, BOOL* pfIsSameOrigin);
 }
 
-@GUID("f779fddf-26e7-4270-8a8b-b983d1859de0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfhttpdownloadrequest
+@GUID("f779fddf-26e7-4270-8a8b-b983d1859de0")
 interface IMFHttpDownloadRequest : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfhttpdownloadrequest-addheader
@@ -18276,9 +18310,9 @@ interface IMFHttpDownloadRequest : IUnknown
     HRESULT Close();
 }
 
-@GUID("71fa9a2c-53ce-4662-a132-1a7e8cbf62db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfhttpdownloadsession
+@GUID("71fa9a2c-53ce-4662-a132-1a7e8cbf62db")
 interface IMFHttpDownloadSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfhttpdownloadsession-setserver
@@ -18290,9 +18324,9 @@ interface IMFHttpDownloadSession : IUnknown
     HRESULT Close();
 }
 
-@GUID("1b4cf4b9-3a16-4115-839d-03cc5c99df01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfhttpdownloadsessionprovider
+@GUID("1b4cf4b9-3a16-4115-839d-03cc5c99df01")
 interface IMFHttpDownloadSessionProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfhttpdownloadsessionprovider-createhttpdownloadsession
@@ -18312,9 +18346,9 @@ interface IMFMediaStream2 : IMFMediaStream
     HRESULT GetStreamState(MF_STREAM_STATE* value);
 }
 
-@GUID("fb9f48f2-2a18-4e28-9730-786f30f04dc4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensordevice
+@GUID("fb9f48f2-2a18-4e28-9730-786f30f04dc4")
 interface IMFSensorDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensordevice-getdeviceid
@@ -18337,9 +18371,9 @@ interface IMFSensorDevice : IUnknown
     HRESULT GetSensorDeviceMode(MFSensorDeviceMode* peMode);
 }
 
-@GUID("4110243a-9757-461f-89f1-f22345bcab4e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensorgroup
+@GUID("4110243a-9757-461f-89f1-f22345bcab4e")
 interface IMFSensorGroup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensorgroup-getsymboliclink
@@ -18360,9 +18394,9 @@ interface IMFSensorGroup : IUnknown
     HRESULT CreateMediaSource(IMFMediaSource* ppSource);
 }
 
-@GUID("e9a42171-c56e-498a-8b39-eda5a070b7fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensorstream
+@GUID("e9a42171-c56e-498a-8b39-eda5a070b7fc")
 interface IMFSensorStream : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensorstream-getmediatypecount
@@ -18373,9 +18407,9 @@ interface IMFSensorStream : IMFAttributes
     HRESULT CloneSensorStream(IMFSensorStream* ppStream);
 }
 
-@GUID("eed9c2ee-66b4-4f18-a697-ac7d3960215c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensortransformfactory
+@GUID("eed9c2ee-66b4-4f18-a697-ac7d3960215c")
 interface IMFSensorTransformFactory : IUnknown
 {
     HRESULT GetFactoryAttributes(IMFAttributes* ppAttributes);
@@ -18391,9 +18425,9 @@ interface IMFSensorTransformFactory : IUnknown
                             IMFDeviceTransform* ppDeviceMFT);
 }
 
-@GUID("22f765d1-8dab-4107-846d-56baf72215e7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensorprofile
+@GUID("22f765d1-8dab-4107-846d-56baf72215e7")
 interface IMFSensorProfile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensorprofile-getprofileid
@@ -18406,9 +18440,9 @@ interface IMFSensorProfile : IUnknown
     HRESULT AddBlockedControl(const(PWSTR) wzBlockedControl);
 }
 
-@GUID("c95ea55b-0187-48be-9353-8d2507662351")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensorprofilecollection
+@GUID("c95ea55b-0187-48be-9353-8d2507662351")
 interface IMFSensorProfileCollection : IUnknown
 {
     uint    GetProfileCount();
@@ -18424,9 +18458,9 @@ interface IMFSensorProfileCollection : IUnknown
     void    RemoveProfile(SENSORPROFILEID* ProfileId);
 }
 
-@GUID("39dc7f4a-b141-4719-813c-a7f46162a2b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensorprocessactivity
+@GUID("39dc7f4a-b141-4719-813c-a7f46162a2b8")
 interface IMFSensorProcessActivity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensorprocessactivity-getprocessid
@@ -18439,9 +18473,9 @@ interface IMFSensorProcessActivity : IUnknown
     HRESULT GetReportTime(FILETIME* pft);
 }
 
-@GUID("3e8c4be1-a8c2-4528-90de-2851bde5fead")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensoractivityreport
+@GUID("3e8c4be1-a8c2-4528-90de-2851bde5fead")
 interface IMFSensorActivityReport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensoractivityreport-getfriendlyname
@@ -18454,9 +18488,9 @@ interface IMFSensorActivityReport : IUnknown
     HRESULT GetProcessActivity(uint Index, IMFSensorProcessActivity* ppProcessActivity);
 }
 
-@GUID("683f7a5e-4a19-43cd-b1a9-dbf4ab3f7777")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensoractivitiesreport
+@GUID("683f7a5e-4a19-43cd-b1a9-dbf4ab3f7777")
 interface IMFSensorActivitiesReport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensoractivitiesreport-getcount
@@ -18467,18 +18501,18 @@ interface IMFSensorActivitiesReport : IUnknown
     HRESULT GetActivityReportByDeviceName(const(PWSTR) SymbolicName, IMFSensorActivityReport* sensorActivityReport);
 }
 
-@GUID("de5072ee-dbe3-46dc-8a87-b6f631194751")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensoractivitiesreportcallback
+@GUID("de5072ee-dbe3-46dc-8a87-b6f631194751")
 interface IMFSensorActivitiesReportCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensoractivitiesreportcallback-onactivitiesreport
     HRESULT OnActivitiesReport(IMFSensorActivitiesReport sensorActivitiesReport);
 }
 
-@GUID("d0cef145-b3f4-4340-a2e5-7a5080ca05cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsensoractivitymonitor
+@GUID("d0cef145-b3f4-4340-a2e5-7a5080ca05cb")
 interface IMFSensorActivityMonitor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsensoractivitymonitor-start
@@ -18522,8 +18556,8 @@ interface IMFExtendedCameraIntrinsics : IUnknown
     HRESULT AddIntrinsicModel(IMFExtendedCameraIntrinsicModel pIntrinsicModel);
 }
 
-@GUID("38e33520-fca1-4845-a27a-68b7c6ab3789")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfextendedcameracontrol
+@GUID("38e33520-fca1-4845-a27a-68b7c6ab3789")
 interface IMFExtendedCameraControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfextendedcameracontrol-getcapabilities
@@ -18540,26 +18574,26 @@ interface IMFExtendedCameraControl : IUnknown
     HRESULT CommitSettings();
 }
 
-@GUID("b91ebfee-ca03-4af4-8a82-a31752f4a0fc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfextendedcameracontroller
+@GUID("b91ebfee-ca03-4af4-8a82-a31752f4a0fc")
 interface IMFExtendedCameraController : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfextendedcameracontroller-getextendedcameracontrol
     HRESULT GetExtendedCameraControl(uint dwStreamIndex, uint ulPropertyId, IMFExtendedCameraControl* ppControl);
 }
 
-@GUID("f25362ea-2c0e-447f-81e2-755914cdc0c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfrelativepanelreport
+@GUID("f25362ea-2c0e-447f-81e2-755914cdc0c3")
 interface IMFRelativePanelReport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfrelativepanelreport-getrelativepanel
     HRESULT GetRelativePanel(uint* panel);
 }
 
-@GUID("421af7f6-573e-4ad0-8fda-2e57cedb18c6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfrelativepanelwatcher
+@GUID("421af7f6-573e-4ad0-8fda-2e57cedb18c6")
 interface IMFRelativePanelWatcher : IMFShutdown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfrelativepanelwatcher-begingetreport
@@ -18570,9 +18604,9 @@ interface IMFRelativePanelWatcher : IMFShutdown
     HRESULT GetReport(IMFRelativePanelReport* ppRelativePanelReport);
 }
 
-@GUID("725b77c7-ca9f-4fe5-9d72-9946bf9b3c70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfvideocapturesampleallocator
+@GUID("725b77c7-ca9f-4fe5-9d72-9946bf9b3c70")
 interface IMFVideoCaptureSampleAllocator : IMFVideoSampleAllocator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfvideocapturesampleallocator-initializecapturesampleallocator
@@ -18581,9 +18615,9 @@ interface IMFVideoCaptureSampleAllocator : IMFVideoSampleAllocator
                                              IMFMediaType pMediaType);
 }
 
-@GUID("da62b958-3a38-4a97-bd27-149c640c0771")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfsampleallocatorcontrol
+@GUID("da62b958-3a38-4a97-bd27-149c640c0771")
 interface IMFSampleAllocatorControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfsampleallocatorcontrol-setdefaultallocator
@@ -18592,24 +18626,24 @@ interface IMFSampleAllocatorControl : IUnknown
     HRESULT GetAllocatorUsage(uint dwOutputStreamID, uint* pdwInputStreamID, MFSampleAllocatorUsage* peUsage);
 }
 
-@GUID("1640b2cf-74da-4462-a43b-b76d3bdc1434")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameraocclusionstatereport
+@GUID("1640b2cf-74da-4462-a43b-b76d3bdc1434")
 interface IMFCameraOcclusionStateReport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameraocclusionstatereport-getocclusionstate
     HRESULT GetOcclusionState(uint* occlusionState);
 }
 
-@GUID("6e5841c7-3889-4019-9035-783fb19b5948")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameraocclusionstatereportcallback
+@GUID("6e5841c7-3889-4019-9035-783fb19b5948")
 interface IMFCameraOcclusionStateReportCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameraocclusionstatereportcallback-onocclusionstatereport
     HRESULT OnOcclusionStateReport(IMFCameraOcclusionStateReport occlusionStateReport);
 }
 
-@GUID("cc692f46-c697-47e2-a72d-7b064617749b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameraocclusionstatemonitor
+@GUID("cc692f46-c697-47e2-a72d-7b064617749b")
 interface IMFCameraOcclusionStateMonitor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameraocclusionstatemonitor-start
@@ -18620,8 +18654,8 @@ interface IMFCameraOcclusionStateMonitor : IUnknown
     uint    GetSupportedStates();
 }
 
-@GUID("e8f2540d-558a-4449-8b64-4863467a9fe8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameracontrolnotify
+@GUID("e8f2540d-558a-4449-8b64-4863467a9fe8")
 interface IMFCameraControlNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameracontrolnotify-onchange
@@ -18630,8 +18664,8 @@ interface IMFCameraControlNotify : IUnknown
     void OnError(HRESULT hrStatus);
 }
 
-@GUID("4d46f2c9-28ba-4970-8c7b-1f0c9d80af69")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameracontrolmonitor
+@GUID("4d46f2c9-28ba-4970-8c7b-1f0c9d80af69")
 interface IMFCameraControlMonitor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameracontrolmonitor-start
@@ -18646,8 +18680,8 @@ interface IMFCameraControlMonitor : IUnknown
     void    Shutdown();
 }
 
-@GUID("75510662-b034-48f4-88a7-8de61daa4af9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameracontroldefaults
+@GUID("75510662-b034-48f4-88a7-8de61daa4af9")
 interface IMFCameraControlDefaults : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameracontroldefaults-gettype
@@ -18660,8 +18694,8 @@ interface IMFCameraControlDefaults : IUnknown
     HRESULT UnlockControlData();
 }
 
-@GUID("92d43d0f-54a8-4bae-96da-356d259a5c26")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameracontroldefaultscollection
+@GUID("92d43d0f-54a8-4bae-96da-356d259a5c26")
 interface IMFCameraControlDefaultsCollection : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameracontroldefaultscollection-getcontrolcount
@@ -18680,8 +18714,8 @@ interface IMFCameraControlDefaultsCollection : IMFAttributes
     HRESULT RemoveAllControls();
 }
 
-@GUID("a624f617-4704-4206-8a6d-ebda4a093985")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nn-mfidl-imfcameraconfigurationmanager
+@GUID("a624f617-4704-4206-8a6d-ebda4a093985")
 interface IMFCameraConfigurationManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/nf-mfidl-imfcameraconfigurationmanager-loaddefaults
@@ -18705,9 +18739,9 @@ interface IMFFaceDetectionTransform : IUnknown
     HRESULT ClearDetectionCallback(void* callbackToken);
 }
 
-@GUID("b1dca5cd-d5da-4451-8e9e-db5c59914ead")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfcontentinfo
+@GUID("b1dca5cd-d5da-4451-8e9e-db5c59914ead")
 interface IMFASFContentInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfcontentinfo-getheadersize
@@ -18726,9 +18760,9 @@ interface IMFASFContentInfo : IUnknown
     HRESULT GetEncodingConfigurationPropertyStore(ushort wStreamNumber, IPropertyStore* ppIStore);
 }
 
-@GUID("d267bf6a-028b-4e0d-903d-43f0ef82d0d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfprofile
+@GUID("d267bf6a-028b-4e0d-903d-43f0ef82d0d4")
 interface IMFASFProfile : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfprofile-getstreamcount
@@ -18765,9 +18799,9 @@ interface IMFASFProfile : IMFAttributes
     HRESULT Clone(IMFASFProfile* ppIProfile);
 }
 
-@GUID("9e8ae8d2-dbbd-4200-9aca-06e6df484913")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfstreamconfig
+@GUID("9e8ae8d2-dbbd-4200-9aca-06e6df484913")
 interface IMFASFStreamConfig : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfstreamconfig-getstreamtype
@@ -18795,9 +18829,9 @@ interface IMFASFStreamConfig : IMFAttributes
     HRESULT Clone(IMFASFStreamConfig* ppIStreamConfig);
 }
 
-@GUID("12558291-e399-11d5-bc2a-00b0d0f3f4ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfmutualexclusion
+@GUID("12558291-e399-11d5-bc2a-00b0d0f3f4ab")
 interface IMFASFMutualExclusion : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfmutualexclusion-gettype
@@ -18820,9 +18854,9 @@ interface IMFASFMutualExclusion : IUnknown
     HRESULT Clone(IMFASFMutualExclusion* ppIMutex);
 }
 
-@GUID("699bdc27-bbaf-49ff-8e38-9c39c9b5e088")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfstreamprioritization
+@GUID("699bdc27-bbaf-49ff-8e38-9c39c9b5e088")
 interface IMFASFStreamPrioritization : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfstreamprioritization-getstreamcount
@@ -18837,9 +18871,9 @@ interface IMFASFStreamPrioritization : IUnknown
     HRESULT Clone(IMFASFStreamPrioritization* ppIStreamPrioritization);
 }
 
-@GUID("53590f48-dc3b-4297-813f-787761ad7b3e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfindexer
+@GUID("53590f48-dc3b-4297-813f-787761ad7b3e")
 interface IMFASFIndexer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfindexer-setflags
@@ -18873,9 +18907,9 @@ interface IMFASFIndexer : IUnknown
     HRESULT GetCompletedIndex(IMFMediaBuffer pIIndexBuffer, ulong cbOffsetWithinIndex);
 }
 
-@GUID("12558295-e399-11d5-bc2a-00b0d0f3f4ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfsplitter
+@GUID("12558295-e399-11d5-bc2a-00b0d0f3f4ab")
 interface IMFASFSplitter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfsplitter-initialize
@@ -18898,9 +18932,9 @@ interface IMFASFSplitter : IUnknown
     HRESULT GetLastSendTime(uint* pdwLastSendTime);
 }
 
-@GUID("57bdd80a-9b38-4838-b737-c58f670d7d4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfmultiplexer
+@GUID("57bdd80a-9b38-4838-b737-c58f670d7d4f")
 interface IMFASFMultiplexer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfmultiplexer-initialize
@@ -18923,9 +18957,9 @@ interface IMFASFMultiplexer : IUnknown
     HRESULT SetSyncTolerance(uint msSyncTolerance);
 }
 
-@GUID("d01bad4a-4fa0-4a60-9349-c27e62da9d41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfasfstreamselector
+@GUID("d01bad4a-4fa0-4a60-9349-c27e62da9d41")
 interface IMFASFStreamSelector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfasfstreamselector-getstreamcount
@@ -18959,9 +18993,9 @@ interface IMFASFStreamSelector : IUnknown
     HRESULT SetStreamSelectorFlags(uint dwStreamSelectorFlags);
 }
 
-@GUID("3d1ff0ea-679a-4190-8d46-7fa69e8c7e15")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nn-wmcontainer-imfdrmnethelper
+@GUID("3d1ff0ea-679a-4190-8d46-7fa69e8c7e15")
 interface IMFDRMNetHelper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmcontainer/nf-wmcontainer-imfdrmnethelper-processlicenserequest
@@ -18971,27 +19005,27 @@ interface IMFDRMNetHelper : IUnknown
     HRESULT GetChainedLicenseResponse(ubyte** ppLicenseResponse, uint* pcbLicenseResponse);
 }
 
-@GUID("aeda51c0-9025-4983-9012-de597b88b089")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcaptureengineoneventcallback
+@GUID("aeda51c0-9025-4983-9012-de597b88b089")
 interface IMFCaptureEngineOnEventCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcaptureengineoneventcallback-onevent
     HRESULT OnEvent(IMFMediaEvent pEvent);
 }
 
-@GUID("52150b82-ab39-4467-980f-e48bf0822ecd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcaptureengineonsamplecallback
+@GUID("52150b82-ab39-4467-980f-e48bf0822ecd")
 interface IMFCaptureEngineOnSampleCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcaptureengineonsamplecallback-onsample
     HRESULT OnSample(IMFSample pSample);
 }
 
-@GUID("72d6135b-35e9-412c-b926-fd5265f2a885")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcapturesink
+@GUID("72d6135b-35e9-412c-b926-fd5265f2a885")
 interface IMFCaptureSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcapturesink-getoutputmediatype
@@ -19007,9 +19041,9 @@ interface IMFCaptureSink : IUnknown
     HRESULT RemoveAllStreams();
 }
 
-@GUID("3323b55a-f92a-4fe2-8edc-e9bfc0634d77")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcapturerecordsink
+@GUID("3323b55a-f92a-4fe2-8edc-e9bfc0634d77")
 interface IMFCaptureRecordSink : IMFCaptureSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcapturerecordsink-setoutputbytestream
@@ -19026,9 +19060,9 @@ interface IMFCaptureRecordSink : IMFCaptureSink
     HRESULT SetRotation(uint dwStreamIndex, uint dwRotationValue);
 }
 
-@GUID("77346cfd-5b49-4d73-ace0-5b52a859f2e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcapturepreviewsink
+@GUID("77346cfd-5b49-4d73-ace0-5b52a859f2e0")
 interface IMFCapturePreviewSink : IMFCaptureSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcapturepreviewsink-setrenderhandle
@@ -19051,9 +19085,9 @@ interface IMFCapturePreviewSink : IMFCaptureSink
     HRESULT SetCustomSink(IMFMediaSink pMediaSink);
 }
 
-@GUID("d2d43cc8-48bb-4aa7-95db-10c06977e777")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcapturephotosink
+@GUID("d2d43cc8-48bb-4aa7-95db-10c06977e777")
 interface IMFCapturePhotoSink : IMFCaptureSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcapturephotosink-setoutputfilename
@@ -19064,9 +19098,9 @@ interface IMFCapturePhotoSink : IMFCaptureSink
     HRESULT SetOutputByteStream(IMFByteStream pByteStream);
 }
 
-@GUID("439a42a8-0d2c-4505-be83-f79b2a05d5c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcapturesource
+@GUID("439a42a8-0d2c-4505-be83-f79b2a05d5c4")
 interface IMFCaptureSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcapturesource-getcapturedevicesource
@@ -19101,9 +19135,9 @@ interface IMFCaptureSource : IUnknown
     HRESULT GetStreamIndexFromFriendlyName(uint uifriendlyName, uint* pdwActualStreamIndex);
 }
 
-@GUID("a6bba433-176b-48b2-b375-53aa03473207")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcaptureengine
+@GUID("a6bba433-176b-48b2-b375-53aa03473207")
 interface IMFCaptureEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcaptureengine-initialize
@@ -19125,35 +19159,35 @@ interface IMFCaptureEngine : IUnknown
     HRESULT GetSource(IMFCaptureSource* ppSource);
 }
 
-@GUID("8f02d140-56fc-4302-a705-3a97c78be779")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcaptureengineclassfactory
+@GUID("8f02d140-56fc-4302-a705-3a97c78be779")
 interface IMFCaptureEngineClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcaptureengineclassfactory-createinstance
     HRESULT CreateInstance(const(GUID)* clsid, const(GUID)* riid, void** ppvObject);
 }
 
-@GUID("e37ceed7-340f-4514-9f4d-9c2ae026100b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcaptureengineonsamplecallback2
+@GUID("e37ceed7-340f-4514-9f4d-9c2ae026100b")
 interface IMFCaptureEngineOnSampleCallback2 : IMFCaptureEngineOnSampleCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcaptureengineonsamplecallback2-onsynchronizedevent
     HRESULT OnSynchronizedEvent(IMFMediaEvent pEvent);
 }
 
-@GUID("f9e4219e-6197-4b5e-b888-bee310ab2c59")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nn-mfcaptureengine-imfcapturesink2
+@GUID("f9e4219e-6197-4b5e-b888-bee310ab2c59")
 interface IMFCaptureSink2 : IMFCaptureSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcaptureengine/nf-mfcaptureengine-imfcapturesink2-setoutputmediatype
     HRESULT SetOutputMediaType(uint dwStreamIndex, IMFMediaType pMediaType, IMFAttributes pEncodingAttributes);
 }
 
-@GUID("09d0f835-92ff-4e53-8efa-40faa551f233")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfd3d12/nn-mfd3d12-imfd3d12synchronizationobjectcommands
+@GUID("09d0f835-92ff-4e53-8efa-40faa551f233")
 interface IMFD3D12SynchronizationObjectCommands : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfd3d12/nf-mfd3d12-imfd3d12synchronizationobjectcommands-enqueueresourceready
@@ -19166,8 +19200,8 @@ interface IMFD3D12SynchronizationObjectCommands : IUnknown
     HRESULT EnqueueResourceRelease(ID3D12CommandQueue pConsumerCommandQueue);
 }
 
-@GUID("802302b0-82de-45e1-b421-f19ee5bdaf23")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfd3d12/nn-mfd3d12-imfd3d12synchronizationobject
+@GUID("802302b0-82de-45e1-b421-f19ee5bdaf23")
 interface IMFD3D12SynchronizationObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfd3d12/nf-mfd3d12-imfd3d12synchronizationobject-signaleventonfinalresourcerelease
@@ -19181,9 +19215,9 @@ interface MFASYNCRESULT : IMFAsyncResult
 {
 }
 
-@GUID("fc0e10d2-ab2a-4501-a951-06bb1075184c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaerror
+@GUID("fc0e10d2-ab2a-4501-a951-06bb1075184c")
 interface IMFMediaError : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaerror-geterrorcode
@@ -19196,9 +19230,9 @@ interface IMFMediaError : IUnknown
     HRESULT SetExtendedErrorCode(HRESULT error);
 }
 
-@GUID("db71a2fc-078a-414e-9df9-8c2531b0aa6c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediatimerange
+@GUID("db71a2fc-078a-414e-9df9-8c2531b0aa6c")
 interface IMFMediaTimeRange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediatimerange-getlength
@@ -19215,18 +19249,18 @@ interface IMFMediaTimeRange : IUnknown
     HRESULT Clear();
 }
 
-@GUID("fee7c112-e776-42b5-9bbf-0048524e2bd5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaenginenotify
+@GUID("fee7c112-e776-42b5-9bbf-0048524e2bd5")
 interface IMFMediaEngineNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaenginenotify-eventnotify
     HRESULT EventNotify(uint event, size_t param1, uint param2);
 }
 
-@GUID("7a5e5354-b114-4c72-b991-3131d75032ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaenginesrcelements
+@GUID("7a5e5354-b114-4c72-b991-3131d75032ea")
 interface IMFMediaEngineSrcElements : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaenginesrcelements-getlength
@@ -19243,9 +19277,9 @@ interface IMFMediaEngineSrcElements : IUnknown
     HRESULT RemoveAllElements();
 }
 
-@GUID("98a1b0bb-03eb-4935-ae7c-93c1fa0e1c93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengine
+@GUID("98a1b0bb-03eb-4935-ae7c-93c1fa0e1c93")
 interface IMFMediaEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengine-geterror
@@ -19335,9 +19369,9 @@ interface IMFMediaEngine : IUnknown
     HRESULT OnVideoStreamTick(long* pPts);
 }
 
-@GUID("83015ead-b1e6-40d0-a98a-37145ffe1ad1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineex
+@GUID("83015ead-b1e6-40d0-a98a-37145ffe1ad1")
 interface IMFMediaEngineEx : IMFMediaEngine
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineex-setsourcefrombytestream
@@ -19423,9 +19457,9 @@ interface IMFMediaEngineAudioEndpointId : IUnknown
     HRESULT GetAudioEndpointId(PWSTR* ppszEndpointId);
 }
 
-@GUID("2f69d622-20b5-41e9-afdf-89ced1dda04e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineextension
+@GUID("2f69d622-20b5-41e9-afdf-89ced1dda04e")
 interface IMFMediaEngineExtension : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineextension-canplaytype
@@ -19439,9 +19473,9 @@ interface IMFMediaEngineExtension : IUnknown
     HRESULT EndCreateObject(IMFAsyncResult pResult, IUnknown* ppObject);
 }
 
-@GUID("9f8021e8-9c8c-487e-bb5c-79aa4779938c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineprotectedcontent
+@GUID("9f8021e8-9c8c-487e-bb5c-79aa4779938c")
 interface IMFMediaEngineProtectedContent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineprotectedcontent-shareresources
@@ -19466,8 +19500,8 @@ interface IAudioSourceProvider : IUnknown
     HRESULT ProvideInput(uint dwSampleCount, uint* pdwChannelCount, float* pInterleavedAudioData);
 }
 
-@GUID("ba2743a1-07e0-48ef-84b6-9a2ed023ca6c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaenginewebsupport
+@GUID("ba2743a1-07e0-48ef-84b6-9a2ed023ca6c")
 interface IMFMediaEngineWebSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaenginewebsupport-shoulddelaytheloadevent
@@ -19478,9 +19512,9 @@ interface IMFMediaEngineWebSupport : IUnknown
     HRESULT DisconnectWebAudio();
 }
 
-@GUID("a7901327-05dd-4469-a7b7-0e01979e361d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediasourceextensionnotify
+@GUID("a7901327-05dd-4469-a7b7-0e01979e361d")
 interface IMFMediaSourceExtensionNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediasourceextensionnotify-onsourceopen
@@ -19491,9 +19525,9 @@ interface IMFMediaSourceExtensionNotify : IUnknown
     void OnSourceClose();
 }
 
-@GUID("24cd47f7-81d8-4785-adb2-af697a963cd2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfbufferlistnotify
+@GUID("24cd47f7-81d8-4785-adb2-af697a963cd2")
 interface IMFBufferListNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfbufferlistnotify-onaddsourcebuffer
@@ -19502,9 +19536,9 @@ interface IMFBufferListNotify : IUnknown
     void OnRemoveSourceBuffer();
 }
 
-@GUID("87e47623-2ceb-45d6-9b88-d8520c4dcbbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfsourcebuffernotify
+@GUID("87e47623-2ceb-45d6-9b88-d8520c4dcbbc")
 interface IMFSourceBufferNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfsourcebuffernotify-onupdatestart
@@ -19519,9 +19553,9 @@ interface IMFSourceBufferNotify : IUnknown
     void OnUpdateEnd();
 }
 
-@GUID("e2cd3a4b-af25-4d3d-9110-da0e6f8ee877")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfsourcebuffer
+@GUID("e2cd3a4b-af25-4d3d-9110-da0e6f8ee877")
 interface IMFSourceBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfsourcebuffer-getupdating
@@ -19558,9 +19592,9 @@ interface IMFSourceBufferAppendMode : IUnknown
     HRESULT SetAppendMode(MF_MSE_APPEND_MODE mode);
 }
 
-@GUID("249981f8-8325-41f3-b80c-3b9e3aad0cbe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfsourcebufferlist
+@GUID("249981f8-8325-41f3-b80c-3b9e3aad0cbe")
 interface IMFSourceBufferList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfsourcebufferlist-getlength
@@ -19569,9 +19603,9 @@ interface IMFSourceBufferList : IUnknown
     IMFSourceBuffer GetSourceBuffer(uint index);
 }
 
-@GUID("e467b94e-a713-4562-a802-816a42e9008a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediasourceextension
+@GUID("e467b94e-a713-4562-a802-816a42e9008a")
 interface IMFMediaSourceExtension : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediasourceextension-getsourcebuffers
@@ -19603,9 +19637,9 @@ interface IMFMediaSourceExtensionLiveSeekableRange : IUnknown
     HRESULT ClearLiveSeekableRange();
 }
 
-@GUID("50dc93e4-ba4f-4275-ae66-83e836e57469")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineeme
+@GUID("50dc93e4-ba4f-4275-ae66-83e836e57469")
 interface IMFMediaEngineEME : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineeme-get_keys
@@ -19614,9 +19648,9 @@ interface IMFMediaEngineEME : IUnknown
     HRESULT SetMediaKeys(IMFMediaKeys keys);
 }
 
-@GUID("654a6bb3-e1a3-424a-9908-53a43a0dfda0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaenginesrcelementsex
+@GUID("654a6bb3-e1a3-424a-9908-53a43a0dfda0")
 interface IMFMediaEngineSrcElementsEx : IMFMediaEngineSrcElements
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaenginesrcelementsex-addelementex
@@ -19625,9 +19659,9 @@ interface IMFMediaEngineSrcElementsEx : IMFMediaEngineSrcElements
     HRESULT GetKeySystem(uint index, BSTR* pType);
 }
 
-@GUID("46a30204-a696-4b18-8804-246b8f031bb1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineneedkeynotify
+@GUID("46a30204-a696-4b18-8804-246b8f031bb1")
 interface IMFMediaEngineNeedKeyNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineneedkeynotify-needkey
@@ -19635,9 +19669,9 @@ interface IMFMediaEngineNeedKeyNotify : IUnknown
                  uint cb);
 }
 
-@GUID("5cb31c05-61ff-418f-afda-caaf41421a38")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediakeys
+@GUID("5cb31c05-61ff-418f-afda-caaf41421a38")
 interface IMFMediaKeys : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediakeys-createsession
@@ -19654,9 +19688,9 @@ interface IMFMediaKeys : IUnknown
     HRESULT GetSuspendNotify(IMFCdmSuspendNotify* notify);
 }
 
-@GUID("24fa67d5-d1d0-4dc5-995c-c0efdc191fb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediakeysession
+@GUID("24fa67d5-d1d0-4dc5-995c-c0efdc191fb5")
 interface IMFMediaKeySession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediakeysession-geterror
@@ -19672,9 +19706,9 @@ interface IMFMediaKeySession : IUnknown
     HRESULT Close();
 }
 
-@GUID("6a0083f9-8947-4c1d-9ce0-cdee22b23135")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediakeysessionnotify
+@GUID("6a0083f9-8947-4c1d-9ce0-cdee22b23135")
 interface IMFMediaKeySessionNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediakeysessionnotify-keymessage
@@ -19687,9 +19721,9 @@ interface IMFMediaKeySessionNotify : IUnknown
     void KeyError(ushort code, uint systemCode);
 }
 
-@GUID("7a5645d2-43bd-47fd-87b7-dcd24cc7d692")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfcdmsuspendnotify
+@GUID("7a5645d2-43bd-47fd-87b7-dcd24cc7d692")
 interface IMFCdmSuspendNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfcdmsuspendnotify-begin
@@ -19705,18 +19739,18 @@ interface IMFHDCPStatus : IUnknown
     HRESULT Set(MF_HDCP_STATUS status);
 }
 
-@GUID("765763e6-6c01-4b01-bb0f-b829f60ed28c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineopminfo
+@GUID("765763e6-6c01-4b01-bb0f-b829f60ed28c")
 interface IMFMediaEngineOPMInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineopminfo-getopminfo
     HRESULT GetOPMInfo(MF_MEDIA_ENGINE_OPM_STATUS* pStatus, BOOL* pConstricted);
 }
 
-@GUID("4d645ace-26aa-4688-9be1-df3516990b93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineclassfactory
+@GUID("4d645ace-26aa-4688-9be1-df3516990b93")
 interface IMFMediaEngineClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineclassfactory-createinstance
@@ -19727,9 +19761,9 @@ interface IMFMediaEngineClassFactory : IUnknown
     HRESULT CreateError(IMFMediaError* ppError);
 }
 
-@GUID("c56156c6-ea5b-48a5-9df8-fbe035d0929e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineclassfactoryex
+@GUID("c56156c6-ea5b-48a5-9df8-fbe035d0929e")
 interface IMFMediaEngineClassFactoryEx : IMFMediaEngineClassFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineclassfactoryex-createmediasourceextension
@@ -19740,9 +19774,9 @@ interface IMFMediaEngineClassFactoryEx : IMFMediaEngineClassFactory
     HRESULT IsTypeSupported(BSTR type, BSTR keySystem, BOOL* isSupported);
 }
 
-@GUID("09083cef-867f-4bf6-8776-dee3a7b42fca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineclassfactory2
+@GUID("09083cef-867f-4bf6-8776-dee3a7b42fca")
 interface IMFMediaEngineClassFactory2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineclassfactory2-createmediakeys2
@@ -19750,17 +19784,17 @@ interface IMFMediaEngineClassFactory2 : IUnknown
                              IMFMediaKeys* ppKeys);
 }
 
-@GUID("332ec562-3758-468d-a784-e38f23552128")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfextendeddrmtypesupport
+@GUID("332ec562-3758-468d-a784-e38f23552128")
 interface IMFExtendedDRMTypeSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfextendeddrmtypesupport-istypesupportedex
     HRESULT IsTypeSupportedEx(BSTR type, BSTR keySystem, MF_MEDIA_ENGINE_CANPLAY* pAnswer);
 }
 
-@GUID("a724b056-1b2e-4642-a6f3-db9420c52908")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaenginesupportssourcetransfer
+@GUID("a724b056-1b2e-4642-a6f3-db9420c52908")
 interface IMFMediaEngineSupportsSourceTransfer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaenginesupportssourcetransfer-shouldtransfersource
@@ -19778,9 +19812,9 @@ interface IMFMediaEngineTransferSource : IUnknown
     HRESULT TransferSourceToMediaEngine(IMFMediaEngine destination);
 }
 
-@GUID("1f2a94c9-a3df-430d-9d0f-acd85ddc29af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtext
+@GUID("1f2a94c9-a3df-430d-9d0f-acd85ddc29af")
 interface IMFTimedText : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtext-registernotifications
@@ -19815,9 +19849,9 @@ interface IMFTimedText : IUnknown
     BOOL    IsInBandEnabled();
 }
 
-@GUID("df6b87b6-ce12-45db-aba7-432fe054e57d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtextnotify
+@GUID("df6b87b6-ce12-45db-aba7-432fe054e57d")
 interface IMFTimedTextNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtextnotify-trackadded
@@ -19835,9 +19869,9 @@ interface IMFTimedTextNotify : IUnknown
     void Reset();
 }
 
-@GUID("8822c32d-654e-4233-bf21-d7f2e67d30d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtexttrack
+@GUID("8822c32d-654e-4233-bf21-d7f2e67d30d4")
 interface IMFTimedTextTrack : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtexttrack-getid
@@ -19866,9 +19900,9 @@ interface IMFTimedTextTrack : IUnknown
     HRESULT GetCueList(IMFTimedTextCueList* cues);
 }
 
-@GUID("23ff334c-442c-445f-bccc-edc438aa11e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtexttracklist
+@GUID("23ff334c-442c-445f-bccc-edc438aa11e2")
 interface IMFTimedTextTrackList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtexttracklist-getlength
@@ -19879,9 +19913,9 @@ interface IMFTimedTextTrackList : IUnknown
     HRESULT GetTrackById(uint trackId, IMFTimedTextTrack* track);
 }
 
-@GUID("1e560447-9a2b-43e1-a94c-b0aaabfbfbc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtextcue
+@GUID("1e560447-9a2b-43e1-a94c-b0aaabfbfbc9")
 interface IMFTimedTextCue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtextcue-getid
@@ -19908,9 +19942,9 @@ interface IMFTimedTextCue : IUnknown
     HRESULT GetLine(uint index, IMFTimedTextFormattedText* line);
 }
 
-@GUID("e13af3c1-4d47-4354-b1f5-e83ae0ecae60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtextformattedtext
+@GUID("e13af3c1-4d47-4354-b1f5-e83ae0ecae60")
 interface IMFTimedTextFormattedText : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtextformattedtext-gettext
@@ -19921,9 +19955,9 @@ interface IMFTimedTextFormattedText : IUnknown
     HRESULT GetSubformatting(uint index, uint* firstChar, uint* charLength, IMFTimedTextStyle* style);
 }
 
-@GUID("09b2455d-b834-4f01-a347-9052e21c450e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtextstyle
+@GUID("09b2455d-b834-4f01-a347-9052e21c450e")
 interface IMFTimedTextStyle : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtextstyle-getname
@@ -19954,9 +19988,9 @@ interface IMFTimedTextStyle : IUnknown
     HRESULT GetTextOutline(MFARGB* color, double* thickness, double* blurRadius, MF_TIMED_TEXT_UNIT_TYPE* unitType);
 }
 
-@GUID("c8d22afc-bc47-4bdf-9b04-787e49ce3f58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtextregion
+@GUID("c8d22afc-bc47-4bdf-9b04-787e49ce3f58")
 interface IMFTimedTextRegion : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtextregion-getname
@@ -19986,9 +20020,9 @@ interface IMFTimedTextRegion : IUnknown
     HRESULT GetScrollMode(MF_TIMED_TEXT_SCROLL_MODE* scrollMode);
 }
 
-@GUID("4ae3a412-0545-43c4-bf6f-6b97a5c6c432")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imftimedtextbinary
+@GUID("4ae3a412-0545-43c4-bf6f-6b97a5c6c432")
 interface IMFTimedTextBinary : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imftimedtextbinary-getdata
@@ -20090,26 +20124,26 @@ interface IMFMediaKeySession2 : IMFMediaKeySession
     HRESULT Shutdown();
 }
 
-@GUID("fbe256c1-43cf-4a9b-8cb8-ce8632a34186")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nn-mfmediaengine-imfmediaengineclassfactory4
+@GUID("fbe256c1-43cf-4a9b-8cb8-ce8632a34186")
 interface IMFMediaEngineClassFactory4 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediaengine/nf-mfmediaengine-imfmediaengineclassfactory4-createcontentdecryptionmodulefactory
     HRESULT CreateContentDecryptionModuleFactory(const(PWSTR) keySystem, const(GUID)* riid, void** ppvObject);
 }
 
-@GUID("0c012799-1b61-4c10-bda9-04445be5f561")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmp2dlna/nn-mfmp2dlna-imfdlnasinkinit
+@GUID("0c012799-1b61-4c10-bda9-04445be5f561")
 interface IMFDLNASinkInit : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmp2dlna/nf-mfmp2dlna-imfdlnasinkinit-initialize
     HRESULT Initialize(IMFByteStream pByteStream, BOOL fPal);
 }
 
-@GUID("e7fe2e12-661c-40da-92f9-4f002ab67627")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfreadwriteclassfactory
+@GUID("e7fe2e12-661c-40da-92f9-4f002ab67627")
 interface IMFReadWriteClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfreadwriteclassfactory-createinstancefromurl
@@ -20120,9 +20154,9 @@ interface IMFReadWriteClassFactory : IUnknown
                                      const(GUID)* riid, void** ppvObject);
 }
 
-@GUID("70ae66f2-c809-4e4f-8915-bdcb406b7993")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsourcereader
+@GUID("70ae66f2-c809-4e4f-8915-bdcb406b7993")
 interface IMFSourceReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsourcereader-getstreamselection
@@ -20150,9 +20184,9 @@ interface IMFSourceReader : IUnknown
     HRESULT GetPresentationAttribute(uint dwStreamIndex, const(GUID)* guidAttribute, PROPVARIANT* pvarAttribute);
 }
 
-@GUID("7b981cf0-560e-4116-9875-b099895f23d7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsourcereaderex
+@GUID("7b981cf0-560e-4116-9875-b099895f23d7")
 interface IMFSourceReaderEx : IMFSourceReader
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsourcereaderex-setnativemediatype
@@ -20166,9 +20200,9 @@ interface IMFSourceReaderEx : IMFSourceReader
                                   IMFTransform* ppTransform);
 }
 
-@GUID("deec8d99-fa1d-4d82-84c2-2c8969944867")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsourcereadercallback
+@GUID("deec8d99-fa1d-4d82-84c2-2c8969944867")
 interface IMFSourceReaderCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsourcereadercallback-onreadsample
@@ -20180,8 +20214,8 @@ interface IMFSourceReaderCallback : IUnknown
     HRESULT OnEvent(uint dwStreamIndex, IMFMediaEvent pEvent);
 }
 
-@GUID("cf839fe6-8c2a-4dd2-b6ea-c22d6961af05")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsourcereadercallback2
+@GUID("cf839fe6-8c2a-4dd2-b6ea-c22d6961af05")
 interface IMFSourceReaderCallback2 : IMFSourceReaderCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsourcereadercallback2-ontransformchange
@@ -20190,9 +20224,9 @@ interface IMFSourceReaderCallback2 : IMFSourceReaderCallback
     HRESULT OnStreamError(uint dwStreamIndex, HRESULT hrStatus);
 }
 
-@GUID("3137f1cd-fe5e-4805-a5d8-fb477448cb3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsinkwriter
+@GUID("3137f1cd-fe5e-4805-a5d8-fb477448cb3d")
 interface IMFSinkWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsinkwriter-addstream
@@ -20219,9 +20253,9 @@ interface IMFSinkWriter : IUnknown
     HRESULT GetStatistics(uint dwStreamIndex, MF_SINK_WRITER_STATISTICS* pStats);
 }
 
-@GUID("588d72ab-5bc1-496a-8714-b70617141b25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsinkwriterex
+@GUID("588d72ab-5bc1-496a-8714-b70617141b25")
 interface IMFSinkWriterEx : IMFSinkWriter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsinkwriterex-gettransformforstream
@@ -20229,9 +20263,9 @@ interface IMFSinkWriterEx : IMFSinkWriter
                                   IMFTransform* ppTransform);
 }
 
-@GUID("17c3779e-3cde-4ede-8c60-3899f5f53ad6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsinkwriterencoderconfig
+@GUID("17c3779e-3cde-4ede-8c60-3899f5f53ad6")
 interface IMFSinkWriterEncoderConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsinkwriterencoderconfig-settargetmediatype
@@ -20241,9 +20275,9 @@ interface IMFSinkWriterEncoderConfig : IUnknown
     HRESULT PlaceEncodingParameters(uint dwStreamIndex, IMFAttributes pEncodingParameters);
 }
 
-@GUID("666f76de-33d2-41b9-a458-29ed0a972c58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsinkwritercallback
+@GUID("666f76de-33d2-41b9-a458-29ed0a972c58")
 interface IMFSinkWriterCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsinkwritercallback-onfinalize
@@ -20252,8 +20286,8 @@ interface IMFSinkWriterCallback : IUnknown
     HRESULT OnMarker(uint dwStreamIndex, void* pvContext);
 }
 
-@GUID("2456bd58-c067-4513-84fe-8d0c88ffdc61")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nn-mfreadwrite-imfsinkwritercallback2
+@GUID("2456bd58-c067-4513-84fe-8d0c88ffdc61")
 interface IMFSinkWriterCallback2 : IMFSinkWriterCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfreadwrite/nf-mfreadwrite-imfsinkwritercallback2-ontransformchange
@@ -20262,9 +20296,9 @@ interface IMFSinkWriterCallback2 : IMFSinkWriterCallback
     HRESULT OnStreamError(uint dwStreamIndex, HRESULT hrStatus);
 }
 
-@GUID("1f6a9f17-e70b-4e24-8ae4-0b2c3ba7a4ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideopositionmapper
+@GUID("1f6a9f17-e70b-4e24-8ae4-0b2c3ba7a4ae")
 interface IMFVideoPositionMapper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideopositionmapper-mapoutputcoordinatetoinputstream
@@ -20272,18 +20306,18 @@ interface IMFVideoPositionMapper : IUnknown
                                              uint dwInputStreamIndex, float* pxIn, float* pyIn);
 }
 
-@GUID("a38d9567-5a9c-4f3c-b293-8eb415b279ba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideodeviceid
+@GUID("a38d9567-5a9c-4f3c-b293-8eb415b279ba")
 interface IMFVideoDeviceID : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideodeviceid-getdeviceid
     HRESULT GetDeviceID(GUID* pDeviceID);
 }
 
-@GUID("a490b1e4-ab84-4d31-a1b2-181e03b1077a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideodisplaycontrol
+@GUID("a490b1e4-ab84-4d31-a1b2-181e03b1077a")
 interface IMFVideoDisplayControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideodisplaycontrol-getnativevideosize
@@ -20320,9 +20354,9 @@ interface IMFVideoDisplayControl : IUnknown
     HRESULT GetFullscreen(BOOL* pfFullscreen);
 }
 
-@GUID("29aff080-182a-4a5d-af3b-448f3a6346cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideopresenter
+@GUID("29aff080-182a-4a5d-af3b-448f3a6346cb")
 interface IMFVideoPresenter : IMFClockStateSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideopresenter-processmessage
@@ -20331,9 +20365,9 @@ interface IMFVideoPresenter : IMFClockStateSink
     HRESULT GetCurrentMediaType(IMFVideoMediaType* ppMediaType);
 }
 
-@GUID("56c294d0-753e-4260-8d61-a3d8820b1d54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfdesiredsample
+@GUID("56c294d0-753e-4260-8d61-a3d8820b1d54")
 interface IMFDesiredSample : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfdesiredsample-getdesiredsampletimeandduration
@@ -20344,9 +20378,9 @@ interface IMFDesiredSample : IUnknown
     void    Clear();
 }
 
-@GUID("a5c6c53f-c202-4aa5-9695-175ba8c508a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideomixercontrol
+@GUID("a5c6c53f-c202-4aa5-9695-175ba8c508a5")
 interface IMFVideoMixerControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideomixercontrol-setstreamzorder
@@ -20359,9 +20393,9 @@ interface IMFVideoMixerControl : IUnknown
     HRESULT GetStreamOutputRect(uint dwStreamID, MFVideoNormalizedRect* pnrcOutput);
 }
 
-@GUID("8459616d-966e-4930-b658-54fa7e5a16d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideomixercontrol2
+@GUID("8459616d-966e-4930-b658-54fa7e5a16d3")
 interface IMFVideoMixerControl2 : IMFVideoMixerControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideomixercontrol2-setmixingprefs
@@ -20370,18 +20404,18 @@ interface IMFVideoMixerControl2 : IMFVideoMixerControl
     HRESULT GetMixingPrefs(uint* pdwMixFlags);
 }
 
-@GUID("dfdfd197-a9ca-43d8-b341-6af3503792cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imfvideorenderer
+@GUID("dfdfd197-a9ca-43d8-b341-6af3503792cd")
 interface IMFVideoRenderer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imfvideorenderer-initializerenderer
     HRESULT InitializeRenderer(IMFTransform pVideoMixer, IMFVideoPresenter pVideoPresenter);
 }
 
-@GUID("83e91e85-82c1-4ea7-801d-85dc50b75086")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-ievrfilterconfig
+@GUID("83e91e85-82c1-4ea7-801d-85dc50b75086")
 interface IEVRFilterConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-ievrfilterconfig-setnumberofstreams
@@ -20390,9 +20424,9 @@ interface IEVRFilterConfig : IUnknown
     HRESULT GetNumberOfStreams(uint* pdwMaxStreams);
 }
 
-@GUID("aea36028-796d-454f-beee-b48071e24304")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-ievrfilterconfigex
+@GUID("aea36028-796d-454f-beee-b48071e24304")
 interface IEVRFilterConfigEx : IEVRFilterConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-ievrfilterconfigex-setconfigprefs
@@ -20401,9 +20435,9 @@ interface IEVRFilterConfigEx : IEVRFilterConfig
     HRESULT GetConfigPrefs(uint* pdwConfigFlags);
 }
 
-@GUID("fa993889-4383-415a-a930-dd472a8cf6f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imftopologyservicelookup
+@GUID("fa993889-4383-415a-a930-dd472a8cf6f7")
 interface IMFTopologyServiceLookup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imftopologyservicelookup-lookupservice
@@ -20411,9 +20445,9 @@ interface IMFTopologyServiceLookup : IUnknown
                           void** ppvObjects, uint* pnObjects);
 }
 
-@GUID("fa99388a-4383-415a-a930-dd472a8cf6f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-imftopologyservicelookupclient
+@GUID("fa99388a-4383-415a-a930-dd472a8cf6f7")
 interface IMFTopologyServiceLookupClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-imftopologyservicelookupclient-initservicepointers
@@ -20422,9 +20456,9 @@ interface IMFTopologyServiceLookupClient : IUnknown
     HRESULT ReleaseServicePointers();
 }
 
-@GUID("83a4ce40-7710-494b-a893-a472049af630")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nn-evr-ievrtrustedvideoplugin
+@GUID("83a4ce40-7710-494b-a893-a472049af630")
 interface IEVRTrustedVideoPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr/nf-evr-ievrtrustedvideoplugin-isintrustedvideomode
@@ -20437,9 +20471,9 @@ interface IEVRTrustedVideoPlugin : IUnknown
     HRESULT DisableImageExport(BOOL bDisable);
 }
 
-@GUID("a714590a-58af-430a-85bf-44f5ec838d85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfplay/nn-mfplay-imfpmediaplayer
+@GUID("a714590a-58af-430a-85bf-44f5ec838d85")
 interface IMFPMediaPlayer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfplay/nf-mfplay-imfpmediaplayer-play
@@ -20517,9 +20551,9 @@ interface IMFPMediaPlayer : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("90eb3e6b-ecbf-45cc-b1da-c6fe3ea70d57")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfplay/nn-mfplay-imfpmediaitem
+@GUID("90eb3e6b-ecbf-45cc-b1da-c6fe3ea70d57")
 interface IMFPMediaItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfplay/nf-mfplay-imfpmediaitem-getmediaplayer
@@ -20564,45 +20598,45 @@ interface IMFPMediaItem : IUnknown
     HRESULT GetMetadata(IPropertyStore* ppMetadataStore);
 }
 
-@GUID("766c8ffb-5fdb-4fea-a28d-b912996f51bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfplay/nn-mfplay-imfpmediaplayercallback
+@GUID("766c8ffb-5fdb-4fea-a28d-b912996f51bd")
 interface IMFPMediaPlayerCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfplay/nf-mfplay-imfpmediaplayercallback-onmediaplayerevent
     void OnMediaPlayerEvent(MFP_EVENT_HEADER* pEventHeader);
 }
 
-@GUID("2ba61f92-8305-413b-9733-faf15f259384")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-imfsharingengineclassfactory
+@GUID("2ba61f92-8305-413b-9733-faf15f259384")
 interface IMFSharingEngineClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-imfsharingengineclassfactory-createinstance
     HRESULT CreateInstance(uint dwFlags, IMFAttributes pAttr, IUnknown* ppEngine);
 }
 
-@GUID("8d3ce1bf-2367-40e0-9eee-40d377cc1b46")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-imfmediasharingengine
+@GUID("8d3ce1bf-2367-40e0-9eee-40d377cc1b46")
 interface IMFMediaSharingEngine : IMFMediaEngine
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-imfmediasharingengine-getdevice
     HRESULT GetDevice(DEVICE_INFO* pDevice);
 }
 
-@GUID("524d2bc4-b2b1-4fe5-8fac-fa4e4512b4e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-imfmediasharingengineclassfactory
+@GUID("524d2bc4-b2b1-4fe5-8fac-fa4e4512b4e0")
 interface IMFMediaSharingEngineClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-imfmediasharingengineclassfactory-createinstance
     HRESULT CreateInstance(uint dwFlags, IMFAttributes pAttr, IMFMediaSharingEngine* ppEngine);
 }
 
-@GUID("cfa0ae8e-7e1c-44d2-ae68-fc4c148a6354")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-imfimagesharingengine
+@GUID("cfa0ae8e-7e1c-44d2-ae68-fc4c148a6354")
 interface IMFImageSharingEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-imfimagesharingengine-setsource
@@ -20613,18 +20647,18 @@ interface IMFImageSharingEngine : IUnknown
     HRESULT Shutdown();
 }
 
-@GUID("1fc55727-a7fb-4fc8-83ae-8af024990af1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-imfimagesharingengineclassfactory
+@GUID("1fc55727-a7fb-4fc8-83ae-8af024990af1")
 interface IMFImageSharingEngineClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-imfimagesharingengineclassfactory-createinstancefromudn
     HRESULT CreateInstanceFromUDN(BSTR pUniqueDeviceName, IMFImageSharingEngine* ppEngine);
 }
 
-@GUID("607574eb-f4b6-45c1-b08c-cb715122901d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-iplaytocontrol
+@GUID("607574eb-f4b6-45c1-b08c-cb715122901d")
 interface IPlayToControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-iplaytocontrol-connect
@@ -20633,27 +20667,27 @@ interface IPlayToControl : IUnknown
     HRESULT Disconnect();
 }
 
-@GUID("aa9dd80f-c50a-4220-91c1-332287f82a34")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-iplaytocontrolwithcapabilities
+@GUID("aa9dd80f-c50a-4220-91c1-332287f82a34")
 interface IPlayToControlWithCapabilities : IPlayToControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-iplaytocontrolwithcapabilities-getcapabilities
     HRESULT GetCapabilities(PLAYTO_SOURCE_CREATEFLAGS* pCapabilities);
 }
 
-@GUID("842b32a3-9b9b-4d1c-b3f3-49193248a554")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nn-mfsharingengine-iplaytosourceclassfactory
+@GUID("842b32a3-9b9b-4d1c-b3f3-49193248a554")
 interface IPlayToSourceClassFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfsharingengine/nf-mfsharingengine-iplaytosourceclassfactory-createinstance
     HRESULT CreateInstance(uint dwFlags, IPlayToControl pControl, IInspectable* ppSource);
 }
 
-@GUID("d0cfe38b-93e7-4772-8957-0400c49a4485")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr9/nn-evr9-ievrvideostreamcontrol
+@GUID("d0cfe38b-93e7-4772-8957-0400c49a4485")
 interface IEVRVideoStreamControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr9/nf-evr9-ievrvideostreamcontrol-setstreamactivestate
@@ -20662,9 +20696,9 @@ interface IEVRVideoStreamControl : IUnknown
     HRESULT GetStreamActiveState(BOOL* lpfActive);
 }
 
-@GUID("6ab0000c-fece-4d1f-a2ac-a9573530656e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr9/nn-evr9-imfvideoprocessor
+@GUID("6ab0000c-fece-4d1f-a2ac-a9573530656e")
 interface IMFVideoProcessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr9/nf-evr9-imfvideoprocessor-getavailablevideoprocessormodes
@@ -20693,9 +20727,9 @@ interface IMFVideoProcessor : IUnknown
     HRESULT SetBackgroundColor(COLORREF ClrBkg);
 }
 
-@GUID("814c7b20-0fdb-4eec-af8f-f957c8f69edc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr9/nn-evr9-imfvideomixerbitmap
+@GUID("814c7b20-0fdb-4eec-af8f-f957c8f69edc")
 interface IMFVideoMixerBitmap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evr9/nf-evr9-imfvideomixerbitmap-setalphabitmap
@@ -20708,36 +20742,36 @@ interface IMFVideoMixerBitmap : IUnknown
     HRESULT GetAlphaBitmapParameters(MFVideoAlphaBitmapParams* pBmpParms);
 }
 
-@GUID("3de21209-8ba6-4f2a-a577-2819b56ff14d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediacapture/nn-mfmediacapture-iadvancedmediacaptureinitializationsettings
+@GUID("3de21209-8ba6-4f2a-a577-2819b56ff14d")
 interface IAdvancedMediaCaptureInitializationSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediacapture/nf-mfmediacapture-iadvancedmediacaptureinitializationsettings-setdirectxdevicemanager
     HRESULT SetDirectxDeviceManager(IMFDXGIDeviceManager value);
 }
 
-@GUID("24e0485f-a33e-4aa1-b564-6019b1d14f65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediacapture/nn-mfmediacapture-iadvancedmediacapturesettings
+@GUID("24e0485f-a33e-4aa1-b564-6019b1d14f65")
 interface IAdvancedMediaCaptureSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediacapture/nf-mfmediacapture-iadvancedmediacapturesettings-getdirectxdevicemanager
     HRESULT GetDirectxDeviceManager(IMFDXGIDeviceManager* value);
 }
 
-@GUID("d0751585-d216-4344-b5bf-463b68f977bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediacapture/nn-mfmediacapture-iadvancedmediacapture
+@GUID("d0751585-d216-4344-b5bf-463b68f977bb")
 interface IAdvancedMediaCapture : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmediacapture/nf-mfmediacapture-iadvancedmediacapture-getadvancedmediacapturesettings
     HRESULT GetAdvancedMediaCaptureSettings(IAdvancedMediaCaptureSettings* value);
 }
 
-@GUID("d396ec8c-605e-4249-978d-72ad1c312872")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfspatialaudio/nn-mfspatialaudio-imfspatialaudioobjectbuffer
+@GUID("d396ec8c-605e-4249-978d-72ad1c312872")
 interface IMFSpatialAudioObjectBuffer : IMFMediaBuffer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfspatialaudio/nf-mfspatialaudio-imfspatialaudioobjectbuffer-setid
@@ -20752,9 +20786,9 @@ interface IMFSpatialAudioObjectBuffer : IMFMediaBuffer
     HRESULT GetMetadataItems(ISpatialAudioMetadataItems* ppMetadataItems);
 }
 
-@GUID("abf28a9b-3393-4290-ba79-5ffc46d986b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfspatialaudio/nn-mfspatialaudio-imfspatialaudiosample
+@GUID("abf28a9b-3393-4290-ba79-5ffc46d986b2")
 interface IMFSpatialAudioSample : IMFSample
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfspatialaudio/nf-mfspatialaudio-imfspatialaudiosample-getobjectcount
@@ -20765,9 +20799,9 @@ interface IMFSpatialAudioSample : IMFSample
     HRESULT GetSpatialAudioObjectByIndex(uint dwIndex, IMFSpatialAudioObjectBuffer* ppAudioObjBuffer);
 }
 
-@GUID("4e233efd-1dd2-49e8-b577-d63eee4c0d33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nn-mfcontentdecryptionmodule-imfcontentdecryptionmodulesession
+@GUID("4e233efd-1dd2-49e8-b577-d63eee4c0d33")
 interface IMFContentDecryptionModuleSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nf-mfcontentdecryptionmodule-imfcontentdecryptionmodulesession-getsessionid
@@ -20788,9 +20822,9 @@ interface IMFContentDecryptionModuleSession : IUnknown
     HRESULT Remove();
 }
 
-@GUID("3f96ee40-ad81-4096-8470-59a4b770f89a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nn-mfcontentdecryptionmodule-imfcontentdecryptionmodulesessioncallbacks
+@GUID("3f96ee40-ad81-4096-8470-59a4b770f89a")
 interface IMFContentDecryptionModuleSessionCallbacks : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nf-mfcontentdecryptionmodule-imfcontentdecryptionmodulesessioncallbacks-keymessage
@@ -20800,9 +20834,9 @@ interface IMFContentDecryptionModuleSessionCallbacks : IUnknown
     HRESULT KeyStatusChanged();
 }
 
-@GUID("87be986c-10be-4943-bf48-4b54ce1983a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nn-mfcontentdecryptionmodule-imfcontentdecryptionmodule
+@GUID("87be986c-10be-4943-bf48-4b54ce1983a2")
 interface IMFContentDecryptionModule : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nf-mfcontentdecryptionmodule-imfcontentdecryptionmodule-setcontentenabler
@@ -20824,9 +20858,9 @@ interface IMFContentDecryptionModule : IUnknown
     HRESULT GetProtectionSystemIds(GUID** systemIds, uint* count);
 }
 
-@GUID("a853d1f4-e2a0-4303-9edc-f1a68ee43136")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nn-mfcontentdecryptionmodule-imfcontentdecryptionmoduleaccess
+@GUID("a853d1f4-e2a0-4303-9edc-f1a68ee43136")
 interface IMFContentDecryptionModuleAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nf-mfcontentdecryptionmodule-imfcontentdecryptionmoduleaccess-createcontentdecryptionmodule
@@ -20838,9 +20872,9 @@ interface IMFContentDecryptionModuleAccess : IUnknown
     HRESULT GetKeySystem(PWSTR* keySystem);
 }
 
-@GUID("7d5abf16-4cbb-4e08-b977-9ba59049943e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.19041))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nn-mfcontentdecryptionmodule-imfcontentdecryptionmodulefactory
+@GUID("7d5abf16-4cbb-4e08-b977-9ba59049943e")
 interface IMFContentDecryptionModuleFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfcontentdecryptionmodule/nf-mfcontentdecryptionmodule-imfcontentdecryptionmodulefactory-istypesupported
@@ -20851,8 +20885,8 @@ interface IMFContentDecryptionModuleFactory : IUnknown
                                                 IMFContentDecryptionModuleAccess* contentDecryptionModuleAccess);
 }
 
-@GUID("6338b23a-3042-49d2-a3ea-ec0fed815407")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfvirtualcamera/nn-mfvirtualcamera-imfcamerasyncobject
+@GUID("6338b23a-3042-49d2-a3ea-ec0fed815407")
 interface IMFCameraSyncObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfvirtualcamera/nf-mfvirtualcamera-imfcamerasyncobject-waitonsignal
@@ -20861,8 +20895,8 @@ interface IMFCameraSyncObject : IUnknown
     void    Shutdown();
 }
 
-@GUID("1c08a864-ef6c-4c75-af59-5f2d68da9563")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfvirtualcamera/nn-mfvirtualcamera-imfvirtualcamera
+@GUID("1c08a864-ef6c-4c75-af59-5f2d68da9563")
 interface IMFVirtualCamera : IMFAttributes
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfvirtualcamera/nf-mfvirtualcamera-imfvirtualcamera-adddevicesourceinfo

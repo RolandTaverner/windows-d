@@ -77,9 +77,9 @@ struct WSB_OB_REGISTRATION_INFO
 
 // Interfaces
 
-@GUID("1eff3510-4a27-46ad-b9e0-08332f0f4f6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsbapp/nn-wsbapp-iwsbapplicationbackupsupport
+@GUID("1eff3510-4a27-46ad-b9e0-08332f0f4f6d")
 interface IWsbApplicationBackupSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsbapp/nf-wsbapp-iwsbapplicationbackupsupport-checkconsistency
@@ -88,9 +88,9 @@ interface IWsbApplicationBackupSupport : IUnknown
                              IWsbApplicationAsync* ppAsync);
 }
 
-@GUID("8d3bdb38-4ee8-4718-85f9-c7dbc4ab77aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsbapp/nn-wsbapp-iwsbapplicationrestoresupport
+@GUID("8d3bdb38-4ee8-4718-85f9-c7dbc4ab77aa")
 interface IWsbApplicationRestoreSupport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsbapp/nf-wsbapp-iwsbapplicationrestoresupport-prerestore
@@ -106,9 +106,9 @@ interface IWsbApplicationRestoreSupport : IUnknown
     HRESULT IsRollForwardSupported(ubyte* pbRollForwardSupported);
 }
 
-@GUID("0843f6f7-895c-44a6-b0c2-05a5022aa3a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsbapp/nn-wsbapp-iwsbapplicationasync
+@GUID("0843f6f7-895c-44a6-b0c2-05a5022aa3a1")
 interface IWsbApplicationAsync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsbapp/nf-wsbapp-iwsbapplicationasync-querystatus

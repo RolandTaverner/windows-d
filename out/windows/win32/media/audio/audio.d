@@ -3413,9 +3413,9 @@ struct MMDeviceEnumerator;
 @GUID("1df639d0-5ec1-47aa-9379-828dc1aa8c59")
 struct DeviceTopology;
 
-@GUID("00000016-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-imessagefilter
+@GUID("00000016-0000-0000-c000-000000000046")
 interface IMessageFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-imessagefilter-handleincomingcall
@@ -3426,9 +3426,9 @@ interface IMessageFilter : IUnknown
     uint MessagePending(HTASK htaskCallee, uint dwTickCount, uint dwPendingType);
 }
 
-@GUID("1cb9ad4c-dbfa-4c32-b178-c2f568a703b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclient
+@GUID("1cb9ad4c-dbfa-4c32-b178-c2f568a703b2")
 interface IAudioClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclient-initialize
@@ -3459,9 +3459,9 @@ interface IAudioClient : IUnknown
     HRESULT GetService(const(GUID)* riid, void** ppv);
 }
 
-@GUID("726778cd-f60a-4eda-82de-e47610cd78aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclient2
+@GUID("726778cd-f60a-4eda-82de-e47610cd78aa")
 interface IAudioClient2 : IAudioClient
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclient2-isoffloadcapable
@@ -3473,9 +3473,9 @@ interface IAudioClient2 : IAudioClient
                                 long* phnsMaxBufferDuration);
 }
 
-@GUID("7ed4ee07-8e67-4cd4-8c1a-2b7a5987ad42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclient3
+@GUID("7ed4ee07-8e67-4cd4-8c1a-2b7a5987ad42")
 interface IAudioClient3 : IAudioClient2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclient3-getsharedmodeengineperiod
@@ -3489,9 +3489,9 @@ interface IAudioClient3 : IAudioClient2
                                         const(GUID)* AudioSessionGuid);
 }
 
-@GUID("f294acfc-3146-4483-a7bf-addca7c260e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudiorenderclient
+@GUID("f294acfc-3146-4483-a7bf-addca7c260e2")
 interface IAudioRenderClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudiorenderclient-getbuffer
@@ -3500,9 +3500,9 @@ interface IAudioRenderClient : IUnknown
     HRESULT ReleaseBuffer(uint NumFramesWritten, uint dwFlags);
 }
 
-@GUID("c8adbd64-e71e-48a0-a4de-185c395cd317")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudiocaptureclient
+@GUID("c8adbd64-e71e-48a0-a4de-185c395cd317")
 interface IAudioCaptureClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudiocaptureclient-getbuffer
@@ -3514,9 +3514,9 @@ interface IAudioCaptureClient : IUnknown
     HRESULT GetNextPacketSize(uint* pNumFramesInNextPacket);
 }
 
-@GUID("cd63314f-3fba-4a1b-812c-ef96358728e7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclock
+@GUID("cd63314f-3fba-4a1b-812c-ef96358728e7")
 interface IAudioClock : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclock-getfrequency
@@ -3527,27 +3527,27 @@ interface IAudioClock : IUnknown
     HRESULT GetCharacteristics(uint* pdwCharacteristics);
 }
 
-@GUID("6f49ff73-6727-49ac-a008-d98cf5e70048")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclock2
+@GUID("6f49ff73-6727-49ac-a008-d98cf5e70048")
 interface IAudioClock2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclock2-getdeviceposition
     HRESULT GetDevicePosition(ulong* DevicePosition, ulong* QPCPosition);
 }
 
-@GUID("f6e4c0a0-46d9-4fb8-be21-57a3ef2b626c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclockadjustment
+@GUID("f6e4c0a0-46d9-4fb8-be21-57a3ef2b626c")
 interface IAudioClockAdjustment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclockadjustment-setsamplerate
     HRESULT SetSampleRate(float flSampleRate);
 }
 
-@GUID("87ce5498-68d6-44e5-9215-6da47ef883d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-isimpleaudiovolume
+@GUID("87ce5498-68d6-44e5-9215-6da47ef883d8")
 interface ISimpleAudioVolume : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-isimpleaudiovolume-setmastervolume
@@ -3560,32 +3560,32 @@ interface ISimpleAudioVolume : IUnknown
     HRESULT GetMute(BOOL* pbMute);
 }
 
-@GUID("c789d381-a28c-4168-b28f-d3a837924dc3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioclientduckingcontrol
+@GUID("c789d381-a28c-4168-b28f-d3a837924dc3")
 interface IAudioClientDuckingControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioclientduckingcontrol-setduckingoptionsforcurrentstream
     HRESULT SetDuckingOptionsForCurrentStream(AUDIO_DUCKING_OPTIONS options);
 }
 
-@GUID("a7a7ef10-1f49-45e0-ad35-612057cc8f74")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioviewmanagerservice
+@GUID("a7a7ef10-1f49-45e0-ad35-612057cc8f74")
 interface IAudioViewManagerService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioviewmanagerservice-setaudiostreamwindow
     HRESULT SetAudioStreamWindow(HWND hwnd);
 }
 
-@GUID("a5ded44f-3c5d-4b2b-bd1e-5dc1ee20bbf6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioeffectschangednotificationclient
+@GUID("a5ded44f-3c5d-4b2b-bd1e-5dc1ee20bbf6")
 interface IAudioEffectsChangedNotificationClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioeffectschangednotificationclient-onaudioeffectschanged
     HRESULT OnAudioEffectsChanged();
 }
 
-@GUID("4460b3ae-4b44-4527-8676-7548a8acd260")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudioeffectsmanager
+@GUID("4460b3ae-4b44-4527-8676-7548a8acd260")
 interface IAudioEffectsManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudioeffectsmanager-registeraudioeffectschangednotificationcallback
@@ -3598,9 +3598,9 @@ interface IAudioEffectsManager : IUnknown
     HRESULT SetAudioEffectState(GUID effectId, AUDIO_EFFECT_STATE state);
 }
 
-@GUID("93014887-242d-4068-8a15-cf5e93b90fe3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iaudiostreamvolume
+@GUID("93014887-242d-4068-8a15-cf5e93b90fe3")
 interface IAudioStreamVolume : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iaudiostreamvolume-getchannelcount
@@ -3624,9 +3624,9 @@ interface IAudioAmbisonicsControl : IUnknown
     HRESULT SetRotation(float X, float Y, float Z, float W);
 }
 
-@GUID("1c158861-b533-4b30-b1cf-e853e51c59b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-ichannelaudiovolume
+@GUID("1c158861-b533-4b30-b1cf-e853e51c59b8")
 interface IChannelAudioVolume : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-ichannelaudiovolume-getchannelcount
@@ -3641,16 +3641,16 @@ interface IChannelAudioVolume : IUnknown
     HRESULT GetAllVolumes(uint dwCount, float* pfVolumes);
 }
 
-@GUID("f4ae25b5-aaa3-437d-b6b3-dbbe2d0e9549")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nn-audioclient-iacousticechocancellationcontrol
+@GUID("f4ae25b5-aaa3-437d-b6b3-dbbe2d0e9549")
 interface IAcousticEchoCancellationControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioclient/nf-audioclient-iacousticechocancellationcontrol-setechocancellationrenderendpoint
     HRESULT SetEchoCancellationRenderEndpoint(const(PWSTR) endpointId);
 }
 
-@GUID("dcdaa858-895a-4a22-a5eb-67bda506096d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-iaudioformatenumerator
+@GUID("dcdaa858-895a-4a22-a5eb-67bda506096d")
 interface IAudioFormatEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-iaudioformatenumerator-getcount
@@ -3659,9 +3659,9 @@ interface IAudioFormatEnumerator : IUnknown
     HRESULT GetFormat(uint index, WAVEFORMATEX** format);
 }
 
-@GUID("cce0b8f2-8d4d-4efb-a8cf-3d6ecf1c30e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioobjectbase
+@GUID("cce0b8f2-8d4d-4efb-a8cf-3d6ecf1c30e0")
 interface ISpatialAudioObjectBase : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioobjectbase-getbuffer
@@ -3674,9 +3674,9 @@ interface ISpatialAudioObjectBase : IUnknown
     HRESULT GetAudioObjectType(AudioObjectType* audioObjectType);
 }
 
-@GUID("dde28967-521b-46e5-8f00-bd6f2bc8ab1d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioobject
+@GUID("dde28967-521b-46e5-8f00-bd6f2bc8ab1d")
 interface ISpatialAudioObject : ISpatialAudioObjectBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioobject-setposition
@@ -3685,9 +3685,9 @@ interface ISpatialAudioObject : ISpatialAudioObjectBase
     HRESULT SetVolume(float volume);
 }
 
-@GUID("feaaf403-c1d8-450d-aa05-e0ccee7502a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioobjectrenderstreambase
+@GUID("feaaf403-c1d8-450d-aa05-e0ccee7502a8")
 interface ISpatialAudioObjectRenderStreamBase : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioobjectrenderstreambase-getavailabledynamicobjectcount
@@ -3706,18 +3706,18 @@ interface ISpatialAudioObjectRenderStreamBase : IUnknown
     HRESULT EndUpdatingAudioObjects();
 }
 
-@GUID("bab5f473-b423-477b-85f5-b5a332a04153")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioobjectrenderstream
+@GUID("bab5f473-b423-477b-85f5-b5a332a04153")
 interface ISpatialAudioObjectRenderStream : ISpatialAudioObjectRenderStreamBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioobjectrenderstream-activatespatialaudioobject
     HRESULT ActivateSpatialAudioObject(AudioObjectType type, ISpatialAudioObject* audioObject);
 }
 
-@GUID("dddf83e6-68d7-4c70-883f-a1836afb4a50")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioobjectrenderstreamnotify
+@GUID("dddf83e6-68d7-4c70-883f-a1836afb4a50")
 interface ISpatialAudioObjectRenderStreamNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioobjectrenderstreamnotify-onavailabledynamicobjectcountchange
@@ -3726,9 +3726,9 @@ interface ISpatialAudioObjectRenderStreamNotify : IUnknown
                                                 uint availableDynamicObjectCountChange);
 }
 
-@GUID("bbf8e066-aaaa-49be-9a4d-fd2a858ea27f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioclient
+@GUID("bbf8e066-aaaa-49be-9a4d-fd2a858ea27f")
 interface ISpatialAudioClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioclient-getstaticobjectposition
@@ -3749,8 +3749,8 @@ interface ISpatialAudioClient : IUnknown
     HRESULT ActivateSpatialAudioStream(const(PROPVARIANT)* activationParams, const(GUID)* riid, void** stream);
 }
 
-@GUID("caabe452-a66a-4bee-a93e-e320463f6a53")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nn-spatialaudioclient-ispatialaudioclient2
+@GUID("caabe452-a66a-4bee-a93e-e320463f6a53")
 interface ISpatialAudioClient2 : ISpatialAudioClient
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudioclient/nf-spatialaudioclient-ispatialaudioclient2-isoffloadcapable
@@ -3760,9 +3760,9 @@ interface ISpatialAudioClient2 : ISpatialAudioClient
                                         const(WAVEFORMATEX)* objectFormat, uint* frameCountPerBuffer);
 }
 
-@GUID("d7436ade-1978-4e14-aba0-555bd8eb83b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiohrtf/nn-spatialaudiohrtf-ispatialaudioobjectforhrtf
+@GUID("d7436ade-1978-4e14-aba0-555bd8eb83b4")
 interface ISpatialAudioObjectForHrtf : ISpatialAudioObjectBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiohrtf/nf-spatialaudiohrtf-ispatialaudioobjectforhrtf-setposition
@@ -3779,18 +3779,18 @@ interface ISpatialAudioObjectForHrtf : ISpatialAudioObjectBase
     HRESULT SetDirectivity(SpatialAudioHrtfDirectivityUnion* directivity);
 }
 
-@GUID("e08deef9-5363-406e-9fdc-080ee247bbe0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiohrtf/nn-spatialaudiohrtf-ispatialaudioobjectrenderstreamforhrtf
+@GUID("e08deef9-5363-406e-9fdc-080ee247bbe0")
 interface ISpatialAudioObjectRenderStreamForHrtf : ISpatialAudioObjectRenderStreamBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiohrtf/nf-spatialaudiohrtf-ispatialaudioobjectrenderstreamforhrtf-activatespatialaudioobjectforhrtf
     HRESULT ActivateSpatialAudioObjectForHrtf(AudioObjectType type, ISpatialAudioObjectForHrtf* audioObject);
 }
 
-@GUID("7991eec9-7e89-4d85-8390-6c703cec60c0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-immnotificationclient
+@GUID("7991eec9-7e89-4d85-8390-6c703cec60c0")
 interface IMMNotificationClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-immnotificationclient-ondevicestatechanged
@@ -3805,9 +3805,9 @@ interface IMMNotificationClient : IUnknown
     HRESULT OnPropertyValueChanged(const(PWSTR) pwstrDeviceId, const(PROPERTYKEY) key);
 }
 
-@GUID("d666063f-1587-4e43-81f1-b948e807363f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-immdevice
+@GUID("d666063f-1587-4e43-81f1-b948e807363f")
 interface IMMDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-immdevice-activate
@@ -3820,9 +3820,9 @@ interface IMMDevice : IUnknown
     HRESULT GetState(DEVICE_STATE* pdwState);
 }
 
-@GUID("0bd7a1be-7a1a-44db-8397-cc5392387b5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-immdevicecollection
+@GUID("0bd7a1be-7a1a-44db-8397-cc5392387b5e")
 interface IMMDeviceCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-immdevicecollection-getcount
@@ -3831,18 +3831,18 @@ interface IMMDeviceCollection : IUnknown
     HRESULT Item(uint nDevice, IMMDevice* ppDevice);
 }
 
-@GUID("1be09788-6894-4089-8586-9a2a6c265ac5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-immendpoint
+@GUID("1be09788-6894-4089-8586-9a2a6c265ac5")
 interface IMMEndpoint : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-immendpoint-getdataflow
     HRESULT GetDataFlow(EDataFlow* pDataFlow);
 }
 
-@GUID("a95664d2-9614-4f35-a746-de8db63617e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-immdeviceenumerator
+@GUID("a95664d2-9614-4f35-a746-de8db63617e6")
 interface IMMDeviceEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-immdeviceenumerator-enumaudioendpoints
@@ -3863,34 +3863,34 @@ interface IMMDeviceActivator : IUnknown
     HRESULT Activate(const(GUID)* iid, IMMDevice pDevice, PROPVARIANT* pActivationParams, void** ppInterface);
 }
 
-@GUID("41d949ab-9862-444a-80f6-c261334da5eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-iactivateaudiointerfacecompletionhandler
+@GUID("41d949ab-9862-444a-80f6-c261334da5eb")
 interface IActivateAudioInterfaceCompletionHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-iactivateaudiointerfacecompletionhandler-activatecompleted
     HRESULT ActivateCompleted(IActivateAudioInterfaceAsyncOperation activateOperation);
 }
 
-@GUID("72a22d78-cde4-431d-b8cc-843a71199b6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-iactivateaudiointerfaceasyncoperation
+@GUID("72a22d78-cde4-431d-b8cc-843a71199b6d")
 interface IActivateAudioInterfaceAsyncOperation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-iactivateaudiointerfaceasyncoperation-getactivateresult
     HRESULT GetActivateResult(HRESULT* activateResult, IUnknown* activatedInterface);
 }
 
-@GUID("20049d40-56d5-400e-a2ef-385599feed49")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-iaudiosystemeffectspropertychangenotificationclient
+@GUID("20049d40-56d5-400e-a2ef-385599feed49")
 interface IAudioSystemEffectsPropertyChangeNotificationClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-iaudiosystemeffectspropertychangenotificationclient-onpropertychanged
     HRESULT OnPropertyChanged(AUDIO_SYSTEMEFFECTS_PROPERTYSTORE_TYPE type, const(PROPERTYKEY) key);
 }
 
-@GUID("302ae7f9-d7e0-43e4-971b-1f8293613d2a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nn-mmdeviceapi-iaudiosystemeffectspropertystore
+@GUID("302ae7f9-d7e0-43e4-971b-1f8293613d2a")
 interface IAudioSystemEffectsPropertyStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmdeviceapi/nf-mmdeviceapi-iaudiosystemeffectspropertystore-opendefaultpropertystore
@@ -3909,9 +3909,9 @@ interface IAudioSystemEffectsPropertyStore : IUnknown
     HRESULT UnregisterPropertyChangeNotification(IAudioSystemEffectsPropertyChangeNotificationClient callback);
 }
 
-@GUID("c2f8e001-f205-4bc9-99bc-c13b1e048ccb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iperchanneldblevel
+@GUID("c2f8e001-f205-4bc9-99bc-c13b1e048ccb")
 interface IPerChannelDbLevel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iperchanneldblevel-getchannelcount
@@ -3928,16 +3928,16 @@ interface IPerChannelDbLevel : IUnknown
     HRESULT SetLevelAllChannels(float* aLevelsDB, uint cChannels, const(GUID)* pguidEventContext);
 }
 
-@GUID("7fb7b48f-531d-44a2-bcb3-5ad5a134b3dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiovolumelevel
+@GUID("7fb7b48f-531d-44a2-bcb3-5ad5a134b3dc")
 interface IAudioVolumeLevel : IPerChannelDbLevel
 {
 }
 
-@GUID("bb11c46f-ec28-493c-b88a-5db88062ce98")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiochannelconfig
+@GUID("bb11c46f-ec28-493c-b88a-5db88062ce98")
 interface IAudioChannelConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudiochannelconfig-setchannelconfig
@@ -3946,9 +3946,9 @@ interface IAudioChannelConfig : IUnknown
     HRESULT GetChannelConfig(uint* pdwConfig);
 }
 
-@GUID("7d8b1437-dd53-4350-9c1b-1ee2890bd938")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudioloudness
+@GUID("7d8b1437-dd53-4350-9c1b-1ee2890bd938")
 interface IAudioLoudness : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudioloudness-getenabled
@@ -3957,9 +3957,9 @@ interface IAudioLoudness : IUnknown
     HRESULT SetEnabled(BOOL bEnable, const(GUID)* pguidEventContext);
 }
 
-@GUID("4f03dc02-5e6e-4653-8f72-a030c123d598")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudioinputselector
+@GUID("4f03dc02-5e6e-4653-8f72-a030c123d598")
 interface IAudioInputSelector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudioinputselector-getselection
@@ -3968,9 +3968,9 @@ interface IAudioInputSelector : IUnknown
     HRESULT SetSelection(uint nIdSelect, const(GUID)* pguidEventContext);
 }
 
-@GUID("bb515f69-94a7-429e-8b9c-271b3f11a3ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiooutputselector
+@GUID("bb515f69-94a7-429e-8b9c-271b3f11a3ab")
 interface IAudioOutputSelector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudiooutputselector-getselection
@@ -3979,9 +3979,9 @@ interface IAudioOutputSelector : IUnknown
     HRESULT SetSelection(uint nIdSelect, const(GUID)* pguidEventContext);
 }
 
-@GUID("df45aeea-b74a-4b6b-afad-2366b6aa012e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiomute
+@GUID("df45aeea-b74a-4b6b-afad-2366b6aa012e")
 interface IAudioMute : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudiomute-setmute
@@ -3990,30 +3990,30 @@ interface IAudioMute : IUnknown
     HRESULT GetMute(BOOL* pbMuted);
 }
 
-@GUID("a2b1a1d9-4db3-425d-a2b2-bd335cb3e2e5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiobass
+@GUID("a2b1a1d9-4db3-425d-a2b2-bd335cb3e2e5")
 interface IAudioBass : IPerChannelDbLevel
 {
 }
 
-@GUID("5e54b6d7-b44b-40d9-9a9e-e691d9ce6edf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiomidrange
+@GUID("5e54b6d7-b44b-40d9-9a9e-e691d9ce6edf")
 interface IAudioMidrange : IPerChannelDbLevel
 {
 }
 
-@GUID("0a717812-694e-4907-b74b-bafa5cfdca7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiotreble
+@GUID("0a717812-694e-4907-b74b-bafa5cfdca7b")
 interface IAudioTreble : IPerChannelDbLevel
 {
 }
 
-@GUID("85401fd4-6de4-4b9d-9869-2d6753a82f3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudioautogaincontrol
+@GUID("85401fd4-6de4-4b9d-9869-2d6753a82f3c")
 interface IAudioAutoGainControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudioautogaincontrol-getenabled
@@ -4022,9 +4022,9 @@ interface IAudioAutoGainControl : IUnknown
     HRESULT SetEnabled(BOOL bEnable, const(GUID)* pguidEventContext);
 }
 
-@GUID("dd79923c-0599-45e0-b8b6-c8df7db6e796")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iaudiopeakmeter
+@GUID("dd79923c-0599-45e0-b8b6-c8df7db6e796")
 interface IAudioPeakMeter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iaudiopeakmeter-getchannelcount
@@ -4033,9 +4033,9 @@ interface IAudioPeakMeter : IUnknown
     HRESULT GetLevel(uint nChannel, float* pfLevel);
 }
 
-@GUID("3b22bcbf-2586-4af0-8583-205d391b807c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-idevicespecificproperty
+@GUID("3b22bcbf-2586-4af0-8583-205d391b807c")
 interface IDeviceSpecificProperty : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-idevicespecificproperty-gettype
@@ -4048,9 +4048,9 @@ interface IDeviceSpecificProperty : IUnknown
     HRESULT Get4BRange(int* plMin, int* plMax, int* plStepping);
 }
 
-@GUID("6daa848c-5eb0-45cc-aea5-998a2cda1ffb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-ipartslist
+@GUID("6daa848c-5eb0-45cc-aea5-998a2cda1ffb")
 interface IPartsList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-ipartslist-getcount
@@ -4059,9 +4059,9 @@ interface IPartsList : IUnknown
     HRESULT GetPart(uint nIndex, IPart* ppPart);
 }
 
-@GUID("ae2de0e4-5bca-4f2d-aa46-5d13f8fdb3a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-ipart
+@GUID("ae2de0e4-5bca-4f2d-aa46-5d13f8fdb3a9")
 interface IPart : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-ipart-getname
@@ -4092,9 +4092,9 @@ interface IPart : IUnknown
     HRESULT UnregisterControlChangeCallback(IControlChangeNotify pNotify);
 }
 
-@GUID("9c2c4058-23f5-41de-877a-df3af236a09e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-iconnector
+@GUID("9c2c4058-23f5-41de-877a-df3af236a09e")
 interface IConnector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-iconnector-gettype
@@ -4115,16 +4115,16 @@ interface IConnector : IUnknown
     HRESULT GetDeviceIdConnectedTo(PWSTR* ppwstrDeviceId);
 }
 
-@GUID("82149a85-dba6-4487-86bb-ea8f7fefcc71")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-isubunit
+@GUID("82149a85-dba6-4487-86bb-ea8f7fefcc71")
 interface ISubunit : IUnknown
 {
 }
 
-@GUID("45d37c3f-5140-444a-ae24-400789f3cbf3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-icontrolinterface
+@GUID("45d37c3f-5140-444a-ae24-400789f3cbf3")
 interface IControlInterface : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-icontrolinterface-getname
@@ -4133,18 +4133,18 @@ interface IControlInterface : IUnknown
     HRESULT GetIID(GUID* pIID);
 }
 
-@GUID("a09513ed-c709-4d21-bd7b-5f34c47f3947")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-icontrolchangenotify
+@GUID("a09513ed-c709-4d21-bd7b-5f34c47f3947")
 interface IControlChangeNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-icontrolchangenotify-onnotify
     HRESULT OnNotify(uint dwSenderProcessId, const(GUID)* pguidEventContext);
 }
 
-@GUID("2a07407e-6497-4a18-9787-32f79bd0d98f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nn-devicetopology-idevicetopology
+@GUID("2a07407e-6497-4a18-9787-32f79bd0d98f")
 interface IDeviceTopology : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/devicetopology/nf-devicetopology-idevicetopology-getconnectorcount
@@ -4163,9 +4163,9 @@ interface IDeviceTopology : IUnknown
     HRESULT GetSignalPath(IPart pIPartFrom, IPart pIPartTo, BOOL bRejectMixedPaths, IPartsList* ppParts);
 }
 
-@GUID("24918acc-64b3-37c1-8ca9-74a66e9957a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessionevents
+@GUID("24918acc-64b3-37c1-8ca9-74a66e9957a8")
 interface IAudioSessionEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessionevents-ondisplaynamechanged
@@ -4185,9 +4185,9 @@ interface IAudioSessionEvents : IUnknown
     HRESULT OnSessionDisconnected(AudioSessionDisconnectReason DisconnectReason);
 }
 
-@GUID("f4b1a599-7266-4319-a8ca-e70acb11e8cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessioncontrol
+@GUID("f4b1a599-7266-4319-a8ca-e70acb11e8cd")
 interface IAudioSessionControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessioncontrol-getstate
@@ -4210,9 +4210,9 @@ interface IAudioSessionControl : IUnknown
     HRESULT UnregisterAudioSessionNotification(IAudioSessionEvents NewNotifications);
 }
 
-@GUID("bfb7ff88-7239-4fc9-8fa2-07c950be9c6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessioncontrol2
+@GUID("bfb7ff88-7239-4fc9-8fa2-07c950be9c6d")
 interface IAudioSessionControl2 : IAudioSessionControl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessioncontrol2-getsessionidentifier
@@ -4227,9 +4227,9 @@ interface IAudioSessionControl2 : IAudioSessionControl
     HRESULT SetDuckingPreference(BOOL optOut);
 }
 
-@GUID("bfa971f1-4d5e-40bb-935e-967039bfbee4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessionmanager
+@GUID("bfa971f1-4d5e-40bb-935e-967039bfbee4")
 interface IAudioSessionManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessionmanager-getaudiosessioncontrol
@@ -4239,9 +4239,9 @@ interface IAudioSessionManager : IUnknown
     HRESULT GetSimpleAudioVolume(const(GUID)* AudioSessionGuid, uint StreamFlags, ISimpleAudioVolume* AudioVolume);
 }
 
-@GUID("c3b284d4-6d39-4359-b3cf-b56ddb3bb39c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiovolumeducknotification
+@GUID("c3b284d4-6d39-4359-b3cf-b56ddb3bb39c")
 interface IAudioVolumeDuckNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiovolumeducknotification-onvolumeducknotification
@@ -4250,18 +4250,18 @@ interface IAudioVolumeDuckNotification : IUnknown
     HRESULT OnVolumeUnduckNotification(const(PWSTR) sessionID);
 }
 
-@GUID("641dd20b-4d41-49cc-aba3-174b9477bb08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessionnotification
+@GUID("641dd20b-4d41-49cc-aba3-174b9477bb08")
 interface IAudioSessionNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessionnotification-onsessioncreated
     HRESULT OnSessionCreated(IAudioSessionControl NewSession);
 }
 
-@GUID("e2f5bb11-0570-40ca-acdd-3aa01277dee8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessionenumerator
+@GUID("e2f5bb11-0570-40ca-acdd-3aa01277dee8")
 interface IAudioSessionEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessionenumerator-getcount
@@ -4270,9 +4270,9 @@ interface IAudioSessionEnumerator : IUnknown
     HRESULT GetSession(int SessionCount, IAudioSessionControl* Session);
 }
 
-@GUID("77aa99a0-1bd6-484f-8bc7-2c654c9a9b6f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nn-audiopolicy-iaudiosessionmanager2
+@GUID("77aa99a0-1bd6-484f-8bc7-2c654c9a9b6f")
 interface IAudioSessionManager2 : IAudioSessionManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiopolicy/nf-audiopolicy-iaudiosessionmanager2-getsessionenumerator
@@ -4287,9 +4287,9 @@ interface IAudioSessionManager2 : IAudioSessionManager
     HRESULT UnregisterDuckNotification(IAudioVolumeDuckNotification duckNotification);
 }
 
-@GUID("bcd7c78f-3098-4f22-b547-a2f25a381269")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudiometadataitems
+@GUID("bcd7c78f-3098-4f22-b547-a2f25a381269")
 interface ISpatialAudioMetadataItems : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudiometadataitems-getframecount
@@ -4304,9 +4304,9 @@ interface ISpatialAudioMetadataItems : IUnknown
     HRESULT GetInfo(SpatialAudioMetadataItemsInfo* info);
 }
 
-@GUID("1b17ca01-2955-444d-a430-537dc589a844")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudiometadatawriter
+@GUID("1b17ca01-2955-444d-a430-537dc589a844")
 interface ISpatialAudioMetadataWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudiometadatawriter-open
@@ -4321,9 +4321,9 @@ interface ISpatialAudioMetadataWriter : IUnknown
     HRESULT Close();
 }
 
-@GUID("b78e86a2-31d9-4c32-94d2-7df40fc7ebec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudiometadatareader
+@GUID("b78e86a2-31d9-4c32-94d2-7df40fc7ebec")
 interface ISpatialAudioMetadataReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudiometadatareader-open
@@ -4338,9 +4338,9 @@ interface ISpatialAudioMetadataReader : IUnknown
     HRESULT Close();
 }
 
-@GUID("d224b233-e251-4fd0-9ca2-d5ecf9a68404")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudiometadatacopier
+@GUID("d224b233-e251-4fd0-9ca2-d5ecf9a68404")
 interface ISpatialAudioMetadataCopier : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudiometadatacopier-open
@@ -4352,9 +4352,9 @@ interface ISpatialAudioMetadataCopier : IUnknown
     HRESULT Close();
 }
 
-@GUID("42640a16-e1bd-42d9-9ff6-031ab71a2dba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudiometadataitemsbuffer
+@GUID("42640a16-e1bd-42d9-9ff6-031ab71a2dba")
 interface ISpatialAudioMetadataItemsBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudiometadataitemsbuffer-attachtobuffer
@@ -4367,9 +4367,9 @@ interface ISpatialAudioMetadataItemsBuffer : IUnknown
     HRESULT DetachBuffer();
 }
 
-@GUID("777d4a3b-f6ff-4a26-85dc-68d7cdeda1d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudiometadataclient
+@GUID("777d4a3b-f6ff-4a26-85dc-68d7cdeda1d4")
 interface ISpatialAudioMetadataClient : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudiometadataclient-activatespatialaudiometadataitems
@@ -4387,9 +4387,9 @@ interface ISpatialAudioMetadataClient : IUnknown
     HRESULT ActivateSpatialAudioMetadataReader(ISpatialAudioMetadataReader* metadataReader);
 }
 
-@GUID("0df2c94b-f5f9-472d-af6b-c46e0ac9cd05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudioobjectformetadatacommands
+@GUID("0df2c94b-f5f9-472d-af6b-c46e0ac9cd05")
 interface ISpatialAudioObjectForMetadataCommands : ISpatialAudioObjectBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudioobjectformetadatacommands-writenextmetadatacommand
@@ -4398,18 +4398,18 @@ interface ISpatialAudioObjectForMetadataCommands : ISpatialAudioObjectBase
                                      uint valueBufferLength);
 }
 
-@GUID("ddea49ff-3bc0-4377-8aad-9fbcfd808566")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudioobjectformetadataitems
+@GUID("ddea49ff-3bc0-4377-8aad-9fbcfd808566")
 interface ISpatialAudioObjectForMetadataItems : ISpatialAudioObjectBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudioobjectformetadataitems-getspatialaudiometadataitems
     HRESULT GetSpatialAudioMetadataItems(ISpatialAudioMetadataItems* metadataItems);
 }
 
-@GUID("bbc9c907-48d5-4a2e-a0c7-f7f0d67c1fb1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nn-spatialaudiometadata-ispatialaudioobjectrenderstreamformetadata
+@GUID("bbc9c907-48d5-4a2e-a0c7-f7f0d67c1fb1")
 interface ISpatialAudioObjectRenderStreamForMetadata : ISpatialAudioObjectRenderStreamBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialaudiometadata/nf-spatialaudiometadata-ispatialaudioobjectrenderstreamformetadata-activatespatialaudioobjectformetadatacommands

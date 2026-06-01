@@ -24,24 +24,26 @@ enum : int
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/input_ink/inkdesktophost
 @GUID("062584a6-f830-4bdc-a4d2-0a10ab062b1d")
 struct InkDesktopHost;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/input_ink/inkd2drenderer
 @GUID("4044e60c-7b01-4671-a97c-04e0210a07a5")
 struct InkD2DRenderer;
 
-@GUID("fabea3fc-b108-45b6-a9fc-8d08fa9f85cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nn-inkpresenterdesktop-iinkcommitrequesthandler
+@GUID("fabea3fc-b108-45b6-a9fc-8d08fa9f85cf")
 interface IInkCommitRequestHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nf-inkpresenterdesktop-iinkcommitrequesthandler-oncommitrequested
     HRESULT OnCommitRequested();
 }
 
-@GUID("73f3c0d9-2e8b-48f3-895e-20cbd27b723b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nn-inkpresenterdesktop-iinkpresenterdesktop
+@GUID("73f3c0d9-2e8b-48f3-895e-20cbd27b723b")
 interface IInkPresenterDesktop : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nf-inkpresenterdesktop-iinkpresenterdesktop-setrootvisual
@@ -56,18 +58,18 @@ interface IInkPresenterDesktop : IUnknown
     HRESULT OnHighContrastChanged();
 }
 
-@GUID("ccda0a9a-1b78-4632-bb96-97800662e26c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nn-inkpresenterdesktop-iinkhostworkitem
+@GUID("ccda0a9a-1b78-4632-bb96-97800662e26c")
 interface IInkHostWorkItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nf-inkpresenterdesktop-iinkhostworkitem-invoke
     HRESULT Invoke();
 }
 
-@GUID("4ce7d875-a981-4140-a1ff-ad93258e8d59")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nn-inkpresenterdesktop-iinkdesktophost
+@GUID("4ce7d875-a981-4140-a1ff-ad93258e8d59")
 interface IInkDesktopHost : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkpresenterdesktop/nf-inkpresenterdesktop-iinkdesktophost-queueworkitem
@@ -79,17 +81,17 @@ interface IInkDesktopHost : IUnknown
                                             void** ppv);
 }
 
-@GUID("407fb1de-f85a-4150-97cf-b7fb274fb4f8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkrenderer/nn-inkrenderer-iinkd2drenderer
+@GUID("407fb1de-f85a-4150-97cf-b7fb274fb4f8")
 interface IInkD2DRenderer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkrenderer/nf-inkrenderer-iinkd2drenderer-draw
     HRESULT Draw(IUnknown pD2D1DeviceContext, IUnknown pInkStrokeIterable, BOOL fHighContrast);
 }
 
-@GUID("0a95dcd9-4578-4b71-b20b-bf664d4bfeee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkrenderer/nn-inkrenderer-iinkd2drenderer2
+@GUID("0a95dcd9-4578-4b71-b20b-bf664d4bfeee")
 interface IInkD2DRenderer2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inkrenderer/nf-inkrenderer-iinkd2drenderer2-draw

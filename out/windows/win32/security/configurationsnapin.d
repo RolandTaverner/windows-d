@@ -164,9 +164,9 @@ struct SCESVC_CALLBACK_INFO
 
 // Interfaces
 
-@GUID("6d90e0d0-200d-11d1-affb-00c04fb984f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nn-scesvc-iscesvcattachmentpersistinfo
+@GUID("6d90e0d0-200d-11d1-affb-00c04fb984f9")
 interface ISceSvcAttachmentPersistInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentpersistinfo-save
@@ -177,9 +177,9 @@ interface ISceSvcAttachmentPersistInfo : IUnknown
     HRESULT FreeBuffer(void* pvData);
 }
 
-@GUID("17c35fde-200d-11d1-affb-00c04fb984f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nn-scesvc-iscesvcattachmentdata
+@GUID("17c35fde-200d-11d1-affb-00c04fb984f9")
 interface ISceSvcAttachmentData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-getdata

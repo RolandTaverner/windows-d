@@ -770,6 +770,7 @@ HRESULT CreateHrtfApo(const(HrtfApoInit)* init, IXAPO* xApo);
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/xaudio2/fxeq-constants
 @GUID("f5e01117-d6c4-485a-a3f5-695196f3dbfa")
 struct FXEQ;
 
@@ -788,8 +789,8 @@ struct AudioVolumeMeter;
 @GUID("c2633b16-471b-4498-b8c5-4f0959e2ec09")
 struct AudioReverb;
 
-@GUID("a410b984-9839-4819-a0be-2856ae6b3adb")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nn-xapo-ixapo
+@GUID("a410b984-9839-4819-a0be-2856ae6b3adb")
 interface IXAPO : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-getregistrationproperties
@@ -822,8 +823,8 @@ interface IXAPO : IUnknown
     uint    CalcOutputFrames(uint InputFrameCount);
 }
 
-@GUID("26d95c66-80f2-499a-ad54-5ae7f01c6d98")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nn-xapo-ixapoparameters
+@GUID("26d95c66-80f2-499a-ad54-5ae7f01c6d98")
 interface IXAPOParameters : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapoparameters-setparameters
@@ -834,8 +835,8 @@ interface IXAPOParameters : IUnknown
                        uint ParameterByteSize);
 }
 
-@GUID("2b02e3cf-2e0b-4ec3-be45-1b2a3fe7210d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2
+@GUID("2b02e3cf-2e0b-4ec3-be45-1b2a3fe7210d")
 interface IXAudio2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-registerforcallbacks
@@ -991,9 +992,9 @@ interface IXAudio2VoiceCallback
     void OnVoiceError(void* pBufferContext, HRESULT Error);
 }
 
-@GUID("15b3cd66-e9de-4464-b6e6-2bc3cf63d455")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nn-hrtfapoapi-ixapohrtfparameters
+@GUID("15b3cd66-e9de-4464-b6e6-2bc3cf63d455")
 interface IXAPOHrtfParameters : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourceposition

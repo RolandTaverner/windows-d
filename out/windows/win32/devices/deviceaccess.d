@@ -88,15 +88,15 @@ HRESULT CreateDeviceAccessInstance(const(PWSTR) deviceInterfacePath, uint desire
 
 // Interfaces
 
-@GUID("999bad24-9acd-45bb-8669-2a2fc0288b04")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deviceaccess/nn-deviceaccess-idevicerequestcompletioncallback
+@GUID("999bad24-9acd-45bb-8669-2a2fc0288b04")
 interface IDeviceRequestCompletionCallback : IUnknown
 {
     HRESULT Invoke(HRESULT requestResult, uint bytesReturned);
 }
 
-@GUID("9eefe161-23ab-4f18-9b49-991b586ae970")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deviceaccess/nn-deviceaccess-ideviceiocontrol
+@GUID("9eefe161-23ab-4f18-9b49-991b586ae970")
 interface IDeviceIoControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deviceaccess/nf-deviceaccess-ideviceiocontrol-deviceiocontrolsync
@@ -110,8 +110,8 @@ interface IDeviceIoControl : IUnknown
     HRESULT CancelOperation(size_t cancelContext);
 }
 
-@GUID("3474628f-683d-42d2-abcb-db018c6503bc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deviceaccess/nn-deviceaccess-icreatedeviceaccessasync
+@GUID("3474628f-683d-42d2-abcb-db018c6503bc")
 interface ICreateDeviceAccessAsync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deviceaccess/nf-deviceaccess-icreatedeviceaccessasync-cancel

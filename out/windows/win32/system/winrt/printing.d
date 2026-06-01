@@ -17,8 +17,8 @@ extern(Windows) @nogc nothrow:
 
 // Interfaces
 
-@GUID("9ca31010-1484-4587-b26b-dddf9f9caecd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nn-print3dmanagerinterop-iprinting3dmanagerinterop
+@GUID("9ca31010-1484-4587-b26b-dddf9f9caecd")
 interface IPrinting3DManagerInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nf-print3dmanagerinterop-iprinting3dmanagerinterop-getforwindow
@@ -27,9 +27,9 @@ interface IPrinting3DManagerInterop : IInspectable
     HRESULT ShowPrintUIForWindowAsync(HWND appWindow, const(GUID)* riid, void** asyncOperation);
 }
 
-@GUID("c5435a42-8d43-4e7b-a68a-ef311e392087")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nn-printmanagerinterop-iprintmanagerinterop
+@GUID("c5435a42-8d43-4e7b-a68a-ef311e392087")
 interface IPrintManagerInterop : IInspectable
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nf-printmanagerinterop-iprintmanagerinterop-getforwindow

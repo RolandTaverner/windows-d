@@ -2002,9 +2002,9 @@ struct FaxAccountOutgoingArchive;
 @GUID("735c1248-ec89-4c30-a127-656e92e3c4ea")
 struct FaxSecurity2;
 
-@GUID("8b86f485-fd7f-4824-886b-40c5caa617cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxjobstatus
+@GUID("8b86f485-fd7f-4824-886b-40c5caa617cc")
 interface IFaxJobStatus : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_status
@@ -2043,9 +2043,9 @@ interface IFaxJobStatus : IDispatch
     HRESULT get_RoutingInformation(BSTR* pbstrRoutingInformation);
 }
 
-@GUID("475b6469-90a5-4878-a577-17a86e8e3462")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxserver
+@GUID("475b6469-90a5-4878-a577-17a86e8e3462")
 interface IFaxServer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-connect
@@ -2104,9 +2104,9 @@ interface IFaxServer : IDispatch
     HRESULT get_APIVersion(FAX_SERVER_APIVERSION_ENUM* pAPIVersion);
 }
 
-@GUID("9fb76f62-4c7e-43a5-b6fd-502893f7e13e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceproviders
+@GUID("9fb76f62-4c7e-43a5-b6fd-502893f7e13e")
 interface IFaxDeviceProviders : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get__newenum
@@ -2117,9 +2117,9 @@ interface IFaxDeviceProviders : IDispatch
     HRESULT get_Count(int* plCount);
 }
 
-@GUID("9e46783e-f34f-482e-a360-0416becbbd96")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdevices
+@GUID("9e46783e-f34f-482e-a360-0416becbbd96")
 interface IFaxDevices : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get__newenum
@@ -2132,9 +2132,9 @@ interface IFaxDevices : IDispatch
     HRESULT get_ItemById(int lId, IFaxDevice* ppFaxDevice);
 }
 
-@GUID("8148c20f-9d52-45b1-bf96-38fc12713527")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundrouting
+@GUID("8148c20f-9d52-45b1-bf96-38fc12713527")
 interface IFaxInboundRouting : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundrouting-getextensions
@@ -2143,9 +2143,9 @@ interface IFaxInboundRouting : IDispatch
     HRESULT GetMethods(IFaxInboundRoutingMethods* pFaxInboundRoutingMethods);
 }
 
-@GUID("dce3b2a8-a7ab-42bc-9d0a-3149457261a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxfolders
+@GUID("dce3b2a8-a7ab-42bc-9d0a-3149457261a0")
 interface IFaxFolders : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_outgoingqueue
@@ -2158,9 +2158,9 @@ interface IFaxFolders : IDispatch
     HRESULT get_OutgoingArchive(IFaxOutgoingArchive* pFaxOutgoingArchive);
 }
 
-@GUID("34e64fb9-6b31-4d32-8b27-d286c0c33606")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxloggingoptions
+@GUID("34e64fb9-6b31-4d32-8b27-d286c0c33606")
 interface IFaxLoggingOptions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxloggingoptions-get_eventlogging
@@ -2169,9 +2169,9 @@ interface IFaxLoggingOptions : IDispatch
     HRESULT get_ActivityLogging(IFaxActivityLogging* pFaxActivityLogging);
 }
 
-@GUID("4b106f97-3df5-40f2-bc3c-44cb8115ebdf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxactivity
+@GUID("4b106f97-3df5-40f2-bc3c-44cb8115ebdf")
 interface IFaxActivity : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_incomingmessages
@@ -2186,9 +2186,9 @@ interface IFaxActivity : IDispatch
     HRESULT Refresh();
 }
 
-@GUID("25dc05a4-9909-41bd-a95b-7e5d1dec1d43")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundrouting
+@GUID("25dc05a4-9909-41bd-a95b-7e5d1dec1d43")
 interface IFaxOutboundRouting : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundrouting-getgroups
@@ -2197,9 +2197,9 @@ interface IFaxOutboundRouting : IDispatch
     HRESULT GetRules(IFaxOutboundRoutingRules* pFaxOutboundRoutingRules);
 }
 
-@GUID("378efaeb-5fcb-4afb-b2ee-e16e80614487")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxreceiptoptions
+@GUID("378efaeb-5fcb-4afb-b2ee-e16e80614487")
 interface IFaxReceiptOptions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_authenticationtype
@@ -2240,9 +2240,9 @@ interface IFaxReceiptOptions : IDispatch
     HRESULT put_UseForInboundRouting(VARIANT_BOOL bUseForInboundRouting);
 }
 
-@GUID("77b508c1-09c0-47a2-91eb-fce7fdf2690e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsecurity
+@GUID("77b508c1-09c0-47a2-91eb-fce7fdf2690e")
 interface IFaxSecurity : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_descriptor
@@ -2261,9 +2261,9 @@ interface IFaxSecurity : IDispatch
     HRESULT put_InformationType(int lInformationType);
 }
 
-@GUID("b207a246-09e3-4a4e-a7dc-fea31d29458f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdocument
+@GUID("b207a246-09e3-4a4e-a7dc-fea31d29458f")
 interface IFaxDocument : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_body
@@ -2332,9 +2332,9 @@ interface IFaxDocument : IDispatch
     HRESULT put_AttachFaxToReceipt(VARIANT_BOOL bAttachFax);
 }
 
-@GUID("0d879d7d-f57a-4cc6-a6f9-3ee5d527b46a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsender
+@GUID("0d879d7d-f57a-4cc6-a6f9-3ee5d527b46a")
 interface IFaxSender : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_billingcode
@@ -2399,9 +2399,9 @@ interface IFaxSender : IDispatch
     HRESULT SaveDefaultSender();
 }
 
-@GUID("9a3da3a0-538d-42b6-9444-aaa57d0ce2bc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxrecipient
+@GUID("9a3da3a0-538d-42b6-9444-aaa57d0ce2bc")
 interface IFaxRecipient : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-get_faxnumber
@@ -2414,9 +2414,9 @@ interface IFaxRecipient : IDispatch
     HRESULT put_Name(BSTR bstrName);
 }
 
-@GUID("b9c9de5a-894e-4492-9fa3-08c627c11d5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxrecipients
+@GUID("b9c9de5a-894e-4492-9fa3-08c627c11d5d")
 interface IFaxRecipients : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get__newenum
@@ -2431,9 +2431,9 @@ interface IFaxRecipients : IDispatch
     HRESULT Remove(int lIndex);
 }
 
-@GUID("76062cc7-f714-4fbd-aa06-ed6e4a4b70f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingarchive
+@GUID("76062cc7-f714-4fbd-aa06-ed6e4a4b70f3")
 interface IFaxIncomingArchive : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_usearchive
@@ -2474,9 +2474,9 @@ interface IFaxIncomingArchive : IDispatch
     HRESULT GetMessage(BSTR bstrMessageId, IFaxIncomingMessage* pFaxIncomingMessage);
 }
 
-@GUID("902e64ef-8fd8-4b75-9725-6014df161545")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingqueue
+@GUID("902e64ef-8fd8-4b75-9725-6014df161545")
 interface IFaxIncomingQueue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-get_blocked
@@ -2493,9 +2493,9 @@ interface IFaxIncomingQueue : IDispatch
     HRESULT GetJob(BSTR bstrJobId, IFaxIncomingJob* pFaxIncomingJob);
 }
 
-@GUID("c9c28f40-8d80-4e53-810f-9a79919b49fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingarchive
+@GUID("c9c28f40-8d80-4e53-810f-9a79919b49fd")
 interface IFaxOutgoingArchive : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_usearchive
@@ -2536,9 +2536,9 @@ interface IFaxOutgoingArchive : IDispatch
     HRESULT GetMessage(BSTR bstrMessageId, IFaxOutgoingMessage* pFaxOutgoingMessage);
 }
 
-@GUID("80b1df24-d9ac-4333-b373-487cedc80ce5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingqueue
+@GUID("80b1df24-d9ac-4333-b373-487cedc80ce5")
 interface IFaxOutgoingQueue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_blocked
@@ -2591,9 +2591,9 @@ interface IFaxOutgoingQueue : IDispatch
     HRESULT GetJob(BSTR bstrJobId, IFaxOutgoingJob* pFaxOutgoingJob);
 }
 
-@GUID("fd73ecc4-6f06-4f52-82a8-f7ba06ae3108")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessageiterator
+@GUID("fd73ecc4-6f06-4f52-82a8-f7ba06ae3108")
 interface IFaxIncomingMessageIterator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_message
@@ -2610,9 +2610,9 @@ interface IFaxIncomingMessageIterator : IDispatch
     HRESULT MoveNext();
 }
 
-@GUID("7cab88fa-2ef9-4851-b2f3-1d148fed8447")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessage
+@GUID("7cab88fa-2ef9-4851-b2f3-1d148fed8447")
 interface IFaxIncomingMessage : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_id
@@ -2643,9 +2643,9 @@ interface IFaxIncomingMessage : IDispatch
     HRESULT Delete();
 }
 
-@GUID("2c56d8e6-8c2f-4573-944c-e505f8f5aeed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjobs
+@GUID("2c56d8e6-8c2f-4573-944c-e505f8f5aeed")
 interface IFaxOutgoingJobs : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get__newenum
@@ -2656,9 +2656,9 @@ interface IFaxOutgoingJobs : IDispatch
     HRESULT get_Count(int* plCount);
 }
 
-@GUID("6356daad-6614-4583-bf7a-3ad67bbfc71c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjob
+@GUID("6356daad-6614-4583-bf7a-3ad67bbfc71c")
 interface IFaxOutgoingJob : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_subject
@@ -2725,9 +2725,9 @@ interface IFaxOutgoingJob : IDispatch
     HRESULT Cancel();
 }
 
-@GUID("f5ec5d4f-b840-432f-9980-112fe42a9b7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessageiterator
+@GUID("f5ec5d4f-b840-432f-9980-112fe42a9b7a")
 interface IFaxOutgoingMessageIterator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_message
@@ -2744,9 +2744,9 @@ interface IFaxOutgoingMessageIterator : IDispatch
     HRESULT MoveNext();
 }
 
-@GUID("f0ea35de-caa5-4a7c-82c7-2b60ba5f2be2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessage
+@GUID("f0ea35de-caa5-4a7c-82c7-2b60ba5f2be2")
 interface IFaxOutgoingMessage : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_submissionid
@@ -2789,9 +2789,9 @@ interface IFaxOutgoingMessage : IDispatch
     HRESULT Delete();
 }
 
-@GUID("011f04e9-4fd6-4c23-9513-b6b66bb26be9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingjobs
+@GUID("011f04e9-4fd6-4c23-9513-b6b66bb26be9")
 interface IFaxIncomingJobs : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get__newenum
@@ -2802,9 +2802,9 @@ interface IFaxIncomingJobs : IDispatch
     HRESULT get_Count(int* plCount);
 }
 
-@GUID("207529e6-654a-4916-9f88-4d232ee8a107")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingjob
+@GUID("207529e6-654a-4916-9f88-4d232ee8a107")
 interface IFaxIncomingJob : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_size
@@ -2847,9 +2847,9 @@ interface IFaxIncomingJob : IDispatch
     HRESULT CopyTiff(BSTR bstrTiffPath);
 }
 
-@GUID("290eac63-83ec-449c-8417-f148df8c682a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceprovider
+@GUID("290eac63-83ec-449c-8417-f148df8c682a")
 interface IFaxDeviceProvider : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_friendlyname
@@ -2878,9 +2878,9 @@ interface IFaxDeviceProvider : IDispatch
     HRESULT get_DeviceIds(VARIANT* pvDeviceIds);
 }
 
-@GUID("49306c59-b52e-4867-9df4-ca5841c956d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdevice
+@GUID("49306c59-b52e-4867-9df4-ca5841c956d0")
 interface IFaxDevice : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_id
@@ -2937,9 +2937,9 @@ interface IFaxDevice : IDispatch
     HRESULT AnswerCall();
 }
 
-@GUID("1e29078b-5a69-497b-9592-49b7e7faddb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxactivitylogging
+@GUID("1e29078b-5a69-497b-9592-49b7e7faddb5")
 interface IFaxActivityLogging : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_logincoming
@@ -2960,9 +2960,9 @@ interface IFaxActivityLogging : IDispatch
     HRESULT Save();
 }
 
-@GUID("0880d965-20e8-42e4-8e17-944f192caad4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxeventlogging
+@GUID("0880d965-20e8-42e4-8e17-944f192caad4")
 interface IFaxEventLogging : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_initeventslevel
@@ -2987,9 +2987,9 @@ interface IFaxEventLogging : IDispatch
     HRESULT Save();
 }
 
-@GUID("235cbef7-c2de-4bfd-b8da-75097c82c87f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutinggroups
+@GUID("235cbef7-c2de-4bfd-b8da-75097c82c87f")
 interface IFaxOutboundRoutingGroups : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get__newenum
@@ -3004,9 +3004,9 @@ interface IFaxOutboundRoutingGroups : IDispatch
     HRESULT Remove(VARIANT vIndex);
 }
 
-@GUID("ca6289a1-7e25-4f87-9a0b-93365734962c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutinggroup
+@GUID("ca6289a1-7e25-4f87-9a0b-93365734962c")
 interface IFaxOutboundRoutingGroup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_name
@@ -3017,9 +3017,9 @@ interface IFaxOutboundRoutingGroup : IDispatch
     HRESULT get_DeviceIds(IFaxDeviceIds* pFaxDeviceIds);
 }
 
-@GUID("2f0f813f-4ce9-443e-8ca1-738cfaeee149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceids
+@GUID("2f0f813f-4ce9-443e-8ca1-738cfaeee149")
 interface IFaxDeviceIds : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get__newenum
@@ -3036,9 +3036,9 @@ interface IFaxDeviceIds : IDispatch
     HRESULT SetOrder(int lDeviceId, int lNewOrder);
 }
 
-@GUID("dcefa1e7-ae7d-4ed6-8521-369edcca5120")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutingrules
+@GUID("dcefa1e7-ae7d-4ed6-8521-369edcca5120")
 interface IFaxOutboundRoutingRules : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get__newenum
@@ -3058,9 +3058,9 @@ interface IFaxOutboundRoutingRules : IDispatch
                 IFaxOutboundRoutingRule* pFaxOutboundRoutingRule);
 }
 
-@GUID("e1f795d5-07c2-469f-b027-acacc23219da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutingrule
+@GUID("e1f795d5-07c2-469f-b027-acacc23219da")
 interface IFaxOutboundRoutingRule : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_countrycode
@@ -3087,9 +3087,9 @@ interface IFaxOutboundRoutingRule : IDispatch
     HRESULT Save();
 }
 
-@GUID("2f6c9673-7b26-42de-8eb0-915dcd2a4f4c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingextensions
+@GUID("2f6c9673-7b26-42de-8eb0-915dcd2a4f4c")
 interface IFaxInboundRoutingExtensions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get__newenum
@@ -3100,9 +3100,9 @@ interface IFaxInboundRoutingExtensions : IDispatch
     HRESULT get_Count(int* plCount);
 }
 
-@GUID("885b5e08-c26c-4ef9-af83-51580a750be1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingextension
+@GUID("885b5e08-c26c-4ef9-af83-51580a750be1")
 interface IFaxInboundRoutingExtension : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_friendlyname
@@ -3129,9 +3129,9 @@ interface IFaxInboundRoutingExtension : IDispatch
     HRESULT get_Methods(VARIANT* pvMethods);
 }
 
-@GUID("783fca10-8908-4473-9d69-f67fbea0c6b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingmethods
+@GUID("783fca10-8908-4473-9d69-f67fbea0c6b9")
 interface IFaxInboundRoutingMethods : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get__newenum
@@ -3142,9 +3142,9 @@ interface IFaxInboundRoutingMethods : IDispatch
     HRESULT get_Count(int* plCount);
 }
 
-@GUID("45700061-ad9d-4776-a8c4-64065492cf4b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingmethod
+@GUID("45700061-ad9d-4776-a8c4-64065492cf4b")
 interface IFaxInboundRoutingMethod : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_name
@@ -3167,9 +3167,9 @@ interface IFaxInboundRoutingMethod : IDispatch
     HRESULT Save();
 }
 
-@GUID("e1347661-f9ef-4d6d-b4a5-c0a068b65cff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdocument2
+@GUID("e1347661-f9ef-4d6d-b4a5-c0a068b65cff")
 interface IFaxDocument2 : IFaxDocument
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-get_submissionid
@@ -3184,9 +3184,9 @@ interface IFaxDocument2 : IFaxDocument
     HRESULT ConnectedSubmit2(IFaxServer pFaxServer, VARIANT* pvFaxOutgoingJobIDs, int* plErrorBodyFile);
 }
 
-@GUID("10f4d0f7-0994-4543-ab6e-506949128c40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxconfiguration
+@GUID("10f4d0f7-0994-4543-ab6e-506949128c40")
 interface IFaxConfiguration : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_usearchive
@@ -3275,9 +3275,9 @@ interface IFaxConfiguration : IDispatch
     HRESULT Save();
 }
 
-@GUID("571ced0f-5609-4f40-9176-547e3a72ca7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxserver2
+@GUID("571ced0f-5609-4f40-9176-547e3a72ca7c")
 interface IFaxServer2 : IFaxServer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_configuration
@@ -3290,9 +3290,9 @@ interface IFaxServer2 : IFaxServer
     HRESULT get_Security2(IFaxSecurity2* ppFaxSecurity2);
 }
 
-@GUID("7428fbae-841e-47b8-86f4-2288946dca1b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountset
+@GUID("7428fbae-841e-47b8-86f4-2288946dca1b")
 interface IFaxAccountSet : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-getaccounts
@@ -3305,9 +3305,9 @@ interface IFaxAccountSet : IDispatch
     HRESULT RemoveAccount(BSTR bstrAccountName);
 }
 
-@GUID("93ea8162-8be7-42d1-ae7b-ec74e2d989da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccounts
+@GUID("93ea8162-8be7-42d1-ae7b-ec74e2d989da")
 interface IFaxAccounts : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* ppUnk);
@@ -3317,9 +3317,9 @@ interface IFaxAccounts : IDispatch
     HRESULT get_Count(int* plCount);
 }
 
-@GUID("68535b33-5dc4-4086-be26-b76f9b711006")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccount
+@GUID("68535b33-5dc4-4086-be26-b76f9b711006")
 interface IFaxAccount : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_accountname
@@ -3332,9 +3332,9 @@ interface IFaxAccount : IDispatch
     HRESULT get_RegisteredEvents(FAX_ACCOUNT_EVENTS_TYPE_ENUM* pRegisteredEvents);
 }
 
-@GUID("418a8d96-59a0-4789-b176-edf3dc8fa8f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjob2
+@GUID("418a8d96-59a0-4789-b176-edf3dc8fa8f7")
 interface IFaxOutgoingJob2 : IFaxOutgoingJob
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_hascoverpage
@@ -3345,9 +3345,9 @@ interface IFaxOutgoingJob2 : IFaxOutgoingJob
     HRESULT get_ScheduleType(FAX_SCHEDULE_TYPE_ENUM* pScheduleType);
 }
 
-@GUID("6463f89d-23d8-46a9-8f86-c47b77ca7926")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountfolders
+@GUID("6463f89d-23d8-46a9-8f86-c47b77ca7926")
 interface IFaxAccountFolders : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_outgoingqueue
@@ -3360,9 +3360,9 @@ interface IFaxAccountFolders : IDispatch
     HRESULT get_OutgoingArchive(IFaxAccountOutgoingArchive* pFaxOutgoingArchive);
 }
 
-@GUID("dd142d92-0186-4a95-a090-cbc3eadba6b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountincomingqueue
+@GUID("dd142d92-0186-4a95-a090-cbc3eadba6b4")
 interface IFaxAccountIncomingQueue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingqueue-getjobs
@@ -3371,9 +3371,9 @@ interface IFaxAccountIncomingQueue : IDispatch
     HRESULT GetJob(BSTR bstrJobId, IFaxIncomingJob* pFaxIncomingJob);
 }
 
-@GUID("0f1424e9-f22d-4553-b7a5-0d24bd0d7e46")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountoutgoingqueue
+@GUID("0f1424e9-f22d-4553-b7a5-0d24bd0d7e46")
 interface IFaxAccountOutgoingQueue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingqueue-getjobs
@@ -3382,9 +3382,9 @@ interface IFaxAccountOutgoingQueue : IDispatch
     HRESULT GetJob(BSTR bstrJobId, IFaxOutgoingJob* pFaxOutgoingJob);
 }
 
-@GUID("b37df687-bc88-4b46-b3be-b458b3ea9e7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessage2
+@GUID("b37df687-bc88-4b46-b3be-b458b3ea9e7f")
 interface IFaxOutgoingMessage2 : IFaxOutgoingMessage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_hascoverpage
@@ -3403,9 +3403,9 @@ interface IFaxOutgoingMessage2 : IFaxOutgoingMessage
     HRESULT Refresh();
 }
 
-@GUID("a8a5b6ef-e0d6-4aee-955c-91625bec9db4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountincomingarchive
+@GUID("a8a5b6ef-e0d6-4aee-955c-91625bec9db4")
 interface IFaxAccountIncomingArchive : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-get_sizelow
@@ -3420,9 +3420,9 @@ interface IFaxAccountIncomingArchive : IDispatch
     HRESULT GetMessage(BSTR bstrMessageId, IFaxIncomingMessage* pFaxIncomingMessage);
 }
 
-@GUID("5463076d-ec14-491f-926e-b3ceda5e5662")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountoutgoingarchive
+@GUID("5463076d-ec14-491f-926e-b3ceda5e5662")
 interface IFaxAccountOutgoingArchive : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-get_sizelow
@@ -3437,9 +3437,9 @@ interface IFaxAccountOutgoingArchive : IDispatch
     HRESULT GetMessage(BSTR bstrMessageId, IFaxOutgoingMessage* pFaxOutgoingMessage);
 }
 
-@GUID("17d851f4-d09b-48fc-99c9-8f24c4db9ab1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsecurity2
+@GUID("17d851f4-d09b-48fc-99c9-8f24c4db9ab1")
 interface IFaxSecurity2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_descriptor
@@ -3458,9 +3458,9 @@ interface IFaxSecurity2 : IDispatch
     HRESULT put_InformationType(int lInformationType);
 }
 
-@GUID("f9208503-e2bc-48f3-9ec0-e6236f9b509a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessage2
+@GUID("f9208503-e2bc-48f3-9ec0-e6236f9b509a")
 interface IFaxIncomingMessage2 : IFaxIncomingMessage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_subject
@@ -3502,9 +3502,9 @@ interface IFaxServerNotify : IDispatch
 {
 }
 
-@GUID("ec9c69b9-5fe7-4805-9467-82fcd96af903")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxservernotify2
+@GUID("ec9c69b9-5fe7-4805-9467-82fcd96af903")
 interface IFaxServerNotify2 : IDispatch
 {
     HRESULT OnIncomingJobAdded(IFaxServer2 pFaxServer, BSTR bstrJobId);
@@ -3538,9 +3538,9 @@ interface IFaxServerNotify2 : IDispatch
     HRESULT OnGeneralServerConfigChanged(IFaxServer2 pFaxServer);
 }
 
-@GUID("b9b3bc81-ac1b-46f3-b39d-0adc30e1b788")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountnotify
+@GUID("b9b3bc81-ac1b-46f3-b39d-0adc30e1b788")
 interface IFaxAccountNotify : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobadded

@@ -129,8 +129,8 @@ struct DO_DOWNLOAD_ENUM_CATEGORY
 @GUID("5b99fa76-721c-423c-adac-56d03c8a8007")
 struct DeliveryOptimization;
 
-@GUID("fbbd7fc0-c147-4727-a38d-827ef071ee77")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idodownload
+@GUID("fbbd7fc0-c147-4727-a38d-827ef071ee77")
 interface IDODownload : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-start
@@ -149,16 +149,16 @@ interface IDODownload : IUnknown
     HRESULT SetProperty(DODownloadProperty propId, const(VARIANT)* propVal);
 }
 
-@GUID("d166e8e3-a90e-4392-8e87-05e996d3747d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idodownloadstatuscallback
+@GUID("d166e8e3-a90e-4392-8e87-05e996d3747d")
 interface IDODownloadStatusCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownloadstatuscallback-onstatuschange
     HRESULT OnStatusChange(IDODownload download, const(DO_DOWNLOAD_STATUS)* status);
 }
 
-@GUID("400e2d4a-1431-4c1a-a748-39ca472cfdb1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idomanager
+@GUID("400e2d4a-1431-4c1a-a748-39ca472cfdb1")
 interface IDOManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idomanager-createdownload

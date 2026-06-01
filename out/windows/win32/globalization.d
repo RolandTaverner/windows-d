@@ -9760,9 +9760,9 @@ struct CMLangConvertCharset;
 @GUID("275c23e2-3747-11d0-9fea-00aa003f8646")
 struct CMultiLanguage;
 
-@GUID("b7c82d61-fbe8-4b47-9b27-6c0d2e0de0a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellingerror
+@GUID("b7c82d61-fbe8-4b47-9b27-6c0d2e0de0a3")
 interface ISpellingError : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_startindex
@@ -9775,18 +9775,18 @@ interface ISpellingError : IUnknown
     HRESULT get_Replacement(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* value);
 }
 
-@GUID("803e3bd4-2828-4410-8290-418d1d73c762")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ienumspellingerror
+@GUID("803e3bd4-2828-4410-8290-418d1d73c762")
 interface IEnumSpellingError : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(ISpellingError* value);
 }
 
-@GUID("432e5f85-35cf-4606-a801-6f70277e1d7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ioptiondescription
+@GUID("432e5f85-35cf-4606-a801-6f70277e1d7a")
 interface IOptionDescription : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_id
@@ -9799,18 +9799,18 @@ interface IOptionDescription : IUnknown
     HRESULT get_Labels(IEnumString* value);
 }
 
-@GUID("0b83a5b0-792f-4eab-9799-acf52c5ed08a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellcheckerchangedeventhandler
+@GUID("0b83a5b0-792f-4eab-9799-acf52c5ed08a")
 interface ISpellCheckerChangedEventHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerchangedeventhandler-invoke
     HRESULT Invoke(ISpellChecker sender);
 }
 
-@GUID("b6fd0b71-e2bc-4653-8d05-f197e412770b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellchecker
+@GUID("b6fd0b71-e2bc-4653-8d05-f197e412770b")
 interface ISpellChecker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_languagetag
@@ -9843,18 +9843,18 @@ interface ISpellChecker : IUnknown
     HRESULT ComprehensiveCheck(const(PWSTR) text, IEnumSpellingError* value);
 }
 
-@GUID("e7ed1c71-87f7-4378-a840-c9200dacee47")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellchecker2
+@GUID("e7ed1c71-87f7-4378-a840-c9200dacee47")
 interface ISpellChecker2 : ISpellChecker
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker2-remove
     HRESULT Remove(const(PWSTR) word);
 }
 
-@GUID("8e018a9d-2415-4677-bf08-794ea61f94bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellcheckerfactory
+@GUID("8e018a9d-2415-4677-bf08-794ea61f94bb")
 interface ISpellCheckerFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-get_supportedlanguages
@@ -9865,9 +9865,9 @@ interface ISpellCheckerFactory : IUnknown
     HRESULT CreateSpellChecker(const(PWSTR) languageTag, ISpellChecker* value);
 }
 
-@GUID("aa176b85-0e12-4844-8e1a-eef1da77f586")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-iuserdictionariesregistrar
+@GUID("aa176b85-0e12-4844-8e1a-eef1da77f586")
 interface IUserDictionariesRegistrar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-iuserdictionariesregistrar-registeruserdictionary
@@ -9876,9 +9876,9 @@ interface IUserDictionariesRegistrar : IUnknown
     HRESULT UnregisterUserDictionary(const(PWSTR) dictionaryPath, const(PWSTR) languageTag);
 }
 
-@GUID("73e976e0-8ed4-4eb1-80d7-1be0a16b0c38")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-ispellcheckprovider
+@GUID("73e976e0-8ed4-4eb1-80d7-1be0a16b0c38")
 interface ISpellCheckProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_languagetag
@@ -9903,17 +9903,17 @@ interface ISpellCheckProvider : IUnknown
     HRESULT InitializeWordlist(WORDLIST_TYPE wordlistType, IEnumString words);
 }
 
-@GUID("0c58f8de-8e94-479e-9717-70c42c4ad2c3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-icomprehensivespellcheckprovider
+@GUID("0c58f8de-8e94-479e-9717-70c42c4ad2c3")
 interface IComprehensiveSpellCheckProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/icomprehensivespellcheckprovider-comprehensivecheck
     HRESULT ComprehensiveCheck(const(PWSTR) text, IEnumSpellingError* value);
 }
 
-@GUID("9f671e11-77d6-4c92-aefb-615215e3a4be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-ispellcheckproviderfactory
+@GUID("9f671e11-77d6-4c92-aefb-615215e3a4be")
 interface ISpellCheckProviderFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-get_supportedlanguages
@@ -9924,8 +9924,8 @@ interface ISpellCheckProviderFactory : IUnknown
     HRESULT CreateSpellCheckProvider(const(PWSTR) languageTag, ISpellCheckProvider* value);
 }
 
-@GUID("d24acd21-ba72-11d0-b188-00aa0038c969")
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+@GUID("d24acd21-ba72-11d0-b188-00aa0038c969")
 interface IMLangStringBufW : IUnknown
 {
     HRESULT GetStatus(int* plFlags, int* pcchBuf);
@@ -9935,8 +9935,8 @@ interface IMLangStringBufW : IUnknown
     HRESULT Delete(int cchOffset, int cchDelete);
 }
 
-@GUID("d24acd23-ba72-11d0-b188-00aa0038c969")
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+@GUID("d24acd23-ba72-11d0-b188-00aa0038c969")
 interface IMLangStringBufA : IUnknown
 {
     HRESULT GetStatus(int* plFlags, int* pcchBuf);

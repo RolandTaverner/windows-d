@@ -80,8 +80,8 @@ HRESULT CreatePresentationFactory(IUnknown d3dDevice, const(GUID)* riid, void** 
 
 // Interfaces
 
-@GUID("2e217d3a-5abb-4138-9a13-a775593c89ca")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentationbuffer
+@GUID("2e217d3a-5abb-4138-9a13-a775593c89ca")
 interface IPresentationBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-ipresentationbuffer-getavailableevent
@@ -90,16 +90,16 @@ interface IPresentationBuffer : IUnknown
     HRESULT IsAvailable(ubyte* isAvailable);
 }
 
-@GUID("5668bb79-3d8e-415c-b215-f38020f2d252")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentationcontent
+@GUID("5668bb79-3d8e-415c-b215-f38020f2d252")
 interface IPresentationContent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-ipresentationcontent-settag
     void SetTag(size_t tag);
 }
 
-@GUID("956710fb-ea40-4eba-a3eb-4375a0eb4edc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentationsurface
+@GUID("956710fb-ea40-4eba-a3eb-4375a0eb4edc")
 interface IPresentationSurface : IPresentationContent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-ipresentationsurface-setbuffer
@@ -127,8 +127,8 @@ interface IPresentationSurface2 : IPresentationSurface
     void SetIsHdrContent(ubyte isHdrContent);
 }
 
-@GUID("b44b8bda-7282-495d-9dd7-ceadd8b4bb86")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentstatistics
+@GUID("b44b8bda-7282-495d-9dd7-ceadd8b4bb86")
 interface IPresentStatistics : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-ipresentstatistics-getpresentid
@@ -137,8 +137,8 @@ interface IPresentStatistics : IUnknown
     PresentStatisticsKind GetKind();
 }
 
-@GUID("fb562f82-6292-470a-88b1-843661e7f20c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentationmanager
+@GUID("fb562f82-6292-470a-88b1-843661e7f20c")
 interface IPresentationManager : IUnknown
 {
     HRESULT AddBufferFromResource(IUnknown resource, IPresentationBuffer* presentationBuffer);
@@ -169,8 +169,8 @@ interface IPresentationManager : IUnknown
     HRESULT GetNextPresentStatistics(IPresentStatistics* nextPresentStatistics);
 }
 
-@GUID("8fb37b58-1d74-4f64-a49c-1f97a80a2ec0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentationfactory
+@GUID("8fb37b58-1d74-4f64-a49c-1f97a80a2ec0")
 interface IPresentationFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-ipresentationfactory-ispresentationsupported
@@ -186,8 +186,8 @@ interface IPresentationFactory_SupportHdrAware : IUnknown
 {
 }
 
-@GUID("c9ed2a41-79cb-435e-964e-c8553055420c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-ipresentstatuspresentstatistics
+@GUID("c9ed2a41-79cb-435e-964e-c8553055420c")
 interface IPresentStatusPresentStatistics : IPresentStatistics
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-ipresentstatuspresentstatistics-getcompositionframeid
@@ -196,8 +196,8 @@ interface IPresentStatusPresentStatistics : IPresentStatistics
     PresentStatus GetPresentStatus();
 }
 
-@GUID("ab41d127-c101-4c0a-911d-f9f2e9d08e64")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-icompositionframepresentstatistics
+@GUID("ab41d127-c101-4c0a-911d-f9f2e9d08e64")
 interface ICompositionFramePresentStatistics : IPresentStatistics
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-icompositionframepresentstatistics-getcontenttag
@@ -209,8 +209,8 @@ interface ICompositionFramePresentStatistics : IPresentStatistics
                                    const(CompositionFrameDisplayInstance)** displayInstanceArray);
 }
 
-@GUID("8c93be27-ad94-4da0-8fd4-2413132d124e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nn-presentation-iindependentflipframepresentstatistics
+@GUID("8c93be27-ad94-4da0-8fd4-2413132d124e")
 interface IIndependentFlipFramePresentStatistics : IPresentStatistics
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/presentation/nf-presentation-iindependentflipframepresentstatistics-getoutputadapterluid

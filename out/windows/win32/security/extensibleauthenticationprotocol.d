@@ -1494,9 +1494,9 @@ interface IAccountingProviderConfig : IUnknown
     HRESULT Deactivate(size_t uConnectionParam, size_t uReserved1, size_t uReserved2);
 }
 
-@GUID("66a2db19-d706-11d0-a37b-00c04fc9da04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nn-rrascfg-ieapproviderconfig
+@GUID("66a2db19-d706-11d0-a37b-00c04fc9da04")
 interface IEAPProviderConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-initialize

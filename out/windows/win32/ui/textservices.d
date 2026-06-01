@@ -1257,9 +1257,9 @@ struct AccClientDocMgr;
 @GUID("bf426f7e-7a5e-44d6-830c-a390ea9462a3")
 struct DocWrap;
 
-@GUID("28888fe3-c2a0-483a-a3ea-8cb1ce51ff3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nn-textstor-itextstoreacp
+@GUID("28888fe3-c2a0-483a-a3ea-8cb1ce51ff3d")
 interface ITextStoreACP : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nf-textstor-itextstoreacp-advisesink
@@ -1321,9 +1321,9 @@ interface ITextStoreACP : IUnknown
     HRESULT GetWnd(uint vcView, HWND* phwnd);
 }
 
-@GUID("f86ad89f-5fe4-4b8d-bb9f-ef3797a84f1f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nn-textstor-itextstoreacp2
+@GUID("f86ad89f-5fe4-4b8d-bb9f-ef3797a84f1f")
 interface ITextStoreACP2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nf-textstor-itextstoreacp2-advisesink
@@ -1383,9 +1383,9 @@ interface ITextStoreACP2 : IUnknown
     HRESULT GetScreenExt(uint vcView, RECT* prc);
 }
 
-@GUID("22d44c94-a419-4542-a272-ae26093ececf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nn-textstor-itextstoreacpsink
+@GUID("22d44c94-a419-4542-a272-ae26093ececf")
 interface ITextStoreACPSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nf-textstor-itextstoreacpsink-ontextchange
@@ -1406,9 +1406,9 @@ interface ITextStoreACPSink : IUnknown
     HRESULT OnEndEditTransaction();
 }
 
-@GUID("0feb7e34-5a60-4356-8ef7-abdec2ff7cf8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nn-textstor-ianchor
+@GUID("0feb7e34-5a60-4356-8ef7-abdec2ff7cf8")
 interface IAnchor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nf-textstor-ianchor-setgravity
@@ -1435,9 +1435,9 @@ interface IAnchor : IUnknown
     HRESULT Clone(IAnchor* ppaClone);
 }
 
-@GUID("9b2077b0-5f18-4dec-bee9-3cc722f5dfe0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nn-textstor-itextstoreanchor
+@GUID("9b2077b0-5f18-4dec-bee9-3cc722f5dfe0")
 interface ITextStoreAnchor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nf-textstor-itextstoreanchor-advisesink
@@ -1500,9 +1500,9 @@ interface ITextStoreAnchor : IUnknown
     HRESULT InsertEmbeddedAtSelection(uint dwFlags, IDataObject pDataObject, IAnchor* ppaStart, IAnchor* ppaEnd);
 }
 
-@GUID("aa80e905-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nn-textstor-itextstoreanchorsink
+@GUID("aa80e905-2021-11d2-93e0-0060b067b86e")
 interface ITextStoreAnchorSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textstor/nf-textstor-itextstoreanchorsink-ontextchange
@@ -1523,9 +1523,9 @@ interface ITextStoreAnchorSink : IUnknown
     HRESULT OnEndEditTransaction();
 }
 
-@GUID("87955690-e627-11d2-8ddb-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbarmgr
+@GUID("87955690-e627-11d2-8ddb-00105a2799b5")
 interface ITfLangBarMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbarmgr-adviseeventsink
@@ -1548,9 +1548,9 @@ interface ITfLangBarMgr : IUnknown
     HRESULT GetShowFloatingStatus(uint* pdwFlags);
 }
 
-@GUID("18a4e900-e0ae-11d2-afdd-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbareventsink
+@GUID("18a4e900-e0ae-11d2-afdd-00105a2799b5")
 interface ITfLangBarEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbareventsink-onsetfocus
@@ -1567,18 +1567,18 @@ interface ITfLangBarEventSink : IUnknown
     HRESULT GetItemFloatingRect(uint dwThreadId, const(GUID)* rguid, RECT* prc);
 }
 
-@GUID("57dbe1a0-de25-11d2-afdd-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritemsink
+@GUID("57dbe1a0-de25-11d2-afdd-00105a2799b5")
 interface ITfLangBarItemSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritemsink-onupdate
     HRESULT OnUpdate(uint dwFlags);
 }
 
-@GUID("583f34d0-de25-11d2-afdd-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-ienumtflangbaritems
+@GUID("583f34d0-de25-11d2-afdd-00105a2799b5")
 interface IEnumTfLangBarItems : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-ienumtflangbaritems-clone
@@ -1591,9 +1591,9 @@ interface IEnumTfLangBarItems : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("ba468c55-9956-4fb1-a59d-52a7dd7cc6aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritemmgr
+@GUID("ba468c55-9956-4fb1-a59d-52a7dd7cc6aa")
 interface ITfLangBarItemMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritemmgr-enumitems
@@ -1623,9 +1623,9 @@ interface ITfLangBarItemMgr : IUnknown
     HRESULT UnadviseItemsSink(uint ulCount, uint* pdwCookie);
 }
 
-@GUID("73540d69-edeb-4ee9-96c9-23aa30b25916")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritem
+@GUID("73540d69-edeb-4ee9-96c9-23aa30b25916")
 interface ITfLangBarItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritem-getinfo
@@ -1638,9 +1638,9 @@ interface ITfLangBarItem : IUnknown
     HRESULT GetTooltipString(BSTR* pbstrToolTip);
 }
 
-@GUID("1449d9ab-13cf-4687-aa3e-8d8b18574396")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itfsystemlangbaritemsink
+@GUID("1449d9ab-13cf-4687-aa3e-8d8b18574396")
 interface ITfSystemLangBarItemSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itfsystemlangbaritemsink-initmenu
@@ -1649,9 +1649,9 @@ interface ITfSystemLangBarItemSink : IUnknown
     HRESULT OnMenuSelect(uint wID);
 }
 
-@GUID("1e13e9ec-6b33-4d4a-b5eb-8a92f029f356")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itfsystemlangbaritem
+@GUID("1e13e9ec-6b33-4d4a-b5eb-8a92f029f356")
 interface ITfSystemLangBarItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itfsystemlangbaritem-seticon
@@ -1660,9 +1660,9 @@ interface ITfSystemLangBarItem : IUnknown
     HRESULT SetTooltipString(PWSTR pchToolTip, uint cch);
 }
 
-@GUID("5c4ce0e5-ba49-4b52-ac6b-3b397b4f701f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itfsystemlangbaritemtext
+@GUID("5c4ce0e5-ba49-4b52-ac6b-3b397b4f701f")
 interface ITfSystemLangBarItemText : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itfsystemlangbaritemtext-setitemtext
@@ -1671,9 +1671,9 @@ interface ITfSystemLangBarItemText : IUnknown
     HRESULT GetItemText(BSTR* pbstrText);
 }
 
-@GUID("45672eb9-9059-46a2-838d-4530355f6a77")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itfsystemdevicetypelangbaritem
+@GUID("45672eb9-9059-46a2-838d-4530355f6a77")
 interface ITfSystemDeviceTypeLangBarItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itfsystemdevicetypelangbaritem-seticonmode
@@ -1682,9 +1682,9 @@ interface ITfSystemDeviceTypeLangBarItem : IUnknown
     HRESULT GetIconMode(uint* pdwFlags);
 }
 
-@GUID("28c7f1d0-de25-11d2-afdd-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritembutton
+@GUID("28c7f1d0-de25-11d2-afdd-00105a2799b5")
 interface ITfLangBarItemButton : ITfLangBarItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritembutton-onclick
@@ -1699,9 +1699,9 @@ interface ITfLangBarItemButton : ITfLangBarItem
     HRESULT GetText(BSTR* pbstrText);
 }
 
-@GUID("a26a0525-3fae-4fa0-89ee-88a964f9f1b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritembitmapbutton
+@GUID("a26a0525-3fae-4fa0-89ee-88a964f9f1b5")
 interface ITfLangBarItemBitmapButton : ITfLangBarItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritembitmapbutton-onclick
@@ -1718,9 +1718,9 @@ interface ITfLangBarItemBitmapButton : ITfLangBarItem
     HRESULT GetText(BSTR* pbstrText);
 }
 
-@GUID("73830352-d722-4179-ada5-f045c98df355")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritembitmap
+@GUID("73830352-d722-4179-ada5-f045c98df355")
 interface ITfLangBarItemBitmap : ITfLangBarItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritembitmap-onclick
@@ -1731,9 +1731,9 @@ interface ITfLangBarItemBitmap : ITfLangBarItem
     HRESULT DrawBitmap(int bmWidth, int bmHeight, uint dwFlags, HBITMAP* phbmp, HBITMAP* phbmpMask);
 }
 
-@GUID("01c2d285-d3c7-4b7b-b5b5-d97411d0c283")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itflangbaritemballoon
+@GUID("01c2d285-d3c7-4b7b-b5b5-d97411d0c283")
 interface ITfLangBarItemBalloon : ITfLangBarItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itflangbaritemballoon-onclick
@@ -1744,9 +1744,9 @@ interface ITfLangBarItemBalloon : ITfLangBarItem
     HRESULT GetBalloonInfo(TF_LBBALLOONINFO* pInfo);
 }
 
-@GUID("6f8a98e4-aaa0-4f15-8c5b-07e0df0a3dd8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nn-ctfutb-itfmenu
+@GUID("6f8a98e4-aaa0-4f15-8c5b-07e0df0a3dd8")
 interface ITfMenu : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfutb/nf-ctfutb-itfmenu-addmenuitem
@@ -1754,9 +1754,9 @@ interface ITfMenu : IUnknown
                         ITfMenu* ppMenu);
 }
 
-@GUID("aa80e801-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfthreadmgr
+@GUID("aa80e801-2021-11d2-93e0-0060b067b86e")
 interface ITfThreadMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfthreadmgr-activate
@@ -1783,9 +1783,9 @@ interface ITfThreadMgr : IUnknown
     HRESULT GetGlobalCompartment(ITfCompartmentMgr* ppCompMgr);
 }
 
-@GUID("3e90ade3-7594-4cb0-bb58-69628f5f458c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfthreadmgrex
+@GUID("3e90ade3-7594-4cb0-bb58-69628f5f458c")
 interface ITfThreadMgrEx : ITfThreadMgr
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfthreadmgrex-activateex
@@ -1794,9 +1794,9 @@ interface ITfThreadMgrEx : ITfThreadMgr
     HRESULT GetActiveFlags(uint* lpdwFlags);
 }
 
-@GUID("0ab198ef-6477-4ee8-8812-6780edb82d5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfthreadmgr2
+@GUID("0ab198ef-6477-4ee8-8812-6780edb82d5e")
 interface ITfThreadMgr2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfthreadmgr2-activate
@@ -1829,9 +1829,9 @@ interface ITfThreadMgr2 : IUnknown
     HRESULT ResumeKeystrokeHandling();
 }
 
-@GUID("aa80e80e-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfthreadmgreventsink
+@GUID("aa80e80e-2021-11d2-93e0-0060b067b86e")
 interface ITfThreadMgrEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfthreadmgreventsink-oninitdocumentmgr
@@ -1846,9 +1846,9 @@ interface ITfThreadMgrEventSink : IUnknown
     HRESULT OnPopContext(ITfContext pic);
 }
 
-@GUID("0d2c969a-bc9c-437c-84ee-951c49b1a764")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfconfiguresystemkeystrokefeed
+@GUID("0d2c969a-bc9c-437c-84ee-951c49b1a764")
 interface ITfConfigureSystemKeystrokeFeed : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfconfiguresystemkeystrokefeed-disablesystemkeystrokefeed
@@ -1857,9 +1857,9 @@ interface ITfConfigureSystemKeystrokeFeed : IUnknown
     HRESULT EnableSystemKeystrokeFeed();
 }
 
-@GUID("aa80e808-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfdocumentmgrs
+@GUID("aa80e808-2021-11d2-93e0-0060b067b86e")
 interface IEnumTfDocumentMgrs : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfdocumentmgrs-clone
@@ -1872,9 +1872,9 @@ interface IEnumTfDocumentMgrs : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("aa80e7f4-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfdocumentmgr
+@GUID("aa80e7f4-2021-11d2-93e0-0060b067b86e")
 interface ITfDocumentMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfdocumentmgr-createcontext
@@ -1891,9 +1891,9 @@ interface ITfDocumentMgr : IUnknown
     HRESULT EnumContexts(IEnumTfContexts* ppEnum);
 }
 
-@GUID("8f1a7ea6-1654-4502-a86e-b2902344d507")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfcontexts
+@GUID("8f1a7ea6-1654-4502-a86e-b2902344d507")
 interface IEnumTfContexts : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfcontexts-clone
@@ -1906,9 +1906,9 @@ interface IEnumTfContexts : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("d7540241-f9a1-4364-befc-dbcd2c4395b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcompositionview
+@GUID("d7540241-f9a1-4364-befc-dbcd2c4395b7")
 interface ITfCompositionView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcompositionview-getownerclsid
@@ -1917,9 +1917,9 @@ interface ITfCompositionView : IUnknown
     HRESULT GetRange(ITfRange* ppRange);
 }
 
-@GUID("5efd22ba-7838-46cb-88e2-cadb14124f8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumitfcompositionview
+@GUID("5efd22ba-7838-46cb-88e2-cadb14124f8f")
 interface IEnumITfCompositionView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumitfcompositionview-clone
@@ -1932,9 +1932,9 @@ interface IEnumITfCompositionView : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("20168d64-5a8f-4a5a-b7bd-cfa29f4d0fd9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcomposition
+@GUID("20168d64-5a8f-4a5a-b7bd-cfa29f4d0fd9")
 interface ITfComposition : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcomposition-getrange
@@ -1947,18 +1947,18 @@ interface ITfComposition : IUnknown
     HRESULT EndComposition(uint ecWrite);
 }
 
-@GUID("a781718c-579a-4b15-a280-32b8577acc5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcompositionsink
+@GUID("a781718c-579a-4b15-a280-32b8577acc5e")
 interface ITfCompositionSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcompositionsink-oncompositionterminated
     HRESULT OnCompositionTerminated(uint ecWrite, ITfComposition pComposition);
 }
 
-@GUID("d40c8aae-ac92-4fc7-9a11-0ee0e23aa39b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextcomposition
+@GUID("d40c8aae-ac92-4fc7-9a11-0ee0e23aa39b")
 interface ITfContextComposition : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextcomposition-startcomposition
@@ -1973,18 +1973,18 @@ interface ITfContextComposition : IUnknown
                           ITfComposition* ppComposition);
 }
 
-@GUID("86462810-593b-4916-9764-19c08e9ce110")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextownercompositionservices
+@GUID("86462810-593b-4916-9764-19c08e9ce110")
 interface ITfContextOwnerCompositionServices : ITfContextComposition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextownercompositionservices-terminatecomposition
     HRESULT TerminateComposition(ITfCompositionView pComposition);
 }
 
-@GUID("5f20aa40-b57a-4f34-96ab-3576f377cc79")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextownercompositionsink
+@GUID("5f20aa40-b57a-4f34-96ab-3576f377cc79")
 interface ITfContextOwnerCompositionSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextownercompositionsink-onstartcomposition
@@ -1995,9 +1995,9 @@ interface ITfContextOwnerCompositionSink : IUnknown
     HRESULT OnEndComposition(ITfCompositionView pComposition);
 }
 
-@GUID("2433bf8e-0f9b-435c-ba2c-180611978c30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextview
+@GUID("2433bf8e-0f9b-435c-ba2c-180611978c30")
 interface ITfContextView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextview-getrangefrompoint
@@ -2010,8 +2010,8 @@ interface ITfContextView : IUnknown
     HRESULT GetWnd(HWND* phwnd);
 }
 
-@GUID("f0c0f8dd-cf38-44e1-bb0f-68cf0d551c78")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfcontextviews
+@GUID("f0c0f8dd-cf38-44e1-bb0f-68cf0d551c78")
 interface IEnumTfContextViews : IUnknown
 {
     HRESULT Clone(IEnumTfContextViews* ppEnum);
@@ -2020,9 +2020,9 @@ interface IEnumTfContextViews : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("aa80e7fd-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontext
+@GUID("aa80e7fd-2021-11d2-93e0-0060b067b86e")
 interface ITfContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontext-requesteditsession
@@ -2058,18 +2058,18 @@ interface ITfContext : IUnknown
     HRESULT CreateRangeBackup(uint ec, ITfRange pRange, ITfRangeBackup* ppBackup);
 }
 
-@GUID("0fab9bdb-d250-4169-84e5-6be118fdd7a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfqueryembedded
+@GUID("0fab9bdb-d250-4169-84e5-6be118fdd7a8")
 interface ITfQueryEmbedded : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfqueryembedded-queryinsertembedded
     HRESULT QueryInsertEmbedded(const(GUID)* pguidService, const(FORMATETC)* pFormatEtc, BOOL* pfInsertable);
 }
 
-@GUID("55ce16ba-3014-41c1-9ceb-fade1446ac6c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfinsertatselection
+@GUID("55ce16ba-3014-41c1-9ceb-fade1446ac6c")
 interface ITfInsertAtSelection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfinsertatselection-inserttextatselection
@@ -2079,18 +2079,18 @@ interface ITfInsertAtSelection : IUnknown
     HRESULT InsertEmbeddedAtSelection(uint ec, uint dwFlags, IDataObject pDataObject, ITfRange* ppRange);
 }
 
-@GUID("01689689-7acb-4e9b-ab7c-7ea46b12b522")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcleanupcontextsink
+@GUID("01689689-7acb-4e9b-ab7c-7ea46b12b522")
 interface ITfCleanupContextSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcleanupcontextsink-oncleanupcontext
     HRESULT OnCleanupContext(uint ecWrite, ITfContext pic);
 }
 
-@GUID("45c35144-154e-4797-bed8-d33ae7bf8794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcleanupcontextdurationsink
+@GUID("45c35144-154e-4797-bed8-d33ae7bf8794")
 interface ITfCleanupContextDurationSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcleanupcontextdurationsink-onstartcleanupcontext
@@ -2099,9 +2099,9 @@ interface ITfCleanupContextDurationSink : IUnknown
     HRESULT OnEndCleanupContext();
 }
 
-@GUID("17d49a3d-f8b8-4b2f-b254-52319dd64c53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfreadonlyproperty
+@GUID("17d49a3d-f8b8-4b2f-b254-52319dd64c53")
 interface ITfReadOnlyProperty : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfreadonlyproperty-gettype
@@ -2114,9 +2114,9 @@ interface ITfReadOnlyProperty : IUnknown
     HRESULT GetContext(ITfContext* ppContext);
 }
 
-@GUID("8ed8981b-7c10-4d7d-9fb3-ab72e9c75f72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfpropertyvalue
+@GUID("8ed8981b-7c10-4d7d-9fb3-ab72e9c75f72")
 interface IEnumTfPropertyValue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfpropertyvalue-clone
@@ -2129,9 +2129,9 @@ interface IEnumTfPropertyValue : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("09d146cd-a544-4132-925b-7afa8ef322d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfmousetracker
+@GUID("09d146cd-a544-4132-925b-7afa8ef322d0")
 interface ITfMouseTracker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfmousetracker-advisemousesink
@@ -2140,9 +2140,9 @@ interface ITfMouseTracker : IUnknown
     HRESULT UnadviseMouseSink(uint dwCookie);
 }
 
-@GUID("3bdd78e2-c16e-47fd-b883-ce6facc1a208")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfmousetrackeracp
+@GUID("3bdd78e2-c16e-47fd-b883-ce6facc1a208")
 interface ITfMouseTrackerACP : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfmousetrackeracp-advisemousesink
@@ -2151,18 +2151,18 @@ interface ITfMouseTrackerACP : IUnknown
     HRESULT UnadviseMouseSink(uint dwCookie);
 }
 
-@GUID("a1adaaa2-3a24-449d-ac96-5183e7f5c217")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfmousesink
+@GUID("a1adaaa2-3a24-449d-ac96-5183e7f5c217")
 interface ITfMouseSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfmousesink-onmouseevent
     HRESULT OnMouseEvent(uint uEdge, uint uQuadrant, uint dwBtnStatus, BOOL* pfEaten);
 }
 
-@GUID("42d4d099-7c1a-4a89-b836-6c6f22160df0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfeditrecord
+@GUID("42d4d099-7c1a-4a89-b836-6c6f22160df0")
 interface ITfEditRecord : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfeditrecord-getselectionstatus
@@ -2172,36 +2172,36 @@ interface ITfEditRecord : IUnknown
                                       uint cProperties, IEnumTfRanges* ppEnum);
 }
 
-@GUID("8127d409-ccd3-4683-967a-b43d5b482bf7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftexteditsink
+@GUID("8127d409-ccd3-4683-967a-b43d5b482bf7")
 interface ITfTextEditSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftexteditsink-onendedit
     HRESULT OnEndEdit(ITfContext pic, uint ecReadOnly, ITfEditRecord pEditRecord);
 }
 
-@GUID("2af2d06a-dd5b-4927-a0b4-54f19c91fade")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftextlayoutsink
+@GUID("2af2d06a-dd5b-4927-a0b4-54f19c91fade")
 interface ITfTextLayoutSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftextlayoutsink-onlayoutchange
     HRESULT OnLayoutChange(ITfContext pic, TfLayoutCode lcode, ITfContextView pView);
 }
 
-@GUID("6b7d8d73-b267-4f69-b32e-1ca321ce4f45")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfstatussink
+@GUID("6b7d8d73-b267-4f69-b32e-1ca321ce4f45")
 interface ITfStatusSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfstatussink-onstatuschange
     HRESULT OnStatusChange(ITfContext pic, uint dwFlags);
 }
 
-@GUID("708fbf70-b520-416b-b06c-2c41ab44f8ba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfedittransactionsink
+@GUID("708fbf70-b520-416b-b06c-2c41ab44f8ba")
 interface ITfEditTransactionSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfedittransactionsink-onstartedittransaction
@@ -2210,9 +2210,9 @@ interface ITfEditTransactionSink : IUnknown
     HRESULT OnEndEditTransaction(ITfContext pic);
 }
 
-@GUID("aa80e80c-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextowner
+@GUID("aa80e80c-2021-11d2-93e0-0060b067b86e")
 interface ITfContextOwner : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextowner-getacpfrompoint
@@ -2229,9 +2229,9 @@ interface ITfContextOwner : IUnknown
     HRESULT GetAttribute(const(GUID)* rguidAttribute, VARIANT* pvarValue);
 }
 
-@GUID("b23eb630-3e1c-11d3-a745-0050040ab407")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextownerservices
+@GUID("b23eb630-3e1c-11d3-a745-0050040ab407")
 interface ITfContextOwnerServices : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextownerservices-onlayoutchange
@@ -2251,9 +2251,9 @@ interface ITfContextOwnerServices : IUnknown
     HRESULT CreateRange(int acpStart, int acpEnd, ITfRangeACP* ppRange);
 }
 
-@GUID("0552ba5d-c835-4934-bf50-846aaa67432f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcontextkeyeventsink
+@GUID("0552ba5d-c835-4934-bf50-846aaa67432f")
 interface ITfContextKeyEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcontextkeyeventsink-onkeydown
@@ -2266,18 +2266,18 @@ interface ITfContextKeyEventSink : IUnknown
     HRESULT OnTestKeyUp(WPARAM wParam, LPARAM lParam, BOOL* pfEaten);
 }
 
-@GUID("aa80e803-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfeditsession
+@GUID("aa80e803-2021-11d2-93e0-0060b067b86e")
 interface ITfEditSession : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfeditsession-doeditsession
     HRESULT DoEditSession(uint ec);
 }
 
-@GUID("aa80e7ff-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfrange
+@GUID("aa80e7ff-2021-11d2-93e0-0060b067b86e")
 interface ITfRange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfrange-gettext
@@ -2326,9 +2326,9 @@ interface ITfRange : IUnknown
     HRESULT GetContext(ITfContext* ppContext);
 }
 
-@GUID("057a6296-029b-4154-b79a-0d461d4ea94c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfrangeacp
+@GUID("057a6296-029b-4154-b79a-0d461d4ea94c")
 interface ITfRangeACP : ITfRange
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfrangeacp-getextent
@@ -2337,9 +2337,9 @@ interface ITfRangeACP : ITfRange
     HRESULT SetExtent(int acpAnchor, int cch);
 }
 
-@GUID("aa80e901-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itextstoreacpservices
+@GUID("aa80e901-2021-11d2-93e0-0060b067b86e")
 interface ITextStoreACPServices : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itextstoreacpservices-serialize
@@ -2353,18 +2353,18 @@ interface ITextStoreACPServices : IUnknown
     HRESULT CreateRange(int acpStart, int acpEnd, ITfRangeACP* ppRange);
 }
 
-@GUID("463a506d-6992-49d2-9b88-93d55e70bb16")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfrangebackup
+@GUID("463a506d-6992-49d2-9b88-93d55e70bb16")
 interface ITfRangeBackup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfrangebackup-restore
     HRESULT Restore(uint ec, ITfRange pRange);
 }
 
-@GUID("6834b120-88cb-11d2-bf45-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfpropertystore
+@GUID("6834b120-88cb-11d2-bf45-00105a2799b5")
 interface ITfPropertyStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfpropertystore-gettype
@@ -2387,9 +2387,9 @@ interface ITfPropertyStore : IUnknown
     HRESULT Serialize(IStream pStream, uint* pcb);
 }
 
-@GUID("f99d3f40-8e32-11d2-bf46-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfranges
+@GUID("f99d3f40-8e32-11d2-bf46-00105a2799b5")
 interface IEnumTfRanges : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfranges-clone
@@ -2402,9 +2402,9 @@ interface IEnumTfRanges : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("2463fbf0-b0af-11d2-afc5-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcreatepropertystore
+@GUID("2463fbf0-b0af-11d2-afc5-00105a2799b5")
 interface ITfCreatePropertyStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcreatepropertystore-isstoreserializable
@@ -2415,18 +2415,18 @@ interface ITfCreatePropertyStore : IUnknown
                                 ITfPropertyStore* ppStore);
 }
 
-@GUID("4ef89150-0807-11d3-8df0-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfpersistentpropertyloaderacp
+@GUID("4ef89150-0807-11d3-8df0-00105a2799b5")
 interface ITfPersistentPropertyLoaderACP : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfpersistentpropertyloaderacp-loadproperty
     HRESULT LoadProperty(const(TF_PERSISTENT_PROPERTY_HEADER_ACP)* pHdr, IStream* ppStream);
 }
 
-@GUID("e2449660-9542-11d2-bf46-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfproperty
+@GUID("e2449660-9542-11d2-bf46-00105a2799b5")
 interface ITfProperty : ITfReadOnlyProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfproperty-findrange
@@ -2439,9 +2439,9 @@ interface ITfProperty : ITfReadOnlyProperty
     HRESULT Clear(uint ec, ITfRange pRange);
 }
 
-@GUID("19188cb0-aca9-11d2-afc5-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfproperties
+@GUID("19188cb0-aca9-11d2-afc5-00105a2799b5")
 interface IEnumTfProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfproperties-clone
@@ -2454,9 +2454,9 @@ interface IEnumTfProperties : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("bb08f7a9-607a-4384-8623-056892b64371")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcompartment
+@GUID("bb08f7a9-607a-4384-8623-056892b64371")
 interface ITfCompartment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcompartment-setvalue
@@ -2465,18 +2465,18 @@ interface ITfCompartment : IUnknown
     HRESULT GetValue(VARIANT* pvarValue);
 }
 
-@GUID("743abd5f-f26d-48df-8cc5-238492419b64")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcompartmenteventsink
+@GUID("743abd5f-f26d-48df-8cc5-238492419b64")
 interface ITfCompartmentEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcompartmenteventsink-onchange
     HRESULT OnChange(const(GUID)* rguid);
 }
 
-@GUID("7dcf57ac-18ad-438b-824d-979bffb74b7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcompartmentmgr
+@GUID("7dcf57ac-18ad-438b-824d-979bffb74b7c")
 interface ITfCompartmentMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcompartmentmgr-getcompartment
@@ -2487,18 +2487,18 @@ interface ITfCompartmentMgr : IUnknown
     HRESULT EnumCompartments(IEnumGUID* ppEnum);
 }
 
-@GUID("db593490-098f-11d3-8df0-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itffunction
+@GUID("db593490-098f-11d3-8df0-00105a2799b5")
 interface ITfFunction : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itffunction-getdisplayname
     HRESULT GetDisplayName(BSTR* pbstrName);
 }
 
-@GUID("101d6610-0990-11d3-8df0-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itffunctionprovider
+@GUID("101d6610-0990-11d3-8df0-00105a2799b5")
 interface ITfFunctionProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itffunctionprovider-gettype
@@ -2509,9 +2509,9 @@ interface ITfFunctionProvider : IUnknown
     HRESULT GetFunction(const(GUID)* rguid, const(GUID)* riid, IUnknown* ppunk);
 }
 
-@GUID("e4b24db0-0990-11d3-8df0-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtffunctionproviders
+@GUID("e4b24db0-0990-11d3-8df0-00105a2799b5")
 interface IEnumTfFunctionProviders : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtffunctionproviders-clone
@@ -2524,9 +2524,9 @@ interface IEnumTfFunctionProviders : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("1f02b6c5-7842-4ee6-8a0b-9a24183a95ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfinputprocessorprofiles
+@GUID("1f02b6c5-7842-4ee6-8a0b-9a24183a95ca")
 interface ITfInputProcessorProfiles : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfinputprocessorprofiles-register
@@ -2570,9 +2570,9 @@ interface ITfInputProcessorProfiles : IUnknown
     HRESULT SubstituteKeyboardLayout(const(GUID)* rclsid, ushort langid, const(GUID)* guidProfile, HKL hKL);
 }
 
-@GUID("892f230f-fe00-4a41-a98e-fcd6de0d35ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfinputprocessorprofilesex
+@GUID("892f230f-fe00-4a41-a98e-fcd6de0d35ef")
 interface ITfInputProcessorProfilesEx : ITfInputProcessorProfiles
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfinputprocessorprofilesex-setlanguageprofiledisplayname
@@ -2580,27 +2580,27 @@ interface ITfInputProcessorProfilesEx : ITfInputProcessorProfiles
                                           const(PWSTR) pchFile, uint cchFile, uint uResId);
 }
 
-@GUID("4fd67194-1002-4513-bff2-c0ddf6258552")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfinputprocessorprofilesubstitutelayout
+@GUID("4fd67194-1002-4513-bff2-c0ddf6258552")
 interface ITfInputProcessorProfileSubstituteLayout : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfinputprocessorprofilesubstitutelayout-getsubstitutekeyboardlayout
     HRESULT GetSubstituteKeyboardLayout(const(GUID)* rclsid, ushort langid, const(GUID)* guidProfile, HKL* phKL);
 }
 
-@GUID("b246cb75-a93e-4652-bf8c-b3fe0cfd7e57")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfactivelanguageprofilenotifysink
+@GUID("b246cb75-a93e-4652-bf8c-b3fe0cfd7e57")
 interface ITfActiveLanguageProfileNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfactivelanguageprofilenotifysink-onactivated
     HRESULT OnActivated(const(GUID)* clsid, const(GUID)* guidProfile, BOOL fActivated);
 }
 
-@GUID("3d61bf11-ac5f-42c8-a4cb-931bcc28c744")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtflanguageprofiles
+@GUID("3d61bf11-ac5f-42c8-a4cb-931bcc28c744")
 interface IEnumTfLanguageProfiles : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtflanguageprofiles-clone
@@ -2613,9 +2613,9 @@ interface IEnumTfLanguageProfiles : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("43c9fe15-f494-4c17-9de2-b8a4ac350aa8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itflanguageprofilenotifysink
+@GUID("43c9fe15-f494-4c17-9de2-b8a4ac350aa8")
 interface ITfLanguageProfileNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itflanguageprofilenotifysink-onlanguagechange
@@ -2624,9 +2624,9 @@ interface ITfLanguageProfileNotifySink : IUnknown
     HRESULT OnLanguageChanged();
 }
 
-@GUID("71c6e74c-0f28-11d8-a82a-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfinputprocessorprofilemgr
+@GUID("71c6e74c-0f28-11d8-a82a-00065b84435c")
 interface ITfInputProcessorProfileMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfinputprocessorprofilemgr-activateprofile
@@ -2652,9 +2652,9 @@ interface ITfInputProcessorProfileMgr : IUnknown
     HRESULT GetActiveProfile(const(GUID)* catid, TF_INPUTPROCESSORPROFILE* pProfile);
 }
 
-@GUID("71c6e74d-0f28-11d8-a82a-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfinputprocessorprofiles
+@GUID("71c6e74d-0f28-11d8-a82a-00065b84435c")
 interface IEnumTfInputProcessorProfiles : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfinputprocessorprofiles-clone
@@ -2667,9 +2667,9 @@ interface IEnumTfInputProcessorProfiles : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("71c6e74e-0f28-11d8-a82a-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfinputprocessorprofileactivationsink
+@GUID("71c6e74e-0f28-11d8-a82a-00065b84435c")
 interface ITfInputProcessorProfileActivationSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfinputprocessorprofileactivationsink-onactivated
@@ -2677,9 +2677,9 @@ interface ITfInputProcessorProfileActivationSink : IUnknown
                         const(GUID)* guidProfile, HKL hkl, uint dwFlags);
 }
 
-@GUID("aa80e7f0-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfkeystrokemgr
+@GUID("aa80e7f0-2021-11d2-93e0-0060b067b86e")
 interface ITfKeystrokeMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfkeystrokemgr-advisekeyeventsink
@@ -2713,9 +2713,9 @@ interface ITfKeystrokeMgr : IUnknown
     HRESULT SimulatePreservedKey(ITfContext pic, const(GUID)* rguid, BOOL* pfEaten);
 }
 
-@GUID("aa80e7f5-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfkeyeventsink
+@GUID("aa80e7f5-2021-11d2-93e0-0060b067b86e")
 interface ITfKeyEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfkeyeventsink-onsetfocus
@@ -2732,9 +2732,9 @@ interface ITfKeyEventSink : IUnknown
     HRESULT OnPreservedKey(ITfContext pic, const(GUID)* rguid, BOOL* pfEaten);
 }
 
-@GUID("1cd4c13b-1c36-4191-a70a-7f3e611f367d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfkeytraceeventsink
+@GUID("1cd4c13b-1c36-4191-a70a-7f3e611f367d")
 interface ITfKeyTraceEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfkeytraceeventsink-onkeytracedown
@@ -2743,18 +2743,18 @@ interface ITfKeyTraceEventSink : IUnknown
     HRESULT OnKeyTraceUp(WPARAM wParam, LPARAM lParam);
 }
 
-@GUID("6f77c993-d2b1-446e-853e-5912efc8a286")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfpreservedkeynotifysink
+@GUID("6f77c993-d2b1-446e-853e-5912efc8a286")
 interface ITfPreservedKeyNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfpreservedkeynotifysink-onupdated
     HRESULT OnUpdated(const(TF_PRESERVEDKEY)* pprekey);
 }
 
-@GUID("8f1b8ad8-0b6b-4874-90c5-bd76011e8f7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfmessagepump
+@GUID("8f1b8ad8-0b6b-4874-90c5-bd76011e8f7c")
 interface ITfMessagePump : IUnknown
 {
 //METH ATTR: AnsiAttribute : CustomAttributeSig([], [])
@@ -2769,9 +2769,9 @@ interface ITfMessagePump : IUnknown
     HRESULT GetMessageW(MSG* pMsg, HWND hwnd, uint wMsgFilterMin, uint wMsgFilterMax, BOOL* pfResult);
 }
 
-@GUID("c0f1db0c-3a20-405c-a303-96b6010a885f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfthreadfocussink
+@GUID("c0f1db0c-3a20-405c-a303-96b6010a885f")
 interface ITfThreadFocusSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfthreadfocussink-onsetthreadfocus
@@ -2780,9 +2780,9 @@ interface ITfThreadFocusSink : IUnknown
     HRESULT OnKillThreadFocus();
 }
 
-@GUID("aa80e7f7-2021-11d2-93e0-0060b067b86e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftextinputprocessor
+@GUID("aa80e7f7-2021-11d2-93e0-0060b067b86e")
 interface ITfTextInputProcessor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftextinputprocessor-activate
@@ -2791,27 +2791,27 @@ interface ITfTextInputProcessor : IUnknown
     HRESULT Deactivate();
 }
 
-@GUID("6e4e2102-f9cd-433d-b496-303ce03a6507")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftextinputprocessorex
+@GUID("6e4e2102-f9cd-433d-b496-303ce03a6507")
 interface ITfTextInputProcessorEx : ITfTextInputProcessor
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftextinputprocessorex-activateex
     HRESULT ActivateEx(ITfThreadMgr ptim, uint tid, uint dwFlags);
 }
 
-@GUID("d60a7b49-1b9f-4be2-b702-47e9dc05dec3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfclientid
+@GUID("d60a7b49-1b9f-4be2-b702-47e9dc05dec3")
 interface ITfClientId : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfclientid-getclientid
     HRESULT GetClientId(const(GUID)* rclsid, uint* ptid);
 }
 
-@GUID("70528852-2f26-4aea-8c96-215150578932")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfdisplayattributeinfo
+@GUID("70528852-2f26-4aea-8c96-215150578932")
 interface ITfDisplayAttributeInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfdisplayattributeinfo-getguid
@@ -2826,9 +2826,9 @@ interface ITfDisplayAttributeInfo : IUnknown
     HRESULT Reset();
 }
 
-@GUID("7cef04d7-cb75-4e80-a7ab-5f5bc7d332de")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfdisplayattributeinfo
+@GUID("7cef04d7-cb75-4e80-a7ab-5f5bc7d332de")
 interface IEnumTfDisplayAttributeInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfdisplayattributeinfo-clone
@@ -2841,9 +2841,9 @@ interface IEnumTfDisplayAttributeInfo : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("fee47777-163c-4769-996a-6e9c50ad8f54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfdisplayattributeprovider
+@GUID("fee47777-163c-4769-996a-6e9c50ad8f54")
 interface ITfDisplayAttributeProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfdisplayattributeprovider-enumdisplayattributeinfo
@@ -2852,9 +2852,9 @@ interface ITfDisplayAttributeProvider : IUnknown
     HRESULT GetDisplayAttributeInfo(const(GUID)* guid, ITfDisplayAttributeInfo* ppInfo);
 }
 
-@GUID("8ded7393-5db1-475c-9e71-a39111b0ff67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfdisplayattributemgr
+@GUID("8ded7393-5db1-475c-9e71-a39111b0ff67")
 interface ITfDisplayAttributeMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfdisplayattributemgr-onupdateinfo
@@ -2865,18 +2865,18 @@ interface ITfDisplayAttributeMgr : IUnknown
     HRESULT GetDisplayAttributeInfo(const(GUID)* guid, ITfDisplayAttributeInfo* ppInfo, GUID* pclsidOwner);
 }
 
-@GUID("ad56f402-e162-4f25-908f-7d577cf9bda9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfdisplayattributenotifysink
+@GUID("ad56f402-e162-4f25-908f-7d577cf9bda9")
 interface ITfDisplayAttributeNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfdisplayattributenotifysink-onupdateinfo
     HRESULT OnUpdateInfo();
 }
 
-@GUID("c3acefb5-f69d-4905-938f-fcadcf4be830")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcategorymgr
+@GUID("c3acefb5-f69d-4905-938f-fcadcf4be830")
 interface ITfCategoryMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcategorymgr-registercategory
@@ -2909,9 +2909,9 @@ interface ITfCategoryMgr : IUnknown
     HRESULT IsEqualTfGuidAtom(uint guidatom, const(GUID)* rguid, BOOL* pfEqual);
 }
 
-@GUID("4ea48a35-60ae-446f-8fd6-e6a8d82459f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfsource
+@GUID("4ea48a35-60ae-446f-8fd6-e6a8d82459f7")
 interface ITfSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfsource-advisesink
@@ -2920,9 +2920,9 @@ interface ITfSource : IUnknown
     HRESULT UnadviseSink(uint dwCookie);
 }
 
-@GUID("73131f9c-56a9-49dd-b0ee-d046633f7528")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfsourcesingle
+@GUID("73131f9c-56a9-49dd-b0ee-d046633f7528")
 interface ITfSourceSingle : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfsourcesingle-advisesinglesink
@@ -2931,9 +2931,9 @@ interface ITfSourceSingle : IUnknown
     HRESULT UnadviseSingleSink(uint tid, const(GUID)* riid);
 }
 
-@GUID("ea1ea135-19df-11d7-a6d2-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfuielementmgr
+@GUID("ea1ea135-19df-11d7-a6d2-00065b84435c")
 interface ITfUIElementMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfuielementmgr-beginuielement
@@ -2948,9 +2948,9 @@ interface ITfUIElementMgr : IUnknown
     HRESULT EnumUIElements(IEnumTfUIElements* ppEnum);
 }
 
-@GUID("887aa91e-acba-4931-84da-3c5208cf543f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-ienumtfuielements
+@GUID("887aa91e-acba-4931-84da-3c5208cf543f")
 interface IEnumTfUIElements : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-ienumtfuielements-clone
@@ -2963,9 +2963,9 @@ interface IEnumTfUIElements : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("ea1ea136-19df-11d7-a6d2-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfuielementsink
+@GUID("ea1ea136-19df-11d7-a6d2-00065b84435c")
 interface ITfUIElementSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfuielementsink-beginuielement
@@ -2976,9 +2976,9 @@ interface ITfUIElementSink : IUnknown
     HRESULT EndUIElement(uint dwUIElementId);
 }
 
-@GUID("ea1ea137-19df-11d7-a6d2-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfuielement
+@GUID("ea1ea137-19df-11d7-a6d2-00065b84435c")
 interface ITfUIElement : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfuielement-getdescription
@@ -2991,9 +2991,9 @@ interface ITfUIElement : IUnknown
     HRESULT IsShown(BOOL* pbShow);
 }
 
-@GUID("ea1ea138-19df-11d7-a6d2-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcandidatelistuielement
+@GUID("ea1ea138-19df-11d7-a6d2-00065b84435c")
 interface ITfCandidateListUIElement : ITfUIElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcandidatelistuielement-getupdatedflags
@@ -3014,9 +3014,9 @@ interface ITfCandidateListUIElement : ITfUIElement
     HRESULT GetCurrentPage(uint* puPage);
 }
 
-@GUID("85fad185-58ce-497a-9460-355366b64b9a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfcandidatelistuielementbehavior
+@GUID("85fad185-58ce-497a-9460-355366b64b9a")
 interface ITfCandidateListUIElementBehavior : ITfCandidateListUIElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfcandidatelistuielementbehavior-setselection
@@ -3027,9 +3027,9 @@ interface ITfCandidateListUIElementBehavior : ITfCandidateListUIElement
     HRESULT Abort();
 }
 
-@GUID("ea1ea139-19df-11d7-a6d2-00065b84435c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfreadinginformationuielement
+@GUID("ea1ea139-19df-11d7-a6d2-00065b84435c")
 interface ITfReadingInformationUIElement : ITfUIElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfreadinginformationuielement-getupdatedflags
@@ -3046,18 +3046,18 @@ interface ITfReadingInformationUIElement : ITfUIElement
     HRESULT IsVerticalOrderPreferred(BOOL* pfVertical);
 }
 
-@GUID("858f956a-972f-42a2-a2f2-0321e1abe209")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftransitoryextensionuielement
+@GUID("858f956a-972f-42a2-a2f2-0321e1abe209")
 interface ITfTransitoryExtensionUIElement : ITfUIElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftransitoryextensionuielement-getdocumentmgr
     HRESULT GetDocumentMgr(ITfDocumentMgr* ppdim);
 }
 
-@GUID("a615096f-1c57-4813-8a15-55ee6e5a839c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftransitoryextensionsink
+@GUID("a615096f-1c57-4813-8a15-55ee6e5a839c")
 interface ITfTransitoryExtensionSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftransitoryextensionsink-ontransitoryextensionupdated
@@ -3065,18 +3065,18 @@ interface ITfTransitoryExtensionSink : IUnknown
                                          ITfRange pCompositionRange, BOOL* pfDeleteResultRange);
 }
 
-@GUID("52b18b5c-555d-46b2-b00a-fa680144fbdb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itftooltipuielement
+@GUID("52b18b5c-555d-46b2-b00a-fa680144fbdb")
 interface ITfToolTipUIElement : ITfUIElement
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itftooltipuielement-getstring
     HRESULT GetString(BSTR* pstr);
 }
 
-@GUID("151d69f0-86f4-4674-b721-56911e797f47")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfreverseconversionlist
+@GUID("151d69f0-86f4-4674-b721-56911e797f47")
 interface ITfReverseConversionList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfreverseconversionlist-getlength
@@ -3085,18 +3085,18 @@ interface ITfReverseConversionList : IUnknown
     HRESULT GetString(uint uIndex, BSTR* pbstr);
 }
 
-@GUID("a415e162-157d-417d-8a8c-0ab26c7d2781")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfreverseconversion
+@GUID("a415e162-157d-417d-8a8c-0ab26c7d2781")
 interface ITfReverseConversion : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfreverseconversion-doreverseconversion
     HRESULT DoReverseConversion(const(PWSTR) lpstr, ITfReverseConversionList* ppList);
 }
 
-@GUID("b643c236-c493-41b6-abb3-692412775cc4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nn-msctf-itfreverseconversionmgr
+@GUID("b643c236-c493-41b6-abb3-692412775cc4")
 interface ITfReverseConversionMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msctf/nf-msctf-itfreverseconversionmgr-getreverseconversion
@@ -3104,9 +3104,9 @@ interface ITfReverseConversionMgr : IUnknown
                                  ITfReverseConversion* ppReverseConversion);
 }
 
-@GUID("581f317e-fd9d-443f-b972-ed00467c5d40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itfcandidatestring
+@GUID("581f317e-fd9d-443f-b972-ed00467c5d40")
 interface ITfCandidateString : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itfcandidatestring-getstring
@@ -3115,9 +3115,9 @@ interface ITfCandidateString : IUnknown
     HRESULT GetIndex(uint* pnIndex);
 }
 
-@GUID("defb1926-6c80-4ce8-87d4-d6b72b812bde")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-ienumtfcandidates
+@GUID("defb1926-6c80-4ce8-87d4-d6b72b812bde")
 interface IEnumTfCandidates : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-ienumtfcandidates-clone
@@ -3130,9 +3130,9 @@ interface IEnumTfCandidates : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("a3ad50fb-9bdb-49e3-a843-6c76520fbf5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itfcandidatelist
+@GUID("a3ad50fb-9bdb-49e3-a843-6c76520fbf5d")
 interface ITfCandidateList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itfcandidatelist-enumcandidates
@@ -3145,9 +3145,9 @@ interface ITfCandidateList : IUnknown
     HRESULT SetResult(uint nIndex, TfCandidateResult imcr);
 }
 
-@GUID("4cea93c0-0a58-11d3-8df0-00105a2799b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnreconversion
+@GUID("4cea93c0-0a58-11d3-8df0-00105a2799b5")
 interface ITfFnReconversion : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnreconversion-queryrange
@@ -3158,9 +3158,9 @@ interface ITfFnReconversion : ITfFunction
     HRESULT Reconvert(ITfRange pRange);
 }
 
-@GUID("a3a416a4-0f64-11d3-b5b7-00c04fc324a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnplayback
+@GUID("a3a416a4-0f64-11d3-b5b7-00c04fc324a1")
 interface ITfFnPlayBack : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnplayback-queryrange
@@ -3169,9 +3169,9 @@ interface ITfFnPlayBack : ITfFunction
     HRESULT Play(ITfRange pRange);
 }
 
-@GUID("a87a8574-a6c1-4e15-99f0-3d3965f548eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnlangprofileutil
+@GUID("a87a8574-a6c1-4e15-99f0-3d3965f548eb")
 interface ITfFnLangProfileUtil : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnlangprofileutil-registeractiveprofiles
@@ -3180,63 +3180,63 @@ interface ITfFnLangProfileUtil : ITfFunction
     HRESULT IsProfileAvailableForLang(ushort langid, BOOL* pfAvailable);
 }
 
-@GUID("88f567c6-1757-49f8-a1b2-89234c1eeff9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnconfigure
+@GUID("88f567c6-1757-49f8-a1b2-89234c1eeff9")
 interface ITfFnConfigure : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnconfigure-show
     HRESULT Show(HWND hwndParent, ushort langid, const(GUID)* rguidProfile);
 }
 
-@GUID("bb95808a-6d8f-4bca-8400-5390b586aedf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnconfigureregisterword
+@GUID("bb95808a-6d8f-4bca-8400-5390b586aedf")
 interface ITfFnConfigureRegisterWord : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnconfigureregisterword-show
     HRESULT Show(HWND hwndParent, ushort langid, const(GUID)* rguidProfile, BSTR bstrRegistered);
 }
 
-@GUID("b5e26ff5-d7ad-4304-913f-21a2ed95a1b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnconfigureregistereudc
+@GUID("b5e26ff5-d7ad-4304-913f-21a2ed95a1b0")
 interface ITfFnConfigureRegisterEudc : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnconfigureregistereudc-show
     HRESULT Show(HWND hwndParent, ushort langid, const(GUID)* rguidProfile, BSTR bstrRegistered);
 }
 
-@GUID("5ab1d30c-094d-4c29-8ea5-0bf59be87bf3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnshowhelp
+@GUID("5ab1d30c-094d-4c29-8ea5-0bf59be87bf3")
 interface ITfFnShowHelp : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnshowhelp-show
     HRESULT Show(HWND hwndParent);
 }
 
-@GUID("3bab89e4-5fbe-45f4-a5bc-dca36ad225a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnballoon
+@GUID("3bab89e4-5fbe-45f4-a5bc-dca36ad225a8")
 interface ITfFnBalloon : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnballoon-updateballoon
     HRESULT UpdateBalloon(TfLBBalloonStyle style, const(PWSTR) pch, uint cch);
 }
 
-@GUID("5c0ab7ea-167d-4f59-bfb5-4693755e90ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffngetsapiobject
+@GUID("5c0ab7ea-167d-4f59-bfb5-4693755e90ca")
 interface ITfFnGetSAPIObject : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffngetsapiobject-get
     HRESULT Get(TfSapiObject sObj, IUnknown* ppunk);
 }
 
-@GUID("2338ac6e-2b9d-44c0-a75e-ee64f256b3bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnpropertyuistatus
+@GUID("2338ac6e-2b9d-44c0-a75e-ee64f256b3bd")
 interface ITfFnPropertyUIStatus : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnpropertyuistatus-getstatus
@@ -3267,9 +3267,9 @@ interface ITfFnCustomSpeechCommand : ITfFunction
     HRESULT SetSpeechCommandProvider(IUnknown pspcmdProvider);
 }
 
-@GUID("7afbf8e7-ac4b-4082-b058-890899d3a010")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnlmprocessor
+@GUID("7afbf8e7-ac4b-4082-b058-890899d3a010")
 interface ITfFnLMProcessor : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnlmprocessor-queryrange
@@ -3288,18 +3288,18 @@ interface ITfFnLMProcessor : ITfFunction
     HRESULT InvokeFunc(ITfContext pic, const(GUID)* refguidFunc);
 }
 
-@GUID("04b825b1-ac9a-4f7b-b5ad-c7168f1ee445")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnlminternal
+@GUID("04b825b1-ac9a-4f7b-b5ad-c7168f1ee445")
 interface ITfFnLMInternal : ITfFnLMProcessor
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnlminternal-processlattice
     HRESULT ProcessLattice(ITfRange pRange);
 }
 
-@GUID("56988052-47da-4a05-911a-e3d941f17145")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-ienumtflatticeelements
+@GUID("56988052-47da-4a05-911a-e3d941f17145")
 interface IEnumTfLatticeElements : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-ienumtflatticeelements-clone
@@ -3312,9 +3312,9 @@ interface IEnumTfLatticeElements : IUnknown
     HRESULT Skip(uint ulCount);
 }
 
-@GUID("d4236675-a5bf-4570-9d42-5d6d7b02d59b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itflmlattice
+@GUID("d4236675-a5bf-4570-9d42-5d6d7b02d59b")
 interface ITfLMLattice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itflmlattice-querytype
@@ -3323,9 +3323,9 @@ interface ITfLMLattice : IUnknown
     HRESULT EnumLatticeElements(uint dwFrameStart, const(GUID)* rguidType, IEnumTfLatticeElements* ppEnum);
 }
 
-@GUID("3527268b-7d53-4dd9-92b7-7296ae461249")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnadvisetext
+@GUID("3527268b-7d53-4dd9-92b7-7296ae461249")
 interface ITfFnAdviseText : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnadvisetext-ontextupdate
@@ -3334,9 +3334,9 @@ interface ITfFnAdviseText : ITfFunction
     HRESULT OnLatticeUpdate(ITfRange pRange, ITfLMLattice pLattice);
 }
 
-@GUID("87a2ad8f-f27b-4920-8501-67602280175d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffnsearchcandidateprovider
+@GUID("87a2ad8f-f27b-4920-8501-67602280175d")
 interface ITfFnSearchCandidateProvider : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffnsearchcandidateprovider-getsearchcandidates
@@ -3345,9 +3345,9 @@ interface ITfFnSearchCandidateProvider : ITfFunction
     HRESULT SetResult(BSTR bstrQuery, BSTR bstrApplicationID, BSTR bstrResult);
 }
 
-@GUID("c7a6f54f-b180-416f-b2bf-7bf2e4683d7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itfintegratablecandidatelistuielement
+@GUID("c7a6f54f-b180-416f-b2bf-7bf2e4683d7b")
 interface ITfIntegratableCandidateListUIElement : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itfintegratablecandidatelistuielement-setintegrationstyle
@@ -3362,27 +3362,27 @@ interface ITfIntegratableCandidateListUIElement : IUnknown
     HRESULT FinalizeExactCompositionString();
 }
 
-@GUID("5f309a41-590a-4acc-a97f-d8efff13fdfc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffngetpreferredtouchkeyboardlayout
+@GUID("5f309a41-590a-4acc-a97f-d8efff13fdfc")
 interface ITfFnGetPreferredTouchKeyboardLayout : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffngetpreferredtouchkeyboardlayout-getlayout
     HRESULT GetLayout(TKBLayoutType* pTKBLayoutType, ushort* pwPreferredLayoutId);
 }
 
-@GUID("ea163ce2-7a65-4506-82a3-c528215da64e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-itffngetlinguisticalternates
+@GUID("ea163ce2-7a65-4506-82a3-c528215da64e")
 interface ITfFnGetLinguisticAlternates : ITfFunction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-itffngetlinguisticalternates-getalternates
     HRESULT GetAlternates(ITfRange pRange, ITfCandidateList* ppCandidateList);
 }
 
-@GUID("cd91d690-a7e8-4265-9b38-8bb3bbaba7de")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nn-ctffunc-iuimanagereventsink
+@GUID("cd91d690-a7e8-4265-9b38-8bb3bbaba7de")
 interface IUIManagerEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctffunc/nf-ctffunc-iuimanagereventsink-onwindowopening
@@ -3399,9 +3399,9 @@ interface IUIManagerEventSink : IUnknown
     HRESULT OnWindowClosed();
 }
 
-@GUID("fde1eaee-6924-4cdf-91e7-da38cff5559d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inputscope/nn-inputscope-itfinputscope
+@GUID("fde1eaee-6924-4cdf-91e7-da38cff5559d")
 interface ITfInputScope : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inputscope/nf-inputscope-itfinputscope-getinputscopes
@@ -3416,18 +3416,18 @@ interface ITfInputScope : IUnknown
     HRESULT GetXML(BSTR* pbstrXML);
 }
 
-@GUID("5731eaa0-6bc2-4681-a532-92fbb74d7c41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inputscope/nn-inputscope-itfinputscope2
+@GUID("5731eaa0-6bc2-4681-a532-92fbb74d7c41")
 interface ITfInputScope2 : ITfInputScope
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inputscope/nf-inputscope-itfinputscope2-enumwordlist
     HRESULT EnumWordList(IEnumString* ppEnumString);
 }
 
-@GUID("b5f8fb3b-393f-4f7c-84cb-504924c2705a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-itfmsaacontrol
+@GUID("b5f8fb3b-393f-4f7c-84cb-504924c2705a")
 interface ITfMSAAControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-itfmsaacontrol-systemenablemsaa
@@ -3466,9 +3466,9 @@ interface ITextStoreSinkAnchorEx : ITextStoreAnchorSink
     HRESULT OnDisconnect();
 }
 
-@GUID("1dc4cb5f-d737-474d-ade9-5ccfc9bc1cc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-iaccdictionary
+@GUID("1dc4cb5f-d737-474d-ade9-5ccfc9bc1cc9")
 interface IAccDictionary : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-iaccdictionary-getlocalizedstring
@@ -3483,9 +3483,9 @@ interface IAccDictionary : IUnknown
     HRESULT ConvertValueToString(const(GUID)* Term, uint lcid, VARIANT varValue, BSTR* pbstrResult, uint* plcid);
 }
 
-@GUID("401518ec-db00-4611-9b29-2a0e4b9afa85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-iversioninfo
+@GUID("401518ec-db00-4611-9b29-2a0e4b9afa85")
 interface IVersionInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-iversioninfo-getsubcomponentcount
@@ -3500,9 +3500,9 @@ interface IVersionInfo : IUnknown
     HRESULT GetInstanceDescription(uint ulSub, BSTR* pImplStr);
 }
 
-@GUID("03de00aa-f272-41e3-99cb-03c5e8114ea0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-icocreatelocally
+@GUID("03de00aa-f272-41e3-99cb-03c5e8114ea0")
 interface ICoCreateLocally : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-icocreatelocally-cocreatelocally
@@ -3510,9 +3510,9 @@ interface ICoCreateLocally : IUnknown
                             const(GUID)* riidParam, IUnknown punkParam, VARIANT varParam);
 }
 
-@GUID("0a53eb6c-1908-4742-8cff-2cee2e93f94c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-icocreatedlocally
+@GUID("0a53eb6c-1908-4742-8cff-2cee2e93f94c")
 interface ICoCreatedLocally : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-icocreatedlocally-localinit
@@ -3531,9 +3531,9 @@ interface IAccStore : IUnknown
     HRESULT GetFocused(const(GUID)* riid, IUnknown* ppunk);
 }
 
-@GUID("ad7c73cf-6dd5-4855-abc2-b04bad5b9153")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-iaccserverdocmgr
+@GUID("ad7c73cf-6dd5-4855-abc2-b04bad5b9153")
 interface IAccServerDocMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-iaccserverdocmgr-newdocument
@@ -3544,9 +3544,9 @@ interface IAccServerDocMgr : IUnknown
     HRESULT OnDocumentFocus(IUnknown punk);
 }
 
-@GUID("4c896039-7b6d-49e6-a8c1-45116a98292b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nn-msaatext-iaccclientdocmgr
+@GUID("4c896039-7b6d-49e6-a8c1-45116a98292b")
 interface IAccClientDocMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msaatext/nf-msaatext-iaccclientdocmgr-getdocuments
@@ -3572,9 +3572,9 @@ interface IClonableWrapper : IUnknown
     HRESULT CloneNewWrapper(const(GUID)* riid, void** ppv);
 }
 
-@GUID("90e9a944-9244-489f-a78f-de67afc013a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfspui/nn-ctfspui-itfspeechuiserver
+@GUID("90e9a944-9244-489f-a78f-de67afc013a7")
 interface ITfSpeechUIServer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ctfspui/nf-ctfspui-itfspeechuiserver-initialize

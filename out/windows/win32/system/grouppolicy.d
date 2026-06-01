@@ -706,111 +706,144 @@ HRESULT ExportRSoPData(PWSTR lpNameSpace, PWSTR lpFileName);
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm
 @GUID("f5694708-88fe-4b35-babf-e56162d5fbc8")
 struct GPM;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain
 @GUID("710901be-1050-4cb1-838a-c5cff259e183")
 struct GPMDomain;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsitescontainer
 @GUID("229f5c42-852c-4b30-945f-c522be9bd386")
 struct GPMSitesContainer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdir
 @GUID("fce4a59d-0f21-4afa-b859-e6d0c62cd10c")
 struct GPMBackupDir;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsom
 @GUID("32d93fac-450e-44cf-829c-8b22ff6bdae1")
 struct GPMSOM;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsearchcriteria
 @GUID("17aaca26-5ce0-44fa-8cc0-5259e6483566")
 struct GPMSearchCriteria;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmpermission
 @GUID("5871a40a-e9c0-46ec-913e-944ef9225a94")
 struct GPMPermission;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsecurityinfo
 @GUID("547a5e8f-9162-4516-a4df-9ddb9686d846")
 struct GPMSecurityInfo;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackup
 @GUID("ed1a54b8-5efa-482a-93c0-8ad86f0d68c3")
 struct GPMBackup;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupcollection
 @GUID("eb8f035b-70db-4a9f-9676-37c25994e9dc")
 struct GPMBackupCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsomcollection
 @GUID("24c1f147-3720-4f5b-a9c3-06b4e4f931d2")
 struct GPMSOMCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifilter
 @GUID("626745d8-0dea-4062-bf60-cfc5b1ca1286")
 struct GPMWMIFilter;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifiltercollection
 @GUID("74dc6d28-e820-47d6-a0b8-f08d93d7fa33")
 struct GPMWMIFilterCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmrsop
 @GUID("489b0caf-9ec2-4eb7-91f5-b6f71d43da8c")
 struct GPMRSOP;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo
 @GUID("d2ce2994-59b5-4064-b581-4d68486a16c4")
 struct GPMGPO;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpocollection
 @GUID("7a057325-832d-4de3-a41f-c780436a4e09")
 struct GPMGPOCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolink
 @GUID("c1df9880-5303-42c6-8a3c-0488e1bf7364")
 struct GPMGPOLink;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolinkscollection
 @GUID("f6ed581a-49a5-47e2-b771-fd8dc02b6259")
 struct GPMGPOLinksCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasynccancel
 @GUID("372796a9-76ec-479d-ad6c-556318ed5f9d")
 struct GPMAsyncCancel;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmsgcollection
 @GUID("2824e4be-4bcc-4cac-9e60-0e3ed7f12496")
 struct GPMStatusMsgCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmessage
 @GUID("4b77cc94-d255-409b-bc62-370881715a19")
 struct GPMStatusMessage;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmtrustee
 @GUID("c54a700d-19b6-4211-bcb0-e8e2475e471e")
 struct GPMTrustee;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmclientsideextension
 @GUID("c1a2e70e-659c-4b1a-940b-f88b0af9c8a4")
 struct GPMClientSideExtension;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmcsecollection
 @GUID("cf92b828-2d44-4b61-b10a-b327afd42da8")
 struct GPMCSECollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants
 @GUID("3855e880-cd9e-4d0c-9eaf-1579283a1888")
 struct GPMConstants;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmresult
 @GUID("92101ac0-9287-4206-a3b2-4bdb73d225f6")
 struct GPMResult;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentrycollection
 @GUID("0cf75d5b-a3a1-4c55-b4fe-9e149c41f66d")
 struct GPMMapEntryCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentry
 @GUID("8c975253-5431-4471-b35d-0626c928258a")
 struct GPMMapEntry;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmigrationtable
 @GUID("55af4043-2a06-4f72-abef-631b44079c76")
 struct GPMMigrationTable;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdirex
 @GUID("e8c0988a-cf03-4c5b-8be2-2aa9ad32aada")
 struct GPMBackupDirEx;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackupcollection
 @GUID("e75ea59d-1aeb-4cb5-a78a-281daa582406")
 struct GPMStarterGPOBackupCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackup
 @GUID("389e400a-d8ef-455b-a861-5f9ca34a6a02")
 struct GPMStarterGPOBackup;
 
 @GUID("ecf1d454-71da-4e2f-a8c0-8185465911d9")
 struct GPMTemplate;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpocollection
 @GUID("82f8aa8b-49ba-43b2-956e-3397f9b94c3a")
 struct GPMStarterGPOCollection;
 
-@GUID("f5fae809-3bd6-4da9-a65e-17665b41d763")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm
+@GUID("f5fae809-3bd6-4da9-a65e-17665b41d763")
 interface IGPM : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getdomain
@@ -841,9 +874,9 @@ interface IGPM : IDispatch
     HRESULT InitializeReporting(BSTR bstrAdmPath);
 }
 
-@GUID("6b21cc14-5a00-4f44-a738-feec8a94c7e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain
+@GUID("6b21cc14-5a00-4f44-a738-feec8a94c7e3")
 interface IGPMDomain : IDispatch
 {
     HRESULT get_DomainController(BSTR* pVal);
@@ -868,9 +901,9 @@ interface IGPMDomain : IDispatch
                              IGPMWMIFilterCollection* ppIGPMWMIFilterCollection);
 }
 
-@GUID("b1568bed-0a93-4acc-810f-afe7081019b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdir
+@GUID("b1568bed-0a93-4acc-810f-afe7081019b9")
 interface IGPMBackupDir : IDispatch
 {
     HRESULT get_BackupDirectory(BSTR* pVal);
@@ -880,9 +913,9 @@ interface IGPMBackupDir : IDispatch
     HRESULT SearchBackups(IGPMSearchCriteria pIGPMSearchCriteria, IGPMBackupCollection* ppIGPMBackupCollection);
 }
 
-@GUID("4725a899-2782-4d27-a6bb-d499246ffd72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsitescontainer
+@GUID("4725a899-2782-4d27-a6bb-d499246ffd72")
 interface IGPMSitesContainer : IDispatch
 {
     HRESULT get_DomainController(BSTR* pVal);
@@ -894,18 +927,18 @@ interface IGPMSitesContainer : IDispatch
     HRESULT SearchSites(IGPMSearchCriteria pIGPMSearchCriteria, IGPMSOMCollection* ppIGPMSOMCollection);
 }
 
-@GUID("d6f11c42-829b-48d4-83f5-3615b67dfc22")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsearchcriteria
+@GUID("d6f11c42-829b-48d4-83f5-3615b67dfc22")
 interface IGPMSearchCriteria : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsearchcriteria-add
     HRESULT Add(GPMSearchProperty searchProperty, GPMSearchOperation searchOperation, VARIANT varValue);
 }
 
-@GUID("3b466da8-c1a4-4b2a-999a-befcdd56cefb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmtrustee
+@GUID("3b466da8-c1a4-4b2a-999a-befcdd56cefb")
 interface IGPMTrustee : IDispatch
 {
     HRESULT get_TrusteeSid(BSTR* bstrVal);
@@ -915,9 +948,9 @@ interface IGPMTrustee : IDispatch
     HRESULT get_TrusteeType(int* lVal);
 }
 
-@GUID("35ebca40-e1a1-4a02-8905-d79416fb464a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmpermission
+@GUID("35ebca40-e1a1-4a02-8905-d79416fb464a")
 interface IGPMPermission : IDispatch
 {
     HRESULT get_Inherited(VARIANT_BOOL* pVal);
@@ -927,9 +960,9 @@ interface IGPMPermission : IDispatch
     HRESULT get_Trustee(IGPMTrustee* ppIGPMTrustee);
 }
 
-@GUID("b6c31ed4-1c93-4d3e-ae84-eb6d61161b60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsecurityinfo
+@GUID("b6c31ed4-1c93-4d3e-ae84-eb6d61161b60")
 interface IGPMSecurityInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get_count
@@ -946,9 +979,9 @@ interface IGPMSecurityInfo : IDispatch
     HRESULT RemoveTrustee(BSTR bstrTrustee);
 }
 
-@GUID("d8a16a35-3b0d-416b-8d02-4df6f95a7119")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackup
+@GUID("d8a16a35-3b0d-416b-8d02-4df6f95a7119")
 interface IGPMBackup : IDispatch
 {
     HRESULT get_ID(BSTR* pVal);
@@ -967,9 +1000,9 @@ interface IGPMBackup : IDispatch
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
 }
 
-@GUID("c786fc0f-26d8-4bab-a745-39ca7e800cac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupcollection
+@GUID("c786fc0f-26d8-4bab-a745-39ca7e800cac")
 interface IGPMBackupCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get_count
@@ -980,9 +1013,9 @@ interface IGPMBackupCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMBackup);
 }
 
-@GUID("c0a7f09e-05a1-4f0c-8158-9e5c33684f6b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsom
+@GUID("c0a7f09e-05a1-4f0c-8158-9e5c33684f6b")
 interface IGPMSOM : IDispatch
 {
     HRESULT get_GPOInheritanceBlocked(VARIANT_BOOL* pVal);
@@ -1002,9 +1035,9 @@ interface IGPMSOM : IDispatch
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
 }
 
-@GUID("adc1688e-00e4-4495-abba-bed200df0cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsomcollection
+@GUID("adc1688e-00e4-4495-abba-bed200df0cab")
 interface IGPMSOMCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get_count
@@ -1015,9 +1048,9 @@ interface IGPMSOMCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMSOM);
 }
 
-@GUID("ef2ff9b4-3c27-459a-b979-038305cec75d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifilter
+@GUID("ef2ff9b4-3c27-459a-b979-038305cec75d")
 interface IGPMWMIFilter : IDispatch
 {
     HRESULT get_Path(BSTR* pVal);
@@ -1033,9 +1066,9 @@ interface IGPMWMIFilter : IDispatch
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
 }
 
-@GUID("5782d582-1a36-4661-8a94-c3c32551945b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifiltercollection
+@GUID("5782d582-1a36-4661-8a94-c3c32551945b")
 interface IGPMWMIFilterCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get_count
@@ -1046,9 +1079,9 @@ interface IGPMWMIFilterCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* pVal);
 }
 
-@GUID("49ed785a-3237-4ff2-b1f0-fdf5a8d5a1ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmrsop
+@GUID("49ed785a-3237-4ff2-b1f0-fdf5a8d5a1ee")
 interface IGPMRSOP : IDispatch
 {
     HRESULT get_Mode(GPMRSOPMode* pVal);
@@ -1094,9 +1127,9 @@ interface IGPMRSOP : IDispatch
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
 }
 
-@GUID("58cc4352-1ca3-48e5-9864-1da4d6e0d60f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo
+@GUID("58cc4352-1ca3-48e5-9864-1da4d6e0d60f")
 interface IGPMGPO : IDispatch
 {
     HRESULT get_DisplayName(BSTR* pVal);
@@ -1152,9 +1185,9 @@ interface IGPMGPO : IDispatch
     HRESULT MakeACLConsistent();
 }
 
-@GUID("f0f0d5cf-70ca-4c39-9e29-b642f8726c01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpocollection
+@GUID("f0f0d5cf-70ca-4c39-9e29-b642f8726c01")
 interface IGPMGPOCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get_count
@@ -1165,9 +1198,9 @@ interface IGPMGPOCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMGPOs);
 }
 
-@GUID("434b99bd-5de7-478a-809c-c251721df70c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolink
+@GUID("434b99bd-5de7-478a-809c-c251721df70c")
 interface IGPMGPOLink : IDispatch
 {
     HRESULT get_GPOID(BSTR* pVal);
@@ -1182,9 +1215,9 @@ interface IGPMGPOLink : IDispatch
     HRESULT Delete();
 }
 
-@GUID("189d7b68-16bd-4d0d-a2ec-2e6aa2288c7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolinkscollection
+@GUID("189d7b68-16bd-4d0d-a2ec-2e6aa2288c7f")
 interface IGPMGPOLinksCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get_count
@@ -1195,9 +1228,9 @@ interface IGPMGPOLinksCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMLinks);
 }
 
-@GUID("2e52a97d-0a4a-4a6f-85db-201622455da0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmcsecollection
+@GUID("2e52a97d-0a4a-4a6f-85db-201622455da0")
 interface IGPMCSECollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get_count
@@ -1208,9 +1241,9 @@ interface IGPMCSECollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMCSEs);
 }
 
-@GUID("69da7488-b8db-415e-9266-901be4d49928")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmclientsideextension
+@GUID("69da7488-b8db-415e-9266-901be4d49928")
 interface IGPMClientSideExtension : IDispatch
 {
     HRESULT get_ID(BSTR* pVal);
@@ -1221,18 +1254,18 @@ interface IGPMClientSideExtension : IDispatch
     HRESULT IsComputerEnabled(VARIANT_BOOL* pvbEnabled);
 }
 
-@GUID("ddc67754-be67-4541-8166-f48166868c9c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasynccancel
+@GUID("ddc67754-be67-4541-8166-f48166868c9c")
 interface IGPMAsyncCancel : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmasynccancel-cancel
     HRESULT Cancel();
 }
 
-@GUID("6aac29f8-5948-4324-bf70-423818942dbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasyncprogress
+@GUID("6aac29f8-5948-4324-bf70-423818942dbc")
 interface IGPMAsyncProgress : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmasyncprogress-status
@@ -1240,9 +1273,9 @@ interface IGPMAsyncProgress : IDispatch
                    IGPMStatusMsgCollection ppIGPMStatusMsgCollection);
 }
 
-@GUID("9b6e1af0-1a92-40f3-a59d-f36ac1f728b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmsgcollection
+@GUID("9b6e1af0-1a92-40f3-a59d-f36ac1f728b7")
 interface IGPMStatusMsgCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get_count
@@ -1253,9 +1286,9 @@ interface IGPMStatusMsgCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* pVal);
 }
 
-@GUID("8496c22f-f3de-4a1f-8f58-603caaa93d7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmessage
+@GUID("8496c22f-f3de-4a1f-8f58-603caaa93d7b")
 interface IGPMStatusMessage : IDispatch
 {
     HRESULT get_ObjectPath(BSTR* pVal);
@@ -1268,9 +1301,9 @@ interface IGPMStatusMessage : IDispatch
     HRESULT get_Message(BSTR* pVal);
 }
 
-@GUID("50ef73e6-d35c-4c8d-be63-7ea5d2aac5c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants
+@GUID("50ef73e6-d35c-4c8d-be63-7ea5d2aac5c4")
 interface IGPMConstants : IDispatch
 {
     HRESULT get_PermGPOApply(GPMPermissionType* pVal);
@@ -1337,9 +1370,9 @@ interface IGPMConstants : IDispatch
     HRESULT get_RsopPlanningAssumeCompWQLFilterTrue(int* pVal);
 }
 
-@GUID("86dff7e9-f76f-42ab-9570-cebc6be8a52d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmresult
+@GUID("86dff7e9-f76f-42ab-9570-cebc6be8a52d")
 interface IGPMResult : IDispatch
 {
     HRESULT get_Status(IGPMStatusMsgCollection* ppIGPMStatusMsgCollection);
@@ -1348,9 +1381,9 @@ interface IGPMResult : IDispatch
     HRESULT OverallStatus();
 }
 
-@GUID("bb0bf49b-e53f-443f-b807-8be22bfb6d42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentrycollection
+@GUID("bb0bf49b-e53f-443f-b807-8be22bfb6d42")
 interface IGPMMapEntryCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get_count
@@ -1361,9 +1394,9 @@ interface IGPMMapEntryCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* pVal);
 }
 
-@GUID("8e79ad06-2381-4444-be4c-ff693e6e6f2b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentry
+@GUID("8e79ad06-2381-4444-be4c-ff693e6e6f2b")
 interface IGPMMapEntry : IDispatch
 {
     HRESULT get_Source(BSTR* pbstrSource);
@@ -1372,9 +1405,9 @@ interface IGPMMapEntry : IDispatch
     HRESULT get_EntryType(GPMEntryType* pgpmEntryType);
 }
 
-@GUID("48f823b1-efaf-470b-b6ed-40d14ee1a4ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmigrationtable
+@GUID("48f823b1-efaf-470b-b6ed-40d14ee1a4ec")
 interface IGPMMigrationTable : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-save
@@ -1395,9 +1428,9 @@ interface IGPMMigrationTable : IDispatch
     HRESULT GetEntries(IGPMMapEntryCollection* ppEntries);
 }
 
-@GUID("f8dc55ed-3ba0-4864-aad4-d365189ee1d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdirex
+@GUID("f8dc55ed-3ba0-4864-aad4-d365189ee1d5")
 interface IGPMBackupDirEx : IDispatch
 {
     HRESULT get_BackupDir(BSTR* pbstrBackupDir);
@@ -1408,9 +1441,9 @@ interface IGPMBackupDirEx : IDispatch
     HRESULT SearchBackups(IGPMSearchCriteria pIGPMSearchCriteria, VARIANT* pvarBackupCollection);
 }
 
-@GUID("c998031d-add0-4bb5-8dea-298505d8423b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackupcollection
+@GUID("c998031d-add0-4bb5-8dea-298505d8423b")
 interface IGPMStarterGPOBackupCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get_count
@@ -1421,9 +1454,9 @@ interface IGPMStarterGPOBackupCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMTmplBackup);
 }
 
-@GUID("51d98eda-a87e-43dd-b80a-0b66ef1938d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackup
+@GUID("51d98eda-a87e-43dd-b80a-0b66ef1938d6")
 interface IGPMStarterGPOBackup : IDispatch
 {
     HRESULT get_BackupDir(BSTR* pbstrBackupDir);
@@ -1443,9 +1476,9 @@ interface IGPMStarterGPOBackup : IDispatch
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
 }
 
-@GUID("00238f8a-3d86-41ac-8f5e-06a6638a634a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm2
+@GUID("00238f8a-3d86-41ac-8f5e-06a6638a634a")
 interface IGPM2 : IGPM
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm2-getbackupdirex
@@ -1454,9 +1487,9 @@ interface IGPM2 : IGPM
     HRESULT InitializeReportingEx(BSTR bstrAdmPath, int reportingOptions);
 }
 
-@GUID("dfc3f61b-8880-4490-9337-d29c7ba8c2f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpo
+@GUID("dfc3f61b-8880-4490-9337-d29c7ba8c2f0")
 interface IGPMStarterGPO : IDispatch
 {
     HRESULT get_DisplayName(BSTR* pVal);
@@ -1495,9 +1528,9 @@ interface IGPMStarterGPO : IDispatch
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
 }
 
-@GUID("2e522729-2219-44ad-933a-64dfd650c423")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpocollection
+@GUID("2e522729-2219-44ad-933a-64dfd650c423")
 interface IGPMStarterGPOCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get_count
@@ -1508,9 +1541,9 @@ interface IGPMStarterGPOCollection : IDispatch
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMTemplates);
 }
 
-@GUID("7ca6bb8b-f1eb-490a-938d-3c4e51c768e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain2
+@GUID("7ca6bb8b-f1eb-490a-938d-3c4e51c768e6")
 interface IGPMDomain2 : IGPMDomain
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-createstartergpo
@@ -1530,9 +1563,9 @@ interface IGPMDomain2 : IGPMDomain
                               VARIANT* pvarGPMCancel, IGPMResult* ppIGPMResult);
 }
 
-@GUID("05ae21b0-ac09-4032-a26f-9e7da786dc19")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants2
+@GUID("05ae21b0-ac09-4032-a26f-9e7da786dc19")
 interface IGPMConstants2 : IGPMConstants
 {
     HRESULT get_BackupTypeGPO(GPMBackupType* pVal);
@@ -1552,9 +1585,9 @@ interface IGPMConstants2 : IGPMConstants
     HRESULT get_ReportComments(GPMReportingOptions* pVal);
 }
 
-@GUID("8a66a210-b78b-4d99-88e2-c306a817c925")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo2
+@GUID("8a66a210-b78b-4d99-88e2-c306a817c925")
 interface IGPMGPO2 : IGPMGPO
 {
     HRESULT get_Description(BSTR* pVal);
@@ -1579,9 +1612,9 @@ interface IGPMGPO3 : IGPMGPO2
     HRESULT put_InfrastructureFlags(uint dwFlags);
 }
 
-@GUID("8fc0b735-a0e1-11d1-a7d3-0000f87571e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-igpeinformation
+@GUID("8fc0b735-a0e1-11d1-a7d3-0000f87571e3")
 interface IGPEInformation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getname
@@ -1604,9 +1637,9 @@ interface IGPEInformation : IUnknown
     HRESULT PolicyChanged(BOOL bMachine, BOOL bAdd, GUID* pGuidExtension, GUID* pGuidSnapin);
 }
 
-@GUID("ea502723-a23d-11d1-a7d3-0000f87571e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-igrouppolicyobject
+@GUID("ea502723-a23d-11d1-a7d3-0000f87571e3")
 interface IGroupPolicyObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-new
@@ -1647,9 +1680,9 @@ interface IGroupPolicyObject : IUnknown
     HRESULT GetPropertySheetPages(HPROPSHEETPAGE** hPages, uint* uPageCount);
 }
 
-@GUID("9a5a81b5-d9c7-49ef-9d11-ddf50968c48d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-irsopinformation
+@GUID("9a5a81b5-d9c7-49ef-9d11-ddf50968c48d")
 interface IRSOPInformation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-getnamespace

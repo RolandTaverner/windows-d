@@ -179,9 +179,9 @@ HRESULT InitializeXamlDiagnosticsEx(const(PWSTR) endPointName, uint pid, const(P
 
 // Interfaces
 
-@GUID("aa7a8931-80e4-4fec-8f3b-553f87b4966e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservicecallback
+@GUID("aa7a8931-80e4-4fec-8f3b-553f87b4966e")
 interface IVisualTreeServiceCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservicecallback-onvisualtreechange
@@ -189,17 +189,17 @@ interface IVisualTreeServiceCallback : IUnknown
                                VisualMutationType mutationType);
 }
 
-@GUID("bad9eb88-ae77-4397-b948-5fa2db0a19ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservicecallback2
+@GUID("bad9eb88-ae77-4397-b948-5fa2db0a19ea")
 interface IVisualTreeServiceCallback2 : IVisualTreeServiceCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservicecallback2-onelementstatechanged
     HRESULT OnElementStateChanged(ulong element, VisualElementState elementState, const(PWSTR) context);
 }
 
-@GUID("a593b11a-d17f-48bb-8f66-83910731c8a5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice
+@GUID("a593b11a-d17f-48bb-8f66-83910731c8a5")
 interface IVisualTreeService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-advisevisualtreechange
@@ -231,9 +231,9 @@ interface IVisualTreeService : IUnknown
     HRESULT ClearChildren(ulong parent);
 }
 
-@GUID("18c9e2b6-3f43-4116-9f2b-ff935d7770d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ixamldiagnostics
+@GUID("18c9e2b6-3f43-4116-9f2b-ff935d7770d2")
 interface IXamlDiagnostics : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getdispatcher
@@ -254,9 +254,9 @@ interface IXamlDiagnostics : IUnknown
     HRESULT GetInitializationData(BSTR* pInitializationData);
 }
 
-@GUID("d1a34ef2-cad8-4635-a3d2-fcda8d3f3caf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ibitmapdata
+@GUID("d1a34ef2-cad8-4635-a3d2-fcda8d3f3caf")
 interface IBitmapData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-copybytesto
@@ -269,9 +269,9 @@ interface IBitmapData : IUnknown
     HRESULT GetSourceBitmapDescription(BitmapDescription* pBitmapDescription);
 }
 
-@GUID("130f5136-ec43-4f61-89c7-9801a36d2e95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice2
+@GUID("130f5136-ec43-4f61-89c7-9801a36d2e95")
 interface IVisualTreeService2 : IVisualTreeService
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-getpropertyindex
@@ -285,9 +285,9 @@ interface IVisualTreeService2 : IVisualTreeService
                                uint maxPixelHeight, IBitmapData* ppBitmapData);
 }
 
-@GUID("0e79c6e0-85a0-4be8-b41a-655cf1fd19bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice3
+@GUID("0e79c6e0-85a0-4be8-b41a-655cf1fd19bd")
 interface IVisualTreeService3 : IVisualTreeService2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-resolveresource

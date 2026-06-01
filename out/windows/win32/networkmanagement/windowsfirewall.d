@@ -518,9 +518,9 @@ struct NetFwProducts;
 @GUID("304ce942-6e39-40d8-943a-b913c40c9cd4")
 struct NetFwMgr;
 
-@GUID("b171c812-cc76-485a-94d8-b6b3a2794e99")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-iupnpnat
+@GUID("b171c812-cc76-485a-94d8-b6b3a2794e99")
 interface IUPnPNAT : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-iupnpnat-get_staticportmappingcollection
@@ -531,9 +531,9 @@ interface IUPnPNAT : IDispatch
     HRESULT get_NATEventManager(INATEventManager* ppNEM);
 }
 
-@GUID("624bd588-9060-4109-b0b0-1adbbcac32df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inateventmanager
+@GUID("624bd588-9060-4109-b0b0-1adbbcac32df")
 interface INATEventManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inateventmanager-put_externalipaddresscallback
@@ -542,18 +542,18 @@ interface INATEventManager : IDispatch
     HRESULT put_NumberOfEntriesCallback(IUnknown pUnk);
 }
 
-@GUID("9c416740-a34e-446f-ba06-abd04c3149ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inatexternalipaddresscallback
+@GUID("9c416740-a34e-446f-ba06-abd04c3149ae")
 interface INATExternalIPAddressCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inatexternalipaddresscallback-newexternalipaddress
     HRESULT NewExternalIPAddress(BSTR bstrNewExternalIPAddress);
 }
 
-@GUID("c83a0a74-91ee-41b6-b67a-67e0f00bbd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inatnumberofentriescallback
+@GUID("c83a0a74-91ee-41b6-b67a-67e0f00bbd78")
 interface INATNumberOfEntriesCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inatnumberofentriescallback-newnumberofentries
@@ -591,9 +591,9 @@ interface IDynamicPortMapping : IDispatch
     HRESULT EditInternalPort(int lInternalPort);
 }
 
-@GUID("cd1f3e77-66d6-4664-82c7-36dbb641d0f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-istaticportmappingcollection
+@GUID("cd1f3e77-66d6-4664-82c7-36dbb641d0f1")
 interface IStaticPortMappingCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get__newenum
@@ -609,9 +609,9 @@ interface IStaticPortMappingCollection : IDispatch
                 VARIANT_BOOL bEnabled, BSTR bstrDescription, IStaticPortMapping* ppSPM);
 }
 
-@GUID("6f10711f-729b-41e5-93b8-f21d0f818df1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-istaticportmapping
+@GUID("6f10711f-729b-41e5-93b8-f21d0f818df1")
 interface IStaticPortMapping : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_externalipaddress
@@ -647,9 +647,9 @@ interface IEnumNetConnection : IUnknown
     HRESULT Clone(IEnumNetConnection* ppenum);
 }
 
-@GUID("c08956a1-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetconnection
+@GUID("c08956a1-1cd3-11d1-b1c5-00805fc1270e")
 interface INetConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-connect
@@ -682,9 +682,9 @@ interface INetConnectionConnectUi : IUnknown
     HRESULT Disconnect(HWND hwndParent, uint dwFlags);
 }
 
-@GUID("c08956b0-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingportmapping
+@GUID("c08956b0-1cd3-11d1-b1c5-00805fc1270e")
 interface IEnumNetSharingPortMapping : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-next
@@ -697,9 +697,9 @@ interface IEnumNetSharingPortMapping : IUnknown
     HRESULT Clone(IEnumNetSharingPortMapping* ppenum);
 }
 
-@GUID("24b7e9b5-e38f-4685-851b-00892cf5f940")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmappingprops
+@GUID("24b7e9b5-e38f-4685-851b-00892cf5f940")
 interface INetSharingPortMappingProps : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_name
@@ -720,9 +720,9 @@ interface INetSharingPortMappingProps : IDispatch
     HRESULT get_Enabled(VARIANT_BOOL* pbool);
 }
 
-@GUID("c08956b1-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmapping
+@GUID("c08956b1-1cd3-11d1-b1c5-00805fc1270e")
 interface INetSharingPortMapping : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-disable
@@ -735,9 +735,9 @@ interface INetSharingPortMapping : IDispatch
     HRESULT Delete();
 }
 
-@GUID("c08956b8-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingeveryconnection
+@GUID("c08956b8-1cd3-11d1-b1c5-00805fc1270e")
 interface IEnumNetSharingEveryConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-next
@@ -750,9 +750,9 @@ interface IEnumNetSharingEveryConnection : IUnknown
     HRESULT Clone(IEnumNetSharingEveryConnection* ppenum);
 }
 
-@GUID("c08956b4-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingpublicconnection
+@GUID("c08956b4-1cd3-11d1-b1c5-00805fc1270e")
 interface IEnumNetSharingPublicConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-next
@@ -765,9 +765,9 @@ interface IEnumNetSharingPublicConnection : IUnknown
     HRESULT Clone(IEnumNetSharingPublicConnection* ppenum);
 }
 
-@GUID("c08956b5-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingprivateconnection
+@GUID("c08956b5-1cd3-11d1-b1c5-00805fc1270e")
 interface IEnumNetSharingPrivateConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-next
@@ -780,9 +780,9 @@ interface IEnumNetSharingPrivateConnection : IUnknown
     HRESULT Clone(IEnumNetSharingPrivateConnection* ppenum);
 }
 
-@GUID("02e4a2de-da20-4e34-89c8-ac22275a010b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmappingcollection
+@GUID("02e4a2de-da20-4e34-89c8-ac22275a010b")
 interface INetSharingPortMappingCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingcollection-get__newenum
@@ -791,9 +791,9 @@ interface INetSharingPortMappingCollection : IDispatch
     HRESULT get_Count(int* pVal);
 }
 
-@GUID("f4277c95-ce5b-463d-8167-5662d9bcaa72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetconnectionprops
+@GUID("f4277c95-ce5b-463d-8167-5662d9bcaa72")
 interface INetConnectionProps : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_guid
@@ -810,9 +810,9 @@ interface INetConnectionProps : IDispatch
     HRESULT get_Characteristics(uint* pdwFlags);
 }
 
-@GUID("c08956b6-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingconfiguration
+@GUID("c08956b6-1cd3-11d1-b1c5-00805fc1270e")
 interface INetSharingConfiguration : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_sharingenabled
@@ -839,9 +839,9 @@ interface INetSharingConfiguration : IDispatch
     HRESULT RemovePortMapping(INetSharingPortMapping pMapping);
 }
 
-@GUID("33c4643c-7811-46fa-a89a-768597bd7223")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingeveryconnectioncollection
+@GUID("33c4643c-7811-46fa-a89a-768597bd7223")
 interface INetSharingEveryConnectionCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingeveryconnectioncollection-get__newenum
@@ -850,9 +850,9 @@ interface INetSharingEveryConnectionCollection : IDispatch
     HRESULT get_Count(int* pVal);
 }
 
-@GUID("7d7a6355-f372-4971-a149-bfc927be762a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingpublicconnectioncollection
+@GUID("7d7a6355-f372-4971-a149-bfc927be762a")
 interface INetSharingPublicConnectionCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingpublicconnectioncollection-get__newenum
@@ -861,9 +861,9 @@ interface INetSharingPublicConnectionCollection : IDispatch
     HRESULT get_Count(int* pVal);
 }
 
-@GUID("38ae69e0-4409-402a-a2cb-e965c727f840")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingprivateconnectioncollection
+@GUID("38ae69e0-4409-402a-a2cb-e965c727f840")
 interface INetSharingPrivateConnectionCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingprivateconnectioncollection-get__newenum
@@ -872,9 +872,9 @@ interface INetSharingPrivateConnectionCollection : IDispatch
     HRESULT get_Count(int* pVal);
 }
 
-@GUID("c08956b7-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingmanager
+@GUID("c08956b7-1cd3-11d1-b1c5-00805fc1270e")
 interface INetSharingManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_sharinginstalled
@@ -894,9 +894,9 @@ interface INetSharingManager : IDispatch
     HRESULT get_NetConnectionProps(INetConnection pNetConnection, INetConnectionProps* ppProps);
 }
 
-@GUID("d4becddf-6f73-4a83-b832-9c66874cd20e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwremoteadminsettings
+@GUID("d4becddf-6f73-4a83-b832-9c66874cd20e")
 interface INetFwRemoteAdminSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_ipversion
@@ -917,9 +917,9 @@ interface INetFwRemoteAdminSettings : IDispatch
     HRESULT put_Enabled(VARIANT_BOOL enabled);
 }
 
-@GUID("a6207b2e-7cdd-426a-951e-5e1cbc5afead")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwicmpsettings
+@GUID("a6207b2e-7cdd-426a-951e-5e1cbc5afead")
 interface INetFwIcmpSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutbounddestinationunreachable
@@ -964,9 +964,9 @@ interface INetFwIcmpSettings : IDispatch
     HRESULT put_AllowOutboundPacketTooBig(VARIANT_BOOL allow);
 }
 
-@GUID("e0483ba0-47ff-4d9c-a6d6-7741d0b195f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwopenport
+@GUID("e0483ba0-47ff-4d9c-a6d6-7741d0b195f7")
 interface INetFwOpenPort : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_name
@@ -1001,9 +1001,9 @@ interface INetFwOpenPort : IDispatch
     HRESULT get_BuiltIn(VARIANT_BOOL* builtIn);
 }
 
-@GUID("c0e9d7fa-e07e-430a-b19a-090ce82d92e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwopenports
+@GUID("c0e9d7fa-e07e-430a-b19a-090ce82d92e2")
 interface INetFwOpenPorts : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-get_count
@@ -1018,9 +1018,9 @@ interface INetFwOpenPorts : IDispatch
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
-@GUID("79fd57c8-908e-4a36-9888-d5b3f0a444cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservice
+@GUID("79fd57c8-908e-4a36-9888-d5b3f0a444cf")
 interface INetFwService : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_name
@@ -1049,9 +1049,9 @@ interface INetFwService : IDispatch
     HRESULT get_GloballyOpenPorts(INetFwOpenPorts* openPorts);
 }
 
-@GUID("79649bb4-903e-421b-94c9-79848e79f6ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservices
+@GUID("79649bb4-903e-421b-94c9-79848e79f6ee")
 interface INetFwServices : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-get_count
@@ -1062,9 +1062,9 @@ interface INetFwServices : IDispatch
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
-@GUID("b5e64ffa-c2c5-444e-a301-fb5e00018050")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwauthorizedapplication
+@GUID("b5e64ffa-c2c5-444e-a301-fb5e00018050")
 interface INetFwAuthorizedApplication : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_name
@@ -1093,9 +1093,9 @@ interface INetFwAuthorizedApplication : IDispatch
     HRESULT put_Enabled(VARIANT_BOOL enabled);
 }
 
-@GUID("644efd52-ccf9-486c-97a2-39f352570b30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwauthorizedapplications
+@GUID("644efd52-ccf9-486c-97a2-39f352570b30")
 interface INetFwAuthorizedApplications : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-get_count
@@ -1110,9 +1110,9 @@ interface INetFwAuthorizedApplications : IDispatch
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
-@GUID("af230d27-baba-4e42-aced-f524f22cfce2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule
+@GUID("af230d27-baba-4e42-aced-f524f22cfce2")
 interface INetFwRule : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_name
@@ -1189,9 +1189,9 @@ interface INetFwRule : IDispatch
     HRESULT put_Action(NET_FW_ACTION action);
 }
 
-@GUID("9c27c8da-189b-4dde-89f7-8b39a316782c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule2
+@GUID("9c27c8da-189b-4dde-89f7-8b39a316782c")
 interface INetFwRule2 : INetFwRule
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule2-get_edgetraversaloptions
@@ -1200,9 +1200,9 @@ interface INetFwRule2 : INetFwRule
     HRESULT put_EdgeTraversalOptions(int lOptions);
 }
 
-@GUID("b21563ff-d696-4222-ab46-4e89b73ab34a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule3
+@GUID("b21563ff-d696-4222-ab46-4e89b73ab34a")
 interface INetFwRule3 : INetFwRule2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localapppackageid
@@ -1231,9 +1231,9 @@ interface INetFwRule3 : INetFwRule2
     HRESULT put_SecureFlags(int lOptions);
 }
 
-@GUID("9c4c6277-5027-441e-afae-ca1f542da009")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrules
+@GUID("9c4c6277-5027-441e-afae-ca1f542da009")
 interface INetFwRules : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-get_count
@@ -1248,9 +1248,9 @@ interface INetFwRules : IDispatch
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
-@GUID("8267bbe3-f890-491c-b7b6-2db1ef0e5d2b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservicerestriction
+@GUID("8267bbe3-f890-491c-b7b6-2db1ef0e5d2b")
 interface INetFwServiceRestriction : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-restrictservice
@@ -1262,9 +1262,9 @@ interface INetFwServiceRestriction : IDispatch
     HRESULT get_Rules(INetFwRules* rules);
 }
 
-@GUID("174a0dda-e9f9-449d-993b-21ab667ca456")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwprofile
+@GUID("174a0dda-e9f9-449d-993b-21ab667ca456")
 interface INetFwProfile : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_type
@@ -1297,9 +1297,9 @@ interface INetFwProfile : IDispatch
     HRESULT get_AuthorizedApplications(INetFwAuthorizedApplications* apps);
 }
 
-@GUID("d46d2478-9ac9-4008-9dc7-5563ce5536cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwpolicy
+@GUID("d46d2478-9ac9-4008-9dc7-5563ce5536cc")
 interface INetFwPolicy : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy-get_currentprofile
@@ -1308,9 +1308,9 @@ interface INetFwPolicy : IDispatch
     HRESULT GetProfileByType(NET_FW_PROFILE_TYPE profileType, INetFwProfile* profile);
 }
 
-@GUID("98325047-c671-4174-8d81-defcd3f03186")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwpolicy2
+@GUID("98325047-c671-4174-8d81-defcd3f03186")
 interface INetFwPolicy2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_currentprofiletypes
@@ -1361,9 +1361,9 @@ interface INetFwPolicy2 : IDispatch
     HRESULT get_LocalPolicyModifyState(NET_FW_MODIFY_STATE* modifyState);
 }
 
-@GUID("f7898af5-cac4-4632-a2ec-da06e5111af2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwmgr
+@GUID("f7898af5-cac4-4632-a2ec-da06e5111af2")
 interface INetFwMgr : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-get_localpolicy
@@ -1380,9 +1380,9 @@ interface INetFwMgr : IDispatch
                               VARIANT* restricted);
 }
 
-@GUID("71881699-18f4-458b-b892-3ffce5e07f75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwproduct
+@GUID("71881699-18f4-458b-b892-3ffce5e07f75")
 interface INetFwProduct : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_rulecategories
@@ -1397,9 +1397,9 @@ interface INetFwProduct : IDispatch
     HRESULT get_PathToSignedProductExe(BSTR* path);
 }
 
-@GUID("39eb36e0-2097-40bd-8af2-63a13b525362")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwproducts
+@GUID("39eb36e0-2097-40bd-8af2-63a13b525362")
 interface INetFwProducts : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-get_count

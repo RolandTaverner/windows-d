@@ -58,9 +58,9 @@ struct EventObjectChange;
 @GUID("bb07bacd-cd56-4e63-a8ff-cbf0355fb9f4")
 struct EventObjectChange2;
 
-@GUID("4e14fb9f-2e22-11d1-9964-00c04fbbb345")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventsystem
+@GUID("4e14fb9f-2e22-11d1-9964-00c04fbbb345")
 interface IEventSystem : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventsystem-query
@@ -77,9 +77,9 @@ interface IEventSystem : IDispatch
     HRESULT RemoveS(BSTR progID, BSTR queryCriteria);
 }
 
-@GUID("e341516b-2e32-11d1-9964-00c04fbbb345")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventpublisher
+@GUID("e341516b-2e32-11d1-9964-00c04fbbb345")
 interface IEventPublisher : IDispatch
 {
     HRESULT get_PublisherID(BSTR* pbstrPublisherID);
@@ -111,9 +111,9 @@ interface IEventPublisher : IDispatch
     HRESULT GetDefaultPropertyCollection(IEventObjectCollection* collection);
 }
 
-@GUID("fb2b72a0-7a68-11d1-88f9-0080c7d771bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventclass
+@GUID("fb2b72a0-7a68-11d1-88f9-0080c7d771bf")
 interface IEventClass : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventclass-get_eventclassid
@@ -146,9 +146,9 @@ interface IEventClass : IDispatch
     HRESULT put_TypeLib(BSTR bstrTypeLib);
 }
 
-@GUID("fb2b72a1-7a68-11d1-88f9-0080c7d771bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventclass2
+@GUID("fb2b72a1-7a68-11d1-88f9-0080c7d771bf")
 interface IEventClass2 : IEventClass
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventclass2-get_publisherid
@@ -169,9 +169,9 @@ interface IEventClass2 : IEventClass
     HRESULT put_FireInParallel(BOOL fFireInParallel);
 }
 
-@GUID("4a6b0e15-2e38-11d1-9965-00c04fbbb345")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventsubscription
+@GUID("4a6b0e15-2e38-11d1-9965-00c04fbbb345")
 interface IEventSubscription : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventsubscription-get_subscriptionid
@@ -244,18 +244,18 @@ interface IEventSubscription : IDispatch
     HRESULT put_InterfaceID(BSTR bstrInterfaceID);
 }
 
-@GUID("e0498c93-4efe-11d1-9971-00c04fbbb345")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ifiringcontrol
+@GUID("e0498c93-4efe-11d1-9971-00c04fbbb345")
 interface IFiringControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ifiringcontrol-firesubscription
     HRESULT FireSubscription(IEventSubscription subscription);
 }
 
-@GUID("465e5cc0-7b26-11d1-88fb-0080c7d771bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ipublisherfilter
+@GUID("465e5cc0-7b26-11d1-88fb-0080c7d771bf")
 interface IPublisherFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ipublisherfilter-initialize
@@ -264,9 +264,9 @@ interface IPublisherFilter : IUnknown
     HRESULT PrepareToFire(BSTR methodName, IFiringControl firingControl);
 }
 
-@GUID("465e5cc1-7b26-11d1-88fb-0080c7d771bf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-imultiinterfacepublisherfilter
+@GUID("465e5cc1-7b26-11d1-88fb-0080c7d771bf")
 interface IMultiInterfacePublisherFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-imultiinterfacepublisherfilter-initialize
@@ -275,9 +275,9 @@ interface IMultiInterfacePublisherFilter : IUnknown
     HRESULT PrepareToFire(const(GUID)* iid, BSTR methodName, IFiringControl firingControl);
 }
 
-@GUID("f4a07d70-2e25-11d1-9964-00c04fbbb345")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventobjectchange
+@GUID("f4a07d70-2e25-11d1-9964-00c04fbbb345")
 interface IEventObjectChange : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventobjectchange-changedsubscription
@@ -288,9 +288,9 @@ interface IEventObjectChange : IUnknown
     HRESULT ChangedPublisher(EOC_ChangeType changeType, BSTR bstrPublisherID);
 }
 
-@GUID("7701a9c3-bd68-438f-83e0-67bf4f53a422")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventobjectchange2
+@GUID("7701a9c3-bd68-438f-83e0-67bf4f53a422")
 interface IEventObjectChange2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventobjectchange2-changedsubscription
@@ -299,9 +299,9 @@ interface IEventObjectChange2 : IUnknown
     HRESULT ChangedEventClass(COMEVENTSYSCHANGEINFO* pInfo);
 }
 
-@GUID("f4a07d63-2e25-11d1-9964-00c04fbbb345")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ienumeventobject
+@GUID("f4a07d63-2e25-11d1-9964-00c04fbbb345")
 interface IEnumEventObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ienumeventobject-clone
@@ -314,9 +314,9 @@ interface IEnumEventObject : IUnknown
     HRESULT Skip(uint cSkipElem);
 }
 
-@GUID("f89ac270-d4eb-11d1-b682-00805fc79216")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventobjectcollection
+@GUID("f89ac270-d4eb-11d1-b682-00805fc79216")
 interface IEventObjectCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventobjectcollection-get__newenum
@@ -333,9 +333,9 @@ interface IEventObjectCollection : IDispatch
     HRESULT Remove(BSTR objectID);
 }
 
-@GUID("da538ee2-f4de-11d1-b6bb-00805fc79216")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventproperty
+@GUID("da538ee2-f4de-11d1-b6bb-00805fc79216")
 interface IEventProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventproperty-get_name
@@ -348,9 +348,9 @@ interface IEventProperty : IDispatch
     HRESULT put_Value(VARIANT* propertyValue);
 }
 
-@GUID("0343e2f4-86f6-11d1-b760-00c04fb926af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-ieventcontrol
+@GUID("0343e2f4-86f6-11d1-b760-00c04fb926af")
 interface IEventControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-ieventcontrol-setpublisherfilter
@@ -366,9 +366,9 @@ interface IEventControl : IDispatch
     HRESULT SetDefaultQuery(BSTR methodName, BSTR criteria, int* errorIndex);
 }
 
-@GUID("0343e2f5-86f6-11d1-b760-00c04fb926af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nn-eventsys-imultiinterfaceeventcontrol
+@GUID("0343e2f5-86f6-11d1-b760-00c04fb926af")
 interface IMultiInterfaceEventControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventsys/nf-eventsys-imultiinterfaceeventcontrol-setmultiinterfacepublisherfilter

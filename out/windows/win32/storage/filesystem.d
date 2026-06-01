@@ -6084,9 +6084,9 @@ BOOLEAN CreateSymbolicLinkTransactedW(const(PWSTR) lpSymlinkFileName, const(PWST
 
 // Interfaces
 
-@GUID("7988b574-ec89-11cf-9c00-00aa00a14f56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nn-dskquota-idiskquotauser
+@GUID("7988b574-ec89-11cf-9c00-00aa00a14f56")
 interface IDiskQuotaUser : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nf-dskquota-idiskquotauser-getid
@@ -6122,9 +6122,9 @@ interface IDiskQuotaUser : IUnknown
     HRESULT GetAccountStatus(uint* pdwStatus);
 }
 
-@GUID("7988b577-ec89-11cf-9c00-00aa00a14f56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nn-dskquota-ienumdiskquotausers
+@GUID("7988b577-ec89-11cf-9c00-00aa00a14f56")
 interface IEnumDiskQuotaUsers : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nf-dskquota-ienumdiskquotausers-next
@@ -6137,9 +6137,9 @@ interface IEnumDiskQuotaUsers : IUnknown
     HRESULT Clone(IEnumDiskQuotaUsers* ppEnum);
 }
 
-@GUID("7988b576-ec89-11cf-9c00-00aa00a14f56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nn-dskquota-idiskquotauserbatch
+@GUID("7988b576-ec89-11cf-9c00-00aa00a14f56")
 interface IDiskQuotaUserBatch : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nf-dskquota-idiskquotauserbatch-add
@@ -6152,9 +6152,9 @@ interface IDiskQuotaUserBatch : IUnknown
     HRESULT FlushToDisk();
 }
 
-@GUID("7988b572-ec89-11cf-9c00-00aa00a14f56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nn-dskquota-idiskquotacontrol
+@GUID("7988b572-ec89-11cf-9c00-00aa00a14f56")
 interface IDiskQuotaControl : IConnectionPointContainer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nf-dskquota-idiskquotacontrol-initialize
@@ -6203,9 +6203,9 @@ interface IDiskQuotaControl : IConnectionPointContainer
     HRESULT ShutdownNameResolution();
 }
 
-@GUID("7988b579-ec89-11cf-9c00-00aa00a14f56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nn-dskquota-idiskquotaevents
+@GUID("7988b579-ec89-11cf-9c00-00aa00a14f56")
 interface IDiskQuotaEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dskquota/nf-dskquota-idiskquotaevents-onusernamechanged

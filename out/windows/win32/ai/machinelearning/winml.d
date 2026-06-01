@@ -375,9 +375,9 @@ HRESULT MLCreateOperatorRegistry(IMLOperatorRegistry* registry);
 
 // Interfaces
 
-@GUID("e2eeb6a9-f31f-4055-a521-e30b5b33664a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlmodel
+@GUID("e2eeb6a9-f31f-4055-a521-e30b5b33664a")
 interface IWinMLModel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-getdescription
@@ -390,9 +390,9 @@ interface IWinMLModel : IUnknown
     HRESULT EnumerateModelOutputs(uint Index, WINML_VARIABLE_DESC** ppOutputDescriptor);
 }
 
-@GUID("95848f9e-583d-4054-af12-916387cd8426")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlevaluationcontext
+@GUID("95848f9e-583d-4054-af12-916387cd8426")
 interface IWinMLEvaluationContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-bindvalue
@@ -403,9 +403,9 @@ interface IWinMLEvaluationContext : IUnknown
     HRESULT Clear();
 }
 
-@GUID("a0425329-40ae-48d9-bce3-829ef7b8a41a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlruntime
+@GUID("a0425329-40ae-48d9-bce3-829ef7b8a41a")
 interface IWinMLRuntime : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-loadmodel
@@ -416,9 +416,9 @@ interface IWinMLRuntime : IUnknown
     HRESULT EvaluateModel(IWinMLEvaluationContext pContext);
 }
 
-@GUID("a807b84d-4ae5-4bc0-a76a-941aa246bd41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlruntimefactory
+@GUID("a807b84d-4ae5-4bc0-a76a-941aa246bd41")
 interface IWinMLRuntimeFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntimefactory-createruntime

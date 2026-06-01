@@ -4659,8 +4659,8 @@ BOOL OleUIUpdateLinksA(IOleUILinkContainerA lpOleUILinkCntr, HWND hwndParent, PS
 
 // Interfaces
 
-@GUID("00020405-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypeinfo
+@GUID("00020405-0000-0000-c000-000000000046")
 interface ICreateTypeInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setguid
@@ -4709,8 +4709,8 @@ interface ICreateTypeInfo : IUnknown
     HRESULT LayOut();
 }
 
-@GUID("0002040e-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypeinfo2
+@GUID("0002040e-0000-0000-c000-000000000046")
 interface ICreateTypeInfo2 : ICreateTypeInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletefuncdesc
@@ -4744,8 +4744,8 @@ interface ICreateTypeInfo2 : ICreateTypeInfo
     HRESULT SetName(PWSTR szName);
 }
 
-@GUID("00020406-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypelib
+@GUID("00020406-0000-0000-c000-000000000046")
 interface ICreateTypeLib : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-createtypeinfo
@@ -4770,8 +4770,8 @@ interface ICreateTypeLib : IUnknown
     HRESULT SaveAllChanges();
 }
 
-@GUID("0002040f-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypelib2
+@GUID("0002040f-0000-0000-c000-000000000046")
 interface ICreateTypeLib2 : ICreateTypeLib
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-deletetypeinfo
@@ -4784,8 +4784,8 @@ interface ICreateTypeLib2 : ICreateTypeLib
     HRESULT SetHelpStringDll(PWSTR szFileName);
 }
 
-@GUID("00020404-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-ienumvariant
+@GUID("00020404-0000-0000-c000-000000000046")
 interface IEnumVARIANT : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -4798,8 +4798,8 @@ interface IEnumVARIANT : IUnknown
     HRESULT Clone(IEnumVARIANT* ppEnum);
 }
 
-@GUID("00020410-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-itypechangeevents
+@GUID("00020410-0000-0000-c000-000000000046")
 interface ITypeChangeEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-itypechangeevents-requesttypechange
@@ -4808,8 +4808,8 @@ interface ITypeChangeEvents : IUnknown
     HRESULT AfterTypeChange(CHANGEKIND changeKind, ITypeInfo pTInfoAfter, PWSTR pStrName);
 }
 
-@GUID("22f03340-547d-101b-8e65-08002b2bd119")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreateerrorinfo
+@GUID("22f03340-547d-101b-8e65-08002b2bd119")
 interface ICreateErrorInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setguid
@@ -4841,8 +4841,8 @@ interface ITypeMarshal : IUnknown
     HRESULT Free(void* pvType);
 }
 
-@GUID("0000002f-0000-0000-c000-000000000046")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-irecordinfo
+@GUID("0000002f-0000-0000-c000-000000000046")
 interface IRecordInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordinit
@@ -4879,9 +4879,9 @@ interface IRecordInfo : IUnknown
     HRESULT RecordDestroy(void* pvRecord);
 }
 
-@GUID("00000111-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleadviseholder
+@GUID("00000111-0000-0000-c000-000000000046")
 interface IOleAdviseHolder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-advise
@@ -4898,9 +4898,9 @@ interface IOleAdviseHolder : IUnknown
     HRESULT SendOnClose();
 }
 
-@GUID("0000011e-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecache
+@GUID("0000011e-0000-0000-c000-000000000046")
 interface IOleCache : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-cache
@@ -4915,9 +4915,9 @@ interface IOleCache : IUnknown
     HRESULT SetData(FORMATETC* pformatetc, STGMEDIUM* pmedium, BOOL fRelease);
 }
 
-@GUID("00000128-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecache2
+@GUID("00000128-0000-0000-c000-000000000046")
 interface IOleCache2 : IOleCache
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache2-updatecache
@@ -4927,9 +4927,9 @@ interface IOleCache2 : IOleCache
     HRESULT DiscardCache(uint dwDiscardOptions);
 }
 
-@GUID("00000129-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecachecontrol
+@GUID("00000129-0000-0000-c000-000000000046")
 interface IOleCacheControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecachecontrol-onrun
@@ -4938,18 +4938,18 @@ interface IOleCacheControl : IUnknown
     HRESULT OnStop();
 }
 
-@GUID("0000011a-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iparsedisplayname
+@GUID("0000011a-0000-0000-c000-000000000046")
 interface IParseDisplayName : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iparsedisplayname-parsedisplayname
     HRESULT ParseDisplayName(IBindCtx pbc, PWSTR pszDisplayName, uint* pchEaten, IMoniker* ppmkOut);
 }
 
-@GUID("0000011b-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecontainer
+@GUID("0000011b-0000-0000-c000-000000000046")
 interface IOleContainer : IParseDisplayName
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecontainer-enumobjects
@@ -4959,9 +4959,9 @@ interface IOleContainer : IParseDisplayName
     HRESULT LockContainer(BOOL fLock);
 }
 
-@GUID("00000118-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleclientsite
+@GUID("00000118-0000-0000-c000-000000000046")
 interface IOleClientSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-saveobject
@@ -4980,9 +4980,9 @@ interface IOleClientSite : IUnknown
     HRESULT RequestNewObjectLayout();
 }
 
-@GUID("00000112-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleobject
+@GUID("00000112-0000-0000-c000-000000000046")
 interface IOleObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setclientsite
@@ -5034,9 +5034,9 @@ interface IOleObject : IUnknown
     HRESULT SetColorScheme(LOGPALETTE* pLogpal);
 }
 
-@GUID("00000114-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolewindow
+@GUID("00000114-0000-0000-c000-000000000046")
 interface IOleWindow : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolewindow-getwindow
@@ -5045,9 +5045,9 @@ interface IOleWindow : IUnknown
     HRESULT ContextSensitiveHelp(BOOL fEnterMode);
 }
 
-@GUID("0000011d-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolelink
+@GUID("0000011d-0000-0000-c000-000000000046")
 interface IOleLink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setupdateoptions
@@ -5074,9 +5074,9 @@ interface IOleLink : IUnknown
     HRESULT Update(IBindCtx pbc);
 }
 
-@GUID("0000011c-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleitemcontainer
+@GUID("0000011c-0000-0000-c000-000000000046")
 interface IOleItemContainer : IOleContainer
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-getobject
@@ -5087,9 +5087,9 @@ interface IOleItemContainer : IOleContainer
     HRESULT IsRunning(PWSTR pszItem);
 }
 
-@GUID("00000115-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceuiwindow
+@GUID("00000115-0000-0000-c000-000000000046")
 interface IOleInPlaceUIWindow : IOleWindow
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-getborder
@@ -5102,9 +5102,9 @@ interface IOleInPlaceUIWindow : IOleWindow
     HRESULT SetActiveObject(IOleInPlaceActiveObject pActiveObject, const(PWSTR) pszObjName);
 }
 
-@GUID("00000117-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceactiveobject
+@GUID("00000117-0000-0000-c000-000000000046")
 interface IOleInPlaceActiveObject : IOleWindow
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-translateaccelerator
@@ -5119,9 +5119,9 @@ interface IOleInPlaceActiveObject : IOleWindow
     HRESULT EnableModeless(BOOL fEnable);
 }
 
-@GUID("00000116-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceframe
+@GUID("00000116-0000-0000-c000-000000000046")
 interface IOleInPlaceFrame : IOleInPlaceUIWindow
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-insertmenus
@@ -5138,9 +5138,9 @@ interface IOleInPlaceFrame : IOleInPlaceUIWindow
     HRESULT TranslateAccelerator(MSG* lpmsg, ushort wID);
 }
 
-@GUID("00000113-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceobject
+@GUID("00000113-0000-0000-c000-000000000046")
 interface IOleInPlaceObject : IOleWindow
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-inplacedeactivate
@@ -5153,9 +5153,9 @@ interface IOleInPlaceObject : IOleWindow
     HRESULT ReactivateAndUndo();
 }
 
-@GUID("00000119-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplacesite
+@GUID("00000119-0000-0000-c000-000000000046")
 interface IOleInPlaceSite : IOleWindow
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-caninplaceactivate
@@ -5187,9 +5187,9 @@ interface IContinue : IUnknown
     HRESULT FContinue();
 }
 
-@GUID("0000010d-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iviewobject
+@GUID("0000010d-0000-0000-c000-000000000046")
 interface IViewObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-draw
@@ -5208,18 +5208,18 @@ interface IViewObject : IUnknown
     HRESULT GetAdvise(uint* pAspects, uint* pAdvf, IAdviseSink* ppAdvSink);
 }
 
-@GUID("00000127-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iviewobject2
+@GUID("00000127-0000-0000-c000-000000000046")
 interface IViewObject2 : IViewObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject2-getextent
     HRESULT GetExtent(DVASPECT dwDrawAspect, int lindex, DVTARGETDEVICE* ptd, SIZE* lpsizel);
 }
 
-@GUID("00000121-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idropsource
+@GUID("00000121-0000-0000-c000-000000000046")
 interface IDropSource : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -5228,9 +5228,9 @@ interface IDropSource : IUnknown
     HRESULT GiveFeedback(DROPEFFECT dwEffect);
 }
 
-@GUID("00000122-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idroptarget
+@GUID("00000122-0000-0000-c000-000000000046")
 interface IDropTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragenter
@@ -5243,9 +5243,9 @@ interface IDropTarget : IUnknown
     HRESULT Drop(IDataObject pDataObj, MODIFIERKEYS_FLAGS grfKeyState, POINTL pt, DROPEFFECT* pdwEffect);
 }
 
-@GUID("0000012b-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idropsourcenotify
+@GUID("0000012b-0000-0000-c000-000000000046")
 interface IDropSourceNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idropsourcenotify-dragentertarget
@@ -5254,9 +5254,9 @@ interface IDropSourceNotify : IUnknown
     HRESULT DragLeaveTarget();
 }
 
-@GUID("390e3878-fd55-4e18-819d-4682081c0cfd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ienterprisedroptarget
+@GUID("390e3878-fd55-4e18-819d-4682081c0cfd")
 interface IEnterpriseDropTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienterprisedroptarget-setdropsourceenterpriseid
@@ -5265,9 +5265,9 @@ interface IEnterpriseDropTarget : IUnknown
     HRESULT IsEvaluatingEdpPolicy(BOOL* value);
 }
 
-@GUID("00000104-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ienumoleverb
+@GUID("00000104-0000-0000-c000-000000000046")
 interface IEnumOLEVERB : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-next
@@ -5280,9 +5280,9 @@ interface IEnumOLEVERB : IUnknown
     HRESULT Clone(IEnumOLEVERB* ppenum);
 }
 
-@GUID("b196b28f-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iclassfactory2
+@GUID("b196b28f-bab4-101a-b69c-00aa00341d07")
 interface IClassFactory2 : IClassFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-getlicinfo
@@ -5295,27 +5295,27 @@ interface IClassFactory2 : IClassFactory
                               const(GUID)* riid, BSTR bstrKey, void** ppvObj);
 }
 
-@GUID("b196b283-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovideclassinfo
+@GUID("b196b283-bab4-101a-b69c-00aa00341d07")
 interface IProvideClassInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovideclassinfo-getclassinfo
     HRESULT GetClassInfo(ITypeInfo* ppTI);
 }
 
-@GUID("a6bc3ac0-dbaa-11ce-9de3-00aa004bb851")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovideclassinfo2
+@GUID("a6bc3ac0-dbaa-11ce-9de3-00aa004bb851")
 interface IProvideClassInfo2 : IProvideClassInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovideclassinfo2-getguid
     HRESULT GetGUID(uint dwGuidKind, GUID* pGUID);
 }
 
-@GUID("a7aba9c1-8983-11cf-8f20-00805f2cd064")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovidemultipleclassinfo
+@GUID("a7aba9c1-8983-11cf-8f20-00805f2cd064")
 interface IProvideMultipleClassInfo : IProvideClassInfo2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovidemultipleclassinfo-getmultitypeinfocount
@@ -5325,9 +5325,9 @@ interface IProvideMultipleClassInfo : IProvideClassInfo2
                            uint* pcdispidReserved, GUID* piidPrimary, GUID* piidSource);
 }
 
-@GUID("b196b288-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iolecontrol
+@GUID("b196b288-bab4-101a-b69c-00aa00341d07")
 interface IOleControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-getcontrolinfo
@@ -5340,9 +5340,9 @@ interface IOleControl : IUnknown
     HRESULT FreezeEvents(BOOL bFreeze);
 }
 
-@GUID("b196b289-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iolecontrolsite
+@GUID("b196b289-bab4-101a-b69c-00aa00341d07")
 interface IOleControlSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-oncontrolinfochanged
@@ -5362,9 +5362,9 @@ interface IOleControlSite : IUnknown
     HRESULT ShowPropertyFrame();
 }
 
-@GUID("b196b28d-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypage
+@GUID("b196b28d-bab4-101a-b69c-00aa00341d07")
 interface IPropertyPage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-setpagesite
@@ -5391,18 +5391,18 @@ interface IPropertyPage : IUnknown
     HRESULT TranslateAccelerator(MSG* pMsg);
 }
 
-@GUID("01e44665-24ac-101b-84ed-08002b2ec713")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypage2
+@GUID("01e44665-24ac-101b-84ed-08002b2ec713")
 interface IPropertyPage2 : IPropertyPage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage2-editproperty
     HRESULT EditProperty(int dispID);
 }
 
-@GUID("b196b28c-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypagesite
+@GUID("b196b28c-bab4-101a-b69c-00aa00341d07")
 interface IPropertyPageSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-onstatuschange
@@ -5415,9 +5415,9 @@ interface IPropertyPageSite : IUnknown
     HRESULT TranslateAccelerator(MSG* pMsg);
 }
 
-@GUID("9bfbbc02-eff1-101a-84ed-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertynotifysink
+@GUID("9bfbbc02-eff1-101a-84ed-00aa00341d07")
 interface IPropertyNotifySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertynotifysink-onchanged
@@ -5426,17 +5426,17 @@ interface IPropertyNotifySink : IUnknown
     HRESULT OnRequestEdit(int dispID);
 }
 
-@GUID("b196b28b-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ispecifypropertypages
+@GUID("b196b28b-bab4-101a-b69c-00aa00341d07")
 interface ISpecifyPropertyPages : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ispecifypropertypages-getpages
     HRESULT GetPages(CAUUID* pPages);
 }
 
-@GUID("37d84f60-42cb-11ce-8135-00aa004bb851")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipersistpropertybag
+@GUID("37d84f60-42cb-11ce-8135-00aa004bb851")
 interface IPersistPropertyBag : IPersist
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-initnew
@@ -5447,9 +5447,9 @@ interface IPersistPropertyBag : IPersist
     HRESULT Save(IPropertyBag pPropBag, BOOL fClearDirty, BOOL fSaveAllProperties);
 }
 
-@GUID("742b0e01-14e6-101b-914e-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-isimpleframesite
+@GUID("742b0e01-14e6-101b-914e-00aa00300cab")
 interface ISimpleFrameSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-isimpleframesite-premessagefilter
@@ -5458,9 +5458,9 @@ interface ISimpleFrameSite : IUnknown
     HRESULT PostMessageFilter(HWND hWnd, uint msg, WPARAM wp, LPARAM lp, LRESULT* plResult, uint dwCookie);
 }
 
-@GUID("bef6e002-a874-101a-8bba-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ifont
+@GUID("bef6e002-a874-101a-8bba-00aa00300cab")
 interface IFont : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_name
@@ -5513,9 +5513,9 @@ interface IFont : IUnknown
     HRESULT SetHdc(HDC hDC);
 }
 
-@GUID("7bf80980-bf32-101a-8bbb-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipicture
+@GUID("7bf80980-bf32-101a-8bbb-00aa00300cab")
 interface IPicture : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_handle
@@ -5574,23 +5574,23 @@ interface IFontEventsDisp : IDispatch
 {
 }
 
-@GUID("bef6e003-a874-101a-8bba-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ifontdisp
+@GUID("bef6e003-a874-101a-8bba-00aa00300cab")
 interface IFontDisp : IDispatch
 {
 }
 
-@GUID("7bf80981-bf32-101a-8bbb-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipicturedisp
+@GUID("7bf80981-bf32-101a-8bbb-00aa00300cab")
 interface IPictureDisp : IDispatch
 {
 }
 
-@GUID("1c2056cc-5ef4-101b-8bc8-00aa003e3b29")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplaceobjectwindowless
+@GUID("1c2056cc-5ef4-101b-8bc8-00aa003e3b29")
 interface IOleInPlaceObjectWindowless : IOleInPlaceObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplaceobjectwindowless-onwindowmessage
@@ -5599,9 +5599,9 @@ interface IOleInPlaceObjectWindowless : IOleInPlaceObject
     HRESULT GetDropTarget(IDropTarget* ppDropTarget);
 }
 
-@GUID("9c2cad80-3424-11cf-b670-00aa004cd6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplacesiteex
+@GUID("9c2cad80-3424-11cf-b670-00aa004cd6d8")
 interface IOleInPlaceSiteEx : IOleInPlaceSite
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-oninplaceactivateex
@@ -5612,9 +5612,9 @@ interface IOleInPlaceSiteEx : IOleInPlaceSite
     HRESULT RequestUIActivate();
 }
 
-@GUID("922eada0-3424-11cf-b670-00aa004cd6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplacesitewindowless
+@GUID("922eada0-3424-11cf-b670-00aa004cd6d8")
 interface IOleInPlaceSiteWindowless : IOleInPlaceSiteEx
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-canwindowlessactivate
@@ -5643,9 +5643,9 @@ interface IOleInPlaceSiteWindowless : IOleInPlaceSiteEx
     HRESULT OnDefWindowMessage(uint msg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
 }
 
-@GUID("3af24292-0c96-11ce-a0cf-00aa00600ab8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iviewobjectex
+@GUID("3af24292-0c96-11ce-a0cf-00aa00600ab8")
 interface IViewObjectEx : IViewObject2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getrect
@@ -5661,9 +5661,9 @@ interface IViewObjectEx : IViewObject2
                              DVEXTENTINFO* pExtentInfo, SIZE* pSizel);
 }
 
-@GUID("894ad3b0-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleundounit
+@GUID("894ad3b0-ef97-11ce-9bc9-00aa00608e01")
 interface IOleUndoUnit : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-do
@@ -5676,9 +5676,9 @@ interface IOleUndoUnit : IUnknown
     HRESULT OnNextAdd();
 }
 
-@GUID("a1faf330-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleparentundounit
+@GUID("a1faf330-ef97-11ce-9bc9-00aa00608e01")
 interface IOleParentUndoUnit : IOleUndoUnit
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-open
@@ -5693,9 +5693,9 @@ interface IOleParentUndoUnit : IOleUndoUnit
     HRESULT GetParentState(uint* pdwState);
 }
 
-@GUID("b3e7c340-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ienumoleundounits
+@GUID("b3e7c340-ef97-11ce-9bc9-00aa00608e01")
 interface IEnumOleUndoUnits : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -5708,9 +5708,9 @@ interface IEnumOleUndoUnits : IUnknown
     HRESULT Clone(IEnumOleUndoUnits* ppEnum);
 }
 
-@GUID("d001f200-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleundomanager
+@GUID("d001f200-ef97-11ce-9bc9-00aa00608e01")
 interface IOleUndoManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-open
@@ -5739,9 +5739,9 @@ interface IOleUndoManager : IUnknown
     HRESULT Enable(BOOL fEnable);
 }
 
-@GUID("55980ba0-35aa-11cf-b671-00aa004cd6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipointerinactive
+@GUID("55980ba0-35aa-11cf-b671-00aa004cd6d8")
 interface IPointerInactive : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-getactivationpolicy
@@ -5752,9 +5752,9 @@ interface IPointerInactive : IUnknown
     HRESULT OnInactiveSetCursor(RECT* pRectBounds, int x, int y, uint dwMouseMsg, BOOL fSetAlways);
 }
 
-@GUID("fc4801a3-2ba9-11cf-a229-00aa003d7352")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iobjectwithsite
+@GUID("fc4801a3-2ba9-11cf-a229-00aa003d7352")
 interface IObjectWithSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iobjectwithsite-setsite
@@ -5763,9 +5763,9 @@ interface IObjectWithSite : IUnknown
     HRESULT GetSite(const(GUID)* riid, void** ppvSite);
 }
 
-@GUID("376bd3aa-3845-101b-84ed-08002b2ec713")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iperpropertybrowsing
+@GUID("376bd3aa-3845-101b-84ed-08002b2ec713")
 interface IPerPropertyBrowsing : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getdisplaystring
@@ -5788,18 +5788,18 @@ interface IPersistPropertyBag2 : IPersist
     HRESULT IsDirty();
 }
 
-@GUID("3af24290-0c96-11ce-a0cf-00aa00600ab8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iadvisesinkex
+@GUID("3af24290-0c96-11ce-a0cf-00aa00600ab8")
 interface IAdviseSinkEx : IAdviseSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iadvisesinkex-onviewstatuschange
     void OnViewStatusChange(uint dwViewStatus);
 }
 
-@GUID("cf51ed10-62fe-11cf-bf86-00a0c9034836")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iquickactivate
+@GUID("cf51ed10-62fe-11cf-bf86-00a0c9034836")
 interface IQuickActivate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-quickactivate
@@ -5810,8 +5810,8 @@ interface IQuickActivate : IUnknown
     HRESULT GetContentExtent(SIZE* pSizel);
 }
 
-@GUID("40a050a0-3c31-101b-a82e-08002b2b2337")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-ivbgetcontrol
+@GUID("40a050a0-3c31-101b-a82e-08002b2b2337")
 interface IVBGetControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-ivbgetcontrol-enumcontrols
@@ -5819,16 +5819,16 @@ interface IVBGetControl : IUnknown
                          ENUM_CONTROLS_WHICH_FLAGS dwWhich, IEnumUnknown* ppenumUnk);
 }
 
-@GUID("8a701da0-4feb-101b-a82e-08002b2b2337")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-igetoleobject
+@GUID("8a701da0-4feb-101b-a82e-08002b2b2337")
 interface IGetOleObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-igetoleobject-getoleobject
     HRESULT GetOleObject(const(GUID)* riid, void** ppvObj);
 }
 
-@GUID("9849fd60-3768-101b-8d72-ae6164ffe3cf")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-ivbformat
+@GUID("9849fd60-3768-101b-8d72-ae6164ffe3cf")
 interface IVBFormat : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-ivbformat-format
@@ -5836,17 +5836,17 @@ interface IVBFormat : IUnknown
                    ushort sFirstWeekOfYear, ushort* rcb);
 }
 
-@GUID("91733a60-3f4c-101b-a3f6-00aa0034e4e9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-igetvbaobject
+@GUID("91733a60-3f4c-101b-a3f6-00aa0034e4e9")
 interface IGetVBAObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-igetvbaobject-getobject
     HRESULT GetObject(const(GUID)* riid, void** ppvObj, uint dwReserved);
 }
 
-@GUID("b722bcc5-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocument
+@GUID("b722bcc5-4e68-101b-a2bc-00aa00404770")
 interface IOleDocument : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-createview
@@ -5857,18 +5857,18 @@ interface IOleDocument : IUnknown
     HRESULT EnumViews(IEnumOleDocumentViews* ppEnum, IOleDocumentView* ppView);
 }
 
-@GUID("b722bcc7-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocumentsite
+@GUID("b722bcc7-4e68-101b-a2bc-00aa00404770")
 interface IOleDocumentSite : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentsite-activateme
     HRESULT ActivateMe(IOleDocumentView pViewToActivate);
 }
 
-@GUID("b722bcc6-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocumentview
+@GUID("b722bcc6-4e68-101b-a2bc-00aa00404770")
 interface IOleDocumentView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setinplacesite
@@ -5899,9 +5899,9 @@ interface IOleDocumentView : IUnknown
     HRESULT Clone(IOleInPlaceSite pIPSiteNew, IOleDocumentView* ppViewNew);
 }
 
-@GUID("b722bcc8-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ienumoledocumentviews
+@GUID("b722bcc8-4e68-101b-a2bc-00aa00404770")
 interface IEnumOleDocumentViews : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-next
@@ -5914,9 +5914,9 @@ interface IEnumOleDocumentViews : IUnknown
     HRESULT Clone(IEnumOleDocumentViews* ppEnum);
 }
 
-@GUID("b722bcca-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-icontinuecallback
+@GUID("b722bcca-4e68-101b-a2bc-00aa00404770")
 interface IContinueCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-icontinuecallback-fcontinue
@@ -5925,9 +5925,9 @@ interface IContinueCallback : IUnknown
     HRESULT FContinuePrinting(int nCntPrinted, int nCurPage, PWSTR pwszPrintStatus);
 }
 
-@GUID("b722bcc9-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-iprint
+@GUID("b722bcc9-4e68-101b-a2bc-00aa00404770")
 interface IPrint : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-setinitialpagenum
@@ -5939,9 +5939,9 @@ interface IPrint : IUnknown
                   IContinueCallback pcallback, int nFirstPage, int* pcPagesPrinted, int* pnLastPage);
 }
 
-@GUID("b722bccb-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-iolecommandtarget
+@GUID("b722bccb-4e68-101b-a2bc-00aa00404770")
 interface IOleCommandTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iolecommandtarget-querystatus

@@ -67,9 +67,9 @@ enum HRESULT REC_E_INEEDTODOTHEUPDATES = HRESULT(0x80041004);
 
 // Interfaces
 
-@GUID("6e793361-73c6-11d0-8469-00aa00442901")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emptyvc/nn-emptyvc-iemptyvolumecachecallback
+@GUID("6e793361-73c6-11d0-8469-00aa00442901")
 interface IEmptyVolumeCacheCallBack : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emptyvc/nf-emptyvc-iemptyvolumecachecallback-scanprogress
@@ -78,9 +78,9 @@ interface IEmptyVolumeCacheCallBack : IUnknown
     HRESULT PurgeProgress(ulong dwlSpaceFreed, ulong dwlSpaceToFree, uint dwFlags, const(PWSTR) pcwszStatus);
 }
 
-@GUID("8fce5227-04da-11d1-a004-00805f8abe06")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emptyvc/nn-emptyvc-iemptyvolumecache
+@GUID("8fce5227-04da-11d1-a004-00805f8abe06")
 interface IEmptyVolumeCache : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emptyvc/nf-emptyvc-iemptyvolumecache-initialize
@@ -96,9 +96,9 @@ interface IEmptyVolumeCache : IUnknown
     HRESULT Deactivate(EMPTY_VOLUME_CACHE_FLAGS* pdwFlags);
 }
 
-@GUID("02b7e3ba-4db3-11d2-b2d9-00c04f8eec8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emptyvc/nn-emptyvc-iemptyvolumecache2
+@GUID("02b7e3ba-4db3-11d2-b2d9-00c04f8eec8c")
 interface IEmptyVolumeCache2 : IEmptyVolumeCache
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emptyvc/nf-emptyvc-iemptyvolumecache2-initializeex
@@ -107,9 +107,9 @@ interface IEmptyVolumeCache2 : IEmptyVolumeCache
                          EMPTY_VOLUME_CACHE_FLAGS* pdwFlags);
 }
 
-@GUID("99180161-da16-101a-935c-444553540000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/lwef/ireconcileinitiator
+@GUID("99180161-da16-101a-935c-444553540000")
 interface IReconcileInitiator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/reconcil/nf-reconcil-ireconcileinitiator-setabortcallback
@@ -118,9 +118,9 @@ interface IReconcileInitiator : IUnknown
     HRESULT SetProgressFeedback(uint ulProgress, uint ulProgressMax);
 }
 
-@GUID("99180162-da16-101a-935c-444553540000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/reconcil/nn-reconcil-ireconcilableobject
+@GUID("99180162-da16-101a-935c-444553540000")
 interface IReconcilableObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/reconcil/nf-reconcil-ireconcilableobject-reconcile
@@ -137,9 +137,9 @@ interface IBriefcaseInitiator : IUnknown
     HRESULT IsMonikerInBriefcase(IMoniker pmk);
 }
 
-@GUID("52502ee0-ec80-11d0-89ab-00c04fc2972d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nn-shlobj-iactivedesktopp
+@GUID("52502ee0-ec80-11d0-89ab-00c04fc2972d")
 interface IActiveDesktopP : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nf-shlobj-iactivedesktopp-setsafemode
@@ -149,9 +149,9 @@ interface IActiveDesktopP : IUnknown
     HRESULT GetScheme(PWSTR pwszSchemeName, uint* pdwcchBuffer, uint dwFlags);
 }
 
-@GUID("b22754e2-4574-11d1-9888-006097deacf9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/nn-shlobj-iadesktopp2
+@GUID("b22754e2-4574-11d1-9888-006097deacf9")
 interface IADesktopP2 : IUnknown
 {
     HRESULT ReReadWallpaper();

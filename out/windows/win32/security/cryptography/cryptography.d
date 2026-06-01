@@ -14977,9 +14977,9 @@ struct CCertificateEnrollmentServerSetup;
 @GUID("afe2fa32-41b1-459d-a5de-49add8a72182")
 struct CCertificateEnrollmentPolicyServerSetup;
 
-@GUID("6ba73778-36da-4c39-8a85-bcfa7d000793")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nn-casetup-icertsrvsetupkeyinformation
+@GUID("6ba73778-36da-4c39-8a85-bcfa7d000793")
 interface ICertSrvSetupKeyInformation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nf-casetup-icertsrvsetupkeyinformation-get_providername
@@ -15008,9 +15008,9 @@ interface ICertSrvSetupKeyInformation : IDispatch
     HRESULT put_ExistingCACertificate(VARIANT varVal);
 }
 
-@GUID("e65c8b00-e58f-41f9-a9ec-a28d7427c844")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nn-casetup-icertsrvsetupkeyinformationcollection
+@GUID("e65c8b00-e58f-41f9-a9ec-a28d7427c844")
 interface ICertSrvSetupKeyInformationCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nf-casetup-icertsrvsetupkeyinformationcollection-get__newenum
@@ -15023,9 +15023,9 @@ interface ICertSrvSetupKeyInformationCollection : IDispatch
     HRESULT Add(ICertSrvSetupKeyInformation pIKeyInformation);
 }
 
-@GUID("b760a1bb-4784-44c0-8f12-555f0780ff25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nn-casetup-icertsrvsetup
+@GUID("b760a1bb-4784-44c0-8f12-555f0780ff25")
 interface ICertSrvSetup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nf-casetup-icertsrvsetup-get_caerrorid
@@ -15073,9 +15073,9 @@ interface ICertSrvSetup : IDispatch
     HRESULT PostUnInstall();
 }
 
-@GUID("4f7761bb-9f3b-4592-9ee0-9a73259c313e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nn-casetup-imscepsetup
+@GUID("4f7761bb-9f3b-4592-9ee0-9a73259c313e")
 interface IMSCEPSetup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nf-casetup-imscepsetup-get_msceperrorid
@@ -15104,9 +15104,9 @@ interface IMSCEPSetup : IDispatch
     HRESULT PostUnInstall();
 }
 
-@GUID("70027fdb-9dd9-4921-8944-b35cb31bd2ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nn-casetup-icertificateenrollmentserversetup
+@GUID("70027fdb-9dd9-4921-8944-b35cb31bd2ec")
 interface ICertificateEnrollmentServerSetup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nf-casetup-icertificateenrollmentserversetup-get_errorstring
@@ -15125,9 +15125,9 @@ interface ICertificateEnrollmentServerSetup : IDispatch
     HRESULT UnInstall(VARIANT* pCAConfig, VARIANT* pAuthentication);
 }
 
-@GUID("859252cc-238c-4a88-b8fd-a37e7d04e68b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nn-casetup-icertificateenrollmentpolicyserversetup
+@GUID("859252cc-238c-4a88-b8fd-a37e7d04e68b")
 interface ICertificateEnrollmentPolicyServerSetup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/casetup/nf-casetup-icertificateenrollmentpolicyserversetup-get_errorstring

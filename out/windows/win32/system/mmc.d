@@ -775,21 +775,24 @@ struct MMC_EXT_VIEW_DATA
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-element-application
 @GUID("49b2791a-b1ae-4c90-9b8e-e860ba07f889")
 struct Application;
 
 @GUID("ade6444b-c91f-4e37-92a4-5bb430a33340")
 struct AppEventsDHTMLConnector;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-immcversioninfo
 @GUID("d6fedb1d-cf21-4bd9-af3b-c5468e9c6684")
 struct MMCVersionInfo;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepower
 @GUID("f0285374-dff1-11d3-b433-00c04f8ecd78")
 struct ConsolePower;
 
-@GUID("f7889da9-4a02-4837-bf89-1a6f2a021010")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nn-mmcobj-isnapinproperties
+@GUID("f7889da9-4a02-4837-bf89-1a6f2a021010")
 interface ISnapinProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-initialize
@@ -800,9 +803,9 @@ interface ISnapinProperties : IUnknown
     HRESULT PropertiesChanged(int cProperties, MMC_SNAPIN_PROPERTY* pProperties);
 }
 
-@GUID("a50fa2e5-7e61-45eb-a8d4-9a07b3e851a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nn-mmcobj-isnapinpropertiescallback
+@GUID("a50fa2e5-7e61-45eb-a8d4-9a07b3e851a8")
 interface ISnapinPropertiesCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinpropertiescallback-addpropertyname
@@ -855,8 +858,8 @@ interface _EventConnector : IDispatch
     HRESULT Disconnect();
 }
 
-@GUID("e5e2d970-5bb3-4306-8804-b0968a31c8e6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/framerateconverter
+@GUID("e5e2d970-5bb3-4306-8804-b0968a31c8e6")
 interface Frame : IDispatch
 {
     HRESULT Maximize();
@@ -935,8 +938,8 @@ interface SnapIns : IDispatch
     HRESULT Remove(SnapIn SnapIn);
 }
 
-@GUID("ad4d6ca6-912f-409b-a26e-7fd234aef542")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/extension
+@GUID("ad4d6ca6-912f-409b-a26e-7fd234aef542")
 interface Extension : IDispatch
 {
     HRESULT get_Name(BSTR* Name);
@@ -948,8 +951,8 @@ interface Extension : IDispatch
     HRESULT Enable(BOOL Enable);
 }
 
-@GUID("82dbea43-8ca4-44bc-a2ca-d18741059ec8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCertEnroll/extensions
+@GUID("82dbea43-8ca4-44bc-a2ca-d18741059ec8")
 interface Extensions : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* retval);
@@ -989,8 +992,8 @@ interface Views : IDispatch
     HRESULT get__NewEnum(IUnknown* retval);
 }
 
-@GUID("6efc2da2-b38c-457e-9abb-ed2d189b8c38")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/Msi/view-object
+@GUID("6efc2da2-b38c-457e-9abb-ed2d189b8c38")
 interface View : IDispatch
 {
     HRESULT get_ActiveScopeNode(Node* Node);
@@ -1046,8 +1049,8 @@ interface Nodes : IDispatch
     HRESULT get_Count(int* Count);
 }
 
-@GUID("dab39ce0-25e6-4e07-8362-ba9c95706545")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-element-contextmenu
+@GUID("dab39ce0-25e6-4e07-8362-ba9c95706545")
 interface ContextMenu : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* retval);
@@ -1066,8 +1069,8 @@ interface MenuItem : IDispatch
     HRESULT get_Enabled(BOOL* Enabled);
 }
 
-@GUID("2886abc2-a425-42b2-91c6-e25c0e04581c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/com/properties-and-methods
+@GUID("2886abc2-a425-42b2-91c6-e25c0e04581c")
 interface Properties : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* retval);
@@ -1076,8 +1079,8 @@ interface Properties : IDispatch
     HRESULT Remove(BSTR Name);
 }
 
-@GUID("4600c3a5-e301-41d8-b6d0-ef2e4212e0ca")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/attributes
+@GUID("4600c3a5-e301-41d8-b6d0-ef2e4212e0ca")
 interface Property : IDispatch
 {
     HRESULT get_Value(VARIANT* Value);
@@ -1085,9 +1088,9 @@ interface Property : IDispatch
     HRESULT get_Name(BSTR* Name);
 }
 
-@GUID("955ab28a-5218-11d0-a985-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponentdata
+@GUID("955ab28a-5218-11d0-a985-00c04fd8d565")
 interface IComponentData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-initialize
@@ -1106,9 +1109,9 @@ interface IComponentData : IUnknown
     HRESULT CompareObjects(IDataObject lpDataObjectA, IDataObject lpDataObjectB);
 }
 
-@GUID("43136eb2-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponent
+@GUID("43136eb2-d36c-11cf-adbc-00aa00a80033")
 interface IComponent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-initialize
@@ -1127,18 +1130,18 @@ interface IComponent : IUnknown
     HRESULT CompareObjects(IDataObject lpDataObjectA, IDataObject lpDataObjectB);
 }
 
-@GUID("e8315a52-7a1a-11d0-a2d2-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdatacompare
+@GUID("e8315a52-7a1a-11d0-a2d2-00c04fd909dd")
 interface IResultDataCompare : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdatacompare-compare
     HRESULT Compare(LPARAM lUserParam, ptrdiff_t cookieA, ptrdiff_t cookieB, int* pnResult);
 }
 
-@GUID("9cb396d8-ea83-11d0-aef1-00c04fb6dd2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultownerdata
+@GUID("9cb396d8-ea83-11d0-aef1-00c04fb6dd2c")
 interface IResultOwnerData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-finditem
@@ -1149,9 +1152,9 @@ interface IResultOwnerData : IUnknown
     HRESULT SortItems(int nColumn, uint dwSortOptions, LPARAM lUserParam);
 }
 
-@GUID("43136eb1-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole
+@GUID("43136eb1-d36c-11cf-adbc-00aa00a80033")
 interface IConsole : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-setheader
@@ -1178,9 +1181,9 @@ interface IConsole : IUnknown
     HRESULT NewWindow(ptrdiff_t hScopeItem, uint lOptions);
 }
 
-@GUID("43136eb3-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iheaderctrl
+@GUID("43136eb3-d36c-11cf-adbc-00aa00a80033")
 interface IHeaderCtrl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-insertcolumn
@@ -1197,18 +1200,18 @@ interface IHeaderCtrl : IUnknown
     HRESULT GetColumnWidth(int nCol, int* pWidth);
 }
 
-@GUID("43136eb7-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenucallback
+@GUID("43136eb7-d36c-11cf-adbc-00aa00a80033")
 interface IContextMenuCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenucallback-additem
     HRESULT AddItem(CONTEXTMENUITEM* pItem);
 }
 
-@GUID("43136eb6-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenuprovider
+@GUID("43136eb6-d36c-11cf-adbc-00aa00a80033")
 interface IContextMenuProvider : IContextMenuCallback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-emptymenulist
@@ -1221,9 +1224,9 @@ interface IContextMenuProvider : IContextMenuCallback
     HRESULT ShowContextMenu(HWND hwndParent, int xPos, int yPos, int* plSelected);
 }
 
-@GUID("4f3b7a4f-cfac-11cf-b8e3-00c04fd8d5b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendcontextmenu
+@GUID("4f3b7a4f-cfac-11cf-b8e3-00c04fd8d5b0")
 interface IExtendContextMenu : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontextmenu-addmenuitems
@@ -1232,9 +1235,9 @@ interface IExtendContextMenu : IUnknown
     HRESULT Command(int lCommandID, IDataObject piDataObject);
 }
 
-@GUID("43136eb8-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist
+@GUID("43136eb8-d36c-11cf-adbc-00aa00a80033")
 interface IImageList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iimagelist-imagelistseticon
@@ -1243,9 +1246,9 @@ interface IImageList : IUnknown
     HRESULT ImageListSetStrip(ptrdiff_t* pBMapSm, ptrdiff_t* pBMapLg, int nStartLoc, COLORREF cMask);
 }
 
-@GUID("31da5fa0-e0eb-11cf-9f21-00aa003ca9f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdata
+@GUID("31da5fa0-e0eb-11cf-9f21-00aa003ca9f6")
 interface IResultData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-insertitem
@@ -1280,9 +1283,9 @@ interface IResultData : IUnknown
     HRESULT SetItemCount(int nItemCount, uint dwOptions);
 }
 
-@GUID("bedeb620-f24d-11cf-8afc-00aa003ca9f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolenamespace
+@GUID("bedeb620-f24d-11cf-8afc-00aa003ca9f6")
 interface IConsoleNameSpace : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-insertitem
@@ -1301,9 +1304,9 @@ interface IConsoleNameSpace : IUnknown
     HRESULT GetParentItem(ptrdiff_t item, ptrdiff_t* pItemParent, ptrdiff_t* pCookie);
 }
 
-@GUID("255f18cc-65db-11d1-a7dc-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolenamespace2
+@GUID("255f18cc-65db-11d1-a7dc-00c04fd8d565")
 interface IConsoleNameSpace2 : IConsoleNameSpace
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace2-expand
@@ -1312,9 +1315,9 @@ interface IConsoleNameSpace2 : IConsoleNameSpace
     HRESULT AddExtension(ptrdiff_t hItem, GUID* lpClsid);
 }
 
-@GUID("85de64dd-ef21-11cf-a285-00c04fd8dbe6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ipropertysheetcallback
+@GUID("85de64dd-ef21-11cf-a285-00c04fd8dbe6")
 interface IPropertySheetCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetcallback-addpage
@@ -1323,9 +1326,9 @@ interface IPropertySheetCallback : IUnknown
     HRESULT RemovePage(HPROPSHEETPAGE hPage);
 }
 
-@GUID("85de64de-ef21-11cf-a285-00c04fd8dbe6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ipropertysheetprovider
+@GUID("85de64de-ef21-11cf-a285-00c04fd8dbe6")
 interface IPropertySheetProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-createpropertysheet
@@ -1341,9 +1344,9 @@ interface IPropertySheetProvider : IUnknown
     HRESULT Show(ptrdiff_t window, int page);
 }
 
-@GUID("85de64dc-ef21-11cf-a285-00c04fd8dbe6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendpropertysheet
+@GUID("85de64dc-ef21-11cf-a285-00c04fd8dbe6")
 interface IExtendPropertySheet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet-createpropertypages
@@ -1352,9 +1355,9 @@ interface IExtendPropertySheet : IUnknown
     HRESULT QueryPagesFor(IDataObject lpDataObject);
 }
 
-@GUID("69fb811e-6c1c-11d0-a2cb-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontrolbar
+@GUID("69fb811e-6c1c-11d0-a2cb-00c04fd909dd")
 interface IControlbar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-create
@@ -1365,9 +1368,9 @@ interface IControlbar : IUnknown
     HRESULT Detach(IUnknown lpUnknown);
 }
 
-@GUID("49506520-6f40-11d0-a98b-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendcontrolbar
+@GUID("49506520-6f40-11d0-a98b-00c04fd8d565")
 interface IExtendControlbar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontrolbar-setcontrolbar
@@ -1376,9 +1379,9 @@ interface IExtendControlbar : IUnknown
     HRESULT ControlbarNotify(MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param2);
 }
 
-@GUID("43136eb9-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-itoolbar
+@GUID("43136eb9-d36c-11cf-adbc-00aa00a80033")
 interface IToolbar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-addbitmap
@@ -1395,9 +1398,9 @@ interface IToolbar : IUnknown
     HRESULT SetButtonState(int idCommand, MMC_BUTTON_STATE nState, BOOL bState);
 }
 
-@GUID("e49f7a60-74af-11d0-a286-00c04fd8fe93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsoleverb
+@GUID("e49f7a60-74af-11d0-a286-00c04fd8fe93")
 interface IConsoleVerb : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-getverbstate
@@ -1410,9 +1413,9 @@ interface IConsoleVerb : IUnknown
     HRESULT GetDefaultVerb(MMC_CONSOLE_VERB* peCmdID);
 }
 
-@GUID("1245208c-a151-11d0-a7d7-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinabout
+@GUID("1245208c-a151-11d0-a7d7-00c04fd909dd")
 interface ISnapinAbout : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapindescription
@@ -1428,9 +1431,9 @@ interface ISnapinAbout : IUnknown
                                  COLORREF* cMask);
 }
 
-@GUID("951ed750-d080-11d0-b197-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-imenubutton
+@GUID("951ed750-d080-11d0-b197-000000000000")
 interface IMenuButton : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-addbutton
@@ -1441,18 +1444,18 @@ interface IMenuButton : IUnknown
     HRESULT SetButtonState(int idCommand, MMC_BUTTON_STATE nState, BOOL bState);
 }
 
-@GUID("a6b15ace-df59-11d0-a7dd-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinhelp
+@GUID("a6b15ace-df59-11d0-a7dd-00c04fd909dd")
 interface ISnapinHelp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinhelp-gethelptopic
     HRESULT GetHelpTopic(PWSTR* lpCompiledHelpFile);
 }
 
-@GUID("b7a87232-4a51-11d1-a7ea-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendpropertysheet2
+@GUID("b7a87232-4a51-11d1-a7ea-00c04fd909dd")
 interface IExtendPropertySheet2 : IExtendPropertySheet
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet2-getwatermarks
@@ -1460,9 +1463,9 @@ interface IExtendPropertySheet2 : IExtendPropertySheet
                           HPALETTE* lphPalette, BOOL* bStretch);
 }
 
-@GUID("9757abb8-1b32-11d1-a7ce-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iheaderctrl2
+@GUID("9757abb8-1b32-11d1-a7ce-00c04fd8d565")
 interface IHeaderCtrl2 : IHeaderCtrl
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-setchangetimeout
@@ -1473,18 +1476,18 @@ interface IHeaderCtrl2 : IHeaderCtrl
     HRESULT GetColumnFilter(uint nColumn, uint* pdwType, MMC_FILTERDATA* pFilterData);
 }
 
-@GUID("4861a010-20f9-11d2-a510-00c04fb6dd2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinhelp2
+@GUID("4861a010-20f9-11d2-a510-00c04fb6dd2c")
 interface ISnapinHelp2 : ISnapinHelp
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinhelp2-getlinkedtopics
     HRESULT GetLinkedTopics(PWSTR* lpCompiledHelpFiles);
 }
 
-@GUID("338698b1-5a02-11d1-9fec-00600832db4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ienumtask
+@GUID("338698b1-5a02-11d1-9fec-00600832db4a")
 interface IEnumTASK : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-next
@@ -1497,9 +1500,9 @@ interface IEnumTASK : IUnknown
     HRESULT Clone(IEnumTASK* ppenum);
 }
 
-@GUID("8dee6511-554d-11d1-9fea-00600832db4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendtaskpad
+@GUID("8dee6511-554d-11d1-9fea-00600832db4a")
 interface IExtendTaskPad : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-tasknotify
@@ -1516,9 +1519,9 @@ interface IExtendTaskPad : IUnknown
     HRESULT GetListPadInfo(PWSTR pszGroup, MMC_LISTPAD_INFO* lpListPadInfo);
 }
 
-@GUID("103d842a-aa63-11d1-a7e1-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole2
+@GUID("103d842a-aa63-11d1-a7e1-00c04fd8d565")
 interface IConsole2 : IConsole
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-expand
@@ -1529,18 +1532,18 @@ interface IConsole2 : IConsole
     HRESULT SetStatusText(PWSTR pszStatusText);
 }
 
-@GUID("cc593830-b926-11d1-8063-0000f875a9ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-idisplayhelp
+@GUID("cc593830-b926-11d1-8063-0000f875a9ce")
 interface IDisplayHelp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-idisplayhelp-showtopic
     HRESULT ShowTopic(PWSTR pszHelpTopic);
 }
 
-@GUID("72782d7a-a4a0-11d1-af0f-00c04fb6dd2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-irequiredextensions
+@GUID("72782d7a-a4a0-11d1-af0f-00c04fb6dd2c")
 interface IRequiredExtensions : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-enableallextensions
@@ -1551,9 +1554,9 @@ interface IRequiredExtensions : IUnknown
     HRESULT GetNextExtension(GUID* pExtCLSID);
 }
 
-@GUID("de40b7a4-0f65-11d2-8e25-00c04f8ecd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-istringtable
+@GUID("de40b7a4-0f65-11d2-8e25-00c04f8ecd78")
 interface IStringTable : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-addstring
@@ -1572,9 +1575,9 @@ interface IStringTable : IUnknown
     HRESULT Enumerate(IEnumString* ppEnum);
 }
 
-@GUID("547c1354-024d-11d3-a707-00c04f8ef4cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icolumndata
+@GUID("547c1354-024d-11d3-a707-00c04f8ef4cb")
 interface IColumnData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-setcolumnconfigdata
@@ -1587,9 +1590,9 @@ interface IColumnData : IUnknown
     HRESULT GetColumnSortData(SColumnSetID* pColID, MMC_SORT_SET_DATA** ppColSortData);
 }
 
-@GUID("80f94174-fccc-11d2-b991-00c04f8ecd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-imessageview
+@GUID("80f94174-fccc-11d2-b991-00c04f8ecd78")
 interface IMessageView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-settitletext
@@ -1602,27 +1605,27 @@ interface IMessageView : IUnknown
     HRESULT Clear();
 }
 
-@GUID("96933476-0251-11d3-aeb0-00c04f8ecd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdatacompareex
+@GUID("96933476-0251-11d3-aeb0-00c04f8ecd78")
 interface IResultDataCompareEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdatacompareex-compare
     HRESULT Compare(RDCOMPARE* prdc, int* pnResult);
 }
 
-@GUID("cca0f2d2-82de-41b5-bf47-3b2076273d5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponentdata2
+@GUID("cca0f2d2-82de-41b5-bf47-3b2076273d5c")
 interface IComponentData2 : IComponentData
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata2-querydispatch
     HRESULT QueryDispatch(ptrdiff_t cookie, DATA_OBJECT_TYPES type, IDispatch* ppDispatch);
 }
 
-@GUID("79a2d615-4a10-4ed4-8c65-8633f9335095")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponent2
+@GUID("79a2d615-4a10-4ed4-8c65-8633f9335095")
 interface IComponent2 : IComponent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-querydispatch
@@ -1633,45 +1636,45 @@ interface IComponent2 : IComponent
     HRESULT RestoreResultView(ptrdiff_t cookie, RESULT_VIEW_TYPE_INFO* pResultViewType);
 }
 
-@GUID("e178bc0e-2ed0-4b5e-8097-42c9087e8b33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenucallback2
+@GUID("e178bc0e-2ed0-4b5e-8097-42c9087e8b33")
 interface IContextMenuCallback2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenucallback2-additem
     HRESULT AddItem(CONTEXTMENUITEM2* pItem);
 }
 
-@GUID("a8d2c5fe-cdcb-4b9d-bde5-a27343ff54bc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-immcversioninfo
+@GUID("a8d2c5fe-cdcb-4b9d-bde5-a27343ff54bc")
 interface IMMCVersionInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-immcversioninfo-getmmcversion
     HRESULT GetMMCVersion(int* pVersionMajor, int* pVersionMinor);
 }
 
-@GUID("89995cee-d2ed-4c0e-ae5e-df7e76f3fa53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendview
+@GUID("89995cee-d2ed-4c0e-ae5e-df7e76f3fa53")
 interface IExtendView : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendview-getviews
     HRESULT GetViews(IDataObject pDataObject, IViewExtensionCallback pViewExtensionCallback);
 }
 
-@GUID("34dd928a-7599-41e5-9f5e-d6bc3062c2da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iviewextensioncallback
+@GUID("34dd928a-7599-41e5-9f5e-d6bc3062c2da")
 interface IViewExtensionCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iviewextensioncallback-addview
     HRESULT AddView(MMC_EXT_VIEW_DATA* pExtViewData);
 }
 
-@GUID("1cfbdd0e-62ca-49ce-a3af-dbb2de61b068")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepower
+@GUID("1cfbdd0e-62ca-49ce-a3af-dbb2de61b068")
 interface IConsolePower : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepower-setexecutionstate
@@ -1680,36 +1683,36 @@ interface IConsolePower : IUnknown
     HRESULT ResetIdleTimer(uint dwFlags);
 }
 
-@GUID("3333759f-fe4f-4975-b143-fec0a5dd6d65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepowersink
+@GUID("3333759f-fe4f-4975-b143-fec0a5dd6d65")
 interface IConsolePowerSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepowersink-onpowerbroadcast
     HRESULT OnPowerBroadcast(uint nEvent, LPARAM lParam, LRESULT* plReturn);
 }
 
-@GUID("15bc4d24-a522-4406-aa55-0749537a6865")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-inodeproperties
+@GUID("15bc4d24-a522-4406-aa55-0749537a6865")
 interface INodeProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-inodeproperties-getproperty
     HRESULT GetProperty(IDataObject pDataObject, BSTR szPropertyName, BSTR* pbstrProperty);
 }
 
-@GUID("4f85efdb-d0e1-498c-8d4a-d010dfdd404f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole3
+@GUID("4f85efdb-d0e1-498c-8d4a-d010dfdd404f")
 interface IConsole3 : IConsole2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole3-renamescopeitem
     HRESULT RenameScopeItem(ptrdiff_t hScopeItem);
 }
 
-@GUID("0f36e0eb-a7f1-4a81-be5a-9247f7de4b1b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdata2
+@GUID("0f36e0eb-a7f1-4a81-be5a-9247f7de4b1b")
 interface IResultData2 : IResultData
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata2-renameresultitem

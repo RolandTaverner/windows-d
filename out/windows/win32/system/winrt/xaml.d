@@ -38,8 +38,8 @@ struct TrackerHandle
 
 // Interfaces
 
-@GUID("f2e9edc1-d307-4525-9886-0fafaa44163c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-isurfaceimagesourcenative
+@GUID("f2e9edc1-d307-4525-9886-0fafaa44163c")
 interface ISurfaceImageSourceNative : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nf-windows-ui-xaml-media-dxinterop-isurfaceimagesourcenative-setdevice
@@ -50,15 +50,15 @@ interface ISurfaceImageSourceNative : IUnknown
     HRESULT EndDraw();
 }
 
-@GUID("dbf2e947-8e6c-4254-9eee-7738f71386c9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-ivirtualsurfaceupdatescallbacknative
+@GUID("dbf2e947-8e6c-4254-9eee-7738f71386c9")
 interface IVirtualSurfaceUpdatesCallbackNative : IUnknown
 {
     HRESULT UpdatesNeeded();
 }
 
-@GUID("e9550983-360b-4f53-b391-afd695078691")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-ivirtualsurfaceimagesourcenative
+@GUID("e9550983-360b-4f53-b391-afd695078691")
 interface IVirtualSurfaceImageSourceNative : ISurfaceImageSourceNative
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nf-windows-ui-xaml-media-dxinterop-ivirtualsurfaceimagesourcenative-invalidate
@@ -75,22 +75,22 @@ interface IVirtualSurfaceImageSourceNative : ISurfaceImageSourceNative
     HRESULT Resize(int newWidth, int newHeight);
 }
 
-@GUID("43bebd4e-add5-4035-8f85-5608d08e9dc9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-iswapchainbackgroundpanelnative
+@GUID("43bebd4e-add5-4035-8f85-5608d08e9dc9")
 interface ISwapChainBackgroundPanelNative : IUnknown
 {
     HRESULT SetSwapChain(IDXGISwapChain swapChain);
 }
 
-@GUID("4c8798b7-1d88-4a0f-b59b-b93f600de8c8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-isurfaceimagesourcemanagernative
+@GUID("4c8798b7-1d88-4a0f-b59b-b93f600de8c8")
 interface ISurfaceImageSourceManagerNative : IUnknown
 {
     HRESULT FlushAllSurfacesWithDevice(IUnknown device);
 }
 
-@GUID("54298223-41e1-4a41-9c08-02e8256864a1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-isurfaceimagesourcenativewithd2d
+@GUID("54298223-41e1-4a41-9c08-02e8256864a1")
 interface ISurfaceImageSourceNativeWithD2D : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nf-windows-ui-xaml-media-dxinterop-isurfaceimagesourcenativewithd2d-setdevice
@@ -105,22 +105,22 @@ interface ISurfaceImageSourceNativeWithD2D : IUnknown
     HRESULT ResumeDraw();
 }
 
-@GUID("f92f19d2-3ade-45a6-a20c-f6f1ea90554b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-iswapchainpanelnative
+@GUID("f92f19d2-3ade-45a6-a20c-f6f1ea90554b")
 interface ISwapChainPanelNative : IUnknown
 {
     HRESULT SetSwapChain(IDXGISwapChain swapChain);
 }
 
-@GUID("d5a2f60c-37b2-44a2-937b-8d8eb9726821")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.media.dxinterop/nn-windows-ui-xaml-media-dxinterop-iswapchainpanelnative2
+@GUID("d5a2f60c-37b2-44a2-937b-8d8eb9726821")
 interface ISwapChainPanelNative2 : ISwapChainPanelNative
 {
     HRESULT SetSwapChainHandle(HANDLE swapChainHandle);
 }
 
-@GUID("3cbcf1bf-2f76-4e9c-96ab-e84b37972554")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.desktopwindowxamlsource/nn-windows-ui-xaml-hosting-desktopwindowxamlsource-idesktopwindowxamlsourcenative
+@GUID("3cbcf1bf-2f76-4e9c-96ab-e84b37972554")
 interface IDesktopWindowXamlSourceNative : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.desktopwindowxamlsource/nf-windows-ui-xaml-hosting-desktopwindowxamlsource-idesktopwindowxamlsourcenative-attachtowindow
@@ -129,16 +129,16 @@ interface IDesktopWindowXamlSourceNative : IUnknown
     HRESULT get_WindowHandle(HWND* hWnd);
 }
 
-@GUID("e3dcd8c7-3057-4692-99c3-7b7720afda31")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.desktopwindowxamlsource/nn-windows-ui-xaml-hosting-desktopwindowxamlsource-idesktopwindowxamlsourcenative2
+@GUID("e3dcd8c7-3057-4692-99c3-7b7720afda31")
 interface IDesktopWindowXamlSourceNative2 : IDesktopWindowXamlSourceNative
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.desktopwindowxamlsource/nf-windows-ui-xaml-hosting-desktopwindowxamlsource-idesktopwindowxamlsourcenative2-pretranslatemessage
     HRESULT PreTranslateMessage(const(MSG)* message, BOOL* result);
 }
 
-@GUID("64bd43f8-bfee-4ec4-b7eb-2935158dae21")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ireferencetrackertarget
+@GUID("64bd43f8-bfee-4ec4-b7eb-2935158dae21")
 interface IReferenceTrackerTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nf-windows-ui-xaml-hosting-referencetracker-ireferencetrackertarget-addreffromreferencetracker
@@ -151,8 +151,8 @@ interface IReferenceTrackerTarget : IUnknown
     HRESULT Unpeg();
 }
 
-@GUID("11d3b13a-180e-4789-a8be-7712882893e6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ireferencetracker
+@GUID("11d3b13a-180e-4789-a8be-7712882893e6")
 interface IReferenceTracker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nf-windows-ui-xaml-hosting-referencetracker-ireferencetracker-connectfromtrackersource
@@ -171,8 +171,8 @@ interface IReferenceTracker : IUnknown
     HRESULT PegFromTrackerSource();
 }
 
-@GUID("3cf184b4-7ccb-4dda-8455-7e6ce99a3298")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ireferencetrackermanager
+@GUID("3cf184b4-7ccb-4dda-8455-7e6ce99a3298")
 interface IReferenceTrackerManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nf-windows-ui-xaml-hosting-referencetracker-ireferencetrackermanager-referencetrackingstarted
@@ -185,15 +185,15 @@ interface IReferenceTrackerManager : IUnknown
     HRESULT SetReferenceTrackerHost(IReferenceTrackerHost value);
 }
 
-@GUID("04b3486c-4687-4229-8d14-505ab584dd88")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ifindreferencetargetscallback
+@GUID("04b3486c-4687-4229-8d14-505ab584dd88")
 interface IFindReferenceTargetsCallback : IUnknown
 {
     HRESULT FoundTrackerTarget(IReferenceTrackerTarget target);
 }
 
-@GUID("29a71c6a-3c42-4416-a39d-e2825a07a773")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ireferencetrackerhost
+@GUID("29a71c6a-3c42-4416-a39d-e2825a07a773")
 interface IReferenceTrackerHost : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nf-windows-ui-xaml-hosting-referencetracker-ireferencetrackerhost-disconnectunusedreferencesources

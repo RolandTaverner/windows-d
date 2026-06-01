@@ -12,15 +12,15 @@ extern(Windows) @nogc nothrow:
 
 // Interfaces
 
-@GUID("fd89c65b-b50e-4a19-9d0c-b42b783281cd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.devices.alljoyn.interop/nn-windows-devices-alljoyn-interop-iwindowsdevicesalljoynbusattachmentinterop
+@GUID("fd89c65b-b50e-4a19-9d0c-b42b783281cd")
 interface IWindowsDevicesAllJoynBusAttachmentInterop : IInspectable
 {
     HRESULT get_Win32Handle(ulong* value);
 }
 
-@GUID("4b8f7505-b239-4e7b-88af-f6682575d861")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.devices.alljoyn.interop/nn-windows-devices-alljoyn-interop-iwindowsdevicesalljoynbusattachmentfactoryinterop
+@GUID("4b8f7505-b239-4e7b-88af-f6682575d861")
 interface IWindowsDevicesAllJoynBusAttachmentFactoryInterop : IInspectable
 {
     HRESULT CreateFromWin32Handle(ulong win32handle, ubyte enableAboutData, const(GUID)* riid, void** ppv);

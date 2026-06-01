@@ -1776,9 +1776,9 @@ struct AzBizRuleContext;
 @GUID("483afb5d-70df-4e16-abdc-a1de4d015a3e")
 struct AzPrincipalLocator;
 
-@GUID("edbd9ca9-9b82-4f6a-9e8b-98301e450f14")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore
+@GUID("edbd9ca9-9b82-4f6a-9e8b-98301e450f14")
 interface IAzAuthorizationStore : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_description
@@ -1885,9 +1885,9 @@ interface IAzAuthorizationStore : IDispatch
     HRESULT CloseApplication(BSTR bstrApplicationName, int lFlag);
 }
 
-@GUID("b11e5584-d577-4273-b6c5-0973e0f8e80d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore2
+@GUID("b11e5584-d577-4273-b6c5-0973e0f8e80d")
 interface IAzAuthorizationStore2 : IAzAuthorizationStore
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore2-openapplication2
@@ -1896,9 +1896,9 @@ interface IAzAuthorizationStore2 : IAzAuthorizationStore
     HRESULT CreateApplication2(BSTR bstrApplicationName, VARIANT varReserved, IAzApplication2* ppApplication);
 }
 
-@GUID("abc08425-0c86-4fa0-9be3-7189956c926e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore3
+@GUID("abc08425-0c86-4fa0-9be3-7189956c926e")
 interface IAzAuthorizationStore3 : IAzAuthorizationStore2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-isupdateneeded
@@ -1913,9 +1913,9 @@ interface IAzAuthorizationStore3 : IAzAuthorizationStore2
     HRESULT GetSchemaVersion(int* plMajorVersion, int* plMinorVersion);
 }
 
-@GUID("987bc7c7-b813-4d27-bede-6ba5ae867e95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication
+@GUID("987bc7c7-b813-4d27-bede-6ba5ae867e95")
 interface IAzApplication : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_name
@@ -2045,9 +2045,9 @@ interface IAzApplication : IDispatch
     HRESULT DeleteDelegatedPolicyUserName(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
 }
 
-@GUID("086a68af-a249-437c-b18d-d4d86d6a9660")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication2
+@GUID("086a68af-a249-437c-b18d-d4d86d6a9660")
 interface IAzApplication2 : IAzApplication
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication2-initializeclientcontextfromtoken2
@@ -2058,9 +2058,9 @@ interface IAzApplication2 : IAzApplication
                                      IAzClientContext2* ppClientContext);
 }
 
-@GUID("929b11a9-95c5-4a84-a29a-20ad42c2f16c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplications
+@GUID("929b11a9-95c5-4a84-a29a-20ad42c2f16c")
 interface IAzApplications : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get_item
@@ -2071,9 +2071,9 @@ interface IAzApplications : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("5e56b24f-ea01-4d61-be44-c49b5e4eaf74")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperation
+@GUID("5e56b24f-ea01-4d61-be44-c49b5e4eaf74")
 interface IAzOperation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_name
@@ -2102,9 +2102,9 @@ interface IAzOperation : IDispatch
     HRESULT Submit(int lFlags, VARIANT varReserved);
 }
 
-@GUID("90ef9c07-9706-49d9-af80-0438a5f3ec35")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperations
+@GUID("90ef9c07-9706-49d9-af80-0438a5f3ec35")
 interface IAzOperations : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get_item
@@ -2115,9 +2115,9 @@ interface IAzOperations : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("cb94e592-2e0e-4a6c-a336-b89a6dc1e388")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztask
+@GUID("cb94e592-2e0e-4a6c-a336-b89a6dc1e388")
 interface IAzTask : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_name
@@ -2174,9 +2174,9 @@ interface IAzTask : IDispatch
     HRESULT Submit(int lFlags, VARIANT varReserved);
 }
 
-@GUID("b338ccab-4c85-4388-8c0a-c58592bad398")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztasks
+@GUID("b338ccab-4c85-4388-8c0a-c58592bad398")
 interface IAzTasks : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get_item
@@ -2187,9 +2187,9 @@ interface IAzTasks : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("00e52487-e08d-4514-b62e-877d5645f5ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscope
+@GUID("00e52487-e08d-4514-b62e-877d5645f5ab")
 interface IAzScope : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_name
@@ -2270,9 +2270,9 @@ interface IAzScope : IDispatch
     HRESULT DeletePolicyReaderName(BSTR bstrReader, VARIANT varReserved);
 }
 
-@GUID("78e14853-9f5e-406d-9b91-6bdba6973510")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscopes
+@GUID("78e14853-9f5e-406d-9b91-6bdba6973510")
 interface IAzScopes : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get_item
@@ -2283,9 +2283,9 @@ interface IAzScopes : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("f1b744cd-58a6-4e06-9fbf-36f6d779e21e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroup
+@GUID("f1b744cd-58a6-4e06-9fbf-36f6d779e21e")
 interface IAzApplicationGroup : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_name
@@ -2354,9 +2354,9 @@ interface IAzApplicationGroup : IDispatch
     HRESULT get_NonMembersName(VARIANT* pvarProp);
 }
 
-@GUID("4ce66ad5-9f3c-469d-a911-b99887a7e685")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroups
+@GUID("4ce66ad5-9f3c-469d-a911-b99887a7e685")
 interface IAzApplicationGroups : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get_item
@@ -2367,9 +2367,9 @@ interface IAzApplicationGroups : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("859e0d8d-62d7-41d8-a034-c0cd5d43fdfa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazrole
+@GUID("859e0d8d-62d7-41d8-a034-c0cd5d43fdfa")
 interface IAzRole : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_name
@@ -2428,9 +2428,9 @@ interface IAzRole : IDispatch
     HRESULT get_MembersName(VARIANT* pvarProp);
 }
 
-@GUID("95e0f119-13b4-4dae-b65f-2f7d60d822e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroles
+@GUID("95e0f119-13b4-4dae-b65f-2f7d60d822e4")
 interface IAzRoles : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get_item
@@ -2441,9 +2441,9 @@ interface IAzRoles : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("eff1f00b-488a-466d-afd9-a401c5f9eef5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext
+@GUID("eff1f00b-488a-466d-afd9-a401c5f9eef5")
 interface IAzClientContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-accesscheck
@@ -2476,9 +2476,9 @@ interface IAzClientContext : IDispatch
     HRESULT put_RoleForAccessCheck(BSTR bstrProp);
 }
 
-@GUID("2b0c92b8-208a-488a-8f81-e4edb22111cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext2
+@GUID("2b0c92b8-208a-488a-8f81-e4edb22111cd")
 interface IAzClientContext2 : IAzClientContext
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-getassignedscopespage
@@ -2495,9 +2495,9 @@ interface IAzClientContext2 : IAzClientContext
     HRESULT get_LDAPQueryDN(BSTR* pbstrLDAPQueryDN);
 }
 
-@GUID("e192f17d-d59f-455e-a152-940316cd77b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizrulecontext
+@GUID("e192f17d-d59f-455e-a152-940316cd77b2")
 interface IAzBizRuleContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-put_businessruleresult
@@ -2510,9 +2510,9 @@ interface IAzBizRuleContext : IDispatch
     HRESULT GetParameter(BSTR bstrParameterName, VARIANT* pvarParameterValue);
 }
 
-@GUID("fc17685f-e25d-4dcd-bae1-276ec9533cb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizruleparameters
+@GUID("fc17685f-e25d-4dcd-bae1-276ec9533cb5")
 interface IAzBizRuleParameters : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-addparameter
@@ -2529,9 +2529,9 @@ interface IAzBizRuleParameters : IDispatch
     HRESULT get_Count(uint* plCount);
 }
 
-@GUID("e94128c7-e9da-44cc-b0bd-53036f3aab3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizruleinterfaces
+@GUID("e94128c7-e9da-44cc-b0bd-53036f3aab3d")
 interface IAzBizRuleInterfaces : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-addinterface
@@ -2548,9 +2548,9 @@ interface IAzBizRuleInterfaces : IDispatch
     HRESULT get_Count(uint* plCount);
 }
 
-@GUID("11894fde-1deb-4b4b-8907-6d1cda1f5d4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext3
+@GUID("11894fde-1deb-4b4b-8907-6d1cda1f5d4f")
 interface IAzClientContext3 : IAzClientContext2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-accesscheck2
@@ -2573,9 +2573,9 @@ interface IAzClientContext3 : IAzClientContext2
     HRESULT get_Sids(VARIANT* pStringSidArray);
 }
 
-@GUID("ee9fe8c9-c9f3-40e2-aa12-d1d8599727fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscope2
+@GUID("ee9fe8c9-c9f3-40e2-aa12-d1d8599727fd")
 interface IAzScope2 : IAzScope
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-get_roledefinitions
@@ -2596,9 +2596,9 @@ interface IAzScope2 : IAzScope
     HRESULT DeleteRoleAssignment(BSTR bstrRoleAssignmentName);
 }
 
-@GUID("181c845e-7196-4a7d-ac2e-020c0bb7a303")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication3
+@GUID("181c845e-7196-4a7d-ac2e-020c0bb7a303")
 interface IAzApplication3 : IAzApplication2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-scopeexists
@@ -2631,18 +2631,18 @@ interface IAzApplication3 : IAzApplication2
     HRESULT put_BizRulesEnabled(VARIANT_BOOL bEnabled);
 }
 
-@GUID("1f5ea01f-44a2-4184-9c48-a75b4dcc8ccc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperation2
+@GUID("1f5ea01f-44a2-4184-9c48-a75b4dcc8ccc")
 interface IAzOperation2 : IAzOperation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation2-roleassignments
     HRESULT RoleAssignments(BSTR bstrScopeName, VARIANT_BOOL bRecursive, IAzRoleAssignments* ppRoleAssignments);
 }
 
-@GUID("881f25a5-d755-4550-957a-d503a3b34001")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroledefinitions
+@GUID("881f25a5-d755-4550-957a-d503a3b34001")
 interface IAzRoleDefinitions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get_item
@@ -2653,9 +2653,9 @@ interface IAzRoleDefinitions : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("d97fcea1-2599-44f1-9fc3-58e9fbe09466")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroledefinition
+@GUID("d97fcea1-2599-44f1-9fc3-58e9fbe09466")
 interface IAzRoleDefinition : IAzTask
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-roleassignments
@@ -2668,9 +2668,9 @@ interface IAzRoleDefinition : IAzTask
     HRESULT get_RoleDefinitions(IAzRoleDefinitions* ppRoleDefinitions);
 }
 
-@GUID("55647d31-0d5a-4fa3-b4ac-2b5f9ad5ab76")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroleassignment
+@GUID("55647d31-0d5a-4fa3-b4ac-2b5f9ad5ab76")
 interface IAzRoleAssignment : IAzRole
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-addroledefinition
@@ -2683,9 +2683,9 @@ interface IAzRoleAssignment : IAzRole
     HRESULT get_Scope(IAzScope* ppScope);
 }
 
-@GUID("9c80b900-fceb-4d73-a0f4-c83b0bbf2481")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroleassignments
+@GUID("9c80b900-fceb-4d73-a0f4-c83b0bbf2481")
 interface IAzRoleAssignments : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get_item
@@ -2696,9 +2696,9 @@ interface IAzRoleAssignments : IDispatch
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
-@GUID("e5c3507d-ad6a-4992-9c7f-74ab480b44cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazprincipallocator
+@GUID("e5c3507d-ad6a-4992-9c7f-74ab480b44cc")
 interface IAzPrincipalLocator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazprincipallocator-get_nameresolver
@@ -2707,9 +2707,9 @@ interface IAzPrincipalLocator : IDispatch
     HRESULT get_ObjectPicker(IAzObjectPicker* ppObjectPicker);
 }
 
-@GUID("504d0f15-73e2-43df-a870-a64f40714f53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaznameresolver
+@GUID("504d0f15-73e2-43df-a870-a64f40714f53")
 interface IAzNameResolver : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaznameresolver-namefromsid
@@ -2718,9 +2718,9 @@ interface IAzNameResolver : IDispatch
     HRESULT NamesFromSids(VARIANT vSids, VARIANT* pvSidTypes, VARIANT* pvNames);
 }
 
-@GUID("63130a48-699a-42d8-bf01-c62ac3fb79f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazobjectpicker
+@GUID("63130a48-699a-42d8-bf01-c62ac3fb79f9")
 interface IAzObjectPicker : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazobjectpicker-getprincipals
@@ -2729,9 +2729,9 @@ interface IAzObjectPicker : IDispatch
     HRESULT get_Name(BSTR* pbstrName);
 }
 
-@GUID("3f0613fc-b71a-464e-a11d-5b881a56cefa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroup2
+@GUID("3f0613fc-b71a-464e-a11d-5b881a56cefa")
 interface IAzApplicationGroup2 : IAzApplicationGroup
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizrule
@@ -2750,9 +2750,9 @@ interface IAzApplicationGroup2 : IAzApplicationGroup
     HRESULT RoleAssignments(BSTR bstrScopeName, VARIANT_BOOL bRecursive, IAzRoleAssignments* ppRoleAssignments);
 }
 
-@GUID("03a9a5ee-48c8-4832-9025-aad503c46526")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztask2
+@GUID("03a9a5ee-48c8-4832-9025-aad503c46526")
 interface IAzTask2 : IAzTask
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask2-roleassignments

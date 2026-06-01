@@ -11253,9 +11253,9 @@ BOOL RegisterPointerDeviceNotifications(HWND window, BOOL notifyRange);
 @GUID("7c476ba2-02b1-48f4-8048-b24619ddc058")
 struct ImageList;
 
-@GUID("46eb5926-582e-4017-9fdf-e8998daa0950")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist
+@GUID("46eb5926-582e-4017-9fdf-e8998daa0950")
 interface IImageList : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-add
@@ -11318,9 +11318,9 @@ interface IImageList : IUnknown
     HRESULT GetOverlayImage(int iOverlay, int* piIndex);
 }
 
-@GUID("192b9d83-50fc-457b-90a0-2b82a8b5dae1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist2
+@GUID("192b9d83-50fc-457b-90a0-2b82a8b5dae1")
 interface IImageList2 : IImageList
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-resize

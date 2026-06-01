@@ -1668,15 +1668,16 @@ uint WSManPluginAuthzQueryQuotaComplete(WSMAN_SENDER_DETAILS* senderDetails, uin
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinRM/wsman
 @GUID("bced617b-ec03-420b-8508-977dc7a686bd")
 struct WSMan;
 
 @GUID("7de087a5-5dcb-4df7-bb12-0924ad8fbd9a")
 struct WSManInternal;
 
-@GUID("190d8637-5cd3-496d-ad24-69636bb5a3b5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsman
+@GUID("190d8637-5cd3-496d-ad24-69636bb5a3b5")
 interface IWSMan : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsman-createsession
@@ -1689,9 +1690,9 @@ interface IWSMan : IDispatch
     HRESULT get_Error(BSTR* value);
 }
 
-@GUID("2d53bdaa-798e-49e6-a1aa-74d01256f411")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanex
+@GUID("2d53bdaa-798e-49e6-a1aa-74d01256f411")
 interface IWSManEx : IWSMan
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanex-createresourcelocator
@@ -1736,18 +1737,18 @@ interface IWSManEx : IWSMan
     HRESULT EnumerationFlagReturnObject(int* flags);
 }
 
-@GUID("1d1b5ae0-42d9-4021-8261-3987619512e9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanex2
+@GUID("1d1b5ae0-42d9-4021-8261-3987619512e9")
 interface IWSManEx2 : IWSManEx
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanex2-sessionflaguseclientcertificate
     HRESULT SessionFlagUseClientCertificate(int* flags);
 }
 
-@GUID("6400e966-011d-4eac-8474-049e0848afad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanex3
+@GUID("6400e966-011d-4eac-8474-049e0848afad")
 interface IWSManEx3 : IWSManEx2
 {
     HRESULT SessionFlagUTF16(int* flags);
@@ -1760,9 +1761,9 @@ interface IWSManEx3 : IWSManEx2
     HRESULT SessionFlagUseSsl(int* flags);
 }
 
-@GUID("f704e861-9e52-464f-b786-da5eb2320fdd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanconnectionoptions
+@GUID("f704e861-9e52-464f-b786-da5eb2320fdd")
 interface IWSManConnectionOptions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanconnectionoptions-get_username
@@ -1773,9 +1774,9 @@ interface IWSManConnectionOptions : IDispatch
     HRESULT put_Password(BSTR password);
 }
 
-@GUID("ef43edf7-2a48-4d93-9526-8bd6ab6d4a6b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanconnectionoptionsex
+@GUID("ef43edf7-2a48-4d93-9526-8bd6ab6d4a6b")
 interface IWSManConnectionOptionsEx : IWSManConnectionOptions
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanconnectionoptionsex-get_certificatethumbprint
@@ -1784,9 +1785,9 @@ interface IWSManConnectionOptionsEx : IWSManConnectionOptions
     HRESULT put_CertificateThumbprint(BSTR thumbprint);
 }
 
-@GUID("f500c9ec-24ee-48ab-b38d-fc9a164c658e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanconnectionoptionsex2
+@GUID("f500c9ec-24ee-48ab-b38d-fc9a164c658e")
 interface IWSManConnectionOptionsEx2 : IWSManConnectionOptionsEx
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanconnectionoptionsex2-setproxy
@@ -1807,9 +1808,9 @@ interface IWSManConnectionOptionsEx2 : IWSManConnectionOptionsEx
     HRESULT ProxyAuthenticationUseDigest(int* value);
 }
 
-@GUID("fc84fc58-1286-40c4-9da0-c8ef6ec241e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmansession
+@GUID("fc84fc58-1286-40c4-9da0-c8ef6ec241e0")
 interface IWSManSession : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmansession-get
@@ -1838,9 +1839,9 @@ interface IWSManSession : IDispatch
     HRESULT put_Timeout(int value);
 }
 
-@GUID("f3457ca9-abb9-4fa5-b850-90e8ca300e7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanenumerator
+@GUID("f3457ca9-abb9-4fa5-b850-90e8ca300e7f")
 interface IWSManEnumerator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanenumerator-readitem
@@ -1851,9 +1852,9 @@ interface IWSManEnumerator : IDispatch
     HRESULT get_Error(BSTR* value);
 }
 
-@GUID("a7a1ba28-de41-466a-ad0a-c4059ead7428")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nn-wsmandisp-iwsmanresourcelocator
+@GUID("a7a1ba28-de41-466a-ad0a-c4059ead7428")
 interface IWSManResourceLocator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsmandisp/nf-wsmandisp-iwsmanresourcelocator-put_resourceuri

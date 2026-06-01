@@ -78,9 +78,9 @@ struct TpmVirtualSmartCardManager;
 @GUID("152ea2a8-70dc-4c59-8b2a-32aa3ca0dcac")
 struct RemoteTpmVirtualSmartCardManager;
 
-@GUID("1a1bb35f-abb8-451c-a1ae-33d98f1bef4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nn-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback
+@GUID("1a1bb35f-abb8-451c-a1ae-33d98f1bef4a")
 interface ITpmVirtualSmartCardManagerStatusCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback-reportprogress
@@ -89,9 +89,9 @@ interface ITpmVirtualSmartCardManagerStatusCallback : IUnknown
     HRESULT ReportError(TPMVSCMGR_ERROR Error);
 }
 
-@GUID("112b1dff-d9dc-41f7-869f-d67fee7cb591")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nn-tpmvscmgr-itpmvirtualsmartcardmanager
+@GUID("112b1dff-d9dc-41f7-869f-d67fee7cb591")
 interface ITpmVirtualSmartCardManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanager-createvirtualsmartcard

@@ -2041,18 +2041,23 @@ struct BootTraceSession;
 @GUID("03837539-098b-11d8-9414-505054503030")
 struct BootTraceSessionCollection;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysMon/systemmonitor
 @GUID("c4d2d8e0-d1dd-11ce-940f-008029004347")
 struct SystemMonitor;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysMon/counteritem
 @GUID("c4d2d8e0-d1dd-11ce-940f-008029004348")
 struct CounterItem;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysMon/counters
 @GUID("b2b066d2-2aac-11cf-942f-008029004347")
 struct Counters;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysMon/logfileitem
 @GUID("16ec5be8-df93-4237-94e4-9ee918111d71")
 struct LogFileItem;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysMon/logfiles
 @GUID("2735d9fd-f6b9-4f19-a5d9-e2d068584bc5")
 struct LogFiles;
 
@@ -2077,9 +2082,9 @@ struct SourcePropPage;
 @GUID("cf948561-ede8-11ce-941e-008029004347")
 struct CounterPropPage;
 
-@GUID("03837520-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorset
+@GUID("03837520-098b-11d8-9414-505054503030")
 interface IDataCollectorSet : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_datacollectors
@@ -2204,9 +2209,9 @@ interface IDataCollectorSet : IDispatch
     HRESULT GetValue(BSTR key, BSTR* value);
 }
 
-@GUID("03837541-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatamanager
+@GUID("03837541-098b-11d8-9414-505054503030")
 interface IDataManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_enabled
@@ -2261,9 +2266,9 @@ interface IDataManager : IDispatch
     HRESULT Extract(BSTR CabFilename, BSTR DestinationPath);
 }
 
-@GUID("03837543-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ifolderaction
+@GUID("03837543-098b-11d8-9414-505054503030")
 interface IFolderAction : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_age
@@ -2284,9 +2289,9 @@ interface IFolderAction : IDispatch
     HRESULT put_SendCabTo(BSTR bstrDestination);
 }
 
-@GUID("03837544-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ifolderactioncollection
+@GUID("03837544-098b-11d8-9414-505054503030")
 interface IFolderActionCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get_count
@@ -2307,9 +2312,9 @@ interface IFolderActionCollection : IDispatch
     HRESULT CreateFolderAction(IFolderAction* FolderAction);
 }
 
-@GUID("038374ff-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollector
+@GUID("038374ff-098b-11d8-9414-505054503030")
 interface IDataCollector : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_datacollectorset
@@ -2361,9 +2366,9 @@ interface IDataCollector : IDispatch
     HRESULT CreateOutputLocation(VARIANT_BOOL Latest, BSTR* Location);
 }
 
-@GUID("03837506-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iperformancecounterdatacollector
+@GUID("03837506-098b-11d8-9414-505054503030")
 interface IPerformanceCounterDataCollector : IDataCollector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_datasourcename
@@ -2388,9 +2393,9 @@ interface IPerformanceCounterDataCollector : IDataCollector
     HRESULT put_SegmentMaxRecords(uint records);
 }
 
-@GUID("0383750b-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedatacollector
+@GUID("0383750b-098b-11d8-9414-505054503030")
 interface ITraceDataCollector : IDataCollector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_buffersize
@@ -2468,9 +2473,9 @@ interface ITraceDataCollector : IDataCollector
     HRESULT get_TraceDataProviders(ITraceDataProviderCollection* providers);
 }
 
-@GUID("03837514-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iconfigurationdatacollector
+@GUID("03837514-098b-11d8-9414-505054503030")
 interface IConfigurationDataCollector : IDataCollector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxcount
@@ -2511,9 +2516,9 @@ interface IConfigurationDataCollector : IDataCollector
     HRESULT put_SystemStateFile(BSTR FileName);
 }
 
-@GUID("03837516-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ialertdatacollector
+@GUID("03837516-098b-11d8-9414-505054503030")
 interface IAlertDataCollector : IDataCollector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_alertthresholds
@@ -2550,9 +2555,9 @@ interface IAlertDataCollector : IDataCollector
     HRESULT put_TriggerDataCollectorSet(BSTR name);
 }
 
-@GUID("0383751a-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iapitracingdatacollector
+@GUID("0383751a-098b-11d8-9414-505054503030")
 interface IApiTracingDataCollector : IDataCollector
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logapinamesonly
@@ -2585,9 +2590,9 @@ interface IApiTracingDataCollector : IDataCollector
     HRESULT put_ExcludeApis(SAFEARRAY* excludeapis);
 }
 
-@GUID("03837502-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorcollection
+@GUID("03837502-098b-11d8-9414-505054503030")
 interface IDataCollectorCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get_count
@@ -2610,9 +2615,9 @@ interface IDataCollectorCollection : IDispatch
     HRESULT CreateDataCollector(DataCollectorType Type, IDataCollector* Collector);
 }
 
-@GUID("03837524-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorsetcollection
+@GUID("03837524-098b-11d8-9414-505054503030")
 interface IDataCollectorSetCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get_count
@@ -2633,9 +2638,9 @@ interface IDataCollectorSetCollection : IDispatch
     HRESULT GetDataCollectorSets(BSTR server, BSTR filter);
 }
 
-@GUID("03837512-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedataprovider
+@GUID("03837512-098b-11d8-9414-505054503030")
 interface ITraceDataProvider : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_displayname
@@ -2678,9 +2683,9 @@ interface ITraceDataProvider : IDispatch
     HRESULT GetRegisteredProcesses(IValueMap* Processes);
 }
 
-@GUID("03837510-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedataprovidercollection
+@GUID("03837510-098b-11d8-9414-505054503030")
 interface ITraceDataProviderCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get_count
@@ -2705,9 +2710,9 @@ interface ITraceDataProviderCollection : IDispatch
     HRESULT GetTraceDataProvidersByProcess(BSTR Server, uint Pid);
 }
 
-@GUID("0383753a-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ischedule
+@GUID("0383753a-098b-11d8-9414-505054503030")
 interface ISchedule : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_startdate
@@ -2728,9 +2733,9 @@ interface ISchedule : IDispatch
     HRESULT put_Days(WeekDays days);
 }
 
-@GUID("0383753d-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ischedulecollection
+@GUID("0383753d-098b-11d8-9414-505054503030")
 interface IScheduleCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get_count
@@ -2751,9 +2756,9 @@ interface IScheduleCollection : IDispatch
     HRESULT CreateSchedule(ISchedule* Schedule);
 }
 
-@GUID("03837533-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ivaluemapitem
+@GUID("03837533-098b-11d8-9414-505054503030")
 interface IValueMapItem : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_description
@@ -2778,9 +2783,9 @@ interface IValueMapItem : IDispatch
     HRESULT put_ValueMapType(ValueMapType type);
 }
 
-@GUID("03837534-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ivaluemap
+@GUID("03837534-098b-11d8-9414-505054503030")
 interface IValueMap : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_count

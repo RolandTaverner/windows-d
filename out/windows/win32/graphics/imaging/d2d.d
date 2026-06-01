@@ -15,9 +15,9 @@ extern(Windows) @nogc nothrow:
 
 // Interfaces
 
-@GUID("04c75bf8-3ce1-473b-acc5-3cc4f5e94999")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimageencoder
+@GUID("04c75bf8-3ce1-473b-acc5-3cc4f5e94999")
 interface IWICImageEncoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writeframe
@@ -31,9 +31,9 @@ interface IWICImageEncoder : IUnknown
                            const(WICImageParameters)* pImageParameters);
 }
 
-@GUID("7b816b45-1996-4476-b132-de9e247c8af0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimagingfactory2
+@GUID("7b816b45-1996-4476-b132-de9e247c8af0")
 interface IWICImagingFactory2 : IWICImagingFactory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimagingfactory2-createimageencoder

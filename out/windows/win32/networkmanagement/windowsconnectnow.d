@@ -448,9 +448,9 @@ struct WCN_VENDOR_EXTENSION_SPEC
 @GUID("c100bea7-d33a-4a4b-bf23-bbef4663d017")
 struct WCNDeviceObject;
 
-@GUID("c100be9c-d33a-4a4b-bf23-bbef4663d017")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nn-wcndevice-iwcndevice
+@GUID("c100be9c-d33a-4a4b-bf23-bbef4663d017")
 interface IWCNDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setpassword
@@ -482,9 +482,9 @@ interface IWCNDevice : IUnknown
                                  const(ubyte)* pbDHKeyBlob);
 }
 
-@GUID("c100be9f-d33a-4a4b-bf23-bbef4663d017")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nn-wcndevice-iwcnconnectnotify
+@GUID("c100be9f-d33a-4a4b-bf23-bbef4663d017")
 interface IWCNConnectNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcnconnectnotify-connectsucceeded

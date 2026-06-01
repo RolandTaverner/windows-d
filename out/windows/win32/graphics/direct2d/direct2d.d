@@ -2307,28 +2307,28 @@ void D2D1GetGradientMeshInteriorPointsFromCoonsPatch(const(D2D_POINT_2F)* pPoint
 
 // Interfaces
 
-@GUID("2cd90691-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1resource
+@GUID("2cd90691-12e2-11dc-9fed-001143a055f9")
 interface ID2D1Resource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1resource-getfactory
     void GetFactory(ID2D1Factory* factory);
 }
 
-@GUID("65019f75-8da2-497c-b32c-dfa34e48ede6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1image
+@GUID("65019f75-8da2-497c-b32c-dfa34e48ede6")
 interface ID2D1Image : ID2D1Resource
 {
 }
 
-@GUID("a2296057-ea42-4099-983b-539fb6505426")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1bitmap
+@GUID("a2296057-ea42-4099-983b-539fb6505426")
 interface ID2D1Bitmap : ID2D1Image
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1bitmap-getsize
@@ -2348,10 +2348,10 @@ interface ID2D1Bitmap : ID2D1Image
     HRESULT CopyFromMemory(const(D2D_RECT_U)* dstRect, const(void)* srcData, uint pitch);
 }
 
-@GUID("2cd906a7-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1gradientstopcollection
+@GUID("2cd906a7-12e2-11dc-9fed-001143a055f9")
 interface ID2D1GradientStopCollection : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1gradientstopcollection-getgradientstopcount
@@ -2364,10 +2364,10 @@ interface ID2D1GradientStopCollection : ID2D1Resource
     D2D1_EXTEND_MODE GetExtendMode();
 }
 
-@GUID("2cd906a8-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1brush
+@GUID("2cd906a8-12e2-11dc-9fed-001143a055f9")
 interface ID2D1Brush : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1brush-setopacity
@@ -2380,10 +2380,10 @@ interface ID2D1Brush : ID2D1Resource
     void  GetTransform(D2D_MATRIX_3X2_F* transform);
 }
 
-@GUID("2cd906aa-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1bitmapbrush
+@GUID("2cd906aa-12e2-11dc-9fed-001143a055f9")
 interface ID2D1BitmapBrush : ID2D1Brush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1bitmapbrush-setextendmodex
@@ -2404,10 +2404,10 @@ interface ID2D1BitmapBrush : ID2D1Brush
     void GetBitmap(ID2D1Bitmap* bitmap);
 }
 
-@GUID("2cd906a9-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1solidcolorbrush
+@GUID("2cd906a9-12e2-11dc-9fed-001143a055f9")
 interface ID2D1SolidColorBrush : ID2D1Brush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/Direct2D/id2d1solidcolorbrush-setcolor
@@ -2416,10 +2416,10 @@ interface ID2D1SolidColorBrush : ID2D1Brush
     D2D1_COLOR_F GetColor();
 }
 
-@GUID("2cd906ab-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1lineargradientbrush
+@GUID("2cd906ab-12e2-11dc-9fed-001143a055f9")
 interface ID2D1LinearGradientBrush : ID2D1Brush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1lineargradientbrush-setstartpoint
@@ -2434,10 +2434,10 @@ interface ID2D1LinearGradientBrush : ID2D1Brush
     void GetGradientStopCollection(ID2D1GradientStopCollection* gradientStopCollection);
 }
 
-@GUID("2cd906ac-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1radialgradientbrush
+@GUID("2cd906ac-12e2-11dc-9fed-001143a055f9")
 interface ID2D1RadialGradientBrush : ID2D1Brush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1radialgradientbrush-setcenter
@@ -2460,10 +2460,10 @@ interface ID2D1RadialGradientBrush : ID2D1Brush
     void  GetGradientStopCollection(ID2D1GradientStopCollection* gradientStopCollection);
 }
 
-@GUID("2cd9069d-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1strokestyle
+@GUID("2cd9069d-12e2-11dc-9fed-001143a055f9")
 interface ID2D1StrokeStyle : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1strokestyle-getstartcap
@@ -2486,10 +2486,10 @@ interface ID2D1StrokeStyle : ID2D1Resource
     void  GetDashes(float* dashes, uint dashesCount);
 }
 
-@GUID("2cd906a1-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1geometry
+@GUID("2cd906a1-12e2-11dc-9fed-001143a055f9")
 interface ID2D1Geometry : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/Direct2D/id2d1geometry-getbounds
@@ -2532,40 +2532,40 @@ interface ID2D1Geometry : ID2D1Resource
                   float flatteningTolerance, ID2D1SimplifiedGeometrySink geometrySink);
 }
 
-@GUID("2cd906a2-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1rectanglegeometry
+@GUID("2cd906a2-12e2-11dc-9fed-001143a055f9")
 interface ID2D1RectangleGeometry : ID2D1Geometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1rectanglegeometry-getrect
     void GetRect(D2D_RECT_F* rect);
 }
 
-@GUID("2cd906a3-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1roundedrectanglegeometry
+@GUID("2cd906a3-12e2-11dc-9fed-001143a055f9")
 interface ID2D1RoundedRectangleGeometry : ID2D1Geometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1roundedrectanglegeometry-getroundedrect
     void GetRoundedRect(D2D1_ROUNDED_RECT* roundedRect);
 }
 
-@GUID("2cd906a4-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1ellipsegeometry
+@GUID("2cd906a4-12e2-11dc-9fed-001143a055f9")
 interface ID2D1EllipseGeometry : ID2D1Geometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1ellipsegeometry-getellipse
     void GetEllipse(D2D1_ELLIPSE* ellipse);
 }
 
-@GUID("2cd906a6-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1geometrygroup
+@GUID("2cd906a6-12e2-11dc-9fed-001143a055f9")
 interface ID2D1GeometryGroup : ID2D1Geometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1geometrygroup-getfillmode
@@ -2576,10 +2576,10 @@ interface ID2D1GeometryGroup : ID2D1Geometry
     void GetSourceGeometries(ID2D1Geometry* geometries, uint geometriesCount);
 }
 
-@GUID("2cd906bb-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1transformedgeometry
+@GUID("2cd906bb-12e2-11dc-9fed-001143a055f9")
 interface ID2D1TransformedGeometry : ID2D1Geometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1transformedgeometry-getsourcegeometry
@@ -2588,10 +2588,10 @@ interface ID2D1TransformedGeometry : ID2D1Geometry
     void GetTransform(D2D_MATRIX_3X2_F* transform);
 }
 
-@GUID("2cd9069f-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1geometrysink
+@GUID("2cd9069f-12e2-11dc-9fed-001143a055f9")
 interface ID2D1GeometrySink : ID2D1SimplifiedGeometrySink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1geometrysink-addline
@@ -2606,10 +2606,10 @@ interface ID2D1GeometrySink : ID2D1SimplifiedGeometrySink
     void AddArc(const(D2D1_ARC_SEGMENT)* arc);
 }
 
-@GUID("2cd906c1-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1tessellationsink
+@GUID("2cd906c1-12e2-11dc-9fed-001143a055f9")
 interface ID2D1TessellationSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1tessellationsink-addtriangles
@@ -2618,10 +2618,10 @@ interface ID2D1TessellationSink : IUnknown
     HRESULT Close();
 }
 
-@GUID("2cd906a5-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1pathgeometry
+@GUID("2cd906a5-12e2-11dc-9fed-001143a055f9")
 interface ID2D1PathGeometry : ID2D1Geometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1pathgeometry-open
@@ -2634,30 +2634,30 @@ interface ID2D1PathGeometry : ID2D1Geometry
     HRESULT GetFigureCount(uint* count);
 }
 
-@GUID("2cd906c2-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1mesh
+@GUID("2cd906c2-12e2-11dc-9fed-001143a055f9")
 interface ID2D1Mesh : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1mesh-open
     HRESULT Open(ID2D1TessellationSink* tessellationSink);
 }
 
-@GUID("2cd9069b-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1layer
+@GUID("2cd9069b-12e2-11dc-9fed-001143a055f9")
 interface ID2D1Layer : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1layer-getsize
     D2D_SIZE_F GetSize();
 }
 
-@GUID("28506e39-ebf6-46a1-bb47-fd85565ab957")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1drawingstateblock
+@GUID("28506e39-ebf6-46a1-bb47-fd85565ab957")
 interface ID2D1DrawingStateBlock : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1drawingstateblock-getdescription
@@ -2670,10 +2670,10 @@ interface ID2D1DrawingStateBlock : ID2D1Resource
     void GetTextRenderingParams(IDWriteRenderingParams* textRenderingParams);
 }
 
-@GUID("2cd90694-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1rendertarget
+@GUID("2cd90694-12e2-11dc-9fed-001143a055f9")
 interface ID2D1RenderTarget : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/Direct2D/id2d1rendertarget-createbitmap
@@ -2810,20 +2810,20 @@ interface ID2D1RenderTarget : ID2D1Resource
     BOOL    IsSupported(const(D2D1_RENDER_TARGET_PROPERTIES)* renderTargetProperties);
 }
 
-@GUID("2cd90695-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1bitmaprendertarget
+@GUID("2cd90695-12e2-11dc-9fed-001143a055f9")
 interface ID2D1BitmapRenderTarget : ID2D1RenderTarget
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1bitmaprendertarget-getbitmap
     HRESULT GetBitmap(ID2D1Bitmap* bitmap);
 }
 
-@GUID("2cd90698-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1hwndrendertarget
+@GUID("2cd90698-12e2-11dc-9fed-001143a055f9")
 interface ID2D1HwndRenderTarget : ID2D1RenderTarget
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1hwndrendertarget-checkwindowstate
@@ -2834,10 +2834,10 @@ interface ID2D1HwndRenderTarget : ID2D1RenderTarget
     HWND    GetHwnd();
 }
 
-@GUID("e0db51c3-6f77-4bae-b3d5-e47509b35838")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1gdiinteroprendertarget
+@GUID("e0db51c3-6f77-4bae-b3d5-e47509b35838")
 interface ID2D1GdiInteropRenderTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1gdiinteroprendertarget-getdc
@@ -2846,20 +2846,20 @@ interface ID2D1GdiInteropRenderTarget : IUnknown
     HRESULT ReleaseDC(const(RECT)* update);
 }
 
-@GUID("1c51bc64-de61-46fd-9899-63a5d8f03950")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1dcrendertarget
+@GUID("1c51bc64-de61-46fd-9899-63a5d8f03950")
 interface ID2D1DCRenderTarget : ID2D1RenderTarget
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1dcrendertarget-binddc
     HRESULT BindDC(const(HDC) hDC, const(RECT)* pSubRect);
 }
 
-@GUID("06152247-6f50-465a-9245-118bfd3b6007")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1factory
+@GUID("06152247-6f50-465a-9245-118bfd3b6007")
 interface ID2D1Factory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1factory-reloadsystemmetrics
@@ -2905,20 +2905,20 @@ interface ID2D1Factory : IUnknown
                                  ID2D1DCRenderTarget* dcRenderTarget);
 }
 
-@GUID("82237326-8111-4f7c-bcf4-b5c1175564fe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1gdimetafilesink
+@GUID("82237326-8111-4f7c-bcf4-b5c1175564fe")
 interface ID2D1GdiMetafileSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1gdimetafilesink-processrecord
     HRESULT ProcessRecord(uint recordType, const(void)* recordData, uint recordDataSize);
 }
 
-@GUID("2f543dc3-cfc1-4211-864f-cfd91c6f3395")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1gdimetafile
+@GUID("2f543dc3-cfc1-4211-864f-cfd91c6f3395")
 interface ID2D1GdiMetafile : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1gdimetafile-stream
@@ -2927,10 +2927,10 @@ interface ID2D1GdiMetafile : ID2D1Resource
     HRESULT GetBounds(D2D_RECT_F* bounds);
 }
 
-@GUID("54d7898a-a061-40a7-bec7-e465bcba2c4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1commandsink
+@GUID("54d7898a-a061-40a7-bec7-e465bcba2c4f")
 interface ID2D1CommandSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1commandsink-begindraw
@@ -2993,10 +2993,10 @@ interface ID2D1CommandSink : IUnknown
     HRESULT PopLayer();
 }
 
-@GUID("b4f34a19-2383-4d76-94f6-ec343657c3dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1commandlist
+@GUID("b4f34a19-2383-4d76-94f6-ec343657c3dc")
 interface ID2D1CommandList : ID2D1Image
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1commandlist-stream
@@ -3005,10 +3005,10 @@ interface ID2D1CommandList : ID2D1Image
     HRESULT Close();
 }
 
-@GUID("2c1d867d-c290-41c8-ae7e-34a98702e9a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1printcontrol
+@GUID("2c1d867d-c290-41c8-ae7e-34a98702e9a5")
 interface ID2D1PrintControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1printcontrol-addpage
@@ -3018,10 +3018,10 @@ interface ID2D1PrintControl : IUnknown
     HRESULT Close();
 }
 
-@GUID("fe9e984d-3f95-407c-b5db-cb94d4e8f87c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1imagebrush
+@GUID("fe9e984d-3f95-407c-b5db-cb94d4e8f87c")
 interface ID2D1ImageBrush : ID2D1Brush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1imagebrush-setimage
@@ -3046,10 +3046,10 @@ interface ID2D1ImageBrush : ID2D1Brush
     void GetSourceRectangle(D2D_RECT_F* sourceRectangle);
 }
 
-@GUID("41343a53-e41a-49a2-91cd-21793bbb62e5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1bitmapbrush1
+@GUID("41343a53-e41a-49a2-91cd-21793bbb62e5")
 interface ID2D1BitmapBrush1 : ID2D1BitmapBrush
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1bitmapbrush1-setinterpolationmode1
@@ -3058,20 +3058,20 @@ interface ID2D1BitmapBrush1 : ID2D1BitmapBrush
     D2D1_INTERPOLATION_MODE GetInterpolationMode1();
 }
 
-@GUID("10a72a66-e91c-43f4-993f-ddf4b82b0b4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1strokestyle1
+@GUID("10a72a66-e91c-43f4-993f-ddf4b82b0b4a")
 interface ID2D1StrokeStyle1 : ID2D1StrokeStyle
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1strokestyle1-getstroketransformtype
     D2D1_STROKE_TRANSFORM_TYPE GetStrokeTransformType();
 }
 
-@GUID("62baa2d2-ab54-41b7-b872-787e0106a421")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1pathgeometry1
+@GUID("62baa2d2-ab54-41b7-b872-787e0106a421")
 interface ID2D1PathGeometry1 : ID2D1PathGeometry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1pathgeometry1-computepointandsegmentatlength(float_uint32_constd2d1_matrix_3x2_f__float_d2d1_point_description)
@@ -3080,10 +3080,10 @@ interface ID2D1PathGeometry1 : ID2D1PathGeometry
                                            D2D1_POINT_DESCRIPTION* pointDescription);
 }
 
-@GUID("483473d7-cd46-4f9d-9d3a-3112aa80159d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1properties
+@GUID("483473d7-cd46-4f9d-9d3a-3112aa80159d")
 interface ID2D1Properties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1properties-getpropertycount
@@ -3110,10 +3110,10 @@ interface ID2D1Properties : IUnknown
     HRESULT GetSubProperties(uint index, ID2D1Properties* subProperties);
 }
 
-@GUID("28211a43-7d89-476f-8181-2d6159b220ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1effect
+@GUID("28211a43-7d89-476f-8181-2d6159b220ad")
 interface ID2D1Effect : ID2D1Properties
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1effect-setinput
@@ -3128,10 +3128,10 @@ interface ID2D1Effect : ID2D1Properties
     void    GetOutput(ID2D1Image* outputImage);
 }
 
-@GUID("a898a84c-3873-4588-b08b-ebbf978df041")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1bitmap1
+@GUID("a898a84c-3873-4588-b08b-ebbf978df041")
 interface ID2D1Bitmap1 : ID2D1Bitmap
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1bitmap1-getcolorcontext
@@ -3146,10 +3146,10 @@ interface ID2D1Bitmap1 : ID2D1Bitmap
     HRESULT Unmap();
 }
 
-@GUID("1c4820bb-5771-4518-a581-2fe4dd0ec657")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1colorcontext
+@GUID("1c4820bb-5771-4518-a581-2fe4dd0ec657")
 interface ID2D1ColorContext : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1colorcontext-getcolorspace
@@ -3160,10 +3160,10 @@ interface ID2D1ColorContext : ID2D1Resource
     HRESULT GetProfile(ubyte* profile, uint profileSize);
 }
 
-@GUID("ae1572f4-5dd0-4777-998b-9279472ae63b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1gradientstopcollection1
+@GUID("ae1572f4-5dd0-4777-998b-9279472ae63b")
 interface ID2D1GradientStopCollection1 : ID2D1GradientStopCollection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1gradientstopcollection1-getgradientstops1
@@ -3178,10 +3178,10 @@ interface ID2D1GradientStopCollection1 : ID2D1GradientStopCollection
     D2D1_COLOR_INTERPOLATION_MODE GetColorInterpolationMode();
 }
 
-@GUID("689f1f85-c72e-4e33-8f19-85754efd5ace")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1drawingstateblock1
+@GUID("689f1f85-c72e-4e33-8f19-85754efd5ace")
 interface ID2D1DrawingStateBlock1 : ID2D1DrawingStateBlock
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1drawingstateblock1-getdescription
@@ -3190,10 +3190,10 @@ interface ID2D1DrawingStateBlock1 : ID2D1DrawingStateBlock
     void SetDescription(const(D2D1_DRAWING_STATE_DESCRIPTION1)* stateDescription);
 }
 
-@GUID("e8f7fe7a-191c-466d-ad95-975678bda998")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1devicecontext
+@GUID("e8f7fe7a-191c-466d-ad95-975678bda998")
 interface ID2D1DeviceContext : ID2D1RenderTarget
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1devicecontext-createbitmap(d2d1_size_u_constvoid_uint32_constd2d1_bitmap_properties1_id2d1bitmap1)
@@ -3290,10 +3290,10 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
                             const(D2D_RECT_F)* sourceRectangle);
 }
 
-@GUID("47dd575d-ac05-4cdd-8049-9b02cd16f44c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1device
+@GUID("47dd575d-ac05-4cdd-8049-9b02cd16f44c")
 interface ID2D1Device : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1device-createdevicecontext
@@ -3310,10 +3310,10 @@ interface ID2D1Device : ID2D1Resource
     void    ClearResources(uint millisecondsSinceUse);
 }
 
-@GUID("bb12d362-daee-4b9a-aa1d-14ba401cfa1f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1factory1
+@GUID("bb12d362-daee-4b9a-aa1d-14ba401cfa1f")
 interface ID2D1Factory1 : ID2D1Factory
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1factory1-createdevice
@@ -3345,10 +3345,10 @@ interface ID2D1Factory1 : ID2D1Factory
     HRESULT GetEffectProperties(const(GUID)* effectId, ID2D1Properties* properties);
 }
 
-@GUID("31e6e7bc-e0ff-4d46-8c64-a0a8c41c15d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nn-d2d1_1-id2d1multithread
+@GUID("31e6e7bc-e0ff-4d46-8c64-a0a8c41c15d3")
 interface ID2D1Multithread : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_1/nf-d2d1_1-id2d1multithread-getmultithreadprotected
@@ -3359,10 +3359,10 @@ interface ID2D1Multithread : IUnknown
     void Leave();
 }
 
-@GUID("9b8b1336-00a5-4668-92b7-ced5d8bf9b7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1vertexbuffer
+@GUID("9b8b1336-00a5-4668-92b7-ced5d8bf9b7b")
 interface ID2D1VertexBuffer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1vertexbuffer-map
@@ -3371,10 +3371,10 @@ interface ID2D1VertexBuffer : IUnknown
     HRESULT Unmap();
 }
 
-@GUID("688d15c3-02b0-438d-b13a-d1b44c32c39a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1resourcetexture
+@GUID("688d15c3-02b0-438d-b13a-d1b44c32c39a")
 interface ID2D1ResourceTexture : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1resourcetexture-update
@@ -3382,10 +3382,10 @@ interface ID2D1ResourceTexture : IUnknown
                    uint dimensions, const(ubyte)* data, uint dataCount);
 }
 
-@GUID("519ae1bd-d19a-420d-b849-364f594776b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1renderinfo
+@GUID("519ae1bd-d19a-420d-b849-364f594776b7")
 interface ID2D1RenderInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1renderinfo-setinputdescription
@@ -3398,10 +3398,10 @@ interface ID2D1RenderInfo : IUnknown
     void    SetInstructionCountHint(uint instructionCount);
 }
 
-@GUID("693ce632-7f2f-45de-93fe-18d88b37aa21")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1drawinfo
+@GUID("693ce632-7f2f-45de-93fe-18d88b37aa21")
 interface ID2D1DrawInfo : ID2D1RenderInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1drawinfo-setpixelshaderconstantbuffer
@@ -3418,10 +3418,10 @@ interface ID2D1DrawInfo : ID2D1RenderInfo
                                 const(D2D1_VERTEX_RANGE)* vertexRange, const(GUID)* vertexShader);
 }
 
-@GUID("5598b14b-9fd7-48b7-9bdb-8f0964eb38bc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1computeinfo
+@GUID("5598b14b-9fd7-48b7-9bdb-8f0964eb38bc")
 interface ID2D1ComputeInfo : ID2D1RenderInfo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1computeinfo-setcomputeshaderconstantbuffer
@@ -3432,20 +3432,20 @@ interface ID2D1ComputeInfo : ID2D1RenderInfo
     HRESULT SetResourceTexture(uint textureIndex, ID2D1ResourceTexture resourceTexture);
 }
 
-@GUID("b2efe1e7-729f-4102-949f-505fa21bf666")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1transformnode
+@GUID("b2efe1e7-729f-4102-949f-505fa21bf666")
 interface ID2D1TransformNode : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1transformnode-getinputcount
     uint GetInputCount();
 }
 
-@GUID("13d29038-c3e6-4034-9081-13b53a417992")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1transformgraph
+@GUID("13d29038-c3e6-4034-9081-13b53a417992")
 interface ID2D1TransformGraph : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1transformgraph-getinputcount
@@ -3468,10 +3468,10 @@ interface ID2D1TransformGraph : IUnknown
     HRESULT SetPassthroughGraph(uint effectInputIndex);
 }
 
-@GUID("ef1a287d-342a-4f76-8fdb-da0d6ea9f92b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1transform
+@GUID("ef1a287d-342a-4f76-8fdb-da0d6ea9f92b")
 interface ID2D1Transform : ID2D1TransformNode
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1transform-mapoutputrecttoinputrects
@@ -3483,20 +3483,20 @@ interface ID2D1Transform : ID2D1TransformNode
     HRESULT MapInvalidRect(uint inputIndex, RECT invalidInputRect, RECT* invalidOutputRect);
 }
 
-@GUID("36bfdcb6-9739-435d-a30d-a653beff6a6f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1drawtransform
+@GUID("36bfdcb6-9739-435d-a30d-a653beff6a6f")
 interface ID2D1DrawTransform : ID2D1Transform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1drawtransform-setdrawinfo
     HRESULT SetDrawInfo(ID2D1DrawInfo drawInfo);
 }
 
-@GUID("0d85573c-01e3-4f7d-bfd9-0d60608bf3c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1computetransform
+@GUID("0d85573c-01e3-4f7d-bfd9-0d60608bf3c3")
 interface ID2D1ComputeTransform : ID2D1Transform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1computetransform-setcomputeinfo
@@ -3505,20 +3505,20 @@ interface ID2D1ComputeTransform : ID2D1Transform
     HRESULT CalculateThreadgroups(const(RECT)* outputRect, uint* dimensionX, uint* dimensionY, uint* dimensionZ);
 }
 
-@GUID("0359dc30-95e6-4568-9055-27720d130e93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1analysistransform
+@GUID("0359dc30-95e6-4568-9055-27720d130e93")
 interface ID2D1AnalysisTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1analysistransform-processanalysisresults
     HRESULT ProcessAnalysisResults(const(ubyte)* analysisData, uint analysisDataCount);
 }
 
-@GUID("db1800dd-0c34-4cf9-be90-31cc0a5653e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1sourcetransform
+@GUID("db1800dd-0c34-4cf9-be90-31cc0a5653e1")
 interface ID2D1SourceTransform : ID2D1Transform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1sourcetransform-setrenderinfo
@@ -3527,10 +3527,10 @@ interface ID2D1SourceTransform : ID2D1Transform
     HRESULT Draw(ID2D1Bitmap1 target, const(RECT)* drawRect, D2D_POINT_2U targetOrigin);
 }
 
-@GUID("1a799d8a-69f7-4e4c-9fed-437ccc6684cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1concretetransform
+@GUID("1a799d8a-69f7-4e4c-9fed-437ccc6684cc")
 interface ID2D1ConcreteTransform : ID2D1TransformNode
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1concretetransform-setoutputbuffer
@@ -3539,10 +3539,10 @@ interface ID2D1ConcreteTransform : ID2D1TransformNode
     void    SetCached(BOOL isCached);
 }
 
-@GUID("63ac0b32-ba44-450f-8806-7f4ca1ff2f1b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1blendtransform
+@GUID("63ac0b32-ba44-450f-8806-7f4ca1ff2f1b")
 interface ID2D1BlendTransform : ID2D1ConcreteTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1blendtransform-setdescription
@@ -3551,10 +3551,10 @@ interface ID2D1BlendTransform : ID2D1ConcreteTransform
     void GetDescription(D2D1_BLEND_DESCRIPTION* description);
 }
 
-@GUID("4998735c-3a19-473c-9781-656847e3a347")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1bordertransform
+@GUID("4998735c-3a19-473c-9781-656847e3a347")
 interface ID2D1BorderTransform : ID2D1ConcreteTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1bordertransform-setextendmodex
@@ -3567,10 +3567,10 @@ interface ID2D1BorderTransform : ID2D1ConcreteTransform
     D2D1_EXTEND_MODE GetExtendModeY();
 }
 
-@GUID("3fe6adea-7643-4f53-bd14-a0ce63f24042")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1offsettransform
+@GUID("3fe6adea-7643-4f53-bd14-a0ce63f24042")
 interface ID2D1OffsetTransform : ID2D1TransformNode
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1offsettransform-setoffset
@@ -3579,9 +3579,9 @@ interface ID2D1OffsetTransform : ID2D1TransformNode
     POINT GetOffset();
 }
 
-@GUID("90f732e2-5092-4606-a819-8651970baccd")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1boundsadjustmenttransform
+@GUID("90f732e2-5092-4606-a819-8651970baccd")
 interface ID2D1BoundsAdjustmentTransform : ID2D1TransformNode
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1boundsadjustmenttransform-setoutputbounds
@@ -3590,10 +3590,10 @@ interface ID2D1BoundsAdjustmentTransform : ID2D1TransformNode
     void GetOutputBounds(RECT* outputBounds);
 }
 
-@GUID("a248fd3f-3e6c-4e63-9f03-7f68ecc91db9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1effectimpl
+@GUID("a248fd3f-3e6c-4e63-9f03-7f68ecc91db9")
 interface ID2D1EffectImpl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1effectimpl-initialize
@@ -3604,10 +3604,10 @@ interface ID2D1EffectImpl : IUnknown
     HRESULT SetGraph(ID2D1TransformGraph transformGraph);
 }
 
-@GUID("3d9f916b-27dc-4ad7-b4f1-64945340f563")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nn-d2d1effectauthor-id2d1effectcontext
+@GUID("3d9f916b-27dc-4ad7-b4f1-64945340f563")
 interface ID2D1EffectContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor/nf-d2d1effectauthor-id2d1effectcontext-getdpi
@@ -3668,18 +3668,18 @@ interface ID2D1EffectContext : IUnknown
     BOOL    IsBufferPrecisionSupported(D2D1_BUFFER_PRECISION bufferPrecision);
 }
 
-@GUID("a16907d7-bc02-4801-99e8-8cf7f485f774")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nn-d2d1_2-id2d1geometryrealization
+@GUID("a16907d7-bc02-4801-99e8-8cf7f485f774")
 interface ID2D1GeometryRealization : ID2D1Resource
 {
 }
 
-@GUID("d37f57e4-6908-459f-a199-e72f24f79987")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nn-d2d1_2-id2d1devicecontext1
+@GUID("d37f57e4-6908-459f-a199-e72f24f79987")
 interface ID2D1DeviceContext1 : ID2D1DeviceContext
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nf-d2d1_2-id2d1devicecontext1-createfilledgeometryrealization
@@ -3693,10 +3693,10 @@ interface ID2D1DeviceContext1 : ID2D1DeviceContext
     void    DrawGeometryRealization(ID2D1GeometryRealization geometryRealization, ID2D1Brush brush);
 }
 
-@GUID("d21768e1-23a4-4823-a14b-7c3eba85d658")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nn-d2d1_2-id2d1device1
+@GUID("d21768e1-23a4-4823-a14b-7c3eba85d658")
 interface ID2D1Device1 : ID2D1Device
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nf-d2d1_2-id2d1device1-getrenderingpriority
@@ -3706,29 +3706,29 @@ interface ID2D1Device1 : ID2D1Device
     HRESULT CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS options, ID2D1DeviceContext1* deviceContext1);
 }
 
-@GUID("94f81a73-9212-4376-9c58-b16a3a0d3992")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nn-d2d1_2-id2d1factory2
+@GUID("94f81a73-9212-4376-9c58-b16a3a0d3992")
 interface ID2D1Factory2 : ID2D1Factory1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nf-d2d1_2-id2d1factory2-createdevice
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device1* d2dDevice1);
 }
 
-@GUID("9eb767fd-4269-4467-b8c2-eb30cb305743")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nn-d2d1_2-id2d1commandsink1
+@GUID("9eb767fd-4269-4467-b8c2-eb30cb305743")
 interface ID2D1CommandSink1 : ID2D1CommandSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_2/nf-d2d1_2-id2d1commandsink1-setprimitiveblend1
     HRESULT SetPrimitiveBlend1(D2D1_PRIMITIVE_BLEND primitiveBlend);
 }
 
-@GUID("c9cdb0dd-f8c9-4e70-b7c2-301c80292c5e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgattribute
+@GUID("c9cdb0dd-f8c9-4e70-b7c2-301c80292c5e")
 interface ID2D1SvgAttribute : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgattribute-getelement
@@ -3737,9 +3737,9 @@ interface ID2D1SvgAttribute : ID2D1Resource
     HRESULT Clone(ID2D1SvgAttribute* attribute);
 }
 
-@GUID("d59bab0a-68a2-455b-a5dc-9eb2854e2490")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgpaint
+@GUID("d59bab0a-68a2-455b-a5dc-9eb2854e2490")
 interface ID2D1SvgPaint : ID2D1SvgAttribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgpaint-setpainttype
@@ -3758,9 +3758,9 @@ interface ID2D1SvgPaint : ID2D1SvgAttribute
     uint    GetIdLength();
 }
 
-@GUID("f1c0ca52-92a3-4f00-b4ce-f35691efd9d9")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgstrokedasharray
+@GUID("f1c0ca52-92a3-4f00-b4ce-f35691efd9d9")
 interface ID2D1SvgStrokeDashArray : ID2D1SvgAttribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgstrokedasharray-removedashesatend
@@ -3777,9 +3777,9 @@ interface ID2D1SvgStrokeDashArray : ID2D1SvgAttribute
     uint    GetDashesCount();
 }
 
-@GUID("9dbe4c0d-3572-4dd9-9825-5530813bb712")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgpointcollection
+@GUID("9dbe4c0d-3572-4dd9-9825-5530813bb712")
 interface ID2D1SvgPointCollection : ID2D1SvgAttribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgpointcollection-removepointsatend
@@ -3792,9 +3792,9 @@ interface ID2D1SvgPointCollection : ID2D1SvgAttribute
     uint    GetPointsCount();
 }
 
-@GUID("c095e4f4-bb98-43d6-9745-4d1b84ec9888")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgpathdata
+@GUID("c095e4f4-bb98-43d6-9745-4d1b84ec9888")
 interface ID2D1SvgPathData : ID2D1SvgAttribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgpathdata-removesegmentdataatend
@@ -3817,9 +3817,9 @@ interface ID2D1SvgPathData : ID2D1SvgAttribute
     HRESULT CreatePathGeometry(D2D1_FILL_MODE fillMode, ID2D1PathGeometry1* pathGeometry);
 }
 
-@GUID("ac7b67a6-183e-49c1-a823-0ebe40b0db29")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgelement
+@GUID("ac7b67a6-183e-49c1-a823-0ebe40b0db29")
 interface ID2D1SvgElement : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgelement-getdocument
@@ -3888,9 +3888,9 @@ interface ID2D1SvgElement : ID2D1Resource
     HRESULT GetAttributeValueLength(const(PWSTR) name, D2D1_SVG_ATTRIBUTE_STRING_TYPE type, uint* valueLength);
 }
 
-@GUID("86b88e4d-afa4-4d7b-88e4-68a51c4a0aec")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nn-d2d1svg-id2d1svgdocument
+@GUID("86b88e4d-afa4-4d7b-88e4-68a51c4a0aec")
 interface ID2D1SvgDocument : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1svg/nf-d2d1svg-id2d1svgdocument-setviewportsize
@@ -3921,9 +3921,9 @@ interface ID2D1SvgDocument : ID2D1Resource
                            const(D2D1_SVG_PATH_COMMAND)* commands, uint commandsCount, ID2D1SvgPathData* pathData);
 }
 
-@GUID("bae8b344-23fc-4071-8cb5-d05d6f073848")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1inkstyle
+@GUID("bae8b344-23fc-4071-8cb5-d05d6f073848")
 interface ID2D1InkStyle : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1inkstyle-setnibtransform(constd2d1_matrix_3x2_f_)
@@ -3936,9 +3936,9 @@ interface ID2D1InkStyle : ID2D1Resource
     D2D1_INK_NIB_SHAPE GetNibShape();
 }
 
-@GUID("b499923b-7029-478f-a8b3-432c7c5f5312")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1ink
+@GUID("b499923b-7029-478f-a8b3-432c7c5f5312")
 interface ID2D1Ink : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1ink-setstartpoint(constd2d1_ink_point)
@@ -3964,10 +3964,10 @@ interface ID2D1Ink : ID2D1Resource
     HRESULT GetBounds(ID2D1InkStyle inkStyle, const(D2D_MATRIX_3X2_F)* worldTransform, D2D_RECT_F* bounds);
 }
 
-@GUID("f292e401-c050-4cde-83d7-04962d3b23c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1gradientmesh
+@GUID("f292e401-c050-4cde-83d7-04962d3b23c2")
 interface ID2D1GradientMesh : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1gradientmesh-getpatchcount
@@ -3976,10 +3976,10 @@ interface ID2D1GradientMesh : ID2D1Resource
     HRESULT GetPatches(uint startIndex, D2D1_GRADIENT_MESH_PATCH* patches, uint patchesCount);
 }
 
-@GUID("c9b664e5-74a1-4378-9ac2-eefc37a3f4d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1imagesource
+@GUID("c9b664e5-74a1-4378-9ac2-eefc37a3f4d8")
 interface ID2D1ImageSource : ID2D1Image
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1imagesource-offerresources
@@ -3988,9 +3988,9 @@ interface ID2D1ImageSource : ID2D1Image
     HRESULT TryReclaimResources(BOOL* resourcesDiscarded);
 }
 
-@GUID("77395441-1c8f-4555-8683-f50dab0fe792")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1imagesourcefromwic
+@GUID("77395441-1c8f-4555-8683-f50dab0fe792")
 interface ID2D1ImageSourceFromWic : ID2D1ImageSource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1imagesourcefromwic-ensurecached(constd2d1_rect_u_)
@@ -4001,9 +4001,9 @@ interface ID2D1ImageSourceFromWic : ID2D1ImageSource
     void    GetSource(IWICBitmapSource* wicBitmapSource);
 }
 
-@GUID("7f1f79e5-2796-416c-8f55-700f911445e5")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1transformedimagesource
+@GUID("7f1f79e5-2796-416c-8f55-700f911445e5")
 interface ID2D1TransformedImageSource : ID2D1Image
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1transformedimagesource-getsource
@@ -4012,17 +4012,17 @@ interface ID2D1TransformedImageSource : ID2D1Image
     void GetProperties(D2D1_TRANSFORMED_IMAGE_SOURCE_PROPERTIES* properties);
 }
 
-@GUID("53dd9855-a3b0-4d5b-82e1-26e25c5e5797")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1lookuptable3d
+@GUID("53dd9855-a3b0-4d5b-82e1-26e25c5e5797")
 interface ID2D1LookupTable3D : ID2D1Resource
 {
 }
 
-@GUID("394ea6a3-0c34-4321-950b-6ca20f0be6c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1devicecontext2
+@GUID("394ea6a3-0c34-4321-950b-6ca20f0be6c7")
 interface ID2D1DeviceContext2 : ID2D1DeviceContext1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1devicecontext2-createink(constd2d1_ink_point__id2d1ink)
@@ -4057,9 +4057,9 @@ interface ID2D1DeviceContext2 : ID2D1DeviceContext1
                                          ID2D1TransformedImageSource* transformedImageSource);
 }
 
-@GUID("a44472e1-8dfb-4e60-8492-6e2861c9ca8b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1device2
+@GUID("a44472e1-8dfb-4e60-8492-6e2861c9ca8b")
 interface ID2D1Device2 : ID2D1Device1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1device2-createdevicecontext
@@ -4070,19 +4070,19 @@ interface ID2D1Device2 : ID2D1Device1
     HRESULT GetDxgiDevice(IDXGIDevice* dxgiDevice);
 }
 
-@GUID("0869759f-4f00-413f-b03e-2bda45404d0f")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1factory3
+@GUID("0869759f-4f00-413f-b03e-2bda45404d0f")
 interface ID2D1Factory3 : ID2D1Factory2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1factory3-createdevice
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device2* d2dDevice2);
 }
 
-@GUID("3bab440e-417e-47df-a2e2-bc0be6a00916")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1commandsink2
+@GUID("3bab440e-417e-47df-a2e2-bc0be6a00916")
 interface ID2D1CommandSink2 : ID2D1CommandSink1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1commandsink2-drawink
@@ -4094,10 +4094,10 @@ interface ID2D1CommandSink2 : ID2D1CommandSink1
                             const(D2D_RECT_F)* sourceRectangle);
 }
 
-@GUID("2e69f9e8-dd3f-4bf9-95ba-c04f49d788df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1gdimetafile1
+@GUID("2e69f9e8-dd3f-4bf9-95ba-c04f49d788df")
 interface ID2D1GdiMetafile1 : ID2D1GdiMetafile
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1gdimetafile1-getdpi
@@ -4106,19 +4106,19 @@ interface ID2D1GdiMetafile1 : ID2D1GdiMetafile
     HRESULT GetSourceBounds(D2D_RECT_F* bounds);
 }
 
-@GUID("fd0ecb6b-91e6-411e-8655-395e760f91b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1gdimetafilesink1
+@GUID("fd0ecb6b-91e6-411e-8655-395e760f91b4")
 interface ID2D1GdiMetafileSink1 : ID2D1GdiMetafileSink
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1gdimetafilesink1-processrecord
     HRESULT ProcessRecord(uint recordType, const(void)* recordData, uint recordDataSize, uint flags);
 }
 
-@GUID("4dc583bf-3a10-438a-8722-e9765224f1f1")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1spritebatch
+@GUID("4dc583bf-3a10-438a-8722-e9765224f1f1")
 interface ID2D1SpriteBatch : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1spritebatch-addsprites
@@ -4140,9 +4140,9 @@ interface ID2D1SpriteBatch : ID2D1Resource
     void    Clear();
 }
 
-@GUID("235a7496-8351-414c-bcd4-6672ab2d8e00")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1devicecontext3
+@GUID("235a7496-8351-414c-bcd4-6672ab2d8e00")
 interface ID2D1DeviceContext3 : ID2D1DeviceContext2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1devicecontext3-createspritebatch
@@ -4152,27 +4152,27 @@ interface ID2D1DeviceContext3 : ID2D1DeviceContext2
                             D2D1_BITMAP_INTERPOLATION_MODE interpolationMode, D2D1_SPRITE_OPTIONS spriteOptions);
 }
 
-@GUID("852f2087-802c-4037-ab60-ff2e7ee6fc01")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1device3
+@GUID("852f2087-802c-4037-ab60-ff2e7ee6fc01")
 interface ID2D1Device3 : ID2D1Device2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1device3-createdevicecontext
     HRESULT CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS options, ID2D1DeviceContext3* deviceContext3);
 }
 
-@GUID("bd4ec2d2-0662-4bee-ba8e-6f29f032e096")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1factory4
+@GUID("bd4ec2d2-0662-4bee-ba8e-6f29f032e096")
 interface ID2D1Factory4 : ID2D1Factory3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1factory4-createdevice
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device3* d2dDevice3);
 }
 
-@GUID("18079135-4cf3-4868-bc8e-06067e6d242d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1commandsink3
+@GUID("18079135-4cf3-4868-bc8e-06067e6d242d")
 interface ID2D1CommandSink3 : ID2D1CommandSink2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1commandsink3-drawspritebatch
@@ -4180,9 +4180,9 @@ interface ID2D1CommandSink3 : ID2D1CommandSink2
                             D2D1_BITMAP_INTERPOLATION_MODE interpolationMode, D2D1_SPRITE_OPTIONS spriteOptions);
 }
 
-@GUID("af671749-d241-4db8-8e41-dcc2e5c1a438")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1svgglyphstyle
+@GUID("af671749-d241-4db8-8e41-dcc2e5c1a438")
 interface ID2D1SvgGlyphStyle : ID2D1Resource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1svgglyphstyle-setfill
@@ -4198,9 +4198,9 @@ interface ID2D1SvgGlyphStyle : ID2D1Resource
     void    GetStroke(ID2D1Brush* brush, float* strokeWidth, float* dashes, uint dashesCount, float* dashOffset);
 }
 
-@GUID("8c427831-3d90-4476-b647-c4fae349e4db")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1devicecontext4
+@GUID("8c427831-3d90-4476-b647-c4fae349e4db")
 interface ID2D1DeviceContext4 : ID2D1DeviceContext3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1devicecontext4-createsvgglyphstyle
@@ -4232,9 +4232,9 @@ interface ID2D1DeviceContext4 : ID2D1DeviceContext3
                              D2D_MATRIX_3X2_F* glyphTransform, ID2D1CommandList* glyphImage);
 }
 
-@GUID("d7bdb159-5683-4a46-bc9c-72dc720b858b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1device4
+@GUID("d7bdb159-5683-4a46-bc9c-72dc720b858b")
 interface ID2D1Device4 : ID2D1Device3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1device4-createdevicecontext
@@ -4245,27 +4245,27 @@ interface ID2D1Device4 : ID2D1Device3
     ulong   GetMaximumColorGlyphCacheMemory();
 }
 
-@GUID("c4349994-838e-4b0f-8cab-44997d9eeacc")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1factory5
+@GUID("c4349994-838e-4b0f-8cab-44997d9eeacc")
 interface ID2D1Factory5 : ID2D1Factory4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1factory5-createdevice
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device4* d2dDevice4);
 }
 
-@GUID("c78a6519-40d6-4218-b2de-beeeb744bb3e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1commandsink4
+@GUID("c78a6519-40d6-4218-b2de-beeeb744bb3e")
 interface ID2D1CommandSink4 : ID2D1CommandSink3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1commandsink4-setprimitiveblend2
     HRESULT SetPrimitiveBlend2(D2D1_PRIMITIVE_BLEND primitiveBlend);
 }
 
-@GUID("1ab42875-c57f-4be9-bd85-9cd78d6f55ee")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1colorcontext1
+@GUID("1ab42875-c57f-4be9-bd85-9cd78d6f55ee")
 interface ID2D1ColorContext1 : ID2D1ColorContext
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1colorcontext1-getcolorcontexttype
@@ -4276,9 +4276,9 @@ interface ID2D1ColorContext1 : ID2D1ColorContext
     HRESULT GetSimpleColorProfile(D2D1_SIMPLE_COLOR_PROFILE* simpleProfile);
 }
 
-@GUID("7836d248-68cc-4df6-b9e8-de991bf62eb7")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1devicecontext5
+@GUID("7836d248-68cc-4df6-b9e8-de991bf62eb7")
 interface ID2D1DeviceContext5 : ID2D1DeviceContext4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1devicecontext5-createsvgdocument
@@ -4293,27 +4293,27 @@ interface ID2D1DeviceContext5 : ID2D1DeviceContext4
                                                      ID2D1ColorContext1* colorContext);
 }
 
-@GUID("d55ba0a4-6405-4694-aef5-08ee1a4358b4")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1device5
+@GUID("d55ba0a4-6405-4694-aef5-08ee1a4358b4")
 interface ID2D1Device5 : ID2D1Device4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1device5-createdevicecontext
     HRESULT CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS options, ID2D1DeviceContext5* deviceContext5);
 }
 
-@GUID("f9976f46-f642-44c1-97ca-da32ea2a2635")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1factory6
+@GUID("f9976f46-f642-44c1-97ca-da32ea2a2635")
 interface ID2D1Factory6 : ID2D1Factory5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1factory6-createdevice
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device5* d2dDevice5);
 }
 
-@GUID("7047dd26-b1e7-44a7-959a-8349e2144fa8")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1commandsink5
+@GUID("7047dd26-b1e7-44a7-959a-8349e2144fa8")
 interface ID2D1CommandSink5 : ID2D1CommandSink4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1commandsink5-blendimage
@@ -4321,9 +4321,9 @@ interface ID2D1CommandSink5 : ID2D1CommandSink4
                        const(D2D_RECT_F)* imageRectangle, D2D1_INTERPOLATION_MODE interpolationMode);
 }
 
-@GUID("985f7e37-4ed0-4a19-98a3-15b0edfde306")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1devicecontext6
+@GUID("985f7e37-4ed0-4a19-98a3-15b0edfde306")
 interface ID2D1DeviceContext6 : ID2D1DeviceContext5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1devicecontext6-blendimage
@@ -4331,26 +4331,26 @@ interface ID2D1DeviceContext6 : ID2D1DeviceContext5
                     const(D2D_RECT_F)* imageRectangle, D2D1_INTERPOLATION_MODE interpolationMode);
 }
 
-@GUID("7bfef914-2d75-4bad-be87-e18ddb077b6d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1device6
+@GUID("7bfef914-2d75-4bad-be87-e18ddb077b6d")
 interface ID2D1Device6 : ID2D1Device5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1device6-createdevicecontext
     HRESULT CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS options, ID2D1DeviceContext6* deviceContext6);
 }
 
-@GUID("bdc2bdd3-b96c-4de6-bdf7-99d4745454de")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nn-d2d1_3-id2d1factory7
+@GUID("bdc2bdd3-b96c-4de6-bdf7-99d4745454de")
 interface ID2D1Factory7 : ID2D1Factory6
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1_3/nf-d2d1_3-id2d1factory7-createdevice
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device6* d2dDevice6);
 }
 
-@GUID("ec891cf7-9b69-4851-9def-4e0915771e62")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("ec891cf7-9b69-4851-9def-4e0915771e62")
 interface ID2D1DeviceContext7 : ID2D1DeviceContext6
 {
     DWRITE_PAINT_FEATURE_LEVEL GetPaintFeatureLevel();
@@ -4363,23 +4363,23 @@ interface ID2D1DeviceContext7 : ID2D1DeviceContext6
                                       D2D1_COLOR_BITMAP_GLYPH_SNAP_OPTION bitmapSnapOption);
 }
 
-@GUID("f07c8968-dd4e-4ba6-9cbd-eb6d3752dcbb")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("f07c8968-dd4e-4ba6-9cbd-eb6d3752dcbb")
 interface ID2D1Device7 : ID2D1Device6
 {
     HRESULT CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS options, ID2D1DeviceContext7* deviceContext);
 }
 
-@GUID("677c9311-f36d-4b1f-ae86-86d1223ffd3a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("677c9311-f36d-4b1f-ae86-86d1223ffd3a")
 interface ID2D1Factory8 : ID2D1Factory7
 {
     HRESULT CreateDevice(IDXGIDevice dxgiDevice, ID2D1Device7* d2dDevice6);
 }
 
-@GUID("84ab595a-fc81-4546-bacd-e8ef4d8abe7a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor_1/nn-d2d1effectauthor_1-id2d1effectcontext1
+@GUID("84ab595a-fc81-4546-bacd-e8ef4d8abe7a")
 interface ID2D1EffectContext1 : ID2D1EffectContext
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1effectauthor_1/nf-d2d1effectauthor_1-id2d1effectcontext1-createlookuptable3d
@@ -4387,8 +4387,8 @@ interface ID2D1EffectContext1 : ID2D1EffectContext
                                 uint dataCount, const(uint)* strides, ID2D1LookupTable3D* lookupTable);
 }
 
-@GUID("577ad2a0-9fc7-4dda-8b18-dab810140052")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+@GUID("577ad2a0-9fc7-4dda-8b18-dab810140052")
 interface ID2D1EffectContext2 : ID2D1EffectContext1
 {
     HRESULT CreateColorContextFromDxgiColorSpace(DXGI_COLOR_SPACE_TYPE colorSpace, 

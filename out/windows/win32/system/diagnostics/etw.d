@@ -2704,9 +2704,9 @@ int CveEventWrite(const(PWSTR) CveId, const(PWSTR) AdditionalDetails);
 @GUID("7b40792d-05ff-44c4-9058-f440c71f17d4")
 struct CTraceRelogger;
 
-@GUID("8cc97f40-9028-4ff3-9b62-7d1f79ca7bcb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/relogger/nn-relogger-itraceevent
+@GUID("8cc97f40-9028-4ff3-9b62-7d1f79ca7bcb")
 interface ITraceEvent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/relogger/nf-relogger-itraceevent-clone
@@ -2735,9 +2735,9 @@ interface ITraceEvent : IUnknown
     HRESULT SetProviderId(const(GUID)* ProviderId);
 }
 
-@GUID("3ed25501-593f-43e9-8f38-3ab46f5a4a52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/relogger/nn-relogger-itraceeventcallback
+@GUID("3ed25501-593f-43e9-8f38-3ab46f5a4a52")
 interface ITraceEventCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/relogger/nf-relogger-itraceeventcallback-onbeginprocesstrace
@@ -2748,9 +2748,9 @@ interface ITraceEventCallback : IUnknown
     HRESULT OnEvent(ITraceEvent Event, ITraceRelogger Relogger);
 }
 
-@GUID("f754ad43-3bcc-4286-8009-9c5da214e84e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/relogger/nn-relogger-itracerelogger
+@GUID("f754ad43-3bcc-4286-8009-9c5da214e84e")
 interface ITraceRelogger : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/relogger/nf-relogger-itracerelogger-addlogfiletracestream

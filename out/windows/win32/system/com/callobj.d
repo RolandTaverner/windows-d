@@ -106,9 +106,9 @@ HRESULT CoGetInterceptorFromTypeInfo(const(GUID)* iidIntercepted, IUnknown punkO
 
 // Interfaces
 
-@GUID("d573b4b0-894e-11d2-b8b6-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframe
+@GUID("d573b4b0-894e-11d2-b8b6-00c04fb9618a")
 interface ICallFrame : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getinfo
@@ -155,9 +155,9 @@ interface ICallFrame : IUnknown
     HRESULT Invoke(void* pvReceiver);
 }
 
-@GUID("d573b4b1-894e-11d2-b8b6-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallindirect
+@GUID("d573b4b1-894e-11d2-b8b6-00c04fb9618a")
 interface ICallIndirect : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-callindirect
@@ -170,9 +170,9 @@ interface ICallIndirect : IUnknown
     HRESULT GetIID(GUID* piid, BOOL* pfDerivesFromIDispatch, uint* pcMethod, PWSTR* pwszInterface);
 }
 
-@GUID("60c7ca75-896d-11d2-b8b6-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallinterceptor
+@GUID("60c7ca75-896d-11d2-b8b6-00c04fb9618a")
 interface ICallInterceptor : ICallIndirect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallinterceptor-registersink
@@ -181,18 +181,18 @@ interface ICallInterceptor : ICallIndirect
     HRESULT GetRegisteredSink(ICallFrameEvents* ppsink);
 }
 
-@GUID("fd5e0843-fc91-11d0-97d7-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframeevents
+@GUID("fd5e0843-fc91-11d0-97d7-00c04fb9618a")
 interface ICallFrameEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframeevents-oncall
     HRESULT OnCall(ICallFrame pFrame);
 }
 
-@GUID("5333b003-2e42-11d2-b89d-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallunmarshal
+@GUID("5333b003-2e42-11d2-b89d-00c04fb9618a")
 interface ICallUnmarshal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallunmarshal-unmarshal
@@ -203,9 +203,9 @@ interface ICallUnmarshal : IUnknown
                                CALLFRAME_MARSHALCONTEXT* pcontext);
 }
 
-@GUID("08b23919-392d-11d2-b8a4-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframewalker
+@GUID("08b23919-392d-11d2-b8a4-00c04fb9618a")
 interface ICallFrameWalker : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframewalker-onwalkinterface

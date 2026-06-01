@@ -84,9 +84,9 @@ struct CoClassIdentityStore;
 @GUID("ecf5bf46-e3b6-449a-b56b-43f58f867814")
 struct CIdentityProfileHandler;
 
-@GUID("4e982fed-d14b-440c-b8d6-bb386453d386")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iidentityadvise
+@GUID("4e982fed-d14b-440c-b8d6-bb386453d386")
 interface IIdentityAdvise : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityadvise-identityupdated
@@ -101,9 +101,9 @@ interface AsyncIIdentityAdvise : IUnknown
     HRESULT Finish_IdentityUpdated();
 }
 
-@GUID("0d1b9e0c-e8ba-4f55-a81b-bce934b948f5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iidentityprovider
+@GUID("0d1b9e0c-e8ba-4f55-a81b-bce934b948f5")
 interface IIdentityProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-getidentityenum
@@ -149,9 +149,9 @@ interface AsyncIIdentityProvider : IUnknown
     HRESULT Finish_UnAdvise();
 }
 
-@GUID("2af066b3-4cbb-4cba-a798-204b6af68cc0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iassociatedidentityprovider
+@GUID("2af066b3-4cbb-4cba-a798-204b6af68cc0")
 interface IAssociatedIdentityProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-associateidentity
@@ -173,9 +173,9 @@ interface AsyncIAssociatedIdentityProvider : IUnknown
     HRESULT Finish_ChangeCredential();
 }
 
-@GUID("b7417b54-e08c-429b-96c8-678d1369ecb1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iconnectedidentityprovider
+@GUID("b7417b54-e08c-429b-96c8-678d1369ecb1")
 interface IConnectedIdentityProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-connectidentity
@@ -221,9 +221,9 @@ interface AsyncIIdentityAuthentication : IUnknown
     HRESULT Finish_ValidateIdentityCredential(IPropertyStore* ppIdentityProperties);
 }
 
-@GUID("df586fa5-6f35-44f1-b209-b38e169772eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nn-identitystore-iidentitystore
+@GUID("df586fa5-6f35-44f1-b209-b38e169772eb")
 interface IIdentityStore : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-getcount

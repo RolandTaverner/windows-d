@@ -369,10 +369,10 @@ struct D2D1_BEZIER_SEGMENT
 
 // Interfaces
 
-@GUID("2cd9069e-12e2-11dc-9fed-001143a055f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nn-d2d1-id2d1simplifiedgeometrysink
+@GUID("2cd9069e-12e2-11dc-9fed-001143a055f9")
 interface ID2D1SimplifiedGeometrySink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1/nf-d2d1-id2d1simplifiedgeometrysink-setfillmode

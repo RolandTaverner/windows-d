@@ -10334,9 +10334,9 @@ uint mmGetCurrentTask();
 @GUID("00000003-0000-0010-8000-00aa00389b71")
 struct KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
 
-@GUID("00020021-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavistream
+@GUID("00020021-0000-0000-c000-000000000046")
 interface IAVIStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-create
@@ -10376,9 +10376,9 @@ interface IAVIStream : IUnknown
                     int cbInfo);
 }
 
-@GUID("00020022-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavistreaming
+@GUID("00020022-0000-0000-c000-000000000046")
 interface IAVIStreaming : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistreaming-begin
@@ -10387,9 +10387,9 @@ interface IAVIStreaming : IUnknown
     HRESULT End();
 }
 
-@GUID("00020024-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavieditstream
+@GUID("00020024-0000-0000-c000-000000000046")
 interface IAVIEditStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-cut
@@ -10411,9 +10411,9 @@ interface IAVIPersistFile : IPersistFile
     HRESULT Reserved1();
 }
 
-@GUID("00020020-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavifile
+@GUID("00020020-0000-0000-c000-000000000046")
 interface IAVIFile : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-info
@@ -10436,9 +10436,9 @@ interface IAVIFile : IUnknown
     HRESULT DeleteStream(uint fccType, int lParam);
 }
 
-@GUID("00020023-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-igetframe
+@GUID("00020023-0000-0000-c000-000000000046")
 interface IGetFrame : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-getframe

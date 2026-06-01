@@ -186,9 +186,9 @@ enum HRESULT WCM_E_UNKNOWNRESULT = HRESULT(0x80221003);
 @GUID("9f7d7bb5-20b3-11da-81a5-0030f1642e3c")
 struct SettingsEngine;
 
-@GUID("9f7d7bb7-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-iitemenumerator
+@GUID("9f7d7bb7-20b3-11da-81a5-0030f1642e3c")
 interface IItemEnumerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-current
@@ -199,9 +199,9 @@ interface IItemEnumerator : IUnknown
     HRESULT Reset();
 }
 
-@GUID("9f7d7bb6-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsidentity
+@GUID("9f7d7bb6-20b3-11da-81a5-0030f1642e3c")
 interface ISettingsIdentity : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-getattribute
@@ -214,9 +214,9 @@ interface ISettingsIdentity : IUnknown
     HRESULT SetFlags(uint Flags);
 }
 
-@GUID("9f7d7bb8-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-itargetinfo
+@GUID("9f7d7bb8-20b3-11da-81a5-0030f1642e3c")
 interface ITargetInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetmode
@@ -263,9 +263,9 @@ interface ITargetInfo : IUnknown
     HRESULT GetSchemaHiveMountName(BSTR* pMountName);
 }
 
-@GUID("9f7d7bb9-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsengine
+@GUID("9f7d7bb9-20b3-11da-81a5-0030f1642e3c")
 interface ISettingsEngine : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getnamespaces
@@ -301,9 +301,9 @@ interface ISettingsEngine : IUnknown
     HRESULT GetSettingsContext(ISettingsContext* SettingsContext);
 }
 
-@GUID("9f7d7bbb-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsitem
+@GUID("9f7d7bbb-20b3-11da-81a5-0030f1642e3c")
 interface ISettingsItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getname
@@ -352,9 +352,9 @@ interface ISettingsItem : IUnknown
     HRESULT GetKeyValue(VARIANT* Value);
 }
 
-@GUID("9f7d7bba-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsnamespace
+@GUID("9f7d7bba-20b3-11da-81a5-0030f1642e3c")
 interface ISettingsNamespace : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getidentity
@@ -373,9 +373,9 @@ interface ISettingsNamespace : IUnknown
     HRESULT GetAttribute(const(PWSTR) Name, VARIANT* Value);
 }
 
-@GUID("9f7d7bbc-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsresult
+@GUID("9f7d7bbc-20b3-11da-81a5-0030f1642e3c")
 interface ISettingsResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getdescription
@@ -392,9 +392,9 @@ interface ISettingsResult : IUnknown
     HRESULT GetSource(BSTR* file);
 }
 
-@GUID("9f7d7bbd-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingscontext
+@GUID("9f7d7bbd-20b3-11da-81a5-0030f1642e3c")
 interface ISettingsContext : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-serialize

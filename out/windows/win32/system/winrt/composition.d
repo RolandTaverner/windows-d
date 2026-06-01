@@ -19,8 +19,8 @@ extern(Windows) @nogc nothrow:
 
 // Interfaces
 
-@GUID("fd04e6e3-fe0c-4c3c-ab19-a07601a576ee")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nn-windows-ui-composition-interop-icompositiondrawingsurfaceinterop
+@GUID("fd04e6e3-fe0c-4c3c-ab19-a07601a576ee")
 interface ICompositionDrawingSurfaceInterop : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-begindraw
@@ -45,8 +45,8 @@ interface ICompositionDrawingSurfaceInterop2 : ICompositionDrawingSurfaceInterop
                         const(RECT)* sourceRectangle);
 }
 
-@GUID("a116ff71-f8bf-4c8a-9c98-70779a32a9c8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nn-windows-ui-composition-interop-icompositiongraphicsdeviceinterop
+@GUID("a116ff71-f8bf-4c8a-9c98-70779a32a9c8")
 interface ICompositionGraphicsDeviceInterop : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiongraphicsdeviceinterop-getrenderingdevice

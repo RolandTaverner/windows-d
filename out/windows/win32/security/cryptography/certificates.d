@@ -3789,9 +3789,9 @@ struct CEnroll2;
 @GUID("43f8f289-7a20-11d0-8f06-00c04fc295e1")
 struct CEnroll;
 
-@GUID("9c735be2-57a5-11d1-9bdb-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewcolumn
+@GUID("9c735be2-57a5-11d1-9bdb-00c04fb683fa")
 interface IEnumCERTVIEWCOLUMN : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-next
@@ -3816,9 +3816,9 @@ interface IEnumCERTVIEWCOLUMN : IDispatch
     HRESULT Clone(IEnumCERTVIEWCOLUMN* ppenum);
 }
 
-@GUID("e77db656-7653-11d1-9bde-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewattribute
+@GUID("e77db656-7653-11d1-9bde-00c04fb683fa")
 interface IEnumCERTVIEWATTRIBUTE : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-next
@@ -3835,9 +3835,9 @@ interface IEnumCERTVIEWATTRIBUTE : IDispatch
     HRESULT Clone(IEnumCERTVIEWATTRIBUTE* ppenum);
 }
 
-@GUID("e7dd1466-7653-11d1-9bde-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewextension
+@GUID("e7dd1466-7653-11d1-9bde-00c04fb683fa")
 interface IEnumCERTVIEWEXTENSION : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-next
@@ -3856,9 +3856,9 @@ interface IEnumCERTVIEWEXTENSION : IDispatch
     HRESULT Clone(IEnumCERTVIEWEXTENSION* ppenum);
 }
 
-@GUID("d1157f4c-5af2-11d1-9bdc-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewrow
+@GUID("d1157f4c-5af2-11d1-9bdc-00c04fb683fa")
 interface IEnumCERTVIEWROW : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-next
@@ -3879,9 +3879,9 @@ interface IEnumCERTVIEWROW : IDispatch
     HRESULT GetMaxIndex(int* pIndex);
 }
 
-@GUID("c3fac344-1e84-11d1-9bd6-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-icertview
+@GUID("c3fac344-1e84-11d1-9bd6-00c04fb683fa")
 interface ICertView : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-openconnection
@@ -3903,18 +3903,18 @@ interface ICertView : IDispatch
     HRESULT OpenView(IEnumCERTVIEWROW* ppenum);
 }
 
-@GUID("d594b282-8851-4b61-9c66-3edadf848863")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-icertview2
+@GUID("d594b282-8851-4b61-9c66-3edadf848863")
 interface ICertView2 : ICertView
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview2-settable
     HRESULT SetTable(CVRC_TABLE Table);
 }
 
-@GUID("34df6950-7fb6-11d0-8817-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-icertadmin
+@GUID("34df6950-7fb6-11d0-8817-00a0c903b83c")
 interface ICertAdmin : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-isvalidcertificate
@@ -3941,9 +3941,9 @@ interface ICertAdmin : IDispatch
                               int* pRequestId);
 }
 
-@GUID("f7c3ac41-b8ce-4fb4-aa58-3d1dc0e36b39")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-icertadmin2
+@GUID("f7c3ac41-b8ce-4fb4-aa58-3d1dc0e36b39")
 interface ICertAdmin2 : ICertAdmin
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-publishcrls
@@ -3976,9 +3976,9 @@ interface ICertAdmin2 : ICertAdmin
                       int* pcDeleted);
 }
 
-@GUID("66fb7839-5f04-4c25-ad18-9ff1a8376ee0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspproperty
+@GUID("66fb7839-5f04-4c25-ad18-9ff1a8376ee0")
 interface IOCSPProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_name
@@ -3991,9 +3991,9 @@ interface IOCSPProperty : IDispatch
     HRESULT get_Modified(VARIANT_BOOL* pVal);
 }
 
-@GUID("2597c18d-54e6-4b74-9fa9-a6bfda99cbbe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocsppropertycollection
+@GUID("2597c18d-54e6-4b74-9fa9-a6bfda99cbbe")
 interface IOCSPPropertyCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get__newenum
@@ -4014,9 +4014,9 @@ interface IOCSPPropertyCollection : IDispatch
     HRESULT GetAllProperties(VARIANT* pVarProperties);
 }
 
-@GUID("aec92b40-3d46-433f-87d1-b84d5c1e790d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspcaconfiguration
+@GUID("aec92b40-3d46-433f-87d1-b84d5c1e790d")
 interface IOCSPCAConfiguration : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_identifier
@@ -4069,9 +4069,9 @@ interface IOCSPCAConfiguration : IDispatch
     HRESULT put_CAConfig(const(BSTR) newVal);
 }
 
-@GUID("2bebea0b-5ece-4f28-a91c-86b4bb20f0d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspcaconfigurationcollection
+@GUID("2bebea0b-5ece-4f28-a91c-86b4bb20f0d3")
 interface IOCSPCAConfigurationCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get__newenum
@@ -4088,9 +4088,9 @@ interface IOCSPCAConfigurationCollection : IDispatch
     HRESULT DeleteCAConfiguration(const(BSTR) bstrIdentifier);
 }
 
-@GUID("322e830d-67db-4fe9-9577-4596d9f09294")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspadmin
+@GUID("322e830d-67db-4fe9-9577-4596d9f09294")
 interface IOCSPAdmin : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-get_ocspserviceproperties
@@ -4115,9 +4115,9 @@ interface IOCSPAdmin : IDispatch
     HRESULT GetHashAlgorithms(const(BSTR) bstrServerName, const(BSTR) bstrCAId, VARIANT* pVal);
 }
 
-@GUID("aa000922-ffbe-11cf-8800-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nn-certif-icertserverpolicy
+@GUID("aa000922-ffbe-11cf-8800-00a0c903b83c")
 interface ICertServerPolicy : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcontext
@@ -4153,9 +4153,9 @@ interface ICertServerPolicy : IDispatch
     HRESULT EnumerateAttributesClose();
 }
 
-@GUID("4ba9eb90-732c-11d0-8816-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nn-certif-icertserverexit
+@GUID("4ba9eb90-732c-11d0-8816-00a0c903b83c")
 interface ICertServerExit : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-setcontext
@@ -4184,18 +4184,18 @@ interface ICertServerExit : IDispatch
     HRESULT EnumerateAttributesClose();
 }
 
-@GUID("c7ea09c0-ce17-11d0-8833-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertgetconfig
+@GUID("c7ea09c0-ce17-11d0-8833-00a0c903b83c")
 interface ICertGetConfig : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertgetconfig-getconfig
     HRESULT GetConfig(CERT_GET_CONFIG_FLAGS Flags, BSTR* pstrOut);
 }
 
-@GUID("372fce34-4324-11d0-8810-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertconfig
+@GUID("372fce34-4324-11d0-8810-00a0c903b83c")
 interface ICertConfig : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-reset
@@ -4208,18 +4208,18 @@ interface ICertConfig : IDispatch
     HRESULT GetConfig(int Flags, BSTR* pstrOut);
 }
 
-@GUID("7a18edde-7e78-4163-8ded-78e2c9cee924")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertconfig2
+@GUID("7a18edde-7e78-4163-8ded-78e2c9cee924")
 interface ICertConfig2 : ICertConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig2-setsharedfolder
     HRESULT SetSharedFolder(const(BSTR) strSharedFolder);
 }
 
-@GUID("014e4840-5523-11d0-8812-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest
+@GUID("014e4840-5523-11d0-8812-00a0c903b83c")
 interface ICertRequest : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-submit
@@ -4239,9 +4239,9 @@ interface ICertRequest : IDispatch
     HRESULT GetCertificate(int Flags, BSTR* pstrCertificate);
 }
 
-@GUID("a4772988-4a85-4fa9-824e-b5cf5c16405a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest2
+@GUID("a4772988-4a85-4fa9-824e-b5cf5c16405a")
 interface ICertRequest2 : ICertRequest
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getissuedcertificate
@@ -4261,9 +4261,9 @@ interface ICertRequest2 : ICertRequest
                                     CERT_REQUEST_OUT_TYPE Flags, VARIANT* pvarPropertyValue);
 }
 
-@GUID("afc8f92b-33a2-4861-bf36-2933b7cd67b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest3
+@GUID("afc8f92b-33a2-4861-bf36-2933b7cd67b3")
 interface ICertRequest3 : ICertRequest2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-setcredential
@@ -4276,9 +4276,9 @@ interface ICertRequest3 : ICertRequest2
     HRESULT GetRefreshPolicy(VARIANT_BOOL* pValue);
 }
 
-@GUID("e7d7ad42-bd3d-11d1-9a4d-00c04fc297eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certmod/nn-certmod-icertmanagemodule
+@GUID("e7d7ad42-bd3d-11d1-9a4d-00c04fc297eb")
 interface ICertManageModule : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-getproperty
@@ -4291,9 +4291,9 @@ interface ICertManageModule : IDispatch
     HRESULT Configure(const(BSTR) strConfig, BSTR strStorageLocation, int Flags);
 }
 
-@GUID("38bb5a00-7636-11d0-b413-00a0c91bbf8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-icertpolicy
+@GUID("38bb5a00-7636-11d0-b413-00a0c91bbf8c")
 interface ICertPolicy : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-initialize
@@ -4306,17 +4306,17 @@ interface ICertPolicy : IDispatch
     HRESULT ShutDown();
 }
 
-@GUID("3db4910e-8001-4bf1-aa1b-f43a808317a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-icertpolicy2
+@GUID("3db4910e-8001-4bf1-aa1b-f43a808317a0")
 interface ICertPolicy2 : ICertPolicy
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy2-getmanagemodule
     HRESULT GetManageModule(ICertManageModule* ppManageModule);
 }
 
-@GUID("13ca515d-431d-46cc-8c2e-1da269bbd625")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-indespolicy
+@GUID("13ca515d-431d-46cc-8c2e-1da269bbd625")
 interface INDESPolicy : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-initialize
@@ -4333,9 +4333,9 @@ interface INDESPolicy : IUnknown
                    int lastHResult, CERTTRANSBLOB* pctbIssuedCertEncoded);
 }
 
-@GUID("728ab300-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-iobjectid
+@GUID("728ab300-217d-11da-b2a4-000e7bbb2b09")
 interface IObjectId : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromname
@@ -4357,9 +4357,9 @@ interface IObjectId : IDispatch
     HRESULT GetAlgorithmName(ObjectIdGroupId GroupId, ObjectIdPublicKeyFlags KeyFlags, BSTR* pstrAlgorithmName);
 }
 
-@GUID("728ab301-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-iobjectids
+@GUID("728ab301-217d-11da-b2a4-000e7bbb2b09")
 interface IObjectIds : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get_itembyindex
@@ -4378,9 +4378,9 @@ interface IObjectIds : IDispatch
     HRESULT AddRange(IObjectIds pValue);
 }
 
-@GUID("728ab302-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ibinaryconverter
+@GUID("728ab302-217d-11da-b2a4-000e7bbb2b09")
 interface IBinaryConverter : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-stringtostring
@@ -4398,9 +4398,9 @@ interface IBinaryConverter2 : IBinaryConverter
     HRESULT VariantArrayToStringArray(VARIANT* pvarVariantArray, VARIANT* pvarStringArray);
 }
 
-@GUID("728ab303-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix500distinguishedname
+@GUID("728ab303-217d-11da-b2a4-000e7bbb2b09")
 interface IX500DistinguishedName : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-decode
@@ -4413,9 +4413,9 @@ interface IX500DistinguishedName : IDispatch
     HRESULT get_EncodedName(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab304-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentstatus
+@GUID("728ab304-217d-11da-b2a4-000e7bbb2b09")
 interface IX509EnrollmentStatus : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-appendtext
@@ -4444,9 +4444,9 @@ interface IX509EnrollmentStatus : IDispatch
     HRESULT get_ErrorText(BSTR* pValue);
 }
 
-@GUID("728ab305-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspalgorithm
+@GUID("728ab305-217d-11da-b2a4-000e7bbb2b09")
 interface ICspAlgorithm : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-getalgorithmoid
@@ -4471,9 +4471,9 @@ interface ICspAlgorithm : IDispatch
     HRESULT get_Operations(AlgorithmOperationFlags* pValue);
 }
 
-@GUID("728ab306-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspalgorithms
+@GUID("728ab306-217d-11da-b2a4-000e7bbb2b09")
 interface ICspAlgorithms : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_itembyindex
@@ -4494,9 +4494,9 @@ interface ICspAlgorithms : IDispatch
     HRESULT get_IndexByObjectId(IObjectId pObjectId, int* pIndex);
 }
 
-@GUID("728ab307-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspinformation
+@GUID("728ab307-217d-11da-b2a4-000e7bbb2b09")
 interface ICspInformation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-initializefromname
@@ -4536,9 +4536,9 @@ interface ICspInformation : IDispatch
                                        ICspStatus* ppValue);
 }
 
-@GUID("728ab308-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspinformations
+@GUID("728ab308-217d-11da-b2a4-000e7bbb2b09")
 interface ICspInformations : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_itembyindex
@@ -4568,9 +4568,9 @@ interface ICspInformations : IDispatch
     HRESULT GetHashAlgorithms(ICspInformation pCspInformation, IObjectIds* ppValue);
 }
 
-@GUID("728ab309-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspstatus
+@GUID("728ab309-217d-11da-b2a4-000e7bbb2b09")
 interface ICspStatus : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-initialize
@@ -4589,9 +4589,9 @@ interface ICspStatus : IDispatch
     HRESULT get_DisplayName(BSTR* pValue);
 }
 
-@GUID("728ab30a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspstatuses
+@GUID("728ab30a-217d-11da-b2a4-000e7bbb2b09")
 interface ICspStatuses : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyindex
@@ -4617,9 +4617,9 @@ interface ICspStatuses : IDispatch
     HRESULT get_ItemByProvider(ICspStatus pCspStatus, ICspStatus* ppValue);
 }
 
-@GUID("728ab30b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509publickey
+@GUID("728ab30b-217d-11da-b2a4-000e7bbb2b09")
 interface IX509PublicKey : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-initialize
@@ -4638,9 +4638,9 @@ interface IX509PublicKey : IDispatch
     HRESULT ComputeKeyIdentifier(KeyIdentifierHashAlgorithm Algorithm, EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab30c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509privatekey
+@GUID("728ab30c-217d-11da-b2a4-000e7bbb2b09")
 interface IX509PrivateKey : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-open
@@ -4776,8 +4776,8 @@ interface IX509PrivateKey2 : IX509PrivateKey
     HRESULT put_ParametersExportType(X509KeyParametersExportType Value);
 }
 
-@GUID("b11cd855-f4c4-4fc6-b710-4422237f09e9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509endorsementkey
+@GUID("b11cd855-f4c4-4fc6-b710-4422237f09e9")
 interface IX509EndorsementKey : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_providername
@@ -4804,9 +4804,9 @@ interface IX509EndorsementKey : IDispatch
     HRESULT Close();
 }
 
-@GUID("728ab30d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extension
+@GUID("728ab30d-217d-11da-b2a4-000e7bbb2b09")
 interface IX509Extension : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-initialize
@@ -4821,9 +4821,9 @@ interface IX509Extension : IDispatch
     HRESULT put_Critical(VARIANT_BOOL Value);
 }
 
-@GUID("728ab30e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensions
+@GUID("728ab30e-217d-11da-b2a4-000e7bbb2b09")
 interface IX509Extensions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_itembyindex
@@ -4844,9 +4844,9 @@ interface IX509Extensions : IDispatch
     HRESULT AddRange(IX509Extensions pValue);
 }
 
-@GUID("728ab30f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionkeyusage
+@GUID("728ab30f-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionKeyUsage : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-initializeencode
@@ -4857,9 +4857,9 @@ interface IX509ExtensionKeyUsage : IX509Extension
     HRESULT get_KeyUsage(X509KeyUsageFlags* pValue);
 }
 
-@GUID("728ab310-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionenhancedkeyusage
+@GUID("728ab310-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionEnhancedKeyUsage : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-initializeencode
@@ -4870,9 +4870,9 @@ interface IX509ExtensionEnhancedKeyUsage : IX509Extension
     HRESULT get_EnhancedKeyUsage(IObjectIds* ppValue);
 }
 
-@GUID("728ab311-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensiontemplatename
+@GUID("728ab311-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionTemplateName : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-initializeencode
@@ -4883,9 +4883,9 @@ interface IX509ExtensionTemplateName : IX509Extension
     HRESULT get_TemplateName(BSTR* pValue);
 }
 
-@GUID("728ab312-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensiontemplate
+@GUID("728ab312-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionTemplate : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-initializeencode
@@ -4900,9 +4900,9 @@ interface IX509ExtensionTemplate : IX509Extension
     HRESULT get_MinorVersion(int* pValue);
 }
 
-@GUID("728ab313-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ialternativename
+@GUID("728ab313-217d-11da-b2a4-000e7bbb2b09")
 interface IAlternativeName : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromstring
@@ -4922,9 +4922,9 @@ interface IAlternativeName : IDispatch
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab314-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ialternativenames
+@GUID("728ab314-217d-11da-b2a4-000e7bbb2b09")
 interface IAlternativeNames : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get_itembyindex
@@ -4941,9 +4941,9 @@ interface IAlternativeNames : IDispatch
     HRESULT Clear();
 }
 
-@GUID("728ab315-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionalternativenames
+@GUID("728ab315-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionAlternativeNames : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-initializeencode
@@ -4954,9 +4954,9 @@ interface IX509ExtensionAlternativeNames : IX509Extension
     HRESULT get_AlternativeNames(IAlternativeNames* ppValue);
 }
 
-@GUID("728ab316-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionbasicconstraints
+@GUID("728ab316-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionBasicConstraints : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-initializeencode
@@ -4969,9 +4969,9 @@ interface IX509ExtensionBasicConstraints : IX509Extension
     HRESULT get_PathLenConstraint(int* pValue);
 }
 
-@GUID("728ab317-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionsubjectkeyidentifier
+@GUID("728ab317-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionSubjectKeyIdentifier : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-initializeencode
@@ -4982,9 +4982,9 @@ interface IX509ExtensionSubjectKeyIdentifier : IX509Extension
     HRESULT get_SubjectKeyIdentifier(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab318-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionauthoritykeyidentifier
+@GUID("728ab318-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionAuthorityKeyIdentifier : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-initializeencode
@@ -4995,9 +4995,9 @@ interface IX509ExtensionAuthorityKeyIdentifier : IX509Extension
     HRESULT get_AuthorityKeyIdentifier(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab319-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ismimecapability
+@GUID("728ab319-217d-11da-b2a4-000e7bbb2b09")
 interface ISmimeCapability : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-initialize
@@ -5008,9 +5008,9 @@ interface ISmimeCapability : IDispatch
     HRESULT get_BitCount(int* pValue);
 }
 
-@GUID("728ab31a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ismimecapabilities
+@GUID("728ab31a-217d-11da-b2a4-000e7bbb2b09")
 interface ISmimeCapabilities : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get_itembyindex
@@ -5031,9 +5031,9 @@ interface ISmimeCapabilities : IDispatch
     HRESULT AddAvailableSmimeCapabilities(VARIANT_BOOL MachineContext);
 }
 
-@GUID("728ab31b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionsmimecapabilities
+@GUID("728ab31b-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionSmimeCapabilities : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-initializeencode
@@ -5044,9 +5044,9 @@ interface IX509ExtensionSmimeCapabilities : IX509Extension
     HRESULT get_SmimeCapabilities(ISmimeCapabilities* ppValue);
 }
 
-@GUID("728ab31c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ipolicyqualifier
+@GUID("728ab31c-217d-11da-b2a4-000e7bbb2b09")
 interface IPolicyQualifier : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-initializeencode
@@ -5061,9 +5061,9 @@ interface IPolicyQualifier : IDispatch
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab31d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ipolicyqualifiers
+@GUID("728ab31d-217d-11da-b2a4-000e7bbb2b09")
 interface IPolicyQualifiers : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get_itembyindex
@@ -5080,9 +5080,9 @@ interface IPolicyQualifiers : IDispatch
     HRESULT Clear();
 }
 
-@GUID("728ab31e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificatepolicy
+@GUID("728ab31e-217d-11da-b2a4-000e7bbb2b09")
 interface ICertificatePolicy : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-initialize
@@ -5093,9 +5093,9 @@ interface ICertificatePolicy : IDispatch
     HRESULT get_PolicyQualifiers(IPolicyQualifiers* ppValue);
 }
 
-@GUID("728ab31f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificatepolicies
+@GUID("728ab31f-217d-11da-b2a4-000e7bbb2b09")
 interface ICertificatePolicies : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get_itembyindex
@@ -5112,9 +5112,9 @@ interface ICertificatePolicies : IDispatch
     HRESULT Clear();
 }
 
-@GUID("728ab320-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensioncertificatepolicies
+@GUID("728ab320-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionCertificatePolicies : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-initializeencode
@@ -5125,9 +5125,9 @@ interface IX509ExtensionCertificatePolicies : IX509Extension
     HRESULT get_Policies(ICertificatePolicies* ppValue);
 }
 
-@GUID("728ab321-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionmsapplicationpolicies
+@GUID("728ab321-217d-11da-b2a4-000e7bbb2b09")
 interface IX509ExtensionMSApplicationPolicies : IX509Extension
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-initializeencode
@@ -5138,9 +5138,9 @@ interface IX509ExtensionMSApplicationPolicies : IX509Extension
     HRESULT get_Policies(ICertificatePolicies* ppValue);
 }
 
-@GUID("728ab322-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attribute
+@GUID("728ab322-217d-11da-b2a4-000e7bbb2b09")
 interface IX509Attribute : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-initialize
@@ -5151,9 +5151,9 @@ interface IX509Attribute : IDispatch
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab323-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributes
+@GUID("728ab323-217d-11da-b2a4-000e7bbb2b09")
 interface IX509Attributes : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get_itembyindex
@@ -5170,9 +5170,9 @@ interface IX509Attributes : IDispatch
     HRESULT Clear();
 }
 
-@GUID("728ab324-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeextensions
+@GUID("728ab324-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeExtensions : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-initializeencode
@@ -5183,9 +5183,9 @@ interface IX509AttributeExtensions : IX509Attribute
     HRESULT get_X509Extensions(IX509Extensions* ppValue);
 }
 
-@GUID("728ab325-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeclientid
+@GUID("728ab325-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeClientId : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-initializeencode
@@ -5203,9 +5203,9 @@ interface IX509AttributeClientId : IX509Attribute
     HRESULT get_ProcessName(BSTR* pValue);
 }
 
-@GUID("728ab326-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributerenewalcertificate
+@GUID("728ab326-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeRenewalCertificate : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-initializeencode
@@ -5216,9 +5216,9 @@ interface IX509AttributeRenewalCertificate : IX509Attribute
     HRESULT get_RenewalCertificate(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab327-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributearchivekey
+@GUID("728ab327-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeArchiveKey : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-initializeencode
@@ -5234,9 +5234,9 @@ interface IX509AttributeArchiveKey : IX509Attribute
     HRESULT get_EncryptionStrength(int* pValue);
 }
 
-@GUID("728ab328-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributearchivekeyhash
+@GUID("728ab328-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeArchiveKeyHash : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-initializeencodefromencryptedkeyblob
@@ -5247,9 +5247,9 @@ interface IX509AttributeArchiveKeyHash : IX509Attribute
     HRESULT get_EncryptedKeyHashBlob(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab32a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeosversion
+@GUID("728ab32a-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeOSVersion : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-initializeencode
@@ -5260,9 +5260,9 @@ interface IX509AttributeOSVersion : IX509Attribute
     HRESULT get_OSVersion(BSTR* pValue);
 }
 
-@GUID("728ab32b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributecspprovider
+@GUID("728ab32b-217d-11da-b2a4-000e7bbb2b09")
 interface IX509AttributeCspProvider : IX509Attribute
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-initializeencode
@@ -5277,9 +5277,9 @@ interface IX509AttributeCspProvider : IX509Attribute
     HRESULT get_Signature(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab32c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icryptattribute
+@GUID("728ab32c-217d-11da-b2a4-000e7bbb2b09")
 interface ICryptAttribute : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-initializefromobjectid
@@ -5292,9 +5292,9 @@ interface ICryptAttribute : IDispatch
     HRESULT get_Values(IX509Attributes* ppValue);
 }
 
-@GUID("728ab32d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icryptattributes
+@GUID("728ab32d-217d-11da-b2a4-000e7bbb2b09")
 interface ICryptAttributes : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_itembyindex
@@ -5315,9 +5315,9 @@ interface ICryptAttributes : IDispatch
     HRESULT AddRange(ICryptAttributes pValue);
 }
 
-@GUID("728ab32e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertproperty
+@GUID("728ab32e-217d-11da-b2a4-000e7bbb2b09")
 interface ICertProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-initializefromcertificate
@@ -5336,9 +5336,9 @@ interface ICertProperty : IDispatch
     HRESULT SetValueOnCertificate(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
 }
 
-@GUID("728ab32f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertproperties
+@GUID("728ab32f-217d-11da-b2a4-000e7bbb2b09")
 interface ICertProperties : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get_itembyindex
@@ -5357,9 +5357,9 @@ interface ICertProperties : IDispatch
     HRESULT InitializeFromCertificate(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
 }
 
-@GUID("728ab330-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyfriendlyname
+@GUID("728ab330-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyFriendlyName : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyfriendlyname-initialize
@@ -5368,9 +5368,9 @@ interface ICertPropertyFriendlyName : ICertProperty
     HRESULT get_FriendlyName(BSTR* pValue);
 }
 
-@GUID("728ab331-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertydescription
+@GUID("728ab331-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyDescription : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertydescription-initialize
@@ -5379,9 +5379,9 @@ interface ICertPropertyDescription : ICertProperty
     HRESULT get_Description(BSTR* pValue);
 }
 
-@GUID("728ab332-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyautoenroll
+@GUID("728ab332-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyAutoEnroll : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyautoenroll-initialize
@@ -5390,9 +5390,9 @@ interface ICertPropertyAutoEnroll : ICertProperty
     HRESULT get_TemplateName(BSTR* pValue);
 }
 
-@GUID("728ab333-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyrequestoriginator
+@GUID("728ab333-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyRequestOriginator : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-initialize
@@ -5403,9 +5403,9 @@ interface ICertPropertyRequestOriginator : ICertProperty
     HRESULT get_RequestOriginator(BSTR* pValue);
 }
 
-@GUID("728ab334-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertysha1hash
+@GUID("728ab334-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertySHA1Hash : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertysha1hash-initialize
@@ -5414,9 +5414,9 @@ interface ICertPropertySHA1Hash : ICertProperty
     HRESULT get_SHA1Hash(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab336-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertykeyprovinfo
+@GUID("728ab336-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyKeyProvInfo : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertykeyprovinfo-initialize
@@ -5425,9 +5425,9 @@ interface ICertPropertyKeyProvInfo : ICertProperty
     HRESULT get_PrivateKey(IX509PrivateKey* ppValue);
 }
 
-@GUID("728ab337-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyarchived
+@GUID("728ab337-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyArchived : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchived-initialize
@@ -5436,9 +5436,9 @@ interface ICertPropertyArchived : ICertProperty
     HRESULT get_Archived(VARIANT_BOOL* pValue);
 }
 
-@GUID("728ab338-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertybackedup
+@GUID("728ab338-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyBackedUp : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-initializefromcurrenttime
@@ -5451,9 +5451,9 @@ interface ICertPropertyBackedUp : ICertProperty
     HRESULT get_BackedUpTime(double* pDate);
 }
 
-@GUID("728ab339-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyenrollment
+@GUID("728ab339-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyEnrollment : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-initialize
@@ -5468,9 +5468,9 @@ interface ICertPropertyEnrollment : ICertProperty
     HRESULT get_FriendlyName(BSTR* pValue);
 }
 
-@GUID("728ab33a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyrenewal
+@GUID("728ab33a-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyRenewal : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-initialize
@@ -5481,9 +5481,9 @@ interface ICertPropertyRenewal : ICertProperty
     HRESULT get_Renewal(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab33b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyarchivedkeyhash
+@GUID("728ab33b-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyArchivedKeyHash : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchivedkeyhash-initialize
@@ -5492,9 +5492,9 @@ interface ICertPropertyArchivedKeyHash : ICertProperty
     HRESULT get_ArchivedKeyHash(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab34a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyenrollmentpolicyserver
+@GUID("728ab34a-217d-11da-b2a4-000e7bbb2b09")
 interface ICertPropertyEnrollmentPolicyServer : ICertProperty
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-initialize
@@ -5519,9 +5519,9 @@ interface ICertPropertyEnrollmentPolicyServer : ICertProperty
     HRESULT GetEnrollmentServerAuthentication(X509EnrollmentAuthFlags* pValue);
 }
 
-@GUID("728ab33c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509signatureinformation
+@GUID("728ab33c-217d-11da-b2a4-000e7bbb2b09")
 interface IX509SignatureInformation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_hashalgorithm
@@ -5552,9 +5552,9 @@ interface IX509SignatureInformation : IDispatch
     HRESULT SetDefaultValues();
 }
 
-@GUID("728ab33d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-isignercertificate
+@GUID("728ab33d-217d-11da-b2a4-000e7bbb2b09")
 interface ISignerCertificate : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-initialize
@@ -5582,9 +5582,9 @@ interface ISignerCertificate : IDispatch
     HRESULT get_SignatureInformation(IX509SignatureInformation* ppValue);
 }
 
-@GUID("728ab33e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-isignercertificates
+@GUID("728ab33e-217d-11da-b2a4-000e7bbb2b09")
 interface ISignerCertificates : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get_itembyindex
@@ -5603,9 +5603,9 @@ interface ISignerCertificates : IDispatch
     HRESULT Find(ISignerCertificate pSignerCert, int* piSignerCert);
 }
 
-@GUID("728ab33f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509namevaluepair
+@GUID("728ab33f-217d-11da-b2a4-000e7bbb2b09")
 interface IX509NameValuePair : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-initialize
@@ -5616,9 +5616,9 @@ interface IX509NameValuePair : IDispatch
     HRESULT get_Name(BSTR* pValue);
 }
 
-@GUID("728ab340-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509namevaluepairs
+@GUID("728ab340-217d-11da-b2a4-000e7bbb2b09")
 interface IX509NameValuePairs : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get_itembyindex
@@ -5635,18 +5635,18 @@ interface IX509NameValuePairs : IDispatch
     HRESULT Clear();
 }
 
-@GUID("54244a13-555a-4e22-896d-1b0e52f76406")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplate
+@GUID("54244a13-555a-4e22-896d-1b0e52f76406")
 interface IX509CertificateTemplate : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplate-get_property
     HRESULT get_Property(EnrollmentTemplateProperty property, VARIANT* pValue);
 }
 
-@GUID("13b79003-2181-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplates
+@GUID("13b79003-2181-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateTemplates : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyindex
@@ -5667,9 +5667,9 @@ interface IX509CertificateTemplates : IDispatch
     HRESULT get_ItemByOid(IObjectId pOid, IX509CertificateTemplate* ppValue);
 }
 
-@GUID("f49466a7-395a-4e9e-b6e7-32b331600dc0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplatewritable
+@GUID("f49466a7-395a-4e9e-b6e7-32b331600dc0")
 interface IX509CertificateTemplateWritable : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-initialize
@@ -5684,18 +5684,18 @@ interface IX509CertificateTemplateWritable : IDispatch
     HRESULT get_Template(IX509CertificateTemplate* ppValue);
 }
 
-@GUID("835d1f61-1e95-4bc8-b4d3-976c42b968f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificationauthority
+@GUID("835d1f61-1e95-4bc8-b4d3-976c42b968f7")
 interface ICertificationAuthority : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthority-get_property
     HRESULT get_Property(EnrollmentCAProperty property, VARIANT* pValue);
 }
 
-@GUID("13b79005-2181-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificationauthorities
+@GUID("13b79005-2181-11da-b2a4-000e7bbb2b09")
 interface ICertificationAuthorities : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_itembyindex
@@ -5716,9 +5716,9 @@ interface ICertificationAuthorities : IDispatch
     HRESULT get_ItemByName(BSTR strName, ICertificationAuthority* ppValue);
 }
 
-@GUID("13b79026-2181-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentpolicyserver
+@GUID("13b79026-2181-11da-b2a4-000e7bbb2b09")
 interface IX509EnrollmentPolicyServer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-initialize
@@ -5772,9 +5772,9 @@ interface IX509EnrollmentPolicyServer : IDispatch
     HRESULT put_Cost(uint value);
 }
 
-@GUID("884e204a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509policyserverurl
+@GUID("884e204a-217d-11da-b2a4-000e7bbb2b09")
 interface IX509PolicyServerUrl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-initialize
@@ -5809,9 +5809,9 @@ interface IX509PolicyServerUrl : IDispatch
     HRESULT RemoveFromRegistry(X509CertificateEnrollmentContext context);
 }
 
-@GUID("884e204b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509policyserverlistmanager
+@GUID("884e204b-217d-11da-b2a4-000e7bbb2b09")
 interface IX509PolicyServerListManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get_itembyindex
@@ -5830,9 +5830,9 @@ interface IX509PolicyServerListManager : IDispatch
     HRESULT Initialize(X509CertificateEnrollmentContext context, PolicyServerUrlFlags Flags);
 }
 
-@GUID("728ab341-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequest
+@GUID("728ab341-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequest : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-initialize
@@ -5887,9 +5887,9 @@ interface IX509CertificateRequest : IDispatch
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("728ab342-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10
+@GUID("728ab342-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestPkcs10 : IX509CertificateRequest
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromtemplatename
@@ -5953,9 +5953,9 @@ interface IX509CertificateRequestPkcs10 : IX509CertificateRequest
     HRESULT GetCspStatuses(X509KeySpec KeySpec, ICspStatuses* ppCspStatuses);
 }
 
-@GUID("728ab35b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10v2
+@GUID("728ab35b-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestPkcs10V2 : IX509CertificateRequestPkcs10
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefromtemplate
@@ -5975,8 +5975,8 @@ interface IX509CertificateRequestPkcs10V2 : IX509CertificateRequestPkcs10
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
 }
 
-@GUID("54ea9942-3d66-4530-b76e-7c9170d3ec52")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10v3
+@GUID("54ea9942-3d66-4530-b76e-7c9170d3ec52")
 interface IX509CertificateRequestPkcs10V3 : IX509CertificateRequestPkcs10V2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_attestprivatekey
@@ -6012,9 +6012,9 @@ interface IX509CertificateRequestPkcs10V4 : IX509CertificateRequestPkcs10V3
     HRESULT put_AttestPrivateKeyPreferred(VARIANT_BOOL Value);
 }
 
-@GUID("728ab343-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcertificate
+@GUID("728ab343-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestCertificate : IX509CertificateRequestPkcs10
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-checkpublickeysignature
@@ -6041,9 +6041,9 @@ interface IX509CertificateRequestCertificate : IX509CertificateRequestPkcs10
     HRESULT put_SignerCertificate(ISignerCertificate pValue);
 }
 
-@GUID("728ab35a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcertificate2
+@GUID("728ab35a-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestCertificate2 : IX509CertificateRequestCertificate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-initializefromtemplate
@@ -6059,9 +6059,9 @@ interface IX509CertificateRequestCertificate2 : IX509CertificateRequestCertifica
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
 }
 
-@GUID("728ab344-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs7
+@GUID("728ab344-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestPkcs7 : IX509CertificateRequest
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefromtemplatename
@@ -6084,9 +6084,9 @@ interface IX509CertificateRequestPkcs7 : IX509CertificateRequest
     HRESULT put_SignerCertificate(ISignerCertificate pValue);
 }
 
-@GUID("728ab35c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs7v2
+@GUID("728ab35c-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestPkcs7V2 : IX509CertificateRequestPkcs7
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-initializefromtemplate
@@ -6100,9 +6100,9 @@ interface IX509CertificateRequestPkcs7V2 : IX509CertificateRequestPkcs7
     HRESULT CheckCertificateSignature(VARIANT_BOOL ValidateCertificateChain);
 }
 
-@GUID("728ab345-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcmc
+@GUID("728ab345-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestCmc : IX509CertificateRequestPkcs7
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-initializefrominnerrequesttemplatename
@@ -6153,9 +6153,9 @@ interface IX509CertificateRequestCmc : IX509CertificateRequestPkcs7
     HRESULT get_SignerCertificates(ISignerCertificates* ppValue);
 }
 
-@GUID("728ab35d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcmc2
+@GUID("728ab35d-217d-11da-b2a4-000e7bbb2b09")
 interface IX509CertificateRequestCmc2 : IX509CertificateRequestCmc
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-initializefromtemplate
@@ -6175,9 +6175,9 @@ interface IX509CertificateRequestCmc2 : IX509CertificateRequestCmc
     HRESULT CheckCertificateSignature(ISignerCertificate pSignerCertificate, VARIANT_BOOL ValidateCertificateChain);
 }
 
-@GUID("728ab346-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollment
+@GUID("728ab346-217d-11da-b2a4-000e7bbb2b09")
 interface IX509Enrollment : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initialize
@@ -6229,9 +6229,9 @@ interface IX509Enrollment : IDispatch
     HRESULT get_CAConfigString(BSTR* pValue);
 }
 
-@GUID("728ab350-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollment2
+@GUID("728ab350-217d-11da-b2a4-000e7bbb2b09")
 interface IX509Enrollment2 : IX509Enrollment
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-initializefromtemplate
@@ -6249,9 +6249,9 @@ interface IX509Enrollment2 : IX509Enrollment
     HRESULT get_RequestIdString(BSTR* pValue);
 }
 
-@GUID("728ab351-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmenthelper
+@GUID("728ab351-217d-11da-b2a4-000e7bbb2b09")
 interface IX509EnrollmentHelper : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-addpolicyserver
@@ -6268,18 +6268,18 @@ interface IX509EnrollmentHelper : IDispatch
     HRESULT Initialize(X509CertificateEnrollmentContext Context);
 }
 
-@GUID("728ab349-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentwebclassfactory
+@GUID("728ab349-217d-11da-b2a4-000e7bbb2b09")
 interface IX509EnrollmentWebClassFactory : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentwebclassfactory-createobject
     HRESULT CreateObject(BSTR strProgID, IUnknown* ppIUnknown);
 }
 
-@GUID("728ab352-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509machineenrollmentfactory
+@GUID("728ab352-217d-11da-b2a4-000e7bbb2b09")
 interface IX509MachineEnrollmentFactory : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509machineenrollmentfactory-createobject
@@ -6347,8 +6347,8 @@ interface IX509CertificateRevocationList : IDispatch
     HRESULT get_Signature(EncodingType Encoding, BSTR* pValue);
 }
 
-@GUID("6f175a7c-4a3a-40ae-9dba-592fd6bbf9b8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificateattestationchallenge
+@GUID("6f175a7c-4a3a-40ae-9dba-592fd6bbf9b8")
 interface ICertificateAttestationChallenge : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-initialize
@@ -6366,8 +6366,8 @@ interface ICertificateAttestationChallenge2 : ICertificateAttestationChallenge
     HRESULT put_KeyBlob(EncodingType Encoding, BSTR Value);
 }
 
-@GUID("728ab361-217d-11da-b2a4-000e7bbb2b09")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509scepenrollment
+@GUID("728ab361-217d-11da-b2a4-000e7bbb2b09")
 interface IX509SCEPEnrollment : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-initialize
@@ -6443,9 +6443,9 @@ interface IX509SCEPEnrollmentHelper : IDispatch
     HRESULT get_ResultMessageText(BSTR* pValue);
 }
 
-@GUID("12a88820-7494-11d0-8816-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodestringarray
+@GUID("12a88820-7494-11d0-8816-00a0c903b83c")
 interface ICertEncodeStringArray : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-decode
@@ -6471,9 +6471,9 @@ interface ICertEncodeStringArray2 : ICertEncodeStringArray
     HRESULT EncodeBlob(EncodingType Encoding, BSTR* pstrEncodedData);
 }
 
-@GUID("15e2f230-a0a2-11d0-8821-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodelongarray
+@GUID("15e2f230-a0a2-11d0-8821-00a0c903b83c")
 interface ICertEncodeLongArray : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-decode
@@ -6497,9 +6497,9 @@ interface ICertEncodeLongArray2 : ICertEncodeLongArray
     HRESULT EncodeBlob(EncodingType Encoding, BSTR* pstrEncodedData);
 }
 
-@GUID("2f9469a0-a470-11d0-8821-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodedatearray
+@GUID("2f9469a0-a470-11d0-8821-00a0c903b83c")
 interface ICertEncodeDateArray : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-decode
@@ -6523,9 +6523,9 @@ interface ICertEncodeDateArray2 : ICertEncodeDateArray
     HRESULT EncodeBlob(EncodingType Encoding, BSTR* pstrEncodedData);
 }
 
-@GUID("01958640-bbff-11d0-8825-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodecrldistinfo
+@GUID("01958640-bbff-11d0-8825-00a0c903b83c")
 interface ICertEncodeCRLDistInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-decode
@@ -6555,9 +6555,9 @@ interface ICertEncodeCRLDistInfo2 : ICertEncodeCRLDistInfo
     HRESULT EncodeBlob(EncodingType Encoding, BSTR* pstrEncodedData);
 }
 
-@GUID("1c9a8c70-1271-11d1-9bd4-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodealtname
+@GUID("1c9a8c70-1271-11d1-9bd4-00c04fb683fa")
 interface ICertEncodeAltName : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-decode
@@ -6585,9 +6585,9 @@ interface ICertEncodeAltName2 : ICertEncodeAltName
     HRESULT SetNameEntryBlob(int NameIndex, int NameChoice, const(BSTR) strName, EncodingType Encoding);
 }
 
-@GUID("6db525be-1278-11d1-9bd4-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodebitstring
+@GUID("6db525be-1278-11d1-9bd4-00c04fb683fa")
 interface ICertEncodeBitString : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-decode
@@ -6609,9 +6609,9 @@ interface ICertEncodeBitString2 : ICertEncodeBitString
     HRESULT GetBitStringBlob(EncodingType Encoding, BSTR* pstrBitString);
 }
 
-@GUID("e19ae1a0-7364-11d0-8816-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nn-certexit-icertexit
+@GUID("e19ae1a0-7364-11d0-8816-00a0c903b83c")
 interface ICertExit : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-initialize
@@ -6622,18 +6622,18 @@ interface ICertExit : IDispatch
     HRESULT GetDescription(BSTR* pstrDescription);
 }
 
-@GUID("0abf484b-d049-464d-a7ed-552e7529b0ff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nn-certexit-icertexit2
+@GUID("0abf484b-d049-464d-a7ed-552e7529b0ff")
 interface ICertExit2 : ICertExit
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit2-getmanagemodule
     HRESULT GetManageModule(ICertManageModule* ppManageModule);
 }
 
-@GUID("43f8f288-7a20-11d0-8f06-00c04fc295e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll
+@GUID("43f8f288-7a20-11d0-8f06-00c04fc295e1")
 interface ICEnroll : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-createfilepkcs10
@@ -6750,9 +6750,9 @@ interface ICEnroll : IDispatch
     HRESULT put_HashAlgorithm(BSTR bstr);
 }
 
-@GUID("704ca730-c90b-11d1-9bec-00c04fc295e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll2
+@GUID("704ca730-c90b-11d1-9bec-00c04fc295e1")
 interface ICEnroll2 : ICEnroll
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-addcerttypetorequest
@@ -6769,9 +6769,9 @@ interface ICEnroll2 : ICEnroll
     HRESULT put_EnableT61DNEncoding(BOOL fBool);
 }
 
-@GUID("c28c2d95-b7de-11d2-a421-00c04f79fe8e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll3
+@GUID("c28c2d95-b7de-11d2-a421-00c04f79fe8e")
 interface ICEnroll3 : ICEnroll2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-installpkcs7
@@ -6804,9 +6804,9 @@ interface ICEnroll3 : ICEnroll2
     HRESULT get_EnableSMIMECapabilities(BOOL* fEnableSMIMECapabilities);
 }
 
-@GUID("c1f1188a-2eb5-4a80-841b-7e729a356d90")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll4
+@GUID("c1f1188a-2eb5-4a80-841b-7e729a356d90")
 interface ICEnroll4 : ICEnroll3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_privatekeyarchivecertificate
@@ -6880,9 +6880,9 @@ interface ICEnroll4 : ICEnroll3
     HRESULT get_IncludeSubjectKeyID(BOOL* pfInclude);
 }
 
-@GUID("acaa7838-4585-11d1-ab57-00c04fc295e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll
+@GUID("acaa7838-4585-11d1-ab57-00c04fc295e1")
 interface IEnroll : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createfilepkcs10wstr
@@ -7028,9 +7028,9 @@ interface IEnroll : IUnknown
                                           CRYPT_INTEGER_BLOB* pPkcs7Blob);
 }
 
-@GUID("c080e199-b7df-11d2-a421-00c04f79fe8e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll2
+@GUID("c080e199-b7df-11d2-a421-00c04f79fe8e")
 interface IEnroll2 : IEnroll
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-installpkcs7blob
@@ -7071,9 +7071,9 @@ interface IEnroll2 : IEnroll
     HRESULT get_EnableSMIMECapabilities(BOOL* fEnableSMIMECapabilities);
 }
 
-@GUID("f8053fe5-78f4-448f-a0db-41d61b73446b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll4
+@GUID("f8053fe5-78f4-448f-a0db-41d61b73446b")
 interface IEnroll4 : IEnroll2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_thumbprintwstr

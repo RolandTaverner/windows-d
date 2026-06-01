@@ -3994,16 +3994,16 @@ interface IDialBranding : IUnknown
     HRESULT GetBitmap(uint dwIndex, HBITMAP* phBitmap);
 }
 
-@GUID("cdaece56-4edf-43df-b113-88e4556fa1bb")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/proofofpossessioncookieinfo/nn-proofofpossessioncookieinfo-iproofofpossessioncookieinfomanager
+@GUID("cdaece56-4edf-43df-b113-88e4556fa1bb")
 interface IProofOfPossessionCookieInfoManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/proofofpossessioncookieinfo/nf-proofofpossessioncookieinfo-iproofofpossessioncookieinfomanager-getcookieinfoforuri
     HRESULT GetCookieInfoForUri(const(PWSTR) uri, uint* cookieInfoCount, ProofOfPossessionCookieInfo** cookieInfo);
 }
 
-@GUID("15e41407-b42f-4ae7-9966-34a087b2d713")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/proofofpossessioncookieinfo/nn-proofofpossessioncookieinfo-iproofofpossessioncookieinfomanager2
+@GUID("15e41407-b42f-4ae7-9966-34a087b2d713")
 interface IProofOfPossessionCookieInfoManager2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/proofofpossessioncookieinfo/nf-proofofpossessioncookieinfo-iproofofpossessioncookieinfomanager2-getcookieinfowithuriforaccount
@@ -4018,8 +4018,8 @@ interface IProofOfPossessionCookieInfoManager3 : IUnknown
                                            ProofOfPossessionCookieInfo** cookieInfo);
 }
 
-@GUID("3b74c75b-6e3f-494e-95ec-13174e12a89f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinInet/proofofpossessioncookieinfo/nn-proofofpossessioncookieinfo-iproofofpossessioncookieinfomanager4
+@GUID("3b74c75b-6e3f-494e-95ec-13174e12a89f")
 interface IProofOfPossessionCookieInfoManager4 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinInet/proofofpossessioncookieinfo/nf-proofofpossessioncookieinfo-getcookieinfoforuriwithuseragentid

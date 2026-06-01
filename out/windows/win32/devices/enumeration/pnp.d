@@ -236,9 +236,9 @@ struct UPnPRegistrar;
 @GUID("2e5e84e9-4049-4244-b728-2d24227157c7")
 struct UPnPRemoteEndpointInfo;
 
-@GUID("adda3d55-6f72-4319-bff9-18600a539b10")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevicefinder
+@GUID("adda3d55-6f72-4319-bff9-18600a539b10")
 interface IUPnPDeviceFinder : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevicefinder-findbytype
@@ -253,9 +253,9 @@ interface IUPnPDeviceFinder : IDispatch
     HRESULT FindByUDN(BSTR bstrUDN, IUPnPDevice* pDevice);
 }
 
-@GUID("e3bf6178-694e-459f-a5a6-191ea0ffa1c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpaddressfamilycontrol
+@GUID("e3bf6178-694e-459f-a5a6-191ea0ffa1c7")
 interface IUPnPAddressFamilyControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpaddressfamilycontrol-setaddressfamily
@@ -264,18 +264,18 @@ interface IUPnPAddressFamilyControl : IUnknown
     HRESULT GetAddressFamily(int* pdwFlags);
 }
 
-@GUID("0405af4f-8b5c-447c-80f2-b75984a31f3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnphttpheadercontrol
+@GUID("0405af4f-8b5c-447c-80f2-b75984a31f3c")
 interface IUPnPHttpHeaderControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnphttpheadercontrol-addrequestheaders
     HRESULT AddRequestHeaders(BSTR bstrHttpHeaders);
 }
 
-@GUID("415a984a-88b3-49f3-92af-0508bedf0d6c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevicefindercallback
+@GUID("415a984a-88b3-49f3-92af-0508bedf0d6c")
 interface IUPnPDeviceFinderCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevicefindercallback-deviceadded
@@ -286,9 +286,9 @@ interface IUPnPDeviceFinderCallback : IUnknown
     HRESULT SearchComplete(int lFindData);
 }
 
-@GUID("3f8c8e9e-9a7a-4dc8-bc41-ff31fa374956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpservices
+@GUID("3f8c8e9e-9a7a-4dc8-bc41-ff31fa374956")
 interface IUPnPServices : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpservices-get_count
@@ -299,9 +299,9 @@ interface IUPnPServices : IDispatch
     HRESULT get_Item(BSTR bstrServiceId, IUPnPService* ppService);
 }
 
-@GUID("a295019c-dc65-47dd-90dc-7fe918a1ab44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpservice
+@GUID("a295019c-dc65-47dd-90dc-7fe918a1ab44")
 interface IUPnPService : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpservice-querystatevariable
@@ -318,18 +318,18 @@ interface IUPnPService : IDispatch
     HRESULT get_LastTransportStatus(int* plValue);
 }
 
-@GUID("4d65fd08-d13e-4274-9c8b-dd8d028c8644")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpasyncresult
+@GUID("4d65fd08-d13e-4274-9c8b-dd8d028c8644")
 interface IUPnPAsyncResult : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpasyncresult-asyncoperationcomplete
     HRESULT AsyncOperationComplete(ulong ullRequestID);
 }
 
-@GUID("098bdaf5-5ec1-49e7-a260-b3a11dd8680c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpserviceasync
+@GUID("098bdaf5-5ec1-49e7-a260-b3a11dd8680c")
 interface IUPnPServiceAsync : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpserviceasync-begininvokeaction
@@ -353,9 +353,9 @@ interface IUPnPServiceAsync : IUnknown
     HRESULT CancelAsyncOperation(ulong ullRequestID);
 }
 
-@GUID("31fadca9-ab73-464b-b67d-5c1d0f83c8b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpservicecallback
+@GUID("31fadca9-ab73-464b-b67d-5c1d0f83c8b8")
 interface IUPnPServiceCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpservicecallback-statevariablechanged
@@ -364,18 +364,18 @@ interface IUPnPServiceCallback : IUnknown
     HRESULT ServiceInstanceDied(IUPnPService pus);
 }
 
-@GUID("38873b37-91bb-49f4-b249-2e8efbb8a816")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpserviceenumproperty
+@GUID("38873b37-91bb-49f4-b249-2e8efbb8a816")
 interface IUPnPServiceEnumProperty : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpserviceenumproperty-setserviceenumproperty
     HRESULT SetServiceEnumProperty(uint dwMask);
 }
 
-@GUID("21905529-0a5e-4589-825d-7e6d87ea6998")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpservicedocumentaccess
+@GUID("21905529-0a5e-4589-825d-7e6d87ea6998")
 interface IUPnPServiceDocumentAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpservicedocumentaccess-getdocumenturl
@@ -384,9 +384,9 @@ interface IUPnPServiceDocumentAccess : IUnknown
     HRESULT GetDocument(BSTR* pbstrDoc);
 }
 
-@GUID("fdbc0c73-bda3-4c66-ac4f-f2d96fdad68c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevices
+@GUID("fdbc0c73-bda3-4c66-ac4f-f2d96fdad68c")
 interface IUPnPDevices : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevices-get_count
@@ -397,9 +397,9 @@ interface IUPnPDevices : IDispatch
     HRESULT get_Item(BSTR bstrUDN, IUPnPDevice* ppDevice);
 }
 
-@GUID("3d44d0d1-98c9-4889-acd1-f9d674bf2221")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevice
+@GUID("3d44d0d1-98c9-4889-acd1-f9d674bf2221")
 interface IUPnPDevice : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevice-get_isrootdevice
@@ -442,27 +442,27 @@ interface IUPnPDevice : IDispatch
     HRESULT get_Services(IUPnPServices* ppusServices);
 }
 
-@GUID("e7772804-3287-418e-9072-cf2b47238981")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevicedocumentaccess
+@GUID("e7772804-3287-418e-9072-cf2b47238981")
 interface IUPnPDeviceDocumentAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevicedocumentaccess-getdocumenturl
     HRESULT GetDocumentURL(BSTR* pbstrDocument);
 }
 
-@GUID("c4bc4050-6178-4bd1-a4b8-6398321f3247")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevicedocumentaccessex
+@GUID("c4bc4050-6178-4bd1-a4b8-6398321f3247")
 interface IUPnPDeviceDocumentAccessEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevicedocumentaccessex-getdocument
     HRESULT GetDocument(BSTR* pbstrDocument);
 }
 
-@GUID("11d1c1b2-7daa-4c9e-9595-7f82ed206d1e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdescriptiondocument
+@GUID("11d1c1b2-7daa-4c9e-9595-7f82ed206d1e")
 interface IUPnPDescriptionDocument : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdescriptiondocument-get_readystate
@@ -481,27 +481,27 @@ interface IUPnPDescriptionDocument : IDispatch
     HRESULT DeviceByUDN(BSTR bstrUDN, IUPnPDevice* ppudDevice);
 }
 
-@GUID("983dfc0b-1796-44df-8975-ca545b620ee5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdevicefinderaddcallbackwithinterface
+@GUID("983dfc0b-1796-44df-8975-ca545b620ee5")
 interface IUPnPDeviceFinderAddCallbackWithInterface : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdevicefinderaddcallbackwithinterface-deviceaddedwithinterface
     HRESULT DeviceAddedWithInterface(int lFindData, IUPnPDevice pDevice, GUID* pguidInterface);
 }
 
-@GUID("77394c69-5486-40d6-9bc3-4991983e02da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nn-upnp-iupnpdescriptiondocumentcallback
+@GUID("77394c69-5486-40d6-9bc3-4991983e02da")
 interface IUPnPDescriptionDocumentCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnp/nf-upnp-iupnpdescriptiondocumentcallback-loadcomplete
     HRESULT LoadComplete(HRESULT hrLoadResult);
 }
 
-@GUID("204810b4-73b2-11d4-bf42-00b0d0118b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpeventsink
+@GUID("204810b4-73b2-11d4-bf42-00b0d0118b56")
 interface IUPnPEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpeventsink-onstatechanged
@@ -510,9 +510,9 @@ interface IUPnPEventSink : IUnknown
     HRESULT OnStateChangedSafe(VARIANT varsadispidChanges);
 }
 
-@GUID("204810b5-73b2-11d4-bf42-00b0d0118b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpeventsource
+@GUID("204810b5-73b2-11d4-bf42-00b0d0118b56")
 interface IUPnPEventSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpeventsource-advise
@@ -521,9 +521,9 @@ interface IUPnPEventSource : IUnknown
     HRESULT Unadvise(IUPnPEventSink pesSubscriber);
 }
 
-@GUID("204810b6-73b2-11d4-bf42-00b0d0118b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpregistrar
+@GUID("204810b6-73b2-11d4-bf42-00b0d0118b56")
 interface IUPnPRegistrar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpregistrar-registerdevice
@@ -543,9 +543,9 @@ interface IUPnPRegistrar : IUnknown
     HRESULT UnregisterDeviceProvider(BSTR bstrProviderName);
 }
 
-@GUID("204810b7-73b2-11d4-bf42-00b0d0118b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpreregistrar
+@GUID("204810b7-73b2-11d4-bf42-00b0d0118b56")
 interface IUPnPReregistrar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpreregistrar-reregisterdevice
@@ -556,9 +556,9 @@ interface IUPnPReregistrar : IUnknown
                                     BSTR bstrInitString, BSTR bstrResourcePath, int nLifeTime);
 }
 
-@GUID("204810ba-73b2-11d4-bf42-00b0d0118b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpdevicecontrol
+@GUID("204810ba-73b2-11d4-bf42-00b0d0118b56")
 interface IUPnPDeviceControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpdevicecontrol-initialize
@@ -573,9 +573,9 @@ interface IUPnPDeviceControlHttpHeaders : IUnknown
     HRESULT GetAdditionalResponseHeaders(BSTR* bstrHttpResponseHeaders);
 }
 
-@GUID("204810b8-73b2-11d4-bf42-00b0d0118b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpdeviceprovider
+@GUID("204810b8-73b2-11d4-bf42-00b0d0118b56")
 interface IUPnPDeviceProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpdeviceprovider-start
@@ -584,9 +584,9 @@ interface IUPnPDeviceProvider : IUnknown
     HRESULT Stop();
 }
 
-@GUID("c92eb863-0269-4aff-9c72-75321bba2952")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nn-upnphost-iupnpremoteendpointinfo
+@GUID("c92eb863-0269-4aff-9c72-75321bba2952")
 interface IUPnPRemoteEndpointInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/upnphost/nf-upnphost-iupnpremoteendpointinfo-getdwordvalue

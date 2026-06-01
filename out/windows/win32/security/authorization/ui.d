@@ -222,9 +222,9 @@ HRESULT EditSecurityAdvanced(HWND hwndOwner, ISecurityInformation psi, SI_PAGE_T
 
 // Interfaces
 
-@GUID("965fc360-16ff-11d0-91cb-00aa00bbb723")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation
+@GUID("965fc360-16ff-11d0-91cb-00aa00bbb723")
 interface ISecurityInformation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getobjectinformation
@@ -245,9 +245,9 @@ interface ISecurityInformation : IUnknown
     HRESULT PropertySheetPageCallback(HWND hwnd, PSPCB_MESSAGE uMsg, SI_PAGE_TYPE uPage);
 }
 
-@GUID("c3ccfdb4-6f88-11d2-a3ce-00c04fb1782a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation2
+@GUID("c3ccfdb4-6f88-11d2-a3ce-00c04fb1782a")
 interface ISecurityInformation2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation2-isdaclcanonical
@@ -256,9 +256,9 @@ interface ISecurityInformation2 : IUnknown
     HRESULT LookupSids(uint cSids, PSID* rgpSids, IDataObject* ppdo);
 }
 
-@GUID("3853dc76-9f35-407c-88a1-d19344365fbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-ieffectivepermission
+@GUID("3853dc76-9f35-407c-88a1-d19344365fbc")
 interface IEffectivePermission : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-ieffectivepermission-geteffectivepermission
@@ -268,18 +268,18 @@ interface IEffectivePermission : IUnknown
                                    uint* pcGrantedAccessListLength);
 }
 
-@GUID("fc3066eb-79ef-444b-9111-d18a75ebf2fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityobjecttypeinfo
+@GUID("fc3066eb-79ef-444b-9111-d18a75ebf2fa")
 interface ISecurityObjectTypeInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityobjecttypeinfo-getinheritsource
     HRESULT GetInheritSource(uint si, ACL* pACL, INHERITED_FROMA** ppInheritArray);
 }
 
-@GUID("e2cdc9cc-31bd-4f8f-8c8b-b641af516a1a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation3
+@GUID("e2cdc9cc-31bd-4f8f-8c8b-b641af516a1a")
 interface ISecurityInformation3 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation3-getfullresourcename
@@ -288,18 +288,18 @@ interface ISecurityInformation3 : IUnknown
     HRESULT OpenElevatedEditor(HWND hWnd, SI_PAGE_TYPE uPage);
 }
 
-@GUID("ea961070-cd14-4621-ace4-f63c03e583e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation4
+@GUID("ea961070-cd14-4621-ace4-f63c03e583e4")
 interface ISecurityInformation4 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation4-getsecondarysecurity
     HRESULT GetSecondarySecurity(SECURITY_OBJECT** pSecurityObjects, uint* pSecurityObjectCount);
 }
 
-@GUID("941fabca-dd47-4fca-90bb-b0e10255f20d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-ieffectivepermission2
+@GUID("941fabca-dd47-4fca-90bb-b0e10255f20d")
 interface IEffectivePermission2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-ieffectivepermission2-computeeffectivepermissionwithsecondarysecurity

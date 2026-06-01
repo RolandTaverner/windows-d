@@ -2993,9 +2993,9 @@ struct EditionUpgradeBroker;
 @GUID("3ac83423-3112-4aa6-9b5b-1feb23d0c5f9")
 struct DefaultBrowserSyncSettings;
 
-@GUID("1bfa0c2c-fbcd-4776-bda4-88bf974e74f4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/camerauicontrol/nn-camerauicontrol-icamerauicontroleventcallback
+@GUID("1bfa0c2c-fbcd-4776-bda4-88bf974e74f4")
 interface ICameraUIControlEventCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/camerauicontrol/nf-camerauicontrol-icamerauicontroleventcallback-onstartupcomplete
@@ -3010,9 +3010,9 @@ interface ICameraUIControlEventCallback : IUnknown
     void OnClosed();
 }
 
-@GUID("b8733adf-3d68-4b8f-bb08-e28a0bed0376")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/camerauicontrol/nn-camerauicontrol-icamerauicontrol
+@GUID("b8733adf-3d68-4b8f-bb08-e28a0bed0376")
 interface ICameraUIControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/camerauicontrol/nf-camerauicontrol-icamerauicontrol-show
@@ -3036,9 +3036,9 @@ interface ICameraUIControl : IUnknown
     HRESULT RemoveCapturedItem(const(PWSTR) pszPath);
 }
 
-@GUID("d3e9e342-5deb-43b6-849e-6913b85d503a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/editionupgradehelper/nn-editionupgradehelper-ieditionupgradehelper
+@GUID("d3e9e342-5deb-43b6-849e-6913b85d503a")
 interface IEditionUpgradeHelper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/editionupgradehelper/nf-editionupgradehelper-ieditionupgradehelper-canupgrade

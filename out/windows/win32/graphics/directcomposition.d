@@ -211,9 +211,9 @@ uint DCompositionWaitForCompositorClock(uint count, const(HANDLE)* handles, uint
 
 // Interfaces
 
-@GUID("cbfd91d9-51b2-45e4-b3de-d19ccfb863c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcompanimation/nn-dcompanimation-idcompositionanimation
+@GUID("cbfd91d9-51b2-45e4-b3de-d19ccfb863c5")
 interface IDCompositionAnimation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcompanimation/nf-dcompanimation-idcompositionanimation-reset
@@ -231,9 +231,9 @@ interface IDCompositionAnimation : IUnknown
     HRESULT End(double endOffset, float endValue);
 }
 
-@GUID("c37ea93a-e7aa-450d-b16f-9746cb0407f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiondevice
+@GUID("c37ea93a-e7aa-450d-b16f-9746cb0407f3")
 interface IDCompositionDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiondevice-commit
@@ -290,18 +290,18 @@ interface IDCompositionDevice : IUnknown
     HRESULT CheckDeviceState(BOOL* pfValid);
 }
 
-@GUID("eacdd04c-117e-4e17-88f4-d1b12b0e3d89")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiontarget
+@GUID("eacdd04c-117e-4e17-88f4-d1b12b0e3d89")
 interface IDCompositionTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiontarget-setroot
     HRESULT SetRoot(IDCompositionVisual visual);
 }
 
-@GUID("4d93059d-097b-4651-9a60-f0f25116e2f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionvisual
+@GUID("4d93059d-097b-4651-9a60-f0f25116e2f3")
 interface IDCompositionVisual : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionvisual-setoffsetx(idcompositionanimation)
@@ -340,30 +340,30 @@ interface IDCompositionVisual : IUnknown
     HRESULT SetCompositeMode(DCOMPOSITION_COMPOSITE_MODE compositeMode);
 }
 
-@GUID("ec81b08f-bfcb-4e8d-b193-a915587999e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositioneffect
+@GUID("ec81b08f-bfcb-4e8d-b193-a915587999e8")
 interface IDCompositionEffect : IUnknown
 {
 }
 
-@GUID("71185722-246b-41f2-aad1-0443f7f4bfc2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiontransform3d
+@GUID("71185722-246b-41f2-aad1-0443f7f4bfc2")
 interface IDCompositionTransform3D : IDCompositionEffect
 {
 }
 
-@GUID("fd55faa7-37e0-4c20-95d2-9be45bc33f55")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiontransform
+@GUID("fd55faa7-37e0-4c20-95d2-9be45bc33f55")
 interface IDCompositionTransform : IDCompositionTransform3D
 {
 }
 
-@GUID("06791122-c6f0-417d-8323-269e987f5954")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiontranslatetransform
+@GUID("06791122-c6f0-417d-8323-269e987f5954")
 interface IDCompositionTranslateTransform : IDCompositionTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiontranslatetransform-setoffsetx(idcompositionanimation)
@@ -376,9 +376,9 @@ interface IDCompositionTranslateTransform : IDCompositionTransform
     HRESULT SetOffsetY(float offsetY);
 }
 
-@GUID("71fde914-40ef-45ef-bd51-68b037c339f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionscaletransform
+@GUID("71fde914-40ef-45ef-bd51-68b037c339f9")
 interface IDCompositionScaleTransform : IDCompositionTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionscaletransform-setscalex(float)
@@ -399,9 +399,9 @@ interface IDCompositionScaleTransform : IDCompositionTransform
     HRESULT SetCenterY(float centerY);
 }
 
-@GUID("641ed83c-ae96-46c5-90dc-32774cc5c6d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionrotatetransform
+@GUID("641ed83c-ae96-46c5-90dc-32774cc5c6d5")
 interface IDCompositionRotateTransform : IDCompositionTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionrotatetransform-setangle(idcompositionanimation)
@@ -418,9 +418,9 @@ interface IDCompositionRotateTransform : IDCompositionTransform
     HRESULT SetCenterY(float centerY);
 }
 
-@GUID("e57aa735-dcdb-4c72-9c61-0591f58889ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionskewtransform
+@GUID("e57aa735-dcdb-4c72-9c61-0591f58889ee")
 interface IDCompositionSkewTransform : IDCompositionTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionskewtransform-setanglex(float)
@@ -441,9 +441,9 @@ interface IDCompositionSkewTransform : IDCompositionTransform
     HRESULT SetCenterY(float centerY);
 }
 
-@GUID("16cdff07-c503-419c-83f2-0965c7af1fa6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionmatrixtransform
+@GUID("16cdff07-c503-419c-83f2-0965c7af1fa6")
 interface IDCompositionMatrixTransform : IDCompositionTransform
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionmatrixtransform-setmatrix
@@ -454,9 +454,9 @@ interface IDCompositionMatrixTransform : IDCompositionTransform
     HRESULT SetMatrixElement(int row, int column, float value);
 }
 
-@GUID("a7929a74-e6b2-4bd6-8b95-4040119ca34d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositioneffectgroup
+@GUID("a7929a74-e6b2-4bd6-8b95-4040119ca34d")
 interface IDCompositionEffectGroup : IDCompositionEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositioneffectgroup-setopacity(idcompositionanimation)
@@ -467,9 +467,9 @@ interface IDCompositionEffectGroup : IDCompositionEffect
     HRESULT SetTransform3D(IDCompositionTransform3D transform3D);
 }
 
-@GUID("91636d4b-9ba1-4532-aaf7-e3344994d788")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiontranslatetransform3d
+@GUID("91636d4b-9ba1-4532-aaf7-e3344994d788")
 interface IDCompositionTranslateTransform3D : IDCompositionTransform3D
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiontranslatetransform3d-setoffsetx(idcompositionanimation)
@@ -486,9 +486,9 @@ interface IDCompositionTranslateTransform3D : IDCompositionTransform3D
     HRESULT SetOffsetZ(float offsetZ);
 }
 
-@GUID("2a9e9ead-364b-4b15-a7c4-a1997f78b389")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionscaletransform3d
+@GUID("2a9e9ead-364b-4b15-a7c4-a1997f78b389")
 interface IDCompositionScaleTransform3D : IDCompositionTransform3D
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionscaletransform3d-setscalex(idcompositionanimation)
@@ -517,9 +517,9 @@ interface IDCompositionScaleTransform3D : IDCompositionTransform3D
     HRESULT SetCenterZ(float centerZ);
 }
 
-@GUID("d8f5b23f-d429-4a91-b55a-d2f45fd75b18")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionrotatetransform3d
+@GUID("d8f5b23f-d429-4a91-b55a-d2f45fd75b18")
 interface IDCompositionRotateTransform3D : IDCompositionTransform3D
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionrotatetransform3d-setangle(idcompositionanimation)
@@ -552,9 +552,9 @@ interface IDCompositionRotateTransform3D : IDCompositionTransform3D
     HRESULT SetCenterZ(float centerZ);
 }
 
-@GUID("4b3363f0-643b-41b7-b6e0-ccf22d34467c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionmatrixtransform3d
+@GUID("4b3363f0-643b-41b7-b6e0-ccf22d34467c")
 interface IDCompositionMatrixTransform3D : IDCompositionTransform3D
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionmatrixtransform3d-setmatrix
@@ -565,16 +565,16 @@ interface IDCompositionMatrixTransform3D : IDCompositionTransform3D
     HRESULT SetMatrixElement(int row, int column, float value);
 }
 
-@GUID("64ac3703-9d3f-45ec-a109-7cac0e7a13a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionclip
+@GUID("64ac3703-9d3f-45ec-a109-7cac0e7a13a7")
 interface IDCompositionClip : IUnknown
 {
 }
 
-@GUID("9842ad7d-d9cf-4908-aed7-48b51da5e7c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionrectangleclip
+@GUID("9842ad7d-d9cf-4908-aed7-48b51da5e7c2")
 interface IDCompositionRectangleClip : IDCompositionClip
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionrectangleclip-setleft(float)
@@ -627,9 +627,9 @@ interface IDCompositionRectangleClip : IDCompositionClip
     HRESULT SetBottomRightRadiusY(float radius);
 }
 
-@GUID("bb8a4953-2c99-4f5a-96f5-4819027fa3ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionsurface
+@GUID("bb8a4953-2c99-4f5a-96f5-4819027fa3ac")
 interface IDCompositionSurface : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionsurface-begindraw
@@ -644,9 +644,9 @@ interface IDCompositionSurface : IUnknown
     HRESULT Scroll(const(RECT)* scrollRect, const(RECT)* clipRect, int offsetX, int offsetY);
 }
 
-@GUID("ae471c51-5f53-4a24-8d3e-d0c39c30b3f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionvirtualsurface
+@GUID("ae471c51-5f53-4a24-8d3e-d0c39c30b3f0")
 interface IDCompositionVirtualSurface : IDCompositionSurface
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionvirtualsurface-resize
@@ -655,9 +655,9 @@ interface IDCompositionVirtualSurface : IDCompositionSurface
     HRESULT Trim(const(RECT)* rectangles, uint count);
 }
 
-@GUID("75f6468d-1b8e-447c-9bc6-75fea80b5b25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiondevice2
+@GUID("75f6468d-1b8e-447c-9bc6-75fea80b5b25")
 interface IDCompositionDevice2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiondevice2-commit
@@ -708,9 +708,9 @@ interface IDCompositionDevice2 : IUnknown
     HRESULT CreateAnimation(IDCompositionAnimation* animation);
 }
 
-@GUID("5f4633fe-1e08-4cb8-8c75-ce24333f5602")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiondesktopdevice
+@GUID("5f4633fe-1e08-4cb8-8c75-ce24333f5602")
 interface IDCompositionDesktopDevice : IDCompositionDevice2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiondesktopdevice-createtargetforhwnd
@@ -721,8 +721,8 @@ interface IDCompositionDesktopDevice : IDCompositionDevice2
     HRESULT CreateSurfaceFromHwnd(HWND hwnd, IUnknown* surface);
 }
 
-@GUID("a1a3c64a-224f-4a81-9773-4f03a89d3c6c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiondevicedebug
+@GUID("a1a3c64a-224f-4a81-9773-4f03a89d3c6c")
 interface IDCompositionDeviceDebug : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiondevicedebug-enabledebugcounters
@@ -731,9 +731,9 @@ interface IDCompositionDeviceDebug : IUnknown
     HRESULT DisableDebugCounters();
 }
 
-@GUID("e334bc12-3937-4e02-85eb-fcf4eb30d2c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionsurfacefactory
+@GUID("e334bc12-3937-4e02-85eb-fcf4eb30d2c8")
 interface IDCompositionSurfaceFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionsurfacefactory-createsurface
@@ -744,9 +744,9 @@ interface IDCompositionSurfaceFactory : IUnknown
                                  DXGI_ALPHA_MODE alphaMode, IDCompositionVirtualSurface* virtualSurface);
 }
 
-@GUID("e8de1639-4331-4b26-bc5f-6a321d347a85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionvisual2
+@GUID("e8de1639-4331-4b26-bc5f-6a321d347a85")
 interface IDCompositionVisual2 : IDCompositionVisual
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionvisual2-setopacitymode
@@ -755,9 +755,9 @@ interface IDCompositionVisual2 : IDCompositionVisual
     HRESULT SetBackFaceVisibility(DCOMPOSITION_BACKFACE_VISIBILITY visibility);
 }
 
-@GUID("fed2b808-5eb4-43a0-aea3-35f65280f91b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionvisualdebug
+@GUID("fed2b808-5eb4-43a0-aea3-35f65280f91b")
 interface IDCompositionVisualDebug : IDCompositionVisual2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionvisualdebug-enableheatmap
@@ -770,9 +770,9 @@ interface IDCompositionVisualDebug : IDCompositionVisual2
     HRESULT DisableRedrawRegions();
 }
 
-@GUID("2775f462-b6c1-4015-b0be-b3e7d6a4976d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionvisual3
+@GUID("2775f462-b6c1-4015-b0be-b3e7d6a4976d")
 interface IDCompositionVisual3 : IDCompositionVisualDebug
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionvisual3-setdepthmode
@@ -793,9 +793,9 @@ interface IDCompositionVisual3 : IDCompositionVisualDebug
     HRESULT SetVisible(BOOL visible);
 }
 
-@GUID("0987cb06-f916-48bf-8d35-ce7641781bd9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiondevice3
+@GUID("0987cb06-f916-48bf-8d35-ce7641781bd9")
 interface IDCompositionDevice3 : IDCompositionDevice2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiondevice3-creategaussianblureffect
@@ -826,17 +826,17 @@ interface IDCompositionDevice3 : IDCompositionDevice2
     HRESULT CreateAffineTransform2DEffect(IDCompositionAffineTransform2DEffect* affineTransform2dEffect);
 }
 
-@GUID("30c421d5-8cb2-4e9f-b133-37be270d4ac2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionfiltereffect
+@GUID("30c421d5-8cb2-4e9f-b133-37be270d4ac2")
 interface IDCompositionFilterEffect : IDCompositionEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionfiltereffect-setinput
     HRESULT SetInput(uint index, IUnknown input, uint flags);
 }
 
-@GUID("45d4d0b7-1bd4-454e-8894-2bfa68443033")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiongaussianblureffect
+@GUID("45d4d0b7-1bd4-454e-8894-2bfa68443033")
 interface IDCompositionGaussianBlurEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiongaussianblureffect-setstandarddeviation(float)
@@ -847,8 +847,8 @@ interface IDCompositionGaussianBlurEffect : IDCompositionFilterEffect
     HRESULT SetBorderMode(D2D1_BORDER_MODE mode);
 }
 
-@GUID("6027496e-cb3a-49ab-934f-d798da4f7da6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionbrightnesseffect
+@GUID("6027496e-cb3a-49ab-934f-d798da4f7da6")
 interface IDCompositionBrightnessEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionbrightnesseffect-setwhitepoint
@@ -873,8 +873,8 @@ interface IDCompositionBrightnessEffect : IDCompositionFilterEffect
     HRESULT SetBlackPointY(float blackPointY);
 }
 
-@GUID("c1170a22-3ce2-4966-90d4-55408bfc84c4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositioncolormatrixeffect
+@GUID("c1170a22-3ce2-4966-90d4-55408bfc84c4")
 interface IDCompositionColorMatrixEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositioncolormatrixeffect-setmatrix
@@ -889,8 +889,8 @@ interface IDCompositionColorMatrixEffect : IDCompositionFilterEffect
     HRESULT SetClampOutput(BOOL clamp);
 }
 
-@GUID("4ad18ac0-cfd2-4c2f-bb62-96e54fdb6879")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionshadoweffect
+@GUID("4ad18ac0-cfd2-4c2f-bb62-96e54fdb6879")
 interface IDCompositionShadowEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionshadoweffect-setstandarddeviation(float)
@@ -917,8 +917,8 @@ interface IDCompositionShadowEffect : IDCompositionFilterEffect
     HRESULT SetAlpha(float amount);
 }
 
-@GUID("6db9f920-0770-4781-b0c6-381912f9d167")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionhuerotationeffect
+@GUID("6db9f920-0770-4781-b0c6-381912f9d167")
 interface IDCompositionHueRotationEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionhuerotationeffect-setangle(float)
@@ -927,8 +927,8 @@ interface IDCompositionHueRotationEffect : IDCompositionFilterEffect
     HRESULT SetAngle(float amountDegrees);
 }
 
-@GUID("a08debda-3258-4fa4-9f16-9174d3fe93b1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionsaturationeffect
+@GUID("a08debda-3258-4fa4-9f16-9174d3fe93b1")
 interface IDCompositionSaturationEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionsaturationeffect-setsaturation(float)
@@ -937,8 +937,8 @@ interface IDCompositionSaturationEffect : IDCompositionFilterEffect
     HRESULT SetSaturation(float ratio);
 }
 
-@GUID("a6a55bda-c09c-49f3-9193-a41922c89715")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionturbulenceeffect
+@GUID("a6a55bda-c09c-49f3-9193-a41922c89715")
 interface IDCompositionTurbulenceEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionturbulenceeffect-setoffset
@@ -957,8 +957,8 @@ interface IDCompositionTurbulenceEffect : IDCompositionFilterEffect
     HRESULT SetStitchable(BOOL stitchable);
 }
 
-@GUID("4305ee5b-c4a0-4c88-9385-67124e017683")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionlineartransfereffect
+@GUID("4305ee5b-c4a0-4c88-9385-67124e017683")
 interface IDCompositionLinearTransferEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionlineartransfereffect-setredyintercept(float)
@@ -1005,8 +1005,8 @@ interface IDCompositionLinearTransferEffect : IDCompositionFilterEffect
     HRESULT SetClampOutput(BOOL clampOutput);
 }
 
-@GUID("9b7e82e2-69c5-4eb4-a5f5-a7033f5132cd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositiontabletransfereffect
+@GUID("9b7e82e2-69c5-4eb4-a5f5-a7033f5132cd")
 interface IDCompositionTableTransferEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositiontabletransfereffect-setredtable
@@ -1045,24 +1045,24 @@ interface IDCompositionTableTransferEffect : IDCompositionFilterEffect
     HRESULT SetAlphaTableValue(uint index, float value);
 }
 
-@GUID("576616c0-a231-494d-a38d-00fd5ec4db46")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositioncompositeeffect
+@GUID("576616c0-a231-494d-a38d-00fd5ec4db46")
 interface IDCompositionCompositeEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositioncompositeeffect-setmode
     HRESULT SetMode(D2D1_COMPOSITE_MODE mode);
 }
 
-@GUID("33ecdc0a-578a-4a11-9c14-0cb90517f9c5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionblendeffect
+@GUID("33ecdc0a-578a-4a11-9c14-0cb90517f9c5")
 interface IDCompositionBlendEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionblendeffect-setmode
     HRESULT SetMode(D2D1_BLEND_MODE mode);
 }
 
-@GUID("3b67dfa8-e3dd-4e61-b640-46c2f3d739dc")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionarithmeticcompositeeffect
+@GUID("3b67dfa8-e3dd-4e61-b640-46c2f3d739dc")
 interface IDCompositionArithmeticCompositeEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionarithmeticcompositeeffect-setcoefficients
@@ -1087,8 +1087,8 @@ interface IDCompositionArithmeticCompositeEffect : IDCompositionFilterEffect
     HRESULT SetCoefficient4(float Coefficient4);
 }
 
-@GUID("0b74b9e8-cdd6-492f-bbbc-5ed32157026d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nn-dcomp-idcompositionaffinetransform2deffect
+@GUID("0b74b9e8-cdd6-492f-bbbc-5ed32157026d")
 interface IDCompositionAffineTransform2DEffect : IDCompositionFilterEffect
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcomp/nf-dcomp-idcompositionaffinetransform2deffect-setinterpolationmode

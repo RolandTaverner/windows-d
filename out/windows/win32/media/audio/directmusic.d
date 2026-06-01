@@ -1021,8 +1021,8 @@ interface IDirectMusicThru : IUnknown
                         uint dwDestinationChannel, IDirectMusicPort pDestinationPort);
 }
 
-@GUID("09823661-5c85-11d2-afa6-00aa0024d8b6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynth
+@GUID("09823661-5c85-11d2-afa6-00aa0024d8b6")
 interface IDirectMusicSynth : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-open
@@ -1061,8 +1061,8 @@ interface IDirectMusicSynth : IUnknown
     HRESULT GetAppend(uint* pdwAppend);
 }
 
-@GUID("53cab625-2711-4c9f-9de7-1b7f925f6fc8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynth8
+@GUID("53cab625-2711-4c9f-9de7-1b7f925f6fc8")
 interface IDirectMusicSynth8 : IDirectMusicSynth
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-playvoice
@@ -1078,8 +1078,8 @@ interface IDirectMusicSynth8 : IDirectMusicSynth
     HRESULT AssignChannelToBuses(uint dwChannelGroup, uint dwChannel, uint* pdwBuses, uint cBuses);
 }
 
-@GUID("09823663-5c85-11d2-afa6-00aa0024d8b6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynthsink
+@GUID("09823663-5c85-11d2-afa6-00aa0024d8b6")
 interface IDirectMusicSynthSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-init

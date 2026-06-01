@@ -1348,8 +1348,8 @@ interface IXMLDSOControl : IDispatch
     HRESULT get_readyState(int* state);
 }
 
-@GUID("65725580-9b5d-11d0-9bfe-00c04fc99c8e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml/nn-msxml-ixmlelementcollection
+@GUID("65725580-9b5d-11d0-9bfe-00c04fc99c8e")
 interface IXMLElementCollection : IDispatch
 {
     HRESULT put_length(int v);
@@ -2082,9 +2082,9 @@ interface ISchemaNotation : ISchemaItem
     HRESULT get_publicIdentifier(BSTR* uri);
 }
 
-@GUID("a44a9299-e321-40de-8866-341b41669162")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nn-msxml6-ixmlhttprequest2callback
+@GUID("a44a9299-e321-40de-8866-341b41669162")
 interface IXMLHTTPRequest2Callback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nf-msxml6-ixmlhttprequest2callback-onredirect
@@ -2099,9 +2099,9 @@ interface IXMLHTTPRequest2Callback : IUnknown
     HRESULT OnError(IXMLHTTPRequest2 pXHR, HRESULT hrError);
 }
 
-@GUID("e5d37dc0-552a-4d52-9cc0-a14d546fbd04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nn-msxml6-ixmlhttprequest2
+@GUID("e5d37dc0-552a-4d52-9cc0-a14d546fbd04")
 interface IXMLHTTPRequest2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nf-msxml6-ixmlhttprequest2-open
@@ -2129,9 +2129,9 @@ interface IXMLHTTPRequest2 : IUnknown
     HRESULT GetResponseHeader(const(PWSTR) pwszHeader, ushort** ppwszValue);
 }
 
-@GUID("b9e57830-8c6c-4a6f-9c13-47772bb047bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nn-msxml6-ixmlhttprequest3callback
+@GUID("b9e57830-8c6c-4a6f-9c13-47772bb047bb")
 interface IXMLHTTPRequest3Callback : IXMLHTTPRequest2Callback
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nf-msxml6-ixmlhttprequest3callback-onservercertificatereceived
@@ -2141,9 +2141,9 @@ interface IXMLHTTPRequest3Callback : IXMLHTTPRequest2Callback
     HRESULT OnClientCertificateRequested(IXMLHTTPRequest3 pXHR, uint cIssuerList, const(ushort)** rgpwszIssuerList);
 }
 
-@GUID("a1c9feee-0617-4f23-9d58-8961ea43567c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nn-msxml6-ixmlhttprequest3
+@GUID("a1c9feee-0617-4f23-9d58-8961ea43567c")
 interface IXMLHTTPRequest3 : IXMLHTTPRequest2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msxml6/nf-msxml6-ixmlhttprequest3-setclientcertificate

@@ -5732,18 +5732,18 @@ uint AMGetErrorTextW(HRESULT hr, PWSTR pbuffer, uint MaxLen);
 @GUID("e436ebb3-524f-11ce-9f53-0020af0ba770")
 struct FilgraphManager;
 
-@GUID("29840822-5b84-11d0-bd3b-00a0c911ce86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-icreatedevenum
+@GUID("29840822-5b84-11d0-bd3b-00a0c911ce86")
 interface ICreateDevEnum : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-icreatedevenum-createclassenumerator
     HRESULT CreateClassEnumerator(const(GUID)* clsidDeviceClass, IEnumMoniker* ppEnumMoniker, uint dwFlags);
 }
 
-@GUID("56a86891-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ipin
+@GUID("56a86891-0ad4-11ce-b03a-0020af0ba770")
 interface IPin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ipin-connect
@@ -5778,9 +5778,9 @@ interface IPin : IUnknown
     HRESULT NewSegment(long tStart, long tStop, double dRate);
 }
 
-@GUID("56a86892-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ienumpins
+@GUID("56a86892-0ad4-11ce-b03a-0020af0ba770")
 interface IEnumPins : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -5793,9 +5793,9 @@ interface IEnumPins : IUnknown
     HRESULT Clone(IEnumPins* ppEnum);
 }
 
-@GUID("89c31040-846b-11ce-97d3-00aa0055595a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ienummediatypes
+@GUID("89c31040-846b-11ce-97d3-00aa0055595a")
 interface IEnumMediaTypes : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -5808,9 +5808,9 @@ interface IEnumMediaTypes : IUnknown
     HRESULT Clone(IEnumMediaTypes* ppEnum);
 }
 
-@GUID("56a8689f-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifiltergraph
+@GUID("56a8689f-0ad4-11ce-b03a-0020af0ba770")
 interface IFilterGraph : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifiltergraph-addfilter
@@ -5831,9 +5831,9 @@ interface IFilterGraph : IUnknown
     HRESULT SetDefaultSyncSource();
 }
 
-@GUID("56a86893-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ienumfilters
+@GUID("56a86893-0ad4-11ce-b03a-0020af0ba770")
 interface IEnumFilters : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -5846,9 +5846,9 @@ interface IEnumFilters : IUnknown
     HRESULT Clone(IEnumFilters* ppEnum);
 }
 
-@GUID("56a86899-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediafilter
+@GUID("56a86899-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaFilter : IPersist
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediafilter-stop
@@ -5865,9 +5865,9 @@ interface IMediaFilter : IPersist
     HRESULT GetSyncSource(IReferenceClock* pClock);
 }
 
-@GUID("56a86895-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ibasefilter
+@GUID("56a86895-0ad4-11ce-b03a-0020af0ba770")
 interface IBaseFilter : IMediaFilter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ibasefilter-enumpins
@@ -5882,9 +5882,9 @@ interface IBaseFilter : IMediaFilter
     HRESULT QueryVendorInfo(PWSTR* pVendorInfo);
 }
 
-@GUID("56a8689a-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediasample
+@GUID("56a8689a-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaSample : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediasample-getpointer
@@ -5921,9 +5921,9 @@ interface IMediaSample : IUnknown
     HRESULT SetMediaTime(long* pTimeStart, long* pTimeEnd);
 }
 
-@GUID("36b73884-c2c8-11cf-8b46-00805f6cef60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediasample2
+@GUID("36b73884-c2c8-11cf-8b46-00805f6cef60")
 interface IMediaSample2 : IMediaSample
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediasample2-getproperties
@@ -5934,18 +5934,18 @@ interface IMediaSample2 : IMediaSample
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/const(ubyte)* pbProperties);
 }
 
-@GUID("68961e68-832b-41ea-bc91-63593f3e70e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediasample2config
+@GUID("68961e68-832b-41ea-bc91-63593f3e70e3")
 interface IMediaSample2Config : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediasample2config-getsurface
     HRESULT GetSurface(IUnknown* ppDirect3DSurface9);
 }
 
-@GUID("56a8689c-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imemallocator
+@GUID("56a8689c-0ad4-11ce-b03a-0020af0ba770")
 interface IMemAllocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imemallocator-setproperties
@@ -5962,9 +5962,9 @@ interface IMemAllocator : IUnknown
     HRESULT ReleaseBuffer(IMediaSample pBuffer);
 }
 
-@GUID("379a0cf0-c1de-11d2-abf5-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imemallocatorcallbacktemp
+@GUID("379a0cf0-c1de-11d2-abf5-00a0c905f375")
 interface IMemAllocatorCallbackTemp : IMemAllocator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imemallocatorcallbacktemp-setnotify
@@ -5973,18 +5973,18 @@ interface IMemAllocatorCallbackTemp : IMemAllocator
     HRESULT GetFreeCount(int* plBuffersFree);
 }
 
-@GUID("92980b30-c1de-11d2-abf5-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imemallocatornotifycallbacktemp
+@GUID("92980b30-c1de-11d2-abf5-00a0c905f375")
 interface IMemAllocatorNotifyCallbackTemp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imemallocatornotifycallbacktemp-notifyrelease
     HRESULT NotifyRelease();
 }
 
-@GUID("56a8689d-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imeminputpin
+@GUID("56a8689d-0ad4-11ce-b03a-0020af0ba770")
 interface IMemInputPin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imeminputpin-getallocator
@@ -6001,8 +6001,8 @@ interface IMemInputPin : IUnknown
     HRESULT ReceiveCanBlock();
 }
 
-@GUID("a3d8cec0-7e5a-11cf-bbc5-00805f6cef20")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamoviesetup
+@GUID("a3d8cec0-7e5a-11cf-bbc5-00805f6cef20")
 interface IAMovieSetup : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamoviesetup-register
@@ -6011,9 +6011,9 @@ interface IAMovieSetup : IUnknown
     HRESULT Unregister();
 }
 
-@GUID("36b73880-c2c8-11cf-8b46-00805f6cef60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediaseeking
+@GUID("36b73880-c2c8-11cf-8b46-00805f6cef60")
 interface IMediaSeeking : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediaseeking-getcapabilities
@@ -6052,8 +6052,8 @@ interface IMediaSeeking : IUnknown
     HRESULT GetPreroll(long* pllPreroll);
 }
 
-@GUID("56a868a4-0ad4-11ce-b03a-0020af0ba770")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ienumregfilters
+@GUID("56a868a4-0ad4-11ce-b03a-0020af0ba770")
 interface IEnumRegFilters : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -6066,8 +6066,8 @@ interface IEnumRegFilters : IUnknown
     HRESULT Clone(IEnumRegFilters* ppEnum);
 }
 
-@GUID("56a868a3-0ad4-11ce-b03a-0020af0ba770")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifiltermapper
+@GUID("56a868a3-0ad4-11ce-b03a-0020af0ba770")
 interface IFilterMapper : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifiltermapper-registerfilter
@@ -6090,9 +6090,9 @@ interface IFilterMapper : IUnknown
                                 GUID clsInSub, BOOL bRender, BOOL bOututNeeded, GUID clsOutMaj, GUID clsOutSub);
 }
 
-@GUID("b79bb0b0-33c1-11d1-abe1-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifiltermapper2
+@GUID("b79bb0b0-33c1-11d1-abe1-00a0c905f375")
 interface IFilterMapper2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifiltermapper2-createcategory
@@ -6110,18 +6110,18 @@ interface IFilterMapper2 : IUnknown
                                 const(REGPINMEDIUM)* pMedOut, const(GUID)* pPinCategoryOut);
 }
 
-@GUID("b79bb0b1-33c1-11d1-abe1-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifiltermapper3
+@GUID("b79bb0b1-33c1-11d1-abe1-00a0c905f375")
 interface IFilterMapper3 : IFilterMapper2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifiltermapper3-geticreatedevenum
     HRESULT GetICreateDevEnum(ICreateDevEnum* ppEnum);
 }
 
-@GUID("56a868a5-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iqualitycontrol
+@GUID("56a868a5-0ad4-11ce-b03a-0020af0ba770")
 interface IQualityControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iqualitycontrol-notify
@@ -6130,9 +6130,9 @@ interface IQualityControl : IUnknown
     HRESULT SetSink(IQualityControl piqc);
 }
 
-@GUID("56a868a0-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ioverlaynotify
+@GUID("56a868a0-0ad4-11ce-b03a-0020af0ba770")
 interface IOverlayNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ioverlaynotify-onpalettechange
@@ -6145,18 +6145,18 @@ interface IOverlayNotify : IUnknown
     HRESULT OnPositionChange(const(RECT)* pSourceRect, const(RECT)* pDestinationRect);
 }
 
-@GUID("680efa10-d535-11d1-87c8-00a0c9223196")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ioverlaynotify2
+@GUID("680efa10-d535-11d1-87c8-00a0c9223196")
 interface IOverlayNotify2 : IOverlayNotify
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ioverlaynotify2-ondisplaychange
     HRESULT OnDisplayChange(HMONITOR hMonitor);
 }
 
-@GUID("56a868a1-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ioverlay
+@GUID("56a868a1-0ad4-11ce-b03a-0020af0ba770")
 interface IOverlay : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ioverlay-getpalette
@@ -6181,18 +6181,18 @@ interface IOverlay : IUnknown
     HRESULT Unadvise();
 }
 
-@GUID("56a868a2-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediaeventsink
+@GUID("56a868a2-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediaeventsink-notify
     HRESULT Notify(int EventCode, ptrdiff_t EventParam1, ptrdiff_t EventParam2);
 }
 
-@GUID("56a868a6-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifilesourcefilter
+@GUID("56a868a6-0ad4-11ce-b03a-0020af0ba770")
 interface IFileSourceFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifilesourcefilter-load
@@ -6201,9 +6201,9 @@ interface IFileSourceFilter : IUnknown
     HRESULT GetCurFile(PWSTR* ppszFileName, AM_MEDIA_TYPE* pmt);
 }
 
-@GUID("a2104830-7c70-11cf-8bce-00aa00a3f1a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifilesinkfilter
+@GUID("a2104830-7c70-11cf-8bce-00aa00a3f1a6")
 interface IFileSinkFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifilesinkfilter-setfilename
@@ -6212,9 +6212,9 @@ interface IFileSinkFilter : IUnknown
     HRESULT GetCurFile(PWSTR* ppszFileName, AM_MEDIA_TYPE* pmt);
 }
 
-@GUID("00855b90-ce1b-11d0-bd4f-00a0c911ce86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifilesinkfilter2
+@GUID("00855b90-ce1b-11d0-bd4f-00a0c911ce86")
 interface IFileSinkFilter2 : IFileSinkFilter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifilesinkfilter2-setmode
@@ -6223,9 +6223,9 @@ interface IFileSinkFilter2 : IFileSinkFilter
     HRESULT GetMode(uint* pdwFlags);
 }
 
-@GUID("56a868a9-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-igraphbuilder
+@GUID("56a868a9-0ad4-11ce-b03a-0020af0ba770")
 interface IGraphBuilder : IFilterGraph
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-igraphbuilder-connect
@@ -6244,8 +6244,8 @@ interface IGraphBuilder : IFilterGraph
     HRESULT ShouldOperationContinue();
 }
 
-@GUID("bf87b6e0-8c27-11d0-b3f0-00aa003761c5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-icapturegraphbuilder
+@GUID("bf87b6e0-8c27-11d0-b3f0-00aa003761c5")
 interface ICaptureGraphBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-icapturegraphbuilder-setfiltergraph
@@ -6270,18 +6270,18 @@ interface ICaptureGraphBuilder : IUnknown
                             IAMCopyCaptureFileProgress pCallback);
 }
 
-@GUID("670d1d20-a068-11d0-b3f0-00aa003761c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamcopycapturefileprogress
+@GUID("670d1d20-a068-11d0-b3f0-00aa003761c5")
 interface IAMCopyCaptureFileProgress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamcopycapturefileprogress-progress
     HRESULT Progress(int iProgress);
 }
 
-@GUID("93e5a4e0-2d50-11d2-abfa-00a0c9c6e38d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-icapturegraphbuilder2
+@GUID("93e5a4e0-2d50-11d2-abfa-00a0c9c6e38d")
 interface ICaptureGraphBuilder2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-icapturegraphbuilder2-setfiltergraph
@@ -6310,9 +6310,9 @@ interface ICaptureGraphBuilder2 : IUnknown
                     BOOL fUnconnected, int num, IPin* ppPin);
 }
 
-@GUID("36b73882-c2c8-11cf-8b46-00805f6cef60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifiltergraph2
+@GUID("36b73882-c2c8-11cf-8b46-00805f6cef60")
 interface IFilterGraph2 : IGraphBuilder
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifiltergraph2-addsourcefilterformoniker
@@ -6325,9 +6325,9 @@ interface IFilterGraph2 : IGraphBuilder
                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint* pvContext);
 }
 
-@GUID("aaf38154-b80b-422f-91e6-b66467509a07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifiltergraph3
+@GUID("aaf38154-b80b-422f-91e6-b66467509a07")
 interface IFilterGraph3 : IFilterGraph2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifiltergraph3-setsyncsourceex
@@ -6335,9 +6335,9 @@ interface IFilterGraph3 : IFilterGraph2
                             IBaseFilter pFilter);
 }
 
-@GUID("56a868bf-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-istreambuilder
+@GUID("56a868bf-0ad4-11ce-b03a-0020af0ba770")
 interface IStreamBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-istreambuilder-render
@@ -6346,9 +6346,9 @@ interface IStreamBuilder : IUnknown
     HRESULT Backout(IPin ppinOut, IGraphBuilder pGraph);
 }
 
-@GUID("56a868aa-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iasyncreader
+@GUID("56a868aa-0ad4-11ce-b03a-0020af0ba770")
 interface IAsyncReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iasyncreader-requestallocator
@@ -6370,18 +6370,18 @@ interface IAsyncReader : IUnknown
     HRESULT EndFlush();
 }
 
-@GUID("56a868ab-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-igraphversion
+@GUID("56a868ab-0ad4-11ce-b03a-0020af0ba770")
 interface IGraphVersion : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-igraphversion-queryversion
     HRESULT QueryVersion(int* pVersion);
 }
 
-@GUID("56a868ad-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iresourceconsumer
+@GUID("56a868ad-0ad4-11ce-b03a-0020af0ba770")
 interface IResourceConsumer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iresourceconsumer-acquireresource
@@ -6390,9 +6390,9 @@ interface IResourceConsumer : IUnknown
     HRESULT ReleaseResource(int idResource);
 }
 
-@GUID("56a868ac-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iresourcemanager
+@GUID("56a868ac-0ad4-11ce-b03a-0020af0ba770")
 interface IResourceManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iresourcemanager-register
@@ -6413,9 +6413,9 @@ interface IResourceManager : IUnknown
     HRESULT ReleaseFocus(IUnknown pFocusObject);
 }
 
-@GUID("56a868af-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idistributornotify
+@GUID("56a868af-0ad4-11ce-b03a-0020af0ba770")
 interface IDistributorNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idistributornotify-stop
@@ -6430,9 +6430,9 @@ interface IDistributorNotify : IUnknown
     HRESULT NotifyGraphChange();
 }
 
-@GUID("36b73881-c2c8-11cf-8b46-00805f6cef60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamstreamcontrol
+@GUID("36b73881-c2c8-11cf-8b46-00805f6cef60")
 interface IAMStreamControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamstreamcontrol-startat
@@ -6443,18 +6443,18 @@ interface IAMStreamControl : IUnknown
     HRESULT GetInfo(AM_STREAM_INFO* pInfo);
 }
 
-@GUID("36b73883-c2c8-11cf-8b46-00805f6cef60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iseekingpassthru
+@GUID("36b73883-c2c8-11cf-8b46-00805f6cef60")
 interface ISeekingPassThru : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iseekingpassthru-init
     HRESULT Init(BOOL bSupportRendering, IPin pPin);
 }
 
-@GUID("c6e13340-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamstreamconfig
+@GUID("c6e13340-30ac-11d0-a18c-00a0c9118956")
 interface IAMStreamConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamstreamconfig-setformat
@@ -6467,9 +6467,9 @@ interface IAMStreamConfig : IUnknown
     HRESULT GetStreamCaps(int iIndex, AM_MEDIA_TYPE** ppmt, ubyte* pSCC);
 }
 
-@GUID("bee3d220-157b-11d0-bd23-00a0c911ce86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iconfiginterleaving
+@GUID("bee3d220-157b-11d0-bd23-00a0c911ce86")
 interface IConfigInterleaving : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iconfiginterleaving-put_mode
@@ -6482,9 +6482,9 @@ interface IConfigInterleaving : IUnknown
     HRESULT get_Interleaving(long* prtInterleave, long* prtPreroll);
 }
 
-@GUID("5acd6aa0-f482-11ce-8b67-00aa00a3f1a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iconfigavimux
+@GUID("5acd6aa0-f482-11ce-8b67-00aa00a3f1a6")
 interface IConfigAviMux : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iconfigavimux-setmasterstream
@@ -6497,9 +6497,9 @@ interface IConfigAviMux : IUnknown
     HRESULT GetOutputCompatibilityIndex(BOOL* pfOldIndex);
 }
 
-@GUID("c6e13343-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamvideocompression
+@GUID("c6e13343-30ac-11d0-a18c-00a0c9118956")
 interface IAMVideoCompression : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamvideocompression-put_keyframerate
@@ -6530,9 +6530,9 @@ interface IAMVideoCompression : IUnknown
     HRESULT OverrideFrameSize(int FrameNumber, int Size);
 }
 
-@GUID("d8d715a0-6e5e-11d0-b3f0-00aa003761c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamvfwcapturedialogs
+@GUID("d8d715a0-6e5e-11d0-b3f0-00aa003761c5")
 interface IAMVfwCaptureDialogs : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamvfwcapturedialogs-hasdialog
@@ -6543,9 +6543,9 @@ interface IAMVfwCaptureDialogs : IUnknown
     HRESULT SendDriverMessage(int iDialog, int uMsg, int dw1, int dw2);
 }
 
-@GUID("d8d715a3-6e5e-11d0-b3f0-00aa003761c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamvfwcompressdialogs
+@GUID("d8d715a3-6e5e-11d0-b3f0-00aa003761c5")
 interface IAMVfwCompressDialogs : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamvfwcompressdialogs-showdialog
@@ -6560,9 +6560,9 @@ interface IAMVfwCompressDialogs : IUnknown
     HRESULT SendDriverMessage(int uMsg, int dw1, int dw2);
 }
 
-@GUID("c6e13344-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamdroppedframes
+@GUID("c6e13344-30ac-11d0-a18c-00a0c9118956")
 interface IAMDroppedFrames : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamdroppedframes-getnumdropped
@@ -6575,9 +6575,9 @@ interface IAMDroppedFrames : IUnknown
     HRESULT GetAverageFrameSize(int* plAverageSize);
 }
 
-@GUID("54c39221-8380-11d0-b3f0-00aa003761c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamaudioinputmixer
+@GUID("54c39221-8380-11d0-b3f0-00aa003761c5")
 interface IAMAudioInputMixer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamaudioinputmixer-put_enable
@@ -6614,9 +6614,9 @@ interface IAMAudioInputMixer : IUnknown
     HRESULT get_BassRange(double* pRange);
 }
 
-@GUID("56ed71a0-af5f-11d0-b3f0-00aa003761c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iambuffernegotiation
+@GUID("56ed71a0-af5f-11d0-b3f0-00aa003761c5")
 interface IAMBufferNegotiation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iambuffernegotiation-suggestallocatorproperties
@@ -6625,9 +6625,9 @@ interface IAMBufferNegotiation : IUnknown
     HRESULT GetAllocatorProperties(ALLOCATOR_PROPERTIES* pprop);
 }
 
-@GUID("c6e13350-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamanalogvideodecoder
+@GUID("c6e13350-30ac-11d0-a18c-00a0c9118956")
 interface IAMAnalogVideoDecoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamanalogvideodecoder-get_availabletvformats
@@ -6650,9 +6650,9 @@ interface IAMAnalogVideoDecoder : IUnknown
     HRESULT get_OutputEnable(int* plOutputEnable);
 }
 
-@GUID("c6e13360-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamvideoprocamp
+@GUID("c6e13360-30ac-11d0-a18c-00a0c9118956")
 interface IAMVideoProcAmp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamvideoprocamp-getrange
@@ -6663,9 +6663,9 @@ interface IAMVideoProcAmp : IUnknown
     HRESULT Get(int Property, int* lValue, int* Flags);
 }
 
-@GUID("c6e13370-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamcameracontrol
+@GUID("c6e13370-30ac-11d0-a18c-00a0c9118956")
 interface IAMCameraControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamcameracontrol-getrange
@@ -6676,9 +6676,9 @@ interface IAMCameraControl : IUnknown
     HRESULT Get(int Property, int* lValue, int* Flags);
 }
 
-@GUID("6a2e0670-28e4-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamvideocontrol
+@GUID("6a2e0670-28e4-11d0-a18c-00a0c9118956")
 interface IAMVideoControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamvideocontrol-getcaps
@@ -6695,9 +6695,9 @@ interface IAMVideoControl : IUnknown
     HRESULT GetFrameRateList(IPin pPin, int iIndex, SIZE Dimensions, int* ListSize, long** FrameRates);
 }
 
-@GUID("c6e13380-30ac-11d0-a18c-00a0c9118956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamcrossbar
+@GUID("c6e13380-30ac-11d0-a18c-00a0c9118956")
 interface IAMCrossbar : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamcrossbar-get_pincounts
@@ -6712,9 +6712,9 @@ interface IAMCrossbar : IUnknown
     HRESULT get_CrossbarPinInfo(BOOL IsInputPin, int PinIndex, int* PinIndexRelated, int* PhysicalType);
 }
 
-@GUID("211a8761-03ac-11d1-8d13-00aa00bd8339")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtuner
+@GUID("211a8761-03ac-11d1-8d13-00aa00bd8339")
 interface IAMTuner : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtuner-put_channel
@@ -6749,17 +6749,17 @@ interface IAMTuner : IUnknown
     HRESULT UnRegisterNotificationCallBack(IAMTunerNotification pNotify);
 }
 
-@GUID("211a8760-03ac-11d1-8d13-00aa00bd8339")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtunernotification
+@GUID("211a8760-03ac-11d1-8d13-00aa00bd8339")
 interface IAMTunerNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtunernotification-onevent
     HRESULT OnEvent(AMTunerEventType Event);
 }
 
-@GUID("211a8766-03ac-11d1-8d13-00aa00bd8339")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtvtuner
+@GUID("211a8766-03ac-11d1-8d13-00aa00bd8339")
 interface IAMTVTuner : IAMTuner
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtvtuner-get_availabletvformats
@@ -6786,8 +6786,8 @@ interface IAMTVTuner : IAMTuner
     HRESULT get_AudioFrequency(int* lFreq);
 }
 
-@GUID("211a8765-03ac-11d1-8d13-00aa00bd8339")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ibpcsatellitetuner
+@GUID("211a8765-03ac-11d1-8d13-00aa00bd8339")
 interface IBPCSatelliteTuner : IAMTuner
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ibpcsatellitetuner-get_defaultsubchanneltypes
@@ -6798,9 +6798,9 @@ interface IBPCSatelliteTuner : IAMTuner
     HRESULT IsTapingPermitted();
 }
 
-@GUID("83ec1c30-23d1-11d1-99e6-00a0c9560266")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtvaudio
+@GUID("83ec1c30-23d1-11d1-99e6-00a0c9560266")
 interface IAMTVAudio : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtvaudio-gethardwaresupportedtvaudiomodes
@@ -6817,16 +6817,16 @@ interface IAMTVAudio : IUnknown
     HRESULT UnRegisterNotificationCallBack(IAMTunerNotification pNotify);
 }
 
-@GUID("83ec1c33-23d1-11d1-99e6-00a0c9560266")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtvaudionotification
+@GUID("83ec1c33-23d1-11d1-99e6-00a0c9560266")
 interface IAMTVAudioNotification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtvaudionotification-onevent
     HRESULT OnEvent(AMTVAudioEventType Event);
 }
 
-@GUID("c6e133b0-30ac-11d0-a18c-00a0c9118956")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamanalogvideoencoder
+@GUID("c6e133b0-30ac-11d0-a18c-00a0c9118956")
 interface IAMAnalogVideoEncoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamanalogvideoencoder-get_availabletvformats
@@ -6845,18 +6845,18 @@ interface IAMAnalogVideoEncoder : IUnknown
     HRESULT get_CCEnable(int* lCCEnable);
 }
 
-@GUID("6025a880-c0d5-11d0-bd4e-00a0c911ce86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-imediapropertybag
+@GUID("6025a880-c0d5-11d0-bd4e-00a0c911ce86")
 interface IMediaPropertyBag : IPropertyBag
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-imediapropertybag-enumproperty
     HRESULT EnumProperty(uint iProperty, VARIANT* pvarPropertyName, VARIANT* pvarPropertyValue);
 }
 
-@GUID("5738e040-b67f-11d0-bd4d-00a0c911ce86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ipersistmediapropertybag
+@GUID("5738e040-b67f-11d0-bd4d-00a0c911ce86")
 interface IPersistMediaPropertyBag : IPersist
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ipersistmediapropertybag-initnew
@@ -6867,17 +6867,17 @@ interface IPersistMediaPropertyBag : IPersist
     HRESULT Save(IMediaPropertyBag pPropBag, BOOL fClearDirty, BOOL fSaveAllProperties);
 }
 
-@GUID("f938c991-3029-11cf-8c44-00aa006b6814")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamphysicalpininfo
+@GUID("f938c991-3029-11cf-8c44-00aa006b6814")
 interface IAMPhysicalPinInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamphysicalpininfo-getphysicaltype
     HRESULT GetPhysicalType(int* pType, PWSTR* ppszType);
 }
 
-@GUID("b5730a90-1a2c-11cf-8c23-00aa006b6814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamextdevice
+@GUID("b5730a90-1a2c-11cf-8c23-00aa006b6814")
 interface IAMExtDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamextdevice-getcapability
@@ -6898,9 +6898,9 @@ interface IAMExtDevice : IUnknown
     HRESULT get_DevicePort(int* pDevicePort);
 }
 
-@GUID("a03cd5f0-3045-11cf-8c44-00aa006b6814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamexttransport
+@GUID("a03cd5f0-3045-11cf-8c44-00aa006b6814")
 interface IAMExtTransport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamexttransport-getcapability
@@ -6961,9 +6961,9 @@ interface IAMExtTransport : IUnknown
     HRESULT put_EditStart(int Value);
 }
 
-@GUID("9b496ce1-811b-11cf-8c77-00aa006b6814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtimecodereader
+@GUID("9b496ce1-811b-11cf-8c77-00aa006b6814")
 interface IAMTimecodeReader : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtimecodereader-gettcrmode
@@ -6978,9 +6978,9 @@ interface IAMTimecodeReader : IUnknown
     HRESULT GetTimecode(TIMECODE_SAMPLE* pTimecodeSample);
 }
 
-@GUID("9b496ce0-811b-11cf-8c77-00aa006b6814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtimecodegenerator
+@GUID("9b496ce0-811b-11cf-8c77-00aa006b6814")
 interface IAMTimecodeGenerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtimecodegenerator-gettcgmode
@@ -6997,9 +6997,9 @@ interface IAMTimecodeGenerator : IUnknown
     HRESULT GetTimecode(TIMECODE_SAMPLE* pTimecodeSample);
 }
 
-@GUID("9b496ce2-811b-11cf-8c77-00aa006b6814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamtimecodedisplay
+@GUID("9b496ce2-811b-11cf-8c77-00aa006b6814")
 interface IAMTimecodeDisplay : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamtimecodedisplay-gettcdisplayenable
@@ -7012,8 +7012,8 @@ interface IAMTimecodeDisplay : IUnknown
     HRESULT SetTCDisplay(int Param, int Value);
 }
 
-@GUID("c6545bf0-e76b-11d0-bd52-00a0c911ce86")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamdevmemoryallocator
+@GUID("c6545bf0-e76b-11d0-bd52-00a0c911ce86")
 interface IAMDevMemoryAllocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamdevmemoryallocator-getinfo
@@ -7028,8 +7028,8 @@ interface IAMDevMemoryAllocator : IUnknown
     HRESULT GetDevMemoryObject(IUnknown* ppUnkInnner, IUnknown pUnkOuter);
 }
 
-@GUID("c6545bf1-e76b-11d0-bd52-00a0c911ce86")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamdevmemorycontrol
+@GUID("c6545bf1-e76b-11d0-bd52-00a0c911ce86")
 interface IAMDevMemoryControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamdevmemorycontrol-querywritesync
@@ -7040,9 +7040,9 @@ interface IAMDevMemoryControl : IUnknown
     HRESULT GetDevId(uint* pdwDevId);
 }
 
-@GUID("c1960960-17f5-11d1-abe1-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamstreamselect
+@GUID("c1960960-17f5-11d1-abe1-00a0c905f375")
 interface IAMStreamSelect : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamstreamselect-count
@@ -7054,35 +7054,35 @@ interface IAMStreamSelect : IUnknown
     HRESULT Enable(int lIndex, uint dwFlags);
 }
 
-@GUID("8389d2d0-77d7-11d1-abe6-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamresourcecontrol
+@GUID("8389d2d0-77d7-11d1-abe6-00a0c905f375")
 interface IAMResourceControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamresourcecontrol-reserve
     HRESULT Reserve(uint dwFlags, /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pvReserved);
 }
 
-@GUID("4d5466b0-a49c-11d1-abe8-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamclockadjust
+@GUID("4d5466b0-a49c-11d1-abe8-00a0c905f375")
 interface IAMClockAdjust : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamclockadjust-setclockdelta
     HRESULT SetClockDelta(long rtDelta);
 }
 
-@GUID("2dd74950-a890-11d1-abe8-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamfiltermiscflags
+@GUID("2dd74950-a890-11d1-abe8-00a0c905f375")
 interface IAMFilterMiscFlags : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamfiltermiscflags-getmiscflags
     uint GetMiscFlags();
 }
 
-@GUID("48efb120-ab49-11d2-aed2-00a0c995e8d5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idrawvideoimage
+@GUID("48efb120-ab49-11d2-aed2-00a0c995e8d5")
 interface IDrawVideoImage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idrawvideoimage-drawvideoimagebegin
@@ -7093,9 +7093,9 @@ interface IDrawVideoImage : IUnknown
     HRESULT DrawVideoImageDraw(HDC hdc, RECT* lprcSrc, RECT* lprcDst);
 }
 
-@GUID("2e5ea3e0-e924-11d2-b6da-00a0c995e8df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idecimatevideoimage
+@GUID("2e5ea3e0-e924-11d2-b6da-00a0c995e8df")
 interface IDecimateVideoImage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idecimatevideoimage-setdecimationimagesize
@@ -7104,9 +7104,9 @@ interface IDecimateVideoImage : IUnknown
     HRESULT ResetDecimationImageSize();
 }
 
-@GUID("60d32930-13da-11d3-9ec6-c4fcaef5c7be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamvideodecimationproperties
+@GUID("60d32930-13da-11d3-9ec6-c4fcaef5c7be")
 interface IAMVideoDecimationProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamvideodecimationproperties-querydecimationusage
@@ -7115,9 +7115,9 @@ interface IAMVideoDecimationProperties : IUnknown
     HRESULT SetDecimationUsage(DECIMATION_USAGE Usage);
 }
 
-@GUID("e46a9787-2b71-444d-a4b5-1fab7b708d6a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivideoframestep
+@GUID("e46a9787-2b71-444d-a4b5-1fab7b708d6a")
 interface IVideoFrameStep : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivideoframestep-step
@@ -7128,18 +7128,18 @@ interface IVideoFrameStep : IUnknown
     HRESULT CancelStep();
 }
 
-@GUID("62ea93ba-ec62-11d2-b770-00c04fb6bd3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamlatency
+@GUID("62ea93ba-ec62-11d2-b770-00c04fb6bd3d")
 interface IAMLatency : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamlatency-getlatency
     HRESULT GetLatency(long* prtLatency);
 }
 
-@GUID("f185fe76-e64e-11d2-b76e-00c04fb6bd3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iampushsource
+@GUID("f185fe76-e64e-11d2-b76e-00c04fb6bd3d")
 interface IAMPushSource : IAMLatency
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iampushsource-getpushsourceflags
@@ -7156,9 +7156,9 @@ interface IAMPushSource : IAMLatency
     HRESULT SetMaxStreamOffset(long rtMaxOffset);
 }
 
-@GUID("f90a6130-b658-11d2-ae49-0000f8754b99")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamdeviceremoval
+@GUID("f90a6130-b658-11d2-ae49-0000f8754b99")
 interface IAMDeviceRemoval : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamdeviceremoval-deviceinfo
@@ -7169,9 +7169,9 @@ interface IAMDeviceRemoval : IUnknown
     HRESULT Disassociate();
 }
 
-@GUID("d18e17a0-aacb-11d0-afb0-00aa00b67a42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvenc
+@GUID("d18e17a0-aacb-11d0-afb0-00aa00b67a42")
 interface IDVEnc : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvenc-get_iformatresolution
@@ -7180,9 +7180,9 @@ interface IDVEnc : IUnknown
     HRESULT put_IFormatResolution(int VideoFormat, int DVFormat, int Resolution, ubyte fDVInfo, DVINFO* sDVInfo);
 }
 
-@GUID("b8e8bd60-0bfe-11d0-af91-00aa00b67a42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iipdvdec
+@GUID("b8e8bd60-0bfe-11d0-af91-00aa00b67a42")
 interface IIPDVDec : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iipdvdec-get_ipdisplay
@@ -7191,36 +7191,36 @@ interface IIPDVDec : IUnknown
     HRESULT put_IPDisplay(int displayPix);
 }
 
-@GUID("58473a19-2bc8-4663-8012-25f81babddd1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvrgb219
+@GUID("58473a19-2bc8-4663-8012-25f81babddd1")
 interface IDVRGB219 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvrgb219-setrgb219
     HRESULT SetRGB219(BOOL bState);
 }
 
-@GUID("92a3a302-da7c-4a1f-ba7e-1802bb5d2d02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvsplitter
+@GUID("92a3a302-da7c-4a1f-ba7e-1802bb5d2d02")
 interface IDVSplitter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvsplitter-discardalternatevideoframes
     HRESULT DiscardAlternateVideoFrames(int nDiscard);
 }
 
-@GUID("22320cb2-d41a-11d2-bf7c-d7cb9df0bf93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamaudiorendererstats
+@GUID("22320cb2-d41a-11d2-bf7c-d7cb9df0bf93")
 interface IAMAudioRendererStats : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamaudiorendererstats-getstatparam
     HRESULT GetStatParam(uint dwParam, uint* pdwParam1, uint* pdwParam2);
 }
 
-@GUID("632105fa-072e-11d3-8af9-00c04fb6bd3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamgraphstreams
+@GUID("632105fa-072e-11d3-8af9-00c04fb6bd3d")
 interface IAMGraphStreams : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamgraphstreams-findupstreaminterface
@@ -7231,9 +7231,9 @@ interface IAMGraphStreams : IUnknown
     HRESULT SetMaxGraphLatency(long rtMaxGraphLatency);
 }
 
-@GUID("62fae250-7e65-4460-bfc9-6398b322073c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamoverlayfx
+@GUID("62fae250-7e65-4460-bfc9-6398b322073c")
 interface IAMOverlayFX : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamoverlayfx-queryoverlayfxcaps
@@ -7244,9 +7244,9 @@ interface IAMOverlayFX : IUnknown
     HRESULT GetOverlayFX(uint* lpdwOverlayFX);
 }
 
-@GUID("8e1c39a1-de53-11cf-aa63-0080c744528d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamopenprogress
+@GUID("8e1c39a1-de53-11cf-aa63-0080c744528d")
 interface IAMOpenProgress : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamopenprogress-queryprogress
@@ -7255,9 +7255,9 @@ interface IAMOpenProgress : IUnknown
     HRESULT AbortOperation();
 }
 
-@GUID("436eee9c-264f-4242-90e1-4e330c107512")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-impeg2demultiplexer
+@GUID("436eee9c-264f-4242-90e1-4e330c107512")
 interface IMpeg2Demultiplexer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-impeg2demultiplexer-createoutputpin
@@ -7268,9 +7268,9 @@ interface IMpeg2Demultiplexer : IUnknown
     HRESULT DeleteOutputPin(PWSTR pszPinName);
 }
 
-@GUID("945c1566-6202-46fc-96c7-d87f289c6534")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ienumstreamidmap
+@GUID("945c1566-6202-46fc-96c7-d87f289c6534")
 interface IEnumStreamIdMap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ienumstreamidmap-next
@@ -7283,9 +7283,9 @@ interface IEnumStreamIdMap : IUnknown
     HRESULT Clone(IEnumStreamIdMap* ppIEnumStreamIdMap);
 }
 
-@GUID("d0e04c47-25b8-4369-925a-362a01d95444")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-impeg2streamidmap
+@GUID("d0e04c47-25b8-4369-925a-362a01d95444")
 interface IMPEG2StreamIdMap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-impeg2streamidmap-mapstreamid
@@ -7296,18 +7296,18 @@ interface IMPEG2StreamIdMap : IUnknown
     HRESULT EnumStreamIdMap(IEnumStreamIdMap* ppIEnumStreamIdMap);
 }
 
-@GUID("7b3a2f01-0751-48dd-b556-004785171c54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iregisterserviceprovider
+@GUID("7b3a2f01-0751-48dd-b556-004785171c54")
 interface IRegisterServiceProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iregisterserviceprovider-registerservice
     HRESULT RegisterService(const(GUID)* guidService, IUnknown pUnkObject);
 }
 
-@GUID("9fd52741-176d-4b36-8f51-ca8f933223be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamclockslave
+@GUID("9fd52741-176d-4b36-8f51-ca8f933223be")
 interface IAMClockSlave : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamclockslave-seterrortolerance
@@ -7316,9 +7316,9 @@ interface IAMClockSlave : IUnknown
     HRESULT GetErrorTolerance(uint* pdwTolerance);
 }
 
-@GUID("4995f511-9ddb-4f12-bd3b-f04611807b79")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamgraphbuildercallback
+@GUID("4995f511-9ddb-4f12-bd3b-f04611807b79")
 interface IAMGraphBuilderCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamgraphbuildercallback-selectedfilter
@@ -7327,26 +7327,26 @@ interface IAMGraphBuilderCallback : IUnknown
     HRESULT CreatedFilter(IBaseFilter pFil);
 }
 
-@GUID("56a868fd-0ad4-11ce-b0a3-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamfiltergraphcallback
+@GUID("56a868fd-0ad4-11ce-b0a3-0020af0ba770")
 interface IAMFilterGraphCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamfiltergraphcallback-unabletorender
     HRESULT UnableToRender(IPin pPin);
 }
 
-@GUID("a8809222-07bb-48ea-951c-33158100625b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-igetcapabilitieskey
+@GUID("a8809222-07bb-48ea-951c-33158100625b")
 interface IGetCapabilitiesKey : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-igetcapabilitieskey-getcapabilitieskey
     HRESULT GetCapabilitiesKey(HKEY* pHKey);
 }
 
-@GUID("70423839-6acc-4b23-b079-21dbf08156a5")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iencoderapi
+@GUID("70423839-6acc-4b23-b079-21dbf08156a5")
 interface IEncoderAPI : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iencoderapi-issupported
@@ -7365,24 +7365,24 @@ interface IEncoderAPI : IUnknown
     HRESULT SetValue(const(GUID)* Api, VARIANT* Value);
 }
 
-@GUID("02997c3b-8e1b-460e-9270-545e0de9563e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivideoencoder
+@GUID("02997c3b-8e1b-460e-9270-545e0de9563e")
 interface IVideoEncoder : IEncoderAPI
 {
 }
 
-@GUID("c0dff467-d499-4986-972b-e1d9090fa941")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamdecodercaps
+@GUID("c0dff467-d499-4986-972b-e1d9090fa941")
 interface IAMDecoderCaps : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamdecodercaps-getdecodercaps
     HRESULT GetDecoderCaps(uint dwCapIndex, uint* lpdwCap);
 }
 
-@GUID("6feded3e-0ff1-4901-a2f1-43f7012c8515")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamcertifiedoutputprotection
+@GUID("6feded3e-0ff1-4901-a2f1-43f7012c8515")
 interface IAMCertifiedOutputProtection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamcertifiedoutputprotection-keyexchange
@@ -7395,9 +7395,9 @@ interface IAMCertifiedOutputProtection : IUnknown
     HRESULT ProtectionStatus(const(AMCOPPStatusInput)* pStatusInput, AMCOPPStatusOutput* pStatusOutput);
 }
 
-@GUID("cf7b26fc-9a00-485b-8147-3e789d5e8f67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamasyncreadertimestampscaling
+@GUID("cf7b26fc-9a00-485b-8147-3e789d5e8f67")
 interface IAMAsyncReaderTimestampScaling : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamasyncreadertimestampscaling-gettimestampmode
@@ -7406,9 +7406,9 @@ interface IAMAsyncReaderTimestampScaling : IUnknown
     HRESULT SetTimestampMode(BOOL fRaw);
 }
 
-@GUID("0e26a181-f40c-4635-8786-976284b52981")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iamplugincontrol
+@GUID("0e26a181-f40c-4635-8786-976284b52981")
 interface IAMPluginControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iamplugincontrol-getpreferredclsid
@@ -7427,9 +7427,9 @@ interface IAMPluginControl : IUnknown
     HRESULT IsLegacyDisabled(const(PWSTR) dllName);
 }
 
-@GUID("4a9a62d3-27d4-403d-91e9-89f540e55534")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ipinconnection
+@GUID("4a9a62d3-27d4-403d-91e9-89f540e55534")
 interface IPinConnection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ipinconnection-dynamicqueryaccept
@@ -7442,18 +7442,18 @@ interface IPinConnection : IUnknown
     HRESULT DynamicDisconnect();
 }
 
-@GUID("c56e9858-dbf3-4f6b-8119-384af2060deb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ipinflowcontrol
+@GUID("c56e9858-dbf3-4f6b-8119-384af2060deb")
 interface IPinFlowControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ipinflowcontrol-block
     HRESULT Block(uint dwBlockFlags, HANDLE hEvent);
 }
 
-@GUID("03a1eb8e-32bf-4245-8502-114d08a9cb88")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-igraphconfig
+@GUID("03a1eb8e-32bf-4245-8502-114d08a9cb88")
 interface IGraphConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-igraphconfig-reconnect
@@ -7479,18 +7479,18 @@ interface IGraphConfig : IUnknown
     HRESULT RemoveFilterEx(IBaseFilter pFilter, uint Flags);
 }
 
-@GUID("ade0fd60-d19d-11d2-abf6-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-igraphconfigcallback
+@GUID("ade0fd60-d19d-11d2-abf6-00a0c905f375")
 interface IGraphConfigCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-igraphconfigcallback-reconfigure
     HRESULT Reconfigure(void* pvContext, uint dwFlags);
 }
 
-@GUID("dcfbdcf6-0dc2-45f5-9ab2-7c330ea09c29")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ifilterchain
+@GUID("dcfbdcf6-0dc2-45f5-9ab2-7c330ea09c29")
 interface IFilterChain : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ifilterchain-startchain
@@ -7503,9 +7503,9 @@ interface IFilterChain : IUnknown
     HRESULT RemoveChain(IBaseFilter pStartFilter, IBaseFilter pEndFilter);
 }
 
-@GUID("ce704fe7-e71e-41fb-baa2-c4403e1182f5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrimagepresenter
+@GUID("ce704fe7-e71e-41fb-baa2-c4403e1182f5")
 interface IVMRImagePresenter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrimagepresenter-startpresenting
@@ -7516,9 +7516,9 @@ interface IVMRImagePresenter : IUnknown
     HRESULT PresentImage(size_t dwUserID, VMRPRESENTATIONINFO* lpPresInfo);
 }
 
-@GUID("31ce832e-4484-458b-8cca-f4d7e3db0b52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrsurfaceallocator
+@GUID("31ce832e-4484-458b-8cca-f4d7e3db0b52")
 interface IVMRSurfaceAllocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrsurfaceallocator-allocatesurface
@@ -7532,9 +7532,9 @@ interface IVMRSurfaceAllocator : IUnknown
     HRESULT AdviseNotify(IVMRSurfaceAllocatorNotify lpIVMRSurfAllocNotify);
 }
 
-@GUID("aada05a8-5a4e-4729-af0b-cea27aed51e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrsurfaceallocatornotify
+@GUID("aada05a8-5a4e-4729-af0b-cea27aed51e2")
 interface IVMRSurfaceAllocatorNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrsurfaceallocatornotify-advisesurfaceallocator
@@ -7551,9 +7551,9 @@ interface IVMRSurfaceAllocatorNotify : IUnknown
     HRESULT SetBorderColor(COLORREF clrBorder);
 }
 
-@GUID("0eb1088c-4dcd-46f0-878f-39dae86a51b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrwindowlesscontrol
+@GUID("0eb1088c-4dcd-46f0-878f-39dae86a51b7")
 interface IVMRWindowlessControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrwindowlesscontrol-getnativevideosize
@@ -7588,9 +7588,9 @@ interface IVMRWindowlessControl : IUnknown
     HRESULT GetColorKey(COLORREF* lpClr);
 }
 
-@GUID("1c1a17b0-bed0-415d-974b-dc6696131599")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrmixercontrol
+@GUID("1c1a17b0-bed0-415d-974b-dc6696131599")
 interface IVMRMixerControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrmixercontrol-setalpha
@@ -7615,9 +7615,9 @@ interface IVMRMixerControl : IUnknown
     HRESULT GetMixingPrefs(uint* pdwMixerPrefs);
 }
 
-@GUID("9cf0b1b6-fbaa-4b7f-88cf-cf1f130a0dce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrmonitorconfig
+@GUID("9cf0b1b6-fbaa-4b7f-88cf-cf1f130a0dce")
 interface IVMRMonitorConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrmonitorconfig-setmonitor
@@ -7632,9 +7632,9 @@ interface IVMRMonitorConfig : IUnknown
     HRESULT GetAvailableMonitors(VMRMONITORINFO* pInfo, uint dwMaxInfoArraySize, uint* pdwNumDevices);
 }
 
-@GUID("9e5530c5-7034-48b4-bb46-0b8a6efc8e36")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrfilterconfig
+@GUID("9e5530c5-7034-48b4-bb46-0b8a6efc8e36")
 interface IVMRFilterConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrfilterconfig-setimagecompositor
@@ -7653,9 +7653,9 @@ interface IVMRFilterConfig : IUnknown
     HRESULT GetRenderingMode(uint* pMode);
 }
 
-@GUID("ede80b5c-bad6-4623-b537-65586c9f8dfd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmraspectratiocontrol
+@GUID("ede80b5c-bad6-4623-b537-65586c9f8dfd")
 interface IVMRAspectRatioControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmraspectratiocontrol-getaspectratiomode
@@ -7664,9 +7664,9 @@ interface IVMRAspectRatioControl : IUnknown
     HRESULT SetAspectRatioMode(uint dwARMode);
 }
 
-@GUID("bb057577-0db8-4e6a-87a7-1a8c9a505a0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrdeinterlacecontrol
+@GUID("bb057577-0db8-4e6a-87a7-1a8c9a505a0f")
 interface IVMRDeinterlaceControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrdeinterlacecontrol-getnumberofdeinterlacemodes
@@ -7687,9 +7687,9 @@ interface IVMRDeinterlaceControl : IUnknown
     HRESULT GetActualDeinterlaceMode(uint dwStreamID, GUID* lpDeinterlaceMode);
 }
 
-@GUID("1e673275-0257-40aa-af20-7c608d4a0428")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrmixerbitmap
+@GUID("1e673275-0257-40aa-af20-7c608d4a0428")
 interface IVMRMixerBitmap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrmixerbitmap-setalphabitmap
@@ -7700,9 +7700,9 @@ interface IVMRMixerBitmap : IUnknown
     HRESULT GetAlphaBitmapParameters(VMRALPHABITMAP* pBmpParms);
 }
 
-@GUID("7a4fb5af-479f-4074-bb40-ce6722e43c82")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrimagecompositor
+@GUID("7a4fb5af-479f-4074-bb40-ce6722e43c82")
 interface IVMRImageCompositor : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrimagecompositor-initcompositiontarget
@@ -7717,9 +7717,9 @@ interface IVMRImageCompositor : IUnknown
                            VMRVIDEOSTREAMINFO* pVideoStreamInfo, uint cStreams);
 }
 
-@GUID("058d1f11-2a54-4bef-bd54-df706626b727")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrvideostreamcontrol
+@GUID("058d1f11-2a54-4bef-bd54-df706626b727")
 interface IVMRVideoStreamControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrvideostreamcontrol-setcolorkey
@@ -7732,9 +7732,9 @@ interface IVMRVideoStreamControl : IUnknown
     HRESULT GetStreamActiveState(BOOL* lpfActive);
 }
 
-@GUID("a9849bbe-9ec8-4263-b764-62730f0d15d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrsurface
+@GUID("a9849bbe-9ec8-4263-b764-62730f0d15d0")
 interface IVMRSurface : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrsurface-issurfacelocked
@@ -7747,9 +7747,9 @@ interface IVMRSurface : IUnknown
     HRESULT GetSurface(IDirectDrawSurface7* lplpSurface);
 }
 
-@GUID("9f3a1c85-8555-49ba-935f-be5b5b29d178")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrimagepresenterconfig
+@GUID("9f3a1c85-8555-49ba-935f-be5b5b29d178")
 interface IVMRImagePresenterConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrimagepresenterconfig-setrenderingprefs
@@ -7758,9 +7758,9 @@ interface IVMRImagePresenterConfig : IUnknown
     HRESULT GetRenderingPrefs(uint* dwRenderFlags);
 }
 
-@GUID("e6f7ce40-4673-44f1-8f77-5499d68cb4ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivmrimagepresenterexclmodeconfig
+@GUID("e6f7ce40-4673-44f1-8f77-5499d68cb4ea")
 interface IVMRImagePresenterExclModeConfig : IVMRImagePresenterConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivmrimagepresenterexclmodeconfig-setxlcmodeddobjandprimarysurface
@@ -7769,9 +7769,9 @@ interface IVMRImagePresenterExclModeConfig : IVMRImagePresenterConfig
     HRESULT GetXlcModeDDObjAndPrimarySurface(IDirectDraw7* lpDDObj, IDirectDrawSurface7* lpPrimarySurf);
 }
 
-@GUID("aac18c18-e186-46d2-825d-a1f8dc8e395a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-ivpmanager
+@GUID("aac18c18-e186-46d2-825d-a1f8dc8e395a")
 interface IVPManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-ivpmanager-setvideoportindex
@@ -7780,8 +7780,8 @@ interface IVPManager : IUnknown
     HRESULT GetVideoPortIndex(uint* pdwVideoPortIndex);
 }
 
-@GUID("a70efe61-e2a3-11d0-a9be-00aa0061be93")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdcontrol
+@GUID("a70efe61-e2a3-11d0-a9be-00aa0061be93")
 interface IDvdControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdcontrol-titleplay
@@ -7856,8 +7856,8 @@ interface IDvdControl : IUnknown
     HRESULT ChapterPlayAutoStop(uint ulTitle, uint ulChapter, uint ulChaptersToPlay);
 }
 
-@GUID("a70efe60-e2a3-11d0-a9be-00aa0061be93")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdinfo
+@GUID("a70efe60-e2a3-11d0-a9be-00aa0061be93")
 interface IDvdInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdinfo-getcurrentdomain
@@ -7910,9 +7910,9 @@ interface IDvdInfo : IUnknown
     HRESULT GetRoot(PSTR pRoot, uint ulBufSize, uint* pulActualSize);
 }
 
-@GUID("5a4a97e4-94ee-4a55-9751-74b5643aa27d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdcmd
+@GUID("5a4a97e4-94ee-4a55-9751-74b5643aa27d")
 interface IDvdCmd : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdcmd-waitforstart
@@ -7921,9 +7921,9 @@ interface IDvdCmd : IUnknown
     HRESULT WaitForEnd();
 }
 
-@GUID("86303d6d-1c4a-4087-ab42-f711167048ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdstate
+@GUID("86303d6d-1c4a-4087-ab42-f711167048ef")
 interface IDvdState : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdstate-getdiscid
@@ -7932,9 +7932,9 @@ interface IDvdState : IUnknown
     HRESULT GetParentalLevel(uint* pulParentalLevel);
 }
 
-@GUID("33bc7430-eec0-11d2-8201-00a0c9d74842")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdcontrol2
+@GUID("33bc7430-eec0-11d2-8201-00a0c9d74842")
 interface IDvdControl2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdcontrol2-playtitle
@@ -8020,9 +8020,9 @@ interface IDvdControl2 : IUnknown
     HRESULT SelectDefaultSubpictureLanguage(uint Language, DVD_SUBPICTURE_LANG_EXT subpictureExtension);
 }
 
-@GUID("34151510-eec0-11d2-8201-00a0c9d74842")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdinfo2
+@GUID("34151510-eec0-11d2-8201-00a0c9d74842")
 interface IDvdInfo2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdinfo2-getcurrentdomain
@@ -8108,9 +8108,9 @@ interface IDvdInfo2 : IUnknown
     HRESULT IsSubpictureStreamEnabled(uint ulStreamNum, BOOL* pbEnabled);
 }
 
-@GUID("fcc152b6-f372-11d0-8e00-00c04fd7c08b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-idvdgraphbuilder
+@GUID("fcc152b6-f372-11d0-8e00-00c04fd7c08b")
 interface IDvdGraphBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-idvdgraphbuilder-getfiltergraph
@@ -8121,9 +8121,9 @@ interface IDvdGraphBuilder : IUnknown
     HRESULT RenderDvdVideoVolume(const(PWSTR) lpcwszPathName, uint dwFlags, AM_DVD_RENDERSTATUS* pStatus);
 }
 
-@GUID("153acc21-d83b-11d1-82bf-00a0c9696c8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iddrawexclmodevideo
+@GUID("153acc21-d83b-11d1-82bf-00a0c9696c8f")
 interface IDDrawExclModeVideo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iddrawexclmodevideo-setddrawobject
@@ -8143,9 +8143,9 @@ interface IDDrawExclModeVideo : IUnknown
     HRESULT SetCallbackInterface(IDDrawExclModeVideoCallback pCallback, uint dwFlags);
 }
 
-@GUID("913c24a0-20ab-11d2-9038-00a0c9697298")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iddrawexclmodevideocallback
+@GUID("913c24a0-20ab-11d2-9038-00a0c9697298")
 interface IDDrawExclModeVideoCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nf-strmif-iddrawexclmodevideocallback-onupdateoverlay
@@ -8158,8 +8158,8 @@ interface IDDrawExclModeVideoCallback : IUnknown
     HRESULT OnUpdateSize(uint dwWidth, uint dwHeight, uint dwARWidth, uint dwARHeight);
 }
 
-@GUID("fd501041-8ebe-11ce-8183-00aa00577da2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_networkprovider
+@GUID("fd501041-8ebe-11ce-8183-00aa00577da2")
 interface IBDA_NetworkProvider : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_networkprovider-putsignalsource
@@ -8178,8 +8178,8 @@ interface IBDA_NetworkProvider : IUnknown
     HRESULT UnRegisterDeviceFilter(uint pvRegistrationContext);
 }
 
-@GUID("71985f43-1ca1-11d3-9cc8-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_ethernetfilter
+@GUID("71985f43-1ca1-11d3-9cc8-00c04f7971e0")
 interface IBDA_EthernetFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_ethernetfilter-getmulticastlistsize
@@ -8194,8 +8194,8 @@ interface IBDA_EthernetFilter : IUnknown
     HRESULT GetMulticastMode(uint* pulModeMask);
 }
 
-@GUID("71985f44-1ca1-11d3-9cc8-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_ipv4filter
+@GUID("71985f44-1ca1-11d3-9cc8-00c04f7971e0")
 interface IBDA_IPV4Filter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_ipv4filter-getmulticastlistsize
@@ -8210,8 +8210,8 @@ interface IBDA_IPV4Filter : IUnknown
     HRESULT GetMulticastMode(uint* pulModeMask);
 }
 
-@GUID("e1785a74-2a23-4fb3-9245-a8f88017ef33")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_ipv6filter
+@GUID("e1785a74-2a23-4fb3-9245-a8f88017ef33")
 interface IBDA_IPV6Filter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_ipv6filter-getmulticastlistsize
@@ -8226,8 +8226,8 @@ interface IBDA_IPV6Filter : IUnknown
     HRESULT GetMulticastMode(uint* pulModeMask);
 }
 
-@GUID("fd0a5af3-b41d-11d2-9c95-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_devicecontrol
+@GUID("fd0a5af3-b41d-11d2-9c95-00c04f7971e0")
 interface IBDA_DeviceControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_devicecontrol-startchanges
@@ -8240,8 +8240,8 @@ interface IBDA_DeviceControl : IUnknown
     HRESULT GetChangeState(uint* pState);
 }
 
-@GUID("0ded49d5-a8b7-4d5d-97a1-12b0c195874d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_pincontrol
+@GUID("0ded49d5-a8b7-4d5d-97a1-12b0c195874d")
 interface IBDA_PinControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_pincontrol-getpinid
@@ -8252,8 +8252,8 @@ interface IBDA_PinControl : IUnknown
     HRESULT RegistrationContext(uint* pulRegistrationCtx);
 }
 
-@GUID("d2f1644b-b409-11d2-bc69-00a0c9ee9e16")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_signalproperties
+@GUID("d2f1644b-b409-11d2-bc69-00a0c9ee9e16")
 interface IBDA_SignalProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_signalproperties-putnetworktype
@@ -8270,8 +8270,8 @@ interface IBDA_SignalProperties : IUnknown
     HRESULT GetTuningSpace(GUID* pguidTuingSpace);
 }
 
-@GUID("1347d106-cf3a-428a-a5cb-ac0d9a2a4338")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_signalstatistics
+@GUID("1347d106-cf3a-428a-a5cb-ac0d9a2a4338")
 interface IBDA_SignalStatistics : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_signalstatistics-put_signalstrength
@@ -8296,8 +8296,8 @@ interface IBDA_SignalStatistics : IUnknown
     HRESULT get_SampleTime(int* plmsSampleTime);
 }
 
-@GUID("79b56888-7fea-4690-b45d-38fd3c7849be")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_topology
+@GUID("79b56888-7fea-4690-b45d-38fd3c7849be")
 interface IBDA_Topology : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_topology-getnodetypes
@@ -8326,8 +8326,8 @@ interface IBDA_Topology : IUnknown
     HRESULT GetControlNode(uint ulInputPinId, uint ulOutputPinId, uint ulNodeType, IUnknown* ppControlNode);
 }
 
-@GUID("71985f46-1ca1-11d3-9cc8-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_voidtransform
+@GUID("71985f46-1ca1-11d3-9cc8-00c04f7971e0")
 interface IBDA_VoidTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_voidtransform-start
@@ -8336,8 +8336,8 @@ interface IBDA_VoidTransform : IUnknown
     HRESULT Stop();
 }
 
-@GUID("ddf15b0d-bd25-11d2-9ca0-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_nulltransform
+@GUID("ddf15b0d-bd25-11d2-9ca0-00c04f7971e0")
 interface IBDA_NullTransform : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_nulltransform-start
@@ -8346,8 +8346,8 @@ interface IBDA_NullTransform : IUnknown
     HRESULT Stop();
 }
 
-@GUID("71985f47-1ca1-11d3-9cc8-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_frequencyfilter
+@GUID("71985f47-1ca1-11d3-9cc8-00c04f7971e0")
 interface IBDA_FrequencyFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_frequencyfilter-put_autotune
@@ -8376,8 +8376,8 @@ interface IBDA_FrequencyFilter : IUnknown
     HRESULT get_FrequencyMultiplier(uint* pulMultiplier);
 }
 
-@GUID("992cf102-49f9-4719-a664-c4f23e2408f4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_lnbinfo
+@GUID("992cf102-49f9-4719-a664-c4f23e2408f4")
 interface IBDA_LNBInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_lnbinfo-put_localoscilatorfrequencylowband
@@ -8394,8 +8394,8 @@ interface IBDA_LNBInfo : IUnknown
     HRESULT get_HighLowSwitchFrequency(uint* pulSwitchFrequency);
 }
 
-@GUID("f84e2ab0-3c6b-45e3-a0fc-8669d4b81f11")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_diseqcommand
+@GUID("f84e2ab0-3c6b-45e3-a0fc-8669d4b81f11")
 interface IBDA_DiseqCommand : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_diseqcommand-put_enablediseqcommands
@@ -8412,17 +8412,17 @@ interface IBDA_DiseqCommand : IUnknown
     HRESULT get_DiseqResponse(uint ulRequestId, uint* pulcbResponseLen, ubyte* pbResponse);
 }
 
-@GUID("ddf15b12-bd25-11d2-9ca0-00c04f7971e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_autodemodulate
+@GUID("ddf15b12-bd25-11d2-9ca0-00c04f7971e0")
 interface IBDA_AutoDemodulate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_autodemodulate-put_autodemodulate
     HRESULT put_AutoDemodulate();
 }
 
-@GUID("34518d13-1182-48e6-b28f-b24987787326")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_autodemodulateex
+@GUID("34518d13-1182-48e6-b28f-b24987787326")
 interface IBDA_AutoDemodulateEx : IBDA_AutoDemodulate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_autodemodulateex-get_supporteddevicenodetypes
@@ -8434,8 +8434,8 @@ interface IBDA_AutoDemodulateEx : IBDA_AutoDemodulate
     HRESULT get_AuxInputCount(uint* pulCompositeCount, uint* pulSvideoCount);
 }
 
-@GUID("ef30f379-985b-4d10-b640-a79d5e04e1e0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_digitaldemodulator
+@GUID("ef30f379-985b-4d10-b640-a79d5e04e1e0")
 interface IBDA_DigitalDemodulator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_digitaldemodulator-put_modulationtype
@@ -8468,8 +8468,8 @@ interface IBDA_DigitalDemodulator : IUnknown
     HRESULT get_SpectralInversion(SpectralInversion* pSpectralInversion);
 }
 
-@GUID("525ed3ee-5cf3-4e1e-9a06-5368a84f9a6e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_digitaldemodulator2
+@GUID("525ed3ee-5cf3-4e1e-9a06-5368a84f9a6e")
 interface IBDA_DigitalDemodulator2 : IBDA_DigitalDemodulator
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_digitaldemodulator2-put_guardinterval
@@ -8499,8 +8499,8 @@ interface IBDA_DigitalDemodulator3 : IBDA_DigitalDemodulator2
     HRESULT get_PLPNumber(uint* pPLPNumber);
 }
 
-@GUID("4b2bd7ea-8347-467b-8dbf-62f784929cc3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-iccsubstreamfiltering
+@GUID("4b2bd7ea-8347-467b-8dbf-62f784929cc3")
 interface ICCSubStreamFiltering : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-iccsubstreamfiltering-get_substreamtypes
@@ -8509,8 +8509,8 @@ interface ICCSubStreamFiltering : IUnknown
     HRESULT put_SubstreamTypes(int Types);
 }
 
-@GUID("3f4dc8e2-4050-11d3-8f4b-00c04f7971e2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_ipsinkcontrol
+@GUID("3f4dc8e2-4050-11d3-8f4b-00c04f7971e2")
 interface IBDA_IPSinkControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_ipsinkcontrol-getmulticastlist
@@ -8519,8 +8519,8 @@ interface IBDA_IPSinkControl : IUnknown
     HRESULT GetAdapterIPAddress(uint* pulcbSize, ubyte** pbBuffer);
 }
 
-@GUID("a750108f-492e-4d51-95f7-649b23ff7ad7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_ipsinkinfo
+@GUID("a750108f-492e-4d51-95f7-649b23ff7ad7")
 interface IBDA_IPSinkInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_ipsinkinfo-get_multicastlist
@@ -8531,9 +8531,9 @@ interface IBDA_IPSinkInfo : IUnknown
     HRESULT get_AdapterDescription(BSTR* pbstrBuffer);
 }
 
-@GUID("afb6c2a2-2c41-11d3-8a60-0000f81e0e4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ienumpidmap
+@GUID("afb6c2a2-2c41-11d3-8a60-0000f81e0e4a")
 interface IEnumPIDMap : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -8546,9 +8546,9 @@ interface IEnumPIDMap : IUnknown
     HRESULT Clone(IEnumPIDMap* ppIEnumPIDMap);
 }
 
-@GUID("afb6c2a1-2c41-11d3-8a60-0000f81e0e4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-impeg2pidmap
+@GUID("afb6c2a1-2c41-11d3-8a60-0000f81e0e4a")
 interface IMPEG2PIDMap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-impeg2pidmap-mappid
@@ -8559,8 +8559,8 @@ interface IMPEG2PIDMap : IUnknown
     HRESULT EnumPIDMap(IEnumPIDMap* pIEnumPIDMap);
 }
 
-@GUID("06fb45c1-693c-4ea7-b79f-7a6a54d8def2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ifrequencymap
+@GUID("06fb45c1-693c-4ea7-b79f-7a6a54d8def2")
 interface IFrequencyMap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ifrequencymap-get_frequencymapping
@@ -8577,26 +8577,26 @@ interface IFrequencyMap : IUnknown
     HRESULT get_CountryCodeList(uint* pulCount, uint** ppulList);
 }
 
-@GUID("d806973d-3ebe-46de-8fbb-6358fe784208")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_easmessage
+@GUID("d806973d-3ebe-46de-8fbb-6358fe784208")
 interface IBDA_EasMessage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_easmessage-get_easmessage
     HRESULT get_EasMessage(uint ulEventID, IUnknown* ppEASObject);
 }
 
-@GUID("8e882535-5f86-47ab-86cf-c281a72a0549")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_transportstreaminfo
+@GUID("8e882535-5f86-47ab-86cf-c281a72a0549")
 interface IBDA_TransportStreamInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_transportstreaminfo-get_pattabletickcount
     HRESULT get_PatTableTickCount(uint* pPatTickCount);
 }
 
-@GUID("cd51f1e0-7be9-4123-8482-a2a796c0a6b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_conditionalaccess
+@GUID("cd51f1e0-7be9-4123-8482-a2a796c0a6b0")
 interface IBDA_ConditionalAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_conditionalaccess-get_smartcardstatus
@@ -8625,15 +8625,15 @@ interface IBDA_ConditionalAccess : IUnknown
     HRESULT InformUIClosed(ubyte byDialogNumber, UICloseReasonType CloseReason);
 }
 
-@GUID("20e80cb5-c543-4c1b-8eb3-49e719eee7d4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_diagnosticproperties
+@GUID("20e80cb5-c543-4c1b-8eb3-49e719eee7d4")
 interface IBDA_DiagnosticProperties : IPropertyBag
 {
 }
 
-@GUID("f98d88b0-1992-4cd6-a6d9-b9afab99330d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_drm
+@GUID("f98d88b0-1992-4cd6-a6d9-b9afab99330d")
 interface IBDA_DRM : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_drm-getdrmpairingstatus
@@ -8642,8 +8642,8 @@ interface IBDA_DRM : IUnknown
     HRESULT PerformDRMPairing(BOOL fSync);
 }
 
-@GUID("7f0b3150-7b81-4ad4-98e3-7e9097094301")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_namevalueservice
+@GUID("7f0b3150-7b81-4ad4-98e3-7e9097094301")
 interface IBDA_NameValueService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_namevalueservice-getvaluenamebyindex
@@ -8654,9 +8654,9 @@ interface IBDA_NameValueService : IUnknown
     HRESULT SetValue(uint ulDialogRequest, BSTR bstrLanguage, BSTR bstrName, BSTR bstrValue, uint ulReserved);
 }
 
-@GUID("497c3418-23cb-44ba-bb62-769f506fcea7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_conditionalaccessex
+@GUID("497c3418-23cb-44ba-bb62-769f506fcea7")
 interface IBDA_ConditionalAccessEx : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_conditionalaccessex-checkentitlementtoken
@@ -8674,26 +8674,26 @@ interface IBDA_ConditionalAccessEx : IUnknown
     HRESULT CreateDialogRequestNumber(uint* pulDialogRequestNumber);
 }
 
-@GUID("5e68c627-16c2-4e6c-b1e2-d00170cdaa0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_isdbconditionalaccess
+@GUID("5e68c627-16c2-4e6c-b1e2-d00170cdaa0f")
 interface IBDA_ISDBConditionalAccess : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_isdbconditionalaccess-setisdbcasrequest
     HRESULT SetIsdbCasRequest(uint ulRequestId, uint ulcbRequestBufferLen, ubyte* pbRequestBuffer);
 }
 
-@GUID("207c413f-00dc-4c61-bad6-6fee1ff07064")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_eventingservice
+@GUID("207c413f-00dc-4c61-bad6-6fee1ff07064")
 interface IBDA_EventingService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_eventingservice-completeevent
     HRESULT CompleteEvent(uint ulEventID, uint ulEventResult);
 }
 
-@GUID("7def4c09-6e66-4567-a819-f0e17f4a81ab")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_aux
+@GUID("7def4c09-6e66-4567-a819-f0e17f4a81ab")
 interface IBDA_AUX : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_aux-querycapabilities
@@ -8703,9 +8703,9 @@ interface IBDA_AUX : IUnknown
                            uint* NumVideoStds, ulong* AnalogStds);
 }
 
-@GUID("3a8bad59-59fe-4559-a0ba-396cfaa98ae3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_encoder
+@GUID("3a8bad59-59fe-4559-a0ba-396cfaa98ae3")
 interface IBDA_Encoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_encoder-querycapabilities
@@ -8729,9 +8729,9 @@ interface IBDA_Encoder : IUnknown
                      uint* SignalToNoiseRatio);
 }
 
-@GUID("138adc7e-58ae-437f-b0b4-c9fe19d5b4ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_fdc
+@GUID("138adc7e-58ae-437f-b0b4-c9fe19d5b4ac")
 interface IBDA_FDC : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_fdc-getstatus
@@ -8751,9 +8751,9 @@ interface IBDA_FDC : IUnknown
     HRESULT GetTableSection(uint* Pid, uint MaxBufferSize, uint* ActualSize, ubyte* SecBuffer);
 }
 
-@GUID("c0afcb73-23e7-4bc6-bafa-fdc167b4719f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_guidedatadeliveryservice
+@GUID("c0afcb73-23e7-4bc6-bafa-fdc167b4719f")
 interface IBDA_GuideDataDeliveryService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_guidedatadeliveryservice-getguidedatatype
@@ -8770,8 +8770,8 @@ interface IBDA_GuideDataDeliveryService : IUnknown
     HRESULT GetServiceInfoFromTuneXml(BSTR bstrTuneXml, BSTR* pbstrServiceDescription);
 }
 
-@GUID("bff6b5bb-b0ae-484c-9dca-73528fb0b46e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_drmservice
+@GUID("bff6b5bb-b0ae-484c-9dca-73528fb0b46e")
 interface IBDA_DRMService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_drmservice-setdrm
@@ -8810,9 +8810,9 @@ interface IBDA_WMDRMTuner : IUnknown
     HRESULT GetStartCodeProfile(uint* pulStartCodeProfileLen, ubyte* pbStartCodeProfile);
 }
 
-@GUID("1f9bc2a5-44a3-4c52-aab1-0bbce5a1381d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_dridrmservice
+@GUID("1f9bc2a5-44a3-4c52-aab1-0bbce5a1381d")
 interface IBDA_DRIDRMService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_dridrmservice-setdrm
@@ -8837,9 +8837,9 @@ interface IBDA_DRIWMDRMSession : IUnknown
     HRESULT GetLastCardeaError(uint* pdwError);
 }
 
-@GUID("942aafec-4c05-4c74-b8eb-8706c2a4943f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_mux
+@GUID("942aafec-4c05-4c74-b8eb-8706c2a4943f")
 interface IBDA_MUX : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_mux-setpidlist
@@ -8855,9 +8855,9 @@ interface IBDA_TransportStreamSelector : IUnknown
     HRESULT GetTSInformation(uint* pulTSInformationBufferLen, ubyte* pbTSInformationBuffer);
 }
 
-@GUID("53b14189-e478-4b7a-a1ff-506db4b99dfe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nn-bdaiface-ibda_useractivityservice
+@GUID("53b14189-e478-4b7a-a1ff-506db4b99dfe")
 interface IBDA_UserActivityService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdaiface/nf-bdaiface-ibda_useractivityservice-setcurrenttunerusereason
@@ -8868,9 +8868,9 @@ interface IBDA_UserActivityService : IUnknown
     HRESULT UserActivityDetected();
 }
 
-@GUID("1f0e5357-af43-44e6-8547-654c645145d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesevent
+@GUID("1f0e5357-af43-44e6-8547-654c645145d2")
 interface IESEvent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesevent-geteventid
@@ -8885,35 +8885,35 @@ interface IESEvent : IUnknown
     HRESULT GetStringData(BSTR* pbstrData);
 }
 
-@GUID("abd414bf-cfe5-4e5e-af5b-4b4e49c5bfeb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesevents
+@GUID("abd414bf-cfe5-4e5e-af5b-4b4e49c5bfeb")
 interface IESEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesevents-oneseventreceived
     HRESULT OnESEventReceived(GUID guidEventType, IESEvent pESEvent);
 }
 
-@GUID("3b21263f-26e8-489d-aac4-924f7efd9511")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ibroadcastevent
+@GUID("3b21263f-26e8-489d-aac4-924f7efd9511")
 interface IBroadcastEvent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibroadcastevent-fire
     HRESULT Fire(GUID EventID);
 }
 
-@GUID("3d9e3887-1929-423f-8021-43682de95448")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ibroadcasteventex
+@GUID("3d9e3887-1929-423f-8021-43682de95448")
 interface IBroadcastEventEx : IBroadcastEvent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibroadcasteventex-fireex
     HRESULT FireEx(GUID EventID, uint Param1, uint Param2, uint Param3, uint Param4);
 }
 
-@GUID("fa2aa8f1-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamnetshowconfig
+@GUID("fa2aa8f1-8b62-11d0-a520-000000000000")
 interface IAMNetShowConfig : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamnetshowconfig-get_bufferingtime
@@ -8962,9 +8962,9 @@ interface IAMNetShowConfig : IDispatch
     HRESULT put_EnableHTTP(VARIANT_BOOL EnableHTTP);
 }
 
-@GUID("fa2aa8f2-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamchannelinfo
+@GUID("fa2aa8f2-8b62-11d0-a520-000000000000")
 interface IAMChannelInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamchannelinfo-get_channelname
@@ -8981,9 +8981,9 @@ interface IAMChannelInfo : IDispatch
     HRESULT get_ContactEmail(BSTR* pbstrContactEmail);
 }
 
-@GUID("fa2aa8f3-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamnetworkstatus
+@GUID("fa2aa8f3-8b62-11d0-a520-000000000000")
 interface IAMNetworkStatus : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamnetworkstatus-get_receivedpackets
@@ -9002,9 +9002,9 @@ interface IAMNetworkStatus : IDispatch
     HRESULT get_BufferingProgress(int* pBufferingProgress);
 }
 
-@GUID("fa2aa8f9-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamextendedseeking
+@GUID("fa2aa8f9-8b62-11d0-a520-000000000000")
 interface IAMExtendedSeeking : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamextendedseeking-get_exseekcapabilities
@@ -9023,9 +9023,9 @@ interface IAMExtendedSeeking : IDispatch
     HRESULT get_PlaybackSpeed(double* pSpeed);
 }
 
-@GUID("fa2aa8f5-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamnetshowexprops
+@GUID("fa2aa8f5-8b62-11d0-a520-000000000000")
 interface IAMNetShowExProps : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamnetshowexprops-get_sourceprotocol
@@ -9048,9 +9048,9 @@ interface IAMNetShowExProps : IDispatch
     HRESULT get_SourceLink(BSTR* pbstrSourceLink);
 }
 
-@GUID("fa2aa8f6-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamextendederrorinfo
+@GUID("fa2aa8f6-8b62-11d0-a520-000000000000")
 interface IAMExtendedErrorInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamextendederrorinfo-get_haserror
@@ -9061,9 +9061,9 @@ interface IAMExtendedErrorInfo : IDispatch
     HRESULT get_ErrorCode(int* pErrorCode);
 }
 
-@GUID("fa2aa8f4-8b62-11d0-a520-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iammediacontent
+@GUID("fa2aa8f4-8b62-11d0-a520-000000000000")
 interface IAMMediaContent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iammediacontent-get_authorname
@@ -9094,9 +9094,9 @@ interface IAMMediaContent : IDispatch
     HRESULT get_MoreInfoText(BSTR* pbstrMoreInfoText);
 }
 
-@GUID("ce8f78c1-74d9-11d2-b09d-00a0c9a81117")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iammediacontent2
+@GUID("ce8f78c1-74d9-11d2-b09d-00a0c9a81117")
 interface IAMMediaContent2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iammediacontent2-get_mediaparameter
@@ -9107,9 +9107,9 @@ interface IAMMediaContent2 : IDispatch
     HRESULT get_PlaylistCount(int* pNumberEntries);
 }
 
-@GUID("aae7e4e2-6388-11d1-8d93-006097c9a2b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-iamnetshowpreroll
+@GUID("aae7e4e2-6388-11d1-8d93-006097c9a2b2")
 interface IAMNetShowPreroll : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-iamnetshowpreroll-put_preroll
@@ -9118,9 +9118,9 @@ interface IAMNetShowPreroll : IDispatch
     HRESULT get_Preroll(VARIANT_BOOL* pfPreroll);
 }
 
-@GUID("4746b7c8-700e-11d1-becc-00c04fb6e937")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nn-qnetwork-idshowplugin
+@GUID("4746b7c8-700e-11d1-becc-00c04fb6e937")
 interface IDShowPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qnetwork/nf-qnetwork-idshowplugin-get_url
@@ -9129,9 +9129,9 @@ interface IDShowPlugin : IUnknown
     HRESULT get_UserAgent(BSTR* pUserAgent);
 }
 
-@GUID("546f4260-d53e-11cf-b3f0-00aa003761c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amaudio/nn-amaudio-iamdirectsound
+@GUID("546f4260-d53e-11cf-b3f0-00aa003761c5")
 interface IAMDirectSound : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amaudio/nf-amaudio-iamdirectsound-getdirectsoundinterface
@@ -9152,9 +9152,9 @@ interface IAMDirectSound : IUnknown
     HRESULT GetFocusWindow(HWND* param0, BOOL* param1);
 }
 
-@GUID("6e8d4a21-310c-11d0-b79a-00aa003767a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/il21dec/nn-il21dec-iamline21decoder
+@GUID("6e8d4a21-310c-11d0-b79a-00aa003767a7")
 interface IAMLine21Decoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/il21dec/nf-il21dec-iamline21decoder-getdecoderlevel
@@ -9185,9 +9185,9 @@ interface IAMLine21Decoder : IUnknown
     HRESULT SetDrawBackgroundMode(AM_LINE21_DRAWBGMODE Mode);
 }
 
-@GUID("c47a3420-005c-11d2-9038-00a0c9697298")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amparse/nn-amparse-iamparse
+@GUID("c47a3420-005c-11d2-9038-00a0c9697298")
 interface IAMParse : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amparse/nf-amparse-iamparse-getparsetime
@@ -9206,9 +9206,9 @@ interface IAMCollection : IDispatch
     HRESULT get__NewEnum(IUnknown* ppUnk);
 }
 
-@GUID("56a868b1-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-imediacontrol
+@GUID("56a868b1-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-imediacontrol-run
@@ -9231,9 +9231,9 @@ interface IMediaControl : IDispatch
     HRESULT StopWhenReady();
 }
 
-@GUID("56a868b6-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-imediaevent
+@GUID("56a868b6-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaEvent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-imediaevent-geteventhandle
@@ -9250,9 +9250,9 @@ interface IMediaEvent : IDispatch
     HRESULT FreeEventParams(int lEvCode, ptrdiff_t lParam1, ptrdiff_t lParam2);
 }
 
-@GUID("56a868c0-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-imediaeventex
+@GUID("56a868c0-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaEventEx : IMediaEvent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-imediaeventex-setnotifywindow
@@ -9263,9 +9263,9 @@ interface IMediaEventEx : IMediaEvent
     HRESULT GetNotifyFlags(int* lplNoNotifyFlags);
 }
 
-@GUID("56a868b2-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-imediaposition
+@GUID("56a868b2-0ad4-11ce-b03a-0020af0ba770")
 interface IMediaPosition : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-imediaposition-get_duration
@@ -9292,9 +9292,9 @@ interface IMediaPosition : IDispatch
     HRESULT CanSeekBackward(int* pCanSeekBackward);
 }
 
-@GUID("56a868b3-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-ibasicaudio
+@GUID("56a868b3-0ad4-11ce-b03a-0020af0ba770")
 interface IBasicAudio : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-ibasicaudio-put_volume
@@ -9307,9 +9307,9 @@ interface IBasicAudio : IDispatch
     HRESULT get_Balance(int* plBalance);
 }
 
-@GUID("56a868b4-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-ivideowindow
+@GUID("56a868b4-0ad4-11ce-b03a-0020af0ba770")
 interface IVideoWindow : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-ivideowindow-put_caption
@@ -9392,9 +9392,9 @@ interface IVideoWindow : IDispatch
     HRESULT IsCursorHidden(int* CursorHidden);
 }
 
-@GUID("56a868b5-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-ibasicvideo
+@GUID("56a868b5-0ad4-11ce-b03a-0020af0ba770")
 interface IBasicVideo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-ibasicvideo-get_avgtimeperframe
@@ -9463,18 +9463,18 @@ interface IBasicVideo : IDispatch
     HRESULT IsUsingDefaultDestination();
 }
 
-@GUID("329bb360-f6ea-11d1-9038-00a0c9697298")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-ibasicvideo2
+@GUID("329bb360-f6ea-11d1-9038-00a0c9697298")
 interface IBasicVideo2 : IBasicVideo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-ibasicvideo2-getpreferredaspectratio
     HRESULT GetPreferredAspectRatio(int* plAspectX, int* plAspectY);
 }
 
-@GUID("56a868b8-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-ideferredcommand
+@GUID("56a868b8-0ad4-11ce-b03a-0020af0ba770")
 interface IDeferredCommand : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-ideferredcommand-cancel
@@ -9487,9 +9487,9 @@ interface IDeferredCommand : IUnknown
     HRESULT GetHResult(HRESULT* phrResult);
 }
 
-@GUID("56a868b7-0ad4-11ce-b03a-0020af0ba770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-iqueuecommand
+@GUID("56a868b7-0ad4-11ce-b03a-0020af0ba770")
 interface IQueueCommand : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-iqueuecommand-invokeatstreamtime
@@ -9546,9 +9546,9 @@ interface IPinInfo : IDispatch
     HRESULT Render();
 }
 
-@GUID("bc9bcf80-dcd2-11d2-abf6-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nn-control-iamstats
+@GUID("bc9bcf80-dcd2-11d2-abf6-00a0c905f375")
 interface IAMStats : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/control/nf-control-iamstats-reset
@@ -9567,9 +9567,9 @@ interface IAMStats : IDispatch
     HRESULT AddValue(int lIndex, double dValue);
 }
 
-@GUID("256a6a21-fbad-11d1-82bf-00a0c9696c8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/videoacc/nn-videoacc-iamvideoacceleratornotify
+@GUID("256a6a21-fbad-11d1-82bf-00a0c9696c8f")
 interface IAMVideoAcceleratorNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/videoacc/nf-videoacc-iamvideoacceleratornotify-getuncompsurfacesinfo
@@ -9580,9 +9580,9 @@ interface IAMVideoAcceleratorNotify : IUnknown
     HRESULT GetCreateVideoAcceleratorData(const(GUID)* pGuid, uint* pdwSizeMiscData, void** ppMiscData);
 }
 
-@GUID("256a6a22-fbad-11d1-82bf-00a0c9696c8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/videoacc/nn-videoacc-iamvideoaccelerator
+@GUID("256a6a22-fbad-11d1-82bf-00a0c9696c8f")
 interface IAMVideoAccelerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/videoacc/nf-videoacc-iamvideoaccelerator-getvideoacceleratorguids
@@ -9615,9 +9615,9 @@ interface IAMVideoAccelerator : IUnknown
     HRESULT DisplayFrame(uint dwFlipToIndex, IMediaSample pMediaSample);
 }
 
-@GUID("c056de21-75c2-11d3-a184-00105aef9f33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwstdec/nn-iwstdec-iamwstdecoder
+@GUID("c056de21-75c2-11d3-a184-00105aef9f33")
 interface IAMWstDecoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwstdec/nf-iwstdec-iamwstdecoder-getdecoderlevel
@@ -9658,9 +9658,9 @@ interface IAMWstDecoder : IUnknown
     HRESULT SetCurrentPage(AM_WST_PAGE WstPage);
 }
 
-@GUID("1abdaeca-68b6-4f83-9371-b413907c7b9f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nn-vidcap-iselector
+@GUID("1abdaeca-68b6-4f83-9371-b413907c7b9f")
 interface ISelector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nf-vidcap-iselector-get_numsources
@@ -9671,9 +9671,9 @@ interface ISelector : IUnknown
     HRESULT put_SourceNodeId(uint dwPinId);
 }
 
-@GUID("2ba1785d-4d1b-44ef-85e8-c7f1d3f20184")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nn-vidcap-icameracontrol
+@GUID("2ba1785d-4d1b-44ef-85e8-c7f1d3f20184")
 interface ICameraControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nf-vidcap-icameracontrol-get_exposure
@@ -9781,9 +9781,9 @@ interface ICameraControl : IUnknown
     HRESULT put_PrivacyMode(int Value, int Flags);
 }
 
-@GUID("4050560e-42a7-413a-85c2-09269a2d0f44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nn-vidcap-ivideoprocamp
+@GUID("4050560e-42a7-413a-85c2-09269a2d0f44")
 interface IVideoProcAmp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vidcap/nf-vidcap-ivideoprocamp-get_backlightcompensation
@@ -9868,25 +9868,25 @@ interface IVideoProcAmp : IUnknown
                                            int* pCapsFlag);
 }
 
-@GUID("6dd816d7-e740-4123-9e24-2444412644d8")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nn-dshowasf-iamwmbufferpass
+@GUID("6dd816d7-e740-4123-9e24-2444412644d8")
 interface IAMWMBufferPass : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nf-dshowasf-iamwmbufferpass-setnotify
     HRESULT SetNotify(IAMWMBufferPassCallback pCallback);
 }
 
-@GUID("b25b8372-d2d2-44b2-8653-1b8dae332489")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nn-dshowasf-iamwmbufferpasscallback
+@GUID("b25b8372-d2d2-44b2-8653-1b8dae332489")
 interface IAMWMBufferPassCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nf-dshowasf-iamwmbufferpasscallback-notify
     HRESULT Notify(INSSBuffer3 pNSSBuffer3, IPin pPin, long* prtStart, long* prtEnd);
 }
 
-@GUID("45086030-f7e4-486a-b504-826bb5792a3b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nn-dshowasf-iconfigasfwriter
+@GUID("45086030-f7e4-486a-b504-826bb5792a3b")
 interface IConfigAsfWriter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nf-dshowasf-iconfigasfwriter-configurefilterusingprofileid
@@ -9907,9 +9907,9 @@ interface IConfigAsfWriter : IUnknown
     HRESULT GetIndexMode(BOOL* pbIndexFile);
 }
 
-@GUID("7989ccaa-53f0-44f0-884a-f3b03f6ae066")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nn-dshowasf-iconfigasfwriter2
+@GUID("7989ccaa-53f0-44f0-884a-f3b03f6ae066")
 interface IConfigAsfWriter2 : IConfigAsfWriter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dshowasf/nf-dshowasf-iconfigasfwriter2-streamnumfrompin
@@ -9922,8 +9922,8 @@ interface IConfigAsfWriter2 : IConfigAsfWriter
     HRESULT ResetMultiPassState();
 }
 
-@GUID("b502d1bc-9a57-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmstream/nn-mmstream-imultimediastream
+@GUID("b502d1bc-9a57-11d0-8fde-00c04fd9189d")
 interface IMultiMediaStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmstream/nf-mmstream-imultimediastream-getinformation
@@ -9946,8 +9946,8 @@ interface IMultiMediaStream : IUnknown
     HRESULT GetEndOfStreamEventHandle(HANDLE* phEOS);
 }
 
-@GUID("b502d1bd-9a57-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmstream/nn-mmstream-imediastream
+@GUID("b502d1bd-9a57-11d0-8fde-00c04fd9189d")
 interface IMediaStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmstream/nf-mmstream-imediastream-getmultimediastream
@@ -9964,8 +9964,8 @@ interface IMediaStream : IUnknown
     HRESULT SendEndOfStream(uint dwFlags);
 }
 
-@GUID("b502d1be-9a57-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmstream/nn-mmstream-istreamsample
+@GUID("b502d1be-9a57-11d0-8fde-00c04fd9189d")
 interface IStreamSample : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmstream/nf-mmstream-istreamsample-getmediastream
@@ -9980,8 +9980,8 @@ interface IStreamSample : IUnknown
     HRESULT CompletionStatus(uint dwFlags, uint dwMilliseconds);
 }
 
-@GUID("f4104fce-9a70-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddstream/nn-ddstream-idirectdrawmediastream
+@GUID("f4104fce-9a70-11d0-8fde-00c04fd9189d")
 interface IDirectDrawMediaStream : IMediaStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddstream/nf-ddstream-idirectdrawmediastream-getformat
@@ -10000,8 +10000,8 @@ interface IDirectDrawMediaStream : IMediaStream
     HRESULT GetTimePerFrame(long* pFrameTime);
 }
 
-@GUID("f4104fcf-9a70-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddstream/nn-ddstream-idirectdrawstreamsample
+@GUID("f4104fcf-9a70-11d0-8fde-00c04fd9189d")
 interface IDirectDrawStreamSample : IStreamSample
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddstream/nf-ddstream-idirectdrawstreamsample-getsurface
@@ -10010,8 +10010,8 @@ interface IDirectDrawStreamSample : IStreamSample
     HRESULT SetRect(const(RECT)* pRect);
 }
 
-@GUID("f7537560-a3be-11d0-8212-00c04fc32c45")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nn-austream-iaudiomediastream
+@GUID("f7537560-a3be-11d0-8212-00c04fc32c45")
 interface IAudioMediaStream : IMediaStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nf-austream-iaudiomediastream-getformat
@@ -10022,16 +10022,16 @@ interface IAudioMediaStream : IMediaStream
     HRESULT CreateSample(IAudioData pAudioData, uint dwFlags, IAudioStreamSample* ppSample);
 }
 
-@GUID("345fee00-aba5-11d0-8212-00c04fc32c45")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nn-austream-iaudiostreamsample
+@GUID("345fee00-aba5-11d0-8212-00c04fc32c45")
 interface IAudioStreamSample : IStreamSample
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nf-austream-iaudiostreamsample-getaudiodata
     HRESULT GetAudioData(IAudioData* ppAudio);
 }
 
-@GUID("327fc560-af60-11d0-8212-00c04fc32c45")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nn-austream-imemorydata
+@GUID("327fc560-af60-11d0-8212-00c04fc32c45")
 interface IMemoryData : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nf-austream-imemorydata-setbuffer
@@ -10042,8 +10042,8 @@ interface IMemoryData : IUnknown
     HRESULT SetActual(uint cbDataValid);
 }
 
-@GUID("54c719c0-af60-11d0-8212-00c04fc32c45")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nn-austream-iaudiodata
+@GUID("54c719c0-af60-11d0-8212-00c04fc32c45")
 interface IAudioData : IMemoryData
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/austream/nf-austream-iaudiodata-getformat
@@ -10052,8 +10052,8 @@ interface IAudioData : IMemoryData
     HRESULT SetFormat(const(WAVEFORMATEX)* lpWaveFormat);
 }
 
-@GUID("bebe595c-9a6f-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-iammultimediastream
+@GUID("bebe595c-9a6f-11d0-8fde-00c04fd9189d")
 interface IAMMultiMediaStream : IMultiMediaStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-iammultimediastream-initialize
@@ -10076,8 +10076,8 @@ interface IAMMultiMediaStream : IMultiMediaStream
     HRESULT Render(uint dwFlags);
 }
 
-@GUID("bebe595d-9a6f-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-iammediastream
+@GUID("bebe595d-9a6f-11d0-8fde-00c04fd9189d")
 interface IAMMediaStream : IMediaStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-iammediastream-initialize
@@ -10092,8 +10092,8 @@ interface IAMMediaStream : IMediaStream
     HRESULT JoinFilterGraph(IFilterGraph pFilterGraph);
 }
 
-@GUID("bebe595e-9a6f-11d0-8fde-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-imediastreamfilter
+@GUID("bebe595e-9a6f-11d0-8fde-00c04fd9189d")
 interface IMediaStreamFilter : IBaseFilter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-imediastreamfilter-addmediastream
@@ -10116,18 +10116,18 @@ interface IMediaStreamFilter : IBaseFilter
     HRESULT EndOfStream();
 }
 
-@GUID("ab6b4afc-f6e4-11d0-900d-00c04fd9189d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-idirectdrawmediasampleallocator
+@GUID("ab6b4afc-f6e4-11d0-900d-00c04fd9189d")
 interface IDirectDrawMediaSampleAllocator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-idirectdrawmediasampleallocator-getdirectdraw
     HRESULT GetDirectDraw(IDirectDraw* ppDirectDraw);
 }
 
-@GUID("ab6b4afe-f6e4-11d0-900d-00c04fd9189d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-idirectdrawmediasample
+@GUID("ab6b4afe-f6e4-11d0-900d-00c04fd9189d")
 interface IDirectDrawMediaSample : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-idirectdrawmediasample-getsurfaceandreleaselock
@@ -10136,8 +10136,8 @@ interface IDirectDrawMediaSample : IUnknown
     HRESULT LockMediaSamplePointer();
 }
 
-@GUID("ab6b4afa-f6e4-11d0-900d-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-iammediatypestream
+@GUID("ab6b4afa-f6e4-11d0-900d-00c04fd9189d")
 interface IAMMediaTypeStream : IMediaStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-iammediatypestream-getformat
@@ -10153,8 +10153,8 @@ interface IAMMediaTypeStream : IMediaStream
     HRESULT SetStreamAllocatorRequirements(ALLOCATOR_PROPERTIES* pProps);
 }
 
-@GUID("ab6b4afb-f6e4-11d0-900d-00c04fd9189d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nn-amstream-iammediatypesample
+@GUID("ab6b4afb-f6e4-11d0-900d-00c04fd9189d")
 interface IAMMediaTypeSample : IStreamSample
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amstream/nf-amstream-iammediatypesample-setpointer
@@ -10193,9 +10193,9 @@ interface IAMMediaTypeSample : IStreamSample
     HRESULT SetMediaTime(long* pTimeStart, long* pTimeEnd);
 }
 
-@GUID("36d39eb0-dd75-11ce-bf0e-00aa0055595a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amvideo/nn-amvideo-idirectdrawvideo
+@GUID("36d39eb0-dd75-11ce-bf0e-00aa0055595a")
 interface IDirectDrawVideo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amvideo/nf-amvideo-idirectdrawvideo-getswitches
@@ -10232,9 +10232,9 @@ interface IDirectDrawVideo : IUnknown
     HRESULT WillUseFullScreen(int* UseWhenFullScreen);
 }
 
-@GUID("1bd0ecb0-f8e2-11ce-aac6-0020af0b99a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amvideo/nn-amvideo-iqualprop
+@GUID("1bd0ecb0-f8e2-11ce-aac6-0020af0b99a3")
 interface IQualProp : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amvideo/nf-amvideo-iqualprop-get_framesdroppedinrenderer
@@ -10273,9 +10273,9 @@ interface IFullScreenVideo : IUnknown
     HRESULT SetDefault();
 }
 
-@GUID("53479470-f1dd-11cf-bc42-00aa00ac74f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amvideo/nn-amvideo-ifullscreenvideoex
+@GUID("53479470-f1dd-11cf-bc42-00aa00ac74f6")
 interface IFullScreenVideoEx : IFullScreenVideo
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/amvideo/nf-amvideo-ifullscreenvideoex-setacceleratortable
@@ -10300,18 +10300,18 @@ interface IBaseVideoMixer : IUnknown
     HRESULT SetClockPeriod(int bValue);
 }
 
-@GUID("52d6f586-9f0f-4824-8fc8-e32ca04930c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmodshow/nn-dmodshow-idmowrapperfilter
+@GUID("52d6f586-9f0f-4824-8fc8-e32ca04930c2")
 interface IDMOWrapperFilter : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmodshow/nf-dmodshow-idmowrapperfilter-init
     HRESULT Init(const(GUID)* clsidDMO, const(GUID)* catDMO);
 }
 
-@GUID("81a3bd31-dee1-11d1-8508-00a0c91f9ca0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mixerocx/nn-mixerocx-imixerocxnotify
+@GUID("81a3bd31-dee1-11d1-8508-00a0c91f9ca0")
 interface IMixerOCXNotify : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mixerocx/nf-mixerocx-imixerocxnotify-oninvalidaterect
@@ -10322,9 +10322,9 @@ interface IMixerOCXNotify : IUnknown
     HRESULT OnDataChange(uint ulDataFlags);
 }
 
-@GUID("81a3bd32-dee1-11d1-8508-00a0c91f9ca0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mixerocx/nn-mixerocx-imixerocx
+@GUID("81a3bd32-dee1-11d1-8508-00a0c91f9ca0")
 interface IMixerOCX : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mixerocx/nf-mixerocx-imixerocx-ondisplaychange
@@ -10345,9 +10345,9 @@ interface IMixerOCX : IUnknown
     HRESULT UnAdvise();
 }
 
-@GUID("593cdde1-0759-11d1-9e69-00c04fd7c15b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpconfig/nn-mpconfig-imixerpinconfig
+@GUID("593cdde1-0759-11d1-9e69-00c04fd7c15b")
 interface IMixerPinConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpconfig/nf-mpconfig-imixerpinconfig-setrelativeposition
@@ -10376,9 +10376,9 @@ interface IMixerPinConfig : IUnknown
     HRESULT GetStreamTransparent(BOOL* pbStreamTransparent);
 }
 
-@GUID("ebf47182-8764-11d1-9e69-00c04fd7c15b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpconfig/nn-mpconfig-imixerpinconfig2
+@GUID("ebf47182-8764-11d1-9e69-00c04fd7c15b")
 interface IMixerPinConfig2 : IMixerPinConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpconfig/nf-mpconfig-imixerpinconfig2-setoverlaysurfacecolorcontrols
@@ -10387,9 +10387,9 @@ interface IMixerPinConfig2 : IMixerPinConfig
     HRESULT GetOverlaySurfaceColorControls(DDCOLORCONTROL* pColorControl);
 }
 
-@GUID("b45dd570-3c77-11d1-abe1-00a0c905f375")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpegtype/nn-mpegtype-impegaudiodecoder
+@GUID("b45dd570-3c77-11d1-abe1-00a0c905f375")
 interface IMpegAudioDecoder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpegtype/nf-mpegtype-impegaudiodecoder-get_frequencydivider
@@ -10420,9 +10420,9 @@ interface IMpegAudioDecoder : IUnknown
     HRESULT get_AudioFormat(MPEG1WAVEFORMAT* lpFmt);
 }
 
-@GUID("69188c61-12a3-40f0-8ffc-342e7b433fd7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrimagepresenter9
+@GUID("69188c61-12a3-40f0-8ffc-342e7b433fd7")
 interface IVMRImagePresenter9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrimagepresenter9-startpresenting
@@ -10433,9 +10433,9 @@ interface IVMRImagePresenter9 : IUnknown
     HRESULT PresentImage(size_t dwUserID, VMR9PresentationInfo* lpPresInfo);
 }
 
-@GUID("8d5148ea-3f5d-46cf-9df1-d1b896eedb1f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrsurfaceallocator9
+@GUID("8d5148ea-3f5d-46cf-9df1-d1b896eedb1f")
 interface IVMRSurfaceAllocator9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrsurfaceallocator9-initializedevice
@@ -10448,9 +10448,9 @@ interface IVMRSurfaceAllocator9 : IUnknown
     HRESULT AdviseNotify(IVMRSurfaceAllocatorNotify9 lpIVMRSurfAllocNotify);
 }
 
-@GUID("6de9a68a-a928-4522-bf57-655ae3866456")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrsurfaceallocatorex9
+@GUID("6de9a68a-a928-4522-bf57-655ae3866456")
 interface IVMRSurfaceAllocatorEx9 : IVMRSurfaceAllocator9
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrsurfaceallocatorex9-getsurfaceex
@@ -10458,9 +10458,9 @@ interface IVMRSurfaceAllocatorEx9 : IVMRSurfaceAllocator9
                          RECT* lprcDst);
 }
 
-@GUID("dca3f5df-bb3a-4d03-bd81-84614bfbfa0c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrsurfaceallocatornotify9
+@GUID("dca3f5df-bb3a-4d03-bd81-84614bfbfa0c")
 interface IVMRSurfaceAllocatorNotify9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrsurfaceallocatornotify9-advisesurfaceallocator
@@ -10476,9 +10476,9 @@ interface IVMRSurfaceAllocatorNotify9 : IUnknown
     HRESULT NotifyEvent(int EventCode, ptrdiff_t Param1, ptrdiff_t Param2);
 }
 
-@GUID("8f537d09-f85e-4414-b23b-502e54c79927")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrwindowlesscontrol9
+@GUID("8f537d09-f85e-4414-b23b-502e54c79927")
 interface IVMRWindowlessControl9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrwindowlesscontrol9-getnativevideosize
@@ -10509,9 +10509,9 @@ interface IVMRWindowlessControl9 : IUnknown
     HRESULT GetBorderColor(COLORREF* lpClr);
 }
 
-@GUID("1a777eaa-47c8-4930-b2c9-8fee1c1b0f3b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrmixercontrol9
+@GUID("1a777eaa-47c8-4930-b2c9-8fee1c1b0f3b")
 interface IVMRMixerControl9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrmixercontrol9-setalpha
@@ -10542,9 +10542,9 @@ interface IVMRMixerControl9 : IUnknown
     HRESULT GetProcAmpControlRange(uint dwStreamID, VMR9ProcAmpControlRange* lpClrControl);
 }
 
-@GUID("ced175e5-1935-4820-81bd-ff6ad00c9108")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrmixerbitmap9
+@GUID("ced175e5-1935-4820-81bd-ff6ad00c9108")
 interface IVMRMixerBitmap9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrmixerbitmap9-setalphabitmap
@@ -10555,9 +10555,9 @@ interface IVMRMixerBitmap9 : IUnknown
     HRESULT GetAlphaBitmapParameters(VMR9AlphaBitmap* pBmpParms);
 }
 
-@GUID("dfc581a1-6e1f-4c3a-8d0a-5e9792ea2afc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrsurface9
+@GUID("dfc581a1-6e1f-4c3a-8d0a-5e9792ea2afc")
 interface IVMRSurface9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrsurface9-issurfacelocked
@@ -10570,9 +10570,9 @@ interface IVMRSurface9 : IUnknown
     HRESULT GetSurface(IDirect3DSurface9* lplpSurface);
 }
 
-@GUID("45c15cab-6e22-420a-8043-ae1f0ac02c7d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrimagepresenterconfig9
+@GUID("45c15cab-6e22-420a-8043-ae1f0ac02c7d")
 interface IVMRImagePresenterConfig9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrimagepresenterconfig9-setrenderingprefs
@@ -10581,9 +10581,9 @@ interface IVMRImagePresenterConfig9 : IUnknown
     HRESULT GetRenderingPrefs(uint* dwRenderFlags);
 }
 
-@GUID("d0cfe38b-93e7-4772-8957-0400c49a4485")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrvideostreamcontrol9
+@GUID("d0cfe38b-93e7-4772-8957-0400c49a4485")
 interface IVMRVideoStreamControl9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrvideostreamcontrol9-setstreamactivestate
@@ -10592,9 +10592,9 @@ interface IVMRVideoStreamControl9 : IUnknown
     HRESULT GetStreamActiveState(BOOL* lpfActive);
 }
 
-@GUID("5a804648-4f66-4867-9c43-4f5c822cf1b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrfilterconfig9
+@GUID("5a804648-4f66-4867-9c43-4f5c822cf1b8")
 interface IVMRFilterConfig9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrfilterconfig9-setimagecompositor
@@ -10613,9 +10613,9 @@ interface IVMRFilterConfig9 : IUnknown
     HRESULT GetRenderingMode(uint* pMode);
 }
 
-@GUID("00d96c29-bbde-4efc-9901-bb5036392146")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmraspectratiocontrol9
+@GUID("00d96c29-bbde-4efc-9901-bb5036392146")
 interface IVMRAspectRatioControl9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmraspectratiocontrol9-getaspectratiomode
@@ -10624,9 +10624,9 @@ interface IVMRAspectRatioControl9 : IUnknown
     HRESULT SetAspectRatioMode(uint dwARMode);
 }
 
-@GUID("46c2e457-8ba0-4eef-b80b-0680f0978749")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrmonitorconfig9
+@GUID("46c2e457-8ba0-4eef-b80b-0680f0978749")
 interface IVMRMonitorConfig9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrmonitorconfig9-setmonitor
@@ -10641,9 +10641,9 @@ interface IVMRMonitorConfig9 : IUnknown
     HRESULT GetAvailableMonitors(VMR9MonitorInfo* pInfo, uint dwMaxInfoArraySize, uint* pdwNumDevices);
 }
 
-@GUID("a215fb8d-13c2-4f7f-993c-003d6271a459")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrdeinterlacecontrol9
+@GUID("a215fb8d-13c2-4f7f-993c-003d6271a459")
 interface IVMRDeinterlaceControl9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrdeinterlacecontrol9-getnumberofdeinterlacemodes
@@ -10664,9 +10664,9 @@ interface IVMRDeinterlaceControl9 : IUnknown
     HRESULT GetActualDeinterlaceMode(uint dwStreamID, GUID* lpDeinterlaceMode);
 }
 
-@GUID("4a5c89eb-df51-4654-ac2a-e48e02bbabf6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nn-vmr9-ivmrimagecompositor9
+@GUID("4a5c89eb-df51-4654-ac2a-e48e02bbabf6")
 interface IVMRImageCompositor9 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmr9/nf-vmr9-ivmrimagecompositor9-initcompositiondevice
@@ -10713,9 +10713,9 @@ interface IVPBaseConfig : IUnknown
     HRESULT SetSurfaceParameters(uint dwPitch, uint dwXOrigin, uint dwYOrigin);
 }
 
-@GUID("bc29a660-30e3-11d0-9e69-00c04fd7c15b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vpconfig/nn-vpconfig-ivpconfig
+@GUID("bc29a660-30e3-11d0-9e69-00c04fd7c15b")
 interface IVPConfig : IVPBaseConfig
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vpconfig/nf-vpconfig-ivpconfig-isvpdecimationallowed
@@ -10737,9 +10737,9 @@ interface IVPBaseNotify : IUnknown
     HRESULT RenegotiateVPParameters();
 }
 
-@GUID("c76794a1-d6c5-11d0-9e69-00c04fd7c15b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vpnotify/nn-vpnotify-ivpnotify
+@GUID("c76794a1-d6c5-11d0-9e69-00c04fd7c15b")
 interface IVPNotify : IVPBaseNotify
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vpnotify/nf-vpnotify-ivpnotify-setdeinterlacemode
@@ -10748,9 +10748,9 @@ interface IVPNotify : IVPBaseNotify
     HRESULT GetDeinterlaceMode(AMVP_MODE* pMode);
 }
 
-@GUID("ebf47183-8764-11d1-9e69-00c04fd7c15b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vpnotify/nn-vpnotify-ivpnotify2
+@GUID("ebf47183-8764-11d1-9e69-00c04fd7c15b")
 interface IVPNotify2 : IVPNotify
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vpnotify/nf-vpnotify-ivpnotify2-setvpsyncmaster
@@ -10764,8 +10764,8 @@ interface IVPVBINotify : IVPBaseNotify
 {
 }
 
-@GUID("6d6cbb60-a223-44aa-842f-a2f06750be6d")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/medparam/nn-medparam-imediaparaminfo
+@GUID("6d6cbb60-a223-44aa-842f-a2f06750be6d")
 interface IMediaParamInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/medparam/nf-medparam-imediaparaminfo-getparamcount
@@ -10782,8 +10782,8 @@ interface IMediaParamInfo : IUnknown
     HRESULT GetCurrentTimeFormat(GUID* pguidTimeFormat, uint* pTimeData);
 }
 
-@GUID("6d6cbb61-a223-44aa-842f-a2f06750be6e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/medparam/nn-medparam-imediaparams
+@GUID("6d6cbb61-a223-44aa-842f-a2f06750be6e")
 interface IMediaParams : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/medparam/nf-medparam-imediaparams-getparam
@@ -10843,8 +10843,8 @@ interface IBufferingTime : IUnknown
     HRESULT SetBufferingTime(uint dwMilliseconds);
 }
 
-@GUID("d98ee251-34e0-4a2d-9312-9b4c788d9fa1")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdxva/nn-wmdxva-iwmcodecamvideoaccelerator
+@GUID("d98ee251-34e0-4a2d-9312-9b4c788d9fa1")
 interface IWMCodecAMVideoAccelerator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdxva/nf-wmdxva-iwmcodecamvideoaccelerator-setacceleratorinterface

@@ -223,18 +223,18 @@ struct UIRibbonFramework;
 @GUID("0f7434b6-59b6-4250-999e-d168d6ae4293")
 struct UIRibbonImageFromBitmapFactory;
 
-@GUID("c205bb48-5b1c-4219-a106-15bd0a5f24e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuisimplepropertyset
+@GUID("c205bb48-5b1c-4219-a106-15bd0a5f24e2")
 interface IUISimplePropertySet : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuisimplepropertyset-getvalue
     HRESULT GetValue(const(PROPERTYKEY)* key, PROPVARIANT* value);
 }
 
-@GUID("803982ab-370a-4f7e-a9e7-8784036a6e26")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuiribbon
+@GUID("803982ab-370a-4f7e-a9e7-8784036a6e26")
 interface IUIRibbon : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuiribbon-getheight
@@ -245,9 +245,9 @@ interface IUIRibbon : IUnknown
     HRESULT SaveSettingsToStream(IStream pStream);
 }
 
-@GUID("f4f0385d-6872-43a8-ad09-4c339cb3f5c5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuiframework
+@GUID("f4f0385d-6872-43a8-ad09-4c339cb3f5c5")
 interface IUIFramework : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuiframework-initialize
@@ -270,36 +270,36 @@ interface IUIFramework : IUnknown
     HRESULT SetModes(int iModes);
 }
 
-@GUID("ec3e1034-dbf4-41a1-95d5-03e0f1026e05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuieventlogger
+@GUID("ec3e1034-dbf4-41a1-95d5-03e0f1026e05")
 interface IUIEventLogger : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuieventlogger-onuievent
     void OnUIEvent(UI_EVENTPARAMS* pEventParams);
 }
 
-@GUID("3be6ea7f-9a9b-4198-9368-9b0f923bd534")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuieventingmanager
+@GUID("3be6ea7f-9a9b-4198-9368-9b0f923bd534")
 interface IUIEventingManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuieventingmanager-seteventlogger
     HRESULT SetEventLogger(IUIEventLogger eventLogger);
 }
 
-@GUID("eea11f37-7c46-437c-8e55-b52122b29293")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuicontextualui
+@GUID("eea11f37-7c46-437c-8e55-b52122b29293")
 interface IUIContextualUI : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuicontextualui-showatlocation
     HRESULT ShowAtLocation(int x, int y);
 }
 
-@GUID("df4f45bf-6f9d-4dd7-9d68-d8f9cd18c4db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuicollection
+@GUID("df4f45bf-6f9d-4dd7-9d68-d8f9cd18c4db")
 interface IUICollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuicollection-getcount
@@ -318,18 +318,18 @@ interface IUICollection : IUnknown
     HRESULT Clear();
 }
 
-@GUID("6502ae91-a14d-44b5-bbd0-62aacc581d52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuicollectionchangedevent
+@GUID("6502ae91-a14d-44b5-bbd0-62aacc581d52")
 interface IUICollectionChangedEvent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuicollectionchangedevent-onchanged
     HRESULT OnChanged(UI_COLLECTIONCHANGE action, uint oldIndex, IUnknown oldItem, uint newIndex, IUnknown newItem);
 }
 
-@GUID("75ae0a2d-dc03-4c9f-8883-069660d0beb6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuicommandhandler
+@GUID("75ae0a2d-dc03-4c9f-8883-069660d0beb6")
 interface IUICommandHandler : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuicommandhandler-execute
@@ -340,9 +340,9 @@ interface IUICommandHandler : IUnknown
                            PROPVARIANT* newValue);
 }
 
-@GUID("d428903c-729a-491d-910d-682a08ff2522")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuiapplication
+@GUID("d428903c-729a-491d-910d-682a08ff2522")
 interface IUIApplication : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuiapplication-onviewchanged
@@ -353,18 +353,18 @@ interface IUIApplication : IUnknown
     HRESULT OnDestroyUICommand(uint commandId, UI_COMMANDTYPE typeID, IUICommandHandler commandHandler);
 }
 
-@GUID("23c8c838-4de6-436b-ab01-5554bb7c30dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuiimage
+@GUID("23c8c838-4de6-436b-ab01-5554bb7c30dd")
 interface IUIImage : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuiimage-getbitmap
     HRESULT GetBitmap(HBITMAP* bitmap);
 }
 
-@GUID("18aba7f3-4c1c-4ba2-bf6c-f5c3326fa816")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nn-uiribbon-iuiimagefrombitmap
+@GUID("18aba7f3-4c1c-4ba2-bf6c-f5c3326fa816")
 interface IUIImageFromBitmap : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiribbon/nf-uiribbon-iuiimagefrombitmap-createimage

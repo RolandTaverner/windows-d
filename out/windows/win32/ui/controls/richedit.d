@@ -3119,9 +3119,9 @@ interface ITextServices2 : ITextServices
     HRESULT TxDrawD2D(ID2D1RenderTarget pRenderTarget, RECTL* lprcBounds, RECT* lprcUpdate, int lViewId);
 }
 
-@GUID("00020d00-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nn-richole-iricheditole
+@GUID("00020d00-0000-0000-c000-000000000046")
 interface IRichEditOle : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getclientsite
@@ -3158,9 +3158,9 @@ interface IRichEditOle : IUnknown
     HRESULT ImportDataObject(IDataObject lpdataobj, ushort cf, HGLOBAL hMetaPict);
 }
 
-@GUID("00020d03-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nn-richole-iricheditolecallback
+@GUID("00020d03-0000-0000-c000-000000000046")
 interface IRichEditOleCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getnewstorage
@@ -3188,9 +3188,9 @@ interface IRichEditOleCallback : IUnknown
                            HMENU* lphmenu);
 }
 
-@GUID("8cc497c0-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdocument
+@GUID("8cc497c0-a1df-11ce-8098-00aa0047be5d")
 interface ITextDocument : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getname
@@ -3233,9 +3233,9 @@ interface ITextDocument : IDispatch
     HRESULT RangeFromPoint(int x, int y, ITextRange* ppRange);
 }
 
-@GUID("8cc497c2-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrange
+@GUID("8cc497c2-a1df-11ce-8098-00aa0047be5d")
 interface ITextRange : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-gettext
@@ -3342,9 +3342,9 @@ interface ITextRange : IDispatch
     HRESULT GetEmbeddedObject(IUnknown* ppObject);
 }
 
-@GUID("8cc497c1-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextselection
+@GUID("8cc497c1-a1df-11ce-8098-00aa0047be5d")
 interface ITextSelection : ITextRange
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-getflags
@@ -3369,9 +3369,9 @@ interface ITextSelection : ITextRange
     HRESULT TypeText(BSTR bstr);
 }
 
-@GUID("8cc497c3-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextfont
+@GUID("8cc497c3-a1df-11ce-8098-00aa0047be5d")
 interface ITextFont : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getduplicate
@@ -3486,9 +3486,9 @@ interface ITextFont : IDispatch
     HRESULT SetWeight(int Value);
 }
 
-@GUID("8cc497c4-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextpara
+@GUID("8cc497c4-a1df-11ce-8098-00aa0047be5d")
 interface ITextPara : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getduplicate
@@ -3589,9 +3589,9 @@ interface ITextPara : IDispatch
     HRESULT GetTab(int iTab, float* ptbPos, int* ptbAlign, int* ptbLeader);
 }
 
-@GUID("8cc497c5-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstoryranges
+@GUID("8cc497c5-a1df-11ce-8098-00aa0047be5d")
 interface ITextStoryRanges : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-_newenum
@@ -3602,9 +3602,9 @@ interface ITextStoryRanges : IDispatch
     HRESULT GetCount(int* pCount);
 }
 
-@GUID("c241f5e0-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdocument2
+@GUID("c241f5e0-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextDocument2 : ITextDocument
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getcarettype
@@ -3698,9 +3698,9 @@ interface ITextDocument2 : ITextDocument
     HRESULT GetStory(int Index, ITextStory* ppStory);
 }
 
-@GUID("c241f5e2-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrange2
+@GUID("c241f5e2-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextRange2 : ITextSelection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcch
@@ -3786,16 +3786,16 @@ interface ITextRange2 : ITextSelection
     HRESULT InsertImage(int width, int height, int ascent, int Type, BSTR bstrAltText, IStream pStream);
 }
 
-@GUID("c241f5e1-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextselection2
+@GUID("c241f5e1-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextSelection2 : ITextRange2
 {
 }
 
-@GUID("c241f5e3-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextfont2
+@GUID("c241f5e3-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextFont2 : ITextFont
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcount
@@ -3892,9 +3892,9 @@ interface ITextFont2 : ITextFont
     HRESULT SetProperty(int Type, int Value);
 }
 
-@GUID("c241f5e4-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextpara2
+@GUID("c241f5e4-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextPara2 : ITextPara
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getborders
@@ -3931,18 +3931,18 @@ interface ITextPara2 : ITextPara
     HRESULT SetProperty(int Type, int Value);
 }
 
-@GUID("c241f5e5-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstoryranges2
+@GUID("c241f5e5-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextStoryRanges2 : ITextStoryRanges
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges2-item2
     HRESULT Item2(int Index, ITextRange2* ppRange);
 }
 
-@GUID("c241f5f3-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstory
+@GUID("c241f5f3-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextStory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getactive
@@ -3971,9 +3971,9 @@ interface ITextStory : IUnknown
     HRESULT SetText(int Flags, BSTR bstr);
 }
 
-@GUID("c241f5e7-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstrings
+@GUID("c241f5e7-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextStrings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-item
@@ -4013,9 +4013,9 @@ interface ITextStrings : IDispatch
     HRESULT Swap();
 }
 
-@GUID("c241f5ef-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrow
+@GUID("c241f5ef-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextRow : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getalignment
@@ -4112,9 +4112,9 @@ interface ITextRow : IDispatch
     HRESULT SetProperty(int Type, int Value);
 }
 
-@GUID("c241f5f2-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdisplays
+@GUID("c241f5f2-7206-11d8-a2c7-00a0d1d6c6b3")
 interface ITextDisplays : IDispatch
 {
 }

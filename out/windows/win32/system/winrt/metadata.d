@@ -1512,8 +1512,8 @@ interface IMapToken : IUnknown
     HRESULT Map(uint tkImp, uint tkEmit);
 }
 
-@GUID("809c652e-7396-11d2-9771-00a0c9b4d50c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatadispenser
+@GUID("809c652e-7396-11d2-9771-00a0c9b4d50c")
 interface IMetaDataDispenser : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-definescope
@@ -1612,8 +1612,8 @@ interface IMetaDataEmit2 : IMetaDataEmit
     HRESULT ResetENCLog();
 }
 
-@GUID("7dac8207-d3ae-4c75-9b67-92801a497d44")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataimport
+@GUID("7dac8207-d3ae-4c75-9b67-92801a497d44")
 interface IMetaDataImport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-closeenum
@@ -1757,8 +1757,8 @@ interface IMetaDataImport : IUnknown
     HRESULT IsGlobal(uint pd, int* pbGlobal);
 }
 
-@GUID("fce5efa0-8bba-4f8e-a036-8f2022b08466")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataimport2
+@GUID("fce5efa0-8bba-4f8e-a036-8f2022b08466")
 interface IMetaDataImport2 : IMetaDataImport
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enumgenericparams
@@ -1819,8 +1819,8 @@ interface IMetaDataAssemblyEmit : IUnknown
     HRESULT SetManifestResourceProps(uint mr, uint tkImplementation, uint dwOffset, uint dwResourceFlags);
 }
 
-@GUID("ee62470b-e94b-424e-9b7c-2f00c9249f93")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataassemblyimport
+@GUID("ee62470b-e94b-424e-9b7c-2f00c9249f93")
 interface IMetaDataAssemblyImport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyprops
@@ -1868,8 +1868,8 @@ interface IMetaDataValidate : IUnknown
     HRESULT ValidateMetaData();
 }
 
-@GUID("31bcfce2-dafb-11d2-9f81-00c04f79a0a3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatadispenserex
+@GUID("31bcfce2-dafb-11d2-9f81-00c04f79a0a3")
 interface IMetaDataDispenserEx : IMetaDataDispenser
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-setoption
@@ -1909,8 +1909,8 @@ interface ICeeGen : IUnknown
     HRESULT ComputePointer(void* section, uint RVA, ubyte** lpBuffer);
 }
 
-@GUID("d8f579ab-402d-4b8e-82d9-5d63b1065c68")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatatables
+@GUID("d8f579ab-402d-4b8e-82d9-5d63b1065c68")
 interface IMetaDataTables : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getstringheapsize
@@ -1953,8 +1953,8 @@ interface IMetaDataTables : IUnknown
     HRESULT GetNextUserString(uint ixUserString, uint* pNext);
 }
 
-@GUID("badb5f70-58da-43a9-a1c6-d74819f19b15")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatatables2
+@GUID("badb5f70-58da-43a9-a1c6-d74819f19b15")
 interface IMetaDataTables2 : IMetaDataTables
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables2-getmetadatastorage

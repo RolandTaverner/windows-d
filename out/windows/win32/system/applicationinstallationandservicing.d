@@ -4202,8 +4202,8 @@ struct MsmMerge;
 @GUID("b9e511fc-e364-497a-a121-b7b3612cedce")
 struct PMSvc;
 
-@GUID("e482e5c6-e31e-4143-a2e6-dbc3d8e4b8d3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nn-evalcom2-ivalidate
+@GUID("e482e5c6-e31e-4143-a2e6-dbc3d8e4b8d3")
 interface IValidate : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-opendatabase
@@ -4239,8 +4239,8 @@ interface IMsmStrings : IDispatch
     HRESULT get__NewEnum(IUnknown* NewEnum);
 }
 
-@GUID("0adda828-2c26-11d2-ad65-00a0c9af11a6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmerror
+@GUID("0adda828-2c26-11d2-ad65-00a0c9af11a6")
 interface IMsmError : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_type
@@ -4276,8 +4276,8 @@ interface IMsmErrors : IDispatch
     HRESULT get__NewEnum(IUnknown* NewEnum);
 }
 
-@GUID("0adda82b-2c26-11d2-ad65-00a0c9af11a6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmdependency
+@GUID("0adda82b-2c26-11d2-ad65-00a0c9af11a6")
 interface IMsmDependency : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_module
@@ -4305,8 +4305,8 @@ interface IMsmDependencies : IDispatch
     HRESULT get__NewEnum(IUnknown* NewEnum);
 }
 
-@GUID("0adda82e-2c26-11d2-ad65-00a0c9af11a6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmmerge
+@GUID("0adda82e-2c26-11d2-ad65-00a0c9af11a6")
 interface IMsmMerge : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-opendatabase
@@ -4337,17 +4337,17 @@ interface IMsmMerge : IDispatch
     HRESULT ExtractFiles(const(BSTR) Path);
 }
 
-@GUID("7041ae26-2d78-11d2-888a-00a0c981b015")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmgetfiles
+@GUID("7041ae26-2d78-11d2-888a-00a0c981b015")
 interface IMsmGetFiles : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmgetfiles-get_modulefiles
     HRESULT get_ModuleFiles(IMsmStrings* Files);
 }
 
-@GUID("cd193bc0-b4bc-11d2-9833-00c04fc31d2e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblyname
+@GUID("cd193bc0-b4bc-11d2-9833-00c04fc31d2e")
 interface IAssemblyName : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-setproperty
@@ -4369,9 +4369,9 @@ interface IAssemblyName : IUnknown
     HRESULT Clone(IAssemblyName* pName);
 }
 
-@GUID("9e3aaeb4-d1cd-11d2-bab9-00c04f8eceae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblycacheitem
+@GUID("9e3aaeb4-d1cd-11d2-bab9-00c04f8eceae")
 interface IAssemblyCacheItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycacheitem-createstream
@@ -4382,9 +4382,9 @@ interface IAssemblyCacheItem : IUnknown
     HRESULT AbortItem();
 }
 
-@GUID("e707dcde-d1cd-11d2-bab9-00c04f8eceae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblycache
+@GUID("e707dcde-d1cd-11d2-bab9-00c04f8eceae")
 interface IAssemblyCache : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-uninstallassembly

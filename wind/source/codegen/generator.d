@@ -22,6 +22,8 @@ import climetadata.mdcollection.entity;
 import climetadata.mdcollection.entitytypes;
 import climetadata.mdcollection.sigtnature;
 import climetadata.utils.memcast;
+import codegen.attributes.common;
+import codegen.attributes.guid;
 
 enum maxLineWidth = 120;
 enum minSetTreshold = 0.4;
@@ -308,16 +310,13 @@ public struct Generator
     private void dumpEnum(scope ref std.stdio.File f, const ref TypeDefEntity e, scope ref const bool[string] structNames, bool docs = false)
     {
         f.writeln;
-        string docsAttr = "";
-        foreach(ca; e.getAttributes())
+
+        auto enumAttrs = CommonAttributes(e.getAttributes());
+        foreach(ca; enumAttrs.getUnhandledAttributes())
         {
             if (ca.name() == "FlagsAttribute")
             {
                 //can't find any use
-            }
-            else if (ca.name() == "DocumentationAttribute")
-            {
-                docsAttr = getDocumentationAttribute(ca);
             }
             else
             {
@@ -325,9 +324,9 @@ public struct Generator
             }
         }
 
-        if (docsAttr.length != 0)
+        if (enumAttrs.getDocumentation().length != 0)
         {
-            f.writefln("// Microsoft documentation: %s", docsAttr);
+            f.writefln("// Microsoft documentation: %s", enumAttrs.getDocumentation());
         }
 
         bool hasMembers = e.getFieldList().any!(f => !f.getFlags().hasRuntimeSpecialName);
@@ -347,7 +346,6 @@ public struct Generator
         // f.writeln;
         // if (doc)
         //     dumpDocumentation(f, doc.description, 0);
-
 
         if (!trueEnum)
         {
@@ -530,17 +528,20 @@ public struct Generator
         }
         auto isPropKey = typeText.endsWith("/PROPERTYKEY") || typeText.endsWith("/DEVPROPKEY"); // TODO: get type name instead of typeText here, getFieldTypeText() change may break this
         auto isSidIdAuth = typeText.endsWith("/SID_IDENTIFIER_AUTHORITY");
+        auto isHandle = typeText.endsWith("/SID_IDENTIFIER_AUTHORITY");
 
         if (flds.length == 1)
         {
             auto fx = flds[0];
+            auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
+            auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
 
             if (!wasOne)
                 f.writeln;
             f.write("enum ");
             f.write(typeText);   
             f.write(" ");
-            
+
             auto constName = fx.getName();
             if (constName in structNames)
             {
@@ -578,7 +579,7 @@ public struct Generator
                     else
                     {
                         // TODO: throw
-                        writeln("ERROR ", fx.getName(), " no GuidAttribute or ConstantAttribute");
+                        writeln("ERROR ", fx.getName(), "no GuidAttribute or ConstantAttribute");
                     }
                 }
             }
@@ -677,16 +678,8 @@ public struct Generator
             dumpSectionHeader(f, "Structs");
             foreach(s; structs)
             {
-                SupportedArchitecture arch = SupportedArchitecture.All;
-                foreach(ca; s.getAttributes())
-                {
-                    if (ca.name() == "SupportedArchitectureAttribute")
-                    {
-                        arch = getSupportedArchitecture(ca);
-                        break;
-                    }
-                }
-
+                auto structAttrs = CommonAttributes(s.getAttributes());
+                auto arch = structAttrs.getSupportedArchitecture();
                 if (arch == SupportedArchitecture.None)
                 {
                     f.write(format("// Type %s attributed with SupportedArchitecture.None\n", s.getTypeName()));
@@ -698,19 +691,24 @@ public struct Generator
                     foreach(ver; versions)
                     {
                         f.write(format("\nversion(%s)\n{\n", ver));
-                        dumpStruct(f, s, 1, null, docs);
+                        dumpStruct(f, s, structAttrs, 1, null, docs);
                         f.write("}\n");
                     }
                 }
                 else
                 {
-                    dumpStruct(f, s, 0, null, docs);
+                    dumpStruct(f, s, structAttrs, 0, null, docs);
                 }
             }
         }
     }
 
-    private void dumpStruct(scope ref std.stdio.File f, scope ref const TypeDefEntity struc, int level = 0, string nameOverride = "", bool docs = false)
+    private void dumpStruct(scope ref std.stdio.File f,
+        scope ref const TypeDefEntity struc,
+        scope ref const CommonAttributes structAttrs,
+        int level = 0,
+        string nameOverride = "",
+        bool docs = false)
     {
         if (!level)
             f.writeln;
@@ -719,16 +717,11 @@ public struct Generator
         // if (doc)
         //     dumpDocumentation(f, doc.description, 0); 
 
-        string docsAttr = "";
-        foreach(ca; struc.getAttributes())
+        foreach(ca; structAttrs.getUnhandledAttributes())
         {
-            if (ca.name() == "NativeTypedefAttribute" || ca.name() == "SupportedArchitectureAttribute")
+            if (ca.name() == "NativeTypedefAttribute")
             {
                 //do nothing
-            }
-            else if (ca.name() == "DocumentationAttribute")
-            {
-                docsAttr = getDocumentationAttribute(ca);
             }
             else if (ca.name() == "RAIIFreeAttribute")
             {
@@ -745,10 +738,10 @@ public struct Generator
             }
         }
 
-        if (docsAttr.length != 0)
+        if (structAttrs.getDocumentation().length != 0)
         {
             f.write("".padLeft(' ', level * 4));
-            f.writefln("// Microsoft documentation: %s", docsAttr);
+            f.writefln("// Microsoft documentation: %s", structAttrs.getDocumentation());
         }
 
         string[string] types;
@@ -761,7 +754,6 @@ public struct Generator
         foreach(fx; struc.getFieldList())
         {
             auto name = safeWords.get(fx.getName(), fx.getName());
-
             auto fieldType = fx.getSignature().typeSig.type;
             
             if (nestedClasses)
@@ -809,14 +801,7 @@ public struct Generator
         // Dump fields
         foreach(fx; struc.getFieldList())
         {
-            string fieldDocsAttr;
-            foreach(ca; fx.getCustomAttributes())
-            {
-                if (ca.name() == "DocumentationAttribute")
-                {
-                    fieldDocsAttr = getDocumentationAttribute(ca);
-                }
-            }
+            auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
 
             if (nestedClasses)
             {
@@ -825,11 +810,12 @@ public struct Generator
                 {
                     if (td.get in *nestedClasses)
                     {
-                        dumpStruct(f, td.get, level + 1, safeWords.get(fx.getName(), fx.getName()), false);
+                        auto typeAttrs = CommonAttributes(td.get.getAttributes());
+                        dumpStruct(f, td.get, typeAttrs, level + 1, safeWords.get(fx.getName(), fx.getName()), false);
                         continue;
                     }
                 }
-            }    
+            }
 
             string name = safeWords.get(fx.getName(), fx.getName());        
             auto type = types[name];
@@ -845,11 +831,11 @@ public struct Generator
             //         dumpDocumentation(f, fdoc.front.description, level + 1);            
             // }
             
-            if (fieldDocsAttr.length != 0)
+            if (fieldAttrs.getDocumentation().length != 0)
             {
                 f.write("".padLeft(' ', level * 4));
                 f.write("".padLeft(' ' , 4));
-                f.writefln("// Microsoft documentation: %s", docsAttr);
+                f.writefln("// Microsoft documentation: %s", fieldAttrs.getDocumentation());
             }
 
             f.write("".padLeft(' ', level * 4));
@@ -881,16 +867,8 @@ public struct Generator
             dumpSectionHeader(f, "Callbacks");
             foreach(d; delegates)
             {
-                SupportedArchitecture arch = SupportedArchitecture.All;
-                foreach(ca; d.getAttributes())
-                {
-                    if (ca.name() == "SupportedArchitectureAttribute")
-                    {
-                        arch = getSupportedArchitecture(ca);
-                        break;
-                    }
-                }
-
+                auto attrs = CommonAttributes(d.getAttributes());
+                auto arch = attrs.getSupportedArchitecture();
                 if (arch == SupportedArchitecture.None)
                 {
                     f.write(format("// Delegate %s attributed with SupportedArchitecture.None\n", d.getTypeName()));
@@ -902,34 +880,29 @@ public struct Generator
                     foreach(ver; versions)
                     {
                         f.write(format("\nversion(%s)\n{\n", ver));
-                        dumpDelegate(f, d, 1, docs);
+                        dumpDelegate(f, d, attrs, 1, docs);
                         f.write("}\n");
                     }
                 }
                 else
                 {
-                    dumpDelegate(f, d, 0, docs);
+                    dumpDelegate(f, d, attrs, 0, docs);
                 }                    
             }                
         }
     }
 
-    private void dumpDelegate(scope ref std.stdio.File f, scope ref const TypeDefEntity type, int level, bool docs = false)
+    private void dumpDelegate(scope ref std.stdio.File f,
+        scope ref const TypeDefEntity type,
+        scope ref const CommonAttributes attrs,
+        int level,
+        bool docs = false)
     {
         string conv;
-        string docsAttr;
 
-        foreach(ca; type.getAttributes())
+        foreach(ca; attrs.getUnhandledAttributes())
         {
-            if (ca.name() == "SupportedArchitectureAttribute")
-            {
-                continue;
-            }
-            else if (ca.name() == "DocumentationAttribute")
-            {
-                docsAttr = getDocumentationAttribute(ca);
-            } 
-            else if (ca.name() == "UnmanagedFunctionPointerAttribute")
+            if (ca.name() == "UnmanagedFunctionPointerAttribute")
             {
                 auto fixed = ca.value().fixed[0];
                 auto element = fixed.value.get!ElementSig;
@@ -960,9 +933,9 @@ public struct Generator
                 //     dumpDocumentationReturn(f, doc.returns, 0);
                 // }
 
-                if (docsAttr.length != 0)
+                if (attrs.getDocumentation().length != 0)
                 {
-                    f.writefln("// Microsoft documentation: %s", docsAttr);
+                    f.writefln("// Microsoft documentation: %s", attrs.getDocumentation());
                 }
 
                 auto name = safeWords.get(type.getTypeName(), type.getTypeName());
@@ -1044,16 +1017,8 @@ public struct Generator
                 if (meth.getName() in skipMethods)
                     continue;
 
-                SupportedArchitecture arch = SupportedArchitecture.All;
-                foreach(ca; meth.getAttributes())
-                {
-                    if (ca.name() == "SupportedArchitectureAttribute")
-                    {
-                        arch = getSupportedArchitecture(ca);
-                        break;
-                    }
-                }
-
+                auto attrs = CommonAttributes(meth.getAttributes());
+                auto arch = attrs.getSupportedArchitecture();
                 if (arch == SupportedArchitecture.None)
                 {
                     f.write(format("// Method %s attributed with SupportedArchitecture.None\n", meth.getName()));
@@ -1065,39 +1030,33 @@ public struct Generator
                     foreach(ver; versions)
                     {
                         f.write(format("\nversion(%s)\n{\n", ver));
-                        dumpMethod(f, meth, 1, 0, docs);
+                        dumpMethod(f, meth, attrs, 1, 0, docs);
                         f.write("}\n");
                     }
                 }
                 else
                 {
-                    dumpMethod(f, meth, 0, 0, docs);
+                    dumpMethod(f, meth, attrs, 0, 0, docs);
                 }                    
             }
         }
     }
 
-    private void dumpMethod(scope ref std.stdio.File f, scope ref const MethodDefEntity meth, int level, size_t maxReturnTypeLength, bool docs = false, string prefix = null)
+    private void dumpMethod(scope ref std.stdio.File f, 
+        scope ref const MethodDefEntity meth, 
+        scope ref const CommonAttributes attrs,
+        int level, 
+        size_t maxReturnTypeLength,
+        bool docs = false,
+        string prefix = null)
     {
         size_t w, v;
-        string docsAttr;
 
-        foreach(ca; meth.getAttributes())
+        foreach(ca; attrs.getUnhandledAttributes())
         {
-            if (ca.name() == "SupportedArchitectureAttribute")
-            {
-                continue;
-            }
-            else if (ca.name() == "DocumentationAttribute")
-            {
-                docsAttr = getDocumentationAttribute(ca);
-            } 
-            else
-            {
-                f.writefln("//METH ATTR: %s : %s", ca.name(), ca.value());
-            }
+            f.writefln("//METH ATTR: %s : %s", ca.name(), ca.value());
         }
-    
+
         // auto doc = docs ? findDoc(prefix.length ? prefix ~ '.' ~ meth.name: meth.name) : null;
 
         // if (doc)
@@ -1107,10 +1066,10 @@ public struct Generator
         //     dumpDocumentationReturn(f, doc.returns, level);
         // }
 
-        if (docsAttr.length != 0)
+        if (attrs.getDocumentation().length != 0)
         {
             f.write("".padLeft(' ', level * 4));
-            f.writefln("// Microsoft documentation: %s", docsAttr);
+            f.writefln("// Microsoft documentation: %s", attrs.getDocumentation());
         }
 
         f.write("".padLeft(' ', level * 4));
@@ -1209,9 +1168,22 @@ public struct Generator
             // auto doc = docs ? findDoc(intf.name) : null;
             // if (doc)
             //     dumpDocumentation(f, doc.description, 0);
+            auto intfAttrs = CommonAttributes(intf.getAttributes());
+            auto guidAttribute = GuidAttribute(intfAttrs.getUnhandledAttributes());
+            foreach(ca; guidAttribute.getUnhandledAttributes())
+            {
+                f.writefln("//INTERFACEF ATTR: %s : %s", ca.name(), ca.value());
+            }
 
-            auto attr = intf.getAttributes().find!(a => a.name() == "GuidAttribute").front;
-            dumpGUIDAttr(f, attr);
+            if (intfAttrs.getDocumentation().length != 0)
+            {
+                f.writefln("// Microsoft documentation: %s", intfAttrs.getDocumentation());
+            }
+            if (!guidAttribute.getGuid().empty)
+            {
+                dumpGUIDAttr(f, guidAttribute.getGuid());
+            }
+
             auto intfName = intf.getTypeName();
             
             f.writefln("struct %s;", intfName);
@@ -1226,33 +1198,26 @@ public struct Generator
             if (intf.getTypeName() in skipInterfaces)
                 continue;
             bool hasGuid;
-            string docsAttr;
 
             // auto doc = docs ? findDoc(intf.name) : null;
             // if (doc)
             //     dumpDocumentation(f, doc.description, 0);
 
-            foreach(ca; intf.getAttributes())
+            auto intfAttrs = CommonAttributes(intf.getAttributes());
+            auto guidAttribute = GuidAttribute(intfAttrs.getUnhandledAttributes());
+            foreach(ca; guidAttribute.getUnhandledAttributes())
             {
-                auto attrName = ca.name();
-                if (attrName == "GuidAttribute")
-                {
-                    dumpGUIDAttr(f, ca); 
-                    hasGuid = true;
-                }
-                else if (ca.name() == "DocumentationAttribute")
-                {
-                    docsAttr = getDocumentationAttribute(ca);
-                }                 
-                else
-                {
-                    f.writefln("//INTERFACEF ATTR: %s : %s", ca.name(), ca.value());
-                }
+                f.writefln("//INTERFACEF ATTR: %s : %s", ca.name(), ca.value());
             }
 
-            if (docsAttr.length != 0)
+            if (intfAttrs.getDocumentation().length != 0)
             {
-                f.writefln("// Microsoft documentation: %s", docsAttr);
+                f.writefln("// Microsoft documentation: %s", intfAttrs.getDocumentation());
+            }
+            if (!guidAttribute.getGuid().empty)
+            {
+                dumpGUIDAttr(f, guidAttribute.getGuid());
+                hasGuid = true;
             }
 
             auto name = intf.getTypeName();
@@ -1287,7 +1252,10 @@ public struct Generator
             }
 
             foreach(meth; intf.getMethodList())
-                dumpMethod(f, meth, 1, maxReturnTypeLength, docs, intf.getTypeName());
+            {
+                auto attrs = CommonAttributes(meth.getAttributes());
+                dumpMethod(f, meth, attrs, 1, maxReturnTypeLength, docs, intf.getTypeName());
+            }
 
             f.writeln("}");
             f.writeln;
@@ -1925,6 +1893,11 @@ string getParamText(scope ref const ParamSig sig, scope ref const ParamEntity pa
 void dumpGUIDAttr(scope ref std.stdio.File f, scope ref const CustomAttributeEntity ca)
 {
     f.writefln("@GUID(\"%s\")", readGuid(ca));
+}
+
+void dumpGUIDAttr(scope ref std.stdio.File f, in UUID guid)
+{
+    f.writefln("@GUID(\"%s\")", guid);
 }
 
 string nameof(T)(T value)

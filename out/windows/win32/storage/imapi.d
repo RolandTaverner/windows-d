@@ -1012,6 +1012,7 @@ struct MsftDiscFormat2TrackAtOnce;
 @GUID("27354128-7f64-5b0f-8f00-5d77afbe261e")
 struct MsftDiscFormat2RawCD;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/imapi/msftstreamzero
 @GUID("27354127-7f64-5b0f-8f00-5d77afbe261e")
 struct MsftStreamZero;
 
@@ -1105,9 +1106,9 @@ struct tagIMMPID_NMP_STRUCT;
 @GUID("a2a76b2a-e52d-11d1-aa64-00c04fa35b82")
 struct tagIMMPID_CPV_STRUCT;
 
-@GUID("27354130-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscmaster2
+@GUID("27354130-7f64-5b0f-8f00-5d77afbe261e")
 interface IDiscMaster2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscmaster2-get__newenum
@@ -1120,9 +1121,9 @@ interface IDiscMaster2 : IDispatch
     HRESULT get_IsSupportedEnvironment(VARIANT_BOOL* value);
 }
 
-@GUID("27354131-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-ddiscmaster2events
+@GUID("27354131-7f64-5b0f-8f00-5d77afbe261e")
 interface DDiscMaster2Events : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-ddiscmaster2events-notifydeviceadded
@@ -1131,9 +1132,9 @@ interface DDiscMaster2Events : IDispatch
     HRESULT NotifyDeviceRemoved(IDispatch object, BSTR uniqueId);
 }
 
-@GUID("27354132-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscrecorder2ex
+@GUID("27354132-7f64-5b0f-8f00-5d77afbe261e")
 interface IDiscRecorder2Ex : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscrecorder2ex-sendcommandnodata
@@ -1181,9 +1182,9 @@ interface IDiscRecorder2Ex : IUnknown
     HRESULT GetMaximumPageAlignedTransferSize(uint* value);
 }
 
-@GUID("27354133-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscrecorder2
+@GUID("27354133-7f64-5b0f-8f00-5d77afbe261e")
 interface IDiscRecorder2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscrecorder2-ejectmedia
@@ -1230,9 +1231,9 @@ interface IDiscRecorder2 : IDispatch
     HRESULT get_ExclusiveAccessOwner(BSTR* value);
 }
 
-@GUID("27354135-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-iwriteengine2
+@GUID("27354135-7f64-5b0f-8f00-5d77afbe261e")
 interface IWriteEngine2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-iwriteengine2-writesection
@@ -1263,9 +1264,9 @@ interface IWriteEngine2 : IDispatch
     HRESULT get_WriteInProgress(VARIANT_BOOL* value);
 }
 
-@GUID("27354136-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-iwriteengine2eventargs
+@GUID("27354136-7f64-5b0f-8f00-5d77afbe261e")
 interface IWriteEngine2EventArgs : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-iwriteengine2eventargs-get_startlba
@@ -1284,18 +1285,18 @@ interface IWriteEngine2EventArgs : IDispatch
     HRESULT get_FreeSystemBuffer(int* value);
 }
 
-@GUID("27354137-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-dwriteengine2events
+@GUID("27354137-7f64-5b0f-8f00-5d77afbe261e")
 interface DWriteEngine2Events : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-dwriteengine2events-update
     HRESULT Update(IDispatch object, IDispatch progress);
 }
 
-@GUID("27354152-8f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2
+@GUID("27354152-8f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2-isrecordersupported
@@ -1310,9 +1311,9 @@ interface IDiscFormat2 : IDispatch
     HRESULT get_SupportedMediaTypes(SAFEARRAY** value);
 }
 
-@GUID("27354156-8f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2erase
+@GUID("27354156-8f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2Erase : IDiscFormat2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2erase-put_recorder
@@ -1333,18 +1334,18 @@ interface IDiscFormat2Erase : IDiscFormat2
     HRESULT EraseMedia();
 }
 
-@GUID("2735413a-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-ddiscformat2eraseevents
+@GUID("2735413a-7f64-5b0f-8f00-5d77afbe261e")
 interface DDiscFormat2EraseEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-ddiscformat2eraseevents-update
     HRESULT Update(IDispatch object, int elapsedSeconds, int estimatedTotalSeconds);
 }
 
-@GUID("27354153-9f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2data
+@GUID("27354153-9f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2Data : IDiscFormat2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2data-put_recorder
@@ -1413,18 +1414,18 @@ interface IDiscFormat2Data : IDiscFormat2
     HRESULT SetWriteSpeed(int RequestedSectorsPerSecond, VARIANT_BOOL RotationTypeIsPureCAV);
 }
 
-@GUID("2735413c-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-ddiscformat2dataevents
+@GUID("2735413c-7f64-5b0f-8f00-5d77afbe261e")
 interface DDiscFormat2DataEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-ddiscformat2dataevents-update
     HRESULT Update(IDispatch object, IDispatch progress);
 }
 
-@GUID("2735413d-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2dataeventargs
+@GUID("2735413d-7f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2DataEventArgs : IWriteEngine2EventArgs
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2dataeventargs-get_elapsedtime
@@ -1437,9 +1438,9 @@ interface IDiscFormat2DataEventArgs : IWriteEngine2EventArgs
     HRESULT get_CurrentAction(IMAPI_FORMAT2_DATA_WRITE_ACTION* value);
 }
 
-@GUID("27354154-8f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2trackatonce
+@GUID("27354154-8f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2TrackAtOnce : IDiscFormat2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2trackatonce-preparemedia
@@ -1494,18 +1495,18 @@ interface IDiscFormat2TrackAtOnce : IDiscFormat2
     HRESULT get_SupportedWriteSpeedDescriptors(SAFEARRAY** supportedSpeedDescriptors);
 }
 
-@GUID("2735413f-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-ddiscformat2trackatonceevents
+@GUID("2735413f-7f64-5b0f-8f00-5d77afbe261e")
 interface DDiscFormat2TrackAtOnceEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-ddiscformat2trackatonceevents-update
     HRESULT Update(IDispatch object, IDispatch progress);
 }
 
-@GUID("27354140-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2trackatonceeventargs
+@GUID("27354140-7f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2TrackAtOnceEventArgs : IWriteEngine2EventArgs
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2trackatonceeventargs-get_currenttracknumber
@@ -1518,9 +1519,9 @@ interface IDiscFormat2TrackAtOnceEventArgs : IWriteEngine2EventArgs
     HRESULT get_RemainingTime(int* value);
 }
 
-@GUID("27354155-8f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2rawcd
+@GUID("27354155-8f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2RawCD : IDiscFormat2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2rawcd-preparemedia
@@ -1573,18 +1574,18 @@ interface IDiscFormat2RawCD : IDiscFormat2
     HRESULT get_SupportedWriteSpeedDescriptors(SAFEARRAY** supportedSpeedDescriptors);
 }
 
-@GUID("27354142-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-ddiscformat2rawcdevents
+@GUID("27354142-7f64-5b0f-8f00-5d77afbe261e")
 interface DDiscFormat2RawCDEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-ddiscformat2rawcdevents-update
     HRESULT Update(IDispatch object, IDispatch progress);
 }
 
-@GUID("27354143-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-idiscformat2rawcdeventargs
+@GUID("27354143-7f64-5b0f-8f00-5d77afbe261e")
 interface IDiscFormat2RawCDEventArgs : IWriteEngine2EventArgs
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-idiscformat2rawcdeventargs-get_currentaction
@@ -1595,9 +1596,9 @@ interface IDiscFormat2RawCDEventArgs : IWriteEngine2EventArgs
     HRESULT get_RemainingTime(int* value);
 }
 
-@GUID("d2ffd834-958b-426d-8470-2a13879c6a91")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-iburnverification
+@GUID("d2ffd834-958b-426d-8470-2a13879c6a91")
 interface IBurnVerification : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-iburnverification-put_burnverificationlevel
@@ -1606,9 +1607,9 @@ interface IBurnVerification : IUnknown
     HRESULT get_BurnVerificationLevel(IMAPI_BURN_VERIFICATION_LEVEL* value);
 }
 
-@GUID("27354144-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-iwritespeeddescriptor
+@GUID("27354144-7f64-5b0f-8f00-5d77afbe261e")
 interface IWriteSpeedDescriptor : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-iwritespeeddescriptor-get_mediatype
@@ -1619,9 +1620,9 @@ interface IWriteSpeedDescriptor : IDispatch
     HRESULT get_WriteSpeed(int* value);
 }
 
-@GUID("27354150-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-imultisession
+@GUID("27354150-7f64-5b0f-8f00-5d77afbe261e")
 interface IMultisession : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-imultisession-get_issupportedoncurrentmediastate
@@ -1634,9 +1635,9 @@ interface IMultisession : IDispatch
     HRESULT get_ImportRecorder(IDiscRecorder2* value);
 }
 
-@GUID("27354151-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-imultisessionsequential
+@GUID("27354151-7f64-5b0f-8f00-5d77afbe261e")
 interface IMultisessionSequential : IMultisession
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-imultisessionsequential-get_isfirstdatasession
@@ -1651,18 +1652,18 @@ interface IMultisessionSequential : IMultisession
     HRESULT get_FreeSectorsOnMedia(int* value);
 }
 
-@GUID("b507ca22-2204-11dd-966a-001aa01bbc58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-imultisessionsequential2
+@GUID("b507ca22-2204-11dd-966a-001aa01bbc58")
 interface IMultisessionSequential2 : IMultisessionSequential
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-imultisessionsequential2-get_writeunitsize
     HRESULT get_WriteUnitSize(int* value);
 }
 
-@GUID("b507ca23-2204-11dd-966a-001aa01bbc58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-imultisessionrandomwrite
+@GUID("b507ca23-2204-11dd-966a-001aa01bbc58")
 interface IMultisessionRandomWrite : IMultisession
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-imultisessionrandomwrite-get_writeunitsize
@@ -1673,9 +1674,9 @@ interface IMultisessionRandomWrite : IMultisession
     HRESULT get_TotalSectorsOnMedia(int* value);
 }
 
-@GUID("27354145-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-istreampseudorandombased
+@GUID("27354145-7f64-5b0f-8f00-5d77afbe261e")
 interface IStreamPseudoRandomBased : IStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-istreampseudorandombased-put_seed
@@ -1688,9 +1689,9 @@ interface IStreamPseudoRandomBased : IStream
     HRESULT get_ExtendedSeed(uint** values, uint* eCount);
 }
 
-@GUID("27354146-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-istreamconcatenate
+@GUID("27354146-7f64-5b0f-8f00-5d77afbe261e")
 interface IStreamConcatenate : IStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-istreamconcatenate-initialize
@@ -1703,18 +1704,18 @@ interface IStreamConcatenate : IStream
     HRESULT Append2(IStream* streams, uint streamCount);
 }
 
-@GUID("27354147-7f64-5b0f-8f00-5d77afbe261e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-istreaminterleave
+@GUID("27354147-7f64-5b0f-8f00-5d77afbe261e")
 interface IStreamInterleave : IStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-istreaminterleave-initialize
     HRESULT Initialize(IStream* streams, uint* interleaveSizes, uint streamCount);
 }
 
-@GUID("25983550-9d65-49ce-b335-40630d901227")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-irawcdimagecreator
+@GUID("25983550-9d65-49ce-b335-40630d901227")
 interface IRawCDImageCreator : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-irawcdimagecreator-createresultimage
@@ -1757,9 +1758,9 @@ interface IRawCDImageCreator : IDispatch
     HRESULT get_ExpectedTableOfContents(SAFEARRAY** value);
 }
 
-@GUID("25983551-9d65-49ce-b335-40630d901227")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-irawcdimagetrackinfo
+@GUID("25983551-9d65-49ce-b335-40630d901227")
 interface IRawCDImageTrackInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-irawcdimagetrackinfo-get_startinglba
@@ -1788,9 +1789,9 @@ interface IRawCDImageTrackInfo : IDispatch
     HRESULT ClearTrackIndex(int lbaOffset);
 }
 
-@GUID("b507ca25-2204-11dd-966a-001aa01bbc58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-iblockrange
+@GUID("b507ca25-2204-11dd-966a-001aa01bbc58")
 interface IBlockRange : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-iblockrange-get_startlba
@@ -1799,18 +1800,18 @@ interface IBlockRange : IDispatch
     HRESULT get_EndLba(int* value);
 }
 
-@GUID("b507ca26-2204-11dd-966a-001aa01bbc58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nn-imapi2-iblockrangelist
+@GUID("b507ca26-2204-11dd-966a-001aa01bbc58")
 interface IBlockRangeList : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2/nf-imapi2-iblockrangelist-get_blockranges
     HRESULT get_BlockRanges(SAFEARRAY** value);
 }
 
-@GUID("2c941fd4-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ibootoptions
+@GUID("2c941fd4-975b-59be-a960-9a2a262853a5")
 interface IBootOptions : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ibootoptions-get_bootimage
@@ -1833,9 +1834,9 @@ interface IBootOptions : IDispatch
     HRESULT AssignBootImage(IStream newVal);
 }
 
-@GUID("2c941fd5-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-iprogressitem
+@GUID("2c941fd5-975b-59be-a960-9a2a262853a5")
 interface IProgressItem : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-iprogressitem-get_description
@@ -1848,9 +1849,9 @@ interface IProgressItem : IDispatch
     HRESULT get_BlockCount(uint* blocks);
 }
 
-@GUID("2c941fd6-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ienumprogressitems
+@GUID("2c941fd6-975b-59be-a960-9a2a262853a5")
 interface IEnumProgressItems : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ienumprogressitems-next
@@ -1863,9 +1864,9 @@ interface IEnumProgressItems : IUnknown
     HRESULT Clone(IEnumProgressItems* ppEnum);
 }
 
-@GUID("2c941fd7-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-iprogressitems
+@GUID("2c941fd7-975b-59be-a960-9a2a262853a5")
 interface IProgressItems : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-iprogressitems-get__newenum
@@ -1882,9 +1883,9 @@ interface IProgressItems : IDispatch
     HRESULT get_EnumProgressItems(IEnumProgressItems* NewEnum);
 }
 
-@GUID("2c941fd8-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifilesystemimageresult
+@GUID("2c941fd8-975b-59be-a960-9a2a262853a5")
 interface IFileSystemImageResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifilesystemimageresult-get_imagestream
@@ -1899,18 +1900,18 @@ interface IFileSystemImageResult : IDispatch
     HRESULT get_DiscId(BSTR* pVal);
 }
 
-@GUID("b507ca29-2204-11dd-966a-001aa01bbc58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifilesystemimageresult2
+@GUID("b507ca29-2204-11dd-966a-001aa01bbc58")
 interface IFileSystemImageResult2 : IFileSystemImageResult
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifilesystemimageresult2-get_modifiedblocks
     HRESULT get_ModifiedBlocks(IBlockRangeList* pVal);
 }
 
-@GUID("2c941fd9-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifsiitem
+@GUID("2c941fd9-975b-59be-a960-9a2a262853a5")
 interface IFsiItem : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifsiitem-get_name
@@ -1939,9 +1940,9 @@ interface IFsiItem : IDispatch
     HRESULT FileSystemPath(FsiFileSystems fileSystem, BSTR* pVal);
 }
 
-@GUID("2c941fda-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ienumfsiitems
+@GUID("2c941fda-975b-59be-a960-9a2a262853a5")
 interface IEnumFsiItems : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ienumfsiitems-next
@@ -1954,9 +1955,9 @@ interface IEnumFsiItems : IUnknown
     HRESULT Clone(IEnumFsiItems* ppEnum);
 }
 
-@GUID("2c941fdb-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifsifileitem
+@GUID("2c941fdb-975b-59be-a960-9a2a262853a5")
 interface IFsiFileItem : IFsiItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifsifileitem-get_datasize
@@ -1971,9 +1972,9 @@ interface IFsiFileItem : IFsiItem
     HRESULT put_Data(IStream newVal);
 }
 
-@GUID("199d0c19-11e1-40eb-8ec2-c8c822a07792")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifsifileitem2
+@GUID("199d0c19-11e1-40eb-8ec2-c8c822a07792")
 interface IFsiFileItem2 : IFsiFileItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifsifileitem2-get_fsinamedstreams
@@ -1990,9 +1991,9 @@ interface IFsiFileItem2 : IFsiFileItem
     HRESULT put_IsRealTime(VARIANT_BOOL newVal);
 }
 
-@GUID("ed79ba56-5294-4250-8d46-f9aecee23459")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifsinamedstreams
+@GUID("ed79ba56-5294-4250-8d46-f9aecee23459")
 interface IFsiNamedStreams : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifsinamedstreams-get__newenum
@@ -2005,9 +2006,9 @@ interface IFsiNamedStreams : IDispatch
     HRESULT get_EnumNamedStreams(IEnumFsiItems* NewEnum);
 }
 
-@GUID("2c941fdc-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifsidirectoryitem
+@GUID("2c941fdc-975b-59be-a960-9a2a262853a5")
 interface IFsiDirectoryItem : IFsiItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifsidirectoryitem-get__newenum
@@ -2032,18 +2033,18 @@ interface IFsiDirectoryItem : IFsiItem
     HRESULT RemoveTree(BSTR path);
 }
 
-@GUID("f7fb4b9b-6d96-4d7b-9115-201b144811ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifsidirectoryitem2
+@GUID("f7fb4b9b-6d96-4d7b-9115-201b144811ef")
 interface IFsiDirectoryItem2 : IFsiDirectoryItem
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifsidirectoryitem2-addtreewithnamedstreams
     HRESULT AddTreeWithNamedStreams(BSTR sourceDirectory, VARIANT_BOOL includeBaseDirectory);
 }
 
-@GUID("2c941fe1-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifilesystemimage
+@GUID("2c941fe1-975b-59be-a960-9a2a262853a5")
 interface IFileSystemImage : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifilesystemimage-get_root
@@ -2148,9 +2149,9 @@ interface IFileSystemImage : IDispatch
     HRESULT put_MultisessionInterfaces(SAFEARRAY* newVal);
 }
 
-@GUID("d7644b2c-1537-4767-b62f-f1387b02ddfd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifilesystemimage2
+@GUID("d7644b2c-1537-4767-b62f-f1387b02ddfd")
 interface IFileSystemImage2 : IFileSystemImage
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifilesystemimage2-get_bootimageoptionsarray
@@ -2159,9 +2160,9 @@ interface IFileSystemImage2 : IFileSystemImage
     HRESULT put_BootImageOptionsArray(SAFEARRAY* newVal);
 }
 
-@GUID("7cff842c-7e97-4807-8304-910dd8f7c051")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-ifilesystemimage3
+@GUID("7cff842c-7e97-4807-8304-910dd8f7c051")
 interface IFileSystemImage3 : IFileSystemImage2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-ifilesystemimage3-get_createredundantudfmetadatafiles
@@ -2172,18 +2173,18 @@ interface IFileSystemImage3 : IFileSystemImage2
     HRESULT ProbeSpecificFileSystem(FsiFileSystems fileSystemToProbe, VARIANT_BOOL* isAppendable);
 }
 
-@GUID("2c941fdf-975b-59be-a960-9a2a262853a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-dfilesystemimageevents
+@GUID("2c941fdf-975b-59be-a960-9a2a262853a5")
 interface DFileSystemImageEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-dfilesystemimageevents-update
     HRESULT Update(IDispatch object, BSTR currentFile, int copiedSectors, int totalSectors);
 }
 
-@GUID("d25c30f9-4087-4366-9e24-e55be286424b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-dfilesystemimageimportevents
+@GUID("d25c30f9-4087-4366-9e24-e55be286424b")
 interface DFileSystemImageImportEvents : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-dfilesystemimageimportevents-updateimport
@@ -2191,9 +2192,9 @@ interface DFileSystemImageImportEvents : IDispatch
                          int totalDirectoryItems, int importedFileItems, int totalFileItems);
 }
 
-@GUID("6ca38be5-fbbb-4800-95a1-a438865eb0d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nn-imapi2fs-iisoimagemanager
+@GUID("6ca38be5-fbbb-4800-95a1-a438865eb0d4")
 interface IIsoImageManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi2fs/nf-imapi2fs-iisoimagemanager-get_path
@@ -2208,9 +2209,9 @@ interface IIsoImageManager : IDispatch
     HRESULT Validate();
 }
 
-@GUID("85ac9776-ca88-4cf2-894e-09598c078a41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nn-imapi-idiscrecorder
+@GUID("85ac9776-ca88-4cf2-894e-09598c078a41")
 interface IDiscRecorder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nn-imapi-idiscrecorder
@@ -2264,9 +2265,9 @@ interface IEnumDiscMasterFormats : IUnknown
     HRESULT Clone(IEnumDiscMasterFormats* ppEnum);
 }
 
-@GUID("e3bc42cd-4e5c-11d3-9144-00104ba11c5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nn-imapi-iredbookdiscmaster
+@GUID("e3bc42cd-4e5c-11d3-9144-00104ba11c5e")
 interface IRedbookDiscMaster : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nf-imapi-iredbookdiscmaster-gettotalaudiotracks
@@ -2287,9 +2288,9 @@ interface IRedbookDiscMaster : IUnknown
     HRESULT CloseAudioTrack();
 }
 
-@GUID("e3bc42ce-4e5c-11d3-9144-00104ba11c5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nn-imapi-ijolietdiscmaster
+@GUID("e3bc42ce-4e5c-11d3-9144-00104ba11c5e")
 interface IJolietDiscMaster : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nf-imapi-ijolietdiscmaster-gettotaldatablocks
@@ -2306,9 +2307,9 @@ interface IJolietDiscMaster : IUnknown
     HRESULT SetJolietProperties(IPropertyStorage pPropStg);
 }
 
-@GUID("ec9e51c1-4e5d-11d3-9144-00104ba11c5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nn-imapi-idiscmasterprogressevents
+@GUID("ec9e51c1-4e5d-11d3-9144-00104ba11c5e")
 interface IDiscMasterProgressEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nf-imapi-idiscmasterprogressevents-querycancel
@@ -2331,9 +2332,9 @@ interface IDiscMasterProgressEvents : IUnknown
     HRESULT NotifyEraseComplete(HRESULT status);
 }
 
-@GUID("520cca62-51a5-11d3-9144-00104ba11c5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nn-imapi-idiscmaster
+@GUID("520cca62-51a5-11d3-9144-00104ba11c5e")
 interface IDiscMaster : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imapi/nf-imapi-idiscmaster-open

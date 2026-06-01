@@ -2354,42 +2354,53 @@ HRESULT LoadCachedAttributes(GUID clsid, RECO_ATTRS* pRecoAttributes);
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkdisp-class
 @GUID("937c1a34-151d-4610-9ca6-a8cc9bdb5d83")
 struct InkDisp;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkoverlay-class
 @GUID("65d00646-cde3-4a88-9163-6769f0f1a97d")
 struct InkOverlay;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkpicture-methods
 @GUID("04a1e553-fe36-4fde-865e-344194e69424")
 struct InkPicture;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkcollector-class
 @GUID("43fb1553-ad74-4ee8-88e4-3e6daac915db")
 struct InkCollector;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkdrawingattributes-class
 @GUID("d8bf32a2-05a5-44c3-b3aa-5e80ac7d2576")
 struct InkDrawingAttributes;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkrectangle-class
 @GUID("43b07326-aae0-4b62-a83d-5fd768b7353c")
 struct InkRectangle;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkrenderer-class
 @GUID("9c1cc6e4-d7eb-4eeb-9091-15a7c8791ed9")
 struct InkRenderer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inktransform-class
 @GUID("e3d5d93c-1663-4a78-a1a7-22375dfebaee")
 struct InkTransform;
 
 @GUID("9fd4e808-f6e6-4e65-98d3-aa39054c1255")
 struct InkRecognizers;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkrecognizercontext-class
 @GUID("aac46a37-9229-4fc0-8cce-4497569bf4d1")
 struct InkRecognizerContext;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkrecognizerguide-class
 @GUID("8770d941-a63a-4671-a375-2855a18eba73")
 struct InkRecognizerGuide;
 
 @GUID("6e4fcb12-510a-4d40-9304-1da10ae9147c")
 struct InkTablets;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkwordlist-class
 @GUID("9de85094-f71f-44f1-8471-15a2fa76fcf3")
 struct InkWordList;
 
@@ -2402,12 +2413,14 @@ struct Ink;
 @GUID("f0291081-e87c-4e07-97da-a0a03761e586")
 struct SketchInk;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkdivider-class
 @GUID("8854f6a0-4683-4ae7-9191-752fe64612c3")
 struct InkDivider;
 
 @GUID("9f074ee2-e6e9-4d8a-a047-eb5b5c3c55da")
 struct HandwrittenTextInsertion;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/peninputpanel-class
 @GUID("f744e496-1b5a-489e-81dc-fbd7ac6298a8")
 struct PenInputPanel;
 
@@ -2417,29 +2430,33 @@ struct TextInputPanel;
 @GUID("802b1fb9-056b-4720-b0cc-80d23b71171e")
 struct PenInputPanel_Internal;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/inkedit-methods
 @GUID("e5ca59f5-57c4-4dd8-9bd6-1deeedd27af4")
 struct InkEdit;
 
 @GUID("c561816c-14d8-4090-830c-98d994b21c7b")
 struct MathInputControl;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/realtimestylus-class
 @GUID("e26b366d-f998-43ce-836f-cb6d904432b0")
 struct RealTimeStylus;
 
 @GUID("ecd32aea-746f-4dcb-bf68-082757faff18")
 struct DynamicRenderer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/gesturerecognizer-class
 @GUID("ea30c654-c62c-441f-ac00-95f9a196782c")
 struct GestureRecognizer;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/strokebuilder-class
 @GUID("e810cee7-6e51-4cb0-aa3a-0b985b70daf7")
 struct StrokeBuilder;
 
 @GUID("807c1e6c-1d00-453f-b920-b61bb7cdd997")
 struct TipAutoCompleteClient;
 
-@GUID("9794ff82-6071-4717-8a8b-6ac7c64a686e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrectangle
+@GUID("9794ff82-6071-4717-8a8b-6ac7c64a686e")
 interface IInkRectangle : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_top
@@ -2468,9 +2485,9 @@ interface IInkRectangle : IDispatch
     HRESULT SetRectangle(int Top, int Left, int Bottom, int Right);
 }
 
-@GUID("db489209-b7c3-411d-90f6-1548cfff271e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkextendedproperty
+@GUID("db489209-b7c3-411d-90f6-1548cfff271e")
 interface IInkExtendedProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-get_guid
@@ -2481,9 +2498,9 @@ interface IInkExtendedProperty : IDispatch
     HRESULT put_Data(VARIANT Data);
 }
 
-@GUID("89f2a8be-95a9-4530-8b8f-88e971e3e25f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkextendedproperties
+@GUID("89f2a8be-95a9-4530-8b8f-88e971e3e25f")
 interface IInkExtendedProperties : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-get_count
@@ -2501,8 +2518,8 @@ interface IInkExtendedProperties : IDispatch
     HRESULT DoesPropertyExist(BSTR Guid, VARIANT_BOOL* DoesPropertyExist);
 }
 
-@GUID("bf519b75-0a15-4623-adc9-c00d436a8092")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkdrawingattributes
+@GUID("bf519b75-0a15-4623-adc9-c00d436a8092")
 interface IInkDrawingAttributes : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_color
@@ -2547,8 +2564,8 @@ interface IInkDrawingAttributes : IDispatch
     HRESULT Clone(IInkDrawingAttributes* DrawingAttributes);
 }
 
-@GUID("615f1d43-8703-4565-88e2-8201d2ecd7b7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktransform
+@GUID("615f1d43-8703-4565-88e2-8201d2ecd7b7")
 interface IInkTransform : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-reset
@@ -2597,9 +2614,9 @@ interface IInkTransform : IDispatch
     HRESULT put_Data(XFORM XForm);
 }
 
-@GUID("3bdc0a97-04e5-4e26-b813-18f052d41def")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkgesture
+@GUID("3bdc0a97-04e5-4e26-b813-18f052d41def")
 interface IInkGesture : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-get_confidence
@@ -2610,9 +2627,9 @@ interface IInkGesture : IDispatch
     HRESULT GetHotPoint(int* X, int* Y);
 }
 
-@GUID("ad30c630-40c5-4350-8405-9c71012fc558")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursor
+@GUID("ad30c630-40c5-4350-8405-9c71012fc558")
 interface IInkCursor : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_name
@@ -2631,9 +2648,9 @@ interface IInkCursor : IDispatch
     HRESULT get_Buttons(IInkCursorButtons* Buttons);
 }
 
-@GUID("a248c1ac-c698-4e06-9e5c-d57f77c7e647")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursors
+@GUID("a248c1ac-c698-4e06-9e5c-d57f77c7e647")
 interface IInkCursors : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursors-get_count
@@ -2643,9 +2660,9 @@ interface IInkCursors : IDispatch
     HRESULT Item(int Index, IInkCursor* Cursor);
 }
 
-@GUID("85ef9417-1d59-49b2-a13c-702c85430894")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursorbutton
+@GUID("85ef9417-1d59-49b2-a13c-702c85430894")
 interface IInkCursorButton : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_name
@@ -2656,9 +2673,9 @@ interface IInkCursorButton : IDispatch
     HRESULT get_State(InkCursorButtonState* CurrentState);
 }
 
-@GUID("3671cc40-b624-4671-9fa0-db119d952d54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursorbuttons
+@GUID("3671cc40-b624-4671-9fa0-db119d952d54")
 interface IInkCursorButtons : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbuttons-get_count
@@ -2668,9 +2685,9 @@ interface IInkCursorButtons : IDispatch
     HRESULT Item(VARIANT Identifier, IInkCursorButton* Button);
 }
 
-@GUID("2de25eaa-6ef8-42d5-aee9-185bc81b912d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet
+@GUID("2de25eaa-6ef8-42d5-aee9-185bc81b912d")
 interface IInkTablet : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_name
@@ -2688,18 +2705,18 @@ interface IInkTablet : IDispatch
                                float* Resolution);
 }
 
-@GUID("90c91ad2-fa36-49d6-9516-ce8d570f6f85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet2
+@GUID("90c91ad2-fa36-49d6-9516-ce8d570f6f85")
 interface IInkTablet2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet2-get_devicekind
     HRESULT get_DeviceKind(TabletDeviceKind* Kind);
 }
 
-@GUID("7e313997-1327-41dd-8ca9-79f24be17250")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet3
+@GUID("7e313997-1327-41dd-8ca9-79f24be17250")
 interface IInkTablet3 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet3-get_ismultitouch
@@ -2708,8 +2725,8 @@ interface IInkTablet3 : IDispatch
     HRESULT get_MaximumCursors(uint* pMaximumCursors);
 }
 
-@GUID("112086d9-7779-4535-a699-862b43ac1863")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablets
+@GUID("112086d9-7779-4535-a699-862b43ac1863")
 interface IInkTablets : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-get_count
@@ -2723,9 +2740,9 @@ interface IInkTablets : IDispatch
     HRESULT IsPacketPropertySupported(BSTR packetPropertyName, VARIANT_BOOL* Supported);
 }
 
-@GUID("43242fea-91d1-4a72-963e-fbb91829cfa2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkstrokedisp
+@GUID("43242fea-91d1-4a72-963e-fbb91829cfa2")
 interface IInkStrokeDisp : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_id
@@ -2797,8 +2814,8 @@ interface IInkStrokeDisp : IDispatch
     HRESULT ScaleTransform(float HorizontalMultiplier, float VerticalMultiplier);
 }
 
-@GUID("f1f4c9d8-590a-4963-b3ae-1935671bb6f3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkstrokes
+@GUID("f1f4c9d8-590a-4963-b3ae-1935671bb6f3")
 interface IInkStrokes : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_count
@@ -2842,9 +2859,9 @@ interface IInkStrokes : IDispatch
     HRESULT RemoveRecognitionResult();
 }
 
-@GUID("7e23a88f-c30e-420f-9bdb-28902543f0c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcustomstrokes
+@GUID("7e23a88f-c30e-420f-9bdb-28902543f0c1")
 interface IInkCustomStrokes : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-get_count
@@ -2865,8 +2882,8 @@ interface _IInkStrokesEvents : IDispatch
 {
 }
 
-@GUID("9d398fa0-c4e2-4fcd-9973-975caaf47ea6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkdisp
+@GUID("9d398fa0-c4e2-4fcd-9973-975caaf47ea6")
 interface IInkDisp : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_strokes
@@ -2929,8 +2946,8 @@ interface _IInkEvents : IDispatch
 {
 }
 
-@GUID("e6257a9c-b511-4f4c-a8b0-a7dbc9506b83")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrenderer
+@GUID("e6257a9c-b511-4f4c-a8b0-a7dbc9506b83")
 interface IInkRenderer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-getviewtransform
@@ -2965,8 +2982,8 @@ interface IInkRenderer : IDispatch
     HRESULT ScaleTransform(float HorizontalMultiplier, float VerticalMultiplier, VARIANT_BOOL ApplyOnPenWidth);
 }
 
-@GUID("f0f060b5-8b1f-4a7c-89ec-880692588a4f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcollector
+@GUID("f0f060b5-8b1f-4a7c-89ec-880692588a4f")
 interface IInkCollector : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_hwnd
@@ -3055,8 +3072,8 @@ interface _IInkCollectorEvents : IDispatch
 {
 }
 
-@GUID("b82a463b-c1c5-45a3-997c-deab5651b67a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkoverlay
+@GUID("b82a463b-c1c5-45a3-997c-deab5651b67a")
 interface IInkOverlay : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_hwnd
@@ -3170,8 +3187,8 @@ interface _IInkOverlayEvents : IDispatch
 {
 }
 
-@GUID("e85662e0-379a-40d7-9b5c-757d233f9923")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkpicture
+@GUID("e85662e0-379a-40d7-9b5c-757d233f9923")
 interface IInkPicture : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_hwnd
@@ -3294,9 +3311,9 @@ interface _IInkPictureEvents : IDispatch
 {
 }
 
-@GUID("782bf7cf-034b-4396-8a32-3a1833cf6b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizer
+@GUID("782bf7cf-034b-4396-8a32-3a1833cf6b56")
 interface IInkRecognizer : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_name
@@ -3315,9 +3332,9 @@ interface IInkRecognizer : IDispatch
     HRESULT CreateRecognizerContext(IInkRecognizerContext* Context);
 }
 
-@GUID("6110118a-3a75-4ad6-b2aa-04b2b72bbe65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizer2
+@GUID("6110118a-3a75-4ad6-b2aa-04b2b72bbe65")
 interface IInkRecognizer2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer2-get_id
@@ -3326,8 +3343,8 @@ interface IInkRecognizer2 : IDispatch
     HRESULT get_UnicodeRanges(VARIANT* UnicodeRanges);
 }
 
-@GUID("9ccc4f12-b0b7-4a8b-bf58-4aeca4e8cefd")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizers
+@GUID("9ccc4f12-b0b7-4a8b-bf58-4aeca4e8cefd")
 interface IInkRecognizers : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-get_count
@@ -3344,8 +3361,8 @@ interface _IInkRecognitionEvents : IDispatch
 {
 }
 
-@GUID("c68f52f9-32a3-4625-906c-44fc23b40958")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizercontext
+@GUID("c68f52f9-32a3-4625-906c-44fc23b40958")
 interface IInkRecognizerContext : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_strokes
@@ -3398,9 +3415,9 @@ interface IInkRecognizerContext : IDispatch
     HRESULT IsStringSupported(BSTR String, VARIANT_BOOL* Supported);
 }
 
-@GUID("d6f0e32f-73d8-408e-8e9f-5fea592c363f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizercontext2
+@GUID("d6f0e32f-73d8-408e-8e9f-5fea592c363f")
 interface IInkRecognizerContext2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext2-get_enabledunicoderanges
@@ -3409,9 +3426,9 @@ interface IInkRecognizerContext2 : IDispatch
     HRESULT put_EnabledUnicodeRanges(VARIANT UnicodeRanges);
 }
 
-@GUID("3bc129a8-86cd-45ad-bde8-e0d32d61c16d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionresult
+@GUID("3bc129a8-86cd-45ad-bde8-e0d32d61c16d")
 interface IInkRecognitionResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topstring
@@ -3430,9 +3447,9 @@ interface IInkRecognitionResult : IDispatch
     HRESULT SetResultOnStrokes();
 }
 
-@GUID("b7e660ad-77e4-429b-adda-873780d1fc4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionalternate
+@GUID("b7e660ad-77e4-429b-adda-873780d1fc4a")
 interface IInkRecognitionAlternate : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_string
@@ -3469,9 +3486,9 @@ interface IInkRecognitionAlternate : IDispatch
     HRESULT GetPropertyValue(BSTR PropertyType, VARIANT* PropertyValue);
 }
 
-@GUID("286a167f-9f19-4c61-9d53-4f07be622b84")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionalternates
+@GUID("286a167f-9f19-4c61-9d53-4f07be622b84")
 interface IInkRecognitionAlternates : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-get_count
@@ -3483,8 +3500,8 @@ interface IInkRecognitionAlternates : IDispatch
     HRESULT Item(int Index, IInkRecognitionAlternate* InkRecoAlternate);
 }
 
-@GUID("d934be07-7b84-4208-9136-83c20994e905")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizerguide
+@GUID("d934be07-7b84-4208-9136-83c20994e905")
 interface IInkRecognizerGuide : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_writingbox
@@ -3513,8 +3530,8 @@ interface IInkRecognizerGuide : IDispatch
     HRESULT put_GuideData(InkRecoGuide recoGuide);
 }
 
-@GUID("76ba3491-cb2f-406b-9961-0e0c4cdaaef2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkwordlist
+@GUID("76ba3491-cb2f-406b-9961-0e0c4cdaaef2")
 interface IInkWordList : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-addword
@@ -3525,9 +3542,9 @@ interface IInkWordList : IDispatch
     HRESULT Merge(IInkWordList MergeWordList);
 }
 
-@GUID("14542586-11bf-4f5f-b6e7-49d0744aab6e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkwordlist2
+@GUID("14542586-11bf-4f5f-b6e7-49d0744aab6e")
 interface IInkWordList2 : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist2-addwords
@@ -3539,9 +3556,9 @@ interface IInk : IDispatch
 {
 }
 
-@GUID("9c1c5ad6-f22f-4de4-b453-a2cc482e7c33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinklineinfo
+@GUID("9c1c5ad6-f22f-4de4-b453-a2cc482e7c33")
 interface IInkLineInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-setformat
@@ -3563,8 +3580,8 @@ interface ISketchInk : IDispatch
 {
 }
 
-@GUID("5de00405-f9a4-4651-b0c5-c317defd58b9")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivider
+@GUID("5de00405-f9a4-4651-b0c5-c317defd58b9")
 interface IInkDivider : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_strokes
@@ -3583,9 +3600,9 @@ interface IInkDivider : IDispatch
     HRESULT Divide(IInkDivisionResult* InkDivisionResult);
 }
 
-@GUID("2dbec0a7-74c7-4b38-81eb-aa8ef0c24900")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionresult
+@GUID("2dbec0a7-74c7-4b38-81eb-aa8ef0c24900")
 interface IInkDivisionResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionresult-get_strokes
@@ -3594,9 +3611,9 @@ interface IInkDivisionResult : IDispatch
     HRESULT ResultByType(InkDivisionType divisionType, IInkDivisionUnits* InkDivisionUnits);
 }
 
-@GUID("85aee342-48b0-4244-9dd5-1ed435410fab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionunit
+@GUID("85aee342-48b0-4244-9dd5-1ed435410fab")
 interface IInkDivisionUnit : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_strokes
@@ -3608,9 +3625,9 @@ interface IInkDivisionUnit : IDispatch
     HRESULT get_RotationTransform(IInkTransform* RotationTransform);
 }
 
-@GUID("1bb5ddc2-31cc-4135-ab82-2c66c9f00c41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionunits
+@GUID("1bb5ddc2-31cc-4135-ab82-2c66c9f00c41")
 interface IInkDivisionUnits : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunits-get_count
@@ -3620,8 +3637,8 @@ interface IInkDivisionUnits : IDispatch
     HRESULT Item(int Index, IInkDivisionUnit* InkDivisionUnit);
 }
 
-@GUID("fa7a4083-5747-4040-a182-0b0e9fd4fac7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-ipeninputpanel
+@GUID("fa7a4083-5747-4040-a182-0b0e9fd4fac7")
 interface IPenInputPanel : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_busy
@@ -3680,9 +3697,9 @@ interface _IPenInputPanelEvents : IDispatch
 {
 }
 
-@GUID("56fdea97-ecd6-43e7-aa3a-816be7785860")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-ihandwrittentextinsertion
+@GUID("56fdea97-ecd6-43e7-aa3a-816be7785860")
 interface IHandwrittenTextInsertion : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ihandwrittentextinsertion-insertrecognitionresultsarray
@@ -3693,9 +3710,9 @@ interface IHandwrittenTextInsertion : IUnknown
                                        BOOL fAlternateContainsAutoSpacingInformation);
 }
 
-@GUID("27560408-8e64-4fe1-804e-421201584b31")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpaneleventsink
+@GUID("27560408-8e64-4fe1-804e-421201584b31")
 interface ITextInputPanelEventSink : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacestatechanging
@@ -3724,9 +3741,9 @@ interface ITextInputPanelEventSink : IUnknown
     HRESULT TextInserted(SAFEARRAY* Ink);
 }
 
-@GUID("6b6a65a5-6af3-46c2-b6ea-56cd1f80df71")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpanel
+@GUID("6b6a65a5-6af3-46c2-b6ea-56cd1f80df71")
 interface ITextInputPanel : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_attachededitwindow
@@ -3790,17 +3807,17 @@ interface IInputPanelWindowHandle : IUnknown
     HRESULT put_AttachedEditWindow64(long AttachedEditWindow);
 }
 
-@GUID("9f424568-1920-48cc-9811-a993cbf5adba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpanelruninfo
+@GUID("9f424568-1920-48cc-9811-a993cbf5adba")
 interface ITextInputPanelRunInfo : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanelruninfo-istiprunning
     HRESULT IsTipRunning(BOOL* pfRunning);
 }
 
-@GUID("f2127a19-fbfb-4aed-8464-3f36d78cfefb")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nn-inked-iinkedit
+@GUID("f2127a19-fbfb-4aed-8464-3f36d78cfefb")
 interface IInkEdit : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_status
@@ -3964,8 +3981,8 @@ interface _IInkEditEvents : IDispatch
 {
 }
 
-@GUID("eba615aa-fac6-4738-ba5f-ff09e9fe473e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nn-micaut-imathinputcontrol
+@GUID("eba615aa-fac6-4738-ba5f-ff09e9fe473e")
 interface IMathInputControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-show
@@ -4004,15 +4021,15 @@ interface IMathInputControl : IDispatch
     HRESULT GetHoverIcon(IPictureDisp* HoverImage);
 }
 
-@GUID("683336b5-a47d-4358-96f9-875a472ae70a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nn-micaut-_imathinputcontrolevents
+@GUID("683336b5-a47d-4358-96f9-875a472ae70a")
 interface _IMathInputControlEvents : IDispatch
 {
 }
 
-@GUID("a8bb5d22-3144-4a7b-93cd-f34a16be513a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus
+@GUID("a8bb5d22-3144-4a7b-93cd-f34a16be513a")
 interface IRealTimeStylus : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_enabled
@@ -4079,9 +4096,9 @@ interface IRealTimeStylus : IUnknown
                                      uint* pcPacketProperties, PACKET_PROPERTY** ppPacketProperties);
 }
 
-@GUID("b5f2a6cd-3179-4a3e-b9c4-bb5865962be2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus2
+@GUID("b5f2a6cd-3179-4a3e-b9c4-bb5865962be2")
 interface IRealTimeStylus2 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus2-get_flicksenabled
@@ -4090,9 +4107,9 @@ interface IRealTimeStylus2 : IUnknown
     HRESULT put_FlicksEnabled(BOOL fEnable);
 }
 
-@GUID("d70230a3-6986-4051-b57a-1cf69f4d9db5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus3
+@GUID("d70230a3-6986-4051-b57a-1cf69f4d9db5")
 interface IRealTimeStylus3 : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus3-get_multitouchenabled
@@ -4101,9 +4118,9 @@ interface IRealTimeStylus3 : IUnknown
     HRESULT put_MultiTouchEnabled(BOOL fEnable);
 }
 
-@GUID("aa87eab8-ab4a-4cea-b5cb-46d84c6a2509")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylussynchronization
+@GUID("aa87eab8-ab4a-4cea-b5cb-46d84c6a2509")
 interface IRealTimeStylusSynchronization : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylussynchronization-acquirelock
@@ -4112,9 +4129,9 @@ interface IRealTimeStylusSynchronization : IUnknown
     HRESULT ReleaseLock(RealTimeStylusLockType lock);
 }
 
-@GUID("a5fd4e2d-c44b-4092-9177-260905eb672b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istrokebuilder
+@GUID("a5fd4e2d-c44b-4092-9177-260905eb672b")
 interface IStrokeBuilder : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-createstroke
@@ -4134,9 +4151,9 @@ interface IStrokeBuilder : IUnknown
     HRESULT putref_Ink(IInkDisp piInkObj);
 }
 
-@GUID("a81436d8-4757-4fd1-a185-133f97c6c545")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylusplugin
+@GUID("a81436d8-4757-4fd1-a185-133f97c6c545")
 interface IStylusPlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-realtimestylusenabled
@@ -4181,23 +4198,23 @@ interface IStylusPlugin : IUnknown
     HRESULT DataInterest(RealTimeStylusDataInterest* pDataInterest);
 }
 
-@GUID("a157b174-482f-4d71-a3f6-3a41ddd11be9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylussyncplugin
+@GUID("a157b174-482f-4d71-a3f6-3a41ddd11be9")
 interface IStylusSyncPlugin : IStylusPlugin
 {
 }
 
-@GUID("a7cca85a-31bc-4cd2-aadc-3289a3af11c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylusasyncplugin
+@GUID("a7cca85a-31bc-4cd2-aadc-3289a3af11c8")
 interface IStylusAsyncPlugin : IStylusPlugin
 {
 }
 
-@GUID("a079468e-7165-46f9-b7af-98ad01a93009")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-idynamicrenderer
+@GUID("a079468e-7165-46f9-b7af-98ad01a93009")
 interface IDynamicRenderer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_enabled
@@ -4231,9 +4248,9 @@ interface IDynamicRenderer : IUnknown
     HRESULT Draw(HANDLE_PTR hDC);
 }
 
-@GUID("ae9ef86b-7054-45e3-ae22-3174dc8811b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-igesturerecognizer
+@GUID("ae9ef86b-7054-45e3-ae22-3174dc8811b7")
 interface IGestureRecognizer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-get_enabled

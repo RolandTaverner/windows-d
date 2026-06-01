@@ -1132,9 +1132,9 @@ HRESULT DXGIDisableVBlankVirtualization();
 
 // Interfaces
 
-@GUID("aec22fb8-76f3-4639-9be0-28eb43a67a2e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgiobject
+@GUID("aec22fb8-76f3-4639-9be0-28eb43a67a2e")
 interface IDXGIObject : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgiobject-setprivatedata
@@ -1149,18 +1149,18 @@ interface IDXGIObject : IUnknown
     HRESULT GetParent(const(GUID)* riid, void** ppParent);
 }
 
-@GUID("3d3e0379-f9de-4d58-bb6c-18d62992f1a6")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgidevicesubobject
+@GUID("3d3e0379-f9de-4d58-bb6c-18d62992f1a6")
 interface IDXGIDeviceSubObject : IDXGIObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgidevicesubobject-getdevice
     HRESULT GetDevice(const(GUID)* riid, void** ppDevice);
 }
 
-@GUID("035f3ab4-482e-4e50-b41f-8a7f8bd8960b")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgiresource
+@GUID("035f3ab4-482e-4e50-b41f-8a7f8bd8960b")
 interface IDXGIResource : IDXGIDeviceSubObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgiresource-getsharedhandle
@@ -1173,9 +1173,9 @@ interface IDXGIResource : IDXGIDeviceSubObject
     HRESULT GetEvictionPriority(DXGI_RESOURCE_PRIORITY* pEvictionPriority);
 }
 
-@GUID("9d8e1289-d7b3-465f-8126-250e349af85d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgikeyedmutex
+@GUID("9d8e1289-d7b3-465f-8126-250e349af85d")
 interface IDXGIKeyedMutex : IDXGIDeviceSubObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgikeyedmutex-acquiresync
@@ -1184,9 +1184,9 @@ interface IDXGIKeyedMutex : IDXGIDeviceSubObject
     HRESULT ReleaseSync(ulong Key);
 }
 
-@GUID("cafcb56c-6ac3-4889-bf47-9e23bbd260ec")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgisurface
+@GUID("cafcb56c-6ac3-4889-bf47-9e23bbd260ec")
 interface IDXGISurface : IDXGIDeviceSubObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgisurface-getdesc
@@ -1197,10 +1197,10 @@ interface IDXGISurface : IDXGIDeviceSubObject
     HRESULT Unmap();
 }
 
-@GUID("4ae63092-6327-4c1b-80ae-bfe12ea32b86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgisurface1
+@GUID("4ae63092-6327-4c1b-80ae-bfe12ea32b86")
 interface IDXGISurface1 : IDXGISurface
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgisurface1-getdc
@@ -1209,9 +1209,9 @@ interface IDXGISurface1 : IDXGISurface
     HRESULT ReleaseDC(RECT* pDirtyRect);
 }
 
-@GUID("2411e7e1-12ac-4ccf-bd14-9798e8534dc0")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgiadapter
+@GUID("2411e7e1-12ac-4ccf-bd14-9798e8534dc0")
 interface IDXGIAdapter : IDXGIObject
 {
 //METH ATTR: CanReturnErrorsAsSuccessAttribute : CustomAttributeSig([], [])
@@ -1222,9 +1222,9 @@ interface IDXGIAdapter : IDXGIObject
     HRESULT CheckInterfaceSupport(const(GUID)* InterfaceName, long* pUMDVersion);
 }
 
-@GUID("ae02eedb-c735-4690-8d52-5a8dc20213aa")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgioutput
+@GUID("ae02eedb-c735-4690-8d52-5a8dc20213aa")
 interface IDXGIOutput : IDXGIObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgioutput-getdesc
@@ -1255,9 +1255,9 @@ interface IDXGIOutput : IDXGIObject
     HRESULT GetFrameStatistics(DXGI_FRAME_STATISTICS* pStats);
 }
 
-@GUID("310d36a0-d2e7-4c0a-aa04-6a9d23b8886a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgiswapchain
+@GUID("310d36a0-d2e7-4c0a-aa04-6a9d23b8886a")
 interface IDXGISwapChain : IDXGIDeviceSubObject
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -1283,9 +1283,9 @@ interface IDXGISwapChain : IDXGIDeviceSubObject
     HRESULT GetLastPresentCount(uint* pLastPresentCount);
 }
 
-@GUID("7b7166ec-21c7-44ae-b21a-c9ae321ae369")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgifactory
+@GUID("7b7166ec-21c7-44ae-b21a-c9ae321ae369")
 interface IDXGIFactory : IDXGIObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgifactory-enumadapters
@@ -1300,9 +1300,9 @@ interface IDXGIFactory : IDXGIObject
     HRESULT CreateSoftwareAdapter(HMODULE Module, IDXGIAdapter* ppAdapter);
 }
 
-@GUID("54ec77fa-1377-44e6-8c32-88fd5f44c84c")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgidevice
+@GUID("54ec77fa-1377-44e6-8c32-88fd5f44c84c")
 interface IDXGIDevice : IDXGIObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgidevice-getadapter
@@ -1318,10 +1318,10 @@ interface IDXGIDevice : IDXGIObject
     HRESULT GetGPUThreadPriority(int* pPriority);
 }
 
-@GUID("770aae78-f26f-4dba-a829-253c83d1b387")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgifactory1
+@GUID("770aae78-f26f-4dba-a829-253c83d1b387")
 interface IDXGIFactory1 : IDXGIFactory
 {
 //METH ATTR: CanReturnErrorsAsSuccessAttribute : CustomAttributeSig([], [])
@@ -1330,20 +1330,20 @@ interface IDXGIFactory1 : IDXGIFactory
     BOOL    IsCurrent();
 }
 
-@GUID("29038f61-3839-4626-91fd-086879011a05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgiadapter1
+@GUID("29038f61-3839-4626-91fd-086879011a05")
 interface IDXGIAdapter1 : IDXGIAdapter
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgiadapter1-getdesc1
     HRESULT GetDesc1(DXGI_ADAPTER_DESC1* pDesc);
 }
 
-@GUID("77db970f-6276-48ba-ba28-070143b4392c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nn-dxgi-idxgidevice1
+@GUID("77db970f-6276-48ba-ba28-070143b4392c")
 interface IDXGIDevice1 : IDXGIDevice
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi/nf-dxgi-idxgidevice1-setmaximumframelatency
@@ -1352,10 +1352,10 @@ interface IDXGIDevice1 : IDXGIDevice
     HRESULT GetMaximumFrameLatency(uint* pMaxLatency);
 }
 
-@GUID("ea9dbf1a-c88e-4486-854a-98aa0138f30c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgidisplaycontrol
+@GUID("ea9dbf1a-c88e-4486-854a-98aa0138f30c")
 interface IDXGIDisplayControl : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgidisplaycontrol-isstereoenabled
@@ -1364,10 +1364,10 @@ interface IDXGIDisplayControl : IUnknown
     void SetStereoEnabled(BOOL enabled);
 }
 
-@GUID("191cfac3-a341-470d-b26e-a864f428319c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgioutputduplication
+@GUID("191cfac3-a341-470d-b26e-a864f428319c")
 interface IDXGIOutputDuplication : IDXGIObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgioutputduplication-getdesc
@@ -1396,20 +1396,20 @@ interface IDXGIOutputDuplication : IDXGIObject
     HRESULT ReleaseFrame();
 }
 
-@GUID("aba496dd-b617-4cb8-a866-bc44d7eb1fa2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgisurface2
+@GUID("aba496dd-b617-4cb8-a866-bc44d7eb1fa2")
 interface IDXGISurface2 : IDXGISurface1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgisurface2-getresource
     HRESULT GetResource(const(GUID)* riid, void** ppParentResource, uint* pSubresourceIndex);
 }
 
-@GUID("30961379-4609-4a41-998e-54fe567ee0c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgiresource1
+@GUID("30961379-4609-4a41-998e-54fe567ee0c1")
 interface IDXGIResource1 : IDXGIResource
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgiresource1-createsubresourcesurface
@@ -1419,10 +1419,10 @@ interface IDXGIResource1 : IDXGIResource
                                HANDLE* pHandle);
 }
 
-@GUID("05008617-fbfd-4051-a790-144884b4f6a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgidevice2
+@GUID("05008617-fbfd-4051-a790-144884b4f6a9")
 interface IDXGIDevice2 : IDXGIDevice1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgidevice2-offerresources
@@ -1433,10 +1433,10 @@ interface IDXGIDevice2 : IDXGIDevice1
     HRESULT EnqueueSetEvent(HANDLE hEvent);
 }
 
-@GUID("790a45f7-0d42-4876-983a-0a55cfe6f4aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgiswapchain1
+@GUID("790a45f7-0d42-4876-983a-0a55cfe6f4aa")
 interface IDXGISwapChain1 : IDXGISwapChain
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgiswapchain1-getdesc1
@@ -1464,10 +1464,10 @@ interface IDXGISwapChain1 : IDXGISwapChain
     HRESULT GetRotation(DXGI_MODE_ROTATION* pRotation);
 }
 
-@GUID("50c83a1c-e072-4c48-87b0-3630fa36a6d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgifactory2
+@GUID("50c83a1c-e072-4c48-87b0-3630fa36a6d0")
 interface IDXGIFactory2 : IDXGIFactory1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgifactory2-iswindowedstereoenabled
@@ -1498,20 +1498,20 @@ interface IDXGIFactory2 : IDXGIFactory1
                                           IDXGIOutput pRestrictToOutput, IDXGISwapChain1* ppSwapChain);
 }
 
-@GUID("0aa1ae0a-fa0e-4b84-8644-e05ff8e5acb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgiadapter2
+@GUID("0aa1ae0a-fa0e-4b84-8644-e05ff8e5acb5")
 interface IDXGIAdapter2 : IDXGIAdapter1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgiadapter2-getdesc2
     HRESULT GetDesc2(DXGI_ADAPTER_DESC2* pDesc);
 }
 
-@GUID("00cddea8-939b-4b83-a340-a685226666cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nn-dxgi1_2-idxgioutput1
+@GUID("00cddea8-939b-4b83-a340-a685226666cc")
 interface IDXGIOutput1 : IDXGIOutput
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgioutput1-getdisplaymodelist1
@@ -1526,20 +1526,20 @@ interface IDXGIOutput1 : IDXGIOutput
     HRESULT DuplicateOutput(IUnknown pDevice, IDXGIOutputDuplication* ppOutputDuplication);
 }
 
-@GUID("6007896c-3244-4afd-bf18-a6d3beda5023")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgidevice3
+@GUID("6007896c-3244-4afd-bf18-a6d3beda5023")
 interface IDXGIDevice3 : IDXGIDevice2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgidevice3-trim
     void Trim();
 }
 
-@GUID("a8be2ac4-199f-4946-b331-79599fb98de7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgiswapchain2
+@GUID("a8be2ac4-199f-4946-b331-79599fb98de7")
 interface IDXGISwapChain2 : IDXGISwapChain1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgiswapchain2-setsourcesize
@@ -1558,30 +1558,30 @@ interface IDXGISwapChain2 : IDXGISwapChain1
     HRESULT GetMatrixTransform(DXGI_MATRIX_3X2_F* pMatrix);
 }
 
-@GUID("595e39d1-2724-4663-99b1-da969de28364")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgioutput2
+@GUID("595e39d1-2724-4663-99b1-da969de28364")
 interface IDXGIOutput2 : IDXGIOutput1
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgioutput2-supportsoverlays
     BOOL SupportsOverlays();
 }
 
-@GUID("25483823-cd46-4c7d-86ca-47aa95b837bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgifactory3
+@GUID("25483823-cd46-4c7d-86ca-47aa95b837bd")
 interface IDXGIFactory3 : IDXGIFactory2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgifactory3-getcreationflags
     DXGI_CREATE_FACTORY_FLAGS GetCreationFlags();
 }
 
-@GUID("2633066b-4514-4c7a-8fd8-12ea98059d18")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgidecodeswapchain
+@GUID("2633066b-4514-4c7a-8fd8-12ea98059d18")
 interface IDXGIDecodeSwapChain : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -1604,10 +1604,10 @@ interface IDXGIDecodeSwapChain : IUnknown
     DXGI_MULTIPLANE_OVERLAY_YCbCr_FLAGS GetColorSpace();
 }
 
-@GUID("41e7d1f2-a591-4f7b-a2e5-fa9c843e1c12")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgifactorymedia
+@GUID("41e7d1f2-a591-4f7b-a2e5-fa9c843e1c12")
 interface IDXGIFactoryMedia : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgifactorymedia-createswapchainforcompositionsurfacehandle
@@ -1622,10 +1622,10 @@ interface IDXGIFactoryMedia : IUnknown
                                                              IDXGIDecodeSwapChain* ppSwapChain);
 }
 
-@GUID("dd95b90b-f05f-4f6a-bd65-25bfb264bd84")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgiswapchainmedia
+@GUID("dd95b90b-f05f-4f6a-bd65-25bfb264bd84")
 interface IDXGISwapChainMedia : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgiswapchainmedia-getframestatisticsmedia
@@ -1637,10 +1637,10 @@ interface IDXGISwapChainMedia : IUnknown
                                         uint* pClosestLargerPresentDuration);
 }
 
-@GUID("8a6bb301-7e7e-41f4-a8e0-5b32f7f99b18")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nn-dxgi1_3-idxgioutput3
+@GUID("8a6bb301-7e7e-41f4-a8e0-5b32f7f99b18")
 interface IDXGIOutput3 : IDXGIOutput2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_3/nf-dxgi1_3-idxgioutput3-checkoverlaysupport
@@ -1648,10 +1648,10 @@ interface IDXGIOutput3 : IDXGIOutput2
                                 /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DXGI_OVERLAY_SUPPORT_FLAG))], [])*/uint* pFlags);
 }
 
-@GUID("94d99bdb-f1f8-4ab0-b236-7da0170edab1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nn-dxgi1_4-idxgiswapchain3
+@GUID("94d99bdb-f1f8-4ab0-b236-7da0170edab1")
 interface IDXGISwapChain3 : IDXGISwapChain2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nf-dxgi1_4-idxgiswapchain3-getcurrentbackbufferindex
@@ -1667,10 +1667,10 @@ interface IDXGISwapChain3 : IDXGISwapChain2
                            const(uint)* pCreationNodeMask, IUnknown* ppPresentQueue);
 }
 
-@GUID("dc7dca35-2196-414d-9f53-617884032a60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nn-dxgi1_4-idxgioutput4
+@GUID("dc7dca35-2196-414d-9f53-617884032a60")
 interface IDXGIOutput4 : IDXGIOutput3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nf-dxgi1_4-idxgioutput4-checkoverlaycolorspacesupport
@@ -1679,9 +1679,9 @@ interface IDXGIOutput4 : IDXGIOutput3
                                           /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG))], [])*/uint* pFlags);
 }
 
-@GUID("1bc6ea02-ef36-464f-bf0c-21ca39e5168a")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nn-dxgi1_4-idxgifactory4
+@GUID("1bc6ea02-ef36-464f-bf0c-21ca39e5168a")
 interface IDXGIFactory4 : IDXGIFactory3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nf-dxgi1_4-idxgifactory4-enumadapterbyluid
@@ -1690,9 +1690,9 @@ interface IDXGIFactory4 : IDXGIFactory3
     HRESULT EnumWarpAdapter(const(GUID)* riid, void** ppvAdapter);
 }
 
-@GUID("645967a4-1392-4310-a798-8053ce3e93fd")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nn-dxgi1_4-idxgiadapter3
+@GUID("645967a4-1392-4310-a798-8053ce3e93fd")
 interface IDXGIAdapter3 : IDXGIAdapter2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_4/nf-dxgi1_4-idxgiadapter3-registerhardwarecontentprotectionteardownstatusevent
@@ -1711,10 +1711,10 @@ interface IDXGIAdapter3 : IDXGIAdapter2
     void    UnregisterVideoMemoryBudgetChangeNotification(uint dwCookie);
 }
 
-@GUID("80a07424-ab52-42eb-833c-0c42fd282d98")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nn-dxgi1_5-idxgioutput5
+@GUID("80a07424-ab52-42eb-833c-0c42fd282d98")
 interface IDXGIOutput5 : IDXGIOutput4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nf-dxgi1_5-idxgioutput5-duplicateoutput1
@@ -1722,18 +1722,18 @@ interface IDXGIOutput5 : IDXGIOutput4
                              const(DXGI_FORMAT)* pSupportedFormats, IDXGIOutputDuplication* ppOutputDuplication);
 }
 
-@GUID("3d585d5a-bd4a-489e-b1f4-3dbcb6452ffb")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nn-dxgi1_5-idxgiswapchain4
+@GUID("3d585d5a-bd4a-489e-b1f4-3dbcb6452ffb")
 interface IDXGISwapChain4 : IDXGISwapChain3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nf-dxgi1_5-idxgiswapchain4-sethdrmetadata
     HRESULT SetHDRMetaData(DXGI_HDR_METADATA_TYPE Type, uint Size, void* pMetaData);
 }
 
-@GUID("95b4f95f-d8da-4ca4-9ee6-3b76d5968a10")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nn-dxgi1_5-idxgidevice4
+@GUID("95b4f95f-d8da-4ca4-9ee6-3b76d5968a10")
 interface IDXGIDevice4 : IDXGIDevice3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nf-dxgi1_5-idxgidevice4-offerresources1
@@ -1744,9 +1744,9 @@ interface IDXGIDevice4 : IDXGIDevice3
                               DXGI_RECLAIM_RESOURCE_RESULTS* pResults);
 }
 
-@GUID("7632e1f5-ee65-4dca-87fd-84cd75f8838d")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nn-dxgi1_5-idxgifactory5
+@GUID("7632e1f5-ee65-4dca-87fd-84cd75f8838d")
 interface IDXGIFactory5 : IDXGIFactory4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_5/nf-dxgi1_5-idxgifactory5-checkfeaturesupport
@@ -1755,19 +1755,19 @@ interface IDXGIFactory5 : IDXGIFactory4
                                 uint FeatureSupportDataSize);
 }
 
-@GUID("3c8d99d1-4fbf-4181-a82c-af66bf7bd24e")
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nn-dxgi1_6-idxgiadapter4
+@GUID("3c8d99d1-4fbf-4181-a82c-af66bf7bd24e")
 interface IDXGIAdapter4 : IDXGIAdapter3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nf-dxgi1_6-idxgiadapter4-getdesc3
     HRESULT GetDesc3(DXGI_ADAPTER_DESC3* pDesc);
 }
 
-@GUID("068346e8-aaec-4b84-add7-137f513f77a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nn-dxgi1_6-idxgioutput6
+@GUID("068346e8-aaec-4b84-add7-137f513f77a1")
 interface IDXGIOutput6 : IDXGIOutput5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nf-dxgi1_6-idxgioutput6-getdesc1
@@ -1776,10 +1776,10 @@ interface IDXGIOutput6 : IDXGIOutput5
     HRESULT CheckHardwareCompositionSupport(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS))], [])*/uint* pFlags);
 }
 
-@GUID("c1b6694f-ff09-44a9-b03c-77900a0a1d17")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nn-dxgi1_6-idxgifactory6
+@GUID("c1b6694f-ff09-44a9-b03c-77900a0a1d17")
 interface IDXGIFactory6 : IDXGIFactory5
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nf-dxgi1_6-idxgifactory6-enumadapterbygpupreference
@@ -1787,10 +1787,10 @@ interface IDXGIFactory6 : IDXGIFactory5
                                        void** ppvAdapter);
 }
 
-@GUID("a4966eed-76db-44da-84c1-ee9a7afb20a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nn-dxgi1_6-idxgifactory7
+@GUID("a4966eed-76db-44da-84c1-ee9a7afb20a8")
 interface IDXGIFactory7 : IDXGIFactory6
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_6/nf-dxgi1_6-idxgifactory7-registeradapterschangedevent
@@ -1799,10 +1799,10 @@ interface IDXGIFactory7 : IDXGIFactory6
     HRESULT UnregisterAdaptersChangedEvent(uint dwCookie);
 }
 
-@GUID("d67441c7-672a-476f-9e82-cd55b44949ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgidebug/nn-dxgidebug-idxgiinfoqueue
+@GUID("d67441c7-672a-476f-9e82-cd55b44949ce")
 interface IDXGIInfoQueue : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgidebug/nf-dxgidebug-idxgiinfoqueue-setmessagecountlimit
@@ -1888,20 +1888,20 @@ interface IDXGIInfoQueue : IUnknown
     BOOL    GetMuteDebugOutput(GUID Producer);
 }
 
-@GUID("119e7452-de9e-40fe-8806-88f90c12b441")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgidebug/nn-dxgidebug-idxgidebug
+@GUID("119e7452-de9e-40fe-8806-88f90c12b441")
 interface IDXGIDebug : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgidebug/nf-dxgidebug-idxgidebug-reportliveobjects
     HRESULT ReportLiveObjects(GUID apiid, DXGI_DEBUG_RLO_FLAGS flags);
 }
 
-@GUID("c5a05f0c-16f2-4adf-9f4d-a8c4d58ac550")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgidebug/nn-dxgidebug-idxgidebug1
+@GUID("c5a05f0c-16f2-4adf-9f4d-a8c4d58ac550")
 interface IDXGIDebug1 : IDXGIDebug
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgidebug/nf-dxgidebug-idxgidebug1-enableleaktrackingforthread

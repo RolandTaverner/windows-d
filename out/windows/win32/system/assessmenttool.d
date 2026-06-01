@@ -77,9 +77,9 @@ struct CAccessiblityWinSAT;
 @GUID("c47a41b7-b729-424f-9af9-5cb3934f2dfa")
 struct CQueryOEMWinSATCustomization;
 
-@GUID("0cd1c380-52d3-4678-ac6f-e929e480be9e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iprovidewinsatassessmentinfo
+@GUID("0cd1c380-52d3-4678-ac6f-e929e480be9e")
 interface IProvideWinSATAssessmentInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iprovidewinsatassessmentinfo-get_score
@@ -90,9 +90,9 @@ interface IProvideWinSATAssessmentInfo : IDispatch
     HRESULT get_Description(BSTR* description);
 }
 
-@GUID("f8334d5d-568e-4075-875f-9df341506640")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iprovidewinsatresultsinfo
+@GUID("f8334d5d-568e-4075-875f-9df341506640")
 interface IProvideWinSATResultsInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iprovidewinsatresultsinfo-getassessmentinfo
@@ -107,9 +107,9 @@ interface IProvideWinSATResultsInfo : IDispatch
     HRESULT get_RatingStateDesc(BSTR* description);
 }
 
-@GUID("f8ad5d1f-3b47-4bdc-9375-7c6b1da4eca7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iqueryrecentwinsatassessment
+@GUID("f8ad5d1f-3b47-4bdc-9375-7c6b1da4eca7")
 interface IQueryRecentWinSATAssessment : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iqueryrecentwinsatassessment-get_xml
@@ -118,9 +118,9 @@ interface IQueryRecentWinSATAssessment : IDispatch
     HRESULT get_Info(IProvideWinSATResultsInfo* ppWinSATAssessmentInfo);
 }
 
-@GUID("a9f4ade0-871a-42a3-b813-3078d25162c9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iprovidewinsatvisuals
+@GUID("a9f4ade0-871a-42a3-b813-3078d25162c9")
 interface IProvideWinSATVisuals : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iprovidewinsatvisuals-get_bitmap
@@ -128,18 +128,18 @@ interface IProvideWinSATVisuals : IUnknown
                        HBITMAP* pBitmap);
 }
 
-@GUID("0b89ed1d-6398-4fea-87fc-567d8d19176f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iqueryallwinsatassessments
+@GUID("0b89ed1d-6398-4fea-87fc-567d8d19176f")
 interface IQueryAllWinSATAssessments : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iqueryallwinsatassessments-get_allxml
     HRESULT get_AllXML(BSTR xPath, BSTR namespaces, IXMLDOMNodeList* ppDomNodeList);
 }
 
-@GUID("262a1918-ba0d-41d5-92c2-fab4633ee74f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iwinsatinitiateevents
+@GUID("262a1918-ba0d-41d5-92c2-fab4633ee74f")
 interface IWinSATInitiateEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iwinsatinitiateevents-winsatcomplete
@@ -148,9 +148,9 @@ interface IWinSATInitiateEvents : IUnknown
     HRESULT WinSATUpdate(uint uCurrentTick, uint uTickTotal, const(PWSTR) strCurrentState);
 }
 
-@GUID("d983fc50-f5bf-49d5-b5ed-cccb18aa7fc1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nn-winsatcominterfacei-iinitiatewinsatassessment
+@GUID("d983fc50-f5bf-49d5-b5ed-cccb18aa7fc1")
 interface IInitiateWinSATAssessment : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsatcominterfacei/nf-winsatcominterfacei-iinitiatewinsatassessment-initiateassessment

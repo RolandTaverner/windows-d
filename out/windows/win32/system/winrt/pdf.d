@@ -38,8 +38,8 @@ HRESULT PdfCreateRenderer(IDXGIDevice pDevice, IPdfRendererNative* ppRenderer);
 
 // Interfaces
 
-@GUID("7d9dcd91-d277-4947-8527-07a0daeda94a")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.data.pdf.interop/nn-windows-data-pdf-interop-ipdfrenderernative
+@GUID("7d9dcd91-d277-4947-8527-07a0daeda94a")
 interface IPdfRendererNative : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.data.pdf.interop/nf-windows-data-pdf-interop-ipdfrenderernative-renderpagetosurface

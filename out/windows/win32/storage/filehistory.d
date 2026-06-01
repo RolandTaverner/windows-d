@@ -223,15 +223,17 @@ HRESULT FhServiceUnblockBackup(FH_SERVICE_PIPE_HANDLE Pipe);
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevNotes/fhconfigmgr
 @GUID("ed43bb3c-09e9-498a-9df6-2177244c6db4")
 struct FhConfigMgr;
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevNotes/fhreassociation
 @GUID("4d728e35-16fa-4320-9e8b-bfd7100a8846")
 struct FhReassociation;
 
-@GUID("d87965fd-2bad-4657-bd3b-9567eb300ced")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhtarget
+@GUID("d87965fd-2bad-4657-bd3b-9567eb300ced")
 interface IFhTarget : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhtarget-getstringproperty
@@ -240,9 +242,9 @@ interface IFhTarget : IUnknown
     HRESULT GetNumericalProperty(FH_TARGET_PROPERTY_TYPE PropertyType, ulong* PropertyValue);
 }
 
-@GUID("3197abce-532a-44c6-8615-f3666566a720")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhscopeiterator
+@GUID("3197abce-532a-44c6-8615-f3666566a720")
 interface IFhScopeIterator : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhscopeiterator-movetonextitem
@@ -251,9 +253,9 @@ interface IFhScopeIterator : IUnknown
     HRESULT GetItem(BSTR* Item);
 }
 
-@GUID("6a5fea5b-bf8f-4ee5-b8c3-44d8a0d7331c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhconfigmgr
+@GUID("6a5fea5b-bf8f-4ee5-b8c3-44d8a0d7331c")
 interface IFhConfigMgr : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-loadconfiguration
@@ -286,9 +288,9 @@ interface IFhConfigMgr : IUnknown
     HRESULT QueryProtectionStatus(uint* ProtectionState, BSTR* ProtectedUntilTime);
 }
 
-@GUID("6544a28a-f68d-47ac-91ef-16b2b36aa3ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhreassociation
+@GUID("6544a28a-f68d-47ac-91ef-16b2b36aa3ee")
 interface IFhReassociation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-validatetarget

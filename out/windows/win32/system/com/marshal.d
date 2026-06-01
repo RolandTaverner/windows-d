@@ -466,9 +466,9 @@ void HPALETTE_UserFree64(uint* param0, HPALETTE* param1);
 
 // Interfaces
 
-@GUID("00000003-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidlbase/nn-objidlbase-imarshal
+@GUID("00000003-0000-0000-c000-000000000046")
 interface IMarshal : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-imarshal-getunmarshalclass
@@ -496,9 +496,9 @@ interface IMarshal2 : IMarshal
 {
 }
 
-@GUID("d8f2f5e6-6102-4863-9f26-389a4676efde")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidlbase/nn-objidlbase-imarshalingstream
+@GUID("d8f2f5e6-6102-4863-9f26-389a4676efde")
 interface IMarshalingStream : IStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidlbase/nf-objidlbase-imarshalingstream-getmarshalingcontextattribute

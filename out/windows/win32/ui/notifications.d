@@ -21,9 +21,9 @@ struct NOTIFICATION_USER_INPUT_DATA
 
 // Interfaces
 
-@GUID("53e31837-6600-4a81-9395-75cffe746f94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/notificationactivationcallback/nn-notificationactivationcallback-inotificationactivationcallback
+@GUID("53e31837-6600-4a81-9395-75cffe746f94")
 interface INotificationActivationCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/notificationactivationcallback/nf-notificationactivationcallback-inotificationactivationcallback-activate

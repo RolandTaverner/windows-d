@@ -850,6 +850,7 @@ struct GNSS_CHIPSETINFO
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMP/location-attribute
 @GUID("e5b8e079-ee6d-4e33-a438-c87f2e959254")
 struct Location;
 
@@ -874,9 +875,9 @@ struct DispLatLongReport;
 @GUID("4c596aec-8544-4082-ba9f-eb0a7d8e65c6")
 struct DispCivicAddressReport;
 
-@GUID("c8b7f7ee-75d0-4db9-b62d-7a0f369ca456")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationreport
+@GUID("c8b7f7ee-75d0-4db9-b62d-7a0f369ca456")
 interface ILocationReport : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getsensorid
@@ -887,9 +888,9 @@ interface ILocationReport : IUnknown
     HRESULT GetValue(const(PROPERTYKEY)* pKey, PROPVARIANT* pValue);
 }
 
-@GUID("7fed806d-0ef8-4f07-80ac-36a0beae3134")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilatlongreport
+@GUID("7fed806d-0ef8-4f07-80ac-36a0beae3134")
 interface ILatLongReport : ILocationReport
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getlatitude
@@ -904,9 +905,9 @@ interface ILatLongReport : ILocationReport
     HRESULT GetAltitudeError(double* pAltitudeError);
 }
 
-@GUID("c0b19f70-4adf-445d-87f2-cad8fd711792")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-icivicaddressreport
+@GUID("c0b19f70-4adf-445d-87f2-cad8fd711792")
 interface ICivicAddressReport : ILocationReport
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getaddressline1
@@ -925,9 +926,9 @@ interface ICivicAddressReport : ILocationReport
     HRESULT GetDetailLevel(uint* pDetailLevel);
 }
 
-@GUID("ab2ece69-56d9-4f28-b525-de1b0ee44237")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocation
+@GUID("ab2ece69-56d9-4f28-b525-de1b0ee44237")
 interface ILocation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-registerforreport
@@ -950,9 +951,9 @@ interface ILocation : IUnknown
     HRESULT RequestPermissions(HWND hParent, GUID* pReportTypes, uint count, BOOL fModal);
 }
 
-@GUID("193e7729-ab6b-4b12-8617-7596e1bb191c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationpower
+@GUID("193e7729-ab6b-4b12-8617-7596e1bb191c")
 interface ILocationPower : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationpower-connect
@@ -961,9 +962,9 @@ interface ILocationPower : IUnknown
     HRESULT Disconnect();
 }
 
-@GUID("a65af77e-969a-4a2e-8aca-33bb7cbb1235")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-idefaultlocation
+@GUID("a65af77e-969a-4a2e-8aca-33bb7cbb1235")
 interface IDefaultLocation : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-idefaultlocation-setreport
@@ -972,9 +973,9 @@ interface IDefaultLocation : IUnknown
     HRESULT GetReport(const(GUID)* reportType, ILocationReport* ppLocationReport);
 }
 
-@GUID("cae02bbf-798b-4508-a207-35a7906dc73d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationevents
+@GUID("cae02bbf-798b-4508-a207-35a7906dc73d")
 interface ILocationEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationevents-onlocationchanged

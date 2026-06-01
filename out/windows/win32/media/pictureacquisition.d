@@ -169,8 +169,8 @@ struct PhotoProgressDialog;
 @GUID("00f29a34-b8a1-482c-bcf8-3ac7b0fe8f62")
 struct PhotoAcquireDeviceSelectionDialog;
 
-@GUID("00f21c97-28bf-4c02-b842-5e4e90139a30")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquireitem
+@GUID("00f21c97-28bf-4c02-b842-5e4e90139a30")
 interface IPhotoAcquireItem : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquireitem-getitemname
@@ -193,8 +193,8 @@ interface IPhotoAcquireItem : IUnknown
     HRESULT GetSubItemAt(uint nItemIndex, IPhotoAcquireItem* ppPhotoAcquireItem);
 }
 
-@GUID("00f243a1-205b-45ba-ae26-abbc53aa7a6f")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iuserinputstring
+@GUID("00f243a1-205b-45ba-ae26-abbc53aa7a6f")
 interface IUserInputString : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iuserinputstring-getsubmitbuttontext
@@ -219,8 +219,8 @@ interface IUserInputString : IUnknown
     HRESULT GetImage(uint nSize, HBITMAP* phBitmap, HICON* phIcon);
 }
 
-@GUID("00f2ce1e-935e-4248-892c-130f32c45cb4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquireprogresscb
+@GUID("00f2ce1e-935e-4248-892c-130f32c45cb4")
 interface IPhotoAcquireProgressCB : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquireprogresscb-cancelled
@@ -271,8 +271,8 @@ interface IPhotoProgressActionCB : IUnknown
     HRESULT DoAction(HWND hWndParent);
 }
 
-@GUID("00f246f9-0750-4f08-9381-2cd8e906a4ae")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoprogressdialog
+@GUID("00f246f9-0750-4f08-9381-2cd8e906a4ae")
 interface IPhotoProgressDialog : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoprogressdialog-create
@@ -310,8 +310,8 @@ interface IPhotoProgressDialog : IUnknown
                          const(PROPVARIANT)* pPropVarDefault);
 }
 
-@GUID("00f2c703-8613-4282-a53b-6ec59c5883ac")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquiresource
+@GUID("00f2c703-8613-4282-a53b-6ec59c5883ac")
 interface IPhotoAcquireSource : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquiresource-getfriendlyname
@@ -332,8 +332,8 @@ interface IPhotoAcquireSource : IUnknown
     HRESULT BindToObject(const(GUID)* riid, void** ppv);
 }
 
-@GUID("00f23353-e31b-4955-a8ad-ca5ebf31e2ce")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquire
+@GUID("00f23353-e31b-4955-a8ad-ca5ebf31e2ce")
 interface IPhotoAcquire : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquire-createphotosource
@@ -345,8 +345,8 @@ interface IPhotoAcquire : IUnknown
     HRESULT EnumResults(IEnumString* ppEnumFilePaths);
 }
 
-@GUID("00f2b868-dd67-487c-9553-049240767e91")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquiresettings
+@GUID("00f2b868-dd67-487c-9553-049240767e91")
 interface IPhotoAcquireSettings : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquiresettings-initializefromregistry
@@ -377,8 +377,8 @@ interface IPhotoAcquireSettings : IUnknown
     HRESULT GetAcquisitionTime(FILETIME* pftAcquisitionTime);
 }
 
-@GUID("00f2b3ee-bf64-47ee-89f4-4dedd79643f2")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquireoptionsdialog
+@GUID("00f2b3ee-bf64-47ee-89f4-4dedd79643f2")
 interface IPhotoAcquireOptionsDialog : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquireoptionsdialog-initialize
@@ -393,8 +393,8 @@ interface IPhotoAcquireOptionsDialog : IUnknown
     HRESULT SaveData();
 }
 
-@GUID("00f28837-55dd-4f37-aaf5-6855a9640467")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquiredeviceselectiondialog
+@GUID("00f28837-55dd-4f37-aaf5-6855a9640467")
 interface IPhotoAcquireDeviceSelectionDialog : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquiredeviceselectiondialog-settitle
@@ -406,8 +406,8 @@ interface IPhotoAcquireDeviceSelectionDialog : IUnknown
                     DEVICE_SELECTION_DEVICE_TYPE* pnDeviceType);
 }
 
-@GUID("00f2dceb-ecb8-4f77-8e47-e7a987c83dd0")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nn-photoacquire-iphotoacquireplugin
+@GUID("00f2dceb-ecb8-4f77-8e47-e7a987c83dd0")
 interface IPhotoAcquirePlugin : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/photoacquire/nf-photoacquire-iphotoacquireplugin-initialize

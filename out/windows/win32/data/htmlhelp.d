@@ -642,8 +642,8 @@ HWND HtmlHelpW(HWND hwndCaller, const(PWSTR) pszFile,
 
 // Interfaces
 
-@GUID("1f403bb1-9997-11d0-a850-00aa006c7d01")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitproplist
+@GUID("1f403bb1-9997-11d0-a850-00aa006c7d01")
 interface IITPropList : IPersistStreamInit
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)
@@ -678,8 +678,8 @@ interface IITPropList : IPersistStreamInit
     HRESULT SaveToMem(void* lpvData, uint dwBufSize);
 }
 
-@GUID("8fa0d5a2-dedf-11d0-9a61-00c04fb68bf7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitdatabase
+@GUID("8fa0d5a2-dedf-11d0-9a61-00c04fb68bf7")
 interface IITDatabase : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-open
@@ -700,8 +700,8 @@ interface IStemSink : IUnknown
     HRESULT PutWord(const(PWSTR) pwcInBuf, uint cwc);
 }
 
-@GUID("8fa0d5a7-dedf-11d0-9a61-00c04fb68bf7")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-istemmerconfig
+@GUID("8fa0d5a7-dedf-11d0-9a61-00c04fb68bf7")
 interface IStemmerConfig : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-istemmerconfig-setlocaleinfo
@@ -726,8 +726,8 @@ interface IWordBreakerConfig : IUnknown
     HRESULT GetWordStemmer(IStemmer* ppStemmer);
 }
 
-@GUID("3bb91d41-998b-11d0-a850-00aa006c7d01")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitresultset
+@GUID("3bb91d41-998b-11d0-a850-00aa006c7d01")
 interface IITResultSet : IUnknown
 {
     HRESULT SetColumnPriority(int lColumnIndex, PRIORITY ColumnPriority);

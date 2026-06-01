@@ -992,6 +992,7 @@ enum : const(wchar)*
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMP/stringcollection-object
 @GUID("72c97d74-7c3b-40ae-b77d-abdb22eba6fb")
 struct StringCollection;
 
@@ -1028,18 +1029,18 @@ struct UpdateServiceManager;
 @GUID("317e92fc-1679-46fd-a0b5-f08914dd8623")
 struct InstallationAgent;
 
-@GUID("a976c28d-75a1-42aa-94ae-8af8b872089a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatelockdown
+@GUID("a976c28d-75a1-42aa-94ae-8af8b872089a")
 interface IUpdateLockdown : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatelockdown-lockdown
     HRESULT LockDown(int flags);
 }
 
-@GUID("eff90582-2ddc-480f-a06d-60f3fbc362c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-istringcollection
+@GUID("eff90582-2ddc-480f-a06d-60f3fbc362c3")
 interface IStringCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_item
@@ -1064,9 +1065,9 @@ interface IStringCollection : IDispatch
     HRESULT RemoveAt(int index);
 }
 
-@GUID("174c81fe-aecd-4dae-b8a0-2c6318dd86a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwebproxy
+@GUID("174c81fe-aecd-4dae-b8a0-2c6318dd86a8")
 interface IWebProxy : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_address
@@ -1099,9 +1100,9 @@ interface IWebProxy : IDispatch
     HRESULT put_AutoDetect(VARIANT_BOOL value);
 }
 
-@GUID("ade87bf7-7b56-4275-8fab-b9b0e591844b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isysteminformation
+@GUID("ade87bf7-7b56-4275-8fab-b9b0e591844b")
 interface ISystemInformation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isysteminformation-get_oemhardwaresupportlink
@@ -1110,18 +1111,18 @@ interface ISystemInformation : IDispatch
     HRESULT get_RebootRequired(VARIANT_BOOL* retval);
 }
 
-@GUID("85713fa1-7796-4fa2-be3b-e2d6124dd373")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsupdateagentinfo
+@GUID("85713fa1-7796-4fa2-be3b-e2d6124dd373")
 interface IWindowsUpdateAgentInfo : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsupdateagentinfo-getinfo
     HRESULT GetInfo(VARIANT varInfoIdentifier, VARIANT* retval);
 }
 
-@GUID("e7a4d634-7942-4dd9-a111-82228ba33901")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatesresults
+@GUID("e7a4d634-7942-4dd9-a111-82228ba33901")
 interface IAutomaticUpdatesResults : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatesresults-get_lastsearchsuccessdate
@@ -1130,9 +1131,9 @@ interface IAutomaticUpdatesResults : IDispatch
     HRESULT get_LastInstallationSuccessDate(VARIANT* retval);
 }
 
-@GUID("2ee48f22-af3c-405f-8970-f71be12ee9a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings
+@GUID("2ee48f22-af3c-405f-8970-f71be12ee9a2")
 interface IAutomaticUpdatesSettings : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_notificationlevel
@@ -1157,9 +1158,9 @@ interface IAutomaticUpdatesSettings : IDispatch
     HRESULT Save();
 }
 
-@GUID("6abc136a-c3ca-4384-8171-cb2b1e59b8dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings2
+@GUID("6abc136a-c3ca-4384-8171-cb2b1e59b8dc")
 interface IAutomaticUpdatesSettings2 : IAutomaticUpdatesSettings
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-get_includerecommendedupdates
@@ -1171,9 +1172,9 @@ interface IAutomaticUpdatesSettings2 : IAutomaticUpdatesSettings
                             VARIANT_BOOL* userHasPermission);
 }
 
-@GUID("b587f5c3-f57e-485f-bbf5-0d181c5cd0dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings3
+@GUID("b587f5c3-f57e-485f-bbf5-0d181c5cd0dc")
 interface IAutomaticUpdatesSettings3 : IAutomaticUpdatesSettings2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-get_nonadministratorselevated
@@ -1186,9 +1187,9 @@ interface IAutomaticUpdatesSettings3 : IAutomaticUpdatesSettings2
     HRESULT put_FeaturedUpdatesEnabled(VARIANT_BOOL value);
 }
 
-@GUID("673425bf-c082-4c7c-bdfd-569464b8e0ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdates
+@GUID("673425bf-c082-4c7c-bdfd-569464b8e0ce")
 interface IAutomaticUpdates : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-detectnow
@@ -1207,18 +1208,18 @@ interface IAutomaticUpdates : IDispatch
     HRESULT EnableService();
 }
 
-@GUID("4a2f5c31-cfd9-410e-b7fb-29a653973a0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdates2
+@GUID("4a2f5c31-cfd9-410e-b7fb-29a653973a0f")
 interface IAutomaticUpdates2 : IAutomaticUpdates
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates2-get_results
     HRESULT get_Results(IAutomaticUpdatesResults* retval);
 }
 
-@GUID("46297823-9940-4c09-aed9-cd3ea6d05968")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateidentity
+@GUID("46297823-9940-4c09-aed9-cd3ea6d05968")
 interface IUpdateIdentity : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateidentity-get_revisionnumber
@@ -1227,9 +1228,9 @@ interface IUpdateIdentity : IDispatch
     HRESULT get_UpdateID(BSTR* retval);
 }
 
-@GUID("7c907864-346c-4aeb-8f3f-57da289f969f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iimageinformation
+@GUID("7c907864-346c-4aeb-8f3f-57da289f969f")
 interface IImageInformation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_alttext
@@ -1242,9 +1243,9 @@ interface IImageInformation : IDispatch
     HRESULT get_Width(int* retval);
 }
 
-@GUID("81ddc1b8-9d35-47a6-b471-5b80f519223b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-icategory
+@GUID("81ddc1b8-9d35-47a6-b471-5b80f519223b")
 interface ICategory : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_name
@@ -1267,9 +1268,9 @@ interface ICategory : IDispatch
     HRESULT get_Updates(IUpdateCollection* retval);
 }
 
-@GUID("3a56bfb8-576c-43f7-9335-fe4838fd7e37")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-icategorycollection
+@GUID("3a56bfb8-576c-43f7-9335-fe4838fd7e37")
 interface ICategoryCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get_item
@@ -1280,9 +1281,9 @@ interface ICategoryCollection : IDispatch
     HRESULT get_Count(int* retval);
 }
 
-@GUID("d9a59339-e245-4dbd-9686-4d5763e39624")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationbehavior
+@GUID("d9a59339-e245-4dbd-9686-4d5763e39624")
 interface IInstallationBehavior : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_canrequestuserinput
@@ -1295,27 +1296,27 @@ interface IInstallationBehavior : IDispatch
     HRESULT get_RequiresNetworkConnectivity(VARIANT_BOOL* retval);
 }
 
-@GUID("54a2cb2d-9a0c-48b6-8a50-9abb69ee2d02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontent
+@GUID("54a2cb2d-9a0c-48b6-8a50-9abb69ee2d02")
 interface IUpdateDownloadContent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontent-get_downloadurl
     HRESULT get_DownloadUrl(BSTR* retval);
 }
 
-@GUID("c97ad11b-f257-420b-9d9f-377f733f6f68")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontent2
+@GUID("c97ad11b-f257-420b-9d9f-377f733f6f68")
 interface IUpdateDownloadContent2 : IUpdateDownloadContent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontent2-get_isdeltacompressedcontent
     HRESULT get_IsDeltaCompressedContent(VARIANT_BOOL* retval);
 }
 
-@GUID("bc5513c8-b3b8-4bf7-a4d4-361c0d8c88ba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontentcollection
+@GUID("bc5513c8-b3b8-4bf7-a4d4-361c0d8c88ba")
 interface IUpdateDownloadContentCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get_item
@@ -1326,9 +1327,9 @@ interface IUpdateDownloadContentCollection : IDispatch
     HRESULT get_Count(int* retval);
 }
 
-@GUID("6a92b07a-d821-4682-b423-5c805022cc4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate
+@GUID("6a92b07a-d821-4682-b423-5c805022cc4d")
 interface IUpdate : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_title
@@ -1423,9 +1424,9 @@ interface IUpdate : IDispatch
     HRESULT get_DownloadContents(IUpdateDownloadContentCollection* retval);
 }
 
-@GUID("b383cd1a-5ce9-4504-9f63-764b1236f191")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate
+@GUID("b383cd1a-5ce9-4504-9f63-764b1236f191")
 interface IWindowsDriverUpdate : IUpdate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverclass
@@ -1446,9 +1447,9 @@ interface IWindowsDriverUpdate : IUpdate
     HRESULT get_DeviceStatus(int* retval);
 }
 
-@GUID("144fe9b0-d23d-4a8b-8634-fb4457533b7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate2
+@GUID("144fe9b0-d23d-4a8b-8634-fb4457533b7a")
 interface IUpdate2 : IUpdate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_rebootrequired
@@ -1461,27 +1462,27 @@ interface IUpdate2 : IUpdate
     HRESULT CopyToCache(IStringCollection pFiles);
 }
 
-@GUID("112eda6b-95b3-476f-9d90-aee82c6b8181")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate3
+@GUID("112eda6b-95b3-476f-9d90-aee82c6b8181")
 interface IUpdate3 : IUpdate2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate3-get_browseonly
     HRESULT get_BrowseOnly(VARIANT_BOOL* retval);
 }
 
-@GUID("27e94b0d-5139-49a2-9a61-93522dc54652")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate4
+@GUID("27e94b0d-5139-49a2-9a61-93522dc54652")
 interface IUpdate4 : IUpdate3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate4-get_peruser
     HRESULT get_PerUser(VARIANT_BOOL* retval);
 }
 
-@GUID("c1c2f21a-d2f4-4902-b5c6-8a081c19a890")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate5
+@GUID("c1c2f21a-d2f4-4902-b5c6-8a081c19a890")
 interface IUpdate5 : IUpdate4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate5-get_autoselection
@@ -1497,9 +1498,9 @@ interface IUpdateEx : IUpdate5
     HRESULT EvaluateExtendedDynamicProperty(BSTR propertyName, VARIANT* retval);
 }
 
-@GUID("615c4269-7a48-43bd-96b7-bf6ca27d6c3e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate2
+@GUID("615c4269-7a48-43bd-96b7-bf6ca27d6c3e")
 interface IWindowsDriverUpdate2 : IWindowsDriverUpdate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_rebootrequired
@@ -1512,18 +1513,18 @@ interface IWindowsDriverUpdate2 : IWindowsDriverUpdate
     HRESULT CopyToCache(IStringCollection pFiles);
 }
 
-@GUID("49ebd502-4a96-41bd-9e3e-4c5057f4250c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate3
+@GUID("49ebd502-4a96-41bd-9e3e-4c5057f4250c")
 interface IWindowsDriverUpdate3 : IWindowsDriverUpdate2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate3-get_browseonly
     HRESULT get_BrowseOnly(VARIANT_BOOL* retval);
 }
 
-@GUID("ed8bfe40-a60b-42ea-9652-817dfcfa23ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdateentry
+@GUID("ed8bfe40-a60b-42ea-9652-817dfcfa23ec")
 interface IWindowsDriverUpdateEntry : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverclass
@@ -1544,9 +1545,9 @@ interface IWindowsDriverUpdateEntry : IDispatch
     HRESULT get_DeviceStatus(int* retval);
 }
 
-@GUID("0d521700-a372-4bef-828b-3d00c10adebd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdateentrycollection
+@GUID("0d521700-a372-4bef-828b-3d00c10adebd")
 interface IWindowsDriverUpdateEntryCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get_item
@@ -1557,9 +1558,9 @@ interface IWindowsDriverUpdateEntryCollection : IDispatch
     HRESULT get_Count(int* retval);
 }
 
-@GUID("004c6a2b-0c19-4c69-9f5c-a269b2560db9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate4
+@GUID("004c6a2b-0c19-4c69-9f5c-a269b2560db9")
 interface IWindowsDriverUpdate4 : IWindowsDriverUpdate3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate4-get_windowsdriverupdateentries
@@ -1568,9 +1569,9 @@ interface IWindowsDriverUpdate4 : IWindowsDriverUpdate3
     HRESULT get_PerUser(VARIANT_BOOL* retval);
 }
 
-@GUID("70cf5c82-8642-42bb-9dbc-0cfd263c6c4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate5
+@GUID("70cf5c82-8642-42bb-9dbc-0cfd263c6c4f")
 interface IWindowsDriverUpdate5 : IWindowsDriverUpdate4
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate5-get_autoselection
@@ -1579,9 +1580,9 @@ interface IWindowsDriverUpdate5 : IWindowsDriverUpdate4
     HRESULT get_AutoDownload(AutoDownloadMode* retval);
 }
 
-@GUID("07f7438c-7709-4ca5-b518-91279288134e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatecollection
+@GUID("07f7438c-7709-4ca5-b518-91279288134e")
 interface IUpdateCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_item
@@ -1606,9 +1607,9 @@ interface IUpdateCollection : IDispatch
     HRESULT RemoveAt(int index);
 }
 
-@GUID("a376dd5e-09d4-427f-af7c-fed5b6e1c1d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateexception
+@GUID("a376dd5e-09d4-427f-af7c-fed5b6e1c1d6")
 interface IUpdateException : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_message
@@ -1619,18 +1620,18 @@ interface IUpdateException : IDispatch
     HRESULT get_Context(UpdateExceptionContext* retval);
 }
 
-@GUID("a37d00f5-7bb0-4953-b414-f9e98326f2e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinvalidproductlicenseexception
+@GUID("a37d00f5-7bb0-4953-b414-f9e98326f2e8")
 interface IInvalidProductLicenseException : IUpdateException
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinvalidproductlicenseexception-get_product
     HRESULT get_Product(BSTR* retval);
 }
 
-@GUID("503626a3-8e14-4729-9355-0fe664bd2321")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateexceptioncollection
+@GUID("503626a3-8e14-4729-9355-0fe664bd2321")
 interface IUpdateExceptionCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get_item
@@ -1641,9 +1642,9 @@ interface IUpdateExceptionCollection : IDispatch
     HRESULT get_Count(int* retval);
 }
 
-@GUID("d40cff62-e08c-4498-941a-01e25f0fd33c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchresult
+@GUID("d40cff62-e08c-4498-941a-01e25f0fd33c")
 interface ISearchResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_resultcode
@@ -1656,9 +1657,9 @@ interface ISearchResult : IDispatch
     HRESULT get_Warnings(IUpdateExceptionCollection* retval);
 }
 
-@GUID("7366ea16-7a1a-4ea2-b042-973d3e9cd99b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchjob
+@GUID("7366ea16-7a1a-4ea2-b042-973d3e9cd99b")
 interface ISearchJob : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-get_asyncstate
@@ -1671,25 +1672,25 @@ interface ISearchJob : IDispatch
     HRESULT RequestAbort();
 }
 
-@GUID("a700a634-2850-4c47-938a-9e4b6e5af9a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchcompletedcallbackargs
+@GUID("a700a634-2850-4c47-938a-9e4b6e5af9a6")
 interface ISearchCompletedCallbackArgs : IDispatch
 {
 }
 
-@GUID("88aee058-d4b0-4725-a2f1-814a67ae964c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchcompletedcallback
+@GUID("88aee058-d4b0-4725-a2f1-814a67ae964c")
 interface ISearchCompletedCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchcompletedcallback-invoke
     HRESULT Invoke(ISearchJob searchJob, ISearchCompletedCallbackArgs callbackArgs);
 }
 
-@GUID("be56a644-af0e-4e0e-a311-c1d8e695cbff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentry
+@GUID("be56a644-af0e-4e0e-a311-c1d8e695cbff")
 interface IUpdateHistoryEntry : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_operation
@@ -1722,18 +1723,18 @@ interface IUpdateHistoryEntry : IDispatch
     HRESULT get_SupportUrl(BSTR* retval);
 }
 
-@GUID("c2bfb780-4539-4132-ab8c-0a8772013ab6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentry2
+@GUID("c2bfb780-4539-4132-ab8c-0a8772013ab6")
 interface IUpdateHistoryEntry2 : IUpdateHistoryEntry
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry2-get_categories
     HRESULT get_Categories(ICategoryCollection* retval);
 }
 
-@GUID("a7f04f3c-a290-435b-aadf-a116c3357a5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentrycollection
+@GUID("a7f04f3c-a290-435b-aadf-a116c3357a5c")
 interface IUpdateHistoryEntryCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get_item
@@ -1744,9 +1745,9 @@ interface IUpdateHistoryEntryCollection : IDispatch
     HRESULT get_Count(int* retval);
 }
 
-@GUID("8f45abf1-f9ae-4b95-a933-f0f66e5056ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher
+@GUID("8f45abf1-f9ae-4b95-a933-f0f66e5056ea")
 interface IUpdateSearcher : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_canautomaticallyupgradeservice
@@ -1787,9 +1788,9 @@ interface IUpdateSearcher : IDispatch
     HRESULT put_ServiceID(BSTR value);
 }
 
-@GUID("4cbdcb2d-1589-4beb-bd1c-3e582ff0add0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher2
+@GUID("4cbdcb2d-1589-4beb-bd1c-3e582ff0add0")
 interface IUpdateSearcher2 : IUpdateSearcher
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher2-get_ignoredownloadpriority
@@ -1798,18 +1799,18 @@ interface IUpdateSearcher2 : IUpdateSearcher
     HRESULT put_IgnoreDownloadPriority(VARIANT_BOOL value);
 }
 
-@GUID("04c6895d-eaf2-4034-97f3-311de9be413a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher3
+@GUID("04c6895d-eaf2-4034-97f3-311de9be413a")
 interface IUpdateSearcher3 : IUpdateSearcher2
 {
     HRESULT get_SearchScope(SearchScope* retval);
     HRESULT put_SearchScope(SearchScope value);
 }
 
-@GUID("bf99af76-b575-42ad-8aa4-33cbb5477af1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadresult
+@GUID("bf99af76-b575-42ad-8aa4-33cbb5477af1")
 interface IUpdateDownloadResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadresult-get_hresult
@@ -1818,9 +1819,9 @@ interface IUpdateDownloadResult : IDispatch
     HRESULT get_ResultCode(OperationResultCode* retval);
 }
 
-@GUID("daa4fdd0-4727-4dbe-a1e7-745dca317144")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadresult
+@GUID("daa4fdd0-4727-4dbe-a1e7-745dca317144")
 interface IDownloadResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-get_hresult
@@ -1831,9 +1832,9 @@ interface IDownloadResult : IDispatch
     HRESULT GetUpdateResult(int updateIndex, IUpdateDownloadResult* retval);
 }
 
-@GUID("d31a5bac-f719-4178-9dbb-5e2cb47fd18a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogress
+@GUID("d31a5bac-f719-4178-9dbb-5e2cb47fd18a")
 interface IDownloadProgress : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatebytesdownloaded
@@ -1856,9 +1857,9 @@ interface IDownloadProgress : IDispatch
     HRESULT get_CurrentUpdatePercentComplete(int* retval);
 }
 
-@GUID("c574de85-7358-43f6-aae8-8697e62d8ba7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadjob
+@GUID("c574de85-7358-43f6-aae8-8697e62d8ba7")
 interface IDownloadJob : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_asyncstate
@@ -1875,43 +1876,43 @@ interface IDownloadJob : IDispatch
     HRESULT RequestAbort();
 }
 
-@GUID("fa565b23-498c-47a0-979d-e7d5b1813360")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadcompletedcallbackargs
+@GUID("fa565b23-498c-47a0-979d-e7d5b1813360")
 interface IDownloadCompletedCallbackArgs : IDispatch
 {
 }
 
-@GUID("77254866-9f5b-4c8e-b9e2-c77a8530d64b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadcompletedcallback
+@GUID("77254866-9f5b-4c8e-b9e2-c77a8530d64b")
 interface IDownloadCompletedCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadcompletedcallback-invoke
     HRESULT Invoke(IDownloadJob downloadJob, IDownloadCompletedCallbackArgs callbackArgs);
 }
 
-@GUID("324ff2c6-4981-4b04-9412-57481745ab24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogresschangedcallbackargs
+@GUID("324ff2c6-4981-4b04-9412-57481745ab24")
 interface IDownloadProgressChangedCallbackArgs : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogresschangedcallbackargs-get_progress
     HRESULT get_Progress(IDownloadProgress* retval);
 }
 
-@GUID("8c3f1cdd-6173-4591-aebd-a56a53ca77c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogresschangedcallback
+@GUID("8c3f1cdd-6173-4591-aebd-a56a53ca77c1")
 interface IDownloadProgressChangedCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogresschangedcallback-invoke
     HRESULT Invoke(IDownloadJob downloadJob, IDownloadProgressChangedCallbackArgs callbackArgs);
 }
 
-@GUID("68f1c6f9-7ecc-4666-a464-247fe12496c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloader
+@GUID("68f1c6f9-7ecc-4666-a464-247fe12496c3")
 interface IUpdateDownloader : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_clientapplicationid
@@ -1946,9 +1947,9 @@ interface IUpdateDownloaderEx : IUpdateDownloader
     HRESULT Download2(DownloadType downloadType, IDownloadResult* retval);
 }
 
-@GUID("d940f0f8-3cbb-4fd0-993f-471e7f2328ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstallationresult
+@GUID("d940f0f8-3cbb-4fd0-993f-471e7f2328ad")
 interface IUpdateInstallationResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_hresult
@@ -1959,9 +1960,9 @@ interface IUpdateInstallationResult : IDispatch
     HRESULT get_ResultCode(OperationResultCode* retval);
 }
 
-@GUID("a43c56d6-7451-48d4-af96-b6cd2d0d9b7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationresult
+@GUID("a43c56d6-7451-48d4-af96-b6cd2d0d9b7a")
 interface IInstallationResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_hresult
@@ -1974,9 +1975,9 @@ interface IInstallationResult : IDispatch
     HRESULT GetUpdateResult(int updateIndex, IUpdateInstallationResult* retval);
 }
 
-@GUID("345c8244-43a3-4e32-a368-65f073b76f36")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogress
+@GUID("345c8244-43a3-4e32-a368-65f073b76f36")
 interface IInstallationProgress : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_currentupdateindex
@@ -1989,9 +1990,9 @@ interface IInstallationProgress : IDispatch
     HRESULT GetUpdateResult(int updateIndex, IUpdateInstallationResult* retval);
 }
 
-@GUID("5c209f0b-bad5-432a-9556-4699bed2638a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationjob
+@GUID("5c209f0b-bad5-432a-9556-4699bed2638a")
 interface IInstallationJob : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_asyncstate
@@ -2008,43 +2009,43 @@ interface IInstallationJob : IDispatch
     HRESULT RequestAbort();
 }
 
-@GUID("250e2106-8efb-4705-9653-ef13c581b6a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationcompletedcallbackargs
+@GUID("250e2106-8efb-4705-9653-ef13c581b6a1")
 interface IInstallationCompletedCallbackArgs : IDispatch
 {
 }
 
-@GUID("45f4f6f3-d602-4f98-9a8a-3efa152ad2d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationcompletedcallback
+@GUID("45f4f6f3-d602-4f98-9a8a-3efa152ad2d3")
 interface IInstallationCompletedCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationcompletedcallback-invoke
     HRESULT Invoke(IInstallationJob installationJob, IInstallationCompletedCallbackArgs callbackArgs);
 }
 
-@GUID("e4f14e1e-689d-4218-a0b9-bc189c484a01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogresschangedcallbackargs
+@GUID("e4f14e1e-689d-4218-a0b9-bc189c484a01")
 interface IInstallationProgressChangedCallbackArgs : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogresschangedcallbackargs-get_progress
     HRESULT get_Progress(IInstallationProgress* retval);
 }
 
-@GUID("e01402d5-f8da-43ba-a012-38894bd048f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogresschangedcallback
+@GUID("e01402d5-f8da-43ba-a012-38894bd048f1")
 interface IInstallationProgressChangedCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogresschangedcallback-invoke
     HRESULT Invoke(IInstallationJob installationJob, IInstallationProgressChangedCallbackArgs callbackArgs);
 }
 
-@GUID("7b929c68-ccdc-4226-96b1-8724600b54c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller
+@GUID("7b929c68-ccdc-4226-96b1-8724600b54c2")
 interface IUpdateInstaller : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_clientapplicationid
@@ -2092,9 +2093,9 @@ interface IUpdateInstaller : IDispatch
     HRESULT get_RebootRequiredBeforeInstallation(VARIANT_BOOL* retval);
 }
 
-@GUID("3442d4fe-224d-4cee-98cf-30e0c4d229e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller2
+@GUID("3442d4fe-224d-4cee-98cf-30e0c4d229e6")
 interface IUpdateInstaller2 : IUpdateInstaller
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller2-get_forcequiet
@@ -2103,9 +2104,9 @@ interface IUpdateInstaller2 : IUpdateInstaller
     HRESULT put_ForceQuiet(VARIANT_BOOL value);
 }
 
-@GUID("16d11c35-099a-48d0-8338-5fae64047f8e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller3
+@GUID("16d11c35-099a-48d0-8338-5fae64047f8e")
 interface IUpdateInstaller3 : IUpdateInstaller2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller3-get_attemptcloseappsifnecessary
@@ -2114,18 +2115,18 @@ interface IUpdateInstaller3 : IUpdateInstaller2
     HRESULT put_AttemptCloseAppsIfNecessary(VARIANT_BOOL value);
 }
 
-@GUID("ef8208ea-2304-492d-9109-23813b0958e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller4
+@GUID("ef8208ea-2304-492d-9109-23813b0958e1")
 interface IUpdateInstaller4 : IUpdateInstaller3
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller4-commit
     HRESULT Commit(uint dwFlags);
 }
 
-@GUID("816858a4-260d-4260-933a-2585f1abc76b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession
+@GUID("816858a4-260d-4260-933a-2585f1abc76b")
 interface IUpdateSession : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_clientapplicationid
@@ -2146,9 +2147,9 @@ interface IUpdateSession : IDispatch
     HRESULT CreateUpdateInstaller(IUpdateInstaller* retval);
 }
 
-@GUID("91caf7b0-eb23-49ed-9937-c52d817f46f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession2
+@GUID("91caf7b0-eb23-49ed-9937-c52d817f46f7")
 interface IUpdateSession2 : IUpdateSession
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession2-get_userlocale
@@ -2157,9 +2158,9 @@ interface IUpdateSession2 : IUpdateSession
     HRESULT put_UserLocale(uint lcid);
 }
 
-@GUID("918efd1e-b5d8-4c90-8540-aeb9bdc56f9d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession3
+@GUID("918efd1e-b5d8-4c90-8540-aeb9bdc56f9d")
 interface IUpdateSession3 : IUpdateSession2
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession3-createupdateservicemanager
@@ -2168,9 +2169,9 @@ interface IUpdateSession3 : IUpdateSession2
     HRESULT QueryHistory(BSTR criteria, int startIndex, int count, IUpdateHistoryEntryCollection* retval);
 }
 
-@GUID("76b3b17e-aed6-4da5-85f0-83587f81abe3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservice
+@GUID("76b3b17e-aed6-4da5-85f0-83587f81abe3")
 interface IUpdateService : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_name
@@ -2201,18 +2202,18 @@ interface IUpdateService : IDispatch
     HRESULT get_SetupPrefix(BSTR* retval);
 }
 
-@GUID("1518b460-6518-4172-940f-c75883b24ceb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservice2
+@GUID("1518b460-6518-4172-940f-c75883b24ceb")
 interface IUpdateService2 : IUpdateService
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice2-get_isdefaultauservice
     HRESULT get_IsDefaultAUService(VARIANT_BOOL* retval);
 }
 
-@GUID("9b0353aa-0e52-44ff-b8b0-1f7fa0437f88")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicecollection
+@GUID("9b0353aa-0e52-44ff-b8b0-1f7fa0437f88")
 interface IUpdateServiceCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get_item
@@ -2223,9 +2224,9 @@ interface IUpdateServiceCollection : IDispatch
     HRESULT get_Count(int* retval);
 }
 
-@GUID("dde02280-12b3-4e0b-937b-6747f6acb286")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateserviceregistration
+@GUID("dde02280-12b3-4e0b-937b-6747f6acb286")
 interface IUpdateServiceRegistration : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_registrationstate
@@ -2237,9 +2238,9 @@ interface IUpdateServiceRegistration : IDispatch
     HRESULT get_Service(IUpdateService2* retval);
 }
 
-@GUID("23857e3c-02ba-44a3-9423-b1c900805f37")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicemanager
+@GUID("23857e3c-02ba-44a3-9423-b1c900805f37")
 interface IUpdateServiceManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-get_services
@@ -2258,9 +2259,9 @@ interface IUpdateServiceManager : IDispatch
     HRESULT SetOption(BSTR optionName, VARIANT optionValue);
 }
 
-@GUID("0bb8531d-7e8d-424f-986c-a0b8f60a3e7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicemanager2
+@GUID("0bb8531d-7e8d-424f-986c-a0b8f60a3e7b")
 interface IUpdateServiceManager2 : IUpdateServiceManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-get_clientapplicationid
@@ -2273,9 +2274,9 @@ interface IUpdateServiceManager2 : IUpdateServiceManager
     HRESULT AddService2(BSTR serviceID, int flags, BSTR authorizationCabPath, IUpdateServiceRegistration* retval);
 }
 
-@GUID("925cbc18-a2ea-4648-bf1c-ec8badcfe20a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationagent
+@GUID("925cbc18-a2ea-4648-bf1c-ec8badcfe20a")
 interface IInstallationAgent : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationagent-recordinstallationresult

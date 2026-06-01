@@ -2416,8 +2416,8 @@ struct PortableDeviceWebControl;
 @GUID("a1570149-e645-4f43-8b0d-409b061db2fc")
 struct EnumBthMtpConnectors;
 
-@GUID("b32f4002-bb27-45ff-af4f-06631c1e8dad")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer
+@GUID("b32f4002-bb27-45ff-af4f-06631c1e8dad")
 interface IWpdSerializer : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getiportabledevicevaluesfrombuffer
@@ -2433,8 +2433,8 @@ interface IWpdSerializer : IUnknown
     HRESULT GetSerializedSize(IPortableDeviceValues pSource, uint* pdwSize);
 }
 
-@GUID("6848f6f2-3155-4f86-b6f5-263eeeab3143")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues
+@GUID("6848f6f2-3155-4f86-b6f5-263eeeab3143")
 interface IPortableDeviceValues : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getcount
@@ -2523,8 +2523,8 @@ interface IPortableDeviceValues : IUnknown
     HRESULT Clear();
 }
 
-@GUID("dada2357-e0ad-492e-98db-dd61c53ba353")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection
+@GUID("dada2357-e0ad-492e-98db-dd61c53ba353")
 interface IPortableDeviceKeyCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-getcount
@@ -2539,8 +2539,8 @@ interface IPortableDeviceKeyCollection : IUnknown
     HRESULT RemoveAt(const(uint) dwIndex);
 }
 
-@GUID("89b2e422-4f1b-4316-bcef-a44afea83eb3")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection
+@GUID("89b2e422-4f1b-4316-bcef-a44afea83eb3")
 interface IPortableDevicePropVariantCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-getcount
@@ -2559,8 +2559,8 @@ interface IPortableDevicePropVariantCollection : IUnknown
     HRESULT RemoveAt(const(uint) dwIndex);
 }
 
-@GUID("6e3f2d79-4e07-48c4-8208-d8c2e5af4a99")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection
+@GUID("6e3f2d79-4e07-48c4-8208-d8c2e5af4a99")
 interface IPortableDeviceValuesCollection : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-getcount
@@ -2575,8 +2575,8 @@ interface IPortableDeviceValuesCollection : IUnknown
     HRESULT RemoveAt(const(uint) dwIndex);
 }
 
-@GUID("a1567595-4c2f-4574-a6fa-ecef917b9a40")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicemanager
+@GUID("a1567595-4c2f-4574-a6fa-ecef917b9a40")
 interface IPortableDeviceManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevices
@@ -2599,8 +2599,8 @@ interface IPortableDeviceManager : IUnknown
     HRESULT GetPrivateDevices(PWSTR* pPnPDeviceIDs, uint* pcPnPDeviceIDs);
 }
 
-@GUID("625e2df8-6392-4cf0-9ad1-3cfa5f17775c")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevice
+@GUID("625e2df8-6392-4cf0-9ad1-3cfa5f17775c")
 interface IPortableDevice : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-open
@@ -2624,8 +2624,8 @@ interface IPortableDevice : IUnknown
     HRESULT GetPnPDeviceID(PWSTR* ppszPnPDeviceID);
 }
 
-@GUID("6a96ed84-7c73-4480-9938-bf5af477d426")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecontent
+@GUID("6a96ed84-7c73-4480-9938-bf5af477d426")
 interface IPortableDeviceContent : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-enumobjects
@@ -2656,9 +2656,9 @@ interface IPortableDeviceContent : IUnknown
                  IPortableDevicePropVariantCollection* ppResults);
 }
 
-@GUID("9b4add96-f6bf-4034-8708-eca72bf10554")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecontent2
+@GUID("9b4add96-f6bf-4034-8708-eca72bf10554")
 interface IPortableDeviceContent2 : IPortableDeviceContent
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent2-updateobjectwithpropertiesanddata
@@ -2666,8 +2666,8 @@ interface IPortableDeviceContent2 : IPortableDeviceContent
                                               IStream* ppData, uint* pdwOptimalWriteBufferSize);
 }
 
-@GUID("10ece955-cf41-4728-bfa0-41eedf1bbf19")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-ienumportabledeviceobjectids
+@GUID("10ece955-cf41-4728-bfa0-41eedf1bbf19")
 interface IEnumPortableDeviceObjectIDs : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -2682,8 +2682,8 @@ interface IEnumPortableDeviceObjectIDs : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("7f6d695c-03df-4439-a809-59266beee3a6")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceproperties
+@GUID("7f6d695c-03df-4439-a809-59266beee3a6")
 interface IPortableDeviceProperties : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getsupportedproperties
@@ -2702,8 +2702,8 @@ interface IPortableDeviceProperties : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("fd8878ac-d841-4d17-891c-e6829cdb6934")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceresources
+@GUID("fd8878ac-d841-4d17-891c-e6829cdb6934")
 interface IPortableDeviceResources : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getsupportedresources
@@ -2723,8 +2723,8 @@ interface IPortableDeviceResources : IUnknown
                            uint* pdwOptimalWriteBufferSize, PWSTR* ppszCookie);
 }
 
-@GUID("2c8c6dbf-e3dc-4061-becc-8542e810d126")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecapabilities
+@GUID("2c8c6dbf-e3dc-4061-becc-8542e810d126")
 interface IPortableDeviceCapabilities : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedcommands
@@ -2752,16 +2752,16 @@ interface IPortableDeviceCapabilities : IUnknown
     HRESULT GetEventOptions(const(GUID)* Event, IPortableDeviceValues* ppOptions);
 }
 
-@GUID("a8792a31-f385-493c-a893-40f64eb45f6e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceeventcallback
+@GUID("a8792a31-f385-493c-a893-40f64eb45f6e")
 interface IPortableDeviceEventCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceeventcallback-onevent
     HRESULT OnEvent(IPortableDeviceValues pEventParameters);
 }
 
-@GUID("88e04db3-1012-4d64-9996-f703a950d3f4")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicedatastream
+@GUID("88e04db3-1012-4d64-9996-f703a950d3f4")
 interface IPortableDeviceDataStream : IStream
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedatastream-getobjectid
@@ -2770,9 +2770,9 @@ interface IPortableDeviceDataStream : IStream
     HRESULT Cancel();
 }
 
-@GUID("5e98025f-bfc4-47a2-9a5f-bc900a507c67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceunitsstream
+@GUID("5e98025f-bfc4-47a2-9a5f-bc900a507c67")
 interface IPortableDeviceUnitsStream : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceunitsstream-seekinunits
@@ -2780,8 +2780,8 @@ interface IPortableDeviceUnitsStream : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("482b05c0-4056-44ed-9e0f-5e23b009da93")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicepropertiesbulk
+@GUID("482b05c0-4056-44ed-9e0f-5e23b009da93")
 interface IPortableDevicePropertiesBulk : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuegetvaluesbyobjectlist
@@ -2801,8 +2801,8 @@ interface IPortableDevicePropertiesBulk : IUnknown
     HRESULT Cancel(const(GUID)* pContext);
 }
 
-@GUID("9deacb80-11e8-40e3-a9f3-f557986a7845")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicepropertiesbulkcallback
+@GUID("9deacb80-11e8-40e3-a9f3-f557986a7845")
 interface IPortableDevicePropertiesBulkCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onstart
@@ -2813,9 +2813,9 @@ interface IPortableDevicePropertiesBulkCallback : IUnknown
     HRESULT OnEnd(const(GUID)* pContext, HRESULT hrStatus);
 }
 
-@GUID("a8abc4e9-a84a-47a9-80b3-c5d9b172a961")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemanager
+@GUID("a8abc4e9-a84a-47a9-80b3-c5d9b172a961")
 interface IPortableDeviceServiceManager : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemanager-getdeviceservices
@@ -2825,9 +2825,9 @@ interface IPortableDeviceServiceManager : IUnknown
     HRESULT GetDeviceForService(const(PWSTR) pszPnPServiceID, PWSTR* ppszPnPDeviceID);
 }
 
-@GUID("d3bd3a44-d7b5-40a9-98b7-2fa4d01dec08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservice
+@GUID("d3bd3a44-d7b5-40a9-98b7-2fa4d01dec08")
 interface IPortableDeviceService : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-open
@@ -2855,9 +2855,9 @@ interface IPortableDeviceService : IUnknown
     HRESULT SendCommand(const(uint) dwFlags, IPortableDeviceValues pParameters, IPortableDeviceValues* ppResults);
 }
 
-@GUID("24dbd89d-413e-43e0-bd5b-197f3c56c886")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicecapabilities
+@GUID("24dbd89d-413e-43e0-bd5b-197f3c56c886")
 interface IPortableDeviceServiceCapabilities : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedmethods
@@ -2897,9 +2897,9 @@ interface IPortableDeviceServiceCapabilities : IUnknown
     HRESULT Cancel();
 }
 
-@GUID("e20333c9-fd34-412d-a381-cc6f2d820df7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemethods
+@GUID("e20333c9-fd34-412d-a381-cc6f2d820df7")
 interface IPortableDeviceServiceMethods : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-invoke
@@ -2911,9 +2911,9 @@ interface IPortableDeviceServiceMethods : IUnknown
     HRESULT Cancel(IPortableDeviceServiceMethodCallback pCallback);
 }
 
-@GUID("c424233c-afce-4828-a756-7ed7a2350083")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemethodcallback
+@GUID("c424233c-afce-4828-a756-7ed7a2350083")
 interface IPortableDeviceServiceMethodCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethodcallback-oncomplete
@@ -2934,18 +2934,18 @@ interface IPortableDeviceServiceOpenCallback : IUnknown
     HRESULT OnComplete(HRESULT hrStatus);
 }
 
-@GUID("5e1eafc3-e3d7-4132-96fa-759c0f9d1e0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicedispatchfactory
+@GUID("5e1eafc3-e3d7-4132-96fa-759c0f9d1e0f")
 interface IPortableDeviceDispatchFactory : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedispatchfactory-getdevicedispatch
     HRESULT GetDeviceDispatch(const(PWSTR) pszPnPDeviceID, IDispatch* ppDeviceDispatch);
 }
 
-@GUID("94fc7953-5ca1-483a-8aee-df52e7747d00")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicewebcontrol
+@GUID("94fc7953-5ca1-483a-8aee-df52e7747d00")
 interface IPortableDeviceWebControl : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicewebcontrol-getdevicefromid
@@ -2954,8 +2954,8 @@ interface IPortableDeviceWebControl : IDispatch
     HRESULT GetDeviceFromIdAsync(BSTR deviceId, IDispatch pCompletionHandler, IDispatch pErrorHandler);
 }
 
-@GUID("bfdef549-9247-454f-bd82-06fe80853faa")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors
+@GUID("bfdef549-9247-454f-bd82-06fe80853faa")
 interface IEnumPortableDeviceConnectors : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-next
@@ -2968,9 +2968,9 @@ interface IEnumPortableDeviceConnectors : IUnknown
     HRESULT Clone(IEnumPortableDeviceConnectors* ppEnum);
 }
 
-@GUID("625e2df8-6392-4cf0-9ad1-3cfa5f17775c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nn-portabledeviceconnectapi-iportabledeviceconnector
+@GUID("625e2df8-6392-4cf0-9ad1-3cfa5f17775c")
 interface IPortableDeviceConnector : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-connect
@@ -2988,8 +2988,8 @@ interface IPortableDeviceConnector : IUnknown
     HRESULT GetPnPID(PWSTR* ppwszPnPID);
 }
 
-@GUID("272c9ae0-7161-4ae0-91bd-9f448ee9c427")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iconnectionrequestcallback
+@GUID("272c9ae0-7161-4ae0-91bd-9f448ee9c427")
 interface IConnectionRequestCallback : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iconnectionrequestcallback-oncomplete

@@ -747,9 +747,9 @@ struct AdSyncTask;
 @GUID("100b4fc8-74c1-470f-b1b7-dd7b6bae79bd")
 struct FsrmAccessDeniedRemediationClient;
 
-@GUID("22bcef93-4a3f-4183-89f9-2f8b8a628aee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmobject
+@GUID("22bcef93-4a3f-4183-89f9-2f8b8a628aee")
 interface IFsrmObject : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmobject-get_id
@@ -764,9 +764,9 @@ interface IFsrmObject : IDispatch
     HRESULT Commit();
 }
 
-@GUID("f76fbf3b-8ddd-4b42-b05a-cb1c3ff1fee8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmcollection
+@GUID("f76fbf3b-8ddd-4b42-b05a-cb1c3ff1fee8")
 interface IFsrmCollection : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmcollection-get__newenum
@@ -785,9 +785,9 @@ interface IFsrmCollection : IDispatch
     HRESULT GetById(GUID id, VARIANT* entry);
 }
 
-@GUID("1bb617b8-3886-49dc-af82-a6c90fa35dda")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmmutablecollection
+@GUID("1bb617b8-3886-49dc-af82-a6c90fa35dda")
 interface IFsrmMutableCollection : IFsrmCollection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmmutablecollection-add
@@ -800,18 +800,18 @@ interface IFsrmMutableCollection : IFsrmCollection
     HRESULT Clone(IFsrmMutableCollection* collection);
 }
 
-@GUID("96deb3b5-8b91-4a2a-9d93-80a35d8aa847")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmcommittablecollection
+@GUID("96deb3b5-8b91-4a2a-9d93-80a35d8aa847")
 interface IFsrmCommittableCollection : IFsrmMutableCollection
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmcommittablecollection-commit
     HRESULT Commit(FsrmCommitOptions options, IFsrmCollection* results);
 }
 
-@GUID("6cd6408a-ae60-463b-9ef1-e117534d69dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmaction
+@GUID("6cd6408a-ae60-463b-9ef1-e117534d69dc")
 interface IFsrmAction : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmaction-get_id
@@ -826,9 +826,9 @@ interface IFsrmAction : IDispatch
     HRESULT Delete();
 }
 
-@GUID("d646567d-26ae-4caa-9f84-4e0aad207fca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmactionemail
+@GUID("d646567d-26ae-4caa-9f84-4e0aad207fca")
 interface IFsrmActionEmail : IFsrmAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmactionemail-get_mailfrom
@@ -861,9 +861,9 @@ interface IFsrmActionEmail : IFsrmAction
     HRESULT put_MessageText(BSTR messageText);
 }
 
-@GUID("8276702f-2532-4839-89bf-4872609a2ea4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmactionemail2
+@GUID("8276702f-2532-4839-89bf-4872609a2ea4")
 interface IFsrmActionEmail2 : IFsrmActionEmail
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmactionemail2-get_attachmentfilelistsize
@@ -872,9 +872,9 @@ interface IFsrmActionEmail2 : IFsrmActionEmail
     HRESULT put_AttachmentFileListSize(int attachmentFileListSize);
 }
 
-@GUID("2dbe63c4-b340-48a0-a5b0-158e07fc567e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmactionreport
+@GUID("2dbe63c4-b340-48a0-a5b0-158e07fc567e")
 interface IFsrmActionReport : IFsrmAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmactionreport-get_reporttypes
@@ -887,9 +887,9 @@ interface IFsrmActionReport : IFsrmAction
     HRESULT put_MailTo(BSTR mailTo);
 }
 
-@GUID("4c8f96c3-5d94-4f37-a4f4-f56ab463546f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmactioneventlog
+@GUID("4c8f96c3-5d94-4f37-a4f4-f56ab463546f")
 interface IFsrmActionEventLog : IFsrmAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmactioneventlog-get_eventtype
@@ -902,9 +902,9 @@ interface IFsrmActionEventLog : IFsrmAction
     HRESULT put_MessageText(BSTR messageText);
 }
 
-@GUID("12937789-e247-4917-9c20-f3ee9c7ee783")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmactioncommand
+@GUID("12937789-e247-4917-9c20-f3ee9c7ee783")
 interface IFsrmActionCommand : IFsrmAction
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmactioncommand-get_executablepath
@@ -937,9 +937,9 @@ interface IFsrmActionCommand : IFsrmAction
     HRESULT put_LogResult(VARIANT_BOOL logResults);
 }
 
-@GUID("f411d4fd-14be-4260-8c40-03b7c95e608a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmsetting
+@GUID("f411d4fd-14be-4260-8c40-03b7c95e608a")
 interface IFsrmSetting : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmsetting-get_smtpserver
@@ -970,18 +970,18 @@ interface IFsrmSetting : IDispatch
     HRESULT GetActionRunLimitInterval(FsrmActionType actionType, int* delayTimeMinutes);
 }
 
-@GUID("6f4dbfff-6920-4821-a6c3-b7e94c1fd60c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmpathmapper
+@GUID("6f4dbfff-6920-4821-a6c3-b7e94c1fd60c")
 interface IFsrmPathMapper : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmpathmapper-getsharepathsforlocalpath
     HRESULT GetSharePathsForLocalPath(BSTR localPath, SAFEARRAY** sharePaths);
 }
 
-@GUID("efcb0ab1-16c4-4a79-812c-725614c3306b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmexportimport
+@GUID("efcb0ab1-16c4-4a79-812c-725614c3306b")
 interface IFsrmExportImport : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmexportimport-exportfilegroups
@@ -1001,9 +1001,9 @@ interface IFsrmExportImport : IDispatch
                                  IFsrmCommittableCollection* templates);
 }
 
-@GUID("39322a2d-38ee-4d0d-8095-421a80849a82")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmderivedobjectsresult
+@GUID("39322a2d-38ee-4d0d-8095-421a80849a82")
 interface IFsrmDerivedObjectsResult : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmderivedobjectsresult-get_derivedobjects
@@ -1012,9 +1012,9 @@ interface IFsrmDerivedObjectsResult : IDispatch
     HRESULT get_Results(IFsrmCollection* results);
 }
 
-@GUID("40002314-590b-45a5-8e1b-8c05da527e52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nn-fsrm-ifsrmaccessdeniedremediationclient
+@GUID("40002314-590b-45a5-8e1b-8c05da527e52")
 interface IFsrmAccessDeniedRemediationClient : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrm/nf-fsrm-ifsrmaccessdeniedremediationclient-show
@@ -1022,9 +1022,9 @@ interface IFsrmAccessDeniedRemediationClient : IDispatch
                  BSTR windowMessage, int* result);
 }
 
-@GUID("1568a795-3924-4118-b74b-68d8f0fa5daf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotabase
+@GUID("1568a795-3924-4118-b74b-68d8f0fa5daf")
 interface IFsrmQuotaBase : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotabase-get_quotalimit
@@ -1049,9 +1049,9 @@ interface IFsrmQuotaBase : IFsrmObject
     HRESULT EnumThresholdActions(int threshold, IFsrmCollection* actions);
 }
 
-@GUID("42dc3511-61d5-48ae-b6dc-59fc00c0a8d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotaobject
+@GUID("42dc3511-61d5-48ae-b6dc-59fc00c0a8d6")
 interface IFsrmQuotaObject : IFsrmQuotaBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotaobject-get_path
@@ -1068,9 +1068,9 @@ interface IFsrmQuotaObject : IFsrmQuotaBase
     HRESULT ApplyTemplate(BSTR quotaTemplateName);
 }
 
-@GUID("377f739d-9647-4b8e-97d2-5ffce6d759cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquota
+@GUID("377f739d-9647-4b8e-97d2-5ffce6d759cd")
 interface IFsrmQuota : IFsrmQuotaObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquota-get_quotaused
@@ -1085,9 +1085,9 @@ interface IFsrmQuota : IFsrmQuotaObject
     HRESULT RefreshUsageProperties();
 }
 
-@GUID("f82e5729-6aba-4740-bfc7-c7f58f75fb7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmautoapplyquota
+@GUID("f82e5729-6aba-4740-bfc7-c7f58f75fb7b")
 interface IFsrmAutoApplyQuota : IFsrmQuotaObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmautoapplyquota-get_excludefolders
@@ -1099,9 +1099,9 @@ interface IFsrmAutoApplyQuota : IFsrmQuotaObject
                                    IFsrmDerivedObjectsResult* derivedObjectsResult);
 }
 
-@GUID("8bb68c7d-19d8-4ffb-809e-be4fc1734014")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotamanager
+@GUID("8bb68c7d-19d8-4ffb-809e-be4fc1734014")
 interface IFsrmQuotaManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotamanager-get_actionvariables
@@ -1130,18 +1130,18 @@ interface IFsrmQuotaManager : IDispatch
     HRESULT CreateQuotaCollection(IFsrmCommittableCollection* collection);
 }
 
-@GUID("4846cb01-d430-494f-abb4-b1054999fb09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotamanagerex
+@GUID("4846cb01-d430-494f-abb4-b1054999fb09")
 interface IFsrmQuotaManagerEx : IFsrmQuotaManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotamanagerex-isaffectedbyquota
     HRESULT IsAffectedByQuota(BSTR path, FsrmEnumOptions options, VARIANT_BOOL* affected);
 }
 
-@GUID("a2efab31-295e-46bb-b976-e86d58b52e8b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotatemplate
+@GUID("a2efab31-295e-46bb-b976-e86d58b52e8b")
 interface IFsrmQuotaTemplate : IFsrmQuotaBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotatemplate-get_name
@@ -1155,9 +1155,9 @@ interface IFsrmQuotaTemplate : IFsrmQuotaBase
                                    IFsrmDerivedObjectsResult* derivedObjectsResult);
 }
 
-@GUID("9a2bf113-a329-44cc-809a-5c00fce8da40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotatemplateimported
+@GUID("9a2bf113-a329-44cc-809a-5c00fce8da40")
 interface IFsrmQuotaTemplateImported : IFsrmQuotaTemplate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotatemplateimported-get_overwriteoncommit
@@ -1166,9 +1166,9 @@ interface IFsrmQuotaTemplateImported : IFsrmQuotaTemplate
     HRESULT put_OverwriteOnCommit(VARIANT_BOOL overwrite);
 }
 
-@GUID("4173ac41-172d-4d52-963c-fdc7e415f717")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nn-fsrmquota-ifsrmquotatemplatemanager
+@GUID("4173ac41-172d-4d52-963c-fdc7e415f717")
 interface IFsrmQuotaTemplateManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmquota/nf-fsrmquota-ifsrmquotatemplatemanager-createtemplate
@@ -1184,9 +1184,9 @@ interface IFsrmQuotaTemplateManager : IDispatch
                             IFsrmCommittableCollection* quotaTemplates);
 }
 
-@GUID("8dd04909-0e34-4d55-afaa-89e1f1a1bbb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilegroup
+@GUID("8dd04909-0e34-4d55-afaa-89e1f1a1bbb9")
 interface IFsrmFileGroup : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilegroup-get_name
@@ -1203,9 +1203,9 @@ interface IFsrmFileGroup : IFsrmObject
     HRESULT put_NonMembers(IFsrmMutableCollection nonMembers);
 }
 
-@GUID("ad55f10b-5f11-4be7-94ef-d9ee2e470ded")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilegroupimported
+@GUID("ad55f10b-5f11-4be7-94ef-d9ee2e470ded")
 interface IFsrmFileGroupImported : IFsrmFileGroup
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilegroupimported-get_overwriteoncommit
@@ -1214,9 +1214,9 @@ interface IFsrmFileGroupImported : IFsrmFileGroup
     HRESULT put_OverwriteOnCommit(VARIANT_BOOL overwrite);
 }
 
-@GUID("426677d5-018c-485c-8a51-20b86d00bdc4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilegroupmanager
+@GUID("426677d5-018c-485c-8a51-20b86d00bdc4")
 interface IFsrmFileGroupManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilegroupmanager-createfilegroup
@@ -1232,9 +1232,9 @@ interface IFsrmFileGroupManager : IDispatch
                              IFsrmCommittableCollection* fileGroups);
 }
 
-@GUID("f3637e80-5b22-4a2b-a637-bbb642b41cfc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreenbase
+@GUID("f3637e80-5b22-4a2b-a637-bbb642b41cfc")
 interface IFsrmFileScreenBase : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreenbase-get_blockedfilegroups
@@ -1251,9 +1251,9 @@ interface IFsrmFileScreenBase : IFsrmObject
     HRESULT EnumActions(IFsrmCollection* actions);
 }
 
-@GUID("5f6325d3-ce88-4733-84c1-2d6aefc5ea07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreen
+@GUID("5f6325d3-ce88-4733-84c1-2d6aefc5ea07")
 interface IFsrmFileScreen : IFsrmFileScreenBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreen-get_path
@@ -1270,9 +1270,9 @@ interface IFsrmFileScreen : IFsrmFileScreenBase
     HRESULT ApplyTemplate(BSTR fileScreenTemplateName);
 }
 
-@GUID("bee7ce02-df77-4515-9389-78f01c5afc1a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreenexception
+@GUID("bee7ce02-df77-4515-9389-78f01c5afc1a")
 interface IFsrmFileScreenException : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreenexception-get_path
@@ -1283,9 +1283,9 @@ interface IFsrmFileScreenException : IFsrmObject
     HRESULT put_AllowedFileGroups(IFsrmMutableCollection allowList);
 }
 
-@GUID("ff4fa04e-5a94-4bda-a3a0-d5b4d3c52eba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreenmanager
+@GUID("ff4fa04e-5a94-4bda-a3a0-d5b4d3c52eba")
 interface IFsrmFileScreenManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreenmanager-get_actionvariables
@@ -1309,9 +1309,9 @@ interface IFsrmFileScreenManager : IDispatch
     HRESULT CreateFileScreenCollection(IFsrmCommittableCollection* collection);
 }
 
-@GUID("205bebf8-dd93-452a-95a6-32b566b35828")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreentemplate
+@GUID("205bebf8-dd93-452a-95a6-32b566b35828")
 interface IFsrmFileScreenTemplate : IFsrmFileScreenBase
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreentemplate-get_name
@@ -1325,9 +1325,9 @@ interface IFsrmFileScreenTemplate : IFsrmFileScreenBase
                                    IFsrmDerivedObjectsResult* derivedObjectsResult);
 }
 
-@GUID("e1010359-3e5d-4ecd-9fe4-ef48622fdf30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreentemplateimported
+@GUID("e1010359-3e5d-4ecd-9fe4-ef48622fdf30")
 interface IFsrmFileScreenTemplateImported : IFsrmFileScreenTemplate
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreentemplateimported-get_overwriteoncommit
@@ -1336,9 +1336,9 @@ interface IFsrmFileScreenTemplateImported : IFsrmFileScreenTemplate
     HRESULT put_OverwriteOnCommit(VARIANT_BOOL overwrite);
 }
 
-@GUID("cfe36cba-1949-4e74-a14f-f1d580ceaf13")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nn-fsrmscreen-ifsrmfilescreentemplatemanager
+@GUID("cfe36cba-1949-4e74-a14f-f1d580ceaf13")
 interface IFsrmFileScreenTemplateManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmscreen/nf-fsrmscreen-ifsrmfilescreentemplatemanager-createtemplate
@@ -1354,9 +1354,9 @@ interface IFsrmFileScreenTemplateManager : IDispatch
                             IFsrmCommittableCollection* fileScreenTemplates);
 }
 
-@GUID("27b899fe-6ffa-4481-a184-d3daade8a02b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmreportmanager
+@GUID("27b899fe-6ffa-4481-a184-d3daade8a02b")
 interface IFsrmReportManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmreportmanager-enumreportjobs
@@ -1381,9 +1381,9 @@ interface IFsrmReportManager : IDispatch
     HRESULT SetReportSizeLimit(FsrmReportLimit limit, VARIANT limitValue);
 }
 
-@GUID("38e87280-715c-4c7d-a280-ea1651a19fef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmreportjob
+@GUID("38e87280-715c-4c7d-a280-ea1651a19fef")
 interface IFsrmReportJob : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmreportjob-get_task
@@ -1422,9 +1422,9 @@ interface IFsrmReportJob : IFsrmObject
     HRESULT Cancel();
 }
 
-@GUID("d8cc81d9-46b8-4fa4-bfa5-4aa9dec9b638")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmreport
+@GUID("d8cc81d9-46b8-4fa4-bfa5-4aa9dec9b638")
 interface IFsrmReport : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmreport-get_type
@@ -1447,9 +1447,9 @@ interface IFsrmReport : IDispatch
     HRESULT Delete();
 }
 
-@GUID("6879caf9-6617-4484-8719-71c3d8645f94")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmreportscheduler
+@GUID("6879caf9-6617-4484-8719-71c3d8645f94")
 interface IFsrmReportScheduler : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmreportscheduler-verifynamespaces
@@ -1462,9 +1462,9 @@ interface IFsrmReportScheduler : IDispatch
     HRESULT DeleteScheduleTask(BSTR taskName);
 }
 
-@GUID("ee321ecb-d95e-48e9-907c-c7685a013235")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmfilemanagementjobmanager
+@GUID("ee321ecb-d95e-48e9-907c-c7685a013235")
 interface IFsrmFileManagementJobManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmfilemanagementjobmanager-get_actionvariables
@@ -1479,9 +1479,9 @@ interface IFsrmFileManagementJobManager : IDispatch
     HRESULT GetFileManagementJob(BSTR name, IFsrmFileManagementJob* fileManagementJob);
 }
 
-@GUID("0770687e-9f36-4d6f-8778-599d188461c9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmfilemanagementjob
+@GUID("0770687e-9f36-4d6f-8778-599d188461c9")
 interface IFsrmFileManagementJob : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmfilemanagementjob-get_name
@@ -1584,9 +1584,9 @@ interface IFsrmFileManagementJob : IFsrmObject
     HRESULT CreateCustomAction(IFsrmActionCommand* customAction);
 }
 
-@GUID("326af66f-2ac0-4f68-bf8c-4759f054fa29")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmpropertycondition
+@GUID("326af66f-2ac0-4f68-bf8c-4759f054fa29")
 interface IFsrmPropertyCondition : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmpropertycondition-get_name
@@ -1612,9 +1612,9 @@ interface IFsrmFileCondition : IDispatch
     HRESULT Delete();
 }
 
-@GUID("81926775-b981-4479-988f-da171d627360")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nn-fsrmreports-ifsrmfileconditionproperty
+@GUID("81926775-b981-4479-988f-da171d627360")
 interface IFsrmFileConditionProperty : IFsrmFileCondition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmreports/nf-fsrmreports-ifsrmfileconditionproperty-get_propertyname
@@ -1639,9 +1639,9 @@ interface IFsrmFileConditionProperty : IFsrmFileCondition
     HRESULT put_Value(VARIANT newVal);
 }
 
-@GUID("ede0150f-e9a3-419c-877c-01fe5d24c5d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpropertydefinition
+@GUID("ede0150f-e9a3-419c-877c-01fe5d24c5d3")
 interface IFsrmPropertyDefinition : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpropertydefinition-get_name
@@ -1666,9 +1666,9 @@ interface IFsrmPropertyDefinition : IFsrmObject
     HRESULT put_Parameters(SAFEARRAY* parameters);
 }
 
-@GUID("47782152-d16c-4229-b4e1-0ddfe308b9f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpropertydefinition2
+@GUID("47782152-d16c-4229-b4e1-0ddfe308b9f6")
 interface IFsrmPropertyDefinition2 : IFsrmPropertyDefinition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpropertydefinition2-get_propertydefinitionflags
@@ -1683,9 +1683,9 @@ interface IFsrmPropertyDefinition2 : IFsrmPropertyDefinition
     HRESULT get_ValueDefinitions(IFsrmCollection* valueDefinitions);
 }
 
-@GUID("e946d148-bd67-4178-8e22-1c44925ed710")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpropertydefinitionvalue
+@GUID("e946d148-bd67-4178-8e22-1c44925ed710")
 interface IFsrmPropertyDefinitionValue : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpropertydefinitionvalue-get_name
@@ -1698,9 +1698,9 @@ interface IFsrmPropertyDefinitionValue : IDispatch
     HRESULT get_UniqueID(BSTR* uniqueID);
 }
 
-@GUID("4a73fee4-4102-4fcc-9ffb-38614f9ee768")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmproperty
+@GUID("4a73fee4-4102-4fcc-9ffb-38614f9ee768")
 interface IFsrmProperty : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmproperty-get_name
@@ -1713,9 +1713,9 @@ interface IFsrmProperty : IDispatch
     HRESULT get_PropertyFlags(int* flags);
 }
 
-@GUID("cb0df960-16f5-4495-9079-3f9360d831df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmrule
+@GUID("cb0df960-16f5-4495-9079-3f9360d831df")
 interface IFsrmRule : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmrule-get_name
@@ -1744,9 +1744,9 @@ interface IFsrmRule : IFsrmObject
     HRESULT get_LastModified(VARIANT* lastModified);
 }
 
-@GUID("afc052c2-5315-45ab-841b-c6db0e120148")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmclassificationrule
+@GUID("afc052c2-5315-45ab-841b-c6db0e120148")
 interface IFsrmClassificationRule : IFsrmRule
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmclassificationrule-get_executionoption
@@ -1763,9 +1763,9 @@ interface IFsrmClassificationRule : IFsrmRule
     HRESULT put_Value(BSTR value);
 }
 
-@GUID("515c1277-2c81-440e-8fcf-367921ed4f59")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpipelinemoduledefinition
+@GUID("515c1277-2c81-440e-8fcf-367921ed4f59")
 interface IFsrmPipelineModuleDefinition : IFsrmObject
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpipelinemoduledefinition-get_moduleclsid
@@ -1808,9 +1808,9 @@ interface IFsrmPipelineModuleDefinition : IFsrmObject
     HRESULT put_Parameters(SAFEARRAY* parameters);
 }
 
-@GUID("bb36ea26-6318-4b8c-8592-f72dd602e7a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmclassifiermoduledefinition
+@GUID("bb36ea26-6318-4b8c-8592-f72dd602e7a5")
 interface IFsrmClassifierModuleDefinition : IFsrmPipelineModuleDefinition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmclassifiermoduledefinition-get_propertiesaffected
@@ -1827,9 +1827,9 @@ interface IFsrmClassifierModuleDefinition : IFsrmPipelineModuleDefinition
     HRESULT put_NeedsExplicitValue(VARIANT_BOOL needsExplicitValue);
 }
 
-@GUID("15a81350-497d-4aba-80e9-d4dbcc5521fe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmstoragemoduledefinition
+@GUID("15a81350-497d-4aba-80e9-d4dbcc5521fe")
 interface IFsrmStorageModuleDefinition : IFsrmPipelineModuleDefinition
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmstoragemoduledefinition-get_capabilities
@@ -1846,9 +1846,9 @@ interface IFsrmStorageModuleDefinition : IFsrmPipelineModuleDefinition
     HRESULT put_UpdatesFileContent(VARIANT_BOOL updatesFileContent);
 }
 
-@GUID("d2dc89da-ee91-48a0-85d8-cc72a56f7d04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmclassificationmanager
+@GUID("d2dc89da-ee91-48a0-85d8-cc72a56f7d04")
 interface IFsrmClassificationManager : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmclassificationmanager-get_classificationreportformats
@@ -1911,9 +1911,9 @@ interface IFsrmClassificationManager : IDispatch
     HRESULT ClearFileProperty(BSTR filePath, BSTR property);
 }
 
-@GUID("0004c1c9-127e-4765-ba07-6a3147bca112")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmclassificationmanager2
+@GUID("0004c1c9-127e-4765-ba07-6a3147bca112")
 interface IFsrmClassificationManager2 : IFsrmClassificationManager
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmclassificationmanager2-classifyfiles
@@ -1921,9 +1921,9 @@ interface IFsrmClassificationManager2 : IFsrmClassificationManager
                           FsrmGetFilePropertyOptions options);
 }
 
-@GUID("774589d1-d300-4f7a-9a24-f7b766800250")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpropertybag
+@GUID("774589d1-d300-4f7a-9a24-f7b766800250")
 interface IFsrmPropertyBag : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpropertybag-get_name
@@ -1971,9 +1971,9 @@ interface IFsrmPropertyBag : IDispatch
                                    VARIANT* pStreamInterface);
 }
 
-@GUID("0e46bdbd-2402-4fed-9c30-9266e6eb2cc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpropertybag2
+@GUID("0e46bdbd-2402-4fed-9c30-9266e6eb2cc9")
 interface IFsrmPropertyBag2 : IFsrmPropertyBag
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpropertybag2-getfieldvalue
@@ -1981,9 +1981,9 @@ interface IFsrmPropertyBag2 : IFsrmPropertyBag
     HRESULT GetUntrustedInFileProperties(IFsrmCollection* props);
 }
 
-@GUID("b7907906-2b02-4cb5-84a9-fdf54613d6cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpipelinemoduleimplementation
+@GUID("b7907906-2b02-4cb5-84a9-fdf54613d6cd")
 interface IFsrmPipelineModuleImplementation : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpipelinemoduleimplementation-onload
@@ -1992,9 +1992,9 @@ interface IFsrmPipelineModuleImplementation : IDispatch
     HRESULT OnUnload();
 }
 
-@GUID("4c968fc6-6edb-4051-9c18-73b7291ae106")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmclassifiermoduleimplementation
+@GUID("4c968fc6-6edb-4051-9c18-73b7291ae106")
 interface IFsrmClassifierModuleImplementation : IFsrmPipelineModuleImplementation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmclassifiermoduleimplementation-get_lastmodified
@@ -2012,9 +2012,9 @@ interface IFsrmClassifierModuleImplementation : IFsrmPipelineModuleImplementatio
     HRESULT OnEndFile();
 }
 
-@GUID("0af4a0da-895a-4e50-8712-a96724bcec64")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmstoragemoduleimplementation
+@GUID("0af4a0da-895a-4e50-8712-a96724bcec64")
 interface IFsrmStorageModuleImplementation : IFsrmPipelineModuleImplementation
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmstoragemoduleimplementation-usedefinitions
@@ -2025,9 +2025,9 @@ interface IFsrmStorageModuleImplementation : IFsrmPipelineModuleImplementation
     HRESULT SaveProperties(IFsrmPropertyBag propertyBag);
 }
 
-@GUID("c16014f3-9aa1-46b3-b0a7-ab146eb205f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nn-fsrmpipeline-ifsrmpipelinemoduleconnector
+@GUID("c16014f3-9aa1-46b3-b0a7-ab146eb205f2")
 interface IFsrmPipelineModuleConnector : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmpipeline/nf-fsrmpipeline-ifsrmpipelinemoduleconnector-get_moduleimplementation
@@ -2043,9 +2043,9 @@ interface IFsrmPipelineModuleConnector : IDispatch
                  IFsrmPipelineModuleImplementation moduleImplementation);
 }
 
-@GUID("26942db0-dabf-41d8-bbdd-b129a9f70424")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fsrmtlb/nn-fsrmtlb-difsrmclassificationevents
+@GUID("26942db0-dabf-41d8-bbdd-b129a9f70424")
 interface DIFsrmClassificationEvents : IDispatch
 {
 }

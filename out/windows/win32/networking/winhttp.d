@@ -2054,11 +2054,12 @@ uint WinHttpFreeProxySettingsEx(WINHTTP_PROXY_SETTINGS_TYPE ProxySettingsType, v
 
 // Interfaces
 
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinHttp/winhttprequest
 @GUID("2087c2f4-2cef-4953-a8ab-66779b670495")
 struct WinHttpRequest;
 
-@GUID("016fe2ec-b2c8-45f8-b23b-39e53a75396b")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinHttp/iwinhttprequest-interface
+@GUID("016fe2ec-b2c8-45f8-b23b-39e53a75396b")
 interface IWinHttpRequest : IDispatch
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinHttp/iwinhttprequest-setproxy
@@ -2101,8 +2102,8 @@ interface IWinHttpRequest : IDispatch
     HRESULT SetAutoLogonPolicy(WinHttpRequestAutoLogonPolicy AutoLogonPolicy);
 }
 
-@GUID("f97f4e15-b787-4212-80d1-d380cbbf982e")
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinHttp/iwinhttprequestevents-interface
+@GUID("f97f4e15-b787-4212-80d1-d380cbbf982e")
 interface IWinHttpRequestEvents : IUnknown
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinHttp/iwinhttprequestevents-onresponsestart
