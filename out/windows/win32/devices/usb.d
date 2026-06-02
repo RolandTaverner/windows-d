@@ -1,0 +1,3476 @@
+// Written in the D programming language.
+
+module windows.win32.devices.usb;
+
+public import windows.core;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, PWSTR;
+public import windows.win32.system.io : OVERLAPPED;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+
+alias WINUSB_PIPE_POLICY = uint;
+enum : uint
+{
+    SHORT_PACKET_TERMINATE = 0x00000001U,
+    AUTO_CLEAR_STALL       = 0x00000002U,
+    PIPE_TRANSFER_TIMEOUT  = 0x00000003U,
+    IGNORE_SHORT_PACKETS   = 0x00000004U,
+    ALLOW_PARTIAL_READS    = 0x00000005U,
+    AUTO_FLUSH             = 0x00000006U,
+    RAW_IO                 = 0x00000007U,
+    MAXIMUM_TRANSFER_SIZE  = 0x00000008U,
+    RESET_PIPE_ON_RESUME   = 0x00000009U,
+}
+
+alias WINUSB_POWER_POLICY = uint;
+enum : uint
+{
+    AUTO_SUSPEND  = 0x00000081U,
+    SUSPEND_DELAY = 0x00000083U,
+}
+
+alias USB_DEVICE_SPEED = int;
+enum : int
+{
+    UsbLowSpeed   = 0x00000000,
+    UsbFullSpeed  = 0x00000001,
+    UsbHighSpeed  = 0x00000002,
+    UsbSuperSpeed = 0x00000003,
+}
+
+alias USB_DEVICE_TYPE = int;
+enum : int
+{
+    Usb11Device = 0x00000000,
+    Usb20Device = 0x00000001,
+}
+
+alias USB_CONTROLLER_FLAVOR = int;
+enum : int
+{
+    USB_HcGeneric       = 0x00000000,
+    OHCI_Generic        = 0x00000064,
+    OHCI_Hydra          = 0x00000065,
+    OHCI_NEC            = 0x00000066,
+    UHCI_Generic        = 0x000000c8,
+    UHCI_Piix4          = 0x000000c9,
+    UHCI_Piix3          = 0x000000ca,
+    UHCI_Ich2           = 0x000000cb,
+    UHCI_Reserved204    = 0x000000cc,
+    UHCI_Ich1           = 0x000000cd,
+    UHCI_Ich3m          = 0x000000ce,
+    UHCI_Ich4           = 0x000000cf,
+    UHCI_Ich5           = 0x000000d0,
+    UHCI_Ich6           = 0x000000d1,
+    UHCI_Intel          = 0x000000f9,
+    UHCI_VIA            = 0x000000fa,
+    UHCI_VIA_x01        = 0x000000fb,
+    UHCI_VIA_x02        = 0x000000fc,
+    UHCI_VIA_x03        = 0x000000fd,
+    UHCI_VIA_x04        = 0x000000fe,
+    UHCI_VIA_x0E_FIFO   = 0x00000108,
+    EHCI_Generic        = 0x000003e8,
+    EHCI_NEC            = 0x000007d0,
+    EHCI_Lucent         = 0x00000bb8,
+    EHCI_NVIDIA_Tegra2  = 0x00000fa0,
+    EHCI_NVIDIA_Tegra3  = 0x00000fa1,
+    EHCI_Intel_Medfield = 0x00001389,
+}
+
+alias USBD_PIPE_TYPE = int;
+enum : int
+{
+    UsbdPipeTypeControl     = 0x00000000,
+    UsbdPipeTypeIsochronous = 0x00000001,
+    UsbdPipeTypeBulk        = 0x00000002,
+    UsbdPipeTypeInterrupt   = 0x00000003,
+}
+
+alias USBD_ENDPOINT_OFFLOAD_MODE = int;
+enum : int
+{
+    UsbdEndpointOffloadModeNotSupported = 0x00000000,
+    UsbdEndpointOffloadSoftwareAssisted = 0x00000001,
+    UsbdEndpointOffloadHardwareAssisted = 0x00000002,
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ne-usbuser-usb_user_error_code
+alias USB_USER_ERROR_CODE = int;
+enum : int
+{
+    UsbUserSuccess                = 0x00000000,
+    UsbUserNotSupported           = 0x00000001,
+    UsbUserInvalidRequestCode     = 0x00000002,
+    UsbUserFeatureDisabled        = 0x00000003,
+    UsbUserInvalidHeaderParameter = 0x00000004,
+    UsbUserInvalidParameter       = 0x00000005,
+    UsbUserMiniportError          = 0x00000006,
+    UsbUserBufferTooSmall         = 0x00000007,
+    UsbUserErrorNotMapped         = 0x00000008,
+    UsbUserDeviceNotStarted       = 0x00000009,
+    UsbUserNoDeviceConnected      = 0x0000000a,
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ne-usbuser-wdmusb_power_state
+alias WDMUSB_POWER_STATE = int;
+enum : int
+{
+    WdmUsbPowerNotMapped         = 0x00000000,
+    WdmUsbPowerSystemUnspecified = 0x00000064,
+    WdmUsbPowerSystemWorking     = 0x00000065,
+    WdmUsbPowerSystemSleeping1   = 0x00000066,
+    WdmUsbPowerSystemSleeping2   = 0x00000067,
+    WdmUsbPowerSystemSleeping3   = 0x00000068,
+    WdmUsbPowerSystemHibernate   = 0x00000069,
+    WdmUsbPowerSystemShutdown    = 0x0000006a,
+    WdmUsbPowerDeviceUnspecified = 0x000000c8,
+    WdmUsbPowerDeviceD0          = 0x000000c9,
+    WdmUsbPowerDeviceD1          = 0x000000ca,
+    WdmUsbPowerDeviceD2          = 0x000000cb,
+    WdmUsbPowerDeviceD3          = 0x000000cc,
+}
+
+alias USBFN_EVENT = int;
+enum : int
+{
+    UsbfnEventMinimum      = 0x00000000,
+    UsbfnEventAttach       = 0x00000001,
+    UsbfnEventReset        = 0x00000002,
+    UsbfnEventDetach       = 0x00000003,
+    UsbfnEventSuspend      = 0x00000004,
+    UsbfnEventResume       = 0x00000005,
+    UsbfnEventSetupPacket  = 0x00000006,
+    UsbfnEventConfigured   = 0x00000007,
+    UsbfnEventUnConfigured = 0x00000008,
+    UsbfnEventPortType     = 0x00000009,
+    UsbfnEventBusTearDown  = 0x0000000a,
+    UsbfnEventSetInterface = 0x0000000b,
+    UsbfnEventMaximum      = 0x0000000c,
+}
+
+alias USBFN_PORT_TYPE = int;
+enum : int
+{
+    UsbfnUnknownPort                      = 0x00000000,
+    UsbfnStandardDownstreamPort           = 0x00000001,
+    UsbfnChargingDownstreamPort           = 0x00000002,
+    UsbfnDedicatedChargingPort            = 0x00000003,
+    UsbfnInvalidDedicatedChargingPort     = 0x00000004,
+    UsbfnProprietaryDedicatedChargingPort = 0x00000005,
+    UsbfnPortTypeMaximum                  = 0x00000006,
+}
+
+alias USBFN_BUS_SPEED = int;
+enum : int
+{
+    UsbfnBusSpeedLow     = 0x00000000,
+    UsbfnBusSpeedFull    = 0x00000001,
+    UsbfnBusSpeedHigh    = 0x00000002,
+    UsbfnBusSpeedSuper   = 0x00000003,
+    UsbfnBusSpeedMaximum = 0x00000004,
+}
+
+alias USBFN_DIRECTION = int;
+enum : int
+{
+    UsbfnDirectionMinimum = 0x00000000,
+    UsbfnDirectionIn      = 0x00000001,
+    UsbfnDirectionOut     = 0x00000002,
+    UsbfnDirectionTx      = 0x00000001,
+    UsbfnDirectionRx      = 0x00000002,
+    UsbfnDirectionMaximum = 0x00000003,
+}
+
+alias USBFN_DEVICE_STATE = int;
+enum : int
+{
+    UsbfnDeviceStateMinimum      = 0x00000000,
+    UsbfnDeviceStateAttached     = 0x00000001,
+    UsbfnDeviceStateDefault      = 0x00000002,
+    UsbfnDeviceStateDetached     = 0x00000003,
+    UsbfnDeviceStateAddressed    = 0x00000004,
+    UsbfnDeviceStateConfigured   = 0x00000005,
+    UsbfnDeviceStateSuspended    = 0x00000006,
+    UsbfnDeviceStateStateMaximum = 0x00000007,
+}
+
+alias USB_HUB_NODE = int;
+enum : int
+{
+    UsbHub      = 0x00000000,
+    UsbMIParent = 0x00000001,
+}
+
+alias USB_CONNECTION_STATUS = int;
+enum : int
+{
+    NoDeviceConnected        = 0x00000000,
+    DeviceConnected          = 0x00000001,
+    DeviceFailedEnumeration  = 0x00000002,
+    DeviceGeneralFailure     = 0x00000003,
+    DeviceCausedOvercurrent  = 0x00000004,
+    DeviceNotEnoughPower     = 0x00000005,
+    DeviceNotEnoughBandwidth = 0x00000006,
+    DeviceHubNestedTooDeeply = 0x00000007,
+    DeviceInLegacyHub        = 0x00000008,
+    DeviceEnumerating        = 0x00000009,
+    DeviceReset              = 0x0000000a,
+}
+
+alias USB_NOTIFICATION_TYPE = int;
+enum : int
+{
+    EnumerationFailure      = 0x00000000,
+    InsufficentBandwidth    = 0x00000001,
+    InsufficentPower        = 0x00000002,
+    OverCurrent             = 0x00000003,
+    ResetOvercurrent        = 0x00000004,
+    AcquireBusInfo          = 0x00000005,
+    AcquireHubName          = 0x00000006,
+    AcquireControllerName   = 0x00000007,
+    HubOvercurrent          = 0x00000008,
+    HubPowerChange          = 0x00000009,
+    HubNestedTooDeeply      = 0x0000000a,
+    ModernDeviceInLegacyHub = 0x0000000b,
+}
+
+alias USB_WMI_DEVICE_NODE_TYPE = int;
+enum : int
+{
+    UsbDevice       = 0x00000000,
+    HubDevice       = 0x00000001,
+    CompositeDevice = 0x00000002,
+    UsbController   = 0x00000003,
+}
+
+alias USB_HUB_TYPE = int;
+enum : int
+{
+    UsbRootHub = 0x00000001,
+    Usb20Hub   = 0x00000002,
+    Usb30Hub   = 0x00000003,
+}
+
+alias USB4_CONFIG_SPACE_TYPE = int;
+enum : int
+{
+    USB4PathConfigurationSpace    = 0x00000000,
+    USB4AdapterConfigurationSpace = 0x00000001,
+    USB4RouterConfigurationSpace  = 0x00000002,
+    USB4CounterConfigurationSpace = 0x00000003,
+}
+
+alias USB4_STATUS = int;
+enum : int
+{
+    ErrConn        = 0x00000000,
+    ErrLink        = 0x00000001,
+    ErrAddr        = 0x00000002,
+    ErrAdp         = 0x00000004,
+    HpAck          = 0x00000007,
+    ErrEnum        = 0x00000008,
+    ErrNua         = 0x00000009,
+    ErrLen         = 0x0000000b,
+    ErrHec         = 0x0000000c,
+    ErrFc          = 0x0000000d,
+    ErrPlug        = 0x0000000e,
+    ErrLock        = 0x0000000f,
+    DpBw           = 0x00000020,
+    RopCmplt       = 0x00000021,
+    PopCmplt       = 0x00000022,
+    PcieWake       = 0x00000023,
+    DpConChange    = 0x00000024,
+    DpTxDiscovery  = 0x00000025,
+    LinkRecovery   = 0x00000026,
+    AsymLink       = 0x00000027,
+    PollingSkipped = 0x000000fc,
+    PollingTimeout = 0x000000fd,
+    StatusSuccess  = 0x000000fe,
+    StatusUnknown  = 0x000000ff,
+}
+
+alias PIPE_TYPE = int;
+enum : int
+{
+    EVENT_PIPE      = 0x00000000,
+    READ_DATA_PIPE  = 0x00000001,
+    WRITE_DATA_PIPE = 0x00000002,
+    ALL_PIPE        = 0x00000003,
+}
+
+alias RAW_PIPE_TYPE = int;
+enum : int
+{
+    USBSCAN_PIPE_CONTROL     = 0x00000000,
+    USBSCAN_PIPE_ISOCHRONOUS = 0x00000001,
+    USBSCAN_PIPE_BULK        = 0x00000002,
+    USBSCAN_PIPE_INTERRUPT   = 0x00000003,
+}
+
+// Constants
+
+
+enum uint DEVICE_SPEED = 0x00000001U;
+enum uint LowSpeed = 0x00000001U;
+enum uint FullSpeed = 0x00000002U;
+enum uint HighSpeed = 0x00000003U;
+
+enum : uint
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_in
+    IOCTL_GENERICUSBFN_TRANSFER_IN                  = 0x0022c00dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_in_append_zero_pkt
+    IOCTL_GENERICUSBFN_TRANSFER_IN_APPEND_ZERO_PKT  = 0x0022c011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_out
+    IOCTL_GENERICUSBFN_TRANSFER_OUT                 = 0x0022c016U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_control_status_handshake_in
+    IOCTL_GENERICUSBFN_CONTROL_STATUS_HANDSHAKE_IN  = 0x0022c018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_control_status_handshake_out
+    IOCTL_GENERICUSBFN_CONTROL_STATUS_HANDSHAKE_OUT = 0x0022c01cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_class_info
+    IOCTL_GENERICUSBFN_GET_CLASS_INFO               = 0x0022c022U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_pipe_state
+    IOCTL_GENERICUSBFN_GET_PIPE_STATE               = 0x0022c026U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_set_pipe_state
+    IOCTL_GENERICUSBFN_SET_PIPE_STATE               = 0x0022c029U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_activate_usb_bus
+    IOCTL_GENERICUSBFN_ACTIVATE_USB_BUS             = 0x0022c02cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_deactivate_usb_bus
+    IOCTL_GENERICUSBFN_DEACTIVATE_USB_BUS           = 0x0022c030U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_bus_event_notification
+    IOCTL_GENERICUSBFN_BUS_EVENT_NOTIFICATION       = 0x0022c036U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_class_info_ex
+    IOCTL_GENERICUSBFN_GET_CLASS_INFO_EX            = 0x0022c03aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_interface_descriptor_set
+    IOCTL_GENERICUSBFN_GET_INTERFACE_DESCRIPTOR_SET = 0x0022c03eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_register_usb_string
+    IOCTL_GENERICUSBFN_REGISTER_USB_STRING          = 0x0022c041U,
+}
+
+enum : uint
+{
+    USBUSER_VERSION                   = 0x00000004U,
+    USBUSER_GET_CONTROLLER_INFO_0     = 0x00000001U,
+    USBUSER_GET_CONTROLLER_DRIVER_KEY = 0x00000002U,
+}
+
+enum : uint
+{
+    USBUSER_PASS_THRU                 = 0x00000003U,
+    USBUSER_GET_POWER_STATE_MAP       = 0x00000004U,
+    USBUSER_GET_BANDWIDTH_INFORMATION = 0x00000005U,
+}
+
+enum : uint
+{
+    USBUSER_GET_BUS_STATISTICS_0      = 0x00000006U,
+    USBUSER_GET_ROOTHUB_SYMBOLIC_NAME = 0x00000007U,
+}
+
+enum : uint
+{
+    USBUSER_GET_USB_DRIVER_VERSION = 0x00000008U,
+    USBUSER_GET_USB2_HW_VERSION    = 0x00000009U,
+}
+
+enum uint USBUSER_USB_REFRESH_HCT_REG = 0x0000000aU;
+
+enum : uint
+{
+    USBUSER_OP_SEND_ONE_PACKET  = 0x10000001U,
+    USBUSER_OP_RAW_RESET_PORT   = 0x20000001U,
+    USBUSER_OP_OPEN_RAW_DEVICE  = 0x20000002U,
+    USBUSER_OP_CLOSE_RAW_DEVICE = 0x20000003U,
+    USBUSER_OP_SEND_RAW_COMMAND = 0x20000004U,
+}
+
+enum uint USBUSER_SET_ROOTPORT_FEATURE = 0x20000005U;
+enum uint USBUSER_CLEAR_ROOTPORT_FEATURE = 0x20000006U;
+enum uint USBUSER_GET_ROOTPORT_STATUS = 0x20000007U;
+enum uint USBUSER_INVALID_REQUEST = 0xfffffff0U;
+
+enum : uint
+{
+    USBUSER_OP_MASK_DEVONLY_API = 0x10000000U,
+    USBUSER_OP_MASK_HCTEST_API  = 0x20000000U,
+}
+
+enum : uint
+{
+    USB_PACKETFLAG_LOW_SPEED  = 0x00000001U,
+    USB_PACKETFLAG_FULL_SPEED = 0x00000002U,
+    USB_PACKETFLAG_HIGH_SPEED = 0x00000004U,
+    USB_PACKETFLAG_ASYNC_IN   = 0x00000008U,
+    USB_PACKETFLAG_ASYNC_OUT  = 0x00000010U,
+    USB_PACKETFLAG_ISO_IN     = 0x00000020U,
+    USB_PACKETFLAG_ISO_OUT    = 0x00000040U,
+    USB_PACKETFLAG_SETUP      = 0x00000080U,
+    USB_PACKETFLAG_TOGGLE0    = 0x00000100U,
+    USB_PACKETFLAG_TOGGLE1    = 0x00000200U,
+}
+
+enum : uint
+{
+    USB_HC_FEATURE_FLAG_PORT_POWER_SWITCHING = 0x00000001U,
+    USB_HC_FEATURE_FLAG_SEL_SUSPEND          = 0x00000002U,
+    USB_HC_FEATURE_LEGACY_BIOS               = 0x00000004U,
+    USB_HC_FEATURE_TIME_SYNC_API             = 0x00000008U,
+}
+
+enum uint USB_SUBMIT_URB = 0x00000000U;
+enum uint USB_RESET_PORT = 0x00000001U;
+
+enum : uint
+{
+    USB_GET_ROOTHUB_PDO = 0x00000003U,
+    USB_GET_PORT_STATUS = 0x00000004U,
+}
+
+enum uint USB_ENABLE_PORT = 0x00000005U;
+enum uint USB_GET_HUB_COUNT = 0x00000006U;
+enum uint USB_CYCLE_PORT = 0x00000007U;
+enum uint USB_GET_HUB_NAME = 0x00000008U;
+enum uint USB_IDLE_NOTIFICATION = 0x00000009U;
+enum uint USB_RECORD_FAILURE = 0x0000000aU;
+
+enum : uint
+{
+    USB_GET_BUS_INFO        = 0x00000108U,
+    USB_GET_CONTROLLER_NAME = 0x00000109U,
+}
+
+enum uint USB_GET_BUSGUID_INFO = 0x0000010aU;
+enum uint USB_GET_PARENT_HUB_INFO = 0x0000010bU;
+
+enum : uint
+{
+    USB_GET_DEVICE_HANDLE    = 0x0000010cU,
+    USB_GET_DEVICE_HANDLE_EX = 0x0000010dU,
+}
+
+enum uint USB_GET_TT_DEVICE_HANDLE = 0x0000010eU;
+enum uint USB_GET_TOPOLOGY_ADDRESS = 0x0000010fU;
+enum uint USB_IDLE_NOTIFICATION_EX = 0x00000110U;
+
+enum : uint
+{
+    USB_REQ_GLOBAL_SUSPEND = 0x00000111U,
+    USB_REQ_GLOBAL_RESUME  = 0x00000112U,
+}
+
+enum uint USB_GET_HUB_CONFIG_INFO = 0x00000113U;
+enum uint USB_FAIL_GET_STATUS = 0x00000118U;
+enum uint USB_REGISTER_COMPOSITE_DEVICE = 0x00000000U;
+enum uint USB_UNREGISTER_COMPOSITE_DEVICE = 0x00000001U;
+enum uint USB_REQUEST_REMOTE_WAKE_NOTIFICATION = 0x00000002U;
+enum uint HCD_GET_STATS_1 = 0x000000ffU;
+
+enum : uint
+{
+    HCD_DIAGNOSTIC_MODE_ON  = 0x00000100U,
+    HCD_DIAGNOSTIC_MODE_OFF = 0x00000101U,
+}
+
+enum uint HCD_GET_ROOT_HUB_NAME = 0x00000102U;
+enum uint HCD_GET_DRIVERKEY_NAME = 0x00000109U;
+enum uint HCD_GET_STATS_2 = 0x0000010aU;
+enum uint HCD_DISABLE_PORT = 0x0000010cU;
+enum uint HCD_ENABLE_PORT = 0x0000010dU;
+enum uint HCD_USER_REQUEST = 0x0000010eU;
+enum uint HCD_TRACE_READ_REQUEST = 0x00000113U;
+
+enum : uint
+{
+    USB_GET_NODE_INFORMATION            = 0x00000102U,
+    USB_GET_NODE_CONNECTION_INFORMATION = 0x00000103U,
+}
+
+enum uint USB_GET_DESCRIPTOR_FROM_NODE_CONNECTION = 0x00000104U;
+enum uint USB_GET_NODE_CONNECTION_NAME = 0x00000105U;
+
+enum : uint
+{
+    USB_DIAG_IGNORE_HUBS_ON  = 0x00000106U,
+    USB_DIAG_IGNORE_HUBS_OFF = 0x00000107U,
+}
+
+enum uint USB_GET_NODE_CONNECTION_DRIVERKEY_NAME = 0x00000108U;
+enum uint USB_GET_HUB_CAPABILITIES = 0x0000010fU;
+enum uint USB_GET_NODE_CONNECTION_ATTRIBUTES = 0x00000110U;
+enum uint USB_HUB_CYCLE_PORT = 0x00000111U;
+enum uint USB_GET_NODE_CONNECTION_INFORMATION_EX = 0x00000112U;
+enum uint USB_RESET_HUB = 0x00000113U;
+
+enum : uint
+{
+    USB_GET_HUB_CAPABILITIES_EX = 0x00000114U,
+    USB_GET_HUB_INFORMATION_EX  = 0x00000115U,
+}
+
+enum uint USB_GET_PORT_CONNECTOR_PROPERTIES = 0x00000116U;
+enum uint USB_GET_NODE_CONNECTION_INFORMATION_EX_V2 = 0x00000117U;
+enum uint USB_GET_TRANSPORT_CHARACTERISTICS = 0x00000119U;
+enum uint USB_REGISTER_FOR_TRANSPORT_CHARACTERISTICS_CHANGE = 0x0000011aU;
+enum uint USB_NOTIFY_ON_TRANSPORT_CHARACTERISTICS_CHANGE = 0x0000011bU;
+enum uint USB_UNREGISTER_FOR_TRANSPORT_CHARACTERISTICS_CHANGE = 0x0000011cU;
+enum uint USB_START_TRACKING_FOR_TIME_SYNC = 0x0000011dU;
+enum uint USB_GET_FRAME_NUMBER_AND_QPC_FOR_TIME_SYNC = 0x0000011eU;
+enum uint USB_STOP_TRACKING_FOR_TIME_SYNC = 0x0000011fU;
+enum uint USB_GET_DEVICE_CHARACTERISTICS = 0x00000120U;
+enum uint USB_GET_NODE_CONNECTION_SUPERSPEEDPLUS_INFORMATION = 0x00000121U;
+enum uint USB_RESERVED_USER_BASE = 0x00000400U;
+
+enum : GUID
+{
+    GUID_DEVINTERFACE_USB_HUB             = GUID("f18a0e88-c30c-11d0-8815-00a0c906bed8"),
+    GUID_DEVINTERFACE_USB_BILLBOARD       = GUID("5e9adaef-f879-473f-b807-4e5ea77d1b1c"),
+    GUID_DEVINTERFACE_USB_DEVICE          = GUID("a5dcbf10-6530-11d2-901f-00c04fb951ed"),
+    GUID_DEVINTERFACE_USB_HOST_CONTROLLER = GUID("3abf6f2d-71c4-462a-8a92-1e6861e6af27"),
+}
+
+enum : GUID
+{
+    GUID_USB_WMI_STD_DATA         = GUID("4e623b20-cb14-11d1-b331-00a0c959bbd2"),
+    GUID_USB_WMI_STD_NOTIFICATION = GUID("4e623b20-cb14-11d1-b331-00a0c959bbd2"),
+    GUID_USB_WMI_DEVICE_PERF_INFO = GUID("66c1aa3c-499f-49a0-a9a5-61e2359f6407"),
+    GUID_USB_WMI_NODE_INFO        = GUID("9c179357-dc7a-4f41-b66b-323b9ddcb5b1"),
+    GUID_USB_WMI_TRACING          = GUID("3a61881b-b4e6-4bf9-ae0f-3cd8f394e52f"),
+    GUID_USB_TRANSFER_TRACING     = GUID("681eb8aa-403d-452c-9f8a-f0616fac9540"),
+}
+
+enum GUID GUID_USB_PERFORMANCE_TRACING = GUID("d5de77a6-6ae9-425c-b1e2-f5615fd348a9");
+enum GUID GUID_USB_WMI_SURPRISE_REMOVAL_NOTIFICATION = GUID("9bbbf831-a2f2-43b4-96d1-86944b5914b3");
+enum uint FILE_DEVICE_USB = 0x00000022U;
+
+enum : uint
+{
+    BMREQUEST_HOST_TO_DEVICE = 0x00000000U,
+    BMREQUEST_DEVICE_TO_HOST = 0x00000001U,
+    BMREQUEST_STANDARD       = 0x00000000U,
+    BMREQUEST_CLASS          = 0x00000001U,
+    BMREQUEST_VENDOR         = 0x00000002U,
+    BMREQUEST_TO_DEVICE      = 0x00000000U,
+    BMREQUEST_TO_INTERFACE   = 0x00000001U,
+    BMREQUEST_TO_ENDPOINT    = 0x00000002U,
+    BMREQUEST_TO_OTHER       = 0x00000003U,
+}
+
+enum : uint
+{
+    USB_REQUEST_GET_STATUS          = 0x00000000U,
+    USB_REQUEST_CLEAR_FEATURE       = 0x00000001U,
+    USB_REQUEST_SET_FEATURE         = 0x00000003U,
+    USB_REQUEST_SET_ADDRESS         = 0x00000005U,
+    USB_REQUEST_GET_DESCRIPTOR      = 0x00000006U,
+    USB_REQUEST_SET_DESCRIPTOR      = 0x00000007U,
+    USB_REQUEST_GET_CONFIGURATION   = 0x00000008U,
+    USB_REQUEST_SET_CONFIGURATION   = 0x00000009U,
+    USB_REQUEST_GET_INTERFACE       = 0x0000000aU,
+    USB_REQUEST_SET_INTERFACE       = 0x0000000bU,
+    USB_REQUEST_SYNC_FRAME          = 0x0000000cU,
+    USB_REQUEST_GET_FIRMWARE_STATUS = 0x0000001aU,
+}
+
+enum uint USB_REQUEST_SET_FIRMWARE_STATUS = 0x0000001bU;
+enum uint USB_GET_FIRMWARE_ALLOWED_OR_DISALLOWED_STATE = 0x00000000U;
+enum uint USB_GET_FIRMWARE_HASH = 0x00000001U;
+enum uint USB_DEVICE_FIRMWARE_HASH_LENGTH = 0x00000020U;
+enum uint USB_DISALLOW_FIRMWARE_UPDATE = 0x00000000U;
+enum uint USB_ALLOW_FIRMWARE_UPDATE = 0x00000001U;
+
+enum : uint
+{
+    USB_REQUEST_SET_SEL     = 0x00000030U,
+    USB_REQUEST_ISOCH_DELAY = 0x00000031U,
+}
+
+enum uint USB_DEVICE_DESCRIPTOR_TYPE = 0x00000001U;
+enum uint USB_CONFIGURATION_DESCRIPTOR_TYPE = 0x00000002U;
+enum uint USB_STRING_DESCRIPTOR_TYPE = 0x00000003U;
+enum uint USB_INTERFACE_DESCRIPTOR_TYPE = 0x00000004U;
+enum uint USB_ENDPOINT_DESCRIPTOR_TYPE = 0x00000005U;
+enum uint USB_DEVICE_QUALIFIER_DESCRIPTOR_TYPE = 0x00000006U;
+enum uint USB_OTHER_SPEED_CONFIGURATION_DESCRIPTOR_TYPE = 0x00000007U;
+enum uint USB_INTERFACE_POWER_DESCRIPTOR_TYPE = 0x00000008U;
+enum uint EUSB2_ISOCH_ENDPOINT_COMPANION_DESCRIPTOR_TYPE = 0x00000012U;
+enum uint USB_OTG_DESCRIPTOR_TYPE = 0x00000009U;
+enum uint USB_DEBUG_DESCRIPTOR_TYPE = 0x0000000aU;
+enum uint USB_INTERFACE_ASSOCIATION_DESCRIPTOR_TYPE = 0x0000000bU;
+enum uint USB_BOS_DESCRIPTOR_TYPE = 0x0000000fU;
+enum uint USB_DEVICE_CAPABILITY_DESCRIPTOR_TYPE = 0x00000010U;
+enum uint USB_SUPERSPEED_ENDPOINT_COMPANION_DESCRIPTOR_TYPE = 0x00000030U;
+enum uint USB_SUPERSPEEDPLUS_ISOCH_ENDPOINT_COMPANION_DESCRIPTOR_TYPE = 0x00000031U;
+enum uint USB_RESERVED_DESCRIPTOR_TYPE = 0x00000006U;
+enum uint USB_CONFIG_POWER_DESCRIPTOR_TYPE = 0x00000007U;
+
+enum : uint
+{
+    USB_FEATURE_ENDPOINT_STALL    = 0x00000000U,
+    USB_FEATURE_REMOTE_WAKEUP     = 0x00000001U,
+    USB_FEATURE_TEST_MODE         = 0x00000002U,
+    USB_FEATURE_FUNCTION_SUSPEND  = 0x00000000U,
+    USB_FEATURE_U1_ENABLE         = 0x00000030U,
+    USB_FEATURE_U2_ENABLE         = 0x00000031U,
+    USB_FEATURE_LTM_ENABLE        = 0x00000032U,
+    USB_FEATURE_LDM_ENABLE        = 0x00000035U,
+    USB_FEATURE_BATTERY_WAKE_MASK = 0x00000028U,
+    USB_FEATURE_OS_IS_PD_AWARE    = 0x00000029U,
+    USB_FEATURE_POLICY_MODE       = 0x0000002aU,
+    USB_FEATURE_CHARGING_POLICY   = 0x00000036U,
+}
+
+enum : uint
+{
+    USB_CHARGING_POLICY_DEFAULT  = 0x00000000U,
+    USB_CHARGING_POLICY_ICCHPF   = 0x00000001U,
+    USB_CHARGING_POLICY_ICCLPF   = 0x00000002U,
+    USB_CHARGING_POLICY_NO_POWER = 0x00000003U,
+}
+
+enum : uint
+{
+    USB_STATUS_PORT_STATUS     = 0x00000000U,
+    USB_STATUS_PD_STATUS       = 0x00000001U,
+    USB_STATUS_EXT_PORT_STATUS = 0x00000002U,
+}
+
+enum : uint
+{
+    USB_GETSTATUS_SELF_POWERED          = 0x00000001U,
+    USB_GETSTATUS_REMOTE_WAKEUP_ENABLED = 0x00000002U,
+}
+
+enum : uint
+{
+    USB_GETSTATUS_U1_ENABLE  = 0x00000004U,
+    USB_GETSTATUS_U2_ENABLE  = 0x00000008U,
+    USB_GETSTATUS_LTM_ENABLE = 0x00000010U,
+}
+
+enum : uint
+{
+    USB_DEVICE_CLASS_RESERVED             = 0x00000000U,
+    USB_DEVICE_CLASS_AUDIO                = 0x00000001U,
+    USB_DEVICE_CLASS_COMMUNICATIONS       = 0x00000002U,
+    USB_DEVICE_CLASS_HUMAN_INTERFACE      = 0x00000003U,
+    USB_DEVICE_CLASS_MONITOR              = 0x00000004U,
+    USB_DEVICE_CLASS_PHYSICAL_INTERFACE   = 0x00000005U,
+    USB_DEVICE_CLASS_POWER                = 0x00000006U,
+    USB_DEVICE_CLASS_IMAGE                = 0x00000006U,
+    USB_DEVICE_CLASS_PRINTER              = 0x00000007U,
+    USB_DEVICE_CLASS_STORAGE              = 0x00000008U,
+    USB_DEVICE_CLASS_HUB                  = 0x00000009U,
+    USB_DEVICE_CLASS_CDC_DATA             = 0x0000000aU,
+    USB_DEVICE_CLASS_SMART_CARD           = 0x0000000bU,
+    USB_DEVICE_CLASS_CONTENT_SECURITY     = 0x0000000dU,
+    USB_DEVICE_CLASS_VIDEO                = 0x0000000eU,
+    USB_DEVICE_CLASS_PERSONAL_HEALTHCARE  = 0x0000000fU,
+    USB_DEVICE_CLASS_AUDIO_VIDEO          = 0x00000010U,
+    USB_DEVICE_CLASS_BILLBOARD            = 0x00000011U,
+    USB_DEVICE_CLASS_DIAGNOSTIC_DEVICE    = 0x000000dcU,
+    USB_DEVICE_CLASS_WIRELESS_CONTROLLER  = 0x000000e0U,
+    USB_DEVICE_CLASS_MISCELLANEOUS        = 0x000000efU,
+    USB_DEVICE_CLASS_APPLICATION_SPECIFIC = 0x000000feU,
+    USB_DEVICE_CLASS_VENDOR_SPECIFIC      = 0x000000ffU,
+}
+
+enum : uint
+{
+    USB_DEVICE_CAPABILITY_WIRELESS_USB                               = 0x00000001U,
+    USB_DEVICE_CAPABILITY_USB20_EXTENSION                            = 0x00000002U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_USB                             = 0x00000003U,
+    USB_DEVICE_CAPABILITY_CONTAINER_ID                               = 0x00000004U,
+    USB_DEVICE_CAPABILITY_PLATFORM                                   = 0x00000005U,
+    USB_DEVICE_CAPABILITY_POWER_DELIVERY                             = 0x00000006U,
+    USB_DEVICE_CAPABILITY_BATTERY_INFO                               = 0x00000007U,
+    USB_DEVICE_CAPABILITY_PD_CONSUMER_PORT                           = 0x00000008U,
+    USB_DEVICE_CAPABILITY_PD_PROVIDER_PORT                           = 0x00000009U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_USB                         = 0x0000000aU,
+    USB_DEVICE_CAPABILITY_PRECISION_TIME_MEASUREMENT                 = 0x0000000bU,
+    USB_DEVICE_CAPABILITY_BILLBOARD                                  = 0x0000000dU,
+    USB_DEVICE_CAPABILITY_FIRMWARE_STATUS                            = 0x00000011U,
+    USB_DEVICE_CAPABILITY_USB20_EXTENSION_BMATTRIBUTES_RESERVED_MASK = 0xffff00e1U,
+}
+
+enum : uint
+{
+    USB_DEVICE_CAPABILITY_SUPERSPEED_BMATTRIBUTES_RESERVED_MASK     = 0x000000fdU,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_BMATTRIBUTES_LTM_CAPABLE       = 0x00000002U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_SPEEDS_SUPPORTED_RESERVED_MASK = 0x0000fff0U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_SPEEDS_SUPPORTED_LOW           = 0x00000001U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_SPEEDS_SUPPORTED_FULL          = 0x00000002U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_SPEEDS_SUPPORTED_HIGH          = 0x00000004U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_SPEEDS_SUPPORTED_SUPER         = 0x00000008U,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_U1_DEVICE_EXIT_MAX_VALUE       = 0x0000000aU,
+    USB_DEVICE_CAPABILITY_SUPERSPEED_U2_DEVICE_EXIT_MAX_VALUE       = 0x000007ffU,
+}
+
+enum : uint
+{
+    USB_DEVICE_CAPABILITY_MAX_U1_LATENCY                       = 0x0000000aU,
+    USB_DEVICE_CAPABILITY_MAX_U2_LATENCY                       = 0x000007ffU,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_LSE_BPS         = 0x00000000U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_LSE_KBPS        = 0x00000001U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_LSE_MBPS        = 0x00000002U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_LSE_GBPS        = 0x00000003U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_MODE_SYMMETRIC  = 0x00000000U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_MODE_ASYMMETRIC = 0x00000001U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_DIR_RX          = 0x00000000U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_DIR_TX          = 0x00000001U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_PROTOCOL_SS     = 0x00000000U,
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED_PROTOCOL_SSP    = 0x00000001U,
+}
+
+enum GUID GUID_USB_MSOS20_PLATFORM_CAPABILITY_ID = GUID("d8dd60df-4589-4cc7-9cd2-659d9e648a9f");
+
+enum : uint
+{
+    USB_CONFIG_POWERED_MASK  = 0x000000c0U,
+    USB_CONFIG_BUS_POWERED   = 0x00000080U,
+    USB_CONFIG_SELF_POWERED  = 0x00000040U,
+    USB_CONFIG_REMOTE_WAKEUP = 0x00000020U,
+    USB_CONFIG_RESERVED      = 0x0000001fU,
+}
+
+enum : uint
+{
+    USB_ENDPOINT_DIRECTION_MASK             = 0x00000080U,
+    USB_ENDPOINT_ADDRESS_MASK               = 0x0000000fU,
+    USB_ENDPOINT_TYPE_MASK                  = 0x00000003U,
+    USB_ENDPOINT_TYPE_CONTROL               = 0x00000000U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS           = 0x00000001U,
+    USB_ENDPOINT_TYPE_BULK                  = 0x00000002U,
+    USB_ENDPOINT_TYPE_INTERRUPT             = 0x00000003U,
+    USB_ENDPOINT_TYPE_BULK_RESERVED_MASK    = 0x000000fcU,
+    USB_ENDPOINT_TYPE_CONTROL_RESERVED_MASK = 0x000000fcU,
+}
+
+enum uint USB_20_ENDPOINT_TYPE_INTERRUPT_RESERVED_MASK = 0x000000fcU;
+enum uint USB_30_ENDPOINT_TYPE_INTERRUPT_RESERVED_MASK = 0x000000ccU;
+enum uint USB_ENDPOINT_TYPE_ISOCHRONOUS_RESERVED_MASK = 0x000000c0U;
+
+enum : uint
+{
+    USB_30_ENDPOINT_TYPE_INTERRUPT_USAGE_MASK         = 0x00000030U,
+    USB_30_ENDPOINT_TYPE_INTERRUPT_USAGE_PERIODIC     = 0x00000000U,
+    USB_30_ENDPOINT_TYPE_INTERRUPT_USAGE_NOTIFICATION = 0x00000010U,
+    USB_30_ENDPOINT_TYPE_INTERRUPT_USAGE_RESERVED10   = 0x00000020U,
+    USB_30_ENDPOINT_TYPE_INTERRUPT_USAGE_RESERVED11   = 0x00000030U,
+}
+
+enum : uint
+{
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_SYNCHRONIZATION_MASK                  = 0x0000000cU,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_SYNCHRONIZATION_NO_SYNCHRONIZATION    = 0x00000000U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_SYNCHRONIZATION_ASYNCHRONOUS          = 0x00000004U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_SYNCHRONIZATION_ADAPTIVE              = 0x00000008U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_SYNCHRONIZATION_SYNCHRONOUS           = 0x0000000cU,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_USAGE_MASK                            = 0x00000030U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_USAGE_DATA_ENDOINT                    = 0x00000000U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_USAGE_FEEDBACK_ENDPOINT               = 0x00000010U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_USAGE_IMPLICIT_FEEDBACK_DATA_ENDPOINT = 0x00000020U,
+    USB_ENDPOINT_TYPE_ISOCHRONOUS_USAGE_RESERVED                        = 0x00000030U,
+}
+
+enum : uint
+{
+    USB_ENDPOINT_SUPERSPEED_BULK_MAX_PACKET_SIZE      = 0x00000400U,
+    USB_ENDPOINT_SUPERSPEED_CONTROL_MAX_PACKET_SIZE   = 0x00000200U,
+    USB_ENDPOINT_SUPERSPEED_ISO_MAX_PACKET_SIZE       = 0x00000400U,
+    USB_ENDPOINT_SUPERSPEED_INTERRUPT_MAX_PACKET_SIZE = 0x00000400U,
+}
+
+enum uint MAXIMUM_USB_STRING_LENGTH = 0x000000ffU;
+enum uint USB_SUPERSPEED_ISOCHRONOUS_MAX_MULTIPLIER = 0x00000002U;
+
+enum : uint
+{
+    USB_SUPERSPEEDPLUS_ISOCHRONOUS_MIN_BYTESPERINTERVAL = 0x0000c001U,
+    USB_SUPERSPEEDPLUS_ISOCHRONOUS_MAX_BYTESPERINTERVAL = 0x00ffffffU,
+}
+
+enum : uint
+{
+    USB_HIGHSPEED_EUSB2_ISOCHRONOUS_MIN_BYTESPERINTERVAL = 0x00000c01U,
+    USB_HIGHSPEED_EUSB2_ISOCHRONOUS_MAX_BYTESPERINTERVAL = 0x00001800U,
+}
+
+enum uint USB_20_HUB_DESCRIPTOR_TYPE = 0x00000029U;
+enum uint USB_30_HUB_DESCRIPTOR_TYPE = 0x0000002aU;
+
+enum : uint
+{
+    USB_REQUEST_GET_STATE          = 0x00000002U,
+    USB_REQUEST_CLEAR_TT_BUFFER    = 0x00000008U,
+    USB_REQUEST_RESET_TT           = 0x00000009U,
+    USB_REQUEST_GET_TT_STATE       = 0x0000000aU,
+    USB_REQUEST_STOP_TT            = 0x0000000bU,
+    USB_REQUEST_SET_HUB_DEPTH      = 0x0000000cU,
+    USB_REQUEST_GET_PORT_ERR_COUNT = 0x0000000dU,
+}
+
+enum : uint
+{
+    USB_PORT_STATUS_CONNECT      = 0x00000001U,
+    USB_PORT_STATUS_ENABLE       = 0x00000002U,
+    USB_PORT_STATUS_SUSPEND      = 0x00000004U,
+    USB_PORT_STATUS_OVER_CURRENT = 0x00000008U,
+    USB_PORT_STATUS_RESET        = 0x00000010U,
+    USB_PORT_STATUS_POWER        = 0x00000100U,
+    USB_PORT_STATUS_LOW_SPEED    = 0x00000200U,
+    USB_PORT_STATUS_HIGH_SPEED   = 0x00000400U,
+}
+
+enum : uint
+{
+    PORT_LINK_STATE_U0              = 0x00000000U,
+    PORT_LINK_STATE_U1              = 0x00000001U,
+    PORT_LINK_STATE_U2              = 0x00000002U,
+    PORT_LINK_STATE_U3              = 0x00000003U,
+    PORT_LINK_STATE_DISABLED        = 0x00000004U,
+    PORT_LINK_STATE_RX_DETECT       = 0x00000005U,
+    PORT_LINK_STATE_INACTIVE        = 0x00000006U,
+    PORT_LINK_STATE_POLLING         = 0x00000007U,
+    PORT_LINK_STATE_RECOVERY        = 0x00000008U,
+    PORT_LINK_STATE_HOT_RESET       = 0x00000009U,
+    PORT_LINK_STATE_COMPLIANCE_MODE = 0x0000000aU,
+    PORT_LINK_STATE_LOOPBACK        = 0x0000000bU,
+    PORT_LINK_STATE_TEST_MODE       = 0x0000000bU,
+}
+
+enum : uint
+{
+    USB_FEATURE_INTERFACE_POWER_D0 = 0x00000002U,
+    USB_FEATURE_INTERFACE_POWER_D1 = 0x00000003U,
+    USB_FEATURE_INTERFACE_POWER_D2 = 0x00000004U,
+    USB_FEATURE_INTERFACE_POWER_D3 = 0x00000005U,
+}
+
+enum : uint
+{
+    USB_SUPPORT_D0_COMMAND = 0x00000001U,
+    USB_SUPPORT_D1_COMMAND = 0x00000002U,
+    USB_SUPPORT_D2_COMMAND = 0x00000004U,
+    USB_SUPPORT_D3_COMMAND = 0x00000008U,
+    USB_SUPPORT_D1_WAKEUP  = 0x00000010U,
+    USB_SUPPORT_D2_WAKEUP  = 0x00000020U,
+}
+
+enum uint USBDI_VERSION = 0x00000600U;
+
+enum : uint
+{
+    USB_PORTATTR_NO_CONNECTOR      = 0x00000001U,
+    USB_PORTATTR_SHARED_USB2       = 0x00000002U,
+    USB_PORTATTR_MINI_CONNECTOR    = 0x00000004U,
+    USB_PORTATTR_OEM_CONNECTOR     = 0x00000008U,
+    USB_PORTATTR_OWNED_BY_CC       = 0x01000000U,
+    USB_PORTATTR_NO_OVERCURRENT_UI = 0x02000000U,
+}
+
+enum : uint
+{
+    USB_DEFAULT_DEVICE_ADDRESS   = 0x00000000U,
+    USB_DEFAULT_ENDPOINT_ADDRESS = 0x00000000U,
+    USB_DEFAULT_MAX_PACKET       = 0x00000040U,
+}
+
+enum : uint
+{
+    URB_FUNCTION_SELECT_CONFIGURATION      = 0x00000000U,
+    URB_FUNCTION_SELECT_INTERFACE          = 0x00000001U,
+    URB_FUNCTION_ABORT_PIPE                = 0x00000002U,
+    URB_FUNCTION_TAKE_FRAME_LENGTH_CONTROL = 0x00000003U,
+}
+
+enum uint URB_FUNCTION_RELEASE_FRAME_LENGTH_CONTROL = 0x00000004U;
+
+enum : uint
+{
+    URB_FUNCTION_GET_FRAME_LENGTH         = 0x00000005U,
+    URB_FUNCTION_SET_FRAME_LENGTH         = 0x00000006U,
+    URB_FUNCTION_GET_CURRENT_FRAME_NUMBER = 0x00000007U,
+}
+
+enum : uint
+{
+    URB_FUNCTION_CONTROL_TRANSFER           = 0x00000008U,
+    URB_FUNCTION_BULK_OR_INTERRUPT_TRANSFER = 0x00000009U,
+}
+
+enum : uint
+{
+    URB_FUNCTION_ISOCH_TRANSFER             = 0x0000000aU,
+    URB_FUNCTION_GET_DESCRIPTOR_FROM_DEVICE = 0x0000000bU,
+}
+
+enum : uint
+{
+    URB_FUNCTION_SET_DESCRIPTOR_TO_DEVICE = 0x0000000cU,
+    URB_FUNCTION_SET_FEATURE_TO_DEVICE    = 0x0000000dU,
+    URB_FUNCTION_SET_FEATURE_TO_INTERFACE = 0x0000000eU,
+    URB_FUNCTION_SET_FEATURE_TO_ENDPOINT  = 0x0000000fU,
+}
+
+enum : uint
+{
+    URB_FUNCTION_CLEAR_FEATURE_TO_DEVICE    = 0x00000010U,
+    URB_FUNCTION_CLEAR_FEATURE_TO_INTERFACE = 0x00000011U,
+    URB_FUNCTION_CLEAR_FEATURE_TO_ENDPOINT  = 0x00000012U,
+}
+
+enum : uint
+{
+    URB_FUNCTION_GET_STATUS_FROM_DEVICE    = 0x00000013U,
+    URB_FUNCTION_GET_STATUS_FROM_INTERFACE = 0x00000014U,
+    URB_FUNCTION_GET_STATUS_FROM_ENDPOINT  = 0x00000015U,
+}
+
+enum : uint
+{
+    URB_FUNCTION_RESERVED_0X0016                 = 0x00000016U,
+    URB_FUNCTION_VENDOR_DEVICE                   = 0x00000017U,
+    URB_FUNCTION_VENDOR_INTERFACE                = 0x00000018U,
+    URB_FUNCTION_VENDOR_ENDPOINT                 = 0x00000019U,
+    URB_FUNCTION_CLASS_DEVICE                    = 0x0000001aU,
+    URB_FUNCTION_CLASS_INTERFACE                 = 0x0000001bU,
+    URB_FUNCTION_CLASS_ENDPOINT                  = 0x0000001cU,
+    URB_FUNCTION_RESERVE_0X001D                  = 0x0000001dU,
+    URB_FUNCTION_SYNC_RESET_PIPE_AND_CLEAR_STALL = 0x0000001eU,
+}
+
+enum : uint
+{
+    URB_FUNCTION_CLASS_OTHER           = 0x0000001fU,
+    URB_FUNCTION_VENDOR_OTHER          = 0x00000020U,
+    URB_FUNCTION_GET_STATUS_FROM_OTHER = 0x00000021U,
+}
+
+enum uint URB_FUNCTION_CLEAR_FEATURE_TO_OTHER = 0x00000022U;
+enum uint URB_FUNCTION_SET_FEATURE_TO_OTHER = 0x00000023U;
+enum uint URB_FUNCTION_GET_DESCRIPTOR_FROM_ENDPOINT = 0x00000024U;
+enum uint URB_FUNCTION_SET_DESCRIPTOR_TO_ENDPOINT = 0x00000025U;
+
+enum : uint
+{
+    URB_FUNCTION_GET_CONFIGURATION             = 0x00000026U,
+    URB_FUNCTION_GET_INTERFACE                 = 0x00000027U,
+    URB_FUNCTION_GET_DESCRIPTOR_FROM_INTERFACE = 0x00000028U,
+}
+
+enum uint URB_FUNCTION_SET_DESCRIPTOR_TO_INTERFACE = 0x00000029U;
+
+enum : uint
+{
+    URB_FUNCTION_RESERVE_0X002B            = 0x0000002bU,
+    URB_FUNCTION_RESERVE_0X002C            = 0x0000002cU,
+    URB_FUNCTION_RESERVE_0X002D            = 0x0000002dU,
+    URB_FUNCTION_RESERVE_0X002E            = 0x0000002eU,
+    URB_FUNCTION_RESERVE_0X002F            = 0x0000002fU,
+    URB_FUNCTION_GET_MS_FEATURE_DESCRIPTOR = 0x0000002aU,
+}
+
+enum : uint
+{
+    URB_FUNCTION_SYNC_RESET_PIPE      = 0x00000030U,
+    URB_FUNCTION_SYNC_CLEAR_STALL     = 0x00000031U,
+    URB_FUNCTION_CONTROL_TRANSFER_EX  = 0x00000032U,
+    URB_FUNCTION_RESERVE_0X0033       = 0x00000033U,
+    URB_FUNCTION_RESERVE_0X0034       = 0x00000034U,
+    URB_FUNCTION_OPEN_STATIC_STREAMS  = 0x00000035U,
+    URB_FUNCTION_CLOSE_STATIC_STREAMS = 0x00000036U,
+}
+
+enum uint URB_FUNCTION_BULK_OR_INTERRUPT_TRANSFER_USING_CHAINED_MDL = 0x00000037U;
+enum uint URB_FUNCTION_ISOCH_TRANSFER_USING_CHAINED_MDL = 0x00000038U;
+enum uint URB_FUNCTION_GET_ISOCH_PIPE_TRANSFER_PATH_DELAYS = 0x0000003dU;
+enum uint URB_FUNCTION_RESET_PIPE = 0x0000001eU;
+enum uint USBD_SHORT_TRANSFER_OK = 0x00000002U;
+enum uint USBD_START_ISO_TRANSFER_ASAP = 0x00000004U;
+enum uint USBD_DEFAULT_PIPE_TRANSFER = 0x00000008U;
+
+enum : uint
+{
+    USBD_TRANSFER_DIRECTION_OUT = 0x00000000U,
+    USBD_TRANSFER_DIRECTION_IN  = 0x00000001U,
+    USBD_TRANSFER_DIRECTION     = 0x00000001U,
+}
+
+enum uint USBD_ISO_START_FRAME_RANGE = 0x00000400U;
+enum uint USBD_DEFAULT_MAXIMUM_TRANSFER_SIZE = 0xffffffffU;
+enum uint USBD_PF_CHANGE_MAX_PACKET = 0x00000001U;
+enum uint USBD_PF_SHORT_PACKET_OPT = 0x00000002U;
+enum uint USBD_PF_ENABLE_RT_THREAD_ACCESS = 0x00000004U;
+enum uint USBD_PF_MAP_ADD_TRANSFERS = 0x00000008U;
+
+enum : uint
+{
+    USBD_PF_VIDEO_PRIORITY = 0x00000010U,
+    USBD_PF_VOICE_PRIORITY = 0x00000020U,
+}
+
+enum uint USBD_PF_INTERACTIVE_PRIORITY = 0x00000030U;
+enum uint USBD_PF_PRIORITY_MASK = 0x000000f0U;
+enum uint USBD_PF_HANDLES_SSP_HIGH_BANDWIDTH_ISOCH = 0x00000100U;
+enum uint USBD_PF_SSP_HIGH_BANDWIDTH_ISOCH = 0x00010000U;
+enum uint OS_STRING_DESCRIPTOR_INDEX = 0x000000eeU;
+enum uint MS_GENRE_DESCRIPTOR_INDEX = 0x00000001U;
+enum uint MS_POWER_DESCRIPTOR_INDEX = 0x00000002U;
+enum const(wchar)* MS_OS_STRING_SIGNATURE = "MSFT100";
+enum uint MS_OS_FLAGS_CONTAINERID = 0x00000002U;
+enum uint URB_OPEN_STATIC_STREAMS_VERSION_100 = 0x00000100U;
+enum uint USB4_MAX_DEPTH = 0x00000006U;
+enum uint USB4_CONFIGURATION_REGISTERS_DW_LENGTH = 0x0000003cU;
+enum GUID USB4_HRD_DEBUG_INTERFACE = GUID("981fca05-60d3-4bb3-898e-497c580c4fb3");
+enum const(wchar)* USB4_HRD_DEBUG_INTERFACE_REFERENCE_STRING = "\\DEBUGINTERFACE";
+enum uint USB4_HRD_DEBUG_FUNCTION_READ_CONFIGURATION_SPACE = 0x0000046bU;
+enum uint IOCTL_USB4_HRD_DEBUG_READ_CONFIGURATION_SPACE = 0x006011acU;
+enum const(wchar)* KREGUSBFNENUMPATH = "\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Control\\USBFN\\";
+enum const(wchar)* UREGUSBFNENUMPATH = "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\USBFN\\";
+enum const(wchar)* KREGMANUSBFNENUMPATH = "\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Control\\ManufacturingMode\\Current\\USBFN\\";
+enum const(wchar)* UREGMANUSBFNENUMPATH = "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\ManufacturingMode\\Current\\USBFN\\";
+enum uint MAX_NUM_USBFN_ENDPOINTS = 0x0000000fU;
+enum uint MAX_CONFIGURATION_NAME_LENGTH = 0x00000028U;
+enum uint MAX_USB_STRING_LENGTH = 0x000000ffU;
+enum uint MAX_SUPPORTED_CONFIGURATIONS = 0x0000000cU;
+enum uint USBFN_INTERRUPT_ENDPOINT_SIZE_NOT_UPDATEABLE_MASK = 0x00000080U;
+
+enum : uint
+{
+    USB_TEST_MODE_TEST_J            = 0x00000001U,
+    USB_TEST_MODE_TEST_K            = 0x00000002U,
+    USB_TEST_MODE_TEST_SE0_NAK      = 0x00000003U,
+    USB_TEST_MODE_TEST_PACKET       = 0x00000004U,
+    USB_TEST_MODE_TEST_FORCE_ENABLE = 0x00000005U,
+}
+
+enum uint MAX_INTERFACE_NAME_LENGTH = 0x00000028U;
+enum uint MAX_ALTERNATE_NAME_LENGTH = 0x00000028U;
+enum uint MAX_ASSOCIATION_NAME_LENGTH = 0x00000028U;
+
+enum : uint
+{
+    IOCTL_INTERNAL_USB_SUBMIT_URB      = 0x00220003U,
+    IOCTL_INTERNAL_USB_RESET_PORT      = 0x00220007U,
+    IOCTL_INTERNAL_USB_GET_ROOTHUB_PDO = 0x0022000fU,
+}
+
+enum : uint
+{
+    USBD_PORT_ENABLED   = 0x00000001U,
+    USBD_PORT_CONNECTED = 0x00000002U,
+}
+
+enum : uint
+{
+    IOCTL_INTERNAL_USB_GET_PORT_STATUS                  = 0x00220013U,
+    IOCTL_INTERNAL_USB_ENABLE_PORT                      = 0x00220017U,
+    IOCTL_INTERNAL_USB_GET_HUB_COUNT                    = 0x0022001bU,
+    IOCTL_INTERNAL_USB_CYCLE_PORT                       = 0x0022001fU,
+    IOCTL_INTERNAL_USB_GET_HUB_NAME                     = 0x00220020U,
+    IOCTL_INTERNAL_USB_GET_BUS_INFO                     = 0x00220420U,
+    IOCTL_INTERNAL_USB_GET_CONTROLLER_NAME              = 0x00220424U,
+    IOCTL_INTERNAL_USB_GET_BUSGUID_INFO                 = 0x00220428U,
+    IOCTL_INTERNAL_USB_GET_PARENT_HUB_INFO              = 0x0022042cU,
+    IOCTL_INTERNAL_USB_SUBMIT_IDLE_NOTIFICATION         = 0x00220027U,
+    IOCTL_INTERNAL_USB_GET_DEVICE_HANDLE                = 0x00220433U,
+    IOCTL_INTERNAL_USB_NOTIFY_IDLE_READY                = 0x00220443U,
+    IOCTL_INTERNAL_USB_REQ_GLOBAL_SUSPEND               = 0x00220447U,
+    IOCTL_INTERNAL_USB_REQ_GLOBAL_RESUME                = 0x0022044bU,
+    IOCTL_INTERNAL_USB_RECORD_FAILURE                   = 0x0022002bU,
+    IOCTL_INTERNAL_USB_GET_DEVICE_HANDLE_EX             = 0x00220437U,
+    IOCTL_INTERNAL_USB_GET_TT_DEVICE_HANDLE             = 0x0022043bU,
+    IOCTL_INTERNAL_USB_GET_TOPOLOGY_ADDRESS             = 0x0022043fU,
+    IOCTL_INTERNAL_USB_GET_DEVICE_CONFIG_INFO           = 0x0022044fU,
+    IOCTL_INTERNAL_USB_REGISTER_COMPOSITE_DEVICE        = 0x00490003U,
+    IOCTL_INTERNAL_USB_UNREGISTER_COMPOSITE_DEVICE      = 0x00490007U,
+    IOCTL_INTERNAL_USB_REQUEST_REMOTE_WAKE_NOTIFICATION = 0x0049000bU,
+}
+
+enum uint IOCTL_INTERNAL_USB_FAIL_GET_STATUS_FROM_DEVICE = 0x00220463U;
+
+enum : uint
+{
+    IOCTL_USB_HCD_GET_STATS_1  = 0x002203fcU,
+    IOCTL_USB_HCD_GET_STATS_2  = 0x00220428U,
+    IOCTL_USB_HCD_DISABLE_PORT = 0x00220430U,
+    IOCTL_USB_HCD_ENABLE_PORT  = 0x00220434U,
+}
+
+enum : uint
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_diagnostic_mode_on
+    IOCTL_USB_DIAGNOSTIC_MODE_ON  = 0x00220400U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_diagnostic_mode_off
+    IOCTL_USB_DIAGNOSTIC_MODE_OFF = 0x00220404U,
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_get_root_hub_name
+enum uint IOCTL_USB_GET_ROOT_HUB_NAME = 0x00220408U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_get_hcd_driverkey_name
+enum uint IOCTL_GET_HCD_DRIVERKEY_NAME = 0x00220424U;
+
+enum : uint
+{
+    IOCTL_USB_GET_NODE_INFORMATION            = 0x00220408U,
+    IOCTL_USB_GET_NODE_CONNECTION_INFORMATION = 0x0022040cU,
+}
+
+enum uint IOCTL_USB_GET_DESCRIPTOR_FROM_NODE_CONNECTION = 0x00220410U;
+enum uint IOCTL_USB_GET_NODE_CONNECTION_NAME = 0x00220414U;
+
+enum : uint
+{
+    IOCTL_USB_DIAG_IGNORE_HUBS_ON  = 0x00220418U,
+    IOCTL_USB_DIAG_IGNORE_HUBS_OFF = 0x0022041cU,
+}
+
+enum uint IOCTL_USB_GET_NODE_CONNECTION_DRIVERKEY_NAME = 0x00220420U;
+enum uint IOCTL_USB_GET_HUB_CAPABILITIES = 0x0022043cU;
+
+enum : uint
+{
+    IOCTL_USB_HUB_CYCLE_PORT                     = 0x00220444U,
+    IOCTL_USB_GET_NODE_CONNECTION_ATTRIBUTES     = 0x00220440U,
+    IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX = 0x00220448U,
+}
+
+enum : uint
+{
+    IOCTL_USB_RESET_HUB                     = 0x0022044cU,
+    IOCTL_USB_GET_HUB_CAPABILITIES_EX       = 0x00220450U,
+    IOCTL_USB_GET_HUB_INFORMATION_EX        = 0x00220454U,
+    IOCTL_USB_GET_PORT_CONNECTOR_PROPERTIES = 0x00220458U,
+}
+
+enum uint IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX_V2 = 0x0022045cU;
+enum uint IOCTL_USB_GET_TRANSPORT_CHARACTERISTICS = 0x00220464U;
+enum uint IOCTL_USB_REGISTER_FOR_TRANSPORT_CHARACTERISTICS_CHANGE = 0x00220468U;
+enum uint IOCTL_USB_NOTIFY_ON_TRANSPORT_CHARACTERISTICS_CHANGE = 0x0022046cU;
+enum uint IOCTL_USB_UNREGISTER_FOR_TRANSPORT_CHARACTERISTICS_CHANGE = 0x00220470U;
+enum uint IOCTL_USB_START_TRACKING_FOR_TIME_SYNC = 0x00220474U;
+enum uint IOCTL_USB_GET_FRAME_NUMBER_AND_QPC_FOR_TIME_SYNC = 0x00220478U;
+enum uint IOCTL_USB_STOP_TRACKING_FOR_TIME_SYNC = 0x0022047cU;
+enum uint IOCTL_USB_GET_DEVICE_CHARACTERISTICS = 0x00220480U;
+enum uint IOCTL_USB_GET_NODE_CONNECTION_SUPERSPEEDPLUS_INFORMATION = 0x00220484U;
+
+enum : uint
+{
+    WMI_USB_DRIVER_INFORMATION  = 0x00000000U,
+    WMI_USB_DRIVER_NOTIFICATION = 0x00000001U,
+}
+
+enum uint WMI_USB_POWER_DEVICE_ENABLE = 0x00000002U;
+enum uint WMI_USB_HUB_NODE_INFORMATION = 0x00000004U;
+enum uint WMI_USB_PERFORMANCE_INFORMATION = 0x00000001U;
+enum uint WMI_USB_DEVICE_NODE_INFORMATION = 0x00000002U;
+
+enum : uint
+{
+    USB_TRANSPORT_CHARACTERISTICS_VERSION_1           = 0x00000001U,
+    USB_TRANSPORT_CHARACTERISTICS_LATENCY_AVAILABLE   = 0x00000001U,
+    USB_TRANSPORT_CHARACTERISTICS_BANDWIDTH_AVAILABLE = 0x00000002U,
+}
+
+enum : uint
+{
+    USB_REGISTER_FOR_TRANSPORT_LATENCY_CHANGE   = 0x00000001U,
+    USB_REGISTER_FOR_TRANSPORT_BANDWIDTH_CHANGE = 0x00000002U,
+}
+
+enum : uint
+{
+    USB_DEVICE_CHARACTERISTICS_VERSION_1                     = 0x00000001U,
+    USB_DEVICE_CHARACTERISTICS_MAXIMUM_PATH_DELAYS_AVAILABLE = 0x00000001U,
+}
+
+enum uint MAX_NUM_PIPES = 0x00000008U;
+enum uint BULKIN_FLAG = 0x00000080U;
+enum uint FILE_DEVICE_USB_SCAN = 0x00008000U;
+
+enum : uint
+{
+    IOCTL_INDEX       = 0x00000800U,
+    IOCTL_GET_VERSION = 0x80002000U,
+}
+
+enum uint IOCTL_CANCEL_IO = 0x80002004U;
+enum uint IOCTL_WAIT_ON_DEVICE_EVENT = 0x80002008U;
+enum uint IOCTL_READ_REGISTERS = 0x8000200cU;
+enum uint IOCTL_WRITE_REGISTERS = 0x80002010U;
+enum uint IOCTL_GET_CHANNEL_ALIGN_RQST = 0x80002014U;
+enum uint IOCTL_GET_DEVICE_DESCRIPTOR = 0x80002018U;
+enum uint IOCTL_RESET_PIPE = 0x8000201cU;
+enum uint IOCTL_GET_USB_DESCRIPTOR = 0x80002020U;
+enum uint IOCTL_SEND_USB_REQUEST = 0x80002024U;
+enum uint IOCTL_GET_PIPE_CONFIGURATION = 0x80002028U;
+enum uint IOCTL_SET_TIMEOUT = 0x8000202cU;
+enum uint IOCTL_ABORT_PIPE = 0x80002004U;
+enum GUID WinUSB_TestGuid = GUID("da812bff-12c3-46a2-8e2b-dbd3b7834c43");
+
+// Callbacks
+
+alias USB_IDLE_CALLBACK = void function(void* Context);
+
+// Structs
+
+
+@RAIIFree!WinUsb_Free
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct WINUSB_INTERFACE_HANDLE
+{
+    void* Value;
+}
+
+struct USB_CHANGE_REGISTRATION_HANDLE
+{
+    void* Value;
+}
+
+union BM_REQUEST_TYPE
+{
+    struct s
+    {
+        ubyte _bitfield50;
+    }
+    ubyte B;
+}
+
+struct USB_DEFAULT_PIPE_SETUP_PACKET
+{
+align (1):
+    BM_REQUEST_TYPE bmRequestType;
+    ubyte           bRequest;
+    union wValue
+    {
+    align (1):
+        struct
+        {
+            ubyte LowByte;
+            ubyte HiByte;
+        }
+        ushort W;
+    }
+    union wIndex
+    {
+    align (1):
+        struct
+        {
+            ubyte LowByte;
+            ubyte HiByte;
+        }
+        ushort W;
+    }
+    ushort          wLength;
+}
+
+union USB_DEVICE_STATUS
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield51;
+    }
+}
+
+union USB_INTERFACE_STATUS
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield52;
+    }
+}
+
+union USB_ENDPOINT_STATUS
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield53;
+    }
+}
+
+struct USB_COMMON_DESCRIPTOR
+{
+    ubyte bLength;
+    ubyte bDescriptorType;
+}
+
+struct USB_DEVICE_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ushort bcdUSB;
+    ubyte  bDeviceClass;
+    ubyte  bDeviceSubClass;
+    ubyte  bDeviceProtocol;
+    ubyte  bMaxPacketSize0;
+    ushort idVendor;
+    ushort idProduct;
+    ushort bcdDevice;
+    ubyte  iManufacturer;
+    ubyte  iProduct;
+    ubyte  iSerialNumber;
+    ubyte  bNumConfigurations;
+}
+
+struct USB_DEVICE_QUALIFIER_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ushort bcdUSB;
+    ubyte  bDeviceClass;
+    ubyte  bDeviceSubClass;
+    ubyte  bDeviceProtocol;
+    ubyte  bMaxPacketSize0;
+    ubyte  bNumConfigurations;
+    ubyte  bReserved;
+}
+
+struct USB_BOS_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ushort wTotalLength;
+    ubyte  bNumDeviceCaps;
+}
+
+struct USB_DEVICE_CAPABILITY_USB20_EXTENSION_DESCRIPTOR
+{
+    ubyte bLength;
+    ubyte bDescriptorType;
+    ubyte bDevCapabilityType;
+    union bmAttributes
+    {
+    align (1):
+        uint AsUlong;
+        struct
+        {
+        align (1):
+            uint _bitfield54;
+        }
+    }
+}
+
+struct USB_DEVICE_CAPABILITY_POWER_DELIVERY_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bDevCapabilityType;
+    ubyte  bReserved;
+    union bmAttributes
+    {
+    align (1):
+        uint AsUlong;
+        struct
+        {
+        align (1):
+            uint _bitfield55;
+        }
+    }
+    ushort bmProviderPorts;
+    ushort bmConsumerPorts;
+    ushort bcdBCVersion;
+    ushort bcdPDVersion;
+    ushort bcdUSBTypeCVersion;
+}
+
+struct USB_DEVICE_CAPABILITY_PD_CONSUMER_PORT_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bDevCapabilityType;
+    ubyte  bReserved;
+    union bmCapabilities
+    {
+    align (1):
+        ushort AsUshort;
+        struct
+        {
+        align (1):
+            ushort _bitfield56;
+        }
+    }
+    ushort wMinVoltage;
+    ushort wMaxVoltage;
+    ushort wReserved;
+    uint   dwMaxOperatingPower;
+    uint   dwMaxPeakPower;
+    uint   dwMaxPeakPowerTime;
+}
+
+struct USB_DEVICE_CAPABILITY_SUPERSPEED_USB_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bDevCapabilityType;
+    ubyte  bmAttributes;
+    ushort wSpeedsSupported;
+    ubyte  bFunctionalitySupport;
+    ubyte  bU1DevExitLat;
+    ushort wU2DevExitLat;
+}
+
+union USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED
+{
+align (1):
+    uint AsUlong32;
+    struct
+    {
+    align (1):
+        uint _bitfield57;
+    }
+}
+
+struct USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_USB_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bDevCapabilityType;
+    ubyte  bReserved;
+    union bmAttributes
+    {
+    align (1):
+        uint AsUlong;
+        struct
+        {
+        align (1):
+            uint _bitfield58;
+        }
+    }
+    union wFunctionalitySupport
+    {
+    align (1):
+        ushort AsUshort;
+        struct
+        {
+        align (1):
+            ushort _bitfield59;
+        }
+    }
+    ushort wReserved;
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED[1] bmSublinkSpeedAttr; // Flexible array
+}
+
+struct USB_DEVICE_CAPABILITY_CONTAINER_ID_DESCRIPTOR
+{
+    ubyte     bLength;
+    ubyte     bDescriptorType;
+    ubyte     bDevCapabilityType;
+    ubyte     bReserved;
+    ubyte[16] ContainerID;
+}
+
+struct USB_DEVICE_CAPABILITY_PLATFORM_DESCRIPTOR
+{
+align (1):
+    ubyte    bLength;
+    ubyte    bDescriptorType;
+    ubyte    bDevCapabilityType;
+    ubyte    bReserved;
+    GUID     PlatformCapabilityUuid;
+    ubyte[1] CapabililityData; // Flexible array
+}
+
+struct USB_DEVICE_CAPABILITY_BILLBOARD_DESCRIPTOR
+{
+align (1):
+    ubyte     bLength;
+    ubyte     bDescriptorType;
+    ubyte     bDevCapabilityType;
+    ubyte     iAddtionalInfoURL;
+    ubyte     bNumberOfAlternateModes;
+    ubyte     bPreferredAlternateMode;
+    union VconnPower
+    {
+    align (1):
+        ushort AsUshort;
+        struct
+        {
+        align (1):
+            ushort _bitfield60;
+        }
+    }
+    ubyte[32] bmConfigured;
+    uint      bReserved;
+    struct
+    {
+    align (1):
+        ushort wSVID;
+        ubyte  bAlternateMode;
+        ubyte  iAlternateModeSetting;
+    }
+}
+
+struct USB_DEVICE_CAPABILITY_FIRMWARE_STATUS_DESCRIPTOR
+{
+    ubyte bLength;
+    ubyte bDescriptorType;
+    ubyte bDevCapabilityType;
+    ubyte bcdDescriptorVersion;
+    union bmAttributes
+    {
+    align (1):
+        uint AsUlong;
+        struct
+        {
+        align (1):
+            uint _bitfield61;
+        }
+    }
+}
+
+struct USB_DEVICE_CAPABILITY_DESCRIPTOR
+{
+    ubyte bLength;
+    ubyte bDescriptorType;
+    ubyte bDevCapabilityType;
+}
+
+struct USB_CONFIGURATION_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ushort wTotalLength;
+    ubyte  bNumInterfaces;
+    ubyte  bConfigurationValue;
+    ubyte  iConfiguration;
+    ubyte  bmAttributes;
+    ubyte  MaxPower;
+}
+
+struct USB_INTERFACE_ASSOCIATION_DESCRIPTOR
+{
+    ubyte bLength;
+    ubyte bDescriptorType;
+    ubyte bFirstInterface;
+    ubyte bInterfaceCount;
+    ubyte bFunctionClass;
+    ubyte bFunctionSubClass;
+    ubyte bFunctionProtocol;
+    ubyte iFunction;
+}
+
+struct USB_INTERFACE_DESCRIPTOR
+{
+    ubyte bLength;
+    ubyte bDescriptorType;
+    ubyte bInterfaceNumber;
+    ubyte bAlternateSetting;
+    ubyte bNumEndpoints;
+    ubyte bInterfaceClass;
+    ubyte bInterfaceSubClass;
+    ubyte bInterfaceProtocol;
+    ubyte iInterface;
+}
+
+struct USB_ENDPOINT_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bEndpointAddress;
+    ubyte  bmAttributes;
+    ushort wMaxPacketSize;
+    ubyte  bInterval;
+}
+
+union USB_HIGH_SPEED_MAXPACKET
+{
+align (1):
+    ushort us;
+}
+
+struct USB_STRING_DESCRIPTOR
+{
+align (1):
+    ubyte    bLength;
+    ubyte    bDescriptorType;
+    wchar[1] bString; // Flexible array
+}
+
+struct USB_SUPERSPEED_ENDPOINT_COMPANION_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bMaxBurst;
+    union bmAttributes
+    {
+        ubyte AsUchar;
+        struct Bulk
+        {
+            ubyte _bitfield62;
+        }
+        struct Isochronous
+        {
+            ubyte _bitfield63;
+        }
+    }
+    ushort wBytesPerInterval;
+}
+
+struct USB_SUPERSPEEDPLUS_ISOCH_ENDPOINT_COMPANION_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ushort wReserved;
+    uint   dwBytesPerInterval;
+}
+
+struct EUSB2_ISOCH_ENDPOINT_COMPANION_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ushort wMaxPacketSize;
+    uint   dwBytesPerInterval;
+}
+
+struct USB_HUB_DESCRIPTOR
+{
+align (1):
+    ubyte     bDescriptorLength;
+    ubyte     bDescriptorType;
+    ubyte     bNumberOfPorts;
+    ushort    wHubCharacteristics;
+    ubyte     bPowerOnToPowerGood;
+    ubyte     bHubControlCurrent;
+    ubyte[64] bRemoveAndPowerMask;
+}
+
+struct USB_30_HUB_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bNumberOfPorts;
+    ushort wHubCharacteristics;
+    ubyte  bPowerOnToPowerGood;
+    ubyte  bHubControlCurrent;
+    ubyte  bHubHdrDecLat;
+    ushort wHubDelay;
+    ushort DeviceRemovable;
+}
+
+union USB_HUB_STATUS
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield64;
+    }
+}
+
+union USB_HUB_CHANGE
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield65;
+    }
+}
+
+union USB_HUB_STATUS_AND_CHANGE
+{
+align (1):
+    uint AsUlong32;
+    struct
+    {
+        USB_HUB_STATUS HubStatus;
+        USB_HUB_CHANGE HubChange;
+    }
+}
+
+union USB_20_PORT_STATUS
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield66;
+    }
+}
+
+union USB_20_PORT_CHANGE
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield67;
+    }
+}
+
+union USB_30_PORT_STATUS
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield68;
+    }
+}
+
+union USB_30_PORT_CHANGE
+{
+align (1):
+    ushort AsUshort16;
+    struct
+    {
+    align (1):
+        ushort _bitfield69;
+    }
+}
+
+union USB_PORT_STATUS
+{
+align (1):
+    ushort             AsUshort16;
+    USB_20_PORT_STATUS Usb20PortStatus;
+    USB_30_PORT_STATUS Usb30PortStatus;
+}
+
+union USB_PORT_CHANGE
+{
+align (1):
+    ushort             AsUshort16;
+    USB_20_PORT_CHANGE Usb20PortChange;
+    USB_30_PORT_CHANGE Usb30PortChange;
+}
+
+union USB_PORT_EXT_STATUS
+{
+align (1):
+    uint AsUlong32;
+    struct
+    {
+    align (1):
+        uint _bitfield70;
+    }
+}
+
+union USB_PORT_STATUS_AND_CHANGE
+{
+align (1):
+    uint AsUlong32;
+    struct
+    {
+        USB_PORT_STATUS PortStatus;
+        USB_PORT_CHANGE PortChange;
+    }
+}
+
+union USB_PORT_EXT_STATUS_AND_CHANGE
+{
+align (1):
+    ulong AsUlong64;
+    struct
+    {
+        USB_PORT_STATUS_AND_CHANGE PortStatusChange;
+        USB_PORT_EXT_STATUS PortExtStatus;
+    }
+}
+
+union USB_HUB_30_PORT_REMOTE_WAKE_MASK
+{
+    ubyte AsUchar8;
+    struct
+    {
+        ubyte _bitfield71;
+    }
+}
+
+union USB_FUNCTION_SUSPEND_OPTIONS
+{
+    ubyte AsUchar;
+    struct
+    {
+        ubyte _bitfield72;
+    }
+}
+
+struct USB_CONFIGURATION_POWER_DESCRIPTOR
+{
+align (1):
+    ubyte    bLength;
+    ubyte    bDescriptorType;
+    ubyte[3] SelfPowerConsumedD0;
+    ubyte    bPowerSummaryId;
+    ubyte    bBusPowerSavingD1;
+    ubyte    bSelfPowerSavingD1;
+    ubyte    bBusPowerSavingD2;
+    ubyte    bSelfPowerSavingD2;
+    ubyte    bBusPowerSavingD3;
+    ubyte    bSelfPowerSavingD3;
+    ushort   TransitionTimeFromD1;
+    ushort   TransitionTimeFromD2;
+    ushort   TransitionTimeFromD3;
+}
+
+struct USB_INTERFACE_POWER_DESCRIPTOR
+{
+align (1):
+    ubyte  bLength;
+    ubyte  bDescriptorType;
+    ubyte  bmCapabilitiesFlags;
+    ubyte  bBusPowerSavingD1;
+    ubyte  bSelfPowerSavingD1;
+    ubyte  bBusPowerSavingD2;
+    ubyte  bSelfPowerSavingD2;
+    ubyte  bBusPowerSavingD3;
+    ubyte  bSelfPowerSavingD3;
+    ushort TransitionTimeFromD1;
+    ushort TransitionTimeFromD2;
+    ushort TransitionTimeFromD3;
+}
+
+struct USBD_VERSION_INFORMATION
+{
+    uint USBDI_Version;
+    uint Supported_USB_Version;
+}
+
+struct USBD_DEVICE_INFORMATION
+{
+    uint  OffsetNext;
+    void* UsbdDeviceHandle;
+    USB_DEVICE_DESCRIPTOR DeviceDescriptor;
+}
+
+struct USBD_PIPE_INFORMATION
+{
+    ushort         MaximumPacketSize;
+    ubyte          EndpointAddress;
+    ubyte          Interval;
+    USBD_PIPE_TYPE PipeType;
+    void*          PipeHandle;
+    uint           MaximumTransferSize;
+    uint           PipeFlags;
+}
+
+struct USBD_ENDPOINT_OFFLOAD_INFORMATION_V1
+{
+align (1):
+    uint   Size;
+    ushort EndpointAddress;
+    uint   ResourceId;
+    USBD_ENDPOINT_OFFLOAD_MODE Mode;
+    uint   _bitfield1;
+    uint   _bitfield2;
+    long   TransferSegmentLA;
+    void*  TransferSegmentVA;
+    size_t TransferRingSize;
+    uint   TransferRingInitialCycleBit;
+    uint   MessageNumber;
+    long   EventRingSegmentLA;
+    void*  EventRingSegmentVA;
+    size_t EventRingSize;
+    uint   EventRingInitialCycleBit;
+}
+
+struct USBD_ENDPOINT_OFFLOAD_INFORMATION
+{
+align (1):
+    uint   Size;
+    ushort EndpointAddress;
+    uint   ResourceId;
+    USBD_ENDPOINT_OFFLOAD_MODE Mode;
+    uint   _bitfield1;
+    uint   _bitfield2;
+    long   TransferSegmentLA;
+    void*  TransferSegmentVA;
+    size_t TransferRingSize;
+    uint   TransferRingInitialCycleBit;
+    uint   MessageNumber;
+    long   EventRingSegmentLA;
+    void*  EventRingSegmentVA;
+    size_t EventRingSize;
+    uint   EventRingInitialCycleBit;
+    long   ClientTransferRingSegmentPAIn;
+    size_t ClientTransferRingSizeIn;
+    long   ClientDataBufferPAIn;
+    size_t ClientDataBufferSizeIn;
+    long   ClientDataBufferLAOut;
+    void*  ClientDataBufferVAOut;
+}
+
+struct USBD_INTERFACE_INFORMATION
+{
+    ushort Length;
+    ubyte  InterfaceNumber;
+    ubyte  AlternateSetting;
+    ubyte  Class;
+    ubyte  SubClass;
+    ubyte  Protocol;
+    ubyte  Reserved;
+    void*  InterfaceHandle;
+    uint   NumberOfPipes;
+    USBD_PIPE_INFORMATION[1] Pipes; // Flexible array
+}
+
+struct _URB_HCD_AREA
+{
+    void[8]* Reserved8;
+}
+
+struct _URB_HEADER
+{
+    ushort Length;
+    ushort Function;
+    int    Status;
+    void*  UsbdDeviceHandle;
+    uint   UsbdFlags;
+}
+
+struct _URB_SELECT_INTERFACE
+{
+    _URB_HEADER Hdr;
+    void*       ConfigurationHandle;
+    USBD_INTERFACE_INFORMATION Interface;
+}
+
+struct _URB_SELECT_CONFIGURATION
+{
+    _URB_HEADER Hdr;
+    USB_CONFIGURATION_DESCRIPTOR* ConfigurationDescriptor;
+    void*       ConfigurationHandle;
+    USBD_INTERFACE_INFORMATION Interface;
+}
+
+struct _URB_PIPE_REQUEST
+{
+    _URB_HEADER Hdr;
+    void*       PipeHandle;
+    uint        Reserved;
+}
+
+struct _URB_FRAME_LENGTH_CONTROL
+{
+    _URB_HEADER Hdr;
+}
+
+struct _URB_GET_FRAME_LENGTH
+{
+    _URB_HEADER Hdr;
+    uint        FrameLength;
+    uint        FrameNumber;
+}
+
+struct _URB_SET_FRAME_LENGTH
+{
+    _URB_HEADER Hdr;
+    int         FrameLengthDelta;
+}
+
+struct _URB_GET_CURRENT_FRAME_NUMBER
+{
+    _URB_HEADER Hdr;
+    uint        FrameNumber;
+}
+
+struct _URB_CONTROL_DESCRIPTOR_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          Reserved0;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ushort        Reserved1;
+    ubyte         Index;
+    ubyte         DescriptorType;
+    ushort        LanguageId;
+    ushort        Reserved2;
+}
+
+struct _URB_CONTROL_GET_STATUS_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          Reserved0;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ubyte[4]      Reserved1;
+    ushort        Index;
+    ushort        Reserved2;
+}
+
+struct _URB_CONTROL_FEATURE_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          Reserved2;
+    uint          Reserved3;
+    void*         Reserved4;
+    void*         Reserved5;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ushort        Reserved0;
+    ushort        FeatureSelector;
+    ushort        Index;
+    ushort        Reserved1;
+}
+
+struct _URB_CONTROL_VENDOR_OR_CLASS_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          TransferFlags;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ubyte         RequestTypeReservedBits;
+    ubyte         Request;
+    ushort        Value;
+    ushort        Index;
+    ushort        Reserved1;
+}
+
+struct _URB_CONTROL_GET_INTERFACE_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          Reserved0;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ubyte[4]      Reserved1;
+    ushort        Interface;
+    ushort        Reserved2;
+}
+
+struct _URB_CONTROL_GET_CONFIGURATION_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          Reserved0;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ubyte[8]      Reserved1;
+}
+
+struct OS_STRING
+{
+    ubyte    bLength;
+    ubyte    bDescriptorType;
+    wchar[7] MicrosoftString;
+    ubyte    bVendorCode;
+    union
+    {
+        ubyte bPad;
+        ubyte bFlags;
+    }
+}
+
+struct _URB_OS_FEATURE_DESCRIPTOR_REQUEST
+{
+    _URB_HEADER   Hdr;
+    void*         Reserved;
+    uint          Reserved0;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ubyte         _bitfield73;
+    ubyte         Reserved2;
+    ubyte         InterfaceNumber;
+    ubyte         MS_PageIndex;
+    ushort        MS_FeatureDescriptorIndex;
+    ushort        Reserved3;
+}
+
+struct _URB_CONTROL_TRANSFER
+{
+    _URB_HEADER   Hdr;
+    void*         PipeHandle;
+    uint          TransferFlags;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    ubyte[8]      SetupPacket;
+}
+
+struct _URB_CONTROL_TRANSFER_EX
+{
+    _URB_HEADER   Hdr;
+    void*         PipeHandle;
+    uint          TransferFlags;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    uint          Timeout;
+    _URB_HCD_AREA hca;
+    ubyte[8]      SetupPacket;
+}
+
+struct _URB_BULK_OR_INTERRUPT_TRANSFER
+{
+    _URB_HEADER   Hdr;
+    void*         PipeHandle;
+    uint          TransferFlags;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+}
+
+struct USBD_ISO_PACKET_DESCRIPTOR
+{
+    uint Offset;
+    uint Length;
+    int  Status;
+}
+
+struct _URB_ISOCH_TRANSFER
+{
+    _URB_HEADER   Hdr;
+    void*         PipeHandle;
+    uint          TransferFlags;
+    uint          TransferBufferLength;
+    void*         TransferBuffer;
+    void*         TransferBufferMDL;
+    URB*          UrbLink;
+    _URB_HCD_AREA hca;
+    uint          StartFrame;
+    uint          NumberOfPackets;
+    uint          ErrorCount;
+    USBD_ISO_PACKET_DESCRIPTOR[1] IsoPacket; // Flexible array
+}
+
+struct USBD_STREAM_INFORMATION
+{
+    void* PipeHandle;
+    uint  StreamID;
+    uint  MaximumTransferSize;
+    uint  PipeFlags;
+}
+
+struct _URB_OPEN_STATIC_STREAMS
+{
+    _URB_HEADER Hdr;
+    void*       PipeHandle;
+    uint        NumberOfStreams;
+    ushort      StreamInfoVersion;
+    ushort      StreamInfoSize;
+    USBD_STREAM_INFORMATION* Streams;
+}
+
+struct _URB_GET_ISOCH_PIPE_TRANSFER_PATH_DELAYS
+{
+    _URB_HEADER Hdr;
+    void*       PipeHandle;
+    uint        MaximumSendPathDelayInMilliSeconds;
+    uint        MaximumCompletionPathDelayInMilliSeconds;
+}
+
+struct URB
+{
+    union
+    {
+        _URB_HEADER         UrbHeader;
+        _URB_SELECT_INTERFACE UrbSelectInterface;
+        _URB_SELECT_CONFIGURATION UrbSelectConfiguration;
+        _URB_PIPE_REQUEST   UrbPipeRequest;
+        _URB_FRAME_LENGTH_CONTROL UrbFrameLengthControl;
+        _URB_GET_FRAME_LENGTH UrbGetFrameLength;
+        _URB_SET_FRAME_LENGTH UrbSetFrameLength;
+        _URB_GET_CURRENT_FRAME_NUMBER UrbGetCurrentFrameNumber;
+        _URB_CONTROL_TRANSFER UrbControlTransfer;
+        _URB_CONTROL_TRANSFER_EX UrbControlTransferEx;
+        _URB_BULK_OR_INTERRUPT_TRANSFER UrbBulkOrInterruptTransfer;
+        _URB_ISOCH_TRANSFER UrbIsochronousTransfer;
+        _URB_CONTROL_DESCRIPTOR_REQUEST UrbControlDescriptorRequest;
+        _URB_CONTROL_GET_STATUS_REQUEST UrbControlGetStatusRequest;
+        _URB_CONTROL_FEATURE_REQUEST UrbControlFeatureRequest;
+        _URB_CONTROL_VENDOR_OR_CLASS_REQUEST UrbControlVendorClassRequest;
+        _URB_CONTROL_GET_INTERFACE_REQUEST UrbControlGetInterfaceRequest;
+        _URB_CONTROL_GET_CONFIGURATION_REQUEST UrbControlGetConfigurationRequest;
+        _URB_OS_FEATURE_DESCRIPTOR_REQUEST UrbOSFeatureDescriptorRequest;
+        _URB_OPEN_STATIC_STREAMS UrbOpenStaticStreams;
+        _URB_GET_ISOCH_PIPE_TRANSFER_PATH_DELAYS UrbGetIsochPipeTransferPathDelays;
+    }
+}
+
+struct USB_IDLE_CALLBACK_INFO
+{
+    USB_IDLE_CALLBACK IdleCallback;
+    void*             IdleContext;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_request_header
+struct USBUSER_REQUEST_HEADER
+{
+align (1):
+    uint                UsbUserRequest;
+    USB_USER_ERROR_CODE UsbUserStatusCode;
+    uint                RequestBufferLength;
+    uint                ActualBufferLength;
+}
+
+struct PACKET_PARAMETERS
+{
+align (1):
+    ubyte    DeviceAddress;
+    ubyte    EndpointAddress;
+    ushort   MaximumPacketSize;
+    uint     Timeout;
+    uint     Flags;
+    uint     DataLength;
+    ushort   HubDeviceAddress;
+    ushort   PortTTNumber;
+    ubyte    ErrorCount;
+    ubyte[3] Pad;
+    int      UsbdStatusCode;
+    ubyte[4] Data;
+}
+
+struct USBUSER_SEND_ONE_PACKET
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    PACKET_PARAMETERS PacketParameters;
+}
+
+struct RAW_RESET_PORT_PARAMETERS
+{
+align (1):
+    ushort PortNumber;
+    ushort PortStatus;
+}
+
+struct USBUSER_RAW_RESET_ROOT_PORT
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    RAW_RESET_PORT_PARAMETERS Parameters;
+}
+
+struct RAW_ROOTPORT_FEATURE
+{
+align (1):
+    ushort PortNumber;
+    ushort PortFeature;
+    ushort PortStatus;
+}
+
+struct USBUSER_ROOTPORT_FEATURE_REQUEST
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    RAW_ROOTPORT_FEATURE Parameters;
+}
+
+struct RAW_ROOTPORT_PARAMETERS
+{
+align (1):
+    ushort PortNumber;
+    ushort PortStatus;
+}
+
+struct USBUSER_ROOTPORT_PARAMETERS
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    RAW_ROOTPORT_PARAMETERS Parameters;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_controller_info_0
+struct USB_CONTROLLER_INFO_0
+{
+align (1):
+    uint PciVendorId;
+    uint PciDeviceId;
+    uint PciRevision;
+    uint NumberOfRootPorts;
+    USB_CONTROLLER_FLAVOR ControllerFlavor;
+    uint HcFeatureFlags;
+}
+
+struct USBUSER_CONTROLLER_INFO_0
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_CONTROLLER_INFO_0 Info0;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_unicode_name
+struct USB_UNICODE_NAME
+{
+align (1):
+    uint     Length;
+    wchar[1] String; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_controller_unicode_name
+struct USBUSER_CONTROLLER_UNICODE_NAME
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_UNICODE_NAME UnicodeName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_pass_thru_parameters
+struct USB_PASS_THRU_PARAMETERS
+{
+align (1):
+    GUID     FunctionGUID;
+    uint     ParameterLength;
+    ubyte[4] Parameters;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_pass_thru_request
+struct USBUSER_PASS_THRU_REQUEST
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_PASS_THRU_PARAMETERS PassThru;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_power_info
+struct USB_POWER_INFO
+{
+align (1):
+    WDMUSB_POWER_STATE SystemState;
+    WDMUSB_POWER_STATE HcDevicePowerState;
+    WDMUSB_POWER_STATE HcDeviceWake;
+    WDMUSB_POWER_STATE HcSystemWake;
+    WDMUSB_POWER_STATE RhDevicePowerState;
+    WDMUSB_POWER_STATE RhDeviceWake;
+    WDMUSB_POWER_STATE RhSystemWake;
+    WDMUSB_POWER_STATE LastSystemSleepState;
+    BOOLEAN            CanWakeup;
+    BOOLEAN            IsPowered;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_power_info_request
+struct USBUSER_POWER_INFO_REQUEST
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_POWER_INFO PowerInformation;
+}
+
+struct USB_OPEN_RAW_DEVICE_PARAMETERS
+{
+align (1):
+    ushort PortStatus;
+    ushort MaxPacketEp0;
+}
+
+struct USBUSER_OPEN_RAW_DEVICE
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_OPEN_RAW_DEVICE_PARAMETERS Parameters;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_close_raw_device_parameters
+struct USB_CLOSE_RAW_DEVICE_PARAMETERS
+{
+align (1):
+    uint xxx;
+}
+
+struct USBUSER_CLOSE_RAW_DEVICE
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_CLOSE_RAW_DEVICE_PARAMETERS Parameters;
+}
+
+struct USB_SEND_RAW_COMMAND_PARAMETERS
+{
+align (1):
+    ubyte    Usb_bmRequest;
+    ubyte    Usb_bRequest;
+    ushort   Usb_wVlaue;
+    ushort   Usb_wIndex;
+    ushort   Usb_wLength;
+    ushort   DeviceAddress;
+    ushort   MaximumPacketSize;
+    uint     Timeout;
+    uint     DataLength;
+    int      UsbdStatusCode;
+    ubyte[4] Data;
+}
+
+struct USBUSER_SEND_RAW_COMMAND
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_SEND_RAW_COMMAND_PARAMETERS Parameters;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_bandwidth_info
+struct USB_BANDWIDTH_INFO
+{
+align (1):
+    uint DeviceCount;
+    uint TotalBusBandwidth;
+    uint Total32secBandwidth;
+    uint AllocedBulkAndControl;
+    uint AllocedIso;
+    uint AllocedInterrupt_1ms;
+    uint AllocedInterrupt_2ms;
+    uint AllocedInterrupt_4ms;
+    uint AllocedInterrupt_8ms;
+    uint AllocedInterrupt_16ms;
+    uint AllocedInterrupt_32ms;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_bandwidth_info_request
+struct USBUSER_BANDWIDTH_INFO_REQUEST
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_BANDWIDTH_INFO BandwidthInformation;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_bus_statistics_0
+struct USB_BUS_STATISTICS_0
+{
+align (1):
+    uint    DeviceCount;
+    long    CurrentSystemTime;
+    uint    CurrentUsbFrame;
+    uint    BulkBytes;
+    uint    IsoBytes;
+    uint    InterruptBytes;
+    uint    ControlDataBytes;
+    uint    PciInterruptCount;
+    uint    HardResetCount;
+    uint    WorkerSignalCount;
+    uint    CommonBufferBytes;
+    uint    WorkerIdleTimeMs;
+    BOOLEAN RootHubEnabled;
+    ubyte   RootHubDevicePowerState;
+    ubyte   Unused;
+    ubyte   NameIndex;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_bus_statistics_0_request
+struct USBUSER_BUS_STATISTICS_0_REQUEST
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_BUS_STATISTICS_0 BusStatistics0;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usb_driver_version_parameters
+struct USB_DRIVER_VERSION_PARAMETERS
+{
+align (1):
+    uint    DriverTrackingCode;
+    uint    USBDI_Version;
+    uint    USBUSER_Version;
+    BOOLEAN CheckedPortDriver;
+    BOOLEAN CheckedMiniportDriver;
+    ushort  USB_Version;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_get_driver_version
+struct USBUSER_GET_DRIVER_VERSION
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_DRIVER_VERSION_PARAMETERS Parameters;
+}
+
+struct USB_USB2HW_VERSION_PARAMETERS
+{
+align (1):
+    ubyte Usb2HwRevision;
+}
+
+struct USBUSER_GET_USB2HW_VERSION
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    USB_USB2HW_VERSION_PARAMETERS Parameters;
+}
+
+struct USBUSER_REFRESH_HCT_REG
+{
+align (1):
+    USBUSER_REQUEST_HEADER Header;
+    uint Flags;
+}
+
+struct ALTERNATE_INTERFACE
+{
+    ushort InterfaceNumber;
+    ushort AlternateInterfaceNumber;
+}
+
+struct USBFN_NOTIFICATION
+{
+    USBFN_EVENT Event;
+    union u
+    {
+        USBFN_BUS_SPEED     BusSpeed;
+        USB_DEFAULT_PIPE_SETUP_PACKET SetupPacket;
+        ushort              ConfigurationValue;
+        USBFN_PORT_TYPE     PortType;
+        ALTERNATE_INTERFACE AlternateInterface;
+    }
+}
+
+struct USBFN_PIPE_INFORMATION
+{
+    USB_ENDPOINT_DESCRIPTOR EpDesc;
+    uint PipeId;
+}
+
+struct USBFN_CLASS_INTERFACE
+{
+    ubyte InterfaceNumber;
+    ubyte PipeCount;
+    USBFN_PIPE_INFORMATION[16] PipeArr;
+}
+
+struct USBFN_CLASS_INFORMATION_PACKET
+{
+    USBFN_CLASS_INTERFACE FullSpeedClassInterface;
+    USBFN_CLASS_INTERFACE HighSpeedClassInterface;
+    wchar[40] InterfaceName;
+    wchar[39] InterfaceGuid;
+    BOOLEAN   HasInterfaceGuid;
+    USBFN_CLASS_INTERFACE SuperSpeedClassInterface;
+}
+
+struct USBFN_CLASS_INTERFACE_EX
+{
+    ubyte BaseInterfaceNumber;
+    ubyte InterfaceCount;
+    ubyte PipeCount;
+    USBFN_PIPE_INFORMATION[16] PipeArr;
+}
+
+struct USBFN_CLASS_INFORMATION_PACKET_EX
+{
+    USBFN_CLASS_INTERFACE_EX FullSpeedClassInterfaceEx;
+    USBFN_CLASS_INTERFACE_EX HighSpeedClassInterfaceEx;
+    USBFN_CLASS_INTERFACE_EX SuperSpeedClassInterfaceEx;
+    wchar[40] InterfaceName;
+    wchar[39] InterfaceGuid;
+    BOOLEAN   HasInterfaceGuid;
+}
+
+struct USBFN_INTERFACE_INFO
+{
+    ubyte           InterfaceNumber;
+    USBFN_BUS_SPEED Speed;
+    ushort          Size;
+    ubyte[1]        InterfaceDescriptorSet; // Flexible array
+}
+
+struct USBFN_USB_STRING
+{
+    ubyte      StringIndex;
+    wchar[255] UsbString;
+}
+
+struct USBFN_BUS_CONFIGURATION_INFO
+{
+    wchar[40] ConfigurationName;
+    BOOLEAN   IsCurrent;
+    BOOLEAN   IsActive;
+}
+
+struct USB_TOPOLOGY_ADDRESS
+{
+    uint      PciBusNumber;
+    uint      PciDeviceNumber;
+    uint      PciFunctionNumber;
+    uint      Reserved;
+    ushort    RootHubPortNumber;
+    ushort[5] HubPortNumber;
+    ushort    Reserved2;
+}
+
+struct USB_HUB_INFORMATION
+{
+    USB_HUB_DESCRIPTOR HubDescriptor;
+    BOOLEAN            HubIsBusPowered;
+}
+
+struct USB_MI_PARENT_INFORMATION
+{
+align (1):
+    uint NumberOfInterfaces;
+}
+
+struct USB_NODE_INFORMATION
+{
+align (1):
+    USB_HUB_NODE NodeType;
+    union u
+    {
+        USB_HUB_INFORMATION HubInformation;
+        USB_MI_PARENT_INFORMATION MiParentInformation;
+    }
+}
+
+struct USB_PIPE_INFO
+{
+align (1):
+    USB_ENDPOINT_DESCRIPTOR EndpointDescriptor;
+    uint ScheduleOffset;
+}
+
+struct USB_NODE_CONNECTION_INFORMATION
+{
+align (1):
+    uint             ConnectionIndex;
+    USB_DEVICE_DESCRIPTOR DeviceDescriptor;
+    ubyte            CurrentConfigurationValue;
+    BOOLEAN          LowSpeed;
+    BOOLEAN          DeviceIsHub;
+    ushort           DeviceAddress;
+    uint             NumberOfOpenPipes;
+    USB_CONNECTION_STATUS ConnectionStatus;
+    USB_PIPE_INFO[1] PipeList; // Flexible array
+}
+
+struct USB_NODE_CONNECTION_DRIVERKEY_NAME
+{
+align (1):
+    uint     ConnectionIndex;
+    uint     ActualLength;
+    wchar[1] DriverKeyName; // Flexible array
+}
+
+struct USB_NODE_CONNECTION_NAME
+{
+align (1):
+    uint     ConnectionIndex;
+    uint     ActualLength;
+    wchar[1] NodeName; // Flexible array
+}
+
+struct USB_HUB_NAME
+{
+align (1):
+    uint     ActualLength;
+    wchar[1] HubName; // Flexible array
+}
+
+struct USB_ROOT_HUB_NAME
+{
+align (1):
+    uint     ActualLength;
+    wchar[1] RootHubName; // Flexible array
+}
+
+struct USB_HCD_DRIVERKEY_NAME
+{
+align (1):
+    uint     ActualLength;
+    wchar[1] DriverKeyName; // Flexible array
+}
+
+struct USB_DESCRIPTOR_REQUEST
+{
+align (1):
+    uint     ConnectionIndex;
+    struct SetupPacket
+    {
+    align (1):
+        ubyte  bmRequest;
+        ubyte  bRequest;
+        ushort wValue;
+        ushort wIndex;
+        ushort wLength;
+    }
+    ubyte[1] Data; // Flexible array
+}
+
+struct USB_HUB_CAPABILITIES
+{
+align (1):
+    uint _bitfield74;
+}
+
+struct USB_NODE_CONNECTION_ATTRIBUTES
+{
+align (1):
+    uint ConnectionIndex;
+    USB_CONNECTION_STATUS ConnectionStatus;
+    uint PortAttributes;
+}
+
+struct USB_NODE_CONNECTION_INFORMATION_EX
+{
+align (1):
+    uint             ConnectionIndex;
+    USB_DEVICE_DESCRIPTOR DeviceDescriptor;
+    ubyte            CurrentConfigurationValue;
+    ubyte            Speed;
+    BOOLEAN          DeviceIsHub;
+    ushort           DeviceAddress;
+    uint             NumberOfOpenPipes;
+    USB_CONNECTION_STATUS ConnectionStatus;
+    USB_PIPE_INFO[1] PipeList; // Flexible array
+}
+
+union USB_HUB_CAP_FLAGS
+{
+align (1):
+    uint ul;
+    struct
+    {
+    align (1):
+        uint _bitfield75;
+    }
+}
+
+struct USB_HUB_CAPABILITIES_EX
+{
+    USB_HUB_CAP_FLAGS CapabilityFlags;
+}
+
+struct USB_CYCLE_PORT_PARAMS
+{
+align (1):
+    uint ConnectionIndex;
+    uint StatusReturned;
+}
+
+struct USB_ID_STRING
+{
+align (1):
+    ushort LanguageId;
+    ushort Pad;
+    uint   LengthInBytes;
+    PWSTR  Buffer;
+}
+
+struct USB_HUB_DEVICE_UXD_SETTINGS
+{
+align (1):
+    uint    Version;
+    GUID    PnpGuid;
+    GUID    OwnerGuid;
+    uint    DeleteOnShutdown;
+    uint    DeleteOnReload;
+    uint    DeleteOnDisconnect;
+    uint[5] Reserved;
+}
+
+struct HUB_DEVICE_CONFIG_INFO
+{
+align (1):
+    uint              Version;
+    uint              Length;
+    USB_HUB_CAP_FLAGS HubFlags;
+    USB_ID_STRING     HardwareIds;
+    USB_ID_STRING     CompatibleIds;
+    USB_ID_STRING     DeviceDescription;
+    uint[19]          Reserved;
+    USB_HUB_DEVICE_UXD_SETTINGS UxdSettings;
+}
+
+struct HCD_STAT_COUNTERS
+{
+align (1):
+    uint   BytesTransferred;
+    ushort IsoMissedCount;
+    ushort DataOverrunErrorCount;
+    ushort CrcErrorCount;
+    ushort ScheduleOverrunCount;
+    ushort TimeoutErrorCount;
+    ushort InternalHcErrorCount;
+    ushort BufferOverrunErrorCount;
+    ushort SWErrorCount;
+    ushort StallPidCount;
+    ushort PortDisableCount;
+}
+
+struct HCD_ISO_STAT_COUNTERS
+{
+align (1):
+    ushort  LateUrbs;
+    ushort  DoubleBufferedPackets;
+    ushort  TransfersCF_5ms;
+    ushort  TransfersCF_2ms;
+    ushort  TransfersCF_1ms;
+    ushort  MaxInterruptLatency;
+    ushort  BadStartFrame;
+    ushort  StaleUrbs;
+    ushort  IsoPacketNotAccesed;
+    ushort  IsoPacketHWError;
+    ushort  SmallestUrbPacketCount;
+    ushort  LargestUrbPacketCount;
+    ushort  IsoCRC_Error;
+    ushort  IsoOVERRUN_Error;
+    ushort  IsoINTERNAL_Error;
+    ushort  IsoUNKNOWN_Error;
+    uint    IsoBytesTransferred;
+    ushort  LateMissedCount;
+    ushort  HWIsoMissedCount;
+    uint[8] Reserved7;
+}
+
+struct HCD_STAT_INFORMATION_1
+{
+align (1):
+    uint              Reserved1;
+    uint              Reserved2;
+    uint              ResetCounters;
+    long              TimeRead;
+    HCD_STAT_COUNTERS Counters;
+}
+
+struct HCD_STAT_INFORMATION_2
+{
+align (1):
+    uint              Reserved1;
+    uint              Reserved2;
+    uint              ResetCounters;
+    long              TimeRead;
+    int               LockedMemoryUsed;
+    HCD_STAT_COUNTERS Counters;
+    HCD_ISO_STAT_COUNTERS IsoCounters;
+}
+
+struct USB_NOTIFICATION
+{
+align (1):
+    USB_NOTIFICATION_TYPE NotificationType;
+}
+
+struct USB_CONNECTION_NOTIFICATION
+{
+align (1):
+    USB_NOTIFICATION_TYPE NotificationType;
+    uint ConnectionNumber;
+    uint RequestedBandwidth;
+    uint EnumerationFailReason;
+    uint PowerRequested;
+    uint HubNameLength;
+}
+
+struct USB_BUS_NOTIFICATION
+{
+align (1):
+    USB_NOTIFICATION_TYPE NotificationType;
+    uint TotalBandwidth;
+    uint ConsumedBandwidth;
+    uint ControllerNameLength;
+}
+
+struct USB_ACQUIRE_INFO
+{
+align (1):
+    USB_NOTIFICATION_TYPE NotificationType;
+    uint     TotalSize;
+    wchar[1] Buffer; // Flexible array
+}
+
+struct USB_DEVICE_STATE
+{
+align (1):
+    uint _bitfield76;
+}
+
+struct USB_HUB_PORT_INFORMATION
+{
+align (1):
+    USB_DEVICE_STATE DeviceState;
+    ushort           PortNumber;
+    ushort           DeviceAddress;
+    uint             ConnectionIndex;
+    USB_CONNECTION_STATUS ConnectionStatus;
+}
+
+struct USB_HUB_DEVICE_INFO
+{
+align (1):
+    USB_HUB_DESCRIPTOR   HubDescriptor;
+    uint                 HubNumber;
+    ushort               DeviceAddress;
+    BOOLEAN              HubIsSelfPowered;
+    BOOLEAN              HubIsRootHub;
+    USB_HUB_CAPABILITIES HubCapabilities;
+    uint                 NumberOfHubPorts;
+    USB_HUB_PORT_INFORMATION[1] PortInfo; // Flexible array
+}
+
+struct USB_COMPOSITE_FUNCTION_INFO
+{
+    ubyte   FunctionNumber;
+    ubyte   BaseInterfaceNumber;
+    ubyte   NumberOfInterfaces;
+    BOOLEAN FunctionIsIdle;
+}
+
+struct USB_COMPOSITE_DEVICE_INFO
+{
+    USB_DEVICE_DESCRIPTOR DeviceDescriptor;
+    USB_CONFIGURATION_DESCRIPTOR CurrentConfigDescriptor;
+    ubyte CurrentConfigurationValue;
+    ubyte NumberOfFunctions;
+    USB_COMPOSITE_FUNCTION_INFO[1] FunctionInfo; // Flexible array
+}
+
+struct USB_CONTROLLER_DEVICE_INFO
+{
+align (1):
+    uint PciVendorId;
+    uint PciDeviceId;
+    uint PciRevision;
+    uint NumberOfRootPorts;
+    uint HcFeatureFlags;
+}
+
+struct USB_DEVICE_INFO
+{
+align (1):
+    USB_DEVICE_STATE DeviceState;
+    ushort           PortNumber;
+    USB_DEVICE_DESCRIPTOR DeviceDescriptor;
+    ubyte            CurrentConfigurationValue;
+    USB_DEVICE_SPEED Speed;
+    ushort           DeviceAddress;
+    uint             ConnectionIndex;
+    USB_CONNECTION_STATUS ConnectionStatus;
+    wchar[128]       PnpHardwareId;
+    wchar[128]       PnpCompatibleId;
+    wchar[128]       SerialNumberId;
+    wchar[128]       PnpDeviceDescription;
+    uint             NumberOfOpenPipes;
+    USB_PIPE_INFO[1] PipeList; // Flexible array
+}
+
+struct USB_DEVICE_NODE_INFO
+{
+align (1):
+    uint                 Sig;
+    uint                 LengthInBytes;
+    wchar[40]            DeviceDescription;
+    USB_WMI_DEVICE_NODE_TYPE NodeType;
+    USB_TOPOLOGY_ADDRESS BusAddress;
+    union
+    {
+        USB_DEVICE_INFO     UsbDeviceInfo;
+        USB_HUB_DEVICE_INFO HubDeviceInfo;
+        USB_COMPOSITE_DEVICE_INFO CompositeDeviceInfo;
+        USB_CONTROLLER_DEVICE_INFO ControllerDeviceInfo;
+        ubyte[4]            DeviceInformation;
+    }
+}
+
+struct USB_DEVICE_PERFORMANCE_INFO
+{
+align (1):
+    uint             BulkBytes;
+    uint             ControlDataBytes;
+    uint             IsoBytes;
+    uint             InterruptBytes;
+    uint             BulkUrbCount;
+    uint             ControlUrbCount;
+    uint             IsoUrbCount;
+    uint             InterruptUrbCount;
+    uint[6]          AllocedInterrupt;
+    uint             AllocedIso;
+    uint             Total32secBandwidth;
+    uint             TotalTtBandwidth;
+    wchar[60]        DeviceDescription;
+    USB_DEVICE_SPEED DeviceSpeed;
+    uint             TotalIsoLatency;
+    uint             DroppedIsoPackets;
+    uint             TransferErrors;
+    uint             PciInterruptCount;
+    uint             HcIdleState;
+    uint             HcAsyncIdleState;
+    uint             HcAsyncCacheFlushCount;
+    uint             HcPeriodicIdleState;
+    uint             HcPeriodicCacheFlushCount;
+}
+
+struct USB_HUB_INFORMATION_EX
+{
+align (1):
+    USB_HUB_TYPE HubType;
+    ushort       HighestPortNumber;
+    union u
+    {
+        USB_HUB_DESCRIPTOR UsbHubDescriptor;
+        USB_30_HUB_DESCRIPTOR Usb30HubDescriptor;
+    }
+}
+
+union USB_PORT_PROPERTIES
+{
+align (1):
+    uint ul;
+    struct
+    {
+    align (1):
+        uint _bitfield77;
+    }
+}
+
+struct USB_PORT_CONNECTOR_PROPERTIES
+{
+align (1):
+    uint                ConnectionIndex;
+    uint                ActualLength;
+    USB_PORT_PROPERTIES UsbPortProperties;
+    ushort              CompanionIndex;
+    ushort              CompanionPortNumber;
+    wchar[1]            CompanionHubSymbolicLinkName; // Flexible array
+}
+
+union USB_PROTOCOLS
+{
+align (1):
+    uint ul;
+    struct
+    {
+    align (1):
+        uint _bitfield78;
+    }
+}
+
+union USB_NODE_CONNECTION_INFORMATION_EX_V2_FLAGS
+{
+align (1):
+    uint ul;
+    struct
+    {
+    align (1):
+        uint _bitfield79;
+    }
+}
+
+struct USB_NODE_CONNECTION_INFORMATION_EX_V2
+{
+align (1):
+    uint          ConnectionIndex;
+    uint          Length;
+    USB_PROTOCOLS SupportedUsbProtocols;
+    USB_NODE_CONNECTION_INFORMATION_EX_V2_FLAGS Flags;
+}
+
+struct USB_TRANSPORT_CHARACTERISTICS
+{
+align (1):
+    uint  Version;
+    uint  TransportCharacteristicsFlags;
+    ulong CurrentRoundtripLatencyInMilliSeconds;
+    ulong MaxPotentialBandwidth;
+}
+
+struct USB_TRANSPORT_CHARACTERISTICS_CHANGE_REGISTRATION
+{
+align (1):
+    uint ChangeNotificationInputFlags;
+    USB_CHANGE_REGISTRATION_HANDLE Handle;
+    USB_TRANSPORT_CHARACTERISTICS UsbTransportCharacteristics;
+}
+
+struct USB_TRANSPORT_CHARACTERISTICS_CHANGE_NOTIFICATION
+{
+align (1):
+    USB_CHANGE_REGISTRATION_HANDLE Handle;
+    USB_TRANSPORT_CHARACTERISTICS UsbTransportCharacteristics;
+}
+
+struct USB_TRANSPORT_CHARACTERISTICS_CHANGE_UNREGISTRATION
+{
+align (1):
+    USB_CHANGE_REGISTRATION_HANDLE Handle;
+}
+
+struct USB_DEVICE_CHARACTERISTICS
+{
+align (1):
+    uint    Version;
+    uint[2] Reserved;
+    uint    UsbDeviceCharacteristicsFlags;
+    uint    MaximumSendPathDelayInMilliSeconds;
+    uint    MaximumCompletionPathDelayInMilliSeconds;
+}
+
+struct USB_START_TRACKING_FOR_TIME_SYNC_INFORMATION
+{
+align (1):
+    HANDLE  TimeTrackingHandle;
+    BOOLEAN IsStartupDelayTolerable;
+}
+
+struct USB_STOP_TRACKING_FOR_TIME_SYNC_INFORMATION
+{
+align (1):
+    HANDLE TimeTrackingHandle;
+}
+
+struct USB_FRAME_NUMBER_AND_QPC_FOR_TIME_SYNC_INFORMATION
+{
+align (1):
+    HANDLE TimeTrackingHandle;
+    uint   InputFrameNumber;
+    uint   InputMicroFrameNumber;
+    long   QueryPerformanceCounterAtInputFrameOrMicroFrame;
+    long   QueryPerformanceCounterFrequency;
+    uint   PredictedAccuracyInMicroSeconds;
+    uint   CurrentGenerationID;
+    long   CurrentQueryPerformanceCounter;
+    uint   CurrentHardwareFrameNumber;
+    uint   CurrentHardwareMicroFrameNumber;
+    uint   CurrentUSBFrameNumber;
+}
+
+struct USB_NODE_CONNECTION_SUPERSPEEDPLUS_INFORMATION
+{
+align (1):
+    uint ConnectionIndex;
+    uint Length;
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED RxSuperSpeedPlus;
+    uint RxLaneCount;
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED TxSuperSpeedPlus;
+    uint TxLaneCount;
+}
+
+struct USB4_HRD_DEBUG_ROUTE_STRING
+{
+    ubyte    Depth;
+    ubyte[7] Route;
+}
+
+struct USB4_HRD_DEBUG_READ_CONFIGURATION_SPACE_INPUT
+{
+align (1):
+    USB4_HRD_DEBUG_ROUTE_STRING Route;
+    ubyte AdapterNumber;
+    USB4_CONFIG_SPACE_TYPE ConfigurationSpaceType;
+    uint  DwOffset;
+    uint  DwLength;
+}
+
+struct USB4_HRD_DEBUG_READ_CONFIGURATION_SPACE_OUTPUT
+{
+align (1):
+    USB4_STATUS Usb4Status;
+    uint[60]    Data;
+}
+
+struct DRV_VERSION
+{
+    uint major;
+    uint minor;
+    uint internal;
+}
+
+struct IO_BLOCK
+{
+    uint   uOffset;
+    uint   uLength;
+    ubyte* pbyData;
+    uint   uIndex;
+}
+
+struct IO_BLOCK_EX
+{
+    uint   uOffset;
+    uint   uLength;
+    ubyte* pbyData;
+    uint   uIndex;
+    ubyte  bRequest;
+    ubyte  bmRequestType;
+    ubyte  fTransferDirectionIn;
+}
+
+struct CHANNEL_INFO
+{
+    uint EventChannelSize;
+    uint uReadDataAlignment;
+    uint uWriteDataAlignment;
+}
+
+struct USBSCAN_GET_DESCRIPTOR
+{
+    ubyte  DescriptorType;
+    ubyte  Index;
+    ushort LanguageId;
+}
+
+struct DEVICE_DESCRIPTOR
+{
+    ushort usVendorId;
+    ushort usProductId;
+    ushort usBcdDevice;
+    ushort usLanguageId;
+}
+
+struct USBSCAN_PIPE_INFORMATION
+{
+    ushort        MaximumPacketSize;
+    ubyte         EndpointAddress;
+    ubyte         Interval;
+    RAW_PIPE_TYPE PipeType;
+}
+
+struct USBSCAN_PIPE_CONFIGURATION
+{
+    uint NumberOfPipes;
+    USBSCAN_PIPE_INFORMATION[8] PipeInfo;
+}
+
+struct USBSCAN_TIMEOUT
+{
+    uint TimeoutRead;
+    uint TimeoutWrite;
+    uint TimeoutEvent;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusbio/ns-winusbio-winusb_pipe_information
+struct WINUSB_PIPE_INFORMATION
+{
+    USBD_PIPE_TYPE PipeType;
+    ubyte          PipeId;
+    ushort         MaximumPacketSize;
+    ubyte          Interval;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusbio/ns-winusbio-winusb_pipe_information_ex
+struct WINUSB_PIPE_INFORMATION_EX
+{
+    USBD_PIPE_TYPE PipeType;
+    ubyte          PipeId;
+    ushort         MaximumPacketSize;
+    ubyte          Interval;
+    uint           MaximumBytesPerInterval;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/ns-winusb-winusb_setup_packet
+struct WINUSB_SETUP_PACKET
+{
+align (1):
+    ubyte  RequestType;
+    ubyte  Request;
+    ushort Value;
+    ushort Index;
+    ushort Length;
+}
+
+// Functions
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_initialize
+@DllImport("WINUSB.dll")
+BOOL WinUsb_Initialize(HANDLE DeviceHandle, WINUSB_INTERFACE_HANDLE* InterfaceHandle);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_free
+@DllImport("WINUSB.dll")
+BOOL WinUsb_Free(WINUSB_INTERFACE_HANDLE InterfaceHandle);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_getassociatedinterface
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetAssociatedInterface(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte AssociatedInterfaceIndex, 
+                                   WINUSB_INTERFACE_HANDLE* AssociatedInterfaceHandle);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_getdescriptor
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetDescriptor(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte DescriptorType, ubyte Index, 
+                          ushort LanguageID, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* Buffer, 
+                          uint BufferLength, uint* LengthTransferred);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_queryinterfacesettings
+@DllImport("WINUSB.dll")
+BOOL WinUsb_QueryInterfaceSettings(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte AlternateInterfaceNumber, 
+                                   USB_INTERFACE_DESCRIPTOR* UsbAltInterfaceDescriptor);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_querydeviceinformation
+@DllImport("WINUSB.dll")
+BOOL WinUsb_QueryDeviceInformation(WINUSB_INTERFACE_HANDLE InterfaceHandle, uint InformationType, 
+                                   uint* BufferLength, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* Buffer);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_setcurrentalternatesetting
+@DllImport("WINUSB.dll")
+BOOL WinUsb_SetCurrentAlternateSetting(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte SettingNumber);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_getcurrentalternatesetting
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetCurrentAlternateSetting(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte* SettingNumber);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_querypipe
+@DllImport("WINUSB.dll")
+BOOL WinUsb_QueryPipe(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte AlternateInterfaceNumber, ubyte PipeIndex, 
+                      WINUSB_PIPE_INFORMATION* PipeInformation);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_querypipeex
+@DllImport("WINUSB.dll")
+BOOL WinUsb_QueryPipeEx(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte AlternateSettingNumber, ubyte PipeIndex, 
+                        WINUSB_PIPE_INFORMATION_EX* PipeInformationEx);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_setpipepolicy
+@DllImport("WINUSB.dll")
+BOOL WinUsb_SetPipePolicy(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID, WINUSB_PIPE_POLICY PolicyType, 
+                          uint ValueLength, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Value);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_getpipepolicy
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetPipePolicy(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID, WINUSB_PIPE_POLICY PolicyType, 
+                          uint* ValueLength, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Value);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_readpipe
+@DllImport("WINUSB.dll")
+BOOL WinUsb_ReadPipe(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID, 
+                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* Buffer, 
+                     uint BufferLength, uint* LengthTransferred, OVERLAPPED* Overlapped);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_writepipe
+@DllImport("WINUSB.dll")
+BOOL WinUsb_WritePipe(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* Buffer, 
+                      uint BufferLength, uint* LengthTransferred, OVERLAPPED* Overlapped);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_controltransfer
+@DllImport("WINUSB.dll")
+BOOL WinUsb_ControlTransfer(WINUSB_INTERFACE_HANDLE InterfaceHandle, WINUSB_SETUP_PACKET SetupPacket, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* Buffer, 
+                            uint BufferLength, uint* LengthTransferred, OVERLAPPED* Overlapped);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_resetpipe
+@DllImport("WINUSB.dll")
+BOOL WinUsb_ResetPipe(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_abortpipe
+@DllImport("WINUSB.dll")
+BOOL WinUsb_AbortPipe(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_flushpipe
+@DllImport("WINUSB.dll")
+BOOL WinUsb_FlushPipe(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_setpowerpolicy
+@DllImport("WINUSB.dll")
+BOOL WinUsb_SetPowerPolicy(WINUSB_INTERFACE_HANDLE InterfaceHandle, WINUSB_POWER_POLICY PolicyType, 
+                           uint ValueLength, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* Value);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_getpowerpolicy
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetPowerPolicy(WINUSB_INTERFACE_HANDLE InterfaceHandle, WINUSB_POWER_POLICY PolicyType, 
+                           uint* ValueLength, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* Value);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winusb/nf-winusb-winusb_getoverlappedresult
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetOverlappedResult(WINUSB_INTERFACE_HANDLE InterfaceHandle, OVERLAPPED* lpOverlapped, 
+                                uint* lpNumberOfBytesTransferred, BOOL bWait);
+
+@DllImport("WINUSB.dll")
+USB_INTERFACE_DESCRIPTOR* WinUsb_ParseConfigurationDescriptor(USB_CONFIGURATION_DESCRIPTOR* ConfigurationDescriptor, 
+                                                              void* StartPosition, int InterfaceNumber, 
+                                                              int AlternateSetting, int InterfaceClass, 
+                                                              int InterfaceSubClass, int InterfaceProtocol);
+
+@DllImport("WINUSB.dll")
+USB_COMMON_DESCRIPTOR* WinUsb_ParseDescriptors(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* DescriptorBuffer, 
+                                               uint TotalLength, void* StartPosition, int DescriptorType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetCurrentFrameNumber(WINUSB_INTERFACE_HANDLE InterfaceHandle, uint* CurrentFrameNumber, 
+                                  long* TimeStamp);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetAdjustedFrameNumber(uint* CurrentFrameNumber, long TimeStamp);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_RegisterIsochBuffer(WINUSB_INTERFACE_HANDLE InterfaceHandle, ubyte PipeID, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* Buffer, 
+                                uint BufferLength, void** IsochBufferHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_UnregisterIsochBuffer(void* IsochBufferHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_WriteIsochPipe(void* BufferHandle, uint Offset, uint Length, uint* FrameNumber, OVERLAPPED* Overlapped);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_ReadIsochPipe(void* BufferHandle, uint Offset, uint Length, uint* FrameNumber, uint NumberOfPackets, 
+                          USBD_ISO_PACKET_DESCRIPTOR* IsoPacketDescriptors, OVERLAPPED* Overlapped);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_WriteIsochPipeAsap(void* BufferHandle, uint Offset, uint Length, BOOL ContinueStream, 
+                               OVERLAPPED* Overlapped);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_ReadIsochPipeAsap(void* BufferHandle, uint Offset, uint Length, BOOL ContinueStream, 
+                              uint NumberOfPackets, USBD_ISO_PACKET_DESCRIPTOR* IsoPacketDescriptors, 
+                              OVERLAPPED* Overlapped);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_StartTrackingForTimeSync(WINUSB_INTERFACE_HANDLE InterfaceHandle, 
+                                     USB_START_TRACKING_FOR_TIME_SYNC_INFORMATION* StartTrackingInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_GetCurrentFrameNumberAndQpc(WINUSB_INTERFACE_HANDLE InterfaceHandle, 
+                                        USB_FRAME_NUMBER_AND_QPC_FOR_TIME_SYNC_INFORMATION* FrameQpcInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("WINUSB.dll")
+BOOL WinUsb_StopTrackingForTimeSync(WINUSB_INTERFACE_HANDLE InterfaceHandle, 
+                                    USB_STOP_TRACKING_FOR_TIME_SYNC_INFORMATION* StopTrackingInfo);
+
+

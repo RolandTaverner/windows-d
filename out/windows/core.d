@@ -42,7 +42,7 @@ struct GUID {
             Data4[i + 2] = hex!ubyte(s[i * 2 + 24 .. i * 2 + 26]);        
     }
 
-    this()(const auto ref GUID other)
+    this()(auto ref const GUID other)
     {
         this.Data1 = other.Data1;
         this.Data2 = other.Data2;

@@ -1,0 +1,8348 @@
+// Written in the D programming language.
+
+module windows.win32.devices.deviceanddriverinstallation;
+
+public import windows.core;
+public import windows.win32.data.htmlhelp : PRIORITY;
+public import windows.win32.devices.properties : DEVPROPTYPE;
+public import windows.win32.foundation : BOOL, CHAR, DEVPROPKEY, FILETIME, HANDLE,
+                                         HINSTANCE, HWND, LPARAM, PSTR, PWSTR,
+                                         RECT;
+public import windows.win32.graphics.gdi : HDC;
+public import windows.win32.system.diagnostics.debug_ : VER_PLATFORM;
+public import windows.win32.system.registry : HKEY;
+public import windows.win32.system.systeminformation : PROCESSOR_ARCHITECTURE;
+public import windows.win32.ui.controls : HIMAGELIST, HPROPSHEETPAGE, PROPSHEETHEADERA_V2,
+                                          PROPSHEETHEADERW_V2;
+public import windows.win32.ui.windowsandmessaging : HICON;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+
+alias SP_COPY_STYLE = uint;
+enum : uint
+{
+    SP_COPY_DELETESOURCE        = 0x00000001U,
+    SP_COPY_REPLACEONLY         = 0x00000002U,
+    SP_COPY_NEWER               = 0x00000004U,
+    SP_COPY_NEWER_OR_SAME       = 0x00000004U,
+    SP_COPY_NOOVERWRITE         = 0x00000008U,
+    SP_COPY_NODECOMP            = 0x00000010U,
+    SP_COPY_LANGUAGEAWARE       = 0x00000020U,
+    SP_COPY_SOURCE_ABSOLUTE     = 0x00000040U,
+    SP_COPY_SOURCEPATH_ABSOLUTE = 0x00000080U,
+    SP_COPY_IN_USE_NEEDS_REBOOT = 0x00000100U,
+    SP_COPY_FORCE_IN_USE        = 0x00000200U,
+    SP_COPY_NOSKIP              = 0x00000400U,
+    SP_COPY_FORCE_NOOVERWRITE   = 0x00001000U,
+    SP_COPY_FORCE_NEWER         = 0x00002000U,
+    SP_COPY_WARNIFSKIP          = 0x00004000U,
+    SP_COPY_NOBROWSE            = 0x00008000U,
+    SP_COPY_NEWER_ONLY          = 0x00010000U,
+    SP_COPY_RESERVED            = 0x00020000U,
+    SP_COPY_OEMINF_CATALOG_ONLY = 0x00040000U,
+    SP_COPY_REPLACE_BOOT_FILE   = 0x00080000U,
+    SP_COPY_NOPRUNE             = 0x00100000U,
+    SP_COPY_OEM_F6_INF          = 0x00200000U,
+    SP_COPY_ALREADYDECOMP       = 0x00400000U,
+    SP_COPY_WINDOWS_SIGNED      = 0x01000000U,
+    SP_COPY_PNPLOCKED           = 0x02000000U,
+    SP_COPY_IN_USE_TRY_RENAME   = 0x04000000U,
+    SP_COPY_INBOX_INF           = 0x08000000U,
+    SP_COPY_HARDLINK            = 0x10000000U,
+}
+
+alias SETUP_FILE_OPERATION = uint;
+enum : uint
+{
+    FILEOP_DELETE = 0x00000002U,
+    FILEOP_COPY   = 0x00000000U,
+}
+
+alias OEM_SOURCE_MEDIA_TYPE = uint;
+enum : uint
+{
+    SPOST_NONE = 0x00000000U,
+    SPOST_PATH = 0x00000001U,
+    SPOST_URL  = 0x00000002U,
+}
+
+alias SETUP_DI_DRIVER_TYPE = uint;
+enum : uint
+{
+    SPDIT_CLASSDRIVER  = 0x00000001U,
+    SPDIT_COMPATDRIVER = 0x00000002U,
+}
+
+alias DIINSTALLDEVICE_FLAGS = uint;
+enum : uint
+{
+    DIIDFLAG_SHOWSEARCHUI          = 0x00000001U,
+    DIIDFLAG_NOFINISHINSTALLUI     = 0x00000002U,
+    DIIDFLAG_INSTALLNULLDRIVER     = 0x00000004U,
+    DIIDFLAG_INSTALLCOPYINFDRIVERS = 0x00000008U,
+    DIIDFLAG_BITS                  = 0x0000000fU,
+}
+
+alias DIINSTALLDRIVER_FLAGS = uint;
+enum : uint
+{
+    DIIRFLAG_BITS               = 0x0000006aU,
+    DIIRFLAG_SYSTEM_BITS        = 0x0000007fU,
+    DIIRFLAG_INF_ALREADY_COPIED = 0x00000001U,
+    DIIRFLAG_FORCE_INF          = 0x00000002U,
+    DIIRFLAG_HW_USING_THE_INF   = 0x00000004U,
+    DIIRFLAG_HOTPATCH           = 0x00000008U,
+    DIIRFLAG_NOBACKUP           = 0x00000010U,
+    DIIRFLAG_PRE_CONFIGURE_INF  = 0x00000020U,
+    DIIRFLAG_INSTALL_AS_SET     = 0x00000040U,
+}
+
+alias DIUNINSTALLDRIVER_FLAGS = uint;
+enum : uint
+{
+    DIURFLAG_VALID         = 0x00000003U,
+    DIURFLAG_NO_REMOVE_INF = 0x00000001U,
+    DIURFLAG_RESERVED      = 0x00000002U,
+}
+
+alias DIROLLBACKDRIVER_FLAGS = uint;
+enum : uint
+{
+    ROLLBACK_FLAG_NO_UI = 0x00000001U,
+    ROLLBACK_BITS       = 0x00000001U,
+}
+
+alias UPDATEDRIVERFORPLUGANDPLAYDEVICES_FLAGS = uint;
+enum : uint
+{
+    INSTALLFLAG_FORCE          = 0x00000001U,
+    INSTALLFLAG_READONLY       = 0x00000002U,
+    INSTALLFLAG_NONINTERACTIVE = 0x00000004U,
+    INSTALLFLAG_BITS           = 0x00000007U,
+}
+
+alias CM_RESTYPE = uint;
+enum : uint
+{
+    ResType_All           = 0x00000000U,
+    ResType_None          = 0x00000000U,
+    ResType_Mem           = 0x00000001U,
+    ResType_IO            = 0x00000002U,
+    ResType_DMA           = 0x00000003U,
+    ResType_IRQ           = 0x00000004U,
+    ResType_DoNotUse      = 0x00000005U,
+    ResType_BusNumber     = 0x00000006U,
+    ResType_MemLarge      = 0x00000007U,
+    ResType_MAX           = 0x00000007U,
+    ResType_Ignored_Bit   = 0x00008000U,
+    ResType_ClassSpecific = 0x0000ffffU,
+    ResType_Reserved      = 0x00008000U,
+    ResType_DevicePrivate = 0x00008001U,
+    ResType_PcCardConfig  = 0x00008002U,
+    ResType_MfCardConfig  = 0x00008003U,
+    ResType_Connection    = 0x00008004U,
+}
+
+alias CM_GET_DEVICE_INTERFACE_LIST_FLAGS = uint;
+enum : uint
+{
+    CM_GET_DEVICE_INTERFACE_LIST_PRESENT     = 0x00000000U,
+    CM_GET_DEVICE_INTERFACE_LIST_ALL_DEVICES = 0x00000001U,
+    CM_GET_DEVICE_INTERFACE_LIST_BITS        = 0x00000001U,
+}
+
+alias CM_LOCATE_DEVNODE_FLAGS = uint;
+enum : uint
+{
+    CM_LOCATE_DEVNODE_NORMAL       = 0x00000000U,
+    CM_LOCATE_DEVNODE_PHANTOM      = 0x00000001U,
+    CM_LOCATE_DEVNODE_CANCELREMOVE = 0x00000002U,
+    CM_LOCATE_DEVNODE_NOVALIDATION = 0x00000004U,
+    CM_LOCATE_DEVNODE_BITS         = 0x00000007U,
+}
+
+alias CM_REENUMERATE_FLAGS = uint;
+enum : uint
+{
+    CM_REENUMERATE_NORMAL             = 0x00000000U,
+    CM_REENUMERATE_SYNCHRONOUS        = 0x00000001U,
+    CM_REENUMERATE_RETRY_INSTALLATION = 0x00000002U,
+    CM_REENUMERATE_ASYNCHRONOUS       = 0x00000004U,
+    CM_REENUMERATE_BITS               = 0x00000007U,
+}
+
+alias CM_ENUMERATE_FLAGS = uint;
+enum : uint
+{
+    CM_ENUMERATE_CLASSES_INSTALLER = 0x00000000U,
+    CM_ENUMERATE_CLASSES_INTERFACE = 0x00000001U,
+    CM_ENUMERATE_CLASSES_BITS      = 0x00000001U,
+}
+
+alias INF_STYLE = uint;
+enum : uint
+{
+    INF_STYLE_NONE          = 0x00000000U,
+    INF_STYLE_OLDNT         = 0x00000001U,
+    INF_STYLE_WIN4          = 0x00000002U,
+    INF_STYLE_CACHE_ENABLE  = 0x00000010U,
+    INF_STYLE_CACHE_DISABLE = 0x00000020U,
+    INF_STYLE_CACHE_IGNORE  = 0x00000040U,
+}
+
+alias SETUPSCANFILEQUEUE_FLAGS = uint;
+enum : uint
+{
+    SPQ_SCAN_FILE_PRESENCE                = 0x00000001U,
+    SPQ_SCAN_FILE_VALIDITY                = 0x00000002U,
+    SPQ_SCAN_USE_CALLBACK                 = 0x00000004U,
+    SPQ_SCAN_USE_CALLBACKEX               = 0x00000008U,
+    SPQ_SCAN_INFORM_USER                  = 0x00000010U,
+    SPQ_SCAN_PRUNE_COPY_QUEUE             = 0x00000020U,
+    SPQ_SCAN_USE_CALLBACK_SIGNERINFO      = 0x00000040U,
+    SPQ_SCAN_PRUNE_DELREN                 = 0x00000080U,
+    SPQ_SCAN_FILE_PRESENCE_WITHOUT_SOURCE = 0x00000100U,
+    SPQ_SCAN_FILE_COMPARISON              = 0x00000200U,
+    SPQ_SCAN_ACTIVATE_DRP                 = 0x00000400U,
+    SPQ_SCAN_USE_OEM_CATALOGS             = 0x00000800U,
+}
+
+alias CM_LOG_CONF = uint;
+enum : uint
+{
+    BASIC_LOG_CONF    = 0x00000000U,
+    FILTERED_LOG_CONF = 0x00000001U,
+    ALLOC_LOG_CONF    = 0x00000002U,
+    BOOT_LOG_CONF     = 0x00000003U,
+    FORCED_LOG_CONF   = 0x00000004U,
+    OVERRIDE_LOG_CONF = 0x00000005U,
+    NUM_LOG_CONF      = 0x00000006U,
+}
+
+alias CM_DEVNODE_STATUS_FLAGS = uint;
+enum : uint
+{
+    DN_CHANGEABLE_FLAGS      = 0x61bb62c0U,
+    DN_ROOT_ENUMERATED       = 0x00000001U,
+    DN_DRIVER_LOADED         = 0x00000002U,
+    DN_ENUM_LOADED           = 0x00000004U,
+    DN_STARTED               = 0x00000008U,
+    DN_MANUAL                = 0x00000010U,
+    DN_NEED_TO_ENUM          = 0x00000020U,
+    DN_NOT_FIRST_TIME        = 0x00000040U,
+    DN_HARDWARE_ENUM         = 0x00000080U,
+    DN_LIAR                  = 0x00000100U,
+    DN_HAS_MARK              = 0x00000200U,
+    DN_HAS_PROBLEM           = 0x00000400U,
+    DN_FILTERED              = 0x00000800U,
+    DN_MOVED                 = 0x00001000U,
+    DN_DISABLEABLE           = 0x00002000U,
+    DN_REMOVABLE             = 0x00004000U,
+    DN_PRIVATE_PROBLEM       = 0x00008000U,
+    DN_MF_PARENT             = 0x00010000U,
+    DN_MF_CHILD              = 0x00020000U,
+    DN_WILL_BE_REMOVED       = 0x00040000U,
+    DN_NOT_FIRST_TIMEE       = 0x00080000U,
+    DN_STOP_FREE_RES         = 0x00100000U,
+    DN_REBAL_CANDIDATE       = 0x00200000U,
+    DN_BAD_PARTIAL           = 0x00400000U,
+    DN_NT_ENUMERATOR         = 0x00800000U,
+    DN_NT_DRIVER             = 0x01000000U,
+    DN_NEEDS_LOCKING         = 0x02000000U,
+    DN_ARM_WAKEUP            = 0x04000000U,
+    DN_APM_ENUMERATOR        = 0x08000000U,
+    DN_APM_DRIVER            = 0x10000000U,
+    DN_SILENT_INSTALL        = 0x20000000U,
+    DN_NO_SHOW_IN_DM         = 0x40000000U,
+    DN_BOOT_LOG_PROB         = 0x80000000U,
+    DN_NEED_RESTART          = 0x00000100U,
+    DN_DRIVER_BLOCKED        = 0x00000040U,
+    DN_LEGACY_DRIVER         = 0x00001000U,
+    DN_CHILD_WITH_INVALID_ID = 0x00000200U,
+    DN_DEVICE_DISCONNECTED   = 0x02000000U,
+    DN_QUERY_REMOVE_PENDING  = 0x00010000U,
+    DN_QUERY_REMOVE_ACTIVE   = 0x00020000U,
+}
+
+alias CM_PROB = uint;
+enum : uint
+{
+    CM_PROB_NOT_CONFIGURED             = 0x00000001U,
+    CM_PROB_DEVLOADER_FAILED           = 0x00000002U,
+    CM_PROB_OUT_OF_MEMORY              = 0x00000003U,
+    CM_PROB_ENTRY_IS_WRONG_TYPE        = 0x00000004U,
+    CM_PROB_LACKED_ARBITRATOR          = 0x00000005U,
+    CM_PROB_BOOT_CONFIG_CONFLICT       = 0x00000006U,
+    CM_PROB_FAILED_FILTER              = 0x00000007U,
+    CM_PROB_DEVLOADER_NOT_FOUND        = 0x00000008U,
+    CM_PROB_INVALID_DATA               = 0x00000009U,
+    CM_PROB_FAILED_START               = 0x0000000aU,
+    CM_PROB_LIAR                       = 0x0000000bU,
+    CM_PROB_NORMAL_CONFLICT            = 0x0000000cU,
+    CM_PROB_NOT_VERIFIED               = 0x0000000dU,
+    CM_PROB_NEED_RESTART               = 0x0000000eU,
+    CM_PROB_REENUMERATION              = 0x0000000fU,
+    CM_PROB_PARTIAL_LOG_CONF           = 0x00000010U,
+    CM_PROB_UNKNOWN_RESOURCE           = 0x00000011U,
+    CM_PROB_REINSTALL                  = 0x00000012U,
+    CM_PROB_REGISTRY                   = 0x00000013U,
+    CM_PROB_VXDLDR                     = 0x00000014U,
+    CM_PROB_WILL_BE_REMOVED            = 0x00000015U,
+    CM_PROB_DISABLED                   = 0x00000016U,
+    CM_PROB_DEVLOADER_NOT_READY        = 0x00000017U,
+    CM_PROB_DEVICE_NOT_THERE           = 0x00000018U,
+    CM_PROB_MOVED                      = 0x00000019U,
+    CM_PROB_TOO_EARLY                  = 0x0000001aU,
+    CM_PROB_NO_VALID_LOG_CONF          = 0x0000001bU,
+    CM_PROB_FAILED_INSTALL             = 0x0000001cU,
+    CM_PROB_HARDWARE_DISABLED          = 0x0000001dU,
+    CM_PROB_CANT_SHARE_IRQ             = 0x0000001eU,
+    CM_PROB_FAILED_ADD                 = 0x0000001fU,
+    CM_PROB_DISABLED_SERVICE           = 0x00000020U,
+    CM_PROB_TRANSLATION_FAILED         = 0x00000021U,
+    CM_PROB_NO_SOFTCONFIG              = 0x00000022U,
+    CM_PROB_BIOS_TABLE                 = 0x00000023U,
+    CM_PROB_IRQ_TRANSLATION_FAILED     = 0x00000024U,
+    CM_PROB_FAILED_DRIVER_ENTRY        = 0x00000025U,
+    CM_PROB_DRIVER_FAILED_PRIOR_UNLOAD = 0x00000026U,
+    CM_PROB_DRIVER_FAILED_LOAD         = 0x00000027U,
+    CM_PROB_DRIVER_SERVICE_KEY_INVALID = 0x00000028U,
+    CM_PROB_LEGACY_SERVICE_NO_DEVICES  = 0x00000029U,
+    CM_PROB_DUPLICATE_DEVICE           = 0x0000002aU,
+    CM_PROB_FAILED_POST_START          = 0x0000002bU,
+    CM_PROB_HALTED                     = 0x0000002cU,
+    CM_PROB_PHANTOM                    = 0x0000002dU,
+    CM_PROB_SYSTEM_SHUTDOWN            = 0x0000002eU,
+    CM_PROB_HELD_FOR_EJECT             = 0x0000002fU,
+    CM_PROB_DRIVER_BLOCKED             = 0x00000030U,
+    CM_PROB_REGISTRY_TOO_LARGE         = 0x00000031U,
+    CM_PROB_SETPROPERTIES_FAILED       = 0x00000032U,
+    CM_PROB_WAITING_ON_DEPENDENCY      = 0x00000033U,
+    CM_PROB_UNSIGNED_DRIVER            = 0x00000034U,
+    CM_PROB_USED_BY_DEBUGGER           = 0x00000035U,
+    CM_PROB_DEVICE_RESET               = 0x00000036U,
+    CM_PROB_CONSOLE_LOCKED             = 0x00000037U,
+    CM_PROB_NEED_CLASS_CONFIG          = 0x00000038U,
+    CM_PROB_GUEST_ASSIGNMENT_FAILED    = 0x00000039U,
+}
+
+alias SPSVCINST_FLAGS = uint;
+enum : uint
+{
+    SPSVCINST_TAGTOFRONT                   = 0x00000001U,
+    SPSVCINST_ASSOCSERVICE                 = 0x00000002U,
+    SPSVCINST_DELETEEVENTLOGENTRY          = 0x00000004U,
+    SPSVCINST_NOCLOBBER_DISPLAYNAME        = 0x00000008U,
+    SPSVCINST_NOCLOBBER_STARTTYPE          = 0x00000010U,
+    SPSVCINST_NOCLOBBER_ERRORCONTROL       = 0x00000020U,
+    SPSVCINST_NOCLOBBER_LOADORDERGROUP     = 0x00000040U,
+    SPSVCINST_NOCLOBBER_DEPENDENCIES       = 0x00000080U,
+    SPSVCINST_NOCLOBBER_DESCRIPTION        = 0x00000100U,
+    SPSVCINST_STOPSERVICE                  = 0x00000200U,
+    SPSVCINST_CLOBBER_SECURITY             = 0x00000400U,
+    SPSVCINST_STARTSERVICE                 = 0x00000800U,
+    SPSVCINST_NOCLOBBER_REQUIREDPRIVILEGES = 0x00001000U,
+    SPSVCINST_NOCLOBBER_TRIGGERS           = 0x00002000U,
+    SPSVCINST_NOCLOBBER_SERVICESIDTYPE     = 0x00004000U,
+    SPSVCINST_NOCLOBBER_DELAYEDAUTOSTART   = 0x00008000U,
+    SPSVCINST_UNIQUE_NAME                  = 0x00010000U,
+    SPSVCINST_NOCLOBBER_FAILUREACTIONS     = 0x00020000U,
+    SPSVCINST_NOCLOBBER_BOOTFLAGS          = 0x00040000U,
+}
+
+alias CM_CDMASK = uint;
+enum : uint
+{
+    CM_CDMASK_DEVINST     = 0x00000001U,
+    CM_CDMASK_RESDES      = 0x00000002U,
+    CM_CDMASK_FLAGS       = 0x00000004U,
+    CM_CDMASK_DESCRIPTION = 0x00000008U,
+    CM_CDMASK_VALID       = 0x0000000fU,
+}
+
+alias CM_CDFLAGS = uint;
+enum : uint
+{
+    CM_CDFLAGS_DRIVER     = 0x00000001U,
+    CM_CDFLAGS_ROOT_OWNED = 0x00000002U,
+    CM_CDFLAGS_RESERVED   = 0x00000004U,
+}
+
+alias CM_REMOVAL_POLICY = uint;
+enum : uint
+{
+    CM_REMOVAL_POLICY_EXPECT_NO_REMOVAL       = 0x00000001U,
+    CM_REMOVAL_POLICY_EXPECT_ORDERLY_REMOVAL  = 0x00000002U,
+    CM_REMOVAL_POLICY_EXPECT_SURPRISE_REMOVAL = 0x00000003U,
+}
+
+alias CM_INSTALL_STATE = uint;
+enum : uint
+{
+    CM_INSTALL_STATE_INSTALLED       = 0x00000000U,
+    CM_INSTALL_STATE_NEEDS_REINSTALL = 0x00000001U,
+    CM_INSTALL_STATE_FAILED_INSTALL  = 0x00000002U,
+    CM_INSTALL_STATE_FINISH_INSTALL  = 0x00000003U,
+}
+
+alias CM_DEVCAP = uint;
+enum : uint
+{
+    CM_DEVCAP_LOCKSUPPORTED     = 0x00000001U,
+    CM_DEVCAP_EJECTSUPPORTED    = 0x00000002U,
+    CM_DEVCAP_REMOVABLE         = 0x00000004U,
+    CM_DEVCAP_DOCKDEVICE        = 0x00000008U,
+    CM_DEVCAP_UNIQUEID          = 0x00000010U,
+    CM_DEVCAP_SILENTINSTALL     = 0x00000020U,
+    CM_DEVCAP_RAWDEVICEOK       = 0x00000040U,
+    CM_DEVCAP_SURPRISEREMOVALOK = 0x00000080U,
+    CM_DEVCAP_HARDWAREDISABLED  = 0x00000100U,
+    CM_DEVCAP_NONDYNAMIC        = 0x00000200U,
+    CM_DEVCAP_SECUREDEVICE      = 0x00000400U,
+}
+
+alias DD_FLAGS = uint;
+enum : uint
+{
+    mDD_Width         = 0x00000003U,
+    fDD_BYTE          = 0x00000000U,
+    fDD_WORD          = 0x00000001U,
+    fDD_DWORD         = 0x00000002U,
+    fDD_BYTE_AND_WORD = 0x00000003U,
+    mDD_BusMaster     = 0x00000004U,
+    fDD_NoBusMaster   = 0x00000000U,
+    fDD_BusMaster     = 0x00000004U,
+    mDD_Type          = 0x00000018U,
+    fDD_TypeStandard  = 0x00000000U,
+    fDD_TypeA         = 0x00000008U,
+    fDD_TypeB         = 0x00000010U,
+    fDD_TypeF         = 0x00000018U,
+}
+
+alias IOD_DESFLAGS = uint;
+enum : uint
+{
+    fIOD_PortType        = 0x00000001U,
+    fIOD_Memory          = 0x00000000U,
+    fIOD_IO              = 0x00000001U,
+    fIOD_DECODE          = 0x000000fcU,
+    fIOD_10_BIT_DECODE   = 0x00000004U,
+    fIOD_12_BIT_DECODE   = 0x00000008U,
+    fIOD_16_BIT_DECODE   = 0x00000010U,
+    fIOD_POSITIVE_DECODE = 0x00000020U,
+    fIOD_PASSIVE_DECODE  = 0x00000040U,
+    fIOD_WINDOW_DECODE   = 0x00000080U,
+    fIOD_PORT_BAR        = 0x00000100U,
+}
+
+alias IRQD_FLAGS = uint;
+enum : uint
+{
+    mIRQD_Share      = 0x00000001U,
+    fIRQD_Exclusive  = 0x00000000U,
+    fIRQD_Share      = 0x00000001U,
+    fIRQD_Share_Bit  = 0x00000000U,
+    fIRQD_Level_Bit  = 0x00000001U,
+    mIRQD_Edge_Level = 0x00000002U,
+    fIRQD_Level      = 0x00000000U,
+    fIRQD_Edge       = 0x00000002U,
+}
+
+alias MD_FLAGS = uint;
+enum : uint
+{
+    mMD_MemoryType              = 0x00000001U,
+    fMD_MemoryType              = 0x00000001U,
+    fMD_ROM                     = 0x00000000U,
+    fMD_RAM                     = 0x00000001U,
+    mMD_32_24                   = 0x00000002U,
+    fMD_32_24                   = 0x00000002U,
+    fMD_24                      = 0x00000000U,
+    fMD_32                      = 0x00000002U,
+    mMD_Prefetchable            = 0x00000004U,
+    fMD_Prefetchable            = 0x00000004U,
+    fMD_Pref                    = 0x00000004U,
+    fMD_PrefetchDisallowed      = 0x00000000U,
+    fMD_PrefetchAllowed         = 0x00000004U,
+    mMD_Readable                = 0x00000008U,
+    fMD_Readable                = 0x00000008U,
+    fMD_ReadAllowed             = 0x00000000U,
+    fMD_ReadDisallowed          = 0x00000008U,
+    mMD_CombinedWrite           = 0x00000010U,
+    fMD_CombinedWrite           = 0x00000010U,
+    fMD_CombinedWriteDisallowed = 0x00000000U,
+    fMD_CombinedWriteAllowed    = 0x00000010U,
+    mMD_Cacheable               = 0x00000020U,
+    fMD_NonCacheable            = 0x00000000U,
+    fMD_Cacheable               = 0x00000020U,
+    fMD_WINDOW_DECODE           = 0x00000040U,
+    fMD_MEMORY_BAR              = 0x00000080U,
+}
+
+alias PMF_FLAGS = uint;
+enum : uint
+{
+    fPMF_AUDIO_ENABLE = 0x00000008U,
+}
+
+alias PCD_FLAGS = uint;
+enum : uint
+{
+    mPCD_IO_8_16               = 0x00000001U,
+    fPCD_IO_8                  = 0x00000000U,
+    fPCD_IO_16                 = 0x00000001U,
+    mPCD_MEM_8_16              = 0x00000002U,
+    fPCD_MEM_8                 = 0x00000000U,
+    fPCD_MEM_16                = 0x00000002U,
+    mPCD_MEM_A_C               = 0x0000000cU,
+    fPCD_MEM1_A                = 0x00000004U,
+    fPCD_MEM2_A                = 0x00000008U,
+    fPCD_IO_ZW_8               = 0x00000010U,
+    fPCD_IO_SRC_16             = 0x00000020U,
+    fPCD_IO_WS_16              = 0x00000040U,
+    mPCD_MEM_WS                = 0x00000300U,
+    fPCD_MEM_WS_ONE            = 0x00000100U,
+    fPCD_MEM_WS_TWO            = 0x00000200U,
+    fPCD_MEM_WS_THREE          = 0x00000300U,
+    fPCD_MEM_A                 = 0x00000004U,
+    fPCD_ATTRIBUTES_PER_WINDOW = 0x00008000U,
+    fPCD_IO1_16                = 0x00010000U,
+    fPCD_IO1_ZW_8              = 0x00020000U,
+    fPCD_IO1_SRC_16            = 0x00040000U,
+    fPCD_IO1_WS_16             = 0x00080000U,
+    fPCD_IO2_16                = 0x00100000U,
+    fPCD_IO2_ZW_8              = 0x00200000U,
+    fPCD_IO2_SRC_16            = 0x00400000U,
+    fPCD_IO2_WS_16             = 0x00800000U,
+    mPCD_MEM1_WS               = 0x03000000U,
+    fPCD_MEM1_WS_ONE           = 0x01000000U,
+    fPCD_MEM1_WS_TWO           = 0x02000000U,
+    fPCD_MEM1_WS_THREE         = 0x03000000U,
+    fPCD_MEM1_16               = 0x04000000U,
+    mPCD_MEM2_WS               = 0x30000000U,
+    fPCD_MEM2_WS_ONE           = 0x10000000U,
+    fPCD_MEM2_WS_TWO           = 0x20000000U,
+    fPCD_MEM2_WS_THREE         = 0x30000000U,
+    fPCD_MEM2_16               = 0x40000000U,
+}
+
+alias SETUP_DI_REGISTRY_PROPERTY = uint;
+enum : uint
+{
+    SPDRP_DEVICEDESC                  = 0x00000000U,
+    SPDRP_HARDWAREID                  = 0x00000001U,
+    SPDRP_COMPATIBLEIDS               = 0x00000002U,
+    SPDRP_UNUSED0                     = 0x00000003U,
+    SPDRP_SERVICE                     = 0x00000004U,
+    SPDRP_UNUSED1                     = 0x00000005U,
+    SPDRP_UNUSED2                     = 0x00000006U,
+    SPDRP_CLASS                       = 0x00000007U,
+    SPDRP_CLASSGUID                   = 0x00000008U,
+    SPDRP_DRIVER                      = 0x00000009U,
+    SPDRP_CONFIGFLAGS                 = 0x0000000aU,
+    SPDRP_MFG                         = 0x0000000bU,
+    SPDRP_FRIENDLYNAME                = 0x0000000cU,
+    SPDRP_LOCATION_INFORMATION        = 0x0000000dU,
+    SPDRP_PHYSICAL_DEVICE_OBJECT_NAME = 0x0000000eU,
+    SPDRP_CAPABILITIES                = 0x0000000fU,
+    SPDRP_UI_NUMBER                   = 0x00000010U,
+    SPDRP_UPPERFILTERS                = 0x00000011U,
+    SPDRP_LOWERFILTERS                = 0x00000012U,
+    SPDRP_BUSTYPEGUID                 = 0x00000013U,
+    SPDRP_LEGACYBUSTYPE               = 0x00000014U,
+    SPDRP_BUSNUMBER                   = 0x00000015U,
+    SPDRP_ENUMERATOR_NAME             = 0x00000016U,
+    SPDRP_SECURITY                    = 0x00000017U,
+    SPDRP_SECURITY_SDS                = 0x00000018U,
+    SPDRP_DEVTYPE                     = 0x00000019U,
+    SPDRP_EXCLUSIVE                   = 0x0000001aU,
+    SPDRP_CHARACTERISTICS             = 0x0000001bU,
+    SPDRP_ADDRESS                     = 0x0000001cU,
+    SPDRP_UI_NUMBER_DESC_FORMAT       = 0x0000001dU,
+    SPDRP_DEVICE_POWER_DATA           = 0x0000001eU,
+    SPDRP_REMOVAL_POLICY              = 0x0000001fU,
+    SPDRP_REMOVAL_POLICY_HW_DEFAULT   = 0x00000020U,
+    SPDRP_REMOVAL_POLICY_OVERRIDE     = 0x00000021U,
+    SPDRP_INSTALL_STATE               = 0x00000022U,
+    SPDRP_LOCATION_PATHS              = 0x00000023U,
+    SPDRP_BASE_CONTAINERID            = 0x00000024U,
+    SPDRP_MAXIMUM_PROPERTY            = 0x00000025U,
+}
+
+alias SETUP_DI_DEVICE_CREATION_FLAGS = uint;
+enum : uint
+{
+    DICD_GENERATE_ID       = 0x00000001U,
+    DICD_INHERIT_CLASSDRVS = 0x00000002U,
+}
+
+alias SETUP_DI_DRIVER_INSTALL_FLAGS = uint;
+enum : uint
+{
+    DNF_DUPDESC                   = 0x00000001U,
+    DNF_OLDDRIVER                 = 0x00000002U,
+    DNF_EXCLUDEFROMLIST           = 0x00000004U,
+    DNF_NODRIVER                  = 0x00000008U,
+    DNF_LEGACYINF                 = 0x00000010U,
+    DNF_CLASS_DRIVER              = 0x00000020U,
+    DNF_COMPATIBLE_DRIVER         = 0x00000040U,
+    DNF_INET_DRIVER               = 0x00000080U,
+    DNF_UNUSED1                   = 0x00000100U,
+    DNF_UNUSED2                   = 0x00000200U,
+    DNF_OLD_INET_DRIVER           = 0x00000400U,
+    DNF_BAD_DRIVER                = 0x00000800U,
+    DNF_DUPPROVIDER               = 0x00001000U,
+    DNF_INF_IS_SIGNED             = 0x00002000U,
+    DNF_OEM_F6_INF                = 0x00004000U,
+    DNF_DUPDRIVERVER              = 0x00008000U,
+    DNF_BASIC_DRIVER              = 0x00010000U,
+    DNF_AUTHENTICODE_SIGNED       = 0x00020000U,
+    DNF_INSTALLEDDRIVER           = 0x00040000U,
+    DNF_ALWAYSEXCLUDEFROMLIST     = 0x00080000U,
+    DNF_INBOX_DRIVER              = 0x00100000U,
+    DNF_REQUESTADDITIONALSOFTWARE = 0x00200000U,
+    DNF_UNUSED_22                 = 0x00400000U,
+    DNF_UNUSED_23                 = 0x00800000U,
+    DNF_UNUSED_24                 = 0x01000000U,
+    DNF_UNUSED_25                 = 0x02000000U,
+    DNF_UNUSED_26                 = 0x04000000U,
+    DNF_UNUSED_27                 = 0x08000000U,
+    DNF_UNUSED_28                 = 0x10000000U,
+    DNF_UNUSED_29                 = 0x20000000U,
+    DNF_UNUSED_30                 = 0x40000000U,
+    DNF_UNUSED_31                 = 0x80000000U,
+}
+
+alias SETUP_DI_STATE_CHANGE = uint;
+enum : uint
+{
+    DICS_ENABLE     = 0x00000001U,
+    DICS_DISABLE    = 0x00000002U,
+    DICS_PROPCHANGE = 0x00000003U,
+    DICS_START      = 0x00000004U,
+    DICS_STOP       = 0x00000005U,
+}
+
+alias SETUP_DI_PROPERTY_CHANGE_SCOPE = uint;
+enum : uint
+{
+    DICS_FLAG_GLOBAL         = 0x00000001U,
+    DICS_FLAG_CONFIGSPECIFIC = 0x00000002U,
+    DICS_FLAG_CONFIGGENERAL  = 0x00000004U,
+}
+
+alias SETUP_DI_REMOVE_DEVICE_SCOPE = uint;
+enum : uint
+{
+    DI_REMOVEDEVICE_GLOBAL         = 0x00000001U,
+    DI_REMOVEDEVICE_CONFIGSPECIFIC = 0x00000002U,
+}
+
+alias SETUP_DI_GET_CLASS_DEVS_FLAGS = uint;
+enum : uint
+{
+    DIGCF_DEFAULT         = 0x00000001U,
+    DIGCF_PRESENT         = 0x00000002U,
+    DIGCF_ALLCLASSES      = 0x00000004U,
+    DIGCF_PROFILE         = 0x00000008U,
+    DIGCF_DEVICEINTERFACE = 0x00000010U,
+    DIGCF_INTERFACEDEVICE = 0x00000010U,
+}
+
+alias DI_FUNCTION = uint;
+enum : uint
+{
+    DIF_SELECTDEVICE                   = 0x00000001U,
+    DIF_INSTALLDEVICE                  = 0x00000002U,
+    DIF_ASSIGNRESOURCES                = 0x00000003U,
+    DIF_PROPERTIES                     = 0x00000004U,
+    DIF_REMOVE                         = 0x00000005U,
+    DIF_FIRSTTIMESETUP                 = 0x00000006U,
+    DIF_FOUNDDEVICE                    = 0x00000007U,
+    DIF_SELECTCLASSDRIVERS             = 0x00000008U,
+    DIF_VALIDATECLASSDRIVERS           = 0x00000009U,
+    DIF_INSTALLCLASSDRIVERS            = 0x0000000aU,
+    DIF_CALCDISKSPACE                  = 0x0000000bU,
+    DIF_DESTROYPRIVATEDATA             = 0x0000000cU,
+    DIF_VALIDATEDRIVER                 = 0x0000000dU,
+    DIF_DETECT                         = 0x0000000fU,
+    DIF_INSTALLWIZARD                  = 0x00000010U,
+    DIF_DESTROYWIZARDDATA              = 0x00000011U,
+    DIF_PROPERTYCHANGE                 = 0x00000012U,
+    DIF_ENABLECLASS                    = 0x00000013U,
+    DIF_DETECTVERIFY                   = 0x00000014U,
+    DIF_INSTALLDEVICEFILES             = 0x00000015U,
+    DIF_UNREMOVE                       = 0x00000016U,
+    DIF_SELECTBESTCOMPATDRV            = 0x00000017U,
+    DIF_ALLOW_INSTALL                  = 0x00000018U,
+    DIF_REGISTERDEVICE                 = 0x00000019U,
+    DIF_NEWDEVICEWIZARD_PRESELECT      = 0x0000001aU,
+    DIF_NEWDEVICEWIZARD_SELECT         = 0x0000001bU,
+    DIF_NEWDEVICEWIZARD_PREANALYZE     = 0x0000001cU,
+    DIF_NEWDEVICEWIZARD_POSTANALYZE    = 0x0000001dU,
+    DIF_NEWDEVICEWIZARD_FINISHINSTALL  = 0x0000001eU,
+    DIF_UNUSED1                        = 0x0000001fU,
+    DIF_INSTALLINTERFACES              = 0x00000020U,
+    DIF_DETECTCANCEL                   = 0x00000021U,
+    DIF_REGISTER_COINSTALLERS          = 0x00000022U,
+    DIF_ADDPROPERTYPAGE_ADVANCED       = 0x00000023U,
+    DIF_ADDPROPERTYPAGE_BASIC          = 0x00000024U,
+    DIF_RESERVED1                      = 0x00000025U,
+    DIF_TROUBLESHOOTER                 = 0x00000026U,
+    DIF_POWERMESSAGEWAKE               = 0x00000027U,
+    DIF_ADDREMOTEPROPERTYPAGE_ADVANCED = 0x00000028U,
+    DIF_UPDATEDRIVER_UI                = 0x00000029U,
+    DIF_FINISHINSTALL_ACTION           = 0x0000002aU,
+    DIF_RESERVED2                      = 0x00000030U,
+    DIF_MOVEDEVICE                     = 0x0000000eU,
+}
+
+alias SETUP_DI_DEVICE_INSTALL_FLAGS = uint;
+enum : uint
+{
+    DI_SHOWOEM                       = 0x00000001U,
+    DI_SHOWCOMPAT                    = 0x00000002U,
+    DI_SHOWCLASS                     = 0x00000004U,
+    DI_SHOWALL                       = 0x00000007U,
+    DI_NOVCP                         = 0x00000008U,
+    DI_DIDCOMPAT                     = 0x00000010U,
+    DI_DIDCLASS                      = 0x00000020U,
+    DI_AUTOASSIGNRES                 = 0x00000040U,
+    DI_NEEDRESTART                   = 0x00000080U,
+    DI_NEEDREBOOT                    = 0x00000100U,
+    DI_NOBROWSE                      = 0x00000200U,
+    DI_MULTMFGS                      = 0x00000400U,
+    DI_DISABLED                      = 0x00000800U,
+    DI_GENERALPAGE_ADDED             = 0x00001000U,
+    DI_RESOURCEPAGE_ADDED            = 0x00002000U,
+    DI_PROPERTIES_CHANGE             = 0x00004000U,
+    DI_INF_IS_SORTED                 = 0x00008000U,
+    DI_ENUMSINGLEINF                 = 0x00010000U,
+    DI_DONOTCALLCONFIGMG             = 0x00020000U,
+    DI_INSTALLDISABLED               = 0x00040000U,
+    DI_COMPAT_FROM_CLASS             = 0x00080000U,
+    DI_CLASSINSTALLPARAMS            = 0x00100000U,
+    DI_NODI_DEFAULTACTION            = 0x00200000U,
+    DI_QUIETINSTALL                  = 0x00800000U,
+    DI_NOFILECOPY                    = 0x01000000U,
+    DI_FORCECOPY                     = 0x02000000U,
+    DI_DRIVERPAGE_ADDED              = 0x04000000U,
+    DI_USECI_SELECTSTRINGS           = 0x08000000U,
+    DI_OVERRIDE_INFFLAGS             = 0x10000000U,
+    DI_PROPS_NOCHANGEUSAGE           = 0x20000000U,
+    DI_NOSELECTICONS                 = 0x40000000U,
+    DI_NOWRITE_IDS                   = 0x80000000U,
+    DI_UNREMOVEDEVICE_CONFIGSPECIFIC = 0x00000002U,
+}
+
+alias SETUP_DI_DEVICE_INSTALL_FLAGS_EX = uint;
+enum : uint
+{
+    DI_FLAGSEX_RESERVED2                = 0x00000001U,
+    DI_FLAGSEX_RESERVED3                = 0x00000002U,
+    DI_FLAGSEX_CI_FAILED                = 0x00000004U,
+    DI_FLAGSEX_FINISHINSTALL_ACTION     = 0x00000008U,
+    DI_FLAGSEX_DIDINFOLIST              = 0x00000010U,
+    DI_FLAGSEX_DIDCOMPATINFO            = 0x00000020U,
+    DI_FLAGSEX_FILTERCLASSES            = 0x00000040U,
+    DI_FLAGSEX_SETFAILEDINSTALL         = 0x00000080U,
+    DI_FLAGSEX_DEVICECHANGE             = 0x00000100U,
+    DI_FLAGSEX_ALWAYSWRITEIDS           = 0x00000200U,
+    DI_FLAGSEX_PROPCHANGE_PENDING       = 0x00000400U,
+    DI_FLAGSEX_ALLOWEXCLUDEDDRVS        = 0x00000800U,
+    DI_FLAGSEX_NOUIONQUERYREMOVE        = 0x00001000U,
+    DI_FLAGSEX_USECLASSFORCOMPAT        = 0x00002000U,
+    DI_FLAGSEX_RESERVED4                = 0x00004000U,
+    DI_FLAGSEX_NO_DRVREG_MODIFY         = 0x00008000U,
+    DI_FLAGSEX_IN_SYSTEM_SETUP          = 0x00010000U,
+    DI_FLAGSEX_INET_DRIVER              = 0x00020000U,
+    DI_FLAGSEX_APPENDDRIVERLIST         = 0x00040000U,
+    DI_FLAGSEX_PREINSTALLBACKUP         = 0x00080000U,
+    DI_FLAGSEX_BACKUPONREPLACE          = 0x00100000U,
+    DI_FLAGSEX_DRIVERLIST_FROM_URL      = 0x00200000U,
+    DI_FLAGSEX_RESERVED1                = 0x00400000U,
+    DI_FLAGSEX_EXCLUDE_OLD_INET_DRIVERS = 0x00800000U,
+    DI_FLAGSEX_POWERPAGE_ADDED          = 0x01000000U,
+    DI_FLAGSEX_FILTERSIMILARDRIVERS     = 0x02000000U,
+    DI_FLAGSEX_INSTALLEDDRIVER          = 0x04000000U,
+    DI_FLAGSEX_NO_CLASSLIST_NODE_MERGE  = 0x08000000U,
+    DI_FLAGSEX_ALTPLATFORM_DRVSEARCH    = 0x10000000U,
+    DI_FLAGSEX_RESTART_DEVICE_ONLY      = 0x20000000U,
+    DI_FLAGSEX_RECURSIVESEARCH          = 0x40000000U,
+    DI_FLAGSEX_SEARCH_PUBLISHED_INFS    = 0x80000000U,
+}
+
+alias SETUP_DI_DEVICE_CONFIGURATION_FLAGS = uint;
+enum : uint
+{
+    CONFIGFLAG_DISABLED             = 0x00000001U,
+    CONFIGFLAG_REMOVED              = 0x00000002U,
+    CONFIGFLAG_MANUAL_INSTALL       = 0x00000004U,
+    CONFIGFLAG_IGNORE_BOOT_LC       = 0x00000008U,
+    CONFIGFLAG_NET_BOOT             = 0x00000010U,
+    CONFIGFLAG_REINSTALL            = 0x00000020U,
+    CONFIGFLAG_FAILEDINSTALL        = 0x00000040U,
+    CONFIGFLAG_CANTSTOPACHILD       = 0x00000080U,
+    CONFIGFLAG_OKREMOVEROM          = 0x00000100U,
+    CONFIGFLAG_NOREMOVEEXIT         = 0x00000200U,
+    CONFIGFLAG_FINISH_INSTALL       = 0x00000400U,
+    CONFIGFLAG_NEEDS_FORCED_CONFIG  = 0x00000800U,
+    CONFIGFLAG_NETBOOT_CARD         = 0x00001000U,
+    CONFIGFLAG_PARTIAL_LOG_CONF     = 0x00002000U,
+    CONFIGFLAG_SUPPRESS_SURPRISE    = 0x00004000U,
+    CONFIGFLAG_VERIFY_HARDWARE      = 0x00008000U,
+    CONFIGFLAG_FINISHINSTALL_UI     = 0x00010000U,
+    CONFIGFLAG_FINISHINSTALL_ACTION = 0x00020000U,
+    CONFIGFLAG_BOOT_DEVICE          = 0x00040000U,
+    CONFIGFLAG_NEEDS_CLASS_CONFIG   = 0x00080000U,
+}
+
+alias FILE_COMPRESSION_TYPE = uint;
+enum : uint
+{
+    FILE_COMPRESSION_NONE   = 0x00000000U,
+    FILE_COMPRESSION_WINLZA = 0x00000001U,
+    FILE_COMPRESSION_MSZIP  = 0x00000002U,
+    FILE_COMPRESSION_NTCAB  = 0x00000003U,
+}
+
+alias CONFIGRET = uint;
+enum : uint
+{
+    CR_SUCCESS                  = 0x00000000U,
+    CR_DEFAULT                  = 0x00000001U,
+    CR_OUT_OF_MEMORY            = 0x00000002U,
+    CR_INVALID_POINTER          = 0x00000003U,
+    CR_INVALID_FLAG             = 0x00000004U,
+    CR_INVALID_DEVNODE          = 0x00000005U,
+    CR_INVALID_DEVINST          = 0x00000005U,
+    CR_INVALID_RES_DES          = 0x00000006U,
+    CR_INVALID_LOG_CONF         = 0x00000007U,
+    CR_INVALID_ARBITRATOR       = 0x00000008U,
+    CR_INVALID_NODELIST         = 0x00000009U,
+    CR_DEVNODE_HAS_REQS         = 0x0000000aU,
+    CR_DEVINST_HAS_REQS         = 0x0000000aU,
+    CR_INVALID_RESOURCEID       = 0x0000000bU,
+    CR_DLVXD_NOT_FOUND          = 0x0000000cU,
+    CR_NO_SUCH_DEVNODE          = 0x0000000dU,
+    CR_NO_SUCH_DEVINST          = 0x0000000dU,
+    CR_NO_MORE_LOG_CONF         = 0x0000000eU,
+    CR_NO_MORE_RES_DES          = 0x0000000fU,
+    CR_ALREADY_SUCH_DEVNODE     = 0x00000010U,
+    CR_ALREADY_SUCH_DEVINST     = 0x00000010U,
+    CR_INVALID_RANGE_LIST       = 0x00000011U,
+    CR_INVALID_RANGE            = 0x00000012U,
+    CR_FAILURE                  = 0x00000013U,
+    CR_NO_SUCH_LOGICAL_DEV      = 0x00000014U,
+    CR_CREATE_BLOCKED           = 0x00000015U,
+    CR_NOT_SYSTEM_VM            = 0x00000016U,
+    CR_REMOVE_VETOED            = 0x00000017U,
+    CR_APM_VETOED               = 0x00000018U,
+    CR_INVALID_LOAD_TYPE        = 0x00000019U,
+    CR_BUFFER_SMALL             = 0x0000001aU,
+    CR_NO_ARBITRATOR            = 0x0000001bU,
+    CR_NO_REGISTRY_HANDLE       = 0x0000001cU,
+    CR_REGISTRY_ERROR           = 0x0000001dU,
+    CR_INVALID_DEVICE_ID        = 0x0000001eU,
+    CR_INVALID_DATA             = 0x0000001fU,
+    CR_INVALID_API              = 0x00000020U,
+    CR_DEVLOADER_NOT_READY      = 0x00000021U,
+    CR_NEED_RESTART             = 0x00000022U,
+    CR_NO_MORE_HW_PROFILES      = 0x00000023U,
+    CR_DEVICE_NOT_THERE         = 0x00000024U,
+    CR_NO_SUCH_VALUE            = 0x00000025U,
+    CR_WRONG_TYPE               = 0x00000026U,
+    CR_INVALID_PRIORITY         = 0x00000027U,
+    CR_NOT_DISABLEABLE          = 0x00000028U,
+    CR_FREE_RESOURCES           = 0x00000029U,
+    CR_QUERY_VETOED             = 0x0000002aU,
+    CR_CANT_SHARE_IRQ           = 0x0000002bU,
+    CR_NO_DEPENDENT             = 0x0000002cU,
+    CR_SAME_RESOURCES           = 0x0000002dU,
+    CR_NO_SUCH_REGISTRY_KEY     = 0x0000002eU,
+    CR_INVALID_MACHINENAME      = 0x0000002fU,
+    CR_REMOTE_COMM_FAILURE      = 0x00000030U,
+    CR_MACHINE_UNAVAILABLE      = 0x00000031U,
+    CR_NO_CM_SERVICES           = 0x00000032U,
+    CR_ACCESS_DENIED            = 0x00000033U,
+    CR_CALL_NOT_IMPLEMENTED     = 0x00000034U,
+    CR_INVALID_PROPERTY         = 0x00000035U,
+    CR_DEVICE_INTERFACE_ACTIVE  = 0x00000036U,
+    CR_NO_SUCH_DEVICE_INTERFACE = 0x00000037U,
+    CR_INVALID_REFERENCE_STRING = 0x00000038U,
+    CR_INVALID_CONFLICT_LIST    = 0x00000039U,
+    CR_INVALID_INDEX            = 0x0000003aU,
+    CR_INVALID_STRUCTURE_SIZE   = 0x0000003bU,
+    NUM_CR_RESULTS              = 0x0000003cU,
+}
+
+enum SetupFileLogInfo : int
+{
+    SetupFileLogSourceFilename  = 0x00000000,
+    SetupFileLogChecksum        = 0x00000001,
+    SetupFileLogDiskTagfile     = 0x00000002,
+    SetupFileLogDiskDescription = 0x00000003,
+    SetupFileLogOtherInfo       = 0x00000004,
+    SetupFileLogMax             = 0x00000005,
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfg/ne-cfg-pnp_veto_type
+alias PNP_VETO_TYPE = int;
+enum : int
+{
+    PNP_VetoTypeUnknown          = 0x00000000,
+    PNP_VetoLegacyDevice         = 0x00000001,
+    PNP_VetoPendingClose         = 0x00000002,
+    PNP_VetoWindowsApp           = 0x00000003,
+    PNP_VetoWindowsService       = 0x00000004,
+    PNP_VetoOutstandingOpen      = 0x00000005,
+    PNP_VetoDevice               = 0x00000006,
+    PNP_VetoDriver               = 0x00000007,
+    PNP_VetoIllegalDeviceRequest = 0x00000008,
+    PNP_VetoInsufficientPower    = 0x00000009,
+    PNP_VetoNonDisableable       = 0x0000000a,
+    PNP_VetoLegacyDriver         = 0x0000000b,
+    PNP_VetoInsufficientRights   = 0x0000000c,
+    PNP_VetoAlreadyRemoved       = 0x0000000d,
+}
+
+alias CM_NOTIFY_FILTER_TYPE = int;
+enum : int
+{
+    CM_NOTIFY_FILTER_TYPE_DEVICEINTERFACE = 0x00000000,
+    CM_NOTIFY_FILTER_TYPE_DEVICEHANDLE    = 0x00000001,
+    CM_NOTIFY_FILTER_TYPE_DEVICEINSTANCE  = 0x00000002,
+    CM_NOTIFY_FILTER_TYPE_MAX             = 0x00000003,
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ne-cfgmgr32-cm_notify_action
+alias CM_NOTIFY_ACTION = int;
+enum : int
+{
+    CM_NOTIFY_ACTION_DEVICEINTERFACEARRIVAL   = 0x00000000,
+    CM_NOTIFY_ACTION_DEVICEINTERFACEREMOVAL   = 0x00000001,
+    CM_NOTIFY_ACTION_DEVICEQUERYREMOVE        = 0x00000002,
+    CM_NOTIFY_ACTION_DEVICEQUERYREMOVEFAILED  = 0x00000003,
+    CM_NOTIFY_ACTION_DEVICEREMOVEPENDING      = 0x00000004,
+    CM_NOTIFY_ACTION_DEVICEREMOVECOMPLETE     = 0x00000005,
+    CM_NOTIFY_ACTION_DEVICECUSTOMEVENT        = 0x00000006,
+    CM_NOTIFY_ACTION_DEVICEINSTANCEENUMERATED = 0x00000007,
+    CM_NOTIFY_ACTION_DEVICEINSTANCESTARTED    = 0x00000008,
+    CM_NOTIFY_ACTION_DEVICEINSTANCEREMOVED    = 0x00000009,
+    CM_NOTIFY_ACTION_MAX                      = 0x0000000a,
+}
+
+// Constants
+
+
+enum : uint
+{
+    NUM_CM_PROB_V1 = 0x00000025U,
+    NUM_CM_PROB_V2 = 0x00000032U,
+    NUM_CM_PROB_V3 = 0x00000033U,
+    NUM_CM_PROB_V4 = 0x00000034U,
+    NUM_CM_PROB_V5 = 0x00000035U,
+    NUM_CM_PROB_V6 = 0x00000036U,
+    NUM_CM_PROB_V7 = 0x00000037U,
+    NUM_CM_PROB_V8 = 0x00000039U,
+    NUM_CM_PROB_V9 = 0x0000003aU,
+    NUM_CM_PROB    = 0x0000003aU,
+}
+
+enum uint LCPRI_FORCECONFIG = 0x00000000U;
+enum uint LCPRI_BOOTCONFIG = 0x00000001U;
+
+enum : uint
+{
+    LCPRI_DESIRED        = 0x00002000U,
+    LCPRI_NORMAL         = 0x00003000U,
+    LCPRI_LASTBESTCONFIG = 0x00003fffU,
+}
+
+enum uint LCPRI_SUBOPTIMAL = 0x00005000U;
+enum uint LCPRI_LASTSOFTCONFIG = 0x00007fffU;
+
+enum : uint
+{
+    LCPRI_RESTART      = 0x00008000U,
+    LCPRI_REBOOT       = 0x00009000U,
+    LCPRI_POWEROFF     = 0x0000a000U,
+    LCPRI_HARDRECONFIG = 0x0000c000U,
+    LCPRI_HARDWIRED    = 0x0000e000U,
+}
+
+enum uint LCPRI_IMPOSSIBLE = 0x0000f000U;
+enum uint LCPRI_DISABLED = 0x0000ffffU;
+enum uint MAX_LCPRI = 0x0000ffffU;
+
+enum : uint
+{
+    CM_DEVICE_PANEL_SIDE_UNKNOWN           = 0x00000000U,
+    CM_DEVICE_PANEL_SIDE_TOP               = 0x00000001U,
+    CM_DEVICE_PANEL_SIDE_BOTTOM            = 0x00000002U,
+    CM_DEVICE_PANEL_SIDE_LEFT              = 0x00000003U,
+    CM_DEVICE_PANEL_SIDE_RIGHT             = 0x00000004U,
+    CM_DEVICE_PANEL_SIDE_FRONT             = 0x00000005U,
+    CM_DEVICE_PANEL_SIDE_BACK              = 0x00000006U,
+    CM_DEVICE_PANEL_EDGE_UNKNOWN           = 0x00000000U,
+    CM_DEVICE_PANEL_EDGE_TOP               = 0x00000001U,
+    CM_DEVICE_PANEL_EDGE_BOTTOM            = 0x00000002U,
+    CM_DEVICE_PANEL_EDGE_LEFT              = 0x00000003U,
+    CM_DEVICE_PANEL_EDGE_RIGHT             = 0x00000004U,
+    CM_DEVICE_PANEL_SHAPE_UNKNOWN          = 0x00000000U,
+    CM_DEVICE_PANEL_SHAPE_RECTANGLE        = 0x00000001U,
+    CM_DEVICE_PANEL_SHAPE_OVAL             = 0x00000002U,
+    CM_DEVICE_PANEL_ORIENTATION_HORIZONTAL = 0x00000000U,
+    CM_DEVICE_PANEL_ORIENTATION_VERTICAL   = 0x00000001U,
+    CM_DEVICE_PANEL_JOINT_TYPE_UNKNOWN     = 0x00000000U,
+    CM_DEVICE_PANEL_JOINT_TYPE_PLANAR      = 0x00000001U,
+    CM_DEVICE_PANEL_JOINT_TYPE_HINGE       = 0x00000002U,
+    CM_DEVICE_PANEL_JOINT_TYPE_PIVOT       = 0x00000003U,
+    CM_DEVICE_PANEL_JOINT_TYPE_SWIVEL      = 0x00000004U,
+}
+
+enum : GUID
+{
+    GUID_DEVCLASS_1394                             = GUID("6bdd1fc1-810f-11d0-bec7-08002be2092f"),
+    GUID_DEVCLASS_1394DEBUG                        = GUID("66f250d6-7801-4a64-b139-eea80a450b24"),
+    GUID_DEVCLASS_61883                            = GUID("7ebefbc0-3200-11d2-b4c2-00a0c9697d07"),
+    GUID_DEVCLASS_ADAPTER                          = GUID("4d36e964-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_APMSUPPORT                       = GUID("d45b1c18-c8fa-11d1-9f77-0000f805f530"),
+    GUID_DEVCLASS_AUDIOPROCESSINGOBJECT            = GUID("5989fce8-9cd0-467d-8a6a-5419e31529d4"),
+    GUID_DEVCLASS_AVC                              = GUID("c06ff265-ae09-48f0-812c-16753d7cba83"),
+    GUID_DEVCLASS_BATTERY                          = GUID("72631e54-78a4-11d0-bcf7-00aa00b7b32a"),
+    GUID_DEVCLASS_BIOMETRIC                        = GUID("53d29ef7-377c-4d14-864b-eb3a85769359"),
+    GUID_DEVCLASS_BLUETOOTH                        = GUID("e0cbf06c-cd8b-4647-bb8a-263b43f0f974"),
+    GUID_DEVCLASS_CAMERA                           = GUID("ca3e7ab9-b4c3-4ae6-8251-579ef933890f"),
+    GUID_DEVCLASS_CDROM                            = GUID("4d36e965-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_COMPUTEACCELERATOR               = GUID("f01a9d53-3ff6-48d2-9f97-c8a7004be10c"),
+    GUID_DEVCLASS_COMPUTER                         = GUID("4d36e966-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_DECODER                          = GUID("6bdd1fc2-810f-11d0-bec7-08002be2092f"),
+    GUID_DEVCLASS_DISKDRIVE                        = GUID("4d36e967-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_DISPLAY                          = GUID("4d36e968-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_DOT4                             = GUID("48721b56-6795-11d2-b1a8-0080c72e74a2"),
+    GUID_DEVCLASS_DOT4PRINT                        = GUID("49ce6ac8-6f86-11d2-b1e5-0080c72e74a2"),
+    GUID_DEVCLASS_EHSTORAGESILO                    = GUID("9da2b80f-f89f-4a49-a5c2-511b085b9e8a"),
+    GUID_DEVCLASS_ENUM1394                         = GUID("c459df55-db08-11d1-b009-00a0c9081ff6"),
+    GUID_DEVCLASS_EXTENSION                        = GUID("e2f84ce7-8efa-411c-aa69-97454ca4cb57"),
+    GUID_DEVCLASS_FDC                              = GUID("4d36e969-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_FIRMWARE                         = GUID("f2e7dd72-6468-4e36-b6f1-6488f42c1b52"),
+    GUID_DEVCLASS_FLOPPYDISK                       = GUID("4d36e980-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_GENERIC                          = GUID("ff494df1-c4ed-4fac-9b3f-3786f6e91e7e"),
+    GUID_DEVCLASS_GPS                              = GUID("6bdd1fc3-810f-11d0-bec7-08002be2092f"),
+    GUID_DEVCLASS_HDC                              = GUID("4d36e96a-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_HIDCLASS                         = GUID("745a17a0-74d3-11d0-b6fe-00a0c90f57da"),
+    GUID_DEVCLASS_HOLOGRAPHIC                      = GUID("d612553d-06b1-49ca-8938-e39ef80eb16f"),
+    GUID_DEVCLASS_I3C                              = GUID("13cfe1b1-6b17-424c-ac3f-16ace8733898"),
+    GUID_DEVCLASS_IMAGE                            = GUID("6bdd1fc6-810f-11d0-bec7-08002be2092f"),
+    GUID_DEVCLASS_INFINIBAND                       = GUID("30ef7132-d858-4a0c-ac24-b9028a5cca3f"),
+    GUID_DEVCLASS_INFRARED                         = GUID("6bdd1fc5-810f-11d0-bec7-08002be2092f"),
+    GUID_DEVCLASS_KEYBOARD                         = GUID("4d36e96b-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_LEGACYDRIVER                     = GUID("8ecc055d-047f-11d1-a537-0000f8753ed1"),
+    GUID_DEVCLASS_MEDIA                            = GUID("4d36e96c-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_MEDIUM_CHANGER                   = GUID("ce5939ae-ebde-11d0-b181-0000f8753ec4"),
+    GUID_DEVCLASS_MEMORY                           = GUID("5099944a-f6b9-4057-a056-8c550228544c"),
+    GUID_DEVCLASS_MODEM                            = GUID("4d36e96d-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_MONITOR                          = GUID("4d36e96e-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_MOUSE                            = GUID("4d36e96f-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_MTD                              = GUID("4d36e970-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_MULTIFUNCTION                    = GUID("4d36e971-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_MULTIPORTSERIAL                  = GUID("50906cb8-ba12-11d1-bf5d-0000f805f530"),
+    GUID_DEVCLASS_NET                              = GUID("4d36e972-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_NETCLIENT                        = GUID("4d36e973-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_NETDRIVER                        = GUID("87ef9ad1-8f70-49ee-b215-ab1fcadcbe3c"),
+    GUID_DEVCLASS_NETSERVICE                       = GUID("4d36e974-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_NETTRANS                         = GUID("4d36e975-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_NETUIO                           = GUID("78912bc1-cb8e-4b28-a329-f322ebadbe0f"),
+    GUID_DEVCLASS_NODRIVER                         = GUID("4d36e976-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_PCMCIA                           = GUID("4d36e977-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_PNPPRINTERS                      = GUID("4658ee7e-f050-11d1-b6bd-00c04fa372a7"),
+    GUID_DEVCLASS_PORTS                            = GUID("4d36e978-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_PRIMITIVE                        = GUID("242681d1-eed3-41d2-a1ef-1468fc843106"),
+    GUID_DEVCLASS_PRINTER                          = GUID("4d36e979-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_PRINTERUPGRADE                   = GUID("4d36e97a-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_PRINTQUEUE                       = GUID("1ed2bbf9-11f0-4084-b21f-ad83a8e6dcdc"),
+    GUID_DEVCLASS_PROCESSOR                        = GUID("50127dc3-0f36-415e-a6cc-4cb3be910b65"),
+    GUID_DEVCLASS_SBP2                             = GUID("d48179be-ec20-11d1-b6b8-00c04fa372a7"),
+    GUID_DEVCLASS_SCMDISK                          = GUID("53966cb1-4d46-4166-bf23-c522403cd495"),
+    GUID_DEVCLASS_SCMVOLUME                        = GUID("53ccb149-e543-4c84-b6e0-bce4f6b7e806"),
+    GUID_DEVCLASS_SCSIADAPTER                      = GUID("4d36e97b-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_SECURITYACCELERATOR              = GUID("268c95a1-edfe-11d3-95c3-0010dc4050a5"),
+    GUID_DEVCLASS_SENSOR                           = GUID("5175d334-c371-4806-b3ba-71fd53c9258d"),
+    GUID_DEVCLASS_SIDESHOW                         = GUID("997b5d8d-c442-4f2e-baf3-9c8e671e9e21"),
+    GUID_DEVCLASS_SMARTCARDREADER                  = GUID("50dd5230-ba8a-11d1-bf5d-0000f805f530"),
+    GUID_DEVCLASS_SMRDISK                          = GUID("53487c23-680f-4585-acc3-1f10d6777e82"),
+    GUID_DEVCLASS_SMRVOLUME                        = GUID("53b3cf03-8f5a-4788-91b6-d19ed9fcccbf"),
+    GUID_DEVCLASS_SOFTWARECOMPONENT                = GUID("5c4c3332-344d-483c-8739-259e934c9cc8"),
+    GUID_DEVCLASS_SOUND                            = GUID("4d36e97c-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_SYSTEM                           = GUID("4d36e97d-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_TAPEDRIVE                        = GUID("6d807884-7d21-11cf-801c-08002be10318"),
+    GUID_DEVCLASS_THERMAL                          = GUID("ca301ce1-74fc-45ea-a557-461ef48b9e37"),
+    GUID_DEVCLASS_UNKNOWN                          = GUID("4d36e97e-e325-11ce-bfc1-08002be10318"),
+    GUID_DEVCLASS_UCM                              = GUID("e6f1aa1c-7f3b-4473-b2e8-c97d8ac71d53"),
+    GUID_DEVCLASS_USB                              = GUID("36fc9e60-c465-11cf-8056-444553540000"),
+    GUID_DEVCLASS_VOLUME                           = GUID("71a27cdd-812a-11d0-bec7-08002be2092f"),
+    GUID_DEVCLASS_VOLUMESNAPSHOT                   = GUID("533c5b84-ec70-11d2-9505-00c04f79deaf"),
+    GUID_DEVCLASS_WCEUSBS                          = GUID("25dbce51-6c8f-4a72-8a6d-b54c2b4fc835"),
+    GUID_DEVCLASS_WPD                              = GUID("eec5ad98-8080-425f-922a-dabf3de3f69a"),
+    GUID_DEVCLASS_FSFILTER_TOP                     = GUID("b369baf4-5568-4e82-a87e-a93eb16bca87"),
+    GUID_DEVCLASS_FSFILTER_ACTIVITYMONITOR         = GUID("b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2"),
+    GUID_DEVCLASS_FSFILTER_UNDELETE                = GUID("fe8f1572-c67a-48c0-bbac-0b5c6d66cafb"),
+    GUID_DEVCLASS_FSFILTER_ANTIVIRUS               = GUID("b1d1a169-c54f-4379-81db-bee7d88d7454"),
+    GUID_DEVCLASS_FSFILTER_REPLICATION             = GUID("48d3ebc4-4cf8-48ff-b869-9c68ad42eb9f"),
+    GUID_DEVCLASS_FSFILTER_CONTINUOUSBACKUP        = GUID("71aa14f8-6fad-4622-ad77-92bb9d7e6947"),
+    GUID_DEVCLASS_FSFILTER_CONTENTSCREENER         = GUID("3e3f0674-c83c-4558-bb26-9820e1eba5c5"),
+    GUID_DEVCLASS_FSFILTER_QUOTAMANAGEMENT         = GUID("8503c911-a6c7-4919-8f79-5028f5866b0c"),
+    GUID_DEVCLASS_FSFILTER_SYSTEMRECOVERY          = GUID("2db15374-706e-4131-a0c7-d7c78eb0289a"),
+    GUID_DEVCLASS_FSFILTER_CFSMETADATASERVER       = GUID("cdcf0939-b75b-4630-bf76-80f7ba655884"),
+    GUID_DEVCLASS_FSFILTER_HSM                     = GUID("d546500a-2aeb-45f6-9482-f4b1799c3177"),
+    GUID_DEVCLASS_FSFILTER_COMPRESSION             = GUID("f3586baf-b5aa-49b5-8d6c-0569284c639f"),
+    GUID_DEVCLASS_FSFILTER_ENCRYPTION              = GUID("a0a701c0-a511-42ff-aa6c-06dc0395576f"),
+    GUID_DEVCLASS_FSFILTER_VIRTUALIZATION          = GUID("f75a86c0-10d8-4c3a-b233-ed60e4cdfaac"),
+    GUID_DEVCLASS_FSFILTER_PHYSICALQUOTAMANAGEMENT = GUID("6a0a8e78-bba6-4fc4-a709-1e33cd09d67e"),
+    GUID_DEVCLASS_FSFILTER_OPENFILEBACKUP          = GUID("f8ecafa6-66d1-41a5-899b-66585d7216b7"),
+    GUID_DEVCLASS_FSFILTER_SECURITYENHANCER        = GUID("d02bc3da-0c8e-4945-9bd5-f1883c226c8c"),
+    GUID_DEVCLASS_FSFILTER_COPYPROTECTION          = GUID("89786ff1-9c12-402f-9c9e-17753c7f4375"),
+    GUID_DEVCLASS_FSFILTER_BOTTOM                  = GUID("37765ea0-5958-4fc9-b04b-2fdfef97e59e"),
+    GUID_DEVCLASS_FSFILTER_SYSTEM                  = GUID("5d1b9aaa-01e2-46af-849f-272b3f324c46"),
+    GUID_DEVCLASS_FSFILTER_INFRASTRUCTURE          = GUID("e55fa6f9-128c-4d04-abab-630c74b1453a"),
+}
+
+enum uint LINE_LEN = 0x00000100U;
+
+enum : uint
+{
+    MAX_INF_STRING_LENGTH       = 0x00001000U,
+    MAX_INF_SECTION_NAME_LENGTH = 0x000000ffU,
+}
+
+enum uint MAX_TITLE_LEN = 0x0000003cU;
+enum uint MAX_INSTRUCTION_LEN = 0x00000100U;
+enum uint MAX_LABEL_LEN = 0x0000001eU;
+enum uint MAX_SERVICE_NAME_LEN = 0x00000100U;
+enum uint MAX_SUBTITLE_LEN = 0x00000100U;
+enum uint SP_MAX_MACHINENAME_LENGTH = 0x00000107U;
+
+enum : uint
+{
+    SP_ALTPLATFORM_FLAGS_VERSION_RANGE = 0x00000001U,
+    SP_ALTPLATFORM_FLAGS_SUITE_MASK    = 0x00000002U,
+}
+
+enum int DIRID_ABSOLUTE = 0xffffffff;
+enum uint DIRID_ABSOLUTE_16BIT = 0x0000ffffU;
+
+enum : uint
+{
+    DIRID_NULL         = 0x00000000U,
+    DIRID_SRCPATH      = 0x00000001U,
+    DIRID_WINDOWS      = 0x0000000aU,
+    DIRID_SYSTEM       = 0x0000000bU,
+    DIRID_DRIVERS      = 0x0000000cU,
+    DIRID_IOSUBSYS     = 0x0000000cU,
+    DIRID_DRIVER_STORE = 0x0000000dU,
+}
+
+enum : uint
+{
+    DIRID_INF          = 0x00000011U,
+    DIRID_HELP         = 0x00000012U,
+    DIRID_FONTS        = 0x00000014U,
+    DIRID_VIEWERS      = 0x00000015U,
+    DIRID_COLOR        = 0x00000017U,
+    DIRID_APPS         = 0x00000018U,
+    DIRID_SHARED       = 0x00000019U,
+    DIRID_BOOT         = 0x0000001eU,
+    DIRID_SYSTEM16     = 0x00000032U,
+    DIRID_SPOOL        = 0x00000033U,
+    DIRID_SPOOLDRIVERS = 0x00000034U,
+}
+
+enum uint DIRID_USERPROFILE = 0x00000035U;
+
+enum : uint
+{
+    DIRID_LOADER         = 0x00000036U,
+    DIRID_PRINTPROCESSOR = 0x00000037U,
+}
+
+enum : uint
+{
+    DIRID_DEFAULT                 = 0x0000000bU,
+    DIRID_COMMON_STARTMENU        = 0x00004016U,
+    DIRID_COMMON_PROGRAMS         = 0x00004017U,
+    DIRID_COMMON_STARTUP          = 0x00004018U,
+    DIRID_COMMON_DESKTOPDIRECTORY = 0x00004019U,
+    DIRID_COMMON_FAVORITES        = 0x0000401fU,
+    DIRID_COMMON_APPDATA          = 0x00004023U,
+}
+
+enum uint DIRID_PROGRAM_FILES = 0x00004026U;
+enum uint DIRID_SYSTEM_X86 = 0x00004029U;
+
+enum : uint
+{
+    DIRID_PROGRAM_FILES_X86       = 0x0000402aU,
+    DIRID_PROGRAM_FILES_COMMON    = 0x0000402bU,
+    DIRID_PROGRAM_FILES_COMMONX86 = 0x0000402cU,
+}
+
+enum : uint
+{
+    DIRID_COMMON_TEMPLATES = 0x0000402dU,
+    DIRID_COMMON_DOCUMENTS = 0x0000402eU,
+}
+
+enum uint DIRID_USER = 0x00008000U;
+
+enum : uint
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startqueue
+    SPFILENOTIFY_STARTQUEUE           = 0x00000001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endqueue
+    SPFILENOTIFY_ENDQUEUE             = 0x00000002U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startsubqueue
+    SPFILENOTIFY_STARTSUBQUEUE        = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endsubqueue
+    SPFILENOTIFY_ENDSUBQUEUE          = 0x00000004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startdelete
+    SPFILENOTIFY_STARTDELETE          = 0x00000005U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-enddelete
+    SPFILENOTIFY_ENDDELETE            = 0x00000006U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-deleteerror
+    SPFILENOTIFY_DELETEERROR          = 0x00000007U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startrename
+    SPFILENOTIFY_STARTRENAME          = 0x00000008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endrename
+    SPFILENOTIFY_ENDRENAME            = 0x00000009U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-renameerror
+    SPFILENOTIFY_RENAMEERROR          = 0x0000000aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startcopy
+    SPFILENOTIFY_STARTCOPY            = 0x0000000bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endcopy
+    SPFILENOTIFY_ENDCOPY              = 0x0000000cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-copyerror
+    SPFILENOTIFY_COPYERROR            = 0x0000000dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-needmedia
+    SPFILENOTIFY_NEEDMEDIA            = 0x0000000eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-queuescan
+    SPFILENOTIFY_QUEUESCAN            = 0x0000000fU,
+    SPFILENOTIFY_CABINETINFO          = 0x00000010U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-fileincabinet
+    SPFILENOTIFY_FILEINCABINET        = 0x00000011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-neednewcabinet
+    SPFILENOTIFY_NEEDNEWCABINET       = 0x00000012U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-fileextracted
+    SPFILENOTIFY_FILEEXTRACTED        = 0x00000013U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-fileopdelayed
+    SPFILENOTIFY_FILEOPDELAYED        = 0x00000014U,
+    SPFILENOTIFY_STARTBACKUP          = 0x00000015U,
+    SPFILENOTIFY_BACKUPERROR          = 0x00000016U,
+    SPFILENOTIFY_ENDBACKUP            = 0x00000017U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-queuescan-ex
+    SPFILENOTIFY_QUEUESCAN_EX         = 0x00000018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startregistration
+    SPFILENOTIFY_STARTREGISTRATION    = 0x00000019U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endregistration
+    SPFILENOTIFY_ENDREGISTRATION      = 0x00000020U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-queuescan-signerinfo
+    SPFILENOTIFY_QUEUESCAN_SIGNERINFO = 0x00000040U,
+}
+
+enum : uint
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-langmismatch
+    SPFILENOTIFY_LANGMISMATCH = 0x00010000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-targetexists
+    SPFILENOTIFY_TARGETEXISTS = 0x00020000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-targetnewer
+    SPFILENOTIFY_TARGETNEWER  = 0x00040000U,
+}
+
+enum : uint
+{
+    FILEOP_RENAME  = 0x00000001U,
+    FILEOP_BACKUP  = 0x00000003U,
+    FILEOP_ABORT   = 0x00000000U,
+    FILEOP_DOIT    = 0x00000001U,
+    FILEOP_SKIP    = 0x00000002U,
+    FILEOP_RETRY   = 0x00000001U,
+    FILEOP_NEWPATH = 0x00000004U,
+}
+
+enum uint COPYFLG_WARN_IF_SKIP = 0x00000001U;
+
+enum : uint
+{
+    COPYFLG_NOSKIP         = 0x00000002U,
+    COPYFLG_NOVERSIONCHECK = 0x00000004U,
+}
+
+enum uint COPYFLG_FORCE_FILE_IN_USE = 0x00000008U;
+
+enum : uint
+{
+    COPYFLG_NO_OVERWRITE      = 0x00000010U,
+    COPYFLG_NO_VERSION_DIALOG = 0x00000020U,
+}
+
+enum uint COPYFLG_OVERWRITE_OLDER_ONLY = 0x00000040U;
+enum uint COPYFLG_PROTECTED_WINDOWS_DRIVER_FILE = 0x00000100U;
+
+enum : uint
+{
+    COPYFLG_REPLACEONLY       = 0x00000400U,
+    COPYFLG_NODECOMP          = 0x00000800U,
+    COPYFLG_REPLACE_BOOT_FILE = 0x00001000U,
+}
+
+enum : uint
+{
+    COPYFLG_NOPRUNE           = 0x00002000U,
+    COPYFLG_IN_USE_TRY_RENAME = 0x00004000U,
+}
+
+enum : uint
+{
+    DELFLG_IN_USE  = 0x00000001U,
+    DELFLG_IN_USE1 = 0x00010000U,
+}
+
+enum : uint
+{
+    SPREG_SUCCESS     = 0x00000000U,
+    SPREG_LOADLIBRARY = 0x00000001U,
+}
+
+enum uint SPREG_GETPROCADDR = 0x00000002U;
+
+enum : uint
+{
+    SPREG_REGSVR     = 0x00000003U,
+    SPREG_DLLINSTALL = 0x00000004U,
+}
+
+enum : uint
+{
+    SPREG_TIMEOUT = 0x00000005U,
+    SPREG_UNKNOWN = 0xffffffffU,
+}
+
+enum : uint
+{
+    SPINT_ACTIVE  = 0x00000001U,
+    SPINT_DEFAULT = 0x00000002U,
+    SPINT_REMOVED = 0x00000004U,
+}
+
+enum : uint
+{
+    SPID_ACTIVE  = 0x00000001U,
+    SPID_DEFAULT = 0x00000002U,
+    SPID_REMOVED = 0x00000004U,
+}
+
+enum : uint
+{
+    ENABLECLASS_QUERY   = 0x00000000U,
+    ENABLECLASS_SUCCESS = 0x00000001U,
+    ENABLECLASS_FAILURE = 0x00000002U,
+}
+
+enum uint MAX_INSTALLWIZARD_DYNAPAGES = 0x00000014U;
+
+enum : uint
+{
+    NDW_INSTALLFLAG_DIDFACTDEFS        = 0x00000001U,
+    NDW_INSTALLFLAG_HARDWAREALLREADYIN = 0x00000002U,
+    NDW_INSTALLFLAG_NEEDSHUTDOWN       = 0x00000200U,
+    NDW_INSTALLFLAG_EXPRESSINTRO       = 0x00000400U,
+    NDW_INSTALLFLAG_SKIPISDEVINSTALLED = 0x00000800U,
+    NDW_INSTALLFLAG_NODETECTEDDEVS     = 0x00001000U,
+    NDW_INSTALLFLAG_INSTALLSPECIFIC    = 0x00002000U,
+    NDW_INSTALLFLAG_SKIPCLASSLIST      = 0x00004000U,
+    NDW_INSTALLFLAG_CI_PICKED_OEM      = 0x00008000U,
+    NDW_INSTALLFLAG_PCMCIAMODE         = 0x00010000U,
+    NDW_INSTALLFLAG_PCMCIADEVICE       = 0x00020000U,
+    NDW_INSTALLFLAG_USERCANCEL         = 0x00040000U,
+    NDW_INSTALLFLAG_KNOWNCLASS         = 0x00080000U,
+}
+
+enum : uint
+{
+    DYNAWIZ_FLAG_PAGESADDED             = 0x00000001U,
+    DYNAWIZ_FLAG_ANALYZE_HANDLECONFLICT = 0x00000008U,
+}
+
+enum : uint
+{
+    DYNAWIZ_FLAG_INSTALLDET_NEXT = 0x00000002U,
+    DYNAWIZ_FLAG_INSTALLDET_PREV = 0x00000004U,
+}
+
+enum uint MIN_IDD_DYNAWIZ_RESOURCE_ID = 0x00002710U;
+enum uint MAX_IDD_DYNAWIZ_RESOURCE_ID = 0x00002af8U;
+
+enum : uint
+{
+    IDD_DYNAWIZ_FIRSTPAGE                = 0x00002710U,
+    IDD_DYNAWIZ_SELECT_PREVPAGE          = 0x00002711U,
+    IDD_DYNAWIZ_SELECT_NEXTPAGE          = 0x00002712U,
+    IDD_DYNAWIZ_ANALYZE_PREVPAGE         = 0x00002713U,
+    IDD_DYNAWIZ_ANALYZE_NEXTPAGE         = 0x00002714U,
+    IDD_DYNAWIZ_SELECTDEV_PAGE           = 0x00002719U,
+    IDD_DYNAWIZ_ANALYZEDEV_PAGE          = 0x0000271aU,
+    IDD_DYNAWIZ_INSTALLDETECTEDDEVS_PAGE = 0x0000271bU,
+}
+
+enum : uint
+{
+    IDD_DYNAWIZ_SELECTCLASS_PAGE         = 0x0000271cU,
+    IDD_DYNAWIZ_INSTALLDETECTED_PREVPAGE = 0x00002716U,
+    IDD_DYNAWIZ_INSTALLDETECTED_NEXTPAGE = 0x00002717U,
+    IDD_DYNAWIZ_INSTALLDETECTED_NODEVS   = 0x00002718U,
+}
+
+enum : uint
+{
+    DRIVER_HARDWAREID_RANK = 0x00000fffU,
+    DRIVER_HARDWAREID_MASK = 0x80000fffU,
+}
+
+enum uint DRIVER_UNTRUSTED_RANK = 0x80000000U;
+enum uint DRIVER_W9X_SUSPECT_RANK = 0xc0000000U;
+enum uint DRIVER_COMPATID_RANK = 0x00003fffU;
+
+enum : uint
+{
+    DRIVER_UNTRUSTED_HARDWAREID_RANK = 0x00008fffU,
+    DRIVER_UNTRUSTED_COMPATID_RANK   = 0x0000bfffU,
+}
+
+enum : uint
+{
+    DRIVER_W9X_SUSPECT_HARDWAREID_RANK = 0x0000cfffU,
+    DRIVER_W9X_SUSPECT_COMPATID_RANK   = 0x0000ffffU,
+}
+
+enum uint SPPSR_SELECT_DEVICE_RESOURCES = 0x00000001U;
+enum uint SPPSR_ENUM_BASIC_DEVICE_PROPERTIES = 0x00000002U;
+enum uint SPPSR_ENUM_ADV_DEVICE_PROPERTIES = 0x00000003U;
+
+enum : uint
+{
+    INFINFO_INF_SPEC_IS_HINF     = 0x00000001U,
+    INFINFO_INF_NAME_IS_ABSOLUTE = 0x00000002U,
+}
+
+enum uint INFINFO_DEFAULT_SEARCH = 0x00000003U;
+enum uint INFINFO_REVERSE_DEFAULT_SEARCH = 0x00000004U;
+enum uint INFINFO_INF_PATH_LIST_SEARCH = 0x00000005U;
+
+enum : uint
+{
+    SRCLIST_TEMPORARY       = 0x00000001U,
+    SRCLIST_NOBROWSE        = 0x00000002U,
+    SRCLIST_SYSTEM          = 0x00000010U,
+    SRCLIST_USER            = 0x00000020U,
+    SRCLIST_SYSIFADMIN      = 0x00000040U,
+    SRCLIST_SUBDIRS         = 0x00000100U,
+    SRCLIST_APPEND          = 0x00000200U,
+    SRCLIST_NOSTRIPPLATFORM = 0x00000400U,
+}
+
+enum : uint
+{
+    IDF_NOBROWSE     = 0x00000001U,
+    IDF_NOSKIP       = 0x00000002U,
+    IDF_NODETAILS    = 0x00000004U,
+    IDF_NOCOMPRESSED = 0x00000008U,
+}
+
+enum uint IDF_CHECKFIRST = 0x00000100U;
+
+enum : uint
+{
+    IDF_NOBEEP       = 0x00000200U,
+    IDF_NOFOREGROUND = 0x00000400U,
+}
+
+enum uint IDF_WARNIFSKIP = 0x00000800U;
+enum uint IDF_NOREMOVABLEMEDIAPROMPT = 0x00001000U;
+enum uint IDF_USEDISKNAMEASPROMPT = 0x00002000U;
+enum uint IDF_OEMDISK = 0x80000000U;
+
+enum : uint
+{
+    DPROMPT_SUCCESS        = 0x00000000U,
+    DPROMPT_CANCEL         = 0x00000001U,
+    DPROMPT_SKIPFILE       = 0x00000002U,
+    DPROMPT_BUFFERTOOSMALL = 0x00000003U,
+}
+
+enum uint DPROMPT_OUTOFMEMORY = 0x00000004U;
+enum uint SETDIRID_NOT_FULL_PATH = 0x00000001U;
+
+enum : uint
+{
+    SRCINFO_PATH        = 0x00000001U,
+    SRCINFO_TAGFILE     = 0x00000002U,
+    SRCINFO_DESCRIPTION = 0x00000003U,
+    SRCINFO_FLAGS       = 0x00000004U,
+    SRCINFO_TAGFILE2    = 0x00000005U,
+}
+
+enum uint SRC_FLAGS_CABFILE = 0x00000010U;
+enum uint SP_FLAG_CABINETCONTINUATION = 0x00000800U;
+
+enum : uint
+{
+    SP_BACKUP_BACKUPPASS = 0x00000001U,
+    SP_BACKUP_DEMANDPASS = 0x00000002U,
+    SP_BACKUP_SPECIAL    = 0x00000004U,
+    SP_BACKUP_BOOTFILE   = 0x00000008U,
+}
+
+enum uint SPQ_DELAYED_COPY = 0x00000001U;
+
+enum : uint
+{
+    SPQ_FLAG_BACKUP_AWARE      = 0x00000001U,
+    SPQ_FLAG_ABORT_IF_UNSIGNED = 0x00000002U,
+}
+
+enum uint SPQ_FLAG_FILES_MODIFIED = 0x00000004U;
+enum uint SPQ_FLAG_DO_SHUFFLEMOVE = 0x00000008U;
+enum uint SPQ_FLAG_VALID = 0x0000000fU;
+enum uint SPOST_MAX = 0x00000003U;
+enum uint SUOI_FORCEDELETE = 0x00000001U;
+enum uint SUOI_INTERNAL1 = 0x00000002U;
+enum uint SPDSL_IGNORE_DISK = 0x00000001U;
+enum uint SPDSL_DISALLOW_NEGATIVE_ADJUST = 0x00000002U;
+
+enum : uint
+{
+    SPFILEQ_FILE_IN_USE        = 0x00000001U,
+    SPFILEQ_REBOOT_RECOMMENDED = 0x00000002U,
+    SPFILEQ_REBOOT_IN_PROGRESS = 0x00000004U,
+}
+
+enum : uint
+{
+    FLG_ADDREG_DELREG_BIT     = 0x00008000U,
+    FLG_ADDREG_BINVALUETYPE   = 0x00000001U,
+    FLG_ADDREG_NOCLOBBER      = 0x00000002U,
+    FLG_ADDREG_DELVAL         = 0x00000004U,
+    FLG_ADDREG_APPEND         = 0x00000008U,
+    FLG_ADDREG_KEYONLY        = 0x00000010U,
+    FLG_ADDREG_OVERWRITEONLY  = 0x00000020U,
+    FLG_ADDREG_64BITKEY       = 0x00001000U,
+    FLG_ADDREG_KEYONLY_COMMON = 0x00002000U,
+    FLG_ADDREG_32BITKEY       = 0x00004000U,
+    FLG_ADDREG_TYPE_SZ        = 0x00000000U,
+    FLG_ADDREG_TYPE_MULTI_SZ  = 0x00010000U,
+    FLG_ADDREG_TYPE_EXPAND_SZ = 0x00020000U,
+}
+
+enum : uint
+{
+    FLG_DELREG_VALUE          = 0x00000000U,
+    FLG_DELREG_TYPE_SZ        = 0x00000000U,
+    FLG_DELREG_TYPE_MULTI_SZ  = 0x00010000U,
+    FLG_DELREG_TYPE_EXPAND_SZ = 0x00020000U,
+    FLG_DELREG_64BITKEY       = 0x00001000U,
+    FLG_DELREG_KEYONLY_COMMON = 0x00002000U,
+    FLG_DELREG_32BITKEY       = 0x00004000U,
+    FLG_DELREG_OPERATION_MASK = 0x000000feU,
+}
+
+enum : uint
+{
+    FLG_BITREG_CLEARBITS = 0x00000000U,
+    FLG_BITREG_SETBITS   = 0x00000001U,
+    FLG_BITREG_64BITKEY  = 0x00001000U,
+    FLG_BITREG_32BITKEY  = 0x00004000U,
+}
+
+enum : uint
+{
+    FLG_INI2REG_64BITKEY = 0x00001000U,
+    FLG_INI2REG_32BITKEY = 0x00004000U,
+}
+
+enum : uint
+{
+    FLG_REGSVR_DLLREGISTER = 0x00000001U,
+    FLG_REGSVR_DLLINSTALL  = 0x00000002U,
+}
+
+enum : uint
+{
+    FLG_PROFITEM_CURRENTUSER = 0x00000001U,
+    FLG_PROFITEM_DELETE      = 0x00000002U,
+    FLG_PROFITEM_GROUP       = 0x00000004U,
+    FLG_PROFITEM_CSIDL       = 0x00000008U,
+}
+
+enum : uint
+{
+    FLG_ADDPROPERTY_NOCLOBBER     = 0x00000001U,
+    FLG_ADDPROPERTY_OVERWRITEONLY = 0x00000002U,
+    FLG_ADDPROPERTY_APPEND        = 0x00000004U,
+    FLG_ADDPROPERTY_OR            = 0x00000008U,
+    FLG_ADDPROPERTY_AND           = 0x00000010U,
+}
+
+enum uint FLG_DELPROPERTY_MULTI_SZ_DELSTRING = 0x00000001U;
+
+enum : uint
+{
+    SPINST_LOGCONFIG    = 0x00000001U,
+    SPINST_INIFILES     = 0x00000002U,
+    SPINST_REGISTRY     = 0x00000004U,
+    SPINST_INI2REG      = 0x00000008U,
+    SPINST_FILES        = 0x00000010U,
+    SPINST_BITREG       = 0x00000020U,
+    SPINST_REGSVR       = 0x00000040U,
+    SPINST_UNREGSVR     = 0x00000080U,
+    SPINST_PROFILEITEMS = 0x00000100U,
+}
+
+enum : uint
+{
+    SPINST_COPYINF       = 0x00000200U,
+    SPINST_PROPERTIES    = 0x00000400U,
+    SPINST_ALL           = 0x000007ffU,
+    SPINST_SINGLESECTION = 0x00010000U,
+}
+
+enum : uint
+{
+    SPINST_LOGCONFIG_IS_FORCED      = 0x00020000U,
+    SPINST_LOGCONFIGS_ARE_OVERRIDES = 0x00040000U,
+}
+
+enum uint SPINST_REGISTERCALLBACKAWARE = 0x00080000U;
+enum uint SPINST_DEVICEINSTALL = 0x00100000U;
+
+enum : uint
+{
+    SPFILELOG_SYSTEMLOG = 0x00000001U,
+    SPFILELOG_FORCENEW  = 0x00000002U,
+    SPFILELOG_QUERYONLY = 0x00000004U,
+    SPFILELOG_OEMFILE   = 0x00000001U,
+}
+
+enum uint LogSevInformation = 0x00000000U;
+
+enum : uint
+{
+    LogSevWarning    = 0x00000001U,
+    LogSevError      = 0x00000002U,
+    LogSevFatalError = 0x00000003U,
+}
+
+enum uint LogSevMaximum = 0x00000004U;
+enum uint DIOD_INHERIT_CLASSDRVS = 0x00000002U;
+enum uint DIOD_CANCEL_REMOVE = 0x00000004U;
+enum uint DIODI_NO_ADD = 0x00000001U;
+enum uint SPRDI_FIND_DUPS = 0x00000001U;
+enum uint SPDIT_NODRIVER = 0x00000000U;
+enum uint DIBCI_NOINSTALLCLASS = 0x00000001U;
+enum uint DIBCI_NODISPLAYCLASS = 0x00000002U;
+
+enum : uint
+{
+    DIOCR_INSTALLER = 0x00000001U,
+    DIOCR_INTERFACE = 0x00000002U,
+}
+
+enum : uint
+{
+    DIREG_DEV  = 0x00000001U,
+    DIREG_DRV  = 0x00000002U,
+    DIREG_BOTH = 0x00000004U,
+}
+
+enum : uint
+{
+    DICLASSPROP_INSTALLER = 0x00000001U,
+    DICLASSPROP_INTERFACE = 0x00000002U,
+}
+
+enum uint SPCRP_UPPERFILTERS = 0x00000011U;
+enum uint SPCRP_LOWERFILTERS = 0x00000012U;
+
+enum : uint
+{
+    SPCRP_SECURITY     = 0x00000017U,
+    SPCRP_SECURITY_SDS = 0x00000018U,
+}
+
+enum : uint
+{
+    SPCRP_DEVTYPE   = 0x00000019U,
+    SPCRP_EXCLUSIVE = 0x0000001aU,
+}
+
+enum uint SPCRP_CHARACTERISTICS = 0x0000001bU;
+enum uint SPCRP_MAXIMUM_PROPERTY = 0x0000001cU;
+
+enum : uint
+{
+    DMI_MASK    = 0x00000001U,
+    DMI_BKCOLOR = 0x00000002U,
+}
+
+enum uint DMI_USERECT = 0x00000004U;
+
+enum : uint
+{
+    DIGCDP_FLAG_BASIC           = 0x00000001U,
+    DIGCDP_FLAG_ADVANCED        = 0x00000002U,
+    DIGCDP_FLAG_REMOTE_BASIC    = 0x00000003U,
+    DIGCDP_FLAG_REMOTE_ADVANCED = 0x00000004U,
+}
+
+enum : uint
+{
+    IDI_RESOURCEFIRST        = 0x0000009fU,
+    IDI_RESOURCE             = 0x0000009fU,
+    IDI_RESOURCELAST         = 0x000000a1U,
+    IDI_RESOURCEOVERLAYFIRST = 0x000000a1U,
+    IDI_RESOURCEOVERLAYLAST  = 0x000000a1U,
+}
+
+enum : uint
+{
+    IDI_CONFLICT               = 0x000000a1U,
+    IDI_CLASSICON_OVERLAYFIRST = 0x000001f4U,
+    IDI_CLASSICON_OVERLAYLAST  = 0x000001f6U,
+}
+
+enum uint IDI_PROBLEM_OVL = 0x000001f4U;
+enum uint IDI_DISABLED_OVL = 0x000001f5U;
+enum uint IDI_FORCED_OVL = 0x000001f6U;
+enum uint SPWPT_SELECTDEVICE = 0x00000001U;
+enum uint SPWP_USE_DEVINFO_DATA = 0x00000001U;
+
+enum : uint
+{
+    SIGNERSCORE_UNKNOWN       = 0xff000000U,
+    SIGNERSCORE_W9X_SUSPECT   = 0xc0000000U,
+    SIGNERSCORE_UNSIGNED      = 0x80000000U,
+    SIGNERSCORE_AUTHENTICODE  = 0x0f000000U,
+    SIGNERSCORE_WHQL          = 0x0d000005U,
+    SIGNERSCORE_UNCLASSIFIED  = 0x0d000004U,
+    SIGNERSCORE_INBOX         = 0x0d000003U,
+    SIGNERSCORE_LOGO_STANDARD = 0x0d000002U,
+    SIGNERSCORE_LOGO_PREMIUM  = 0x0d000001U,
+    SIGNERSCORE_MASK          = 0xff000000U,
+    SIGNERSCORE_SIGNED_MASK   = 0xf0000000U,
+}
+
+enum uint DICUSTOMDEVPROP_MERGE_MULTISZ = 0x00000001U;
+enum uint SCWMI_CLOBBER_SECURITY = 0x00000001U;
+
+enum : uint
+{
+    MAX_DEVICE_ID_LEN  = 0x000000c8U,
+    MAX_DEVNODE_ID_LEN = 0x000000c8U,
+}
+
+enum uint MAX_GUID_STRING_LEN = 0x00000027U;
+enum uint MAX_CLASS_NAME_LEN = 0x00000020U;
+enum uint MAX_PROFILE_LEN = 0x00000050U;
+enum uint MAX_CONFIG_VALUE = 0x0000270fU;
+enum uint MAX_INSTANCE_VALUE = 0x0000270fU;
+enum uint MAX_MEM_REGISTERS = 0x00000009U;
+
+enum : uint
+{
+    MAX_IO_PORTS     = 0x00000014U,
+    MAX_IRQS         = 0x00000007U,
+    MAX_DMA_CHANNELS = 0x00000007U,
+}
+
+enum uint DWORD_MAX = 0xffffffffU;
+enum uint CONFIGMG_VERSION = 0x00000400U;
+
+enum : uint
+{
+    IO_ALIAS_10_BIT_DECODE   = 0x00000004U,
+    IO_ALIAS_12_BIT_DECODE   = 0x00000010U,
+    IO_ALIAS_16_BIT_DECODE   = 0x00000000U,
+    IO_ALIAS_POSITIVE_DECODE = 0x000000ffU,
+}
+
+enum uint IOA_Local = 0x000000ffU;
+
+enum : uint
+{
+    CM_RESDES_WIDTH_DEFAULT = 0x00000000U,
+    CM_RESDES_WIDTH_32      = 0x00000001U,
+    CM_RESDES_WIDTH_64      = 0x00000002U,
+    CM_RESDES_WIDTH_BITS    = 0x00000003U,
+}
+
+enum : uint
+{
+    PCD_MAX_MEMORY = 0x00000002U,
+    PCD_MAX_IO     = 0x00000002U,
+}
+
+enum uint mPMF_AUDIO_ENABLE = 0x00000008U;
+enum uint CM_HWPI_NOT_DOCKABLE = 0x00000000U;
+
+enum : uint
+{
+    CM_HWPI_UNDOCKED = 0x00000001U,
+    CM_HWPI_DOCKED   = 0x00000002U,
+}
+
+enum : uint
+{
+    CM_ADD_RANGE_ADDIFCONFLICT      = 0x00000000U,
+    CM_ADD_RANGE_DONOTADDIFCONFLICT = 0x00000001U,
+    CM_ADD_RANGE_BITS               = 0x00000001U,
+}
+
+enum uint LOG_CONF_BITS = 0x00000007U;
+
+enum : uint
+{
+    PRIORITY_EQUAL_FIRST = 0x00000008U,
+    PRIORITY_EQUAL_LAST  = 0x00000000U,
+    PRIORITY_BIT         = 0x00000008U,
+}
+
+enum : uint
+{
+    RegDisposition_OpenAlways   = 0x00000000U,
+    RegDisposition_OpenExisting = 0x00000001U,
+    RegDisposition_Bits         = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_ADD_ID_HARDWARE   = 0x00000000U,
+    CM_ADD_ID_COMPATIBLE = 0x00000001U,
+    CM_ADD_ID_BITS       = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_CREATE_DEVNODE_NORMAL          = 0x00000000U,
+    CM_CREATE_DEVNODE_NO_WAIT_INSTALL = 0x00000001U,
+    CM_CREATE_DEVNODE_PHANTOM         = 0x00000002U,
+    CM_CREATE_DEVNODE_GENERATE_ID     = 0x00000004U,
+    CM_CREATE_DEVNODE_DO_NOT_INSTALL  = 0x00000008U,
+    CM_CREATE_DEVNODE_BITS            = 0x0000000fU,
+    CM_CREATE_DEVINST_NORMAL          = 0x00000000U,
+    CM_CREATE_DEVINST_NO_WAIT_INSTALL = 0x00000001U,
+    CM_CREATE_DEVINST_PHANTOM         = 0x00000002U,
+    CM_CREATE_DEVINST_GENERATE_ID     = 0x00000004U,
+    CM_CREATE_DEVINST_DO_NOT_INSTALL  = 0x00000008U,
+    CM_CREATE_DEVINST_BITS            = 0x0000000fU,
+}
+
+enum : uint
+{
+    CM_DELETE_CLASS_ONLY      = 0x00000000U,
+    CM_DELETE_CLASS_SUBKEYS   = 0x00000001U,
+    CM_DELETE_CLASS_INTERFACE = 0x00000002U,
+    CM_DELETE_CLASS_BITS      = 0x00000003U,
+}
+
+enum : uint
+{
+    CM_DETECT_NEW_PROFILE       = 0x00000001U,
+    CM_DETECT_CRASHED           = 0x00000002U,
+    CM_DETECT_HWPROF_FIRST_BOOT = 0x00000004U,
+}
+
+enum : uint
+{
+    CM_DETECT_RUN  = 0x80000000U,
+    CM_DETECT_BITS = 0x80000007U,
+}
+
+enum : uint
+{
+    CM_DISABLE_POLITE    = 0x00000000U,
+    CM_DISABLE_ABSOLUTE  = 0x00000001U,
+    CM_DISABLE_HARDWARE  = 0x00000002U,
+    CM_DISABLE_UI_NOT_OK = 0x00000004U,
+    CM_DISABLE_PERSIST   = 0x00000008U,
+    CM_DISABLE_BITS      = 0x0000000fU,
+}
+
+enum : uint
+{
+    CM_GETIDLIST_FILTER_NONE               = 0x00000000U,
+    CM_GETIDLIST_FILTER_ENUMERATOR         = 0x00000001U,
+    CM_GETIDLIST_FILTER_SERVICE            = 0x00000002U,
+    CM_GETIDLIST_FILTER_EJECTRELATIONS     = 0x00000004U,
+    CM_GETIDLIST_FILTER_REMOVALRELATIONS   = 0x00000008U,
+    CM_GETIDLIST_FILTER_POWERRELATIONS     = 0x00000010U,
+    CM_GETIDLIST_FILTER_BUSRELATIONS       = 0x00000020U,
+    CM_GETIDLIST_DONOTGENERATE             = 0x10000040U,
+    CM_GETIDLIST_FILTER_BITS               = 0x1000007fU,
+    CM_GETIDLIST_FILTER_TRANSPORTRELATIONS = 0x00000080U,
+    CM_GETIDLIST_FILTER_PRESENT            = 0x00000100U,
+    CM_GETIDLIST_FILTER_CLASS              = 0x00000200U,
+}
+
+enum : uint
+{
+    CM_DRP_DEVICEDESC    = 0x00000001U,
+    CM_DRP_HARDWAREID    = 0x00000002U,
+    CM_DRP_COMPATIBLEIDS = 0x00000003U,
+}
+
+enum : uint
+{
+    CM_DRP_UNUSED0     = 0x00000004U,
+    CM_DRP_SERVICE     = 0x00000005U,
+    CM_DRP_UNUSED1     = 0x00000006U,
+    CM_DRP_UNUSED2     = 0x00000007U,
+    CM_DRP_CLASS       = 0x00000008U,
+    CM_DRP_CLASSGUID   = 0x00000009U,
+    CM_DRP_DRIVER      = 0x0000000aU,
+    CM_DRP_CONFIGFLAGS = 0x0000000bU,
+}
+
+enum : uint
+{
+    CM_DRP_MFG          = 0x0000000cU,
+    CM_DRP_FRIENDLYNAME = 0x0000000dU,
+}
+
+enum uint CM_DRP_LOCATION_INFORMATION = 0x0000000eU;
+enum uint CM_DRP_PHYSICAL_DEVICE_OBJECT_NAME = 0x0000000fU;
+enum uint CM_DRP_CAPABILITIES = 0x00000010U;
+
+enum : uint
+{
+    CM_DRP_UI_NUMBER    = 0x00000011U,
+    CM_DRP_UPPERFILTERS = 0x00000012U,
+}
+
+enum uint CM_CRP_UPPERFILTERS = 0x00000012U;
+enum uint CM_DRP_LOWERFILTERS = 0x00000013U;
+enum uint CM_CRP_LOWERFILTERS = 0x00000013U;
+enum uint CM_DRP_BUSTYPEGUID = 0x00000014U;
+enum uint CM_DRP_LEGACYBUSTYPE = 0x00000015U;
+
+enum : uint
+{
+    CM_DRP_BUSNUMBER       = 0x00000016U,
+    CM_DRP_ENUMERATOR_NAME = 0x00000017U,
+}
+
+enum uint CM_DRP_SECURITY = 0x00000018U;
+enum uint CM_CRP_SECURITY = 0x00000018U;
+enum uint CM_DRP_SECURITY_SDS = 0x00000019U;
+enum uint CM_CRP_SECURITY_SDS = 0x00000019U;
+enum uint CM_DRP_DEVTYPE = 0x0000001aU;
+enum uint CM_CRP_DEVTYPE = 0x0000001aU;
+enum uint CM_DRP_EXCLUSIVE = 0x0000001bU;
+enum uint CM_CRP_EXCLUSIVE = 0x0000001bU;
+enum uint CM_DRP_CHARACTERISTICS = 0x0000001cU;
+enum uint CM_CRP_CHARACTERISTICS = 0x0000001cU;
+
+enum : uint
+{
+    CM_DRP_ADDRESS               = 0x0000001dU,
+    CM_DRP_UI_NUMBER_DESC_FORMAT = 0x0000001eU,
+}
+
+enum uint CM_DRP_DEVICE_POWER_DATA = 0x0000001fU;
+
+enum : uint
+{
+    CM_DRP_REMOVAL_POLICY            = 0x00000020U,
+    CM_DRP_REMOVAL_POLICY_HW_DEFAULT = 0x00000021U,
+    CM_DRP_REMOVAL_POLICY_OVERRIDE   = 0x00000022U,
+}
+
+enum uint CM_DRP_INSTALL_STATE = 0x00000023U;
+enum uint CM_DRP_LOCATION_PATHS = 0x00000024U;
+enum uint CM_DRP_BASE_CONTAINERID = 0x00000025U;
+enum uint CM_DRP_MIN = 0x00000001U;
+enum uint CM_CRP_MIN = 0x00000001U;
+enum uint CM_DRP_MAX = 0x00000025U;
+enum uint CM_CRP_MAX = 0x00000025U;
+
+enum : uint
+{
+    CM_OPEN_CLASS_KEY_INSTALLER = 0x00000000U,
+    CM_OPEN_CLASS_KEY_INTERFACE = 0x00000001U,
+    CM_OPEN_CLASS_KEY_BITS      = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_REMOVE_UI_OK      = 0x00000000U,
+    CM_REMOVE_UI_NOT_OK  = 0x00000001U,
+    CM_REMOVE_NO_RESTART = 0x00000002U,
+    CM_REMOVE_DISABLE    = 0x00000004U,
+    CM_REMOVE_BITS       = 0x00000007U,
+}
+
+enum : uint
+{
+    CM_QUERY_REMOVE_UI_OK     = 0x00000000U,
+    CM_QUERY_REMOVE_UI_NOT_OK = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_REGISTER_DEVICE_DRIVER_STATIC      = 0x00000000U,
+    CM_REGISTER_DEVICE_DRIVER_DISABLEABLE = 0x00000001U,
+    CM_REGISTER_DEVICE_DRIVER_REMOVABLE   = 0x00000002U,
+    CM_REGISTER_DEVICE_DRIVER_BITS        = 0x00000003U,
+}
+
+enum : uint
+{
+    CM_REGISTRY_HARDWARE = 0x00000000U,
+    CM_REGISTRY_SOFTWARE = 0x00000001U,
+    CM_REGISTRY_USER     = 0x00000100U,
+    CM_REGISTRY_CONFIG   = 0x00000200U,
+    CM_REGISTRY_BITS     = 0x00000301U,
+}
+
+enum : uint
+{
+    CM_SET_DEVNODE_PROBLEM_NORMAL   = 0x00000000U,
+    CM_SET_DEVNODE_PROBLEM_OVERRIDE = 0x00000001U,
+    CM_SET_DEVNODE_PROBLEM_BITS     = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_SET_DEVINST_PROBLEM_NORMAL   = 0x00000000U,
+    CM_SET_DEVINST_PROBLEM_OVERRIDE = 0x00000001U,
+    CM_SET_DEVINST_PROBLEM_BITS     = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_SET_HW_PROF_FLAGS_UI_NOT_OK = 0x00000001U,
+    CM_SET_HW_PROF_FLAGS_BITS      = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_SETUP_DEVNODE_READY   = 0x00000000U,
+    CM_SETUP_DEVINST_READY   = 0x00000000U,
+    CM_SETUP_DOWNLOAD        = 0x00000001U,
+    CM_SETUP_WRITE_LOG_CONFS = 0x00000002U,
+}
+
+enum : uint
+{
+    CM_SETUP_PROP_CHANGE               = 0x00000003U,
+    CM_SETUP_DEVNODE_RESET             = 0x00000004U,
+    CM_SETUP_DEVINST_RESET             = 0x00000004U,
+    CM_SETUP_DEVNODE_CONFIG            = 0x00000005U,
+    CM_SETUP_DEVINST_CONFIG            = 0x00000005U,
+    CM_SETUP_DEVNODE_CONFIG_CLASS      = 0x00000006U,
+    CM_SETUP_DEVINST_CONFIG_CLASS      = 0x00000006U,
+    CM_SETUP_DEVNODE_CONFIG_EXTENSIONS = 0x00000007U,
+}
+
+enum uint CM_SETUP_DEVINST_CONFIG_EXTENSIONS = 0x00000007U;
+
+enum : uint
+{
+    CM_SETUP_DEVNODE_CONFIG_RESET = 0x00000008U,
+    CM_SETUP_DEVINST_CONFIG_RESET = 0x00000008U,
+}
+
+enum uint CM_SETUP_BITS = 0x0000000fU;
+
+enum : uint
+{
+    CM_QUERY_ARBITRATOR_RAW        = 0x00000000U,
+    CM_QUERY_ARBITRATOR_TRANSLATED = 0x00000001U,
+    CM_QUERY_ARBITRATOR_BITS       = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_CUSTOMDEVPROP_MERGE_MULTISZ = 0x00000001U,
+    CM_CUSTOMDEVPROP_BITS          = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_NAME_ATTRIBUTE_NAME_RETRIEVED_FROM_DEVICE = 0x00000001U,
+    CM_NAME_ATTRIBUTE_USER_ASSIGNED_NAME         = 0x00000002U,
+}
+
+enum : uint
+{
+    CM_CLASS_PROPERTY_INSTALLER = 0x00000000U,
+    CM_CLASS_PROPERTY_INTERFACE = 0x00000001U,
+    CM_CLASS_PROPERTY_BITS      = 0x00000001U,
+}
+
+enum : uint
+{
+    CM_NOTIFY_FILTER_FLAG_ALL_INTERFACE_CLASSES = 0x00000001U,
+    CM_NOTIFY_FILTER_FLAG_ALL_DEVICE_INSTANCES  = 0x00000002U,
+}
+
+enum : uint
+{
+    CM_GLOBAL_STATE_CAN_DO_UI          = 0x00000001U,
+    CM_GLOBAL_STATE_ON_BIG_STACK       = 0x00000002U,
+    CM_GLOBAL_STATE_SERVICES_AVAILABLE = 0x00000004U,
+    CM_GLOBAL_STATE_SHUTTING_DOWN      = 0x00000008U,
+    CM_GLOBAL_STATE_DETECTION_PENDING  = 0x00000010U,
+    CM_GLOBAL_STATE_REBOOT_REQUIRED    = 0x00000020U,
+}
+
+enum uint MAX_KEY_LEN = 0x00000064U;
+
+enum : const(wchar)*
+{
+    SZ_KEY_OPTIONDESC   = "OptionDesc",
+    SZ_KEY_LDIDOEM      = "LdidOEM",
+    SZ_KEY_SRCDISKFILES = "SourceDisksFiles",
+    SZ_KEY_SRCDISKNAMES = "SourceDisksNames",
+    SZ_KEY_STRINGS      = "Strings",
+    SZ_KEY_DESTDIRS     = "DestinationDirs",
+    SZ_KEY_LAYOUT_FILE  = "LayoutFile",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_DEFDESTDIR  = "DefaultDestDir",
+    SZ_KEY_LFN_SECTION = "VarLDID.LFN",
+}
+
+enum const(wchar)* SZ_KEY_SFN_SECTION = "VarLDID.SFN";
+
+enum : const(wchar)*
+{
+    SZ_KEY_UPDATEINIS      = "UpdateInis",
+    SZ_KEY_UPDATEINIFIELDS = "UpdateIniFields",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_INI2REG         = "Ini2Reg",
+    SZ_KEY_COPYFILES       = "CopyFiles",
+    SZ_KEY_RENFILES        = "RenFiles",
+    SZ_KEY_DELFILES        = "DelFiles",
+    SZ_KEY_ADDREG          = "AddReg",
+    SZ_KEY_ADDREGNOCLOBBER = "AddRegNoClobber",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_DELREG         = "DelReg",
+    SZ_KEY_BITREG         = "BitReg",
+    SZ_KEY_COPYINF        = "CopyINF",
+    SZ_KEY_LOGCONFIG      = "LogConfig",
+    SZ_KEY_ADDSERVICE     = "AddService",
+    SZ_KEY_DELSERVICE     = "DelService",
+    SZ_KEY_ADDTRIGGER     = "AddTrigger",
+    SZ_KEY_FAILUREACTIONS = "FailureActions",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_ADDINTERFACE = "AddInterface",
+    SZ_KEY_ADDIME       = "AddIme",
+    SZ_KEY_DELIME       = "DelIme",
+    SZ_KEY_REGSVR       = "RegisterDlls",
+    SZ_KEY_UNREGSVR     = "UnregisterDlls",
+    SZ_KEY_PROFILEITEMS = "ProfileItems",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_MODULES       = "Modules",
+    SZ_KEY_DEFAULTOPTION = "DefaultOption",
+}
+
+enum const(wchar)* SZ_KEY_LISTOPTIONS = "ListOptions";
+
+enum : const(wchar)*
+{
+    SZ_KEY_CLEANONLY   = "CleanOnly",
+    SZ_KEY_UPGRADEONLY = "UpgradeOnly",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_EXCLUDEID       = "ExcludeId",
+    SZ_KEY_ADDPOWERSETTING = "AddPowerSetting",
+    SZ_KEY_ADDPROP         = "AddProperty",
+    SZ_KEY_DELPROP         = "DelProperty",
+    SZ_KEY_FEATURESCORE    = "FeatureScore",
+}
+
+enum : const(wchar)*
+{
+    SZ_KEY_ADDEVENTPROVIDER = "AddEventProvider",
+    SZ_KEY_ADDCOMSERVER     = "AddComServer",
+    SZ_KEY_ADDCOMCLASS      = "AddComClass",
+    SZ_KEY_ADDCHANNEL       = "AddChannel",
+    SZ_KEY_IMPORTCHANNEL    = "ImportChannel",
+}
+
+enum const(wchar)* SZ_KEY_ADDAUTOLOGGER = "AddAutoLogger";
+enum const(wchar)* SZ_KEY_UPDATEAUTOLOGGER = "UpdateAutoLogger";
+enum const(wchar)* SZ_KEY_ADDAUTOLOGGERPROVIDER = "AddAutoLoggerProvider";
+
+enum : const(wchar)*
+{
+    SZ_KEY_ADDFILTER      = "AddFilter",
+    SZ_KEY_FILTERLEVEL    = "FilterLevel",
+    SZ_KEY_FILTERPOSITION = "FilterPosition",
+}
+
+enum const(wchar)* SZ_KEY_ADDCOMPONENT = "AddComponent";
+
+enum : const(wchar)*
+{
+    SZ_KEY_PHASE1   = "Phase1",
+    SZ_KEY_HARDWARE = "Hardware",
+}
+
+enum const(wchar)* INFSTR_KEY_CONFIGPRIORITY = "ConfigPriority";
+enum uint MAX_PRIORITYSTR_LEN = 0x00000010U;
+
+enum : const(wchar)*
+{
+    INFSTR_CFGPRI_HARDWIRED    = "HARDWIRED",
+    INFSTR_CFGPRI_DESIRED      = "DESIRED",
+    INFSTR_CFGPRI_NORMAL       = "NORMAL",
+    INFSTR_CFGPRI_SUBOPTIMAL   = "SUBOPTIMAL",
+    INFSTR_CFGPRI_DISABLED     = "DISABLED",
+    INFSTR_CFGPRI_RESTART      = "RESTART",
+    INFSTR_CFGPRI_REBOOT       = "REBOOT",
+    INFSTR_CFGPRI_POWEROFF     = "POWEROFF",
+    INFSTR_CFGPRI_HARDRECONFIG = "HARDRECONFIG",
+    INFSTR_CFGPRI_FORCECONFIG  = "FORCECONFIG",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_CFGTYPE_BASIC    = "BASIC",
+    INFSTR_CFGTYPE_FORCED   = "FORCED",
+    INFSTR_CFGTYPE_OVERRIDE = "OVERRIDE",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_MEMCONFIG      = "MemConfig",
+    INFSTR_KEY_MEMLARGECONFIG = "MemLargeConfig",
+    INFSTR_KEY_IOCONFIG       = "IOConfig",
+    INFSTR_KEY_IRQCONFIG      = "IRQConfig",
+    INFSTR_KEY_DMACONFIG      = "DMAConfig",
+    INFSTR_KEY_PCCARDCONFIG   = "PcCardConfig",
+    INFSTR_KEY_MFCARDCONFIG   = "MfCardConfig",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_SECT_CLASS_INSTALL        = "ClassInstall",
+    INFSTR_SECT_CLASS_INSTALL_32     = "ClassInstall32",
+    INFSTR_SECT_DEFAULT_INSTALL      = "DefaultInstall",
+    INFSTR_SECT_DEFAULT_UNINSTALL    = "DefaultUninstall",
+    INFSTR_SECT_INTERFACE_INSTALL_32 = "InterfaceInstall32",
+}
+
+enum const(wchar)* INFSTR_SECT_VERSION = "Version";
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_PROVIDER  = "Provider",
+    INFSTR_KEY_SIGNATURE = "Signature",
+    INFSTR_KEY_DRIVERSET = "DriverSet",
+}
+
+enum uint MAX_INF_FLAG = 0x00000014U;
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_HARDWARE_CLASS     = "Class",
+    INFSTR_KEY_HARDWARE_CLASSGUID = "ClassGUID",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_NOSETUPINF  = "NoSetupInf",
+    INFSTR_KEY_FROMINET    = "FromINet",
+    INFSTR_KEY_CATALOGFILE = "CatalogFile",
+    INFSTR_KEY_PNPLOCKDOWN = "PnpLockDown",
+    INFSTR_KEY_EXTENSIONID = "ExtensionId",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_SECT_MFG                = "Manufacturer",
+    INFSTR_SECT_TARGETCOMPUTERS    = "TargetComputers",
+    INFSTR_SECT_EXTENSIONCONTRACTS = "ExtensionContracts",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_CLASS     = "Class",
+    INFSTR_KEY_CLASSGUID = "ClassGUID",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_RESTART                = "Restart",
+    INFSTR_REBOOT                 = "Reboot",
+    INFSTR_KEY_DISPLAYNAME        = "DisplayName",
+    INFSTR_KEY_SERVICETYPE        = "ServiceType",
+    INFSTR_KEY_STARTTYPE          = "StartType",
+    INFSTR_KEY_ERRORCONTROL       = "ErrorControl",
+    INFSTR_KEY_SERVICEBINARY      = "ServiceBinary",
+    INFSTR_KEY_LOADORDERGROUP     = "LoadOrderGroup",
+    INFSTR_KEY_DEPENDENCIES       = "Dependencies",
+    INFSTR_KEY_REQUIREDPRIVILEGES = "RequiredPrivileges",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_STARTNAME          = "StartName",
+    INFSTR_KEY_SECURITY           = "Security",
+    INFSTR_KEY_DESCRIPTION        = "Description",
+    INFSTR_KEY_SERVICESIDTYPE     = "ServiceSidType",
+    INFSTR_KEY_DELAYEDAUTOSTART   = "DelayedAutoStart",
+    INFSTR_KEY_BOOTFLAGS          = "BootFlags",
+    INFSTR_KEY_TRIGGER_TYPE       = "TriggerType",
+    INFSTR_KEY_ACTION             = "Action",
+    INFSTR_KEY_SUB_TYPE           = "SubType",
+    INFSTR_KEY_DATA_ITEM          = "DataItem",
+    INFSTR_KEY_RESET_PERIOD       = "ResetPeriod",
+    INFSTR_KEY_NON_CRASH_FAILURES = "NonCrashFailures",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_FAILURE_ACTION            = "Action",
+    INFSTR_KEY_PROVIDER_NAME             = "ProviderName",
+    INFSTR_KEY_RESOURCE_FILE             = "ResourceFile",
+    INFSTR_KEY_MESSAGE_FILE              = "MessageFile",
+    INFSTR_KEY_PARAMETER_FILE            = "ParameterFile",
+    INFSTR_KEY_COM_SERVER_TYPE           = "ServerType",
+    INFSTR_KEY_COM_SERVER_BINARY         = "ServerBinary",
+    INFSTR_KEY_COM_SERVER_BINARY_WOW64   = "ServerBinaryWow64",
+    INFSTR_KEY_COM_SERVER_ADD_COM_CLASS  = "AddComClass",
+    INFSTR_KEY_COM_CLASS_THREADING_MODEL = "ThreadingModel",
+    INFSTR_KEY_COM_CLASS_DESCRIPTION     = "Description",
+    INFSTR_KEY_COMPONENTIDS              = "ComponentIds",
+    INFSTR_KEY_CHANNEL_ACCESS            = "Access",
+    INFSTR_KEY_CHANNEL_ISOLATION         = "Isolation",
+    INFSTR_KEY_CHANNEL_ENABLED           = "Enabled",
+    INFSTR_KEY_CHANNEL_VALUE             = "Value",
+    INFSTR_KEY_LOGGING_MAXSIZE           = "LoggingMaxSize",
+    INFSTR_KEY_LOGGING_RETENTION         = "LoggingRetention",
+    INFSTR_KEY_LOGGING_AUTOBACKUP        = "LoggingAutoBackup",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_START                        = "Start",
+    INFSTR_KEY_BUFFER_SIZE                  = "BufferSize",
+    INFSTR_KEY_CLOCK_TYPE                   = "ClockType",
+    INFSTR_KEY_DISABLE_REALTIME_PERSISTENCE = "DisableRealtimePersistence",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_FILE_NAME         = "FileName",
+    INFSTR_KEY_FILE_MAX          = "FileMax",
+    INFSTR_KEY_FLUSH_TIMER       = "FlushTimer",
+    INFSTR_KEY_LOG_FILE_MODE     = "LogFileMode",
+    INFSTR_KEY_MAX_FILE_SIZE     = "MaxFileSize",
+    INFSTR_KEY_MAXIMUM_BUFFERS   = "MaximumBuffers",
+    INFSTR_KEY_MINIMUM_BUFFERS   = "MinimumBuffers",
+    INFSTR_KEY_ENABLED           = "Enabled",
+    INFSTR_KEY_ENABLE_FLAGS      = "EnableFlags",
+    INFSTR_KEY_ENABLE_LEVEL      = "EnableLevel",
+    INFSTR_KEY_ENABLE_PROPERTY   = "EnableProperty",
+    INFSTR_KEY_MATCH_ANY_KEYWORD = "MatchAnyKeyword",
+    INFSTR_KEY_MATCH_ALL_KEYWORD = "MatchAllKeyword",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_SECT_DETMODULES          = "Det.Modules",
+    INFSTR_SECT_DETCLASSINFO        = "Det.ClassInfo",
+    INFSTR_SECT_MANUALDEV           = "Det.ManualDev",
+    INFSTR_SECT_AVOIDCFGSYSDEV      = "Det.AvoidCfgSysDev",
+    INFSTR_SECT_REGCFGSYSDEV        = "Det.RegCfgSysDev",
+    INFSTR_SECT_DEVINFS             = "Det.DevINFs",
+    INFSTR_SECT_AVOIDINIDEV         = "Det.AvoidIniDev",
+    INFSTR_SECT_AVOIDENVDEV         = "Det.AvoidEnvDev",
+    INFSTR_SECT_REGINIDEV           = "Det.RegIniDev",
+    INFSTR_SECT_REGENVDEV           = "Det.RegEnvDev",
+    INFSTR_SECT_HPOMNIBOOK          = "Det.HPOmnibook",
+    INFSTR_SECT_FORCEHWVERIFY       = "Det.ForceHWVerify",
+    INFSTR_SECT_DETOPTIONS          = "Det.Options",
+    INFSTR_SECT_BADPNPBIOS          = "BadPnpBios",
+    INFSTR_SECT_GOODACPIBIOS        = "GoodACPIBios",
+    INFSTR_SECT_BADACPIBIOS         = "BadACPIBios",
+    INFSTR_SECT_BADROUTINGTABLEBIOS = "BadPCIIRQRoutingTableBios",
+    INFSTR_SECT_BADPMCALLBIOS       = "BadProtectedModeCallBios",
+    INFSTR_SECT_BADRMCALLBIOS       = "BadRealModeCallBios",
+    INFSTR_SECT_MACHINEIDBIOS       = "MachineIDBios",
+    INFSTR_SECT_BADDISKBIOS         = "BadDiskBios",
+    INFSTR_SECT_BADDSBIOS           = "BadDSBios",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_DETPARAMS  = "Params",
+    INFSTR_KEY_SKIPLIST   = "SkipList",
+    INFSTR_KEY_DETECTLIST = "DetectList",
+    INFSTR_KEY_EXCLUDERES = "ExcludeRes",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_SUBKEY_LOGCONFIG         = "LogConfig",
+    INFSTR_SUBKEY_DET               = "Det",
+    INFSTR_SUBKEY_FACTDEF           = "FactDef",
+    INFSTR_SUBKEY_POSSIBLEDUPS      = "PosDup",
+    INFSTR_SUBKEY_NORESOURCEDUPS    = "NoResDup",
+    INFSTR_SUBKEY_HW                = "Hw",
+    INFSTR_SUBKEY_CTL               = "CTL",
+    INFSTR_SUBKEY_SERVICES          = "Services",
+    INFSTR_SUBKEY_SOFTWARE          = "Software",
+    INFSTR_SUBKEY_INTERFACES        = "Interfaces",
+    INFSTR_SUBKEY_COINSTALLERS      = "CoInstallers",
+    INFSTR_SUBKEY_LOGCONFIGOVERRIDE = "LogConfigOverride",
+    INFSTR_SUBKEY_WMI               = "WMI",
+    INFSTR_SUBKEY_EVENTS            = "Events",
+    INFSTR_SUBKEY_COM               = "COM",
+    INFSTR_SUBKEY_FILTERS           = "Filters",
+    INFSTR_SUBKEY_COMPONENTS        = "Components",
+}
+
+enum const(wchar)* INFSTR_CONTROLFLAGS_SECTION = "ControlFlags";
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_COPYFILESONLY     = "CopyFilesOnly",
+    INFSTR_KEY_EXCLUDEFROMSELECT = "ExcludeFromSelect",
+}
+
+enum const(wchar)* INFSTR_KEY_ALWAYSEXCLUDEFROMSELECT = "AlwaysExcludeFromSelect";
+enum const(wchar)* INFSTR_KEY_INTERACTIVEINSTALL = "InteractiveInstall";
+enum const(wchar)* INFSTR_KEY_REQUESTADDITIONALSOFTWARE = "RequestAdditionalSoftware";
+
+enum : const(wchar)*
+{
+    INFSTR_PLATFORM_WIN     = "Win",
+    INFSTR_PLATFORM_NT      = "NT",
+    INFSTR_PLATFORM_NTX86   = "NTx86",
+    INFSTR_PLATFORM_NTMIPS  = "NTMIPS",
+    INFSTR_PLATFORM_NTALPHA = "NTAlpha",
+    INFSTR_PLATFORM_NTPPC   = "NTPPC",
+    INFSTR_PLATFORM_NTIA64  = "NTIA64",
+    INFSTR_PLATFORM_NTAXP64 = "NTAXP64",
+    INFSTR_PLATFORM_NTAMD64 = "NTAMD64",
+    INFSTR_PLATFORM_NTARM   = "NTARM",
+    INFSTR_PLATFORM_NTARM64 = "NTARM64",
+}
+
+enum uint MAX_INFSTR_STRKEY_LEN = 0x00000020U;
+enum const(wchar)* INFSTR_STRKEY_DRVDESC = "DriverDesc";
+
+enum : const(wchar)*
+{
+    INFSTR_DRIVERSELECT_SECTION   = "DriverSelect",
+    INFSTR_DRIVERSELECT_FUNCTIONS = "DriverSelectFunctions",
+    INFSTR_DRIVERVERSION_SECTION  = "DriverVer",
+}
+
+enum const(wchar)* INFSTR_SOFTWAREVERSION_SECTION = "SoftwareVersion";
+
+enum : const(wchar)*
+{
+    INFSTR_SECT_CFGSYS      = "ConfigSysDrivers",
+    INFSTR_SECT_AUTOEXECBAT = "AutoexecBatDrivers",
+    INFSTR_SECT_SYSINI      = "SystemIniDrivers",
+    INFSTR_SECT_SYSINIDRV   = "SystemIniDriversLine",
+    INFSTR_SECT_WININIRUN   = "WinIniRunLine",
+}
+
+enum : const(wchar)*
+{
+    INFSTR_KEY_PATH        = "Path",
+    INFSTR_KEY_NAME        = "Name",
+    INFSTR_KEY_IO          = "IO",
+    INFSTR_KEY_MEM         = "Mem",
+    INFSTR_KEY_IRQ         = "IRQ",
+    INFSTR_KEY_DMA         = "DMA",
+    INFSTR_BUS_ISA         = "BUS_ISA",
+    INFSTR_BUS_EISA        = "BUS_EISA",
+    INFSTR_BUS_MCA         = "BUS_MCA",
+    INFSTR_BUS_ALL         = "BUS_ALL",
+    INFSTR_RISK_NONE       = "RISK_NONE",
+    INFSTR_RISK_VERYLOW    = "RISK_VERYLOW",
+    INFSTR_RISK_BIOSROMRD  = "RISK_BIOSROMRD",
+    INFSTR_RISK_QUERYDRV   = "RISK_QUERYDRV",
+    INFSTR_RISK_SWINT      = "RISK_SWINT",
+    INFSTR_RISK_LOW        = "RISK_LOW",
+    INFSTR_RISK_DELICATE   = "RISK_DELICATE",
+    INFSTR_RISK_MEMRD      = "RISK_MEMRD",
+    INFSTR_RISK_IORD       = "RISK_IORD",
+    INFSTR_RISK_MEMWR      = "RISK_MEMWR",
+    INFSTR_RISK_IOWR       = "RISK_IOWR",
+    INFSTR_RISK_UNRELIABLE = "RISK_UNRELIABLE",
+    INFSTR_RISK_VERYHIGH   = "RISK_VERYHIGH",
+}
+
+enum const(wchar)* INFSTR_CLASS_SAFEEXCL = "SAFE_EXCL";
+enum const(wchar)* INFSTR_SECT_DISPLAY_CLEANUP = "DisplayCleanup";
+
+enum : GUID
+{
+    GUID_HWPROFILE_QUERY_CHANGE     = GUID("cb3a4001-46f0-11d0-b08f-00609713053f"),
+    GUID_HWPROFILE_CHANGE_CANCELLED = GUID("cb3a4002-46f0-11d0-b08f-00609713053f"),
+    GUID_HWPROFILE_CHANGE_COMPLETE  = GUID("cb3a4003-46f0-11d0-b08f-00609713053f"),
+}
+
+enum : GUID
+{
+    GUID_DEVICE_INTERFACE_ARRIVAL = GUID("cb3a4004-46f0-11d0-b08f-00609713053f"),
+    GUID_DEVICE_INTERFACE_REMOVAL = GUID("cb3a4005-46f0-11d0-b08f-00609713053f"),
+}
+
+enum : GUID
+{
+    GUID_TARGET_DEVICE_QUERY_REMOVE     = GUID("cb3a4006-46f0-11d0-b08f-00609713053f"),
+    GUID_TARGET_DEVICE_REMOVE_CANCELLED = GUID("cb3a4007-46f0-11d0-b08f-00609713053f"),
+    GUID_TARGET_DEVICE_REMOVE_COMPLETE  = GUID("cb3a4008-46f0-11d0-b08f-00609713053f"),
+}
+
+enum GUID GUID_PNP_CUSTOM_NOTIFICATION = GUID("aca73f8e-8d23-11d1-ac7d-0000f87571d0");
+
+enum : GUID
+{
+    GUID_PNP_POWER_NOTIFICATION   = GUID("c2cf0660-eb7a-11d1-bd7f-0000f87571d0"),
+    GUID_PNP_POWER_SETTING_CHANGE = GUID("29c69b3e-c79a-43bf-bbde-a932fa1bea7e"),
+}
+
+enum GUID GUID_TARGET_DEVICE_TRANSPORT_RELATIONS_CHANGED = GUID("fcf528f6-a82f-47b1-ad3a-8050594cad28");
+
+enum : GUID
+{
+    GUID_KERNEL_SOFT_RESTART_PREPARE = GUID("de373def-a85c-4f76-8cbf-f96bea8bd10f"),
+    GUID_KERNEL_SOFT_RESTART_CANCEL  = GUID("31d737e7-8c0b-468a-956e-9f433ec358fb"),
+}
+
+enum : GUID
+{
+    GUID_RECOVERY_PCI_PREPARE_SHUTDOWN   = GUID("90d889de-8704-44cf-8115-ed8528d2b2da"),
+    GUID_RECOVERY_NVMED_PREPARE_SHUTDOWN = GUID("4b9770ea-bde7-400b-a9b9-4f684f54cc2a"),
+}
+
+enum : GUID
+{
+    GUID_KERNEL_SOFT_RESTART_FINALIZE     = GUID("20e91abd-350a-4d4f-8577-99c81507473a"),
+    GUID_KERNEL_SOFT_RESTART_PRE_COMPLETE = GUID("af855082-530b-4a85-b5a6-120b63089451"),
+}
+
+enum GUID GUID_BUS_INTERFACE_STANDARD = GUID("496b8280-6f25-11d0-beaf-08002be2092f");
+
+enum : GUID
+{
+    GUID_PCI_BUS_INTERFACE_STANDARD  = GUID("496b8281-6f25-11d0-beaf-08002be2092f"),
+    GUID_PCI_BUS_INTERFACE_STANDARD2 = GUID("de94e966-fdff-4c9c-9998-6747b150e74c"),
+}
+
+enum GUID GUID_ARBITER_INTERFACE_STANDARD = GUID("e644f185-8c0e-11d0-becf-08002be2092f");
+enum GUID GUID_TRANSLATOR_INTERFACE_STANDARD = GUID("6c154a92-aacf-11d0-8d2a-00a0c906b244");
+enum GUID GUID_ACPI_INTERFACE_STANDARD = GUID("b091a08a-ba97-11d0-bd14-00aa00b7b32a");
+enum GUID GUID_INT_ROUTE_INTERFACE_STANDARD = GUID("70941bf4-0073-11d1-a09e-00c04fc340b1");
+enum GUID GUID_PCMCIA_BUS_INTERFACE_STANDARD = GUID("76173af0-c504-11d1-947f-00c04fb960ee");
+enum GUID GUID_ACPI_REGS_INTERFACE_STANDARD = GUID("06141966-7245-6369-462e-4e656c736f6e");
+enum GUID GUID_LEGACY_DEVICE_DETECTION_STANDARD = GUID("50feb0de-596a-11d2-a5b8-0000f81a4619");
+enum GUID GUID_PCI_DEVICE_PRESENT_INTERFACE = GUID("d1b82c26-bf49-45ef-b216-71cbd7889b57");
+enum GUID GUID_MF_ENUMERATION_INTERFACE = GUID("aeb895f0-5586-11d1-8d84-00a0c906b244");
+enum GUID GUID_REENUMERATE_SELF_INTERFACE_STANDARD = GUID("2aeb0243-6a6e-486b-82fc-d815f6b97006");
+enum GUID GUID_AGP_TARGET_BUS_INTERFACE_STANDARD = GUID("b15cfce8-06d1-4d37-9d4c-bedde0c2a6ff");
+enum GUID GUID_ACPI_CMOS_INTERFACE_STANDARD = GUID("3a8d0384-6505-40ca-bc39-56c15f8c5fed");
+enum GUID GUID_ACPI_PORT_RANGES_INTERFACE_STANDARD = GUID("f14f609b-cbbd-4957-a674-bc00213f1c97");
+enum GUID GUID_ACPI_INTERFACE_STANDARD2 = GUID("e8695f63-1831-4870-a8cf-9c2f03f9dcb5");
+enum GUID GUID_PNP_LOCATION_INTERFACE = GUID("70211b0e-0afb-47db-afc1-410bf842497a");
+
+enum : GUID
+{
+    GUID_PCI_EXPRESS_LINK_QUIESCENT_INTERFACE = GUID("146cd41c-dae3-4437-8aff-2af3f038099b"),
+    GUID_PCI_EXPRESS_ROOT_PORT_INTERFACE      = GUID("83a7734a-84c7-4161-9a98-6000ed0c4a33"),
+}
+
+enum GUID GUID_MSIX_TABLE_CONFIG_INTERFACE = GUID("1a6a460b-194f-455d-b34b-b84c5b05712b");
+enum GUID GUID_D3COLD_SUPPORT_INTERFACE = GUID("b38290e5-3cd0-4f9d-9937-f5fe2b44d47a");
+enum GUID GUID_PROCESSOR_PCC_INTERFACE_STANDARD = GUID("37b17e9a-c21c-4296-972d-11c4b32b28f0");
+enum GUID GUID_PCI_VIRTUALIZATION_INTERFACE = GUID("64897b47-3a4a-4d75-bc74-89dd6c078293");
+
+enum : GUID
+{
+    GUID_PCC_INTERFACE_STANDARD = GUID("3ee8ba63-0f59-4a24-8a45-35808bdd1249"),
+    GUID_PCC_INTERFACE_INTERNAL = GUID("7cce62ce-c189-4814-a6a7-12112089e938"),
+}
+
+enum GUID GUID_THERMAL_COOLING_INTERFACE = GUID("ecbe47a8-c498-4bb9-bd70-e867e0940d22");
+enum GUID GUID_PCI_LINK_CONFIG_INTERFACE = GUID("67593984-7cc0-4760-8d01-cbffd2d080f7");
+enum GUID GUID_POWER_LIMIT_INTERFACE = GUID("3b96f4f2-ce49-44d1-91f8-652b8121e93a");
+enum GUID GUID_DMA_CACHE_COHERENCY_INTERFACE = GUID("b520f7fa-8a5a-4e40-a3f6-6be1e162d935");
+enum GUID GUID_DEVICE_RESET_INTERFACE_STANDARD = GUID("649fdf26-3bc0-4813-ad24-7e0c1eda3fa3");
+enum GUID GUID_IOMMU_BUS_INTERFACE = GUID("1efee0b2-d278-4ae4-bddc-1b34dd648043");
+enum GUID GUID_PCI_SECURITY_INTERFACE = GUID("6e7f1451-199e-4acc-ba2d-762b4edf4674");
+enum GUID GUID_SCM_BUS_INTERFACE = GUID("25944783-ce79-4232-815e-4a30014e8eb4");
+enum GUID GUID_SECURE_DRIVER_INTERFACE = GUID("370f67e1-4ff5-4a94-9a35-06c5d9cc30e2");
+enum GUID GUID_SDEV_IDENTIFIER_INTERFACE = GUID("49d67af8-916c-4ee8-9df1-889f17d21e91");
+
+enum : GUID
+{
+    GUID_SCM_BUS_NVD_INTERFACE = GUID("8de064ff-b630-42e4-88ea-6f24c8641175"),
+    GUID_SCM_BUS_LD_INTERFACE  = GUID("9b89307d-d76b-4f48-b186-54041ae92e8d"),
+}
+
+enum GUID GUID_SCM_PHYSICAL_NVDIMM_INTERFACE = GUID("0079c21b-917e-405e-a9ce-0732b5bbcebd");
+enum GUID GUID_PNP_EXTENDED_ADDRESS_INTERFACE = GUID("b8e992ec-a797-4dc4-8846-84d041707446");
+enum GUID GUID_D3COLD_AUX_POWER_AND_TIMING_INTERFACE = GUID("0044d8aa-f664-4588-9ffc-2afeaf5950b9");
+enum GUID GUID_PCI_FPGA_CONTROL_INTERFACE = GUID("2df3f7a8-b9b3-4063-9215-b5d14a0b266e");
+enum GUID GUID_PCI_PTM_CONTROL_INTERFACE = GUID("348a5ebb-ba24-44b7-9916-285687735117");
+enum GUID GUID_BUS_RESOURCE_UPDATE_INTERFACE = GUID("27d0102d-bfb2-4164-81dd-dbb82f968b48");
+enum GUID GUID_NPEM_CONTROL_INTERFACE = GUID("4d95573d-b774-488a-b120-4f284a9eff51");
+enum GUID GUID_PCI_ATS_INTERFACE = GUID("010a7fe8-96f5-4943-bedf-95e651b93412");
+
+enum : GUID
+{
+    GUID_BUS_TYPE_INTERNAL  = GUID("1530ea73-086b-11d1-a09f-00c04fc340b1"),
+    GUID_BUS_TYPE_PCMCIA    = GUID("09343630-af9f-11d0-92e9-0000f81e1b30"),
+    GUID_BUS_TYPE_PCI       = GUID("c8ebdfb0-b510-11d0-80e5-00a0c92542e3"),
+    GUID_BUS_TYPE_ISAPNP    = GUID("e676f854-d87d-11d0-92b2-00a0c9055fc5"),
+    GUID_BUS_TYPE_EISA      = GUID("ddc35509-f3fc-11d0-a537-0000f8753ed1"),
+    GUID_BUS_TYPE_MCA       = GUID("1c75997a-dc33-11d0-92b2-00a0c9055fc5"),
+    GUID_BUS_TYPE_SERENUM   = GUID("77114a87-8944-11d1-bd90-00a0c906be2d"),
+    GUID_BUS_TYPE_USB       = GUID("9d7debbc-c85d-11d1-9eb4-006008c3a19a"),
+    GUID_BUS_TYPE_LPTENUM   = GUID("c4ca1000-2ddc-11d5-a17a-00c04f60524d"),
+    GUID_BUS_TYPE_USBPRINT  = GUID("441ee000-4342-11d5-a184-00c04f60524d"),
+    GUID_BUS_TYPE_DOT4PRT   = GUID("441ee001-4342-11d5-a184-00c04f60524d"),
+    GUID_BUS_TYPE_1394      = GUID("f74e73eb-9ac5-45eb-be4d-772cc71ddfb3"),
+    GUID_BUS_TYPE_HID       = GUID("eeaf37d0-1963-47c4-aa48-72476db7cf49"),
+    GUID_BUS_TYPE_AVC       = GUID("c06ff265-ae09-48f0-812c-16753d7cba83"),
+    GUID_BUS_TYPE_IRDA      = GUID("7ae17dc1-c944-44d6-881f-4c2e61053bc1"),
+    GUID_BUS_TYPE_SD        = GUID("e700cc04-4036-4e89-9579-89ebf45f00cd"),
+    GUID_BUS_TYPE_ACPI      = GUID("d7b46895-001a-4942-891f-a7d46610a843"),
+    GUID_BUS_TYPE_SW_DEVICE = GUID("06d10322-7de0-4cef-8e25-197d0e7442e2"),
+    GUID_BUS_TYPE_SCM       = GUID("375a5912-804c-45aa-bdc2-fdd25a1d9512"),
+}
+
+enum : GUID
+{
+    GUID_POWER_DEVICE_ENABLE      = GUID("827c0a6f-feb0-11d0-bd26-00aa00b7b32a"),
+    GUID_POWER_DEVICE_TIMEOUTS    = GUID("a45da735-feb0-11d0-bd26-00aa00b7b32a"),
+    GUID_POWER_DEVICE_WAKE_ENABLE = GUID("a9546a82-feb0-11d0-bd26-00aa00b7b32a"),
+}
+
+enum GUID GUID_WUDF_DEVICE_HOST_PROBLEM = GUID("c43d25bd-9346-40ee-a2d2-d70c15f8b75b");
+enum GUID GUID_PARTITION_UNIT_INTERFACE_STANDARD = GUID("52363f5b-d891-429b-8195-aec5fef6853c");
+enum GUID GUID_QUERY_CRASHDUMP_FUNCTIONS = GUID("9cc6b8ff-32e2-4834-b1de-b32ef8880a4b");
+
+// Callbacks
+
+alias PSP_FILE_CALLBACK_A = uint function(void* Context, uint Notification, size_t Param1, size_t Param2);
+alias PSP_FILE_CALLBACK_W = uint function(void* Context, uint Notification, size_t Param1, size_t Param2);
+alias PDETECT_PROGRESS_NOTIFY = BOOL function(void* ProgressNotifyParam, uint DetectComplete);
+alias PSP_DETSIG_CMPPROC = uint function(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* NewDeviceData, 
+                                         SP_DEVINFO_DATA* ExistingDeviceData, void* CompareContext);
+alias PCM_NOTIFY_CALLBACK = uint function(HCMNOTIFICATION hNotify, void* Context, CM_NOTIFY_ACTION Action, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/CM_NOTIFY_EVENT_DATA* EventData, 
+                                          uint EventDataSize);
+
+// Structs
+
+
+@RAIIFree!SetupDiDestroyDeviceInfoList
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HDEVINFO
+{
+    ptrdiff_t Value;
+}
+
+@RAIIFree!CM_Unregister_Notification
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HCMNOTIFICATION
+{
+    void* Value;
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-infcontext
+    struct INFCONTEXT
+    {
+        void* Inf;
+        void* CurrentInf;
+        uint  Section;
+        uint  Line;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-infcontext
+    struct INFCONTEXT
+    {
+        void* Inf;
+        void* CurrentInf;
+        uint  Section;
+        uint  Line;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_information
+    struct SP_INF_INFORMATION
+    {
+        INF_STYLE InfStyle;
+        uint      InfCount;
+        ubyte[1]  VersionData; // Flexible array
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_information
+    struct SP_INF_INFORMATION
+    {
+        INF_STYLE InfStyle;
+        uint      InfCount;
+        ubyte[1]  VersionData; // Flexible array
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_ALTPLATFORM_INFO_V3
+    {
+        uint   cbSize;
+        uint   Platform;
+        uint   MajorVersion;
+        uint   MinorVersion;
+        ushort ProcessorArchitecture;
+        union
+        {
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint   FirstValidatedMajorVersion;
+        uint   FirstValidatedMinorVersion;
+        ubyte  ProductType;
+        ushort SuiteMask;
+        uint   BuildNumber;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_ALTPLATFORM_INFO_V3
+    {
+        uint   cbSize;
+        uint   Platform;
+        uint   MajorVersion;
+        uint   MinorVersion;
+        ushort ProcessorArchitecture;
+        union
+        {
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint   FirstValidatedMajorVersion;
+        uint   FirstValidatedMinorVersion;
+        ubyte  ProductType;
+        ushort SuiteMask;
+        uint   BuildNumber;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_altplatform_info_v2
+    struct SP_ALTPLATFORM_INFO_V2
+    {
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
+        PROCESSOR_ARCHITECTURE ProcessorArchitecture;
+        union
+        {
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint         FirstValidatedMajorVersion;
+        uint         FirstValidatedMinorVersion;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_altplatform_info_v2
+    struct SP_ALTPLATFORM_INFO_V2
+    {
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
+        PROCESSOR_ARCHITECTURE ProcessorArchitecture;
+        union
+        {
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint         FirstValidatedMajorVersion;
+        uint         FirstValidatedMinorVersion;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_altplatform_info_v1
+    struct SP_ALTPLATFORM_INFO_V1
+    {
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
+        ushort       ProcessorArchitecture;
+        ushort       Reserved;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_altplatform_info_v1
+    struct SP_ALTPLATFORM_INFO_V1
+    {
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
+        ushort       ProcessorArchitecture;
+        ushort       Reserved;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_a
+    struct SP_ORIGINAL_FILE_INFO_A
+    {
+        uint      cbSize;
+        CHAR[260] OriginalInfName;
+        CHAR[260] OriginalCatalogName;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_a
+    struct SP_ORIGINAL_FILE_INFO_A
+    {
+        uint      cbSize;
+        CHAR[260] OriginalInfName;
+        CHAR[260] OriginalCatalogName;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_w
+    struct SP_ORIGINAL_FILE_INFO_W
+    {
+        uint       cbSize;
+        wchar[260] OriginalInfName;
+        wchar[260] OriginalCatalogName;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_w
+    struct SP_ORIGINAL_FILE_INFO_W
+    {
+        uint       cbSize;
+        wchar[260] OriginalInfName;
+        wchar[260] OriginalCatalogName;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_a
+    struct FILEPATHS_A
+    {
+        const(PSTR) Target;
+        const(PSTR) Source;
+        uint        Win32Error;
+        uint        Flags;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_a
+    struct FILEPATHS_A
+    {
+        const(PSTR) Target;
+        const(PSTR) Source;
+        uint        Win32Error;
+        uint        Flags;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_w
+    struct FILEPATHS_W
+    {
+        const(PWSTR) Target;
+        const(PWSTR) Source;
+        uint         Win32Error;
+        uint         Flags;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_w
+    struct FILEPATHS_W
+    {
+        const(PWSTR) Target;
+        const(PWSTR) Source;
+        uint         Win32Error;
+        uint         Flags;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_a
+    struct FILEPATHS_SIGNERINFO_A
+    {
+        const(PSTR) Target;
+        const(PSTR) Source;
+        uint        Win32Error;
+        uint        Flags;
+        const(PSTR) DigitalSigner;
+        const(PSTR) Version;
+        const(PSTR) CatalogFile;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_a
+    struct FILEPATHS_SIGNERINFO_A
+    {
+        const(PSTR) Target;
+        const(PSTR) Source;
+        uint        Win32Error;
+        uint        Flags;
+        const(PSTR) DigitalSigner;
+        const(PSTR) Version;
+        const(PSTR) CatalogFile;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_w
+    struct FILEPATHS_SIGNERINFO_W
+    {
+        const(PWSTR) Target;
+        const(PWSTR) Source;
+        uint         Win32Error;
+        uint         Flags;
+        const(PWSTR) DigitalSigner;
+        const(PWSTR) Version;
+        const(PWSTR) CatalogFile;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_w
+    struct FILEPATHS_SIGNERINFO_W
+    {
+        const(PWSTR) Target;
+        const(PWSTR) Source;
+        uint         Win32Error;
+        uint         Flags;
+        const(PWSTR) DigitalSigner;
+        const(PWSTR) Version;
+        const(PWSTR) CatalogFile;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_a
+    struct SOURCE_MEDIA_A
+    {
+        const(PSTR) Reserved;
+        const(PSTR) Tagfile;
+        const(PSTR) Description;
+        const(PSTR) SourcePath;
+        const(PSTR) SourceFile;
+        uint        Flags;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_a
+    struct SOURCE_MEDIA_A
+    {
+        const(PSTR) Reserved;
+        const(PSTR) Tagfile;
+        const(PSTR) Description;
+        const(PSTR) SourcePath;
+        const(PSTR) SourceFile;
+        uint        Flags;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_w
+    struct SOURCE_MEDIA_W
+    {
+        const(PWSTR) Reserved;
+        const(PWSTR) Tagfile;
+        const(PWSTR) Description;
+        const(PWSTR) SourcePath;
+        const(PWSTR) SourceFile;
+        uint         Flags;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_w
+    struct SOURCE_MEDIA_W
+    {
+        const(PWSTR) Reserved;
+        const(PWSTR) Tagfile;
+        const(PWSTR) Description;
+        const(PWSTR) SourcePath;
+        const(PWSTR) SourceFile;
+        uint         Flags;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_a
+    struct CABINET_INFO_A
+    {
+        const(PSTR) CabinetPath;
+        const(PSTR) CabinetFile;
+        const(PSTR) DiskName;
+        ushort      SetId;
+        ushort      CabinetNumber;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_a
+    struct CABINET_INFO_A
+    {
+        const(PSTR) CabinetPath;
+        const(PSTR) CabinetFile;
+        const(PSTR) DiskName;
+        ushort      SetId;
+        ushort      CabinetNumber;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_w
+    struct CABINET_INFO_W
+    {
+        const(PWSTR) CabinetPath;
+        const(PWSTR) CabinetFile;
+        const(PWSTR) DiskName;
+        ushort       SetId;
+        ushort       CabinetNumber;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_w
+    struct CABINET_INFO_W
+    {
+        const(PWSTR) CabinetPath;
+        const(PWSTR) CabinetFile;
+        const(PWSTR) DiskName;
+        ushort       SetId;
+        ushort       CabinetNumber;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_a
+    struct FILE_IN_CABINET_INFO_A
+    {
+        const(PSTR) NameInCabinet;
+        uint        FileSize;
+        uint        Win32Error;
+        ushort      DosDate;
+        ushort      DosTime;
+        ushort      DosAttribs;
+        CHAR[260]   FullTargetName;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_a
+    struct FILE_IN_CABINET_INFO_A
+    {
+        const(PSTR) NameInCabinet;
+        uint        FileSize;
+        uint        Win32Error;
+        ushort      DosDate;
+        ushort      DosTime;
+        ushort      DosAttribs;
+        CHAR[260]   FullTargetName;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_w
+    struct FILE_IN_CABINET_INFO_W
+    {
+        const(PWSTR) NameInCabinet;
+        uint         FileSize;
+        uint         Win32Error;
+        ushort       DosDate;
+        ushort       DosTime;
+        ushort       DosAttribs;
+        wchar[260]   FullTargetName;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_w
+    struct FILE_IN_CABINET_INFO_W
+    {
+        const(PWSTR) NameInCabinet;
+        uint         FileSize;
+        uint         Win32Error;
+        ushort       DosDate;
+        ushort       DosTime;
+        ushort       DosAttribs;
+        wchar[260]   FullTargetName;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusa
+    struct SP_REGISTER_CONTROL_STATUSA
+    {
+        uint        cbSize;
+        const(PSTR) FileName;
+        uint        Win32Error;
+        uint        FailureCode;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusa
+    struct SP_REGISTER_CONTROL_STATUSA
+    {
+        uint        cbSize;
+        const(PSTR) FileName;
+        uint        Win32Error;
+        uint        FailureCode;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusw
+    struct SP_REGISTER_CONTROL_STATUSW
+    {
+        uint         cbSize;
+        const(PWSTR) FileName;
+        uint         Win32Error;
+        uint         FailureCode;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusw
+    struct SP_REGISTER_CONTROL_STATUSW
+    {
+        uint         cbSize;
+        const(PWSTR) FileName;
+        uint         Win32Error;
+        uint         FailureCode;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_a
+    struct SP_FILE_COPY_PARAMS_A
+    {
+        uint        cbSize;
+        void*       QueueHandle;
+        const(PSTR) SourceRootPath;
+        const(PSTR) SourcePath;
+        const(PSTR) SourceFilename;
+        const(PSTR) SourceDescription;
+        const(PSTR) SourceTagfile;
+        const(PSTR) TargetDirectory;
+        const(PSTR) TargetFilename;
+        uint        CopyStyle;
+        void*       LayoutInf;
+        const(PSTR) SecurityDescriptor;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_a
+    struct SP_FILE_COPY_PARAMS_A
+    {
+        uint        cbSize;
+        void*       QueueHandle;
+        const(PSTR) SourceRootPath;
+        const(PSTR) SourcePath;
+        const(PSTR) SourceFilename;
+        const(PSTR) SourceDescription;
+        const(PSTR) SourceTagfile;
+        const(PSTR) TargetDirectory;
+        const(PSTR) TargetFilename;
+        uint        CopyStyle;
+        void*       LayoutInf;
+        const(PSTR) SecurityDescriptor;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_w
+    struct SP_FILE_COPY_PARAMS_W
+    {
+        uint         cbSize;
+        void*        QueueHandle;
+        const(PWSTR) SourceRootPath;
+        const(PWSTR) SourcePath;
+        const(PWSTR) SourceFilename;
+        const(PWSTR) SourceDescription;
+        const(PWSTR) SourceTagfile;
+        const(PWSTR) TargetDirectory;
+        const(PWSTR) TargetFilename;
+        uint         CopyStyle;
+        void*        LayoutInf;
+        const(PWSTR) SecurityDescriptor;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_w
+    struct SP_FILE_COPY_PARAMS_W
+    {
+        uint         cbSize;
+        void*        QueueHandle;
+        const(PWSTR) SourceRootPath;
+        const(PWSTR) SourcePath;
+        const(PWSTR) SourceFilename;
+        const(PWSTR) SourceDescription;
+        const(PWSTR) SourceTagfile;
+        const(PWSTR) TargetDirectory;
+        const(PWSTR) TargetFilename;
+        uint         CopyStyle;
+        void*        LayoutInf;
+        const(PWSTR) SecurityDescriptor;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_data
+    struct SP_DEVINFO_DATA
+    {
+        uint   cbSize;
+        GUID   ClassGuid;
+        uint   DevInst;
+        size_t Reserved;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_data
+    struct SP_DEVINFO_DATA
+    {
+        uint   cbSize;
+        GUID   ClassGuid;
+        uint   DevInst;
+        size_t Reserved;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_data
+    struct SP_DEVICE_INTERFACE_DATA
+    {
+        uint   cbSize;
+        GUID   InterfaceClassGuid;
+        uint   Flags;
+        size_t Reserved;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_data
+    struct SP_DEVICE_INTERFACE_DATA
+    {
+        uint   cbSize;
+        GUID   InterfaceClassGuid;
+        uint   Flags;
+        size_t Reserved;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
+    struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
+    {
+        uint    cbSize;
+        CHAR[1] DevicePath; // Flexible array
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
+    struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
+    {
+        uint    cbSize;
+        CHAR[1] DevicePath; // Flexible array
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
+    struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
+    {
+        uint     cbSize;
+        wchar[1] DevicePath; // Flexible array
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
+    struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
+    {
+        uint     cbSize;
+        wchar[1] DevicePath; // Flexible array
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_a
+    struct SP_DEVINFO_LIST_DETAIL_DATA_A
+    {
+        uint      cbSize;
+        GUID      ClassGuid;
+        HANDLE    RemoteMachineHandle;
+        CHAR[263] RemoteMachineName;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_a
+    struct SP_DEVINFO_LIST_DETAIL_DATA_A
+    {
+        uint      cbSize;
+        GUID      ClassGuid;
+        HANDLE    RemoteMachineHandle;
+        CHAR[263] RemoteMachineName;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_w
+    struct SP_DEVINFO_LIST_DETAIL_DATA_W
+    {
+        uint       cbSize;
+        GUID       ClassGuid;
+        HANDLE     RemoteMachineHandle;
+        wchar[263] RemoteMachineName;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_w
+    struct SP_DEVINFO_LIST_DETAIL_DATA_W
+    {
+        uint       cbSize;
+        GUID       ClassGuid;
+        HANDLE     RemoteMachineHandle;
+        wchar[263] RemoteMachineName;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_a
+    struct SP_DEVINSTALL_PARAMS_A
+    {
+        uint                cbSize;
+        SETUP_DI_DEVICE_INSTALL_FLAGS Flags;
+        SETUP_DI_DEVICE_INSTALL_FLAGS_EX FlagsEx;
+        HWND                hwndParent;
+        PSP_FILE_CALLBACK_A InstallMsgHandler;
+        void*               InstallMsgHandlerContext;
+        void*               FileQueue;
+        size_t              ClassInstallReserved;
+        uint                Reserved;
+        CHAR[260]           DriverPath;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_a
+    struct SP_DEVINSTALL_PARAMS_A
+    {
+        uint                cbSize;
+        SETUP_DI_DEVICE_INSTALL_FLAGS Flags;
+        SETUP_DI_DEVICE_INSTALL_FLAGS_EX FlagsEx;
+        HWND                hwndParent;
+        PSP_FILE_CALLBACK_A InstallMsgHandler;
+        void*               InstallMsgHandlerContext;
+        void*               FileQueue;
+        size_t              ClassInstallReserved;
+        uint                Reserved;
+        CHAR[260]           DriverPath;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_w
+    struct SP_DEVINSTALL_PARAMS_W
+    {
+        uint                cbSize;
+        SETUP_DI_DEVICE_INSTALL_FLAGS Flags;
+        SETUP_DI_DEVICE_INSTALL_FLAGS_EX FlagsEx;
+        HWND                hwndParent;
+        PSP_FILE_CALLBACK_W InstallMsgHandler;
+        void*               InstallMsgHandlerContext;
+        void*               FileQueue;
+        size_t              ClassInstallReserved;
+        uint                Reserved;
+        wchar[260]          DriverPath;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_w
+    struct SP_DEVINSTALL_PARAMS_W
+    {
+        uint                cbSize;
+        SETUP_DI_DEVICE_INSTALL_FLAGS Flags;
+        SETUP_DI_DEVICE_INSTALL_FLAGS_EX FlagsEx;
+        HWND                hwndParent;
+        PSP_FILE_CALLBACK_W InstallMsgHandler;
+        void*               InstallMsgHandlerContext;
+        void*               FileQueue;
+        size_t              ClassInstallReserved;
+        uint                Reserved;
+        wchar[260]          DriverPath;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_classinstall_header
+    struct SP_CLASSINSTALL_HEADER
+    {
+        uint        cbSize;
+        DI_FUNCTION InstallFunction;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_classinstall_header
+    struct SP_CLASSINSTALL_HEADER
+    {
+        uint        cbSize;
+        DI_FUNCTION InstallFunction;
+    }
+}
+
+version(X86_64)
+{
+    struct SP_ENABLECLASS_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        GUID ClassGuid;
+        uint EnableMessage;
+    }
+}
+
+version(AArch64)
+{
+    struct SP_ENABLECLASS_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        GUID ClassGuid;
+        uint EnableMessage;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_propchange_params
+    struct SP_PROPCHANGE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        SETUP_DI_STATE_CHANGE StateChange;
+        SETUP_DI_PROPERTY_CHANGE_SCOPE Scope;
+        uint HwProfile;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_propchange_params
+    struct SP_PROPCHANGE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        SETUP_DI_STATE_CHANGE StateChange;
+        SETUP_DI_PROPERTY_CHANGE_SCOPE Scope;
+        uint HwProfile;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_removedevice_params
+    struct SP_REMOVEDEVICE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        SETUP_DI_REMOVE_DEVICE_SCOPE Scope;
+        uint HwProfile;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_removedevice_params
+    struct SP_REMOVEDEVICE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        SETUP_DI_REMOVE_DEVICE_SCOPE Scope;
+        uint HwProfile;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_unremovedevice_params
+    struct SP_UNREMOVEDEVICE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint Scope;
+        uint HwProfile;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_unremovedevice_params
+    struct SP_UNREMOVEDEVICE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint Scope;
+        uint HwProfile;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_w
+    struct SP_SELECTDEVICE_PARAMS_W
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[60]  Title;
+        wchar[256] Instructions;
+        wchar[30]  ListLabel;
+        wchar[256] SubTitle;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_w
+    struct SP_SELECTDEVICE_PARAMS_W
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[60]  Title;
+        wchar[256] Instructions;
+        wchar[30]  ListLabel;
+        wchar[256] SubTitle;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_detectdevice_params
+    struct SP_DETECTDEVICE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        PDETECT_PROGRESS_NOTIFY DetectProgressNotify;
+        void* ProgressNotifyParam;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_detectdevice_params
+    struct SP_DETECTDEVICE_PARAMS
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        PDETECT_PROGRESS_NOTIFY DetectProgressNotify;
+        void* ProgressNotifyParam;
+    }
+}
+
+version(X86_64)
+{
+    struct SP_INSTALLWIZARD_DATA
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint               Flags;
+        HPROPSHEETPAGE[20] DynamicPages;
+        uint               NumDynamicPages;
+        uint               DynamicPageFlags;
+        uint               PrivateFlags;
+        LPARAM             PrivateData;
+        HWND               hwndWizardDlg;
+    }
+}
+
+version(AArch64)
+{
+    struct SP_INSTALLWIZARD_DATA
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint               Flags;
+        HPROPSHEETPAGE[20] DynamicPages;
+        uint               NumDynamicPages;
+        uint               DynamicPageFlags;
+        uint               PrivateFlags;
+        LPARAM             PrivateData;
+        HWND               hwndWizardDlg;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_newdevicewizard_data
+    struct SP_NEWDEVICEWIZARD_DATA
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint               Flags;
+        HPROPSHEETPAGE[20] DynamicPages;
+        uint               NumDynamicPages;
+        HWND               hwndWizardDlg;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_newdevicewizard_data
+    struct SP_NEWDEVICEWIZARD_DATA
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint               Flags;
+        HPROPSHEETPAGE[20] DynamicPages;
+        uint               NumDynamicPages;
+        HWND               hwndWizardDlg;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_w
+    struct SP_TROUBLESHOOTER_PARAMS_W
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[260] ChmFile;
+        wchar[260] HtmlTroubleShooter;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_w
+    struct SP_TROUBLESHOOTER_PARAMS_W
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[260] ChmFile;
+        wchar[260] HtmlTroubleShooter;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_w
+    struct SP_POWERMESSAGEWAKE_PARAMS_W
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[512] PowerMessageWake;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_w
+    struct SP_POWERMESSAGEWAKE_PARAMS_W
+    {
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[512] PowerMessageWake;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_a
+    struct SP_DRVINFO_DATA_V2_A
+    {
+        uint      cbSize;
+        uint      DriverType;
+        size_t    Reserved;
+        CHAR[256] Description;
+        CHAR[256] MfgName;
+        CHAR[256] ProviderName;
+        FILETIME  DriverDate;
+        ulong     DriverVersion;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_a
+    struct SP_DRVINFO_DATA_V2_A
+    {
+        uint      cbSize;
+        uint      DriverType;
+        size_t    Reserved;
+        CHAR[256] Description;
+        CHAR[256] MfgName;
+        CHAR[256] ProviderName;
+        FILETIME  DriverDate;
+        ulong     DriverVersion;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_w
+    struct SP_DRVINFO_DATA_V2_W
+    {
+        uint       cbSize;
+        uint       DriverType;
+        size_t     Reserved;
+        wchar[256] Description;
+        wchar[256] MfgName;
+        wchar[256] ProviderName;
+        FILETIME   DriverDate;
+        ulong      DriverVersion;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_w
+    struct SP_DRVINFO_DATA_V2_W
+    {
+        uint       cbSize;
+        uint       DriverType;
+        size_t     Reserved;
+        wchar[256] Description;
+        wchar[256] MfgName;
+        wchar[256] ProviderName;
+        FILETIME   DriverDate;
+        ulong      DriverVersion;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_a
+    struct SP_DRVINFO_DATA_V1_A
+    {
+        uint      cbSize;
+        uint      DriverType;
+        size_t    Reserved;
+        CHAR[256] Description;
+        CHAR[256] MfgName;
+        CHAR[256] ProviderName;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_a
+    struct SP_DRVINFO_DATA_V1_A
+    {
+        uint      cbSize;
+        uint      DriverType;
+        size_t    Reserved;
+        CHAR[256] Description;
+        CHAR[256] MfgName;
+        CHAR[256] ProviderName;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_w
+    struct SP_DRVINFO_DATA_V1_W
+    {
+        uint       cbSize;
+        uint       DriverType;
+        size_t     Reserved;
+        wchar[256] Description;
+        wchar[256] MfgName;
+        wchar[256] ProviderName;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_w
+    struct SP_DRVINFO_DATA_V1_W
+    {
+        uint       cbSize;
+        uint       DriverType;
+        size_t     Reserved;
+        wchar[256] Description;
+        wchar[256] MfgName;
+        wchar[256] ProviderName;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_a
+    struct SP_DRVINFO_DETAIL_DATA_A
+    {
+        uint      cbSize;
+        FILETIME  InfDate;
+        uint      CompatIDsOffset;
+        uint      CompatIDsLength;
+        size_t    Reserved;
+        CHAR[256] SectionName;
+        CHAR[260] InfFileName;
+        CHAR[256] DrvDescription;
+        CHAR[1]   HardwareID; // Flexible array
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_a
+    struct SP_DRVINFO_DETAIL_DATA_A
+    {
+        uint      cbSize;
+        FILETIME  InfDate;
+        uint      CompatIDsOffset;
+        uint      CompatIDsLength;
+        size_t    Reserved;
+        CHAR[256] SectionName;
+        CHAR[260] InfFileName;
+        CHAR[256] DrvDescription;
+        CHAR[1]   HardwareID; // Flexible array
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_w
+    struct SP_DRVINFO_DETAIL_DATA_W
+    {
+        uint       cbSize;
+        FILETIME   InfDate;
+        uint       CompatIDsOffset;
+        uint       CompatIDsLength;
+        size_t     Reserved;
+        wchar[256] SectionName;
+        wchar[260] InfFileName;
+        wchar[256] DrvDescription;
+        wchar[1]   HardwareID; // Flexible array
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_w
+    struct SP_DRVINFO_DETAIL_DATA_W
+    {
+        uint       cbSize;
+        FILETIME   InfDate;
+        uint       CompatIDsOffset;
+        uint       CompatIDsLength;
+        size_t     Reserved;
+        wchar[256] SectionName;
+        wchar[260] InfFileName;
+        wchar[256] DrvDescription;
+        wchar[1]   HardwareID; // Flexible array
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinstall_params
+    struct SP_DRVINSTALL_PARAMS
+    {
+        uint   cbSize;
+        uint   Rank;
+        SETUP_DI_DRIVER_INSTALL_FLAGS Flags;
+        size_t PrivateData;
+        uint   Reserved;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinstall_params
+    struct SP_DRVINSTALL_PARAMS
+    {
+        uint   cbSize;
+        uint   Rank;
+        SETUP_DI_DRIVER_INSTALL_FLAGS Flags;
+        size_t PrivateData;
+        uint   Reserved;
+    }
+}
+
+version(X86_64)
+{
+    struct COINSTALLER_CONTEXT_DATA
+    {
+        BOOL  PostProcessing;
+        uint  InstallResult;
+        void* PrivateData;
+    }
+}
+
+version(AArch64)
+{
+    struct COINSTALLER_CONTEXT_DATA
+    {
+        BOOL  PostProcessing;
+        uint  InstallResult;
+        void* PrivateData;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_classimagelist_data
+    struct SP_CLASSIMAGELIST_DATA
+    {
+        uint       cbSize;
+        HIMAGELIST ImageList;
+        size_t     Reserved;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_classimagelist_data
+    struct SP_CLASSIMAGELIST_DATA
+    {
+        uint       cbSize;
+        HIMAGELIST ImageList;
+        size_t     Reserved;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_propsheetpage_request
+    struct SP_PROPSHEETPAGE_REQUEST
+    {
+        uint             cbSize;
+        uint             PageRequested;
+        HDEVINFO         DeviceInfoSet;
+        SP_DEVINFO_DATA* DeviceInfoData;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_propsheetpage_request
+    struct SP_PROPSHEETPAGE_REQUEST
+    {
+        uint             cbSize;
+        uint             PageRequested;
+        HDEVINFO         DeviceInfoSet;
+        SP_DEVINFO_DATA* DeviceInfoData;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V2_A
+    {
+        uint      cbSize;
+        CHAR[260] FullInfPath;
+        int       FilenameOffset;
+        CHAR[260] ReinstallInstance;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V2_A
+    {
+        uint      cbSize;
+        CHAR[260] FullInfPath;
+        int       FilenameOffset;
+        CHAR[260] ReinstallInstance;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V2_W
+    {
+        uint       cbSize;
+        wchar[260] FullInfPath;
+        int        FilenameOffset;
+        wchar[260] ReinstallInstance;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V2_W
+    {
+        uint       cbSize;
+        wchar[260] FullInfPath;
+        int        FilenameOffset;
+        wchar[260] ReinstallInstance;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V1_A
+    {
+        uint      cbSize;
+        CHAR[260] FullInfPath;
+        int       FilenameOffset;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V1_A
+    {
+        uint      cbSize;
+        CHAR[260] FullInfPath;
+        int       FilenameOffset;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V1_W
+    {
+        uint       cbSize;
+        wchar[260] FullInfPath;
+        int        FilenameOffset;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V1_W
+    {
+        uint       cbSize;
+        wchar[260] FullInfPath;
+        int        FilenameOffset;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_a
+    struct SP_INF_SIGNER_INFO_V1_A
+    {
+        uint      cbSize;
+        CHAR[260] CatalogFile;
+        CHAR[260] DigitalSigner;
+        CHAR[260] DigitalSignerVersion;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_a
+    struct SP_INF_SIGNER_INFO_V1_A
+    {
+        uint      cbSize;
+        CHAR[260] CatalogFile;
+        CHAR[260] DigitalSigner;
+        CHAR[260] DigitalSignerVersion;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_w
+    struct SP_INF_SIGNER_INFO_V1_W
+    {
+        uint       cbSize;
+        wchar[260] CatalogFile;
+        wchar[260] DigitalSigner;
+        wchar[260] DigitalSignerVersion;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_w
+    struct SP_INF_SIGNER_INFO_V1_W
+    {
+        uint       cbSize;
+        wchar[260] CatalogFile;
+        wchar[260] DigitalSigner;
+        wchar[260] DigitalSignerVersion;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_a
+    struct SP_INF_SIGNER_INFO_V2_A
+    {
+        uint      cbSize;
+        CHAR[260] CatalogFile;
+        CHAR[260] DigitalSigner;
+        CHAR[260] DigitalSignerVersion;
+        uint      SignerScore;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_a
+    struct SP_INF_SIGNER_INFO_V2_A
+    {
+        uint      cbSize;
+        CHAR[260] CatalogFile;
+        CHAR[260] DigitalSigner;
+        CHAR[260] DigitalSignerVersion;
+        uint      SignerScore;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_w
+    struct SP_INF_SIGNER_INFO_V2_W
+    {
+        uint       cbSize;
+        wchar[260] CatalogFile;
+        wchar[260] DigitalSigner;
+        wchar[260] DigitalSignerVersion;
+        uint       SignerScore;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_w
+    struct SP_INF_SIGNER_INFO_V2_W
+    {
+        uint       cbSize;
+        wchar[260] CatalogFile;
+        wchar[260] DigitalSigner;
+        wchar[260] DigitalSignerVersion;
+        uint       SignerScore;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-infcontext
+    struct INFCONTEXT
+    {
+    align (1):
+        void* Inf;
+        void* CurrentInf;
+        uint  Section;
+        uint  Line;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_information
+    struct SP_INF_INFORMATION
+    {
+    align (1):
+        INF_STYLE InfStyle;
+        uint      InfCount;
+        ubyte[1]  VersionData; // Flexible array
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_ALTPLATFORM_INFO_V3
+    {
+    align (1):
+        uint   cbSize;
+        uint   Platform;
+        uint   MajorVersion;
+        uint   MinorVersion;
+        ushort ProcessorArchitecture;
+        union
+        {
+        align (1):
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint   FirstValidatedMajorVersion;
+        uint   FirstValidatedMinorVersion;
+        ubyte  ProductType;
+        ushort SuiteMask;
+        uint   BuildNumber;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_altplatform_info_v2
+    struct SP_ALTPLATFORM_INFO_V2
+    {
+    align (1):
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
+        PROCESSOR_ARCHITECTURE ProcessorArchitecture;
+        union
+        {
+        align (1):
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint         FirstValidatedMajorVersion;
+        uint         FirstValidatedMinorVersion;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_altplatform_info_v1
+    struct SP_ALTPLATFORM_INFO_V1
+    {
+    align (1):
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
+        ushort       ProcessorArchitecture;
+        ushort       Reserved;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_a
+    struct SP_ORIGINAL_FILE_INFO_A
+    {
+    align (1):
+        uint      cbSize;
+        CHAR[260] OriginalInfName;
+        CHAR[260] OriginalCatalogName;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_original_file_info_w
+    struct SP_ORIGINAL_FILE_INFO_W
+    {
+    align (1):
+        uint       cbSize;
+        wchar[260] OriginalInfName;
+        wchar[260] OriginalCatalogName;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_a
+    struct FILEPATHS_A
+    {
+    align (1):
+        const(PSTR) Target;
+        const(PSTR) Source;
+        uint        Win32Error;
+        uint        Flags;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_w
+    struct FILEPATHS_W
+    {
+    align (1):
+        const(PWSTR) Target;
+        const(PWSTR) Source;
+        uint         Win32Error;
+        uint         Flags;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_a
+    struct FILEPATHS_SIGNERINFO_A
+    {
+    align (1):
+        const(PSTR) Target;
+        const(PSTR) Source;
+        uint        Win32Error;
+        uint        Flags;
+        const(PSTR) DigitalSigner;
+        const(PSTR) Version;
+        const(PSTR) CatalogFile;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-filepaths_signerinfo_w
+    struct FILEPATHS_SIGNERINFO_W
+    {
+    align (1):
+        const(PWSTR) Target;
+        const(PWSTR) Source;
+        uint         Win32Error;
+        uint         Flags;
+        const(PWSTR) DigitalSigner;
+        const(PWSTR) Version;
+        const(PWSTR) CatalogFile;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_a
+    struct SOURCE_MEDIA_A
+    {
+    align (1):
+        const(PSTR) Reserved;
+        const(PSTR) Tagfile;
+        const(PSTR) Description;
+        const(PSTR) SourcePath;
+        const(PSTR) SourceFile;
+        uint        Flags;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-source_media_w
+    struct SOURCE_MEDIA_W
+    {
+    align (1):
+        const(PWSTR) Reserved;
+        const(PWSTR) Tagfile;
+        const(PWSTR) Description;
+        const(PWSTR) SourcePath;
+        const(PWSTR) SourceFile;
+        uint         Flags;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_a
+    struct CABINET_INFO_A
+    {
+    align (1):
+        const(PSTR) CabinetPath;
+        const(PSTR) CabinetFile;
+        const(PSTR) DiskName;
+        ushort      SetId;
+        ushort      CabinetNumber;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-cabinet_info_w
+    struct CABINET_INFO_W
+    {
+    align (1):
+        const(PWSTR) CabinetPath;
+        const(PWSTR) CabinetFile;
+        const(PWSTR) DiskName;
+        ushort       SetId;
+        ushort       CabinetNumber;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_a
+    struct FILE_IN_CABINET_INFO_A
+    {
+    align (1):
+        const(PSTR) NameInCabinet;
+        uint        FileSize;
+        uint        Win32Error;
+        ushort      DosDate;
+        ushort      DosTime;
+        ushort      DosAttribs;
+        CHAR[260]   FullTargetName;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-file_in_cabinet_info_w
+    struct FILE_IN_CABINET_INFO_W
+    {
+    align (1):
+        const(PWSTR) NameInCabinet;
+        uint         FileSize;
+        uint         Win32Error;
+        ushort       DosDate;
+        ushort       DosTime;
+        ushort       DosAttribs;
+        wchar[260]   FullTargetName;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusa
+    struct SP_REGISTER_CONTROL_STATUSA
+    {
+    align (1):
+        uint        cbSize;
+        const(PSTR) FileName;
+        uint        Win32Error;
+        uint        FailureCode;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_register_control_statusw
+    struct SP_REGISTER_CONTROL_STATUSW
+    {
+    align (1):
+        uint         cbSize;
+        const(PWSTR) FileName;
+        uint         Win32Error;
+        uint         FailureCode;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_a
+    struct SP_FILE_COPY_PARAMS_A
+    {
+    align (1):
+        uint        cbSize;
+        void*       QueueHandle;
+        const(PSTR) SourceRootPath;
+        const(PSTR) SourcePath;
+        const(PSTR) SourceFilename;
+        const(PSTR) SourceDescription;
+        const(PSTR) SourceTagfile;
+        const(PSTR) TargetDirectory;
+        const(PSTR) TargetFilename;
+        uint        CopyStyle;
+        void*       LayoutInf;
+        const(PSTR) SecurityDescriptor;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_file_copy_params_w
+    struct SP_FILE_COPY_PARAMS_W
+    {
+    align (1):
+        uint         cbSize;
+        void*        QueueHandle;
+        const(PWSTR) SourceRootPath;
+        const(PWSTR) SourcePath;
+        const(PWSTR) SourceFilename;
+        const(PWSTR) SourceDescription;
+        const(PWSTR) SourceTagfile;
+        const(PWSTR) TargetDirectory;
+        const(PWSTR) TargetFilename;
+        uint         CopyStyle;
+        void*        LayoutInf;
+        const(PWSTR) SecurityDescriptor;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_data
+    struct SP_DEVINFO_DATA
+    {
+    align (1):
+        uint   cbSize;
+        GUID   ClassGuid;
+        uint   DevInst;
+        size_t Reserved;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_data
+    struct SP_DEVICE_INTERFACE_DATA
+    {
+    align (1):
+        uint   cbSize;
+        GUID   InterfaceClassGuid;
+        uint   Flags;
+        size_t Reserved;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
+    struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
+    {
+    align (1):
+        uint    cbSize;
+        CHAR[1] DevicePath; // Flexible array
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
+    struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
+    {
+    align (1):
+        uint     cbSize;
+        wchar[1] DevicePath; // Flexible array
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_a
+    struct SP_DEVINFO_LIST_DETAIL_DATA_A
+    {
+    align (1):
+        uint      cbSize;
+        GUID      ClassGuid;
+        HANDLE    RemoteMachineHandle;
+        CHAR[263] RemoteMachineName;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinfo_list_detail_data_w
+    struct SP_DEVINFO_LIST_DETAIL_DATA_W
+    {
+    align (1):
+        uint       cbSize;
+        GUID       ClassGuid;
+        HANDLE     RemoteMachineHandle;
+        wchar[263] RemoteMachineName;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_a
+    struct SP_DEVINSTALL_PARAMS_A
+    {
+    align (1):
+        uint                cbSize;
+        SETUP_DI_DEVICE_INSTALL_FLAGS Flags;
+        SETUP_DI_DEVICE_INSTALL_FLAGS_EX FlagsEx;
+        HWND                hwndParent;
+        PSP_FILE_CALLBACK_A InstallMsgHandler;
+        void*               InstallMsgHandlerContext;
+        void*               FileQueue;
+        size_t              ClassInstallReserved;
+        uint                Reserved;
+        CHAR[260]           DriverPath;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_devinstall_params_w
+    struct SP_DEVINSTALL_PARAMS_W
+    {
+    align (1):
+        uint                cbSize;
+        SETUP_DI_DEVICE_INSTALL_FLAGS Flags;
+        SETUP_DI_DEVICE_INSTALL_FLAGS_EX FlagsEx;
+        HWND                hwndParent;
+        PSP_FILE_CALLBACK_W InstallMsgHandler;
+        void*               InstallMsgHandlerContext;
+        void*               FileQueue;
+        size_t              ClassInstallReserved;
+        uint                Reserved;
+        wchar[260]          DriverPath;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_classinstall_header
+    struct SP_CLASSINSTALL_HEADER
+    {
+    align (1):
+        uint        cbSize;
+        DI_FUNCTION InstallFunction;
+    }
+}
+
+version(X86)
+{
+    struct SP_ENABLECLASS_PARAMS
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        GUID ClassGuid;
+        uint EnableMessage;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_propchange_params
+    struct SP_PROPCHANGE_PARAMS
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        SETUP_DI_STATE_CHANGE StateChange;
+        SETUP_DI_PROPERTY_CHANGE_SCOPE Scope;
+        uint HwProfile;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_removedevice_params
+    struct SP_REMOVEDEVICE_PARAMS
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        SETUP_DI_REMOVE_DEVICE_SCOPE Scope;
+        uint HwProfile;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_unremovedevice_params
+    struct SP_UNREMOVEDEVICE_PARAMS
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint Scope;
+        uint HwProfile;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_a
+struct SP_SELECTDEVICE_PARAMS_A
+{
+    SP_CLASSINSTALL_HEADER ClassInstallHeader;
+    CHAR[60]  Title;
+    CHAR[256] Instructions;
+    CHAR[30]  ListLabel;
+    CHAR[256] SubTitle;
+    ubyte[2]  Reserved;
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_selectdevice_params_w
+    struct SP_SELECTDEVICE_PARAMS_W
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[60]  Title;
+        wchar[256] Instructions;
+        wchar[30]  ListLabel;
+        wchar[256] SubTitle;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_detectdevice_params
+    struct SP_DETECTDEVICE_PARAMS
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        PDETECT_PROGRESS_NOTIFY DetectProgressNotify;
+        void* ProgressNotifyParam;
+    }
+}
+
+version(X86)
+{
+    struct SP_INSTALLWIZARD_DATA
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint               Flags;
+        HPROPSHEETPAGE[20] DynamicPages;
+        uint               NumDynamicPages;
+        uint               DynamicPageFlags;
+        uint               PrivateFlags;
+        LPARAM             PrivateData;
+        HWND               hwndWizardDlg;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_newdevicewizard_data
+    struct SP_NEWDEVICEWIZARD_DATA
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        uint               Flags;
+        HPROPSHEETPAGE[20] DynamicPages;
+        uint               NumDynamicPages;
+        HWND               hwndWizardDlg;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_a
+struct SP_TROUBLESHOOTER_PARAMS_A
+{
+    SP_CLASSINSTALL_HEADER ClassInstallHeader;
+    CHAR[260] ChmFile;
+    CHAR[260] HtmlTroubleShooter;
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_troubleshooter_params_w
+    struct SP_TROUBLESHOOTER_PARAMS_W
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[260] ChmFile;
+        wchar[260] HtmlTroubleShooter;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_a
+struct SP_POWERMESSAGEWAKE_PARAMS_A
+{
+    SP_CLASSINSTALL_HEADER ClassInstallHeader;
+    CHAR[512] PowerMessageWake;
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_powermessagewake_params_w
+    struct SP_POWERMESSAGEWAKE_PARAMS_W
+    {
+    align (1):
+        SP_CLASSINSTALL_HEADER ClassInstallHeader;
+        wchar[512] PowerMessageWake;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_a
+    struct SP_DRVINFO_DATA_V2_A
+    {
+    align (1):
+        uint      cbSize;
+        uint      DriverType;
+        size_t    Reserved;
+        CHAR[256] Description;
+        CHAR[256] MfgName;
+        CHAR[256] ProviderName;
+        FILETIME  DriverDate;
+        ulong     DriverVersion;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v2_w
+    struct SP_DRVINFO_DATA_V2_W
+    {
+    align (1):
+        uint       cbSize;
+        uint       DriverType;
+        size_t     Reserved;
+        wchar[256] Description;
+        wchar[256] MfgName;
+        wchar[256] ProviderName;
+        FILETIME   DriverDate;
+        ulong      DriverVersion;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_a
+    struct SP_DRVINFO_DATA_V1_A
+    {
+    align (1):
+        uint      cbSize;
+        uint      DriverType;
+        size_t    Reserved;
+        CHAR[256] Description;
+        CHAR[256] MfgName;
+        CHAR[256] ProviderName;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_data_v1_w
+    struct SP_DRVINFO_DATA_V1_W
+    {
+    align (1):
+        uint       cbSize;
+        uint       DriverType;
+        size_t     Reserved;
+        wchar[256] Description;
+        wchar[256] MfgName;
+        wchar[256] ProviderName;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_a
+    struct SP_DRVINFO_DETAIL_DATA_A
+    {
+    align (1):
+        uint      cbSize;
+        FILETIME  InfDate;
+        uint      CompatIDsOffset;
+        uint      CompatIDsLength;
+        size_t    Reserved;
+        CHAR[256] SectionName;
+        CHAR[260] InfFileName;
+        CHAR[256] DrvDescription;
+        CHAR[1]   HardwareID; // Flexible array
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinfo_detail_data_w
+    struct SP_DRVINFO_DETAIL_DATA_W
+    {
+    align (1):
+        uint       cbSize;
+        FILETIME   InfDate;
+        uint       CompatIDsOffset;
+        uint       CompatIDsLength;
+        size_t     Reserved;
+        wchar[256] SectionName;
+        wchar[260] InfFileName;
+        wchar[256] DrvDescription;
+        wchar[1]   HardwareID; // Flexible array
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_drvinstall_params
+    struct SP_DRVINSTALL_PARAMS
+    {
+    align (1):
+        uint   cbSize;
+        uint   Rank;
+        SETUP_DI_DRIVER_INSTALL_FLAGS Flags;
+        size_t PrivateData;
+        uint   Reserved;
+    }
+}
+
+version(X86)
+{
+    struct COINSTALLER_CONTEXT_DATA
+    {
+    align (1):
+        BOOL  PostProcessing;
+        uint  InstallResult;
+        void* PrivateData;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_classimagelist_data
+    struct SP_CLASSIMAGELIST_DATA
+    {
+    align (1):
+        uint       cbSize;
+        HIMAGELIST ImageList;
+        size_t     Reserved;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_propsheetpage_request
+    struct SP_PROPSHEETPAGE_REQUEST
+    {
+    align (1):
+        uint             cbSize;
+        uint             PageRequested;
+        HDEVINFO         DeviceInfoSet;
+        SP_DEVINFO_DATA* DeviceInfoData;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V2_A
+    {
+    align (1):
+        uint      cbSize;
+        CHAR[260] FullInfPath;
+        int       FilenameOffset;
+        CHAR[260] ReinstallInstance;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V2_W
+    {
+    align (1):
+        uint       cbSize;
+        wchar[260] FullInfPath;
+        int        FilenameOffset;
+        wchar[260] ReinstallInstance;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V1_A
+    {
+    align (1):
+        uint      cbSize;
+        CHAR[260] FullInfPath;
+        int       FilenameOffset;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct SP_BACKUP_QUEUE_PARAMS_V1_W
+    {
+    align (1):
+        uint       cbSize;
+        wchar[260] FullInfPath;
+        int        FilenameOffset;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_a
+    struct SP_INF_SIGNER_INFO_V1_A
+    {
+    align (1):
+        uint      cbSize;
+        CHAR[260] CatalogFile;
+        CHAR[260] DigitalSigner;
+        CHAR[260] DigitalSignerVersion;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v1_w
+    struct SP_INF_SIGNER_INFO_V1_W
+    {
+    align (1):
+        uint       cbSize;
+        wchar[260] CatalogFile;
+        wchar[260] DigitalSigner;
+        wchar[260] DigitalSignerVersion;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_a
+    struct SP_INF_SIGNER_INFO_V2_A
+    {
+    align (1):
+        uint      cbSize;
+        CHAR[260] CatalogFile;
+        CHAR[260] DigitalSigner;
+        CHAR[260] DigitalSignerVersion;
+        uint      SignerScore;
+    }
+}
+
+version(X86)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_inf_signer_info_v2_w
+    struct SP_INF_SIGNER_INFO_V2_W
+    {
+    align (1):
+        uint       cbSize;
+        wchar[260] CatalogFile;
+        wchar[260] DigitalSigner;
+        wchar[260] DigitalSignerVersion;
+        uint       SignerScore;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-conflict_details_a
+struct CONFLICT_DETAILS_A
+{
+    uint       CD_ulSize;
+    CM_CDMASK  CD_ulMask;
+    uint       CD_dnDevInst;
+    size_t     CD_rdResDes;
+    CM_CDFLAGS CD_ulFlags;
+    CHAR[260]  CD_szDescription;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-conflict_details_w
+struct CONFLICT_DETAILS_W
+{
+    uint       CD_ulSize;
+    CM_CDMASK  CD_ulMask;
+    uint       CD_dnDevInst;
+    size_t     CD_rdResDes;
+    CM_CDFLAGS CD_ulFlags;
+    wchar[260] CD_szDescription;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-mem_range
+struct MEM_RANGE
+{
+align (1):
+    ulong    MR_Align;
+    uint     MR_nBytes;
+    ulong    MR_Min;
+    ulong    MR_Max;
+    MD_FLAGS MR_Flags;
+    uint     MR_Reserved;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-mem_des
+struct MEM_DES
+{
+align (1):
+    uint     MD_Count;
+    uint     MD_Type;
+    ulong    MD_Alloc_Base;
+    ulong    MD_Alloc_End;
+    MD_FLAGS MD_Flags;
+    uint     MD_Reserved;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-mem_resource
+struct MEM_RESOURCE
+{
+align (1):
+    MEM_DES      MEM_Header;
+    MEM_RANGE[1] MEM_Data; // Flexible array
+}
+
+struct MEM_LARGE_RANGE
+{
+align (1):
+    ulong MLR_Align;
+    ulong MLR_nBytes;
+    ulong MLR_Min;
+    ulong MLR_Max;
+    uint  MLR_Flags;
+    uint  MLR_Reserved;
+}
+
+struct MEM_LARGE_DES
+{
+align (1):
+    uint  MLD_Count;
+    uint  MLD_Type;
+    ulong MLD_Alloc_Base;
+    ulong MLD_Alloc_End;
+    uint  MLD_Flags;
+    uint  MLD_Reserved;
+}
+
+struct MEM_LARGE_RESOURCE
+{
+align (1):
+    MEM_LARGE_DES      MEM_LARGE_Header;
+    MEM_LARGE_RANGE[1] MEM_LARGE_Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-io_range
+struct IO_RANGE
+{
+align (1):
+    ulong        IOR_Align;
+    uint         IOR_nPorts;
+    ulong        IOR_Min;
+    ulong        IOR_Max;
+    IOD_DESFLAGS IOR_RangeFlags;
+    ulong        IOR_Alias;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-io_des
+struct IO_DES
+{
+align (1):
+    uint         IOD_Count;
+    uint         IOD_Type;
+    ulong        IOD_Alloc_Base;
+    ulong        IOD_Alloc_End;
+    IOD_DESFLAGS IOD_DesFlags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-io_resource
+struct IO_RESOURCE
+{
+    IO_DES      IO_Header;
+    IO_RANGE[1] IO_Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-dma_range
+struct DMA_RANGE
+{
+align (1):
+    uint     DR_Min;
+    uint     DR_Max;
+    DD_FLAGS DR_Flags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-dma_des
+struct DMA_DES
+{
+align (1):
+    uint     DD_Count;
+    uint     DD_Type;
+    DD_FLAGS DD_Flags;
+    uint     DD_Alloc_Chan;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-dma_resource
+struct DMA_RESOURCE
+{
+align (1):
+    DMA_DES      DMA_Header;
+    DMA_RANGE[1] DMA_Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_range
+struct IRQ_RANGE
+{
+align (1):
+    uint       IRQR_Min;
+    uint       IRQR_Max;
+    IRQD_FLAGS IRQR_Flags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_des_32
+struct IRQ_DES_32
+{
+align (1):
+    uint       IRQD_Count;
+    uint       IRQD_Type;
+    IRQD_FLAGS IRQD_Flags;
+    uint       IRQD_Alloc_Num;
+    uint       IRQD_Affinity;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_des_64
+struct IRQ_DES_64
+{
+align (1):
+    uint       IRQD_Count;
+    uint       IRQD_Type;
+    IRQD_FLAGS IRQD_Flags;
+    uint       IRQD_Alloc_Num;
+    ulong      IRQD_Affinity;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_resource_32
+struct IRQ_RESOURCE_32
+{
+align (1):
+    IRQ_DES_32   IRQ_Header;
+    IRQ_RANGE[1] IRQ_Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_resource_64
+struct IRQ_RESOURCE_64
+{
+align (1):
+    IRQ_DES_64   IRQ_Header;
+    IRQ_RANGE[1] IRQ_Data; // Flexible array
+}
+
+struct DEVPRIVATE_RANGE
+{
+align (1):
+    uint PR_Data1;
+    uint PR_Data2;
+    uint PR_Data3;
+}
+
+struct DEVPRIVATE_DES
+{
+align (1):
+    uint PD_Count;
+    uint PD_Type;
+    uint PD_Data1;
+    uint PD_Data2;
+    uint PD_Data3;
+    uint PD_Flags;
+}
+
+struct DEVPRIVATE_RESOURCE
+{
+align (1):
+    DEVPRIVATE_DES      PRV_Header;
+    DEVPRIVATE_RANGE[1] PRV_Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-cs_des
+struct CS_DES
+{
+align (1):
+    uint     CSD_SignatureLength;
+    uint     CSD_LegacyDataOffset;
+    uint     CSD_LegacyDataSize;
+    uint     CSD_Flags;
+    GUID     CSD_ClassGuid;
+    ubyte[1] CSD_Signature; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-cs_resource
+struct CS_RESOURCE
+{
+align (1):
+    CS_DES CS_Header;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-pccard_des
+struct PCCARD_DES
+{
+align (1):
+    uint      PCD_Count;
+    uint      PCD_Type;
+    PCD_FLAGS PCD_Flags;
+    ubyte     PCD_ConfigIndex;
+    ubyte[3]  PCD_Reserved;
+    uint      PCD_MemoryCardBase1;
+    uint      PCD_MemoryCardBase2;
+    uint[2]   PCD_MemoryCardBase;
+    ushort[2] PCD_MemoryFlags;
+    ubyte[2]  PCD_IoFlags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-pccard_resource
+struct PCCARD_RESOURCE
+{
+align (1):
+    PCCARD_DES PcCard_Header;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-mfcard_des
+struct MFCARD_DES
+{
+align (1):
+    uint      PMF_Count;
+    uint      PMF_Type;
+    PMF_FLAGS PMF_Flags;
+    ubyte     PMF_ConfigOptions;
+    ubyte     PMF_IoResourceIndex;
+    ubyte[2]  PMF_Reserved;
+    uint      PMF_ConfigRegisterBase;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-mfcard_resource
+struct MFCARD_RESOURCE
+{
+align (1):
+    MFCARD_DES MfCard_Header;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-busnumber_range
+struct BUSNUMBER_RANGE
+{
+align (1):
+    uint BUSR_Min;
+    uint BUSR_Max;
+    uint BUSR_nBusNumbers;
+    uint BUSR_Flags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-busnumber_des
+struct BUSNUMBER_DES
+{
+align (1):
+    uint BUSD_Count;
+    uint BUSD_Type;
+    uint BUSD_Flags;
+    uint BUSD_Alloc_Base;
+    uint BUSD_Alloc_End;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-busnumber_resource
+struct BUSNUMBER_RESOURCE
+{
+align (1):
+    BUSNUMBER_DES      BusNumber_Header;
+    BUSNUMBER_RANGE[1] BusNumber_Data; // Flexible array
+}
+
+struct CONNECTION_DES
+{
+align (1):
+    uint  COND_Type;
+    uint  COND_Flags;
+    ubyte COND_Class;
+    ubyte COND_ClassType;
+    ubyte COND_Reserved1;
+    ubyte COND_Reserved2;
+    long  COND_Id;
+}
+
+struct CONNECTION_RESOURCE
+{
+align (1):
+    CONNECTION_DES Connection_Header;
+}
+
+struct HWPROFILEINFO_A
+{
+align (1):
+    uint     HWPI_ulHWProfile;
+    CHAR[80] HWPI_szFriendlyName;
+    uint     HWPI_dwFlags;
+}
+
+struct HWPROFILEINFO_W
+{
+align (1):
+    uint      HWPI_ulHWProfile;
+    wchar[80] HWPI_szFriendlyName;
+    uint      HWPI_dwFlags;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-cm_notify_filter
+struct CM_NOTIFY_FILTER
+{
+    uint cbSize;
+    uint Flags;
+    CM_NOTIFY_FILTER_TYPE FilterType;
+    uint Reserved;
+    union u
+    {
+        struct DeviceInterface
+        {
+            GUID ClassGuid;
+        }
+        struct DeviceHandle
+        {
+            HANDLE hTarget;
+        }
+        struct DeviceInstance
+        {
+            wchar[200] InstanceId;
+        }
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-cm_notify_event_data
+struct CM_NOTIFY_EVENT_DATA
+{
+    CM_NOTIFY_FILTER_TYPE FilterType;
+    uint Reserved;
+    union u
+    {
+        struct DeviceInterface
+        {
+            GUID     ClassGuid;
+            wchar[1] SymbolicLink; // Flexible array
+        }
+        struct DeviceHandle
+        {
+            GUID     EventGuid;
+            int      NameOffset;
+            uint     DataSize;
+            ubyte[1] Data; // Flexible array
+        }
+        struct DeviceInstance
+        {
+            wchar[1] InstanceId; // Flexible array
+        }
+    }
+}
+
+// Functions
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfInformationA(const(void)* InfSpec, uint SearchControl, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_INF_INFORMATION* ReturnBuffer, 
+                             uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfInformationW(const(void)* InfSpec, uint SearchControl, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_INF_INFORMATION* ReturnBuffer, 
+                             uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryInfFileInformationA(SP_INF_INFORMATION* InfInformation, uint InfIndex, PSTR ReturnBuffer, 
+                                   uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryInfFileInformationW(SP_INF_INFORMATION* InfInformation, uint InfIndex, PWSTR ReturnBuffer, 
+                                   uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryInfOriginalFileInformationA(SP_INF_INFORMATION* InfInformation, uint InfIndex, 
+                                           SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                           SP_ORIGINAL_FILE_INFO_A* OriginalFileInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryInfOriginalFileInformationW(SP_INF_INFORMATION* InfInformation, uint InfIndex, 
+                                           SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                           SP_ORIGINAL_FILE_INFO_W* OriginalFileInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryInfVersionInformationA(SP_INF_INFORMATION* InfInformation, uint InfIndex, const(PSTR) Key, 
+                                      PSTR ReturnBuffer, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryInfVersionInformationW(SP_INF_INFORMATION* InfInformation, uint InfIndex, const(PWSTR) Key, 
+                                      PWSTR ReturnBuffer, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfDriverStoreLocationA(const(PSTR) FileName, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                     const(PSTR) LocaleName, PSTR ReturnBuffer, uint ReturnBufferSize, 
+                                     uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfDriverStoreLocationW(const(PWSTR) FileName, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                     const(PWSTR) LocaleName, PWSTR ReturnBuffer, uint ReturnBufferSize, 
+                                     uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfPublishedNameA(const(PSTR) DriverStoreLocation, PSTR ReturnBuffer, uint ReturnBufferSize, 
+                               uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfPublishedNameW(const(PWSTR) DriverStoreLocation, PWSTR ReturnBuffer, uint ReturnBufferSize, 
+                               uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfFileListA(const(PSTR) DirectoryPath, INF_STYLE InfStyle, PSTR ReturnBuffer, uint ReturnBufferSize, 
+                          uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetInfFileListW(const(PWSTR) DirectoryPath, INF_STYLE InfStyle, PWSTR ReturnBuffer, 
+                          uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupOpenInfFileW(const(PWSTR) FileName, const(PWSTR) InfClass, INF_STYLE InfStyle, uint* ErrorLine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupOpenInfFileA(const(PSTR) FileName, const(PSTR) InfClass, INF_STYLE InfStyle, uint* ErrorLine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupOpenMasterInf();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupOpenAppendInfFileW(const(PWSTR) FileName, void* InfHandle, uint* ErrorLine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupOpenAppendInfFileA(const(PSTR) FileName, void* InfHandle, uint* ErrorLine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void SetupCloseInfFile(void* InfHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFindFirstLineA(void* InfHandle, const(PSTR) Section, const(PSTR) Key, INFCONTEXT* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFindFirstLineW(void* InfHandle, const(PWSTR) Section, const(PWSTR) Key, INFCONTEXT* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFindNextLine(INFCONTEXT* ContextIn, INFCONTEXT* ContextOut);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFindNextMatchLineA(INFCONTEXT* ContextIn, const(PSTR) Key, INFCONTEXT* ContextOut);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFindNextMatchLineW(INFCONTEXT* ContextIn, const(PWSTR) Key, INFCONTEXT* ContextOut);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetLineByIndexA(void* InfHandle, const(PSTR) Section, uint Index, INFCONTEXT* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetLineByIndexW(void* InfHandle, const(PWSTR) Section, uint Index, INFCONTEXT* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+int SetupGetLineCountA(void* InfHandle, const(PSTR) Section);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+int SetupGetLineCountW(void* InfHandle, const(PWSTR) Section);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetLineTextA(INFCONTEXT* Context, void* InfHandle, const(PSTR) Section, const(PSTR) Key, 
+                       PSTR ReturnBuffer, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetLineTextW(INFCONTEXT* Context, void* InfHandle, const(PWSTR) Section, const(PWSTR) Key, 
+                       PWSTR ReturnBuffer, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupGetFieldCount(INFCONTEXT* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetStringFieldA(INFCONTEXT* Context, uint FieldIndex, PSTR ReturnBuffer, uint ReturnBufferSize, 
+                          uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetStringFieldW(INFCONTEXT* Context, uint FieldIndex, PWSTR ReturnBuffer, uint ReturnBufferSize, 
+                          uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetIntField(INFCONTEXT* Context, uint FieldIndex, int* IntegerValue);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetMultiSzFieldA(INFCONTEXT* Context, uint FieldIndex, PSTR ReturnBuffer, uint ReturnBufferSize, 
+                           uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetMultiSzFieldW(INFCONTEXT* Context, uint FieldIndex, PWSTR ReturnBuffer, uint ReturnBufferSize, 
+                           uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetBinaryField(INFCONTEXT* Context, uint FieldIndex, 
+                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* ReturnBuffer, 
+                         uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupGetFileCompressionInfoA(const(PSTR) SourceFileName, PSTR* ActualSourceFileName, uint* SourceFileSize, 
+                                  uint* TargetFileSize, FILE_COMPRESSION_TYPE* CompressionType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupGetFileCompressionInfoW(const(PWSTR) SourceFileName, PWSTR* ActualSourceFileName, uint* SourceFileSize, 
+                                  uint* TargetFileSize, FILE_COMPRESSION_TYPE* CompressionType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetFileCompressionInfoExA(const(PSTR) SourceFileName, PSTR ActualSourceFileNameBuffer, 
+                                    uint ActualSourceFileNameBufferLen, uint* RequiredBufferLen, 
+                                    uint* SourceFileSize, uint* TargetFileSize, 
+                                    FILE_COMPRESSION_TYPE* CompressionType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetFileCompressionInfoExW(const(PWSTR) SourceFileName, PWSTR ActualSourceFileNameBuffer, 
+                                    uint ActualSourceFileNameBufferLen, uint* RequiredBufferLen, 
+                                    uint* SourceFileSize, uint* TargetFileSize, 
+                                    FILE_COMPRESSION_TYPE* CompressionType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupDecompressOrCopyFileA(const(PSTR) SourceFileName, const(PSTR) TargetFileName, 
+                                FILE_COMPRESSION_TYPE* CompressionType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupDecompressOrCopyFileW(const(PWSTR) SourceFileName, const(PWSTR) TargetFileName, 
+                                FILE_COMPRESSION_TYPE* CompressionType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetSourceFileLocationA(void* InfHandle, INFCONTEXT* InfContext, const(PSTR) FileName, uint* SourceId, 
+                                 PSTR ReturnBuffer, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetSourceFileLocationW(void* InfHandle, INFCONTEXT* InfContext, const(PWSTR) FileName, uint* SourceId, 
+                                 PWSTR ReturnBuffer, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetSourceFileSizeA(void* InfHandle, INFCONTEXT* InfContext, const(PSTR) FileName, const(PSTR) Section, 
+                             uint* FileSize, uint RoundingFactor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetSourceFileSizeW(void* InfHandle, INFCONTEXT* InfContext, const(PWSTR) FileName, const(PWSTR) Section, 
+                             uint* FileSize, uint RoundingFactor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetTargetPathA(void* InfHandle, INFCONTEXT* InfContext, const(PSTR) Section, PSTR ReturnBuffer, 
+                         uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetTargetPathW(void* InfHandle, INFCONTEXT* InfContext, const(PWSTR) Section, PWSTR ReturnBuffer, 
+                         uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetSourceListA(uint Flags, const(PSTR)* SourceList, uint SourceCount);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetSourceListW(uint Flags, const(PWSTR)* SourceList, uint SourceCount);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupCancelTemporarySourceList();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddToSourceListA(uint Flags, const(PSTR) Source);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddToSourceListW(uint Flags, const(PWSTR) Source);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveFromSourceListA(uint Flags, const(PSTR) Source);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveFromSourceListW(uint Flags, const(PWSTR) Source);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQuerySourceListA(uint Flags, const(PSTR)** List, uint* Count);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQuerySourceListW(uint Flags, const(PWSTR)** List, uint* Count);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFreeSourceListA(const(PSTR)** List, uint Count);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupFreeSourceListW(const(PWSTR)** List, uint Count);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupPromptForDiskA(HWND hwndParent, const(PSTR) DialogTitle, const(PSTR) DiskName, const(PSTR) PathToSource, 
+                         const(PSTR) FileSought, const(PSTR) TagFile, uint DiskPromptStyle, PSTR PathBuffer, 
+                         uint PathBufferSize, uint* PathRequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupPromptForDiskW(HWND hwndParent, const(PWSTR) DialogTitle, const(PWSTR) DiskName, 
+                         const(PWSTR) PathToSource, const(PWSTR) FileSought, const(PWSTR) TagFile, 
+                         uint DiskPromptStyle, PWSTR PathBuffer, uint PathBufferSize, uint* PathRequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupCopyErrorA(HWND hwndParent, const(PSTR) DialogTitle, const(PSTR) DiskName, const(PSTR) PathToSource, 
+                     const(PSTR) SourceFile, const(PSTR) TargetPathFile, uint Win32ErrorCode, uint Style, 
+                     PSTR PathBuffer, uint PathBufferSize, uint* PathRequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupCopyErrorW(HWND hwndParent, const(PWSTR) DialogTitle, const(PWSTR) DiskName, const(PWSTR) PathToSource, 
+                     const(PWSTR) SourceFile, const(PWSTR) TargetPathFile, uint Win32ErrorCode, uint Style, 
+                     PWSTR PathBuffer, uint PathBufferSize, uint* PathRequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupRenameErrorA(HWND hwndParent, const(PSTR) DialogTitle, const(PSTR) SourceFile, const(PSTR) TargetFile, 
+                       uint Win32ErrorCode, uint Style);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupRenameErrorW(HWND hwndParent, const(PWSTR) DialogTitle, const(PWSTR) SourceFile, const(PWSTR) TargetFile, 
+                       uint Win32ErrorCode, uint Style);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupDeleteErrorA(HWND hwndParent, const(PSTR) DialogTitle, const(PSTR) File, uint Win32ErrorCode, uint Style);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupDeleteErrorW(HWND hwndParent, const(PWSTR) DialogTitle, const(PWSTR) File, uint Win32ErrorCode, 
+                       uint Style);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupBackupErrorA(HWND hwndParent, const(PSTR) DialogTitle, const(PSTR) SourceFile, const(PSTR) TargetFile, 
+                       uint Win32ErrorCode, uint Style);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupBackupErrorW(HWND hwndParent, const(PWSTR) DialogTitle, const(PWSTR) SourceFile, const(PWSTR) TargetFile, 
+                       uint Win32ErrorCode, uint Style);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetDirectoryIdA(void* InfHandle, uint Id, const(PSTR) Directory);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetDirectoryIdW(void* InfHandle, uint Id, const(PWSTR) Directory);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetDirectoryIdExA(void* InfHandle, uint Id, const(PSTR) Directory, uint Flags, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved1, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetDirectoryIdExW(void* InfHandle, uint Id, const(PWSTR) Directory, uint Flags, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved1, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetSourceInfoA(void* InfHandle, uint SourceId, uint InfoDesired, PSTR ReturnBuffer, 
+                         uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetSourceInfoW(void* InfHandle, uint SourceId, uint InfoDesired, PWSTR ReturnBuffer, 
+                         uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFileA(void* InfHandle, INFCONTEXT* InfContext, const(PSTR) SourceFile, const(PSTR) SourcePathRoot, 
+                       const(PSTR) DestinationName, SP_COPY_STYLE CopyStyle, PSP_FILE_CALLBACK_A CopyMsgHandler, 
+                       void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFileW(void* InfHandle, INFCONTEXT* InfContext, const(PWSTR) SourceFile, 
+                       const(PWSTR) SourcePathRoot, const(PWSTR) DestinationName, SP_COPY_STYLE CopyStyle, 
+                       PSP_FILE_CALLBACK_W CopyMsgHandler, void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFileExA(void* InfHandle, INFCONTEXT* InfContext, const(PSTR) SourceFile, 
+                         const(PSTR) SourcePathRoot, const(PSTR) DestinationName, SP_COPY_STYLE CopyStyle, 
+                         PSP_FILE_CALLBACK_A CopyMsgHandler, void* Context, BOOL* FileWasInUse);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFileExW(void* InfHandle, INFCONTEXT* InfContext, const(PWSTR) SourceFile, 
+                         const(PWSTR) SourcePathRoot, const(PWSTR) DestinationName, SP_COPY_STYLE CopyStyle, 
+                         PSP_FILE_CALLBACK_W CopyMsgHandler, void* Context, BOOL* FileWasInUse);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupOpenFileQueue();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupCloseFileQueue(void* QueueHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetFileQueueAlternatePlatformA(void* QueueHandle, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                         const(PSTR) AlternateDefaultCatalogFile);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetFileQueueAlternatePlatformW(void* QueueHandle, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                         const(PWSTR) AlternateDefaultCatalogFile);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetPlatformPathOverrideA(const(PSTR) Override);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetPlatformPathOverrideW(const(PWSTR) Override);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueCopyA(void* QueueHandle, const(PSTR) SourceRootPath, const(PSTR) SourcePath, 
+                     const(PSTR) SourceFilename, const(PSTR) SourceDescription, const(PSTR) SourceTagfile, 
+                     const(PSTR) TargetDirectory, const(PSTR) TargetFilename, uint CopyStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueCopyW(void* QueueHandle, const(PWSTR) SourceRootPath, const(PWSTR) SourcePath, 
+                     const(PWSTR) SourceFilename, const(PWSTR) SourceDescription, const(PWSTR) SourceTagfile, 
+                     const(PWSTR) TargetDirectory, const(PWSTR) TargetFilename, uint CopyStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueCopyIndirectA(SP_FILE_COPY_PARAMS_A* CopyParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueCopyIndirectW(SP_FILE_COPY_PARAMS_W* CopyParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueDefaultCopyA(void* QueueHandle, void* InfHandle, const(PSTR) SourceRootPath, 
+                            const(PSTR) SourceFilename, const(PSTR) TargetFilename, uint CopyStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueDefaultCopyW(void* QueueHandle, void* InfHandle, const(PWSTR) SourceRootPath, 
+                            const(PWSTR) SourceFilename, const(PWSTR) TargetFilename, uint CopyStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueCopySectionA(void* QueueHandle, const(PSTR) SourceRootPath, void* InfHandle, void* ListInfHandle, 
+                            const(PSTR) Section, uint CopyStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueCopySectionW(void* QueueHandle, const(PWSTR) SourceRootPath, void* InfHandle, void* ListInfHandle, 
+                            const(PWSTR) Section, uint CopyStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueDeleteA(void* QueueHandle, const(PSTR) PathPart1, const(PSTR) PathPart2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueDeleteW(void* QueueHandle, const(PWSTR) PathPart1, const(PWSTR) PathPart2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueDeleteSectionA(void* QueueHandle, void* InfHandle, void* ListInfHandle, const(PSTR) Section);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueDeleteSectionW(void* QueueHandle, void* InfHandle, void* ListInfHandle, const(PWSTR) Section);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueRenameA(void* QueueHandle, const(PSTR) SourcePath, const(PSTR) SourceFilename, 
+                       const(PSTR) TargetPath, const(PSTR) TargetFilename);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueRenameW(void* QueueHandle, const(PWSTR) SourcePath, const(PWSTR) SourceFilename, 
+                       const(PWSTR) TargetPath, const(PWSTR) TargetFilename);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueRenameSectionA(void* QueueHandle, void* InfHandle, void* ListInfHandle, const(PSTR) Section);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueueRenameSectionW(void* QueueHandle, void* InfHandle, void* ListInfHandle, const(PWSTR) Section);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupCommitFileQueueA(HWND Owner, void* QueueHandle, PSP_FILE_CALLBACK_A MsgHandler, void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupCommitFileQueueW(HWND Owner, void* QueueHandle, PSP_FILE_CALLBACK_W MsgHandler, void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupScanFileQueueA(void* FileQueue, SETUPSCANFILEQUEUE_FLAGS Flags, HWND Window, 
+                         PSP_FILE_CALLBACK_A CallbackRoutine, void* CallbackContext, uint* Result);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupScanFileQueueW(void* FileQueue, SETUPSCANFILEQUEUE_FLAGS Flags, HWND Window, 
+                         PSP_FILE_CALLBACK_W CallbackRoutine, void* CallbackContext, uint* Result);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetFileQueueCount(void* FileQueue, uint SubQueueFileOp, uint* NumOperations);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetFileQueueFlags(void* FileQueue, uint* Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetFileQueueFlags(void* FileQueue, uint FlagMask, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupCopyOEMInfA(const(PSTR) SourceInfFileName, const(PSTR) OEMSourceMediaLocation, 
+                      OEM_SOURCE_MEDIA_TYPE OEMSourceMediaType, SP_COPY_STYLE CopyStyle, PSTR DestinationInfFileName, 
+                      uint DestinationInfFileNameSize, uint* RequiredSize, PSTR* DestinationInfFileNameComponent);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupCopyOEMInfW(const(PWSTR) SourceInfFileName, const(PWSTR) OEMSourceMediaLocation, 
+                      OEM_SOURCE_MEDIA_TYPE OEMSourceMediaType, SP_COPY_STYLE CopyStyle, 
+                      PWSTR DestinationInfFileName, uint DestinationInfFileNameSize, uint* RequiredSize, 
+                      PWSTR* DestinationInfFileNameComponent);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupUninstallOEMInfA(const(PSTR) InfFileName, uint Flags, 
+                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupUninstallOEMInfW(const(PWSTR) InfFileName, uint Flags, 
+                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupUninstallNewlyCopiedInfs(void* FileQueue, uint Flags, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupCreateDiskSpaceListA(/*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2, 
+                                uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupCreateDiskSpaceListW(/*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2, 
+                                uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupDuplicateDiskSpaceListA(void* DiskSpace, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2, 
+                                   uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupDuplicateDiskSpaceListW(void* DiskSpace, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2, 
+                                   uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDestroyDiskSpaceList(void* DiskSpace);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryDrivesInDiskSpaceListA(void* DiskSpace, PSTR ReturnBuffer, uint ReturnBufferSize, 
+                                      uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryDrivesInDiskSpaceListW(void* DiskSpace, PWSTR ReturnBuffer, uint ReturnBufferSize, 
+                                      uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQuerySpaceRequiredOnDriveA(void* DiskSpace, const(PSTR) DriveSpec, long* SpaceRequired, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQuerySpaceRequiredOnDriveW(void* DiskSpace, const(PWSTR) DriveSpec, long* SpaceRequired, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAdjustDiskSpaceListA(void* DiskSpace, const(PSTR) DriveRoot, long Amount, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAdjustDiskSpaceListW(void* DiskSpace, const(PWSTR) DriveRoot, long Amount, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddToDiskSpaceListA(void* DiskSpace, const(PSTR) TargetFilespec, long FileSize, 
+                              SETUP_FILE_OPERATION Operation, 
+                              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddToDiskSpaceListW(void* DiskSpace, const(PWSTR) TargetFilespec, long FileSize, 
+                              SETUP_FILE_OPERATION Operation, 
+                              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddSectionToDiskSpaceListA(void* DiskSpace, void* InfHandle, void* ListInfHandle, 
+                                     const(PSTR) SectionName, SETUP_FILE_OPERATION Operation, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddSectionToDiskSpaceListW(void* DiskSpace, void* InfHandle, void* ListInfHandle, 
+                                     const(PWSTR) SectionName, SETUP_FILE_OPERATION Operation, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddInstallSectionToDiskSpaceListA(void* DiskSpace, void* InfHandle, void* LayoutInfHandle, 
+                                            const(PSTR) SectionName, 
+                                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupAddInstallSectionToDiskSpaceListW(void* DiskSpace, void* InfHandle, void* LayoutInfHandle, 
+                                            const(PWSTR) SectionName, 
+                                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveFromDiskSpaceListA(void* DiskSpace, const(PSTR) TargetFilespec, SETUP_FILE_OPERATION Operation, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveFromDiskSpaceListW(void* DiskSpace, const(PWSTR) TargetFilespec, SETUP_FILE_OPERATION Operation, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveSectionFromDiskSpaceListA(void* DiskSpace, void* InfHandle, void* ListInfHandle, 
+                                          const(PSTR) SectionName, SETUP_FILE_OPERATION Operation, 
+                                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveSectionFromDiskSpaceListW(void* DiskSpace, void* InfHandle, void* ListInfHandle, 
+                                          const(PWSTR) SectionName, SETUP_FILE_OPERATION Operation, 
+                                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveInstallSectionFromDiskSpaceListA(void* DiskSpace, void* InfHandle, void* LayoutInfHandle, 
+                                                 const(PSTR) SectionName, 
+                                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveInstallSectionFromDiskSpaceListW(void* DiskSpace, void* InfHandle, void* LayoutInfHandle, 
+                                                 const(PWSTR) SectionName, 
+                                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupIterateCabinetA(const(PSTR) CabinetFile, 
+                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved, 
+                          PSP_FILE_CALLBACK_A MsgHandler, void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupIterateCabinetW(const(PWSTR) CabinetFile, 
+                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved, 
+                          PSP_FILE_CALLBACK_W MsgHandler, void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+int SetupPromptReboot(void* FileQueue, HWND Owner, BOOL ScanOnly);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupInitDefaultQueueCallback(HWND OwnerWindow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupInitDefaultQueueCallbackEx(HWND OwnerWindow, HWND AlternateProgressWindow, uint ProgressMessage, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved1, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void SetupTermDefaultQueueCallback(void* Context);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupDefaultQueueCallbackA(void* Context, uint Notification, size_t Param1, size_t Param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+uint SetupDefaultQueueCallbackW(void* Context, uint Notification, size_t Param1, size_t Param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFromInfSectionA(HWND Owner, void* InfHandle, const(PSTR) SectionName, uint Flags, 
+                                 HKEY RelativeKeyRoot, const(PSTR) SourceRootPath, uint CopyFlags, 
+                                 PSP_FILE_CALLBACK_A MsgHandler, void* Context, HDEVINFO DeviceInfoSet, 
+                                 SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFromInfSectionW(HWND Owner, void* InfHandle, const(PWSTR) SectionName, uint Flags, 
+                                 HKEY RelativeKeyRoot, const(PWSTR) SourceRootPath, uint CopyFlags, 
+                                 PSP_FILE_CALLBACK_W MsgHandler, void* Context, HDEVINFO DeviceInfoSet, 
+                                 SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFilesFromInfSectionA(void* InfHandle, void* LayoutInfHandle, void* FileQueue, 
+                                      const(PSTR) SectionName, const(PSTR) SourceRootPath, uint CopyFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallFilesFromInfSectionW(void* InfHandle, void* LayoutInfHandle, void* FileQueue, 
+                                      const(PWSTR) SectionName, const(PWSTR) SourceRootPath, uint CopyFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallServicesFromInfSectionA(void* InfHandle, const(PSTR) SectionName, SPSVCINST_FLAGS Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallServicesFromInfSectionW(void* InfHandle, const(PWSTR) SectionName, SPSVCINST_FLAGS Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallServicesFromInfSectionExA(void* InfHandle, const(PSTR) SectionName, SPSVCINST_FLAGS Flags, 
+                                           HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupInstallServicesFromInfSectionExW(void* InfHandle, const(PWSTR) SectionName, SPSVCINST_FLAGS Flags, 
+                                           HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void InstallHinfSectionA(HWND Window, HINSTANCE ModuleHandle, const(PSTR) CommandLine, int ShowCommand);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void InstallHinfSectionW(HWND Window, HINSTANCE ModuleHandle, const(PWSTR) CommandLine, int ShowCommand);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupInitializeFileLogA(const(PSTR) LogFileName, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void* SetupInitializeFileLogW(const(PWSTR) LogFileName, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupTerminateFileLog(void* FileLogHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupLogFileA(void* FileLogHandle, const(PSTR) LogSectionName, const(PSTR) SourceFilename, 
+                   const(PSTR) TargetFilename, uint Checksum, const(PSTR) DiskTagfile, const(PSTR) DiskDescription, 
+                   const(PSTR) OtherInfo, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupLogFileW(void* FileLogHandle, const(PWSTR) LogSectionName, const(PWSTR) SourceFilename, 
+                   const(PWSTR) TargetFilename, uint Checksum, const(PWSTR) DiskTagfile, 
+                   const(PWSTR) DiskDescription, const(PWSTR) OtherInfo, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveFileLogEntryA(void* FileLogHandle, const(PSTR) LogSectionName, const(PSTR) TargetFilename);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupRemoveFileLogEntryW(void* FileLogHandle, const(PWSTR) LogSectionName, const(PWSTR) TargetFilename);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryFileLogA(void* FileLogHandle, const(PSTR) LogSectionName, const(PSTR) TargetFilename, 
+                        SetupFileLogInfo DesiredInfo, PSTR DataOut, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupQueryFileLogW(void* FileLogHandle, const(PWSTR) LogSectionName, const(PWSTR) TargetFilename, 
+                        SetupFileLogInfo DesiredInfo, PWSTR DataOut, uint ReturnBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupOpenLog(BOOL Erase);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupLogErrorA(const(PSTR) MessageString, uint Severity);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupLogErrorW(const(PWSTR) MessageString, uint Severity);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+void SetupCloseLog();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+ulong SetupGetThreadLogToken();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+void SetupSetThreadLogToken(ulong LogToken);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+void SetupWriteTextLog(ulong LogToken, uint Category, uint Flags, const(PSTR) MessageStr);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+void SetupWriteTextLogError(ulong LogToken, uint Category, uint LogFlags, uint Error, const(PSTR) MessageStr);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+void SetupWriteTextLogInfLine(ulong LogToken, uint Flags, void* InfHandle, INFCONTEXT* Context);
+
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetBackupInformationA(void* QueueHandle, SP_BACKUP_QUEUE_PARAMS_V2_A* BackupParams);
+
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetBackupInformationW(void* QueueHandle, SP_BACKUP_QUEUE_PARAMS_V2_W* BackupParams);
+
+@DllImport("SETUPAPI.dll")
+BOOL SetupPrepareQueueForRestoreA(void* QueueHandle, const(PSTR) BackupPath, uint RestoreFlags);
+
+@DllImport("SETUPAPI.dll")
+BOOL SetupPrepareQueueForRestoreW(void* QueueHandle, const(PWSTR) BackupPath, uint RestoreFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupSetNonInteractiveMode(BOOL NonInteractiveFlag);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupGetNonInteractiveMode();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiCreateDeviceInfoList(const(GUID)* ClassGuid, HWND hwndParent);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiCreateDeviceInfoListExA(const(GUID)* ClassGuid, HWND hwndParent, const(PSTR) MachineName, 
+                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiCreateDeviceInfoListExW(const(GUID)* ClassGuid, HWND hwndParent, const(PWSTR) MachineName, 
+                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInfoListClass(HDEVINFO DeviceInfoSet, GUID* ClassGuid);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInfoListDetailA(HDEVINFO DeviceInfoSet, 
+                                     SP_DEVINFO_LIST_DETAIL_DATA_A* DeviceInfoSetDetailData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInfoListDetailW(HDEVINFO DeviceInfoSet, 
+                                     SP_DEVINFO_LIST_DETAIL_DATA_W* DeviceInfoSetDetailData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiCreateDeviceInfoA(HDEVINFO DeviceInfoSet, const(PSTR) DeviceName, const(GUID)* ClassGuid, 
+                              const(PSTR) DeviceDescription, HWND hwndParent, 
+                              SETUP_DI_DEVICE_CREATION_FLAGS CreationFlags, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiCreateDeviceInfoW(HDEVINFO DeviceInfoSet, const(PWSTR) DeviceName, const(GUID)* ClassGuid, 
+                              const(PWSTR) DeviceDescription, HWND hwndParent, 
+                              SETUP_DI_DEVICE_CREATION_FLAGS CreationFlags, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiOpenDeviceInfoA(HDEVINFO DeviceInfoSet, const(PSTR) DeviceInstanceId, HWND hwndParent, uint OpenFlags, 
+                            SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiOpenDeviceInfoW(HDEVINFO DeviceInfoSet, const(PWSTR) DeviceInstanceId, HWND hwndParent, uint OpenFlags, 
+                            SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInstanceIdA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, PSTR DeviceInstanceId, 
+                                 uint DeviceInstanceIdSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInstanceIdW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, PWSTR DeviceInstanceId, 
+                                 uint DeviceInstanceIdSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDeleteDeviceInfo(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiEnumDeviceInfo(HDEVINFO DeviceInfoSet, uint MemberIndex, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDestroyDeviceInfoList(HDEVINFO DeviceInfoSet);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiEnumDeviceInterfaces(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                 const(GUID)* InterfaceClassGuid, uint MemberIndex, 
+                                 SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiCreateDeviceInterfaceA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                   const(GUID)* InterfaceClassGuid, const(PSTR) ReferenceString, uint CreationFlags, 
+                                   SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiCreateDeviceInterfaceW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                   const(GUID)* InterfaceClassGuid, const(PWSTR) ReferenceString, uint CreationFlags, 
+                                   SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiOpenDeviceInterfaceA(HDEVINFO DeviceInfoSet, const(PSTR) DevicePath, uint OpenFlags, 
+                                 SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiOpenDeviceInterfaceW(HDEVINFO DeviceInfoSet, const(PWSTR) DevicePath, uint OpenFlags, 
+                                 SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInterfaceAlias(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                    const(GUID)* AliasInterfaceClassGuid, 
+                                    SP_DEVICE_INTERFACE_DATA* AliasDeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDeleteDeviceInterfaceData(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiRemoveDeviceInterface(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInterfaceDetailA(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_DEVICE_INTERFACE_DETAIL_DATA_A* DeviceInterfaceDetailData, 
+                                      uint DeviceInterfaceDetailDataSize, uint* RequiredSize, 
+                                      SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInterfaceDetailW(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_DEVICE_INTERFACE_DETAIL_DATA_W* DeviceInterfaceDetailData, 
+                                      uint DeviceInterfaceDetailDataSize, uint* RequiredSize, 
+                                      SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallDeviceInterfaces(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDeviceInterfaceDefault(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                      uint Flags, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiRegisterDeviceInfo(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Flags, 
+                               PSP_DETSIG_CMPPROC CompareProc, void* CompareContext, 
+                               SP_DEVINFO_DATA* DupDeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiBuildDriverInfoList(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                SETUP_DI_DRIVER_TYPE DriverType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiCancelDriverInfoSearch(HDEVINFO DeviceInfoSet);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiEnumDriverInfoA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                            SETUP_DI_DRIVER_TYPE DriverType, uint MemberIndex, SP_DRVINFO_DATA_V2_A* DriverInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiEnumDriverInfoW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                            SETUP_DI_DRIVER_TYPE DriverType, uint MemberIndex, SP_DRVINFO_DATA_V2_W* DriverInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetSelectedDriverA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                               SP_DRVINFO_DATA_V2_A* DriverInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetSelectedDriverW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                               SP_DRVINFO_DATA_V2_W* DriverInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetSelectedDriverA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                               SP_DRVINFO_DATA_V2_A* DriverInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetSelectedDriverW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                               SP_DRVINFO_DATA_V2_W* DriverInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDriverInfoDetailA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                 SP_DRVINFO_DATA_V2_A* DriverInfoData, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/SP_DRVINFO_DETAIL_DATA_A* DriverInfoDetailData, 
+                                 uint DriverInfoDetailDataSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDriverInfoDetailW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                 SP_DRVINFO_DATA_V2_W* DriverInfoData, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/SP_DRVINFO_DETAIL_DATA_W* DriverInfoDetailData, 
+                                 uint DriverInfoDetailDataSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDestroyDriverInfoList(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                  SETUP_DI_DRIVER_TYPE DriverType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiGetClassDevsA(const(GUID)* ClassGuid, const(PSTR) Enumerator, HWND hwndParent, 
+                              SETUP_DI_GET_CLASS_DEVS_FLAGS Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiGetClassDevsW(const(GUID)* ClassGuid, const(PWSTR) Enumerator, HWND hwndParent, 
+                              SETUP_DI_GET_CLASS_DEVS_FLAGS Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiGetClassDevsExA(const(GUID)* ClassGuid, const(PSTR) Enumerator, HWND hwndParent, 
+                                SETUP_DI_GET_CLASS_DEVS_FLAGS Flags, HDEVINFO DeviceInfoSet, const(PSTR) MachineName, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HDEVINFO SetupDiGetClassDevsExW(const(GUID)* ClassGuid, const(PWSTR) Enumerator, HWND hwndParent, 
+                                SETUP_DI_GET_CLASS_DEVS_FLAGS Flags, HDEVINFO DeviceInfoSet, 
+                                const(PWSTR) MachineName, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetINFClassA(const(PSTR) InfName, GUID* ClassGuid, PSTR ClassName, uint ClassNameSize, 
+                         uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetINFClassW(const(PWSTR) InfName, GUID* ClassGuid, PWSTR ClassName, uint ClassNameSize, 
+                         uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiBuildClassInfoList(uint Flags, GUID* ClassGuidList, uint ClassGuidListSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiBuildClassInfoListExA(uint Flags, GUID* ClassGuidList, uint ClassGuidListSize, uint* RequiredSize, 
+                                  const(PSTR) MachineName, 
+                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiBuildClassInfoListExW(uint Flags, GUID* ClassGuidList, uint ClassGuidListSize, uint* RequiredSize, 
+                                  const(PWSTR) MachineName, 
+                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassDescriptionA(const(GUID)* ClassGuid, PSTR ClassDescription, uint ClassDescriptionSize, 
+                                 uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassDescriptionW(const(GUID)* ClassGuid, PWSTR ClassDescription, uint ClassDescriptionSize, 
+                                 uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassDescriptionExA(const(GUID)* ClassGuid, PSTR ClassDescription, uint ClassDescriptionSize, 
+                                   uint* RequiredSize, const(PSTR) MachineName, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassDescriptionExW(const(GUID)* ClassGuid, PWSTR ClassDescription, uint ClassDescriptionSize, 
+                                   uint* RequiredSize, const(PWSTR) MachineName, 
+                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiCallClassInstaller(DI_FUNCTION InstallFunction, HDEVINFO DeviceInfoSet, 
+                               SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSelectDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSelectBestCompatDrv(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallDriverFiles(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiRegisterCoDeviceInstallers(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiRemoveDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiUnremoveDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/nf-setupapi-setupdirestartdevices
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiRestartDevices(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiChangeState(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallClassA(HWND hwndParent, const(PSTR) InfFileName, uint Flags, void* FileQueue);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallClassW(HWND hwndParent, const(PWSTR) InfFileName, uint Flags, void* FileQueue);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallClassExA(HWND hwndParent, const(PSTR) InfFileName, uint Flags, void* FileQueue, 
+                            const(GUID)* InterfaceClassGuid, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiInstallClassExW(HWND hwndParent, const(PWSTR) InfFileName, uint Flags, void* FileQueue, 
+                            const(GUID)* InterfaceClassGuid, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved1, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiOpenClassRegKey(const(GUID)* ClassGuid, uint samDesired);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiOpenClassRegKeyExA(const(GUID)* ClassGuid, uint samDesired, uint Flags, const(PSTR) MachineName, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiOpenClassRegKeyExW(const(GUID)* ClassGuid, uint samDesired, uint Flags, const(PWSTR) MachineName, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiCreateDeviceInterfaceRegKeyA(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                         /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved, 
+                                         uint samDesired, void* InfHandle, const(PSTR) InfSectionName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiCreateDeviceInterfaceRegKeyW(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                         /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved, 
+                                         uint samDesired, void* InfHandle, const(PWSTR) InfSectionName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiOpenDeviceInterfaceRegKey(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved, 
+                                      uint samDesired);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDeleteDeviceInterfaceRegKey(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiCreateDevRegKeyA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Scope, uint HwProfile, 
+                             uint KeyType, void* InfHandle, const(PSTR) InfSectionName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiCreateDevRegKeyW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Scope, uint HwProfile, 
+                             uint KeyType, void* InfHandle, const(PWSTR) InfSectionName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+HKEY SetupDiOpenDevRegKey(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Scope, uint HwProfile, 
+                          uint KeyType, uint samDesired);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDeleteDevRegKey(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Scope, uint HwProfile, 
+                            uint KeyType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileList(uint* HwProfileList, uint HwProfileListSize, uint* RequiredSize, 
+                             uint* CurrentlyActiveIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileListExA(uint* HwProfileList, uint HwProfileListSize, uint* RequiredSize, 
+                                uint* CurrentlyActiveIndex, const(PSTR) MachineName, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileListExW(uint* HwProfileList, uint HwProfileListSize, uint* RequiredSize, 
+                                uint* CurrentlyActiveIndex, const(PWSTR) MachineName, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDevicePropertyKeys(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                  DEVPROPKEY* PropertyKeyArray, uint PropertyKeyCount, 
+                                  uint* RequiredPropertyKeyCount, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDevicePropertyW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                               const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* PropertyBuffer, 
+                               uint PropertyBufferSize, uint* RequiredSize, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDevicePropertyW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                               const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(ubyte)* PropertyBuffer, 
+                               uint PropertyBufferSize, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInterfacePropertyKeys(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                           DEVPROPKEY* PropertyKeyArray, uint PropertyKeyCount, 
+                                           uint* RequiredPropertyKeyCount, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInterfacePropertyW(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                        const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* PropertyBuffer, 
+                                        uint PropertyBufferSize, uint* RequiredSize, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDeviceInterfacePropertyW(HDEVINFO DeviceInfoSet, SP_DEVICE_INTERFACE_DATA* DeviceInterfaceData, 
+                                        const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(ubyte)* PropertyBuffer, 
+                                        uint PropertyBufferSize, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassPropertyKeys(const(GUID)* ClassGuid, DEVPROPKEY* PropertyKeyArray, uint PropertyKeyCount, 
+                                 uint* RequiredPropertyKeyCount, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassPropertyKeysExW(const(GUID)* ClassGuid, DEVPROPKEY* PropertyKeyArray, uint PropertyKeyCount, 
+                                    uint* RequiredPropertyKeyCount, uint Flags, const(PWSTR) MachineName, 
+                                    /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassPropertyW(const(GUID)* ClassGuid, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                              uint PropertyBufferSize, uint* RequiredSize, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassPropertyExW(const(GUID)* ClassGuid, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                uint PropertyBufferSize, uint* RequiredSize, uint Flags, const(PWSTR) MachineName, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetClassPropertyW(const(GUID)* ClassGuid, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                              uint PropertyBufferSize, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetClassPropertyExW(const(GUID)* ClassGuid, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                uint PropertyBufferSize, uint Flags, const(PWSTR) MachineName, 
+                                /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceRegistryPropertyA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                       SETUP_DI_REGISTRY_PROPERTY Property, uint* PropertyRegDataType, 
+                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* PropertyBuffer, 
+                                       uint PropertyBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceRegistryPropertyW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                       SETUP_DI_REGISTRY_PROPERTY Property, uint* PropertyRegDataType, 
+                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* PropertyBuffer, 
+                                       uint PropertyBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassRegistryPropertyA(const(GUID)* ClassGuid, uint Property, uint* PropertyRegDataType, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                      uint PropertyBufferSize, uint* RequiredSize, const(PSTR) MachineName, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassRegistryPropertyW(const(GUID)* ClassGuid, uint Property, uint* PropertyRegDataType, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                      uint PropertyBufferSize, uint* RequiredSize, const(PWSTR) MachineName, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDeviceRegistryPropertyA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                       SETUP_DI_REGISTRY_PROPERTY Property, 
+                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                       uint PropertyBufferSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDeviceRegistryPropertyW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                       SETUP_DI_REGISTRY_PROPERTY Property, 
+                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                       uint PropertyBufferSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetClassRegistryPropertyA(const(GUID)* ClassGuid, uint Property, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(ubyte)* PropertyBuffer, 
+                                      uint PropertyBufferSize, const(PSTR) MachineName, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetClassRegistryPropertyW(const(GUID)* ClassGuid, uint Property, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(ubyte)* PropertyBuffer, 
+                                      uint PropertyBufferSize, const(PWSTR) MachineName, 
+                                      /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInstallParamsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DEVINSTALL_PARAMS_A* DeviceInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDeviceInstallParamsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DEVINSTALL_PARAMS_W* DeviceInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassInstallParamsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_CLASSINSTALL_HEADER* ClassInstallParams, 
+                                   uint ClassInstallParamsSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassInstallParamsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_CLASSINSTALL_HEADER* ClassInstallParams, 
+                                   uint ClassInstallParamsSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDeviceInstallParamsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DEVINSTALL_PARAMS_A* DeviceInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDeviceInstallParamsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DEVINSTALL_PARAMS_W* DeviceInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetClassInstallParamsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_CLASSINSTALL_HEADER* ClassInstallParams, 
+                                   uint ClassInstallParamsSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetClassInstallParamsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/SP_CLASSINSTALL_HEADER* ClassInstallParams, 
+                                   uint ClassInstallParamsSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDriverInstallParamsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DRVINFO_DATA_V2_A* DriverInfoData, SP_DRVINSTALL_PARAMS* DriverInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetDriverInstallParamsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DRVINFO_DATA_V2_W* DriverInfoData, SP_DRVINSTALL_PARAMS* DriverInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDriverInstallParamsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DRVINFO_DATA_V2_A* DriverInfoData, SP_DRVINSTALL_PARAMS* DriverInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetDriverInstallParamsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_DRVINFO_DATA_V2_W* DriverInfoData, SP_DRVINSTALL_PARAMS* DriverInstallParams);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiLoadClassIcon(const(GUID)* ClassGuid, HICON* LargeIcon, int* MiniIconIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiLoadDeviceIcon(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint cxIcon, uint cyIcon, 
+                           uint Flags, HICON* hIcon);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+int SetupDiDrawMiniIcon(HDC hdc, RECT rc, int MiniIconIndex, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassBitmapIndex(const(GUID)* ClassGuid, int* MiniIconIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassImageList(SP_CLASSIMAGELIST_DATA* ClassImageListData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassImageListExA(SP_CLASSIMAGELIST_DATA* ClassImageListData, const(PSTR) MachineName, 
+                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassImageListExW(SP_CLASSIMAGELIST_DATA* ClassImageListData, const(PWSTR) MachineName, 
+                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassImageIndex(SP_CLASSIMAGELIST_DATA* ClassImageListData, const(GUID)* ClassGuid, int* ImageIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiDestroyClassImageList(SP_CLASSIMAGELIST_DATA* ClassImageListData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassDevPropertySheetsA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                       PROPSHEETHEADERA_V2* PropertySheetHeader, 
+                                       uint PropertySheetHeaderPageListSize, uint* RequiredSize, 
+                                       uint PropertySheetType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetClassDevPropertySheetsW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                       PROPSHEETHEADERW_V2* PropertySheetHeader, 
+                                       uint PropertySheetHeaderPageListSize, uint* RequiredSize, 
+                                       uint PropertySheetType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiAskForOEMDisk(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSelectOEMDrv(HWND hwndParent, HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassNameFromGuidA(const(GUID)* ClassGuid, PSTR ClassName, uint ClassNameSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassNameFromGuidW(const(GUID)* ClassGuid, PWSTR ClassName, uint ClassNameSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassNameFromGuidExA(const(GUID)* ClassGuid, PSTR ClassName, uint ClassNameSize, uint* RequiredSize, 
+                                 const(PSTR) MachineName, 
+                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassNameFromGuidExW(const(GUID)* ClassGuid, PWSTR ClassName, uint ClassNameSize, uint* RequiredSize, 
+                                 const(PWSTR) MachineName, 
+                                 /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassGuidsFromNameA(const(PSTR) ClassName, GUID* ClassGuidList, uint ClassGuidListSize, 
+                                uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassGuidsFromNameW(const(PWSTR) ClassName, GUID* ClassGuidList, uint ClassGuidListSize, 
+                                uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassGuidsFromNameExA(const(PSTR) ClassName, GUID* ClassGuidList, uint ClassGuidListSize, 
+                                  uint* RequiredSize, const(PSTR) MachineName, 
+                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiClassGuidsFromNameExW(const(PWSTR) ClassName, GUID* ClassGuidList, uint ClassGuidListSize, 
+                                  uint* RequiredSize, const(PWSTR) MachineName, 
+                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileFriendlyNameA(uint HwProfile, PSTR FriendlyName, uint FriendlyNameSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileFriendlyNameW(uint HwProfile, PWSTR FriendlyName, uint FriendlyNameSize, 
+                                      uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileFriendlyNameExA(uint HwProfile, PSTR FriendlyName, uint FriendlyNameSize, 
+                                        uint* RequiredSize, const(PSTR) MachineName, 
+                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetHwProfileFriendlyNameExW(uint HwProfile, PWSTR FriendlyName, uint FriendlyNameSize, 
+                                        uint* RequiredSize, const(PWSTR) MachineName, 
+                                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+@DllImport("SETUPAPI.dll")
+HPROPSHEETPAGE SetupDiGetWizardPage(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                    SP_INSTALLWIZARD_DATA* InstallWizardData, uint PageType, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetSelectedDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiSetSelectedDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetActualModelsSectionA(INFCONTEXT* Context, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                    PSTR InfSectionWithExt, uint InfSectionWithExtSize, uint* RequiredSize, 
+                                    /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetActualModelsSectionW(INFCONTEXT* Context, SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, 
+                                    PWSTR InfSectionWithExt, uint InfSectionWithExtSize, uint* RequiredSize, 
+                                    /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetActualSectionToInstallA(void* InfHandle, const(PSTR) InfSectionName, PSTR InfSectionWithExt, 
+                                       uint InfSectionWithExtSize, uint* RequiredSize, PSTR* Extension);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetActualSectionToInstallW(void* InfHandle, const(PWSTR) InfSectionName, PWSTR InfSectionWithExt, 
+                                       uint InfSectionWithExtSize, uint* RequiredSize, PWSTR* Extension);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetActualSectionToInstallExA(void* InfHandle, const(PSTR) InfSectionName, 
+                                         SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, PSTR InfSectionWithExt, 
+                                         uint InfSectionWithExtSize, uint* RequiredSize, PSTR* Extension, 
+                                         /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetActualSectionToInstallExW(void* InfHandle, const(PWSTR) InfSectionName, 
+                                         SP_ALTPLATFORM_INFO_V2* AlternatePlatformInfo, PWSTR InfSectionWithExt, 
+                                         uint InfSectionWithExtSize, uint* RequiredSize, PWSTR* Extension, 
+                                         /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupEnumInfSectionsA(void* InfHandle, uint Index, PSTR Buffer, uint Size, uint* SizeNeeded);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupEnumInfSectionsW(void* InfHandle, uint Index, PWSTR Buffer, uint Size, uint* SizeNeeded);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupVerifyInfFileA(const(PSTR) InfName, SP_ALTPLATFORM_INFO_V2* AltPlatformInfo, 
+                         SP_INF_SIGNER_INFO_V2_A* InfSignerInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupVerifyInfFileW(const(PWSTR) InfName, SP_ALTPLATFORM_INFO_V2* AltPlatformInfo, 
+                         SP_INF_SIGNER_INFO_V2_W* InfSignerInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetCustomDevicePropertyA(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                     const(PSTR) CustomPropertyName, uint Flags, uint* PropertyRegDataType, 
+                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/ubyte* PropertyBuffer, 
+                                     uint PropertyBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupDiGetCustomDevicePropertyW(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                                     const(PWSTR) CustomPropertyName, uint Flags, uint* PropertyRegDataType, 
+                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/ubyte* PropertyBuffer, 
+                                     uint PropertyBufferSize, uint* RequiredSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupConfigureWmiFromInfSectionA(void* InfHandle, const(PSTR) SectionName, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
+@DllImport("SETUPAPI.dll")
+BOOL SetupConfigureWmiFromInfSectionW(void* InfHandle, const(PWSTR) SectionName, uint Flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_Empty_Log_Conf(size_t* plcLogConf, uint dnDevInst, PRIORITY Priority, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_Empty_Log_Conf_Ex(size_t* plcLogConf, uint dnDevInst, PRIORITY Priority, uint ulFlags, 
+                                   ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_IDA(uint dnDevInst, PSTR pszID, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_IDW(uint dnDevInst, PWSTR pszID, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_ID_ExA(uint dnDevInst, PSTR pszID, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_ID_ExW(uint dnDevInst, PWSTR pszID, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_add_range
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_Range(ulong ullStartValue, ulong ullEndValue, size_t rlh, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_Res_Des(size_t* prdResDes, size_t lcLogConf, uint ResourceID, 
+                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* ResourceData, 
+                         uint ResourceLen, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Add_Res_Des_Ex(size_t* prdResDes, size_t lcLogConf, uint ResourceID, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* ResourceData, 
+                            uint ResourceLen, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Connect_MachineA(const(PSTR) UNCServerName, ptrdiff_t* phMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Connect_MachineW(const(PWSTR) UNCServerName, ptrdiff_t* phMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Create_DevNodeA(uint* pdnDevInst, PSTR pDeviceID, uint dnParent, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Create_DevNodeW(uint* pdnDevInst, PWSTR pDeviceID, uint dnParent, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Create_DevNode_ExA(uint* pdnDevInst, PSTR pDeviceID, uint dnParent, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Create_DevNode_ExW(uint* pdnDevInst, PWSTR pDeviceID, uint dnParent, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_create_range_list
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Create_Range_List(size_t* prlh, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Class_Key(GUID* ClassGuid, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_delete_class_key_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Class_Key_Ex(GUID* ClassGuid, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_DevNode_Key(uint dnDevNode, uint ulHardwareProfile, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_delete_devnode_key_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_DevNode_Key_Ex(uint dnDevNode, uint ulHardwareProfile, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_delete_range
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Range(ulong ullStartValue, ulong ullEndValue, size_t rlh, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_detect_resource_conflict
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Detect_Resource_Conflict(uint dnDevInst, uint ResourceID, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* ResourceData, 
+                                      uint ResourceLen, BOOL* pbConflictDetected, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_detect_resource_conflict_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Detect_Resource_Conflict_Ex(uint dnDevInst, uint ResourceID, 
+                                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* ResourceData, 
+                                         uint ResourceLen, BOOL* pbConflictDetected, uint ulFlags, 
+                                         ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Disable_DevNode(uint dnDevInst, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_disable_devnode_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Disable_DevNode_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Disconnect_Machine(ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_dup_range_list
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Dup_Range_List(size_t rlhOld, size_t rlhNew, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enable_DevNode(uint dnDevInst, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_enable_devnode_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enable_DevNode_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enumerate_Classes(uint ulClassIndex, GUID* ClassGuid, CM_ENUMERATE_FLAGS ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enumerate_Classes_Ex(uint ulClassIndex, GUID* ClassGuid, CM_ENUMERATE_FLAGS ulFlags, 
+                                  ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enumerate_EnumeratorsA(uint ulEnumIndex, PSTR Buffer, uint* pulLength, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enumerate_EnumeratorsW(uint ulEnumIndex, PWSTR Buffer, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enumerate_Enumerators_ExA(uint ulEnumIndex, PSTR Buffer, uint* pulLength, uint ulFlags, 
+                                       ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Enumerate_Enumerators_ExW(uint ulEnumIndex, PWSTR Buffer, uint* pulLength, uint ulFlags, 
+                                       ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_find_range
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Find_Range(ulong* pullStart, ulong ullStart, uint ulLength, ulong ullAlignment, ulong ullEnd, 
+                        size_t rlh, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_first_range
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_First_Range(size_t rlh, ulong* pullStart, ulong* pullEnd, size_t* preElement, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Log_Conf(size_t lcLogConfToBeFreed, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Log_Conf_Ex(size_t lcLogConfToBeFreed, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Log_Conf_Handle(size_t lcLogConf);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_free_range_list
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Range_List(size_t rlh, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Res_Des(size_t* prdResDes, size_t rdResDes, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Res_Des_Ex(size_t* prdResDes, size_t rdResDes, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Res_Des_Handle(size_t rdResDes);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Child(uint* pdnDevInst, uint dnDevInst, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Child_Ex(uint* pdnDevInst, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_NameA(GUID* ClassGuid, PSTR Buffer, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_NameW(GUID* ClassGuid, PWSTR Buffer, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Name_ExA(GUID* ClassGuid, PSTR Buffer, uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Name_ExW(GUID* ClassGuid, PWSTR Buffer, uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Key_NameA(GUID* ClassGuid, PSTR pszKeyName, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Key_NameW(GUID* ClassGuid, PWSTR pszKeyName, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Key_Name_ExA(GUID* ClassGuid, PSTR pszKeyName, uint* pulLength, uint ulFlags, 
+                                    ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Key_Name_ExW(GUID* ClassGuid, PWSTR pszKeyName, uint* pulLength, uint ulFlags, 
+                                    ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Depth(uint* pulDepth, uint dnDevInst, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Depth_Ex(uint* pulDepth, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_IDA(uint dnDevInst, PSTR Buffer, uint BufferLen, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_IDW(uint dnDevInst, PWSTR Buffer, uint BufferLen, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_ExA(uint dnDevInst, PSTR Buffer, uint BufferLen, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_ExW(uint dnDevInst, PWSTR Buffer, uint BufferLen, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_ListA(const(PSTR) pszFilter, 
+                                 /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer, 
+                                 uint BufferLen, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_ListW(const(PWSTR) pszFilter, 
+                                 /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
+                                 uint BufferLen, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_List_ExA(const(PSTR) pszFilter, 
+                                    /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer, 
+                                    uint BufferLen, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_List_ExW(const(PWSTR) pszFilter, 
+                                    /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
+                                    uint BufferLen, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_List_SizeA(uint* pulLen, const(PSTR) pszFilter, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_List_SizeW(uint* pulLen, const(PWSTR) pszFilter, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_List_Size_ExA(uint* pulLen, const(PSTR) pszFilter, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_List_Size_ExW(uint* pulLen, const(PWSTR) pszFilter, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_Size(uint* pulLen, uint dnDevInst, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_ID_Size_Ex(uint* pulLen, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_PropertyW(uint dnDevInst, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                   uint* PropertyBufferSize, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Property_ExW(uint dnDevInst, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                      uint* PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Property_Keys(uint dnDevInst, DEVPROPKEY* PropertyKeyArray, uint* PropertyKeyCount, 
+                                       uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Property_Keys_Ex(uint dnDevInst, DEVPROPKEY* PropertyKeyArray, uint* PropertyKeyCount, 
+                                          uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Registry_PropertyA(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                            uint* pulLength, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Registry_PropertyW(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                            uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Registry_Property_ExA(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                               uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Registry_Property_ExW(uint dnDevInst, uint ulProperty, uint* pulRegDataType, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                               uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Custom_PropertyA(uint dnDevInst, const(PSTR) pszCustomPropertyName, uint* pulRegDataType, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                          uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Custom_PropertyW(uint dnDevInst, const(PWSTR) pszCustomPropertyName, uint* pulRegDataType, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                          uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Custom_Property_ExA(uint dnDevInst, const(PSTR) pszCustomPropertyName, 
+                                             uint* pulRegDataType, 
+                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                             uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Custom_Property_ExW(uint dnDevInst, const(PWSTR) pszCustomPropertyName, 
+                                             uint* pulRegDataType, 
+                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                             uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Status(CM_DEVNODE_STATUS_FLAGS* pulStatus, CM_PROB* pulProblemNumber, uint dnDevInst, 
+                                uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_DevNode_Status_Ex(CM_DEVNODE_STATUS_FLAGS* pulStatus, CM_PROB* pulProblemNumber, uint dnDevInst, 
+                                   uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_First_Log_Conf(size_t* plcLogConf, uint dnDevInst, CM_LOG_CONF ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_First_Log_Conf_Ex(size_t* plcLogConf, uint dnDevInst, CM_LOG_CONF ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_get_global_state
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Global_State(uint* pulState, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_get_global_state_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Global_State_Ex(uint* pulState, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Hardware_Profile_InfoA(uint ulIndex, HWPROFILEINFO_A* pHWProfileInfo, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Hardware_Profile_Info_ExA(uint ulIndex, HWPROFILEINFO_A* pHWProfileInfo, uint ulFlags, 
+                                           ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Hardware_Profile_InfoW(uint ulIndex, HWPROFILEINFO_W* pHWProfileInfo, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Hardware_Profile_Info_ExW(uint ulIndex, HWPROFILEINFO_W* pHWProfileInfo, uint ulFlags, 
+                                           ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_HW_Prof_FlagsA(PSTR pDeviceID, uint ulHardwareProfile, uint* pulValue, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_HW_Prof_FlagsW(PWSTR pDeviceID, uint ulHardwareProfile, uint* pulValue, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_HW_Prof_Flags_ExA(PSTR pDeviceID, uint ulHardwareProfile, uint* pulValue, uint ulFlags, 
+                                   ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_HW_Prof_Flags_ExW(PWSTR pDeviceID, uint ulHardwareProfile, uint* pulValue, uint ulFlags, 
+                                   ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_AliasA(const(PSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
+                                         PSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_AliasW(const(PWSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
+                                         PWSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_Alias_ExA(const(PSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
+                                            PSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags, 
+                                            ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_Alias_ExW(const(PWSTR) pszDeviceInterface, GUID* AliasInterfaceGuid, 
+                                            PWSTR pszAliasDeviceInterface, uint* pulLength, uint ulFlags, 
+                                            ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_ListA(GUID* InterfaceClassGuid, PSTR pDeviceID, 
+                                        /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer, 
+                                        uint BufferLen, CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_ListW(GUID* InterfaceClassGuid, PWSTR pDeviceID, 
+                                        /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
+                                        uint BufferLen, CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_List_ExA(GUID* InterfaceClassGuid, PSTR pDeviceID, 
+                                           /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer, 
+                                           uint BufferLen, CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, 
+                                           ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_List_ExW(GUID* InterfaceClassGuid, PWSTR pDeviceID, 
+                                           /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer, 
+                                           uint BufferLen, CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, 
+                                           ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_List_SizeA(uint* pulLen, GUID* InterfaceClassGuid, PSTR pDeviceID, 
+                                             CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_List_SizeW(uint* pulLen, GUID* InterfaceClassGuid, PWSTR pDeviceID, 
+                                             CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_List_Size_ExA(uint* pulLen, GUID* InterfaceClassGuid, PSTR pDeviceID, 
+                                                CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_List_Size_ExW(uint* pulLen, GUID* InterfaceClassGuid, PWSTR pDeviceID, 
+                                                CM_GET_DEVICE_INTERFACE_LIST_FLAGS ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_PropertyW(const(PWSTR) pszDeviceInterface, const(DEVPROPKEY)* PropertyKey, 
+                                            DEVPROPTYPE* PropertyType, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                            uint* PropertyBufferSize, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_Property_ExW(const(PWSTR) pszDeviceInterface, const(DEVPROPKEY)* PropertyKey, 
+                                               DEVPROPTYPE* PropertyType, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                               uint* PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_Property_KeysW(const(PWSTR) pszDeviceInterface, DEVPROPKEY* PropertyKeyArray, 
+                                                 uint* PropertyKeyCount, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Device_Interface_Property_Keys_ExW(const(PWSTR) pszDeviceInterface, DEVPROPKEY* PropertyKeyArray, 
+                                                    uint* PropertyKeyCount, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Log_Conf_Priority(size_t lcLogConf, uint* pPriority, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Log_Conf_Priority_Ex(size_t lcLogConf, uint* pPriority, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Next_Log_Conf(size_t* plcLogConf, size_t lcLogConf, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Next_Log_Conf_Ex(size_t* plcLogConf, size_t lcLogConf, 
+                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint ulFlags, 
+                                  ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Parent(uint* pdnDevInst, uint dnDevInst, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Parent_Ex(uint* pdnDevInst, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Res_Des_Data(size_t rdResDes, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* Buffer, 
+                              uint BufferLen, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Res_Des_Data_Ex(size_t rdResDes, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* Buffer, 
+                                 uint BufferLen, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Res_Des_Data_Size(uint* pulSize, size_t rdResDes, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Res_Des_Data_Size_Ex(uint* pulSize, size_t rdResDes, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Sibling(uint* pdnDevInst, uint dnDevInst, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Sibling_Ex(uint* pdnDevInst, uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+ushort CM_Get_Version();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+ushort CM_Get_Version_Ex(ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("CFGMGR32.dll")
+BOOL CM_Is_Version_Available(ushort wVersion);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("CFGMGR32.dll")
+BOOL CM_Is_Version_Available_Ex(ushort wVersion, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_intersect_range_list
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Intersect_Range_List(size_t rlhOld1, size_t rlhOld2, size_t rlhNew, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_invert_range_list
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Invert_Range_List(size_t rlhOld, size_t rlhNew, ulong ullMaxValue, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Locate_DevNodeA(uint* pdnDevInst, PSTR pDeviceID, CM_LOCATE_DEVNODE_FLAGS ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Locate_DevNodeW(uint* pdnDevInst, PWSTR pDeviceID, CM_LOCATE_DEVNODE_FLAGS ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Locate_DevNode_ExA(uint* pdnDevInst, PSTR pDeviceID, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Locate_DevNode_ExW(uint* pdnDevInst, PWSTR pDeviceID, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_merge_range_list
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Merge_Range_List(size_t rlhOld1, size_t rlhOld2, size_t rlhNew, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Modify_Res_Des(size_t* prdResDes, size_t rdResDes, uint ResourceID, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* ResourceData, 
+                            uint ResourceLen, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Modify_Res_Des_Ex(size_t* prdResDes, size_t rdResDes, uint ResourceID, 
+                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* ResourceData, 
+                               uint ResourceLen, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_move_devnode
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Move_DevNode(uint dnFromDevInst, uint dnToDevInst, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_move_devnode_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Move_DevNode_Ex(uint dnFromDevInst, uint dnToDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_next_range
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Next_Range(size_t* preElement, ulong* pullStart, ulong* pullEnd, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Next_Res_Des(size_t* prdResDes, size_t rdResDes, CM_RESTYPE ForResource, CM_RESTYPE* pResourceID, 
+                              uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Next_Res_Des_Ex(size_t* prdResDes, size_t rdResDes, CM_RESTYPE ForResource, 
+                                 CM_RESTYPE* pResourceID, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Class_KeyA(GUID* ClassGuid, const(PSTR) pszClassName, uint samDesired, uint Disposition, 
+                             HKEY* phkClass, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Class_KeyW(GUID* ClassGuid, const(PWSTR) pszClassName, uint samDesired, uint Disposition, 
+                             HKEY* phkClass, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Class_Key_ExA(GUID* ClassGuid, const(PSTR) pszClassName, uint samDesired, uint Disposition, 
+                                HKEY* phkClass, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Class_Key_ExW(GUID* ClassGuid, const(PWSTR) pszClassName, uint samDesired, uint Disposition, 
+                                HKEY* phkClass, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_DevNode_Key(uint dnDevNode, uint samDesired, uint ulHardwareProfile, uint Disposition, 
+                              HKEY* phkDevice, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_open_devnode_key_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_DevNode_Key_Ex(uint dnDevNode, uint samDesired, uint ulHardwareProfile, uint Disposition, 
+                                 HKEY* phkDevice, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Device_Interface_KeyA(const(PSTR) pszDeviceInterface, uint samDesired, uint Disposition, 
+                                        HKEY* phkDeviceInterface, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Device_Interface_KeyW(const(PWSTR) pszDeviceInterface, uint samDesired, uint Disposition, 
+                                        HKEY* phkDeviceInterface, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Device_Interface_Key_ExA(const(PSTR) pszDeviceInterface, uint samDesired, uint Disposition, 
+                                           HKEY* phkDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Open_Device_Interface_Key_ExW(const(PWSTR) pszDeviceInterface, uint samDesired, uint Disposition, 
+                                           HKEY* phkDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Device_Interface_KeyA(const(PSTR) pszDeviceInterface, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Device_Interface_KeyW(const(PWSTR) pszDeviceInterface, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Device_Interface_Key_ExA(const(PSTR) pszDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Delete_Device_Interface_Key_ExW(const(PWSTR) pszDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_query_arbitrator_free_data
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Arbitrator_Free_Data(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData, 
+                                        uint DataLen, uint dnDevInst, uint ResourceID, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_query_arbitrator_free_data_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Arbitrator_Free_Data_Ex(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData, 
+                                           uint DataLen, uint dnDevInst, uint ResourceID, uint ulFlags, 
+                                           ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_query_arbitrator_free_size
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Arbitrator_Free_Size(uint* pulSize, uint dnDevInst, uint ResourceID, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_query_arbitrator_free_size_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Arbitrator_Free_Size_Ex(uint* pulSize, uint dnDevInst, uint ResourceID, uint ulFlags, 
+                                           ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_query_remove_subtree
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Remove_SubTree(uint dnAncestor, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_query_remove_subtree_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Remove_SubTree_Ex(uint dnAncestor, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_And_Remove_SubTreeA(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, 
+                                       uint ulNameLength, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_And_Remove_SubTreeW(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PWSTR pszVetoName, 
+                                       uint ulNameLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_And_Remove_SubTree_ExA(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, 
+                                          uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_And_Remove_SubTree_ExW(uint dnAncestor, PNP_VETO_TYPE* pVetoType, PWSTR pszVetoName, 
+                                          uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Request_Device_EjectA(uint dnDevInst, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, uint ulNameLength, 
+                                   uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Request_Device_Eject_ExA(uint dnDevInst, PNP_VETO_TYPE* pVetoType, PSTR pszVetoName, 
+                                      uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Request_Device_EjectW(uint dnDevInst, PNP_VETO_TYPE* pVetoType, PWSTR pszVetoName, uint ulNameLength, 
+                                   uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Request_Device_Eject_ExW(uint dnDevInst, PNP_VETO_TYPE* pVetoType, PWSTR pszVetoName, 
+                                      uint ulNameLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Reenumerate_DevNode(uint dnDevInst, CM_REENUMERATE_FLAGS ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Reenumerate_DevNode_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Device_InterfaceA(uint dnDevInst, GUID* InterfaceClassGuid, const(PSTR) pszReference, 
+                                        PSTR pszDeviceInterface, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Device_InterfaceW(uint dnDevInst, GUID* InterfaceClassGuid, const(PWSTR) pszReference, 
+                                        PWSTR pszDeviceInterface, uint* pulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Device_Interface_ExA(uint dnDevInst, GUID* InterfaceClassGuid, const(PSTR) pszReference, 
+                                           PSTR pszDeviceInterface, uint* pulLength, uint ulFlags, 
+                                           ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Device_Interface_ExW(uint dnDevInst, GUID* InterfaceClassGuid, const(PWSTR) pszReference, 
+                                           PWSTR pszDeviceInterface, uint* pulLength, uint ulFlags, 
+                                           ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Problem_Ex(uint dnDevInst, uint ulProblem, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Problem(uint dnDevInst, uint ulProblem, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Unregister_Device_InterfaceA(const(PSTR) pszDeviceInterface, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Unregister_Device_InterfaceW(const(PWSTR) pszDeviceInterface, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Unregister_Device_Interface_ExA(const(PSTR) pszDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Unregister_Device_Interface_ExW(const(PWSTR) pszDeviceInterface, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_register_device_driver
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Device_Driver(uint dnDevInst, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_register_device_driver_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Device_Driver_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_remove_subtree
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Remove_SubTree(uint dnAncestor, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_remove_subtree_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Remove_SubTree_Ex(uint dnAncestor, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_PropertyW(uint dnDevInst, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                   uint PropertyBufferSize, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Property_ExW(uint dnDevInst, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                      uint PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Registry_PropertyA(uint dnDevInst, uint ulProperty, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
+                                            uint ulLength, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Registry_PropertyW(uint dnDevInst, uint ulProperty, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
+                                            uint ulLength, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Registry_Property_ExA(uint dnDevInst, uint ulProperty, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
+                                               uint ulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_DevNode_Registry_Property_ExW(uint dnDevInst, uint ulProperty, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
+                                               uint ulLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_Device_Interface_PropertyW(const(PWSTR) pszDeviceInterface, const(DEVPROPKEY)* PropertyKey, 
+                                            DEVPROPTYPE PropertyType, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                            uint PropertyBufferSize, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_Device_Interface_Property_ExW(const(PWSTR) pszDeviceInterface, const(DEVPROPKEY)* PropertyKey, 
+                                               DEVPROPTYPE PropertyType, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                               uint PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Is_Dock_Station_Present(BOOL* pbPresent);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Is_Dock_Station_Present_Ex(BOOL* pbPresent, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Request_Eject_PC();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Request_Eject_PC_Ex(ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_HW_Prof_FlagsA(PSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_HW_Prof_FlagsW(PWSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_HW_Prof_Flags_ExA(PSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_HW_Prof_Flags_ExW(PWSTR pDeviceID, uint ulConfig, uint ulValue, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Setup_DevNode(uint dnDevInst, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_setup_devnode_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Setup_DevNode_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_test_range_available
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Test_Range_Available(ulong ullStartValue, ulong ullEndValue, size_t rlh, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Uninstall_DevNode(uint dnDevInst, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_uninstall_devnode_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Uninstall_DevNode_Ex(uint dnDevInst, uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_run_detection
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Run_Detection(uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_run_detection_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Run_Detection_Ex(uint ulFlags, ptrdiff_t hMachine);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_set_hw_prof
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_HW_Prof(uint ulHardwareProfile, uint ulFlags);
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/nf-cfgmgr32-cm_set_hw_prof_ex
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_HW_Prof_Ex(uint ulHardwareProfile, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Query_Resource_Conflict_List(size_t* pclConflictList, uint dnDevInst, CM_RESTYPE ResourceID, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* ResourceData, 
+                                          uint ResourceLen, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Free_Resource_Conflict_Handle(size_t clConflictList);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Resource_Conflict_Count(size_t clConflictList, uint* pulCount);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Resource_Conflict_DetailsA(size_t clConflictList, uint ulIndex, 
+                                            CONFLICT_DETAILS_A* pConflictDetails);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Resource_Conflict_DetailsW(size_t clConflictList, uint ulIndex, 
+                                            CONFLICT_DETAILS_W* pConflictDetails);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_PropertyW(const(GUID)* ClassGUID, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE* PropertyType, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                 uint* PropertyBufferSize, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Property_ExW(const(GUID)* ClassGUID, const(DEVPROPKEY)* PropertyKey, 
+                                    DEVPROPTYPE* PropertyType, 
+                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* PropertyBuffer, 
+                                    uint* PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Property_Keys(const(GUID)* ClassGUID, DEVPROPKEY* PropertyKeyArray, uint* PropertyKeyCount, 
+                                     uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Property_Keys_Ex(const(GUID)* ClassGUID, DEVPROPKEY* PropertyKeyArray, 
+                                        uint* PropertyKeyCount, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_Class_PropertyW(const(GUID)* ClassGUID, const(DEVPROPKEY)* PropertyKey, DEVPROPTYPE PropertyType, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                 uint PropertyBufferSize, uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_Class_Property_ExW(const(GUID)* ClassGUID, const(DEVPROPKEY)* PropertyKey, 
+                                    DEVPROPTYPE PropertyType, 
+                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(ubyte)* PropertyBuffer, 
+                                    uint PropertyBufferSize, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Registry_PropertyA(GUID* ClassGuid, uint ulProperty, uint* pulRegDataType, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                          uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Get_Class_Registry_PropertyW(GUID* ClassGuid, uint ulProperty, uint* pulRegDataType, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Buffer, 
+                                          uint* pulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_Class_Registry_PropertyA(GUID* ClassGuid, uint ulProperty, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
+                                          uint ulLength, uint ulFlags, ptrdiff_t hMachine);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Set_Class_Registry_PropertyW(GUID* ClassGuid, uint ulProperty, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
+                                          uint ulLength, uint ulFlags, ptrdiff_t hMachine);
+
+@DllImport("CFGMGR32.dll")
+uint CMP_WaitNoPendingInstallEvents(uint dwTimeout);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Register_Notification(CM_NOTIFY_FILTER* pFilter, void* pContext, PCM_NOTIFY_CALLBACK pCallback, 
+                                   HCMNOTIFICATION* pNotifyContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("CFGMGR32.dll")
+CONFIGRET CM_Unregister_Notification(HCMNOTIFICATION NotifyContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("CFGMGR32.dll")
+uint CM_MapCrToWin32Err(CONFIGRET CmReturnCode, uint DefaultErr);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("newdev.dll")
+BOOL UpdateDriverForPlugAndPlayDevicesA(HWND hwndParent, const(PSTR) HardwareId, const(PSTR) FullInfPath, 
+                                        UPDATEDRIVERFORPLUGANDPLAYDEVICES_FLAGS InstallFlags, BOOL* bRebootRequired);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("newdev.dll")
+BOOL UpdateDriverForPlugAndPlayDevicesW(HWND hwndParent, const(PWSTR) HardwareId, const(PWSTR) FullInfPath, 
+                                        UPDATEDRIVERFORPLUGANDPLAYDEVICES_FLAGS InstallFlags, BOOL* bRebootRequired);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("newdev.dll")
+BOOL DiInstallDevice(HWND hwndParent, HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, 
+                     SP_DRVINFO_DATA_V2_W* DriverInfoData, DIINSTALLDEVICE_FLAGS Flags, BOOL* NeedReboot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("newdev.dll")
+BOOL DiInstallDriverW(HWND hwndParent, const(PWSTR) InfPath, DIINSTALLDRIVER_FLAGS Flags, BOOL* NeedReboot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("newdev.dll")
+BOOL DiInstallDriverA(HWND hwndParent, const(PSTR) InfPath, DIINSTALLDRIVER_FLAGS Flags, BOOL* NeedReboot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("newdev.dll")
+BOOL DiUninstallDevice(HWND hwndParent, HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Flags, 
+                       BOOL* NeedReboot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("newdev.dll")
+BOOL DiUninstallDriverW(HWND hwndParent, const(PWSTR) InfPath, DIUNINSTALLDRIVER_FLAGS Flags, BOOL* NeedReboot);
+
+@DllImport("newdev.dll")
+BOOL DiUninstallDriverA(HWND hwndParent, const(PSTR) InfPath, DIUNINSTALLDRIVER_FLAGS Flags, BOOL* NeedReboot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("newdev.dll")
+BOOL DiShowUpdateDevice(HWND hwndParent, HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Flags, 
+                        BOOL* NeedReboot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("newdev.dll")
+BOOL DiRollbackDriver(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, HWND hwndParent, 
+                      DIROLLBACKDRIVER_FLAGS Flags, BOOL* NeedReboot);
+
+@DllImport("newdev.dll")
+BOOL DiShowUpdateDriver(HWND hwndParent, const(PWSTR) FilePath, uint Flags, BOOL* NeedReboot);
+
+
