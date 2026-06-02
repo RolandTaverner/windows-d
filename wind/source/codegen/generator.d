@@ -116,7 +116,7 @@ public struct Generator
             //if (!namespace.startsWith("Windows.Win32.System.Kernel")) continue;
             //if (namespace != "Windows.Win32.System.Diagnostics.Debug") continue;
             //if (namespace != "Windows.Win32.Foundation") continue;
-            if (namespace != "Windows.Win32.Media.Audio.DirectMusic") continue;
+            // if (namespace != "Windows.Win32.Media.Audio.DirectMusic") continue;
 
             string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
             string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
