@@ -3,8 +3,8 @@
 module windows.win32.networkmanagement.networkpolicyserver;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, VARIANT_BOOL;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BSTR, HRESULT, VARIANT_BOOL;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -873,12 +873,17 @@ enum : int
 // Constants
 
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RADIUS_EXTENSION_INIT            = "RadiusExtensionInit",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RADIUS_EXTENSION_TERM            = "RadiusExtensionTerm",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RADIUS_EXTENSION_PROCESS         = "RadiusExtensionProcess",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RADIUS_EXTENSION_PROCESS_EX      = "RadiusExtensionProcessEx",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RADIUS_EXTENSION_FREE_ATTRIBUTES = "RadiusExtensionFreeAttributes",
 }
 
@@ -887,7 +892,8 @@ enum const(wchar)* AUTHSRV_EXTENSIONS_VALUE_W = "ExtensionDLLs";
 enum const(wchar)* AUTHSRV_AUTHORIZATION_VALUE_W = "AuthorizationDLLs";
 enum const(wchar)* AUTHSRV_ENFORCE_NP_FOR_PAP_CHALLENGE_RESPONSE_VALUE_W = "EnforceNetworkPolicyForPAPBasedChallengeResponse";
 enum uint RADIUS_EXTENSION_VERSION = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* RADIUS_EXTENSION_PROCESS2 = "RadiusExtensionProcess2";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* RADIUS_EXTENSION_PROCESS2 = "RadiusExtensionProcess2";
 
 // Callbacks
 
@@ -921,7 +927,7 @@ struct RADIUS_VSA_FORMAT
     ubyte[4] VendorId;
     ubyte    VendorType;
     ubyte    VendorLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AttributeSpecific;
+    ubyte[1] AttributeSpecific; // Flexible array
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])

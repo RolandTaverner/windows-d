@@ -3,7 +3,7 @@
 module windows.win32.management.mobiledevicemanagementregistration;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

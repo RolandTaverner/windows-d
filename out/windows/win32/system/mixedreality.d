@@ -3,7 +3,6 @@
 module windows.win32.system.mixedreality;
 
 public import windows.core;
-;
 
 extern(Windows) @nogc nothrow:
 

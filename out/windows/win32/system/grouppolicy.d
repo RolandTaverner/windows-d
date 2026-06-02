@@ -3,18 +3,18 @@
 module windows.win32.system.grouppolicy;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
-                                                    HWND, LPARAM, PSTR, PWSTR, SYSTEMTIME,
-                                                    VARIANT_BOOL;
-public import windows.win32.security.security : GENERIC_MAPPING, OBJECT_TYPE_LIST, PRIVILEGE_SET,
-                                                PSECURITY_DESCRIPTOR, PSID;
-public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT, HWND,
+                                         LPARAM, PSTR, PWSTR, SYSTEMTIME,
+                                         VARIANT_BOOL;
+public import windows.win32.security : GENERIC_MAPPING, OBJECT_TYPE_LIST, PRIVILEGE_SET,
+                                       PSECURITY_DESCRIPTOR, PSID;
+public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.system.wmi : IWbemClassObject, IWbemServices;
-public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
-public import windows.win32.ui.shell.shell : APPCATEGORYINFOLIST;
+public import windows.win32.ui.controls : HPROPSHEETPAGE;
+public import windows.win32.ui.shell : APPCATEGORYINFOLIST;
 
 extern(Windows) @nogc nothrow:
 

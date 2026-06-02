@@ -3,8 +3,8 @@
 module windows.win32.system.contacts;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HRESULT, PWSTR;
-public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.foundation : BOOL, FILETIME, HRESULT, PWSTR;
+public import windows.win32.system.com : IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,7 +3,7 @@
 module windows.win32.devices.dvd;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE;
+public import windows.win32.foundation : HANDLE;
 
 extern(Windows) @nogc nothrow:
 
@@ -126,7 +126,7 @@ align (1):
         HANDLE FileHandle;
         long   TitleOffset;
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyData;
+    ubyte[1]     KeyData; // Flexible array
 }
 
 struct STORAGE_SET_READ_AHEAD
@@ -150,20 +150,20 @@ struct DVD_DESCRIPTOR_HEADER
 align (1):
     ushort   Length;
     ubyte[2] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 struct DVD_LAYER_DESCRIPTOR
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BookType)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DiskSize)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield2;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield3;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LinearDensity)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield4;
-    uint StartingDataSector;
-    uint EndDataSector;
-    uint EndLayerZeroSector;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BCAFlag)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield5;
+    ubyte _bitfield1;
+    ubyte _bitfield2;
+    ubyte _bitfield3;
+    ubyte _bitfield4;
+    uint  StartingDataSector;
+    uint  EndDataSector;
+    uint  EndLayerZeroSector;
+    ubyte _bitfield5;
 }
 
 struct DVD_FULL_LAYER_DESCRIPTOR
@@ -187,7 +187,7 @@ struct DVD_DISK_KEY_DESCRIPTOR
 
 struct DVD_BCA_DESCRIPTOR
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] BCAInformation;
+    ubyte[1] BCAInformation; // Flexible array
 }
 
 struct DVD_MANUFACTURER_DESCRIPTOR
@@ -201,11 +201,11 @@ struct DVD_COPYRIGHT_MANAGEMENT_DESCRIPTOR
     {
         struct Dvdrom
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CopyProtectedMaterial)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield32;
+            ubyte _bitfield32;
         }
         struct DvdRecordable_Version1
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CopyProtectedMaterial)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield33;
+            ubyte _bitfield33;
         }
         struct Dvdram
         {
@@ -213,7 +213,7 @@ struct DVD_COPYRIGHT_MANAGEMENT_DESCRIPTOR
         }
         struct DvdRecordable
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0005)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield34;
+            ubyte _bitfield34;
         }
         ubyte CPR_MAI;
     }
@@ -222,7 +222,7 @@ struct DVD_COPYRIGHT_MANAGEMENT_DESCRIPTOR
 
 struct DVD_RAM_MEDIUM_STATUS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MediaInCartridge)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield35;
+    ubyte _bitfield35;
     ubyte DiscTypeIdentification;
     ubyte Reserved2;
     ubyte MediaSpecificWriteInhibitInformation;
@@ -237,14 +237,14 @@ struct DVD_RAM_SPARE_AREA_INFORMATION
 
 struct DVD_RAM_RECORDING_TYPE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield36;
+    ubyte    _bitfield36;
     ubyte[3] Reserved2;
 }
 
 struct DVD_RECORDING_MANAGEMENT_AREA_DATA
 {
     ubyte[4] LastRecordedRMASectorNumber;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RMDBytes;
+    ubyte[1] RMDBytes; // Flexible array
 }
 
 struct DVD_PRERECORDED_INFORMATION
@@ -253,7 +253,7 @@ struct DVD_PRERECORDED_INFORMATION
     ubyte     DiscApplicationCode;
     ubyte     DiscPhysicalCode;
     ubyte[3]  LastAddressOfDataRecordableArea;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PartVers1on)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield37;
+    ubyte     _bitfield37;
     ubyte     Reserved0;
     ubyte     FieldID_2;
     ubyte     OpcSuggestedCode;
@@ -286,21 +286,21 @@ struct DVD_UNIQUE_DISC_IDENTIFIER
 
 struct HD_DVD_R_MEDIUM_STATUS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield38;
+    ubyte    _bitfield38;
     ubyte    NumberOfRemainingRMDsInRDZ;
     ubyte[2] NumberOfRemainingRMDsInCurrentRMZ;
 }
 
 struct DVD_DUAL_LAYER_RECORDING_INFORMATION
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Layer0SectorsImmutable)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield39;
+    ubyte    _bitfield39;
     ubyte[3] Reserved1;
     ubyte[4] Layer0Sectors;
 }
 
 struct DVD_DUAL_LAYER_MIDDLE_ZONE_START_ADDRESS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(InitStatus)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield40;
+    ubyte    _bitfield40;
     ubyte[3] Reserved1;
     ubyte[4] ShiftedMiddleAreaStartAddress;
 }
@@ -331,7 +331,7 @@ struct DVD_DISC_CONTROL_BLOCK_HEADER
         struct
         {
             ubyte[3] ReservedDoNotUse_UseAsByteInstead_0;
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedDoNotUse_UseAsByteInstead_1)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield41;
+            ubyte    _bitfield41;
         }
         ubyte[4] AsByte;
     }
@@ -347,7 +347,7 @@ struct DVD_DISC_CONTROL_BLOCK_WRITE_INHIBIT
         struct
         {
             ubyte[3] ReservedDoNotUse_UseAsByteInstead_0;
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(UpdateRequiresPassword)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield42;
+            ubyte    _bitfield42;
         }
         ubyte[4] AsByte;
     }
@@ -384,12 +384,12 @@ struct DVD_DISC_CONTROL_BLOCK_LIST
     ubyte ReadabldDCBs;
     ubyte Reserved1;
     ubyte WritableDCBs;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DVD_DISC_CONTROL_BLOCK_LIST_DCB[1] Dcbs;
+    DVD_DISC_CONTROL_BLOCK_LIST_DCB[1] Dcbs; // Flexible array
 }
 
 struct DVD_WRITE_PROTECTION_STATUS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield43;
+    ubyte    _bitfield43;
     ubyte[3] Reserved1;
 }
 
@@ -401,13 +401,13 @@ struct DVD_LIST_OF_RECOGNIZED_FORMAT_LAYERS
 struct DVD_LIST_OF_RECOGNIZED_FORMAT_LAYERS_TYPE_CODE
 {
     ubyte NumberOfRecognizedFormatLayers;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield44;
+    ubyte _bitfield44;
 }
 
 struct DVD_STRUCTURE_LIST_ENTRY
 {
     ubyte    FormatCode;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Sendable)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield45;
+    ubyte    _bitfield45;
     ubyte[2] FormatLength;
 }
 
@@ -443,7 +443,7 @@ struct BD_DISC_WRITE_PROTECT_PAC
 
 struct DVD_RPC_KEY
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TypeCode)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield46;
+    ubyte _bitfield46;
     ubyte RegionMask;
     ubyte RpcScheme;
     ubyte Reserved02;
@@ -458,7 +458,7 @@ struct DVD_SET_RPC_KEY
 struct DVD_ASF
 {
     ubyte[3] Reserved0;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield47;
+    ubyte    _bitfield47;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvdmedia/ns-dvdmedia-dvd_region

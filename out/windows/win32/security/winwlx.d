@@ -3,8 +3,8 @@
 module windows.win32.security.winwlx;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, LPARAM, LUID, PWSTR;
-public import windows.win32.security.security : QUOTA_LIMITS;
+public import windows.win32.foundation : BOOL, HANDLE, HWND, LPARAM, LUID, PWSTR;
+public import windows.win32.security : QUOTA_LIMITS;
 public import windows.win32.system.stationsanddesktops : HDESK;
 public import windows.win32.ui.windowsandmessaging : DLGPROC, DLGTEMPLATE;
 

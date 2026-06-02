@@ -3,9 +3,9 @@
 module windows.win32.ai.machinelearning.winml;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
 public import windows.win32.graphics.direct3d12 : ID3D12Device, ID3D12Resource;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

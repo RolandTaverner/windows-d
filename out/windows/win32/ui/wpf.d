@@ -3,10 +3,10 @@
 module windows.win32.ui.wpf;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, VARIANT_BOOL;
+public import windows.win32.foundation : BSTR, HRESULT, VARIANT_BOOL;
 public import windows.win32.graphics.dwm : MilMatrix3x2D;
-public import windows.win32.graphics.imaging.imaging : IWICBitmapSource;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.graphics.imaging : IWICBitmapSource;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,17 +3,16 @@
 module windows.win32.system.remotedesktop;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
-                                                    HANDLE, HANDLE_PTR, HRESULT, HWND,
-                                                    PSTR, PWSTR, RECT, VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME, HANDLE,
+                                         HANDLE_PTR, HRESULT, HWND, PSTR, PWSTR,
+                                         RECT, VARIANT_BOOL;
 public import windows.win32.media.audio.apo : APO_CONNECTION_PROPERTY;
-public import windows.win32.media.audio.audio : WAVEFORMATEX;
-public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
-                                                PSID;
-public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.media.audio : WAVEFORMATEX;
+public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, PSID;
+public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.com.structuredstorage : IPropertyBag;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.system.winrt.winrt : HSTRING;
+public import windows.win32.system.winrt : HSTRING;
 public import windows.win32.ui.windowsandmessaging : MESSAGEBOX_RESULT, MESSAGEBOX_STYLE;
 
 extern(Windows) @nogc nothrow:
@@ -608,8 +607,8 @@ enum KeyCombinationType : int
 
 enum : HANDLE
 {
-    WTS_CURRENT_SERVER        = HANDLE(0x00000000),
-    WTS_CURRENT_SERVER_HANDLE = HANDLE(0x00000000),
+    WTS_CURRENT_SERVER        = HANDLE(cast(void*) 0x00000000),
+    WTS_CURRENT_SERVER_HANDLE = HANDLE(cast(void*) 0x00000000),
 }
 
 enum const(wchar)* WTS_CURRENT_SERVER_NAME = "";
@@ -1829,7 +1828,7 @@ struct RFX_GFX_MSG_DESKTOP_RESEND_REQUEST
 struct RFX_GFX_MSG_RDP_DATA
 {
     RFX_GFX_MSG_HEADER channelHdr;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] rdpData;
+    ubyte[1]           rdpData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtsdefs/ns-wtsdefs-wts_sockaddr

@@ -3,8 +3,8 @@
 module windows.win32.system.com.events;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

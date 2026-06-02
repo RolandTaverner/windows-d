@@ -21,7 +21,7 @@ public struct CustomModSig
         typeIndex = CompositeIndex!TypeDefOrRef(readCompressed!uint(data));        
     }
 
-    const ElementType elementType;
+    const ElementType elementType; // == cModOpt or cModReqd
     const CompositeIndex!TypeDefOrRef typeIndex;
 }
 
@@ -196,7 +196,7 @@ public struct FieldSig
         typeSig = TypeSig(db, data);
     }
 
-    CallingConvention callingConvention;
+    CallingConvention callingConvention; // == 0x06
     CustomModSig[] customMods;
     TypeSig typeSig;
 }

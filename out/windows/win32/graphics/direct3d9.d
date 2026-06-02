@@ -3,12 +3,12 @@
 module windows.win32.graphics.direct3d9;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND,
-                                                    LUID, POINT, PSTR, PWSTR, RECT;
-public import windows.win32.graphics.direct3d.direct3d : D3DMATRIX, D3DVECTOR;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND, LUID,
+                                         POINT, PSTR, PWSTR, RECT;
+public import windows.win32.graphics.direct3d : D3DMATRIX, D3DVECTOR;
 public import windows.win32.graphics.directdraw : DDPIXELFORMAT, DDSURFACEDESC;
 public import windows.win32.graphics.gdi : HDC, HMONITOR, PALETTEENTRY, RGNDATA;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -1845,13 +1845,16 @@ enum : int
 
 enum uint MAX_DEVICE_IDENTIFIER_STRING = 0x00000200U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d9/d3dissue-end))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d9/d3dissue-end
     D3DISSUE_END   = 0x00000001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d9/d3dissue-begin
     D3DISSUE_BEGIN = 0x00000002U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d9/d3dgetdata-flush))], [])*/uint D3DGETDATA_FLUSH = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d9/d3dgetdata-flush
+enum uint D3DGETDATA_FLUSH = 0x00000001U;
 enum uint D3DCOMPOSERECTS_MAXNUMRECTS = 0x0000ffffU;
 
 enum : uint
@@ -2833,7 +2836,7 @@ struct D3DAUTHENTICATEDCHANNEL_PROTECTION_FLAGS
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield92;
+            uint _bitfield92;
         }
         uint Value;
     }
@@ -3512,8 +3515,8 @@ struct D3DSTATE
     }
     union
     {
-        uint[1] dwArg;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/float[1] dvArg;
+        uint[1]  dwArg;
+        float[1] dvArg; // Flexible array
     }
 }
 

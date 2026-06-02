@@ -3,8 +3,8 @@
 module windows.win32.storage.installablefilesystems;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE, HRESULT, NTSTATUS, PWSTR;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation : HANDLE, HRESULT, NTSTATUS, PWSTR;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -203,11 +203,11 @@ struct HFILTER_INSTANCE
 
 struct FILTER_FULL_INFORMATION
 {
-    uint   NextEntryOffset;
-    uint   FrameID;
-    uint   NumberOfInstances;
-    ushort FilterNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FilterNameBuffer;
+    uint     NextEntryOffset;
+    uint     FrameID;
+    uint     NumberOfInstances;
+    ushort   FilterNameLength;
+    wchar[1] FilterNameBuffer; // Flexible array
 }
 
 struct FILTER_AGGREGATE_BASIC_INFORMATION
@@ -262,8 +262,8 @@ struct FILTER_AGGREGATE_STANDARD_INFORMATION
 
 struct FILTER_VOLUME_BASIC_INFORMATION
 {
-    ushort FilterVolumeNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FilterVolumeName;
+    ushort   FilterVolumeNameLength;
+    wchar[1] FilterVolumeName; // Flexible array
 }
 
 struct FILTER_VOLUME_STANDARD_INFORMATION
@@ -273,7 +273,7 @@ struct FILTER_VOLUME_STANDARD_INFORMATION
     uint                FrameID;
     FLT_FILESYSTEM_TYPE FileSystemType;
     ushort              FilterVolumeNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FilterVolumeName;
+    wchar[1]            FilterVolumeName; // Flexible array
 }
 
 struct INSTANCE_BASIC_INFORMATION

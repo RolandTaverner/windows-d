@@ -3,8 +3,8 @@
 module windows.win32.ui.shell.common;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, PWSTR;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : HRESULT, PWSTR;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -112,8 +112,8 @@ enum : uint
 struct SHITEMID
 {
 align (1):
-    ushort cb;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abID;
+    ushort   cb;
+    ubyte[1] abID; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-itemidlist

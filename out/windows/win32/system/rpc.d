@@ -3,11 +3,11 @@
 module windows.win32.system.rpc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
-                                                    LUID, PSTR, PWSTR, SYSTEMTIME;
-public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
-public import windows.win32.system.com.com : IRpcChannelBuffer, IRpcStubBuffer, IUnknown,
-                                             RPC_C_IMP_LEVEL;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND, LUID,
+                                         PSTR, PWSTR, SYSTEMTIME;
+public import windows.win32.security.cryptography : CERT_CONTEXT;
+public import windows.win32.system.com : IRpcChannelBuffer, IRpcStubBuffer, IUnknown,
+                                         RPC_C_IMP_LEVEL;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -930,15 +930,15 @@ struct NDR_POINTER_QUEUE_STATE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_binding_vector
 struct RPC_BINDING_VECTOR
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/void[1]* BindingH;
+    uint     Count;
+    void[1]* BindingH; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-uuid_vector
 struct UUID_VECTOR
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1]* Uuid;
+    uint     Count;
+    GUID[1]* Uuid; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_if_id
@@ -951,14 +951,14 @@ struct RPC_IF_ID
 
 struct RPC_PROTSEQ_VECTORA
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1]* Protseq;
+    uint      Count;
+    ubyte[1]* Protseq; // Flexible array
 }
 
 struct RPC_PROTSEQ_VECTORW
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1]* Protseq;
+    uint       Count;
+    ushort[1]* Protseq; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_policy
@@ -972,15 +972,15 @@ struct RPC_POLICY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_stats_vector
 struct RPC_STATS_VECTOR
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Stats;
+    uint    Count;
+    uint[1] Stats; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_if_id_vector
 struct RPC_IF_ID_VECTOR
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RPC_IF_ID[1]* IfId;
+    uint          Count;
+    RPC_IF_ID[1]* IfId; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rpcdce/ns-rpcdce-rpc_security_qos
@@ -1743,7 +1743,7 @@ struct MIDL_STUB_MESSAGE
     FULL_PTR_XLAT_TABLES* FullPtrXlatTables;
     uint               FullPtrRefId;
     uint               PointerLength;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fUnused3)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield468;
+    int                _bitfield468;
     uint               dwDestContext;
     void*              pvDestContext;
     NDR_SCONTEXT**     SavedContextHandles;
@@ -1995,12 +1995,12 @@ struct MIDL_TYPE_PICKLING_INFO
 
 struct NDR64_PROC_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(27)), FixedArgSig(ElementSig(5))], [])*/uint _bitfield469;
+    uint _bitfield469;
 }
 
 struct NDR64_RPC_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WinrtRemoteAsync)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield470;
+    ushort _bitfield470;
 }
 
 struct NDR64_PROC_FORMAT
@@ -2017,7 +2017,7 @@ struct NDR64_PROC_FORMAT
 
 struct NDR64_PARAM_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(UseCache)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield471;
+    ushort _bitfield471;
 }
 
 struct NDR64_PARAM_FORMAT
@@ -2039,7 +2039,7 @@ struct NDR64_RANGE_FORMAT
 
 struct NDR64_CONTEXT_HANDLE_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsViaPointer)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield472;
+    ubyte _bitfield472;
 }
 
 struct NDR64_CONTEXT_HANDLE_FORMAT
@@ -2120,7 +2120,7 @@ struct NDR64_POINTER_INSTANCE_HEADER_FORMAT
 
 struct NDR64_POINTER_REPEAT_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield473;
+    ubyte _bitfield473;
 }
 
 struct NDR64_REPEAT_FORMAT
@@ -2142,7 +2142,7 @@ struct NDR64_FIXED_REPEAT_FORMAT
 
 struct NDR64_IID_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield474;
+    ubyte _bitfield474;
 }
 
 struct NDR64_CONSTANT_IID_FORMAT
@@ -2163,7 +2163,7 @@ struct NDR64_IID_FORMAT
 
 struct NDR64_STRUCTURE_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved3)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield475;
+    ubyte _bitfield475;
 }
 
 struct NDR64_STRUCTURE_HEADER_FORMAT
@@ -2289,7 +2289,7 @@ struct NDR64_UNION_ARM
 
 struct NDR64_ARRAY_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved4)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield476;
+    ubyte _bitfield476;
 }
 
 struct NDR64_ARRAY_ELEMENT_INFO
@@ -2359,7 +2359,7 @@ struct NDR64_CONF_VAR_BOGUS_ARRAY_HEADER_FORMAT
 
 struct NDR64_STRING_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved8)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield477;
+    ubyte _bitfield477;
 }
 
 struct NDR64_STRING_HEADER_FORMAT
@@ -2435,7 +2435,7 @@ struct NDR64_EXPR_NOOP
 
 struct NDR64_TRANSMIT_AS_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield478;
+    ubyte _bitfield478;
 }
 
 struct NDR64_TRANSMIT_AS_FORMAT
@@ -2452,7 +2452,7 @@ struct NDR64_TRANSMIT_AS_FORMAT
 
 struct NDR64_USER_MARSHAL_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(UniquePointer)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield479;
+    ubyte _bitfield479;
 }
 
 struct NDR64_USER_MARSHAL_FORMAT
@@ -2469,7 +2469,7 @@ struct NDR64_USER_MARSHAL_FORMAT
 
 struct NDR64_PIPE_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield480;
+    ubyte _bitfield480;
 }
 
 struct NDR64_PIPE_FORMAT

@@ -3,17 +3,16 @@
 module windows.win32.security.authorization.ui;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HINSTANCE, HRESULT,
-                                                    HWND, PWSTR;
-public import windows.win32.security.security : ACE_FLAGS, ACL;
-public import windows.win32.security.authorization.authorization : AUTHZ_SECURITY_ATTRIBUTES_INFORMATION,
-                                                                   AUTHZ_SECURITY_ATTRIBUTE_OPERATION,
-                                                                   AUTHZ_SID_OPERATION,
-                                                                   INHERITED_FROMA;
-public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, OBJECT_TYPE_LIST,
-                                                PSECURITY_DESCRIPTOR, PSID, TOKEN_GROUPS;
-public import windows.win32.system.com.com : IDataObject, IUnknown;
-public import windows.win32.ui.controls.controls : HPROPSHEETPAGE, PSPCB_MESSAGE;
+public import windows.win32.foundation : BOOL, BOOLEAN, HINSTANCE, HRESULT, HWND,
+                                         PWSTR;
+public import windows.win32.security : ACE_FLAGS, ACL;
+public import windows.win32.security.authorization : AUTHZ_SECURITY_ATTRIBUTES_INFORMATION,
+                                                     AUTHZ_SECURITY_ATTRIBUTE_OPERATION,
+                                                     AUTHZ_SID_OPERATION, INHERITED_FROMA;
+public import windows.win32.security : OBJECT_SECURITY_INFORMATION, OBJECT_TYPE_LIST,
+                                       PSECURITY_DESCRIPTOR, PSID, TOKEN_GROUPS;
+public import windows.win32.system.com : IDataObject, IUnknown;
+public import windows.win32.ui.controls : HPROPSHEETPAGE, PSPCB_MESSAGE;
 
 extern(Windows) @nogc nothrow:
 
@@ -179,8 +178,8 @@ struct SID_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-sid_info_list
 struct SID_INFO_LIST
 {
-    uint cItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SID_INFO[1] aSidInfo;
+    uint        cItems;
+    SID_INFO[1] aSidInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-security_object

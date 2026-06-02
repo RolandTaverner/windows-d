@@ -3,10 +3,10 @@
 module windows.win32.system.diagnostics.etw;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
-                                                    HRESULT, PSTR, PWSTR, WIN32_ERROR;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR, PSID;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
+                                         HRESULT, PSTR, PWSTR, WIN32_ERROR;
+public import windows.win32.security : PSECURITY_DESCRIPTOR, PSID;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.time : TIME_ZONE_INFORMATION;
 
 extern(Windows) @nogc nothrow:
@@ -543,10 +543,14 @@ enum const(wchar)* KERNEL_LOGGER_NAMEW = "NT Kernel Logger";
 enum const(wchar)* GLOBAL_LOGGER_NAMEW = "GlobalLogger";
 enum const(wchar)* EVENT_LOGGER_NAMEW = "EventLog";
 enum const(wchar)* DIAG_LOGGER_NAMEW = "DiagLog";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* KERNEL_LOGGER_NAMEA = "NT Kernel Logger";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GLOBAL_LOGGER_NAMEA = "GlobalLogger";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* EVENT_LOGGER_NAMEA = "EventLog";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DIAG_LOGGER_NAMEA = "DiagLog";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* KERNEL_LOGGER_NAMEA = "NT Kernel Logger";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GLOBAL_LOGGER_NAMEA = "GlobalLogger";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* EVENT_LOGGER_NAMEA = "EventLog";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* DIAG_LOGGER_NAMEA = "DiagLog";
 enum uint MAX_MOF_FIELDS = 0x00000010U;
 enum uint SYSTEM_EVENT_TYPE = 0x00000001U;
 
@@ -1587,7 +1591,7 @@ struct EVENT_TRACE_PROPERTIES_V2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VersionNumber)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield399;
+            uint _bitfield399;
         }
         uint V2Control;
     }
@@ -1597,7 +1601,7 @@ struct EVENT_TRACE_PROPERTIES_V2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExcludeKernelStack)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield400;
+            uint _bitfield400;
         }
         ulong V2Options;
     }
@@ -1667,12 +1671,12 @@ struct TRACE_GUID_INFO
 
 struct PROFILE_SOURCE_INFO
 {
-    uint  NextEntryOffset;
-    uint  Source;
-    uint  MinInterval;
-    uint  MaxInterval;
-    ulong Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Description;
+    uint     NextEntryOffset;
+    uint     Source;
+    uint     MinInterval;
+    uint     MaxInterval;
+    ulong    Reserved;
+    wchar[1] Description; // Flexible array
 }
 
 struct ETW_PMC_COUNTER_OWNER
@@ -1686,7 +1690,7 @@ struct ETW_PMC_COUNTER_OWNERSHIP_STATUS
 {
     uint ProcessorNumber;
     uint NumberOfCounters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ETW_PMC_COUNTER_OWNER[1] CounterOwners;
+    ETW_PMC_COUNTER_OWNER[1] CounterOwners; // Flexible array
 }
 
 struct ETW_PMC_SESSION_INFO
@@ -1929,21 +1933,21 @@ struct EVENT_FILTER_HEADER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntprov/ns-evntprov-event_filter_event_id
 struct EVENT_FILTER_EVENT_ID
 {
-    BOOLEAN FilterIn;
-    ubyte   Reserved;
-    ushort  Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] Events;
+    BOOLEAN   FilterIn;
+    ubyte     Reserved;
+    ushort    Count;
+    ushort[1] Events; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntprov/ns-evntprov-event_filter_event_name
 struct EVENT_FILTER_EVENT_NAME
 {
-    ulong   MatchAnyKeyword;
-    ulong   MatchAllKeyword;
-    ubyte   Level;
-    BOOLEAN FilterIn;
-    ushort  NameCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Names;
+    ulong    MatchAnyKeyword;
+    ulong    MatchAllKeyword;
+    ubyte    Level;
+    BOOLEAN  FilterIn;
+    ushort   NameCount;
+    ubyte[1] Names; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntprov/ns-evntprov-event_filter_level_kw
@@ -1962,7 +1966,7 @@ struct EVENT_HEADER_EXTENDED_DATA_ITEM
     ushort ExtType;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield401;
+        ushort _bitfield401;
     }
     ushort DataSize;
     ulong  DataPtr;
@@ -1991,15 +1995,15 @@ struct EVENT_EXTENDED_ITEM_TS_ID
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntcons/ns-evntcons-event_extended_item_stack_trace32
 struct EVENT_EXTENDED_ITEM_STACK_TRACE32
 {
-    ulong MatchId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Address;
+    ulong   MatchId;
+    uint[1] Address; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntcons/ns-evntcons-event_extended_item_stack_trace64
 struct EVENT_EXTENDED_ITEM_STACK_TRACE64
 {
-    ulong MatchId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] Address;
+    ulong    MatchId;
+    ulong[1] Address; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntcons/ns-evntcons-event_extended_item_stack_key32
@@ -2026,7 +2030,7 @@ struct EVENT_EXTENDED_ITEM_PEBS_INDEX
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntcons/ns-evntcons-event_extended_item_pmc_counters
 struct EVENT_EXTENDED_ITEM_PMC_COUNTERS
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] Counter;
+    ulong[1] Counter; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evntcons/ns-evntcons-event_extended_item_process_start_key
@@ -2091,15 +2095,15 @@ struct EVENT_MAP_ENTRY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-event_map_info
 struct EVENT_MAP_INFO
 {
-    uint      NameOffset;
-    MAP_FLAGS Flag;
-    uint      EntryCount;
+    uint               NameOffset;
+    MAP_FLAGS          Flag;
+    uint               EntryCount;
     union
     {
         MAP_VALUETYPE MapEntryValueType;
         uint          FormatStringOffset;
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EVENT_MAP_ENTRY[1] MapEntryArray;
+    EVENT_MAP_ENTRY[1] MapEntryArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-event_property_info
@@ -2143,7 +2147,7 @@ struct EVENT_PROPERTY_INFO
         uint Reserved;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Tags)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield402;
+            uint _bitfield402;
         }
     }
 }
@@ -2182,10 +2186,10 @@ struct TRACE_EVENT_INFO
         TEMPLATE_FLAGS Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Tags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield403;
+            uint _bitfield403;
         }
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EVENT_PROPERTY_INFO[1] EventPropertyInfoArray;
+    EVENT_PROPERTY_INFO[1] EventPropertyInfoArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-property_data_descriptor
@@ -2212,7 +2216,7 @@ struct PROVIDER_FILTER_INFO
     uint  MessageOffset;
     uint  Reserved;
     uint  PropertyCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EVENT_PROPERTY_INFO[1] EventPropertyInfoArray;
+    EVENT_PROPERTY_INFO[1] EventPropertyInfoArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-provider_field_info
@@ -2228,7 +2232,7 @@ struct PROVIDER_FIELD_INFOARRAY
 {
     uint             NumberOfElements;
     EVENT_FIELD_TYPE FieldType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PROVIDER_FIELD_INFO[1] FieldInfoArray;
+    PROVIDER_FIELD_INFO[1] FieldInfoArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-trace_provider_info
@@ -2244,15 +2248,15 @@ struct PROVIDER_ENUMERATION_INFO
 {
     uint NumberOfProviders;
     uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRACE_PROVIDER_INFO[1] TraceProviderInfoArray;
+    TRACE_PROVIDER_INFO[1] TraceProviderInfoArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-provider_event_info
 struct PROVIDER_EVENT_INFO
 {
-    uint NumberOfEvents;
-    uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EVENT_DESCRIPTOR[1] EventDescriptorsArray;
+    uint                NumberOfEvents;
+    uint                Reserved;
+    EVENT_DESCRIPTOR[1] EventDescriptorsArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tdh/ns-tdh-tdh_context

@@ -3,9 +3,8 @@
 module windows.win32.system.power;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE,
-                                                    HRESULT, LPARAM, NTSTATUS, PWSTR,
-                                                    WIN32_ERROR;
+public import windows.win32.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE, HRESULT,
+                                         LPARAM, NTSTATUS, PWSTR, WIN32_ERROR;
 public import windows.win32.system.registry : HKEY, REG_SAM_FLAGS;
 public import windows.win32.system.threading : REASON_CONTEXT;
 public import windows.win32.ui.windowsandmessaging : REGISTER_NOTIFICATION_FLAGS;
@@ -536,7 +535,7 @@ enum : GUID
 enum GUID PPM_THERMALCONSTRAINT_GUID = GUID("a852c2c8-1a4c-423b-8c2c-f30d82931a88");
 enum GUID PPM_PERFMON_PERFSTATE_GUID = GUID("7fd18652-0cfe-40d2-b0a1-0b066a87759e");
 enum GUID PPM_THERMAL_POLICY_CHANGE_GUID = GUID("48f377b8-6880-4c7b-8bdc-380176c6654d");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1462028317, 54703, 19487, 161, 3, 160, 110, 40, 242, 4, 198}, 1))], [])*/DEVPROPKEY PROCESSOR_NUMBER_PKEY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1462028317, 54703, 19487, 161, 3, 160, 110, 40, 242, 4, 198}, 1))], [])*/DEVPROPKEY(GUID("5724C81D-D5AF-4C1F-A103-A06E28F204C6"), 1);
+enum DEVPROPKEY PROCESSOR_NUMBER_PKEY = DEVPROPKEY(GUID("5724C81D-D5AF-4C1F-A103-A06E28F204C6"), 1);
 
 enum : GUID
 {
@@ -624,11 +623,15 @@ enum : uint
 
 enum uint MAX_BATTERY_STRING_SIZE = 0x00000080U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/ioctl-battery-query-tag))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-battery-query-tag
     IOCTL_BATTERY_QUERY_TAG              = 0x00294040U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-battery-query-information
     IOCTL_BATTERY_QUERY_INFORMATION      = 0x00294044U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-battery-set-information
     IOCTL_BATTERY_SET_INFORMATION        = 0x00298048U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-battery-query-status
     IOCTL_BATTERY_QUERY_STATUS           = 0x0029404cU,
     IOCTL_BATTERY_CHARGING_SOURCE_CHANGE = 0x00294050U,
 }
@@ -779,11 +782,15 @@ enum : uint
 
 enum GUID GUID_DEVICE_ENERGY_METER = GUID("45bd8344-7ed6-49cf-a440-c276c933b053");
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ni-emi-ioctl_emi_get_version))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ni-emi-ioctl_emi_get_version
     IOCTL_EMI_GET_VERSION       = 0x00224000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ni-emi-ioctl_emi_get_metadata_size
     IOCTL_EMI_GET_METADATA_SIZE = 0x00224004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ni-emi-ioctl_emi_get_metadata
     IOCTL_EMI_GET_METADATA      = 0x00224008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ni-emi-ioctl_emi_get_measurement
     IOCTL_EMI_GET_MEASUREMENT   = 0x0022400cU,
 }
 
@@ -1022,15 +1029,15 @@ struct BATTERY_CHARGING_SOURCE_INFORMATION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-set-information-str
 struct BATTERY_SET_INFORMATION
 {
-    uint BatteryTag;
+    uint     BatteryTag;
     BATTERY_SET_INFORMATION_LEVEL InformationLevel;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buffer;
+    ubyte[1] Buffer; // Flexible array
 }
 
 struct BATTERY_CHARGER_STATUS
 {
     BATTERY_CHARGING_SOURCE_TYPE Type;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] VaData;
+    uint[1] VaData; // Flexible array
 }
 
 struct BATTERY_USB_CHARGER_STATUS
@@ -1069,7 +1076,7 @@ union POWER_ADAPTER_POWER_STATES
 {
     struct States
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield462;
+        uint _bitfield462;
     }
     uint AsUlong;
 }
@@ -1239,7 +1246,7 @@ struct EMI_METADATA_V1
     wchar[16]            HardwareModel;
     ushort               HardwareRevision;
     ushort               MeteredHardwareNameSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] MeteredHardwareName;
+    wchar[1]             MeteredHardwareName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_channel_v2
@@ -1247,23 +1254,23 @@ struct EMI_CHANNEL_V2
 {
     EMI_MEASUREMENT_UNIT MeasurementUnit;
     ushort               ChannelNameSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ChannelName;
+    wchar[1]             ChannelName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_v2
 struct EMI_METADATA_V2
 {
-    wchar[16] HardwareOEM;
-    wchar[16] HardwareModel;
-    ushort    HardwareRevision;
-    ushort    ChannelCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EMI_CHANNEL_V2[1] Channels;
+    wchar[16]         HardwareOEM;
+    wchar[16]         HardwareModel;
+    ushort            HardwareRevision;
+    ushort            ChannelCount;
+    EMI_CHANNEL_V2[1] Channels; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_measurement_data_v2
 struct EMI_MEASUREMENT_DATA_V2
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EMI_CHANNEL_MEASUREMENT_DATA[1] ChannelData;
+    EMI_CHANNEL_MEASUREMENT_DATA[1] ChannelData; // Flexible array
 }
 
 struct CM_POWER_DATA
@@ -1334,11 +1341,11 @@ struct RESUME_PERFORMANCE
 
 struct SET_POWER_SETTING_VALUE
 {
-    uint Version;
-    GUID Guid;
+    uint     Version;
+    GUID     Guid;
     SYSTEM_POWER_CONDITION PowerCondition;
-    uint DataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     DataLength;
+    ubyte[1] Data; // Flexible array
 }
 
 struct POWER_PLATFORM_INFORMATION
@@ -1382,7 +1389,7 @@ struct PPM_WMI_IDLE_STATES
     uint  TargetState;
     uint  OldState;
     ulong TargetProcessors;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PPM_WMI_IDLE_STATE[1] State;
+    PPM_WMI_IDLE_STATE[1] State; // Flexible array
 }
 
 struct PPM_WMI_IDLE_STATES_EX
@@ -1392,7 +1399,7 @@ struct PPM_WMI_IDLE_STATES_EX
     uint  TargetState;
     uint  OldState;
     void* TargetProcessors;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PPM_WMI_IDLE_STATE[1] State;
+    PPM_WMI_IDLE_STATE[1] State; // Flexible array
 }
 
 struct PPM_WMI_PERF_STATE
@@ -1435,7 +1442,7 @@ struct PPM_WMI_PERF_STATES
     uint  FeedbackHandler;
     uint  Reserved1;
     ulong Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PPM_WMI_PERF_STATE[1] State;
+    PPM_WMI_PERF_STATE[1] State; // Flexible array
 }
 
 struct PPM_WMI_PERF_STATES_EX
@@ -1460,7 +1467,7 @@ struct PPM_WMI_PERF_STATES_EX
     uint  FeedbackHandler;
     uint  Reserved1;
     ulong Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PPM_WMI_PERF_STATE[1] State;
+    PPM_WMI_PERF_STATE[1] State; // Flexible array
 }
 
 struct PPM_IDLE_STATE_ACCOUNTING
@@ -1478,7 +1485,7 @@ struct PPM_IDLE_ACCOUNTING
     uint  TotalTransitions;
     uint  ResetCount;
     ulong StartTime;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PPM_IDLE_STATE_ACCOUNTING[1] State;
+    PPM_IDLE_STATE_ACCOUNTING[1] State; // Flexible array
 }
 
 struct PPM_IDLE_STATE_BUCKET_EX
@@ -1508,7 +1515,7 @@ struct PPM_IDLE_ACCOUNTING_EX
     uint  ResetCount;
     uint  AbortCount;
     ulong StartTime;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PPM_IDLE_STATE_ACCOUNTING_EX[1] State;
+    PPM_IDLE_STATE_ACCOUNTING_EX[1] State; // Flexible array
 }
 
 struct PPM_PERFSTATE_EVENT
@@ -1607,7 +1614,7 @@ struct PROCESSOR_POWER_POLICY_INFO
     ubyte    DemotePercent;
     ubyte    PromotePercent;
     ubyte[2] Spare;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield463;
+    uint     _bitfield463;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_power_policy
@@ -1616,7 +1623,7 @@ struct PROCESSOR_POWER_POLICY
     uint     Revision;
     ubyte    DynamicThrottle;
     ubyte[3] Spare;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield464;
+    uint     _bitfield464;
     uint     PolicyCount;
     PROCESSOR_POWER_POLICY_INFO[3] Policy;
 }
@@ -1690,9 +1697,9 @@ struct SYSTEM_BATTERY_STATE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-powerbroadcast_setting
 struct POWERBROADCAST_SETTING
 {
-    GUID PowerSetting;
-    uint DataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    GUID     PowerSetting;
+    uint     DataLength;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-system_power_status

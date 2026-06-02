@@ -3,7 +3,7 @@
 module windows.win32.storage.cabinets;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, PSTR;
+public import windows.win32.foundation : BOOL, CHAR, PSTR;
 
 extern(Windows) @nogc nothrow:
 

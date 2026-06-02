@@ -3,25 +3,23 @@
 module windows.win32.graphics.direct3d12;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, LUID,
-                                                    PSTR, PWSTR, RECT;
-public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_FEATURE_LEVEL,
-                                                         D3D_INTERPOLATION_MODE,
-                                                         D3D_MIN_PRECISION, D3D_NAME,
-                                                         D3D_PARAMETER_FLAGS, D3D_PRIMITIVE,
-                                                         D3D_PRIMITIVE_TOPOLOGY,
-                                                         D3D_REGISTER_COMPONENT_TYPE,
-                                                         D3D_RESOURCE_RETURN_TYPE,
-                                                         D3D_SHADER_INPUT_TYPE,
-                                                         D3D_SHADER_VARIABLE_CLASS,
-                                                         D3D_SHADER_VARIABLE_TYPE,
-                                                         D3D_SRV_DIMENSION, D3D_TESSELLATOR_DOMAIN,
-                                                         D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
-                                                         D3D_TESSELLATOR_PARTITIONING,
-                                                         ID3DBlob;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, LUID, PSTR,
+                                         PWSTR, RECT;
+public import windows.win32.graphics.direct3d : D3D_CBUFFER_TYPE, D3D_FEATURE_LEVEL,
+                                                D3D_INTERPOLATION_MODE, D3D_MIN_PRECISION,
+                                                D3D_NAME, D3D_PARAMETER_FLAGS,
+                                                D3D_PRIMITIVE, D3D_PRIMITIVE_TOPOLOGY,
+                                                D3D_REGISTER_COMPONENT_TYPE,
+                                                D3D_RESOURCE_RETURN_TYPE,
+                                                D3D_SHADER_INPUT_TYPE,
+                                                D3D_SHADER_VARIABLE_CLASS,
+                                                D3D_SHADER_VARIABLE_TYPE, D3D_SRV_DIMENSION,
+                                                D3D_TESSELLATOR_DOMAIN,
+                                                D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
+                                                D3D_TESSELLATOR_PARTITIONING, ID3DBlob;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT, DXGI_SAMPLE_DESC;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -4453,17 +4451,17 @@ struct D3D12_SHADER_BYTECODE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_stream_output_desc
 struct D3D12_STREAM_OUTPUT_DESC
 {
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumEntries)))])*/const(D3D12_SO_DECLARATION_ENTRY)* pSODeclaration;
-    uint NumEntries;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumStrides)))])*/const(uint)* pBufferStrides;
-    uint NumStrides;
-    uint RasterizedStream;
+    const(D3D12_SO_DECLARATION_ENTRY)* pSODeclaration;
+    uint         NumEntries;
+    const(uint)* pBufferStrides;
+    uint         NumStrides;
+    uint         RasterizedStream;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_input_layout_desc
 struct D3D12_INPUT_LAYOUT_DESC
 {
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumElements)))])*/const(D3D12_INPUT_ELEMENT_DESC)* pInputElementDescs;
+    const(D3D12_INPUT_ELEMENT_DESC)* pInputElementDescs;
     uint NumElements;
 }
 
@@ -5138,7 +5136,7 @@ struct D3D12_VIEW_INSTANCE_LOCATION
 struct D3D12_VIEW_INSTANCING_DESC
 {
     uint ViewInstanceCount;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(ViewInstanceCount)))])*/const(D3D12_VIEW_INSTANCE_LOCATION)* pViewInstanceLocations;
+    const(D3D12_VIEW_INSTANCE_LOCATION)* pViewInstanceLocations;
     D3D12_VIEW_INSTANCING_FLAGS Flags;
 }
 
@@ -5550,7 +5548,7 @@ struct D3D12_DESCRIPTOR_RANGE
 struct D3D12_ROOT_DESCRIPTOR_TABLE
 {
     uint NumDescriptorRanges;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumDescriptorRanges)))])*/const(D3D12_DESCRIPTOR_RANGE)* pDescriptorRanges;
+    const(D3D12_DESCRIPTOR_RANGE)* pDescriptorRanges;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_constants
@@ -5621,9 +5619,9 @@ struct D3D12_STATIC_SAMPLER_DESC1
 struct D3D12_ROOT_SIGNATURE_DESC
 {
     uint NumParameters;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumParameters)))])*/const(D3D12_ROOT_PARAMETER)* pParameters;
+    const(D3D12_ROOT_PARAMETER)* pParameters;
     uint NumStaticSamplers;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumStaticSamplers)))])*/const(D3D12_STATIC_SAMPLER_DESC)* pStaticSamplers;
+    const(D3D12_STATIC_SAMPLER_DESC)* pStaticSamplers;
     D3D12_ROOT_SIGNATURE_FLAGS Flags;
 }
 
@@ -5642,7 +5640,7 @@ struct D3D12_DESCRIPTOR_RANGE1
 struct D3D12_ROOT_DESCRIPTOR_TABLE1
 {
     uint NumDescriptorRanges;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumDescriptorRanges)))])*/const(D3D12_DESCRIPTOR_RANGE1)* pDescriptorRanges;
+    const(D3D12_DESCRIPTOR_RANGE1)* pDescriptorRanges;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor1
@@ -5670,9 +5668,9 @@ struct D3D12_ROOT_PARAMETER1
 struct D3D12_ROOT_SIGNATURE_DESC1
 {
     uint NumParameters;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumParameters)))])*/const(D3D12_ROOT_PARAMETER1)* pParameters;
+    const(D3D12_ROOT_PARAMETER1)* pParameters;
     uint NumStaticSamplers;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumStaticSamplers)))])*/const(D3D12_STATIC_SAMPLER_DESC)* pStaticSamplers;
+    const(D3D12_STATIC_SAMPLER_DESC)* pStaticSamplers;
     D3D12_ROOT_SIGNATURE_FLAGS Flags;
 }
 
@@ -5859,7 +5857,7 @@ struct D3D12_COMMAND_SIGNATURE_DESC
 {
     uint ByteStride;
     uint NumArgumentDescs;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumArgumentDescs)))])*/const(D3D12_INDIRECT_ARGUMENT_DESC)* pArgumentDescs;
+    const(D3D12_INDIRECT_ARGUMENT_DESC)* pArgumentDescs;
     uint NodeMask;
 }
 
@@ -6202,7 +6200,7 @@ struct D3D12_RAYTRACING_GEOMETRY_AABBS_DESC
 struct D3D12_RAYTRACING_OPACITY_MICROMAP_DESC
 {
     uint ByteOffset;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Format)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield91;
+    uint _bitfield91;
 }
 
 struct D3D12_RAYTRACING_GEOMETRY_OMM_LINKAGE_DESC
@@ -6301,8 +6299,8 @@ struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_CURRENT_SIZE_DESC
 struct D3D12_RAYTRACING_INSTANCE_DESC
 {
     float[12] Transform;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(InstanceMask)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Flags)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
+    uint      _bitfield1;
+    uint      _bitfield2;
     ulong     AccelerationStructure;
 }
 
@@ -6577,7 +6575,7 @@ struct D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_PARAMETERS
     ID3D12Resource     pSrcResource;
     ID3D12Resource     pDstResource;
     uint               SubresourceCount;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(SubresourceCount)))])*/const(D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS)* pSubresourceParameters;
+    const(D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS)* pSubresourceParameters;
     DXGI_FORMAT        Format;
     D3D12_RESOLVE_MODE ResolveMode;
     BOOL               PreserveResolveSource;

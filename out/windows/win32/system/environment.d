@@ -3,8 +3,7 @@
 module windows.win32.system.environment;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -204,7 +203,7 @@ align (1):
     ubyte[16] FamilyId;
     ubyte[16] ImageId;
     uint      Svn;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ModuleName;
+    wchar[1]  ModuleName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-enclave_information

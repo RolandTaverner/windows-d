@@ -3,7 +3,7 @@
 module windows.win32.storage.iscsidisc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, CHAR, PSTR, PWSTR;
+public import windows.win32.foundation : BOOLEAN, CHAR, PSTR, PWSTR;
 public import windows.win32.system.ioctl : STORAGE_DEVICE_NUMBER;
 
 extern(Windows) @nogc nothrow:
@@ -107,7 +107,8 @@ enum uint IOCTL_SCSI_BASE = 0x00000004U;
 enum GUID ScsiRawInterfaceGuid = GUID("53f56309-b6bf-11d0-94f2-00a0c91efb8b");
 enum GUID WmiScsiAddressGuid = GUID("53f5630f-b6bf-11d0-94f2-00a0c91efb8b");
 enum uint FILE_DEVICE_SCSI = 0x0000001bU;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DD_SCSI_DEVICE_NAME = "\\Device\\ScsiPort";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* DD_SCSI_DEVICE_NAME = "\\Device\\ScsiPort";
 
 enum : uint
 {
@@ -165,18 +166,29 @@ enum : uint
     ATA_FLAGS_NO_MULTIPLE   = 0x00000020U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_SCSIDISK                  = "SCSIDISK",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_HYBRDISK                  = "HYBRDISK",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_DSM_NOTIFICATION          = "MPDSM   ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_DSM_GENERAL               = "MPDSMGEN",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_FIRMWARE                  = "FIRMWARE",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_QUERY_PROTOCOL            = "PROTOCOL",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_SET_PROTOCOL              = "SETPROTO",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_QUERY_TEMPERATURE         = "TEMPERAT",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_SET_TEMPERATURE_THRESHOLD = "SETTEMPT",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_QUERY_PHYSICAL_TOPOLOGY   = "TOPOLOGY",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IOCTL_MINIPORT_SIGNATURE_ENDURANCE_INFO            = "ENDURINF",
 }
 
@@ -399,38 +411,57 @@ enum uint MAX_ISCSI_PORTAL_ADDRESS_LEN = 0x00000100U;
 enum uint MAX_ISCSI_DISCOVERY_DOMAIN_LEN = 0x00000100U;
 enum uint MAX_RADIUS_ADDRESS_LEN = 0x00000029U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_TUNNEL_MODE_PREFERRED    = "0x00000040",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_TRANSPORT_MODE_PREFERRED = "0x00000020",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_PFS_ENABLED              = "0x00000010",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_AGGRESSIVE_MODE_ENABLED  = "0x00000008",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_MAIN_MODE_ENABLED        = "0x00000004",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_IKE_IPSEC_ENABLED        = "0x00000002",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_SECURITY_FLAG_VALID                    = "0x00000001",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_HEADER_DIGEST         = "0x00000001",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_DATA_DIGEST           = "0x00000002",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_MAXIMUM_CONNECTIONS   = "0x00000004",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_DEFAULT_TIME_2_WAIT   = "0x00000008",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_DEFAULT_TIME_2_RETAIN = "0x00000010",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_USERNAME              = "0x00000020",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_PASSWORD              = "0x00000040",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ISCSI_LOGIN_OPTIONS_AUTH_TYPE             = "0x00000080",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ID_IPV4_ADDR = "1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ID_IPV4_ADDR = "1";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ID_FQDN      = "2",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ID_USER_FQDN = "3",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ID_IPV6_ADDR = "5";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ID_IPV6_ADDR = "5";
 
 enum : uint
 {
@@ -546,22 +577,22 @@ version(X86_64)
 {
     struct SCSI_PASS_THROUGH32_EX
     {
-        uint  Version;
-        uint  Length;
-        uint  CdbLength;
-        uint  StorAddressLength;
-        ubyte ScsiStatus;
-        ubyte SenseInfoLength;
-        ubyte DataDirection;
-        ubyte Reserved;
-        uint  TimeOutValue;
-        uint  StorAddressOffset;
-        uint  SenseInfoOffset;
-        uint  DataOutTransferLength;
-        uint  DataInTransferLength;
-        uint  DataOutBufferOffset;
-        uint  DataInBufferOffset;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+        uint     Version;
+        uint     Length;
+        uint     CdbLength;
+        uint     StorAddressLength;
+        ubyte    ScsiStatus;
+        ubyte    SenseInfoLength;
+        ubyte    DataDirection;
+        ubyte    Reserved;
+        uint     TimeOutValue;
+        uint     StorAddressOffset;
+        uint     SenseInfoOffset;
+        uint     DataOutTransferLength;
+        uint     DataInTransferLength;
+        uint     DataOutBufferOffset;
+        uint     DataInBufferOffset;
+        ubyte[1] Cdb; // Flexible array
     }
 }
 
@@ -569,22 +600,22 @@ version(AArch64)
 {
     struct SCSI_PASS_THROUGH32_EX
     {
-        uint  Version;
-        uint  Length;
-        uint  CdbLength;
-        uint  StorAddressLength;
-        ubyte ScsiStatus;
-        ubyte SenseInfoLength;
-        ubyte DataDirection;
-        ubyte Reserved;
-        uint  TimeOutValue;
-        uint  StorAddressOffset;
-        uint  SenseInfoOffset;
-        uint  DataOutTransferLength;
-        uint  DataInTransferLength;
-        uint  DataOutBufferOffset;
-        uint  DataInBufferOffset;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+        uint     Version;
+        uint     Length;
+        uint     CdbLength;
+        uint     StorAddressLength;
+        ubyte    ScsiStatus;
+        ubyte    SenseInfoLength;
+        ubyte    DataDirection;
+        ubyte    Reserved;
+        uint     TimeOutValue;
+        uint     StorAddressOffset;
+        uint     SenseInfoOffset;
+        uint     DataOutTransferLength;
+        uint     DataInTransferLength;
+        uint     DataOutBufferOffset;
+        uint     DataInBufferOffset;
+        ubyte[1] Cdb; // Flexible array
     }
 }
 
@@ -592,22 +623,22 @@ version(X86_64)
 {
     struct SCSI_PASS_THROUGH_DIRECT32_EX
     {
-        uint  Version;
-        uint  Length;
-        uint  CdbLength;
-        uint  StorAddressLength;
-        ubyte ScsiStatus;
-        ubyte SenseInfoLength;
-        ubyte DataDirection;
-        ubyte Reserved;
-        uint  TimeOutValue;
-        uint  StorAddressOffset;
-        uint  SenseInfoOffset;
-        uint  DataOutTransferLength;
-        uint  DataInTransferLength;
-        void* DataOutBuffer;
-        void* DataInBuffer;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+        uint     Version;
+        uint     Length;
+        uint     CdbLength;
+        uint     StorAddressLength;
+        ubyte    ScsiStatus;
+        ubyte    SenseInfoLength;
+        ubyte    DataDirection;
+        ubyte    Reserved;
+        uint     TimeOutValue;
+        uint     StorAddressOffset;
+        uint     SenseInfoOffset;
+        uint     DataOutTransferLength;
+        uint     DataInTransferLength;
+        void*    DataOutBuffer;
+        void*    DataInBuffer;
+        ubyte[1] Cdb; // Flexible array
     }
 }
 
@@ -615,22 +646,22 @@ version(AArch64)
 {
     struct SCSI_PASS_THROUGH_DIRECT32_EX
     {
-        uint  Version;
-        uint  Length;
-        uint  CdbLength;
-        uint  StorAddressLength;
-        ubyte ScsiStatus;
-        ubyte SenseInfoLength;
-        ubyte DataDirection;
-        ubyte Reserved;
-        uint  TimeOutValue;
-        uint  StorAddressOffset;
-        uint  SenseInfoOffset;
-        uint  DataOutTransferLength;
-        uint  DataInTransferLength;
-        void* DataOutBuffer;
-        void* DataInBuffer;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+        uint     Version;
+        uint     Length;
+        uint     CdbLength;
+        uint     StorAddressLength;
+        ubyte    ScsiStatus;
+        ubyte    SenseInfoLength;
+        ubyte    DataDirection;
+        ubyte    Reserved;
+        uint     TimeOutValue;
+        uint     StorAddressOffset;
+        uint     SenseInfoOffset;
+        uint     DataOutTransferLength;
+        uint     DataInTransferLength;
+        void*    DataOutBuffer;
+        void*    DataInBuffer;
+        ubyte[1] Cdb; // Flexible array
     }
 }
 
@@ -850,42 +881,42 @@ struct SCSI_PASS_THROUGH_DIRECT
 
 struct SCSI_PASS_THROUGH_EX
 {
-    uint   Version;
-    uint   Length;
-    uint   CdbLength;
-    uint   StorAddressLength;
-    ubyte  ScsiStatus;
-    ubyte  SenseInfoLength;
-    ubyte  DataDirection;
-    ubyte  Reserved;
-    uint   TimeOutValue;
-    uint   StorAddressOffset;
-    uint   SenseInfoOffset;
-    uint   DataOutTransferLength;
-    uint   DataInTransferLength;
-    size_t DataOutBufferOffset;
-    size_t DataInBufferOffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    uint     Version;
+    uint     Length;
+    uint     CdbLength;
+    uint     StorAddressLength;
+    ubyte    ScsiStatus;
+    ubyte    SenseInfoLength;
+    ubyte    DataDirection;
+    ubyte    Reserved;
+    uint     TimeOutValue;
+    uint     StorAddressOffset;
+    uint     SenseInfoOffset;
+    uint     DataOutTransferLength;
+    uint     DataInTransferLength;
+    size_t   DataOutBufferOffset;
+    size_t   DataInBufferOffset;
+    ubyte[1] Cdb; // Flexible array
 }
 
 struct SCSI_PASS_THROUGH_DIRECT_EX
 {
-    uint  Version;
-    uint  Length;
-    uint  CdbLength;
-    uint  StorAddressLength;
-    ubyte ScsiStatus;
-    ubyte SenseInfoLength;
-    ubyte DataDirection;
-    ubyte Reserved;
-    uint  TimeOutValue;
-    uint  StorAddressOffset;
-    uint  SenseInfoOffset;
-    uint  DataOutTransferLength;
-    uint  DataInTransferLength;
-    void* DataOutBuffer;
-    void* DataInBuffer;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    uint     Version;
+    uint     Length;
+    uint     CdbLength;
+    uint     StorAddressLength;
+    ubyte    ScsiStatus;
+    ubyte    SenseInfoLength;
+    ubyte    DataDirection;
+    ubyte    Reserved;
+    uint     TimeOutValue;
+    uint     StorAddressOffset;
+    uint     SenseInfoOffset;
+    uint     DataOutTransferLength;
+    uint     DataInTransferLength;
+    void*    DataOutBuffer;
+    void*    DataInBuffer;
+    ubyte[1] Cdb; // Flexible array
 }
 
 struct ATA_PASS_THROUGH_EX
@@ -979,19 +1010,19 @@ struct SCSI_BUS_DATA
 
 struct SCSI_ADAPTER_BUS_INFO
 {
-    ubyte NumberOfBuses;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCSI_BUS_DATA[1] BusData;
+    ubyte            NumberOfBuses;
+    SCSI_BUS_DATA[1] BusData; // Flexible array
 }
 
 struct SCSI_INQUIRY_DATA
 {
-    ubyte   PathId;
-    ubyte   TargetId;
-    ubyte   Lun;
-    BOOLEAN DeviceClaimed;
-    uint    InquiryDataLength;
-    uint    NextInquiryDataOffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] InquiryData;
+    ubyte    PathId;
+    ubyte    TargetId;
+    ubyte    Lun;
+    BOOLEAN  DeviceClaimed;
+    uint     InquiryDataLength;
+    uint     NextInquiryDataOffset;
+    ubyte[1] InquiryData; // Flexible array
 }
 
 struct SRB_IO_CONTROL
@@ -1056,7 +1087,7 @@ struct NV_SEP_CACHE_PARAMETER
     {
         struct CacheFlags
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedBits)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield170;
+            ubyte _bitfield170;
         }
         ubyte CacheFlagsSet;
     }
@@ -1067,14 +1098,14 @@ struct NV_SEP_CACHE_PARAMETER
 
 struct STORAGE_DIAGNOSTIC_MP_REQUEST
 {
-    uint Version;
-    uint Size;
+    uint     Version;
+    uint     Size;
     MP_STORAGE_DIAGNOSTIC_TARGET_TYPE TargetType;
     MP_STORAGE_DIAGNOSTIC_LEVEL Level;
-    GUID ProviderId;
-    uint BufferSize;
-    uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DataBuffer;
+    GUID     ProviderId;
+    uint     BufferSize;
+    uint     Reserved;
+    ubyte[1] DataBuffer; // Flexible array
 }
 
 struct MP_DEVICE_DATA_SET_RANGE
@@ -1091,7 +1122,7 @@ struct DSM_NOTIFICATION_REQUEST_BLOCK
     uint    DataSetProfile;
     uint[3] Reserved;
     uint    DataSetRangesCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MP_DEVICE_DATA_SET_RANGE[1] DataSetRanges;
+    MP_DEVICE_DATA_SET_RANGE[1] DataSetRanges; // Flexible array
 }
 
 struct HYBRID_REQUEST_BLOCK
@@ -1127,7 +1158,7 @@ struct HYBRID_INFORMATION
     ulong          CacheSize;
     struct Attributes
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedBits)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield171;
+        uint _bitfield171;
     }
     struct Priorities
     {
@@ -1139,12 +1170,12 @@ struct HYBRID_INFORMATION
         uint    DirtyThresholdHigh;
         struct SupportedCommands
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedBits)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield172;
+            uint _bitfield172;
             uint MaxEvictCommands;
             uint MaxLbaRangeCountForEvict;
             uint MaxLbaRangeCountForChangeLba;
         }
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVCACHE_PRIORITY_LEVEL_DESCRIPTOR[1] Priority;
+        NVCACHE_PRIORITY_LEVEL_DESCRIPTOR[1] Priority; // Flexible array
     }
 }
 
@@ -1206,7 +1237,7 @@ struct STORAGE_FIRMWARE_INFO
     ubyte   ActiveSlot;
     ubyte   PendingActivateSlot;
     uint    Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_FIRMWARE_SLOT_INFO[1] Slot;
+    STORAGE_FIRMWARE_SLOT_INFO[1] Slot; // Flexible array
 }
 
 struct STORAGE_FIRMWARE_INFO_V2
@@ -1221,16 +1252,16 @@ struct STORAGE_FIRMWARE_INFO_V2
     ubyte[3] Reserved;
     uint     ImagePayloadAlignment;
     uint     ImagePayloadMaxSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_FIRMWARE_SLOT_INFO_V2[1] Slot;
+    STORAGE_FIRMWARE_SLOT_INFO_V2[1] Slot; // Flexible array
 }
 
 struct STORAGE_FIRMWARE_DOWNLOAD
 {
-    uint  Version;
-    uint  Size;
-    ulong Offset;
-    ulong BufferSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ImageBuffer;
+    uint     Version;
+    uint     Size;
+    ulong    Offset;
+    ulong    BufferSize;
+    ubyte[1] ImageBuffer; // Flexible array
 }
 
 struct STORAGE_FIRMWARE_DOWNLOAD_V2
@@ -1242,7 +1273,7 @@ struct STORAGE_FIRMWARE_DOWNLOAD_V2
     ubyte    Slot;
     ubyte[3] Reserved;
     uint     ImageSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ImageBuffer;
+    ubyte[1] ImageBuffer; // Flexible array
 }
 
 struct STORAGE_FIRMWARE_ACTIVATE
@@ -1325,7 +1356,7 @@ struct NTSCSI_UNICODE_STRING
 {
     ushort Length;
     ushort MaximumLength;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer;
+    PWSTR  Buffer;
 }
 
 struct DUMP_DRIVER_EX
@@ -1342,7 +1373,7 @@ struct STORAGE_ENDURANCE_INFO
     uint      GroupId;
     struct Flags
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield173;
+        uint _bitfield173;
     }
     uint      LifePercentage;
     ubyte[16] BytesReadCount;
@@ -1499,22 +1530,22 @@ struct ISCSI_TARGET_PORTAL_INFO_EXA
 struct ISCSI_TARGET_PORTAL_GROUPW
 {
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ISCSI_TARGET_PORTALW[1] Portals;
+    ISCSI_TARGET_PORTALW[1] Portals; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupa
 struct ISCSI_TARGET_PORTAL_GROUPA
 {
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ISCSI_TARGET_PORTALA[1] Portals;
+    ISCSI_TARGET_PORTALA[1] Portals; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infow
 struct ISCSI_CONNECTION_INFOW
 {
     ISCSI_UNIQUE_SESSION_ID ConnectionId;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR InitiatorAddress;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR TargetAddress;
+    PWSTR    InitiatorAddress;
+    PWSTR    TargetAddress;
     ushort   InitiatorSocket;
     ushort   TargetSocket;
     ubyte[2] CID;
@@ -1524,9 +1555,9 @@ struct ISCSI_CONNECTION_INFOW
 struct ISCSI_SESSION_INFOW
 {
     ISCSI_UNIQUE_SESSION_ID SessionId;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR InitiatorName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR TargetNodeName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR TargetName;
+    PWSTR    InitiatorName;
+    PWSTR    TargetNodeName;
+    PWSTR    TargetName;
     ubyte[6] ISID;
     ubyte[2] TSID;
     uint     ConnectionCount;
@@ -1537,8 +1568,8 @@ struct ISCSI_SESSION_INFOW
 struct ISCSI_CONNECTION_INFOA
 {
     ISCSI_UNIQUE_SESSION_ID ConnectionId;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR InitiatorAddress;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR TargetAddress;
+    PSTR     InitiatorAddress;
+    PSTR     TargetAddress;
     ushort   InitiatorSocket;
     ushort   TargetSocket;
     ubyte[2] CID;
@@ -1548,9 +1579,9 @@ struct ISCSI_CONNECTION_INFOA
 struct ISCSI_SESSION_INFOA
 {
     ISCSI_UNIQUE_SESSION_ID SessionId;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR InitiatorName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR TargetNodeName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR TargetName;
+    PSTR     InitiatorName;
+    PSTR     TargetNodeName;
+    PSTR     TargetName;
     ubyte[6] ISID;
     ubyte[2] TSID;
     uint     ConnectionCount;

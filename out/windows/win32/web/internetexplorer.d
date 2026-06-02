@@ -3,23 +3,22 @@
 module windows.win32.web.internetexplorer;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HINSTANCE,
-                                                    HRESULT, HWND, LPARAM, LUID, POINT,
-                                                    PSTR, PWSTR, RECT, SIZE, VARIANT_BOOL,
-                                                    WPARAM;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HINSTANCE,
+                                         HRESULT, HWND, LPARAM, LUID, POINT, PSTR,
+                                         PWSTR, RECT, SIZE, VARIANT_BOOL, WPARAM;
 public import windows.win32.graphics.directdraw : IDirectDrawSurface;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT, DXGI_MODE_ROTATION;
 public import windows.win32.graphics.gdi : HBITMAP, RGBQUAD;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
 public import windows.win32.storage.filesystem : GET_FILEEX_INFO_LEVELS, WIN32_FIND_DATAA;
-public import windows.win32.system.com.com : BINDINFO, IBindCtx, IBindStatusCallback,
-                                             IDispatch, IMoniker, IPersist, IStream,
-                                             IUnknown, IUri;
+public import windows.win32.system.com : BINDINFO, IBindCtx, IBindStatusCallback,
+                                         IDispatch, IMoniker, IPersist, IStream,
+                                         IUnknown, IUri;
 public import windows.win32.system.ole : IOleCommandTarget, IOleContainer;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.threading : PROCESS_INFORMATION;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.system.winrt.winrt : IInspectable;
+public import windows.win32.system.winrt : IInspectable;
 public import windows.win32.ui.windowsandmessaging : HICON;
 public import windows.win32.web.mshtml : IHTMLDocument2, IHTMLElement, IHTMLWindow2,
                                          VIEW_OBJECT_ALPHA_MODE, styleMsTouchAction;
@@ -534,10 +533,13 @@ enum : uint
 enum uint TF_NAVIGATE = 0x7faeabacU;
 enum const(wchar)* TARGET_NOTIFY_OBJECT_NAME = "863a99a0-21bc-11d0-82b4-00a0c90c29c5";
 enum const(wchar)* IEPROCESS_MODULE_NAME = "IERtUtil.dll";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* IEGetProcessModule_PROC_NAME = "IEGetProcessModule";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* IEGetTabWindowExports_PROC_NAME = "IEGetTabWindowExports";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* IEGetProcessModule_PROC_NAME = "IEGetProcessModule";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* IEGetTabWindowExports_PROC_NAME = "IEGetTabWindowExports";
 enum const(wchar)* TSZMICROSOFTPATH = "Software\\Microsoft";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_IE_MAIN = "Main";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_IE_MAIN = "Main";
 enum const(wchar)* REGSTR_VAL_SMOOTHSCROLL = "SmoothScroll";
 enum uint REGSTR_VAL_SMOOTHSCROLL_DEF = 0x00000001U;
 
@@ -548,7 +550,8 @@ enum : const(wchar)*
     REGSTR_VAL_STARTPAGE      = "Start Page",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTRA_VAL_STARTPAGE = "Start Page";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGSTRA_VAL_STARTPAGE = "Start Page";
 
 enum : const(wchar)*
 {
@@ -578,7 +581,8 @@ enum : const(wchar)*
     REGSTR_VAL_USEIBAR         = "UseBar",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_IE_SETTINGS = "Settings";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_IE_SETTINGS = "Settings";
 
 enum : const(wchar)*
 {
@@ -595,9 +599,11 @@ enum : const(wchar)*
     REGSTR_VAL_USEHOVERCOLOR    = "Use Anchor Hover Color",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_IE_SECURITY = "Security";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_IE_SECURITY = "Security";
 enum const(wchar)* REGSTR_VAL_SAFETYWARNINGLEVEL = "Safety Warning Level";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_IE_DEFAULT_HTML_EDITOR = "Default HTML Editor";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_IE_DEFAULT_HTML_EDITOR = "Default HTML Editor";
 
 enum : const(wchar)*
 {
@@ -606,9 +612,11 @@ enum : const(wchar)*
     REGSTR_VAL_USEAUTOCOMPLETE = "Use AutoComplete",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SZ_IE_IBAR       = "Bar",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SZ_IE_IBAR_BANDS = "Bands",
 }
 
@@ -643,9 +651,11 @@ enum : const(wchar)*
     REGSTR_VAL_CACHEPREFIX            = "CachePrefix",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_IE_SEARCHSTRINGS = "UrlTemplate";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_IE_SEARCHSTRINGS = "UrlTemplate";
 enum uint MAX_SEARCH_FORMAT_STRING = 0x000000ffU;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_IE_THRESHOLDS = "ErrorThresholds";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_IE_THRESHOLDS = "ErrorThresholds";
 
 enum : const(wchar)*
 {
@@ -692,7 +702,8 @@ enum : const(wchar)*
     REGSTR_VAL_BYPASSAUTOCONFIG = "BypassAutoconfig",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZTRUSTWARNLEVEL = "Trust Warning Level";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZTRUSTWARNLEVEL = "Trust Warning Level";
 
 enum : const(wchar)*
 {
@@ -723,21 +734,26 @@ enum const(wchar)* REGSTR_VAL_SECURITYACTICEXSCRIPTS = "Security_RunScripts";
 enum uint REGSTR_VAL_SECURITYACTICEXSCRIPTS_DEF = 0x00000001U;
 enum const(wchar)* REGSTR_VAL_SECURITYJAVA = "Security_RunJavaApplets";
 enum uint REGSTR_VAL_SECURITYJAVA_DEF = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZJAVAVMPATH = "\\Java VM";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZJAVAVMPATH = "\\Java VM";
 enum const(wchar)* REGSTR_VAL_JAVAJIT = "EnableJIT";
 enum uint REGSTR_VAL_JAVAJIT_DEF = 0x00000000U;
 enum const(wchar)* REGSTR_VAL_JAVALOGGING = "EnableLogging";
 enum uint REGSTR_VAL_JAVALOGGING_DEF = 0x00000000U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZTOOLBAR = "\\Toolbar";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZTOOLBAR = "\\Toolbar";
 enum const(wchar)* REGSTR_VAL_DAYSTOKEEP = "DaysToKeep";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZNOTEXT = "NoText";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZVISIBLE = "VisibleBands";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZNOTEXT = "NoText";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZVISIBLE = "VisibleBands";
 enum const(wchar)* REGSTR_VAL_VISIBLEBANDS = "VisibleBands";
 enum uint REGSTR_VAL_VISIBLEBANDS_DEF = 0x00000007U;
 enum uint TOOLSBAND = 0x00000001U;
 enum uint ADDRESSBAND = 0x00000002U;
 enum uint LINKSBAND = 0x00000004U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZBACKBITMAP = "BackBitmap";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZBACKBITMAP = "BackBitmap";
 enum const(wchar)* REGSTR_VAL_BACKBITMAP = "BackBitmap";
 enum const(wchar)* REGSTR_SHIFTQUICKSUFFIX = "ShiftQuickCompleteSuffix";
 enum const(wchar)* TSZSCHANNELPATH = "SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL";

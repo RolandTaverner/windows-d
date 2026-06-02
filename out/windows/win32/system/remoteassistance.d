@@ -3,8 +3,8 @@
 module windows.win32.system.remoteassistance;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HRESULT;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BSTR, HRESULT;
+public import windows.win32.system.com : IDispatch, IUnknown;
 
 extern(Windows) @nogc nothrow:
 

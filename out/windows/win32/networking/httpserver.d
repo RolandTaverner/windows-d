@@ -3,10 +3,9 @@
 module windows.win32.networking.httpserver;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR, PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR, SOCKADDR_STORAGE;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR, SECURITY_ATTRIBUTES;
+public import windows.win32.security : PSECURITY_DESCRIPTOR, SECURITY_ATTRIBUTES;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -658,7 +657,8 @@ enum : uint
     HTTP_REQUEST_PROPERTY_SNI_FLAG_NO_SNI     = 0x00000002U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_version))], [])*/const(wchar)* HTTP_VERSION_ = "HTTP/1.0";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_version
+enum const(wchar)* HTTP_VERSION_ = "HTTP/1.0";
 
 // Structs
 
@@ -674,7 +674,7 @@ struct HTTP_REQUEST_QUEUE_HANDLE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_property_flags
 struct HTTP_PROPERTY_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Present)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield142;
+    uint _bitfield142;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_state_info
@@ -791,7 +791,7 @@ struct HTTP_SERVICE_BINDING_BASE
 struct HTTP_SERVICE_BINDING_A
 {
     HTTP_SERVICE_BINDING_BASE Base;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer;
+    PSTR Buffer;
     uint BufferSize;
 }
 
@@ -799,8 +799,8 @@ struct HTTP_SERVICE_BINDING_A
 struct HTTP_SERVICE_BINDING_W
 {
     HTTP_SERVICE_BINDING_BASE Base;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer;
-    uint BufferSize;
+    PWSTR Buffer;
+    uint  BufferSize;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_channel_bind_info
@@ -920,18 +920,18 @@ struct HTTP_LOG_FIELDS_DATA
     ushort        UserAgentLength;
     ushort        CookieLength;
     ushort        ReferrerLength;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR UserName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR UriStem;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ClientIp;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ServerName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ServiceName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ServerIp;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Method;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR UriQuery;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Host;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR UserAgent;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Cookie;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Referrer;
+    PWSTR         UserName;
+    PWSTR         UriStem;
+    PSTR          ClientIp;
+    PSTR          ServerName;
+    PSTR          ServiceName;
+    PSTR          ServerIp;
+    PSTR          Method;
+    PSTR          UriQuery;
+    PSTR          Host;
+    PSTR          UserAgent;
+    PSTR          Cookie;
+    PSTR          Referrer;
     ushort        ServerPort;
     ushort        ProtocolStatus;
     uint          Win32Status;
@@ -1121,7 +1121,7 @@ struct HTTP_REQUEST_AUTH_INFO
     uint             PackedContextType;
     void*            PackedContext;
     uint             MutualAuthDataLength;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR pMutualAuthData;
+    PSTR             pMutualAuthData;
     ushort           PackageNameLength;
     PWSTR            pPackageName;
 }
@@ -1410,8 +1410,8 @@ struct HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ip_listen_query
 struct HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 {
-    uint AddrCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SOCKADDR_STORAGE[1] AddrList;
+    uint                AddrCount;
+    SOCKADDR_STORAGE[1] AddrList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_key

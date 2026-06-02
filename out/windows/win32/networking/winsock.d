@@ -3,10 +3,10 @@
 module windows.win32.networking.winsock;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FARPROC, HANDLE,
-                                                    HRESULT, HWND, LPARAM, LUID, PSTR,
-                                                    PWSTR, WAIT_EVENT, WPARAM;
-public import windows.win32.system.com.com : BLOB;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, FARPROC, HANDLE, HRESULT,
+                                         HWND, LPARAM, LUID, PSTR, PWSTR, WAIT_EVENT,
+                                         WPARAM;
+public import windows.win32.system.com : BLOB;
 public import windows.win32.system.io : OVERLAPPED, OVERLAPPED_ENTRY;
 public import windows.win32.system.kernel : COMPARTMENT_ID, PROCESSOR_NUMBER;
 
@@ -849,14 +849,16 @@ enum : GUID
 
 enum GUID ASSOCIATE_NAMERES_CONTEXT = GUID("59a38b67-d4fe-46e1-ba3c-87ea74ca3049");
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-rcvall))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-rcvall
     SIO_RCVALL           = 0x98000001U,
     SIO_RCVALL_MCAST     = 0x98000002U,
     SIO_RCVALL_IGMPMCAST = 0x98000003U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-keepalive-vals))], [])*/uint SIO_KEEPALIVE_VALS = 0x98000004U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-keepalive-vals
+enum uint SIO_KEEPALIVE_VALS = 0x98000004U;
 enum uint SIO_ABSORB_RTRALERT = 0x98000005U;
 enum uint SIO_UCAST_IF = 0x98000006U;
 enum uint SIO_LIMIT_BROADCASTS = 0x98000007U;
@@ -875,10 +877,14 @@ enum : uint
     SIO_RCVALL_IF       = 0x9800000eU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-loopback-fast-path))], [])*/uint SIO_LOOPBACK_FAST_PATH = 0x98000010U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-initial-rto))], [])*/uint SIO_TCP_INITIAL_RTO = 0x98000011U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-apply-transport-setting))], [])*/uint SIO_APPLY_TRANSPORT_SETTING = 0x98000013U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-transport-setting))], [])*/uint SIO_QUERY_TRANSPORT_SETTING = 0x98000014U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-loopback-fast-path
+enum uint SIO_LOOPBACK_FAST_PATH = 0x98000010U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-initial-rto
+enum uint SIO_TCP_INITIAL_RTO = 0x98000011U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-apply-transport-setting
+enum uint SIO_APPLY_TRANSPORT_SETTING = 0x98000013U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-query-transport-setting
+enum uint SIO_QUERY_TRANSPORT_SETTING = 0x98000014U;
 
 enum : uint
 {
@@ -888,7 +894,8 @@ enum : uint
 
 enum uint SIO_SET_PRIORITY_HINT = 0x98000018U;
 enum uint SIO_PRIORITY_HINT = 0x98000018U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-info))], [])*/uint SIO_TCP_INFO = 0xd8000027U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-info
+enum uint SIO_TCP_INFO = 0xd8000027U;
 enum uint SIO_CPU_AFFINITY = 0x98000015U;
 enum uint SIO_TIMESTAMPING = 0x980000ebU;
 
@@ -905,7 +912,7 @@ enum : uint
 }
 
 enum uint SIO_GET_TX_TIMESTAMP = 0x980000eaU;
-enum ushort TCP_INITIAL_RTO_UNSPECIFIED_MAX_SYN_RETRANSMISSIONS = cast(ushort) 0xffff;
+enum ushort TCP_INITIAL_RTO_UNSPECIFIED_MAX_SYN_RETRANSMISSIONS = 0xffff;
 
 enum : uint
 {
@@ -913,22 +920,28 @@ enum : uint
     TCP_INITIAL_RTO_DEFAULT_MAX_SYN_RETRANSMISSIONS = 0x00000000U,
 }
 
-enum ushort TCP_INITIAL_RTO_NO_SYN_RETRANSMISSIONS = cast(ushort) 0xfffe;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-acquire-port-reservation))], [])*/uint SIO_ACQUIRE_PORT_RESERVATION = 0x98000064U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-release-port-reservation))], [])*/uint SIO_RELEASE_PORT_RESERVATION = 0x98000065U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-associate-port-reservation))], [])*/uint SIO_ASSOCIATE_PORT_RESERVATION = 0x98000066U;
+enum ushort TCP_INITIAL_RTO_NO_SYN_RETRANSMISSIONS = 0xfffe;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-acquire-port-reservation
+enum uint SIO_ACQUIRE_PORT_RESERVATION = 0x98000064U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-release-port-reservation
+enum uint SIO_RELEASE_PORT_RESERVATION = 0x98000065U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-associate-port-reservation
+enum uint SIO_ASSOCIATE_PORT_RESERVATION = 0x98000066U;
 enum uint SIO_SET_SECURITY = 0x980000c8U;
 enum uint SIO_QUERY_SECURITY = 0xd80000c9U;
 enum uint SIO_SET_PEER_TARGET_NAME = 0x980000caU;
 enum uint SIO_DELETE_PEER_TARGET_NAME = 0x980000cbU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-wfp-connection-redirect-records))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-query-wfp-connection-redirect-records
     SIO_QUERY_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000dcU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-query-wfp-connection-redirect-context
     SIO_QUERY_WFP_CONNECTION_REDIRECT_CONTEXT = 0x980000ddU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-set-wfp-connection-redirect-records))], [])*/uint SIO_SET_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000deU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-set-wfp-connection-redirect-records
+enum uint SIO_SET_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000deU;
 enum uint SIO_SOCKET_USAGE_NOTIFICATION = 0x980000ccU;
 
 enum : uint
@@ -969,7 +982,8 @@ enum : uint
 
 enum uint IN4ADDR_LINKLOCALPREFIX_LENGTH = 0x00000010U;
 enum uint IN4ADDR_MULTICASTPREFIX_LENGTH = 0x00000004U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-set-compatibility-mode))], [])*/uint SIO_SET_COMPATIBILITY_MODE = 0x9800012cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-set-compatibility-mode
+enum uint SIO_SET_COMPATIBILITY_MODE = 0x9800012cU;
 
 enum : uint
 {
@@ -984,74 +998,75 @@ enum uint RIO_CORRUPT_CQ = 0xffffffffU;
 
 enum : ushort
 {
-    AF_UNIX    = cast(ushort) 0x0001,
-    AF_IMPLINK = cast(ushort) 0x0003,
+    AF_UNIX    = 0x0001,
+    AF_IMPLINK = 0x0003,
 }
 
 enum : ushort
 {
-    AF_PUP   = cast(ushort) 0x0004,
-    AF_CHAOS = cast(ushort) 0x0005,
+    AF_PUP   = 0x0004,
+    AF_CHAOS = 0x0005,
 }
 
 enum : ushort
 {
-    AF_NS      = cast(ushort) 0x0006,
-    AF_IPX     = cast(ushort) 0x0006,
-    AF_ISO     = cast(ushort) 0x0007,
-    AF_OSI     = cast(ushort) 0x0007,
-    AF_ECMA    = cast(ushort) 0x0008,
-    AF_DATAKIT = cast(ushort) 0x0009,
+    AF_NS      = 0x0006,
+    AF_IPX     = 0x0006,
+    AF_ISO     = 0x0007,
+    AF_OSI     = 0x0007,
+    AF_ECMA    = 0x0008,
+    AF_DATAKIT = 0x0009,
 }
 
-enum ushort AF_CCITT = cast(ushort) 0x000a;
+enum ushort AF_CCITT = 0x000a;
 
 enum : ushort
 {
-    AF_SNA    = cast(ushort) 0x000b,
-    AF_DECnet = cast(ushort) 0x000c,
-    AF_DLI    = cast(ushort) 0x000d,
-    AF_LAT    = cast(ushort) 0x000e,
-    AF_HYLINK = cast(ushort) 0x000f,
+    AF_SNA    = 0x000b,
+    AF_DECnet = 0x000c,
+    AF_DLI    = 0x000d,
+    AF_LAT    = 0x000e,
+    AF_HYLINK = 0x000f,
 }
 
-enum ushort AF_APPLETALK = cast(ushort) 0x0010;
-enum ushort AF_NETBIOS = cast(ushort) 0x0011;
-enum ushort AF_VOICEVIEW = cast(ushort) 0x0012;
-enum ushort AF_FIREFOX = cast(ushort) 0x0013;
-enum ushort AF_UNKNOWN1 = cast(ushort) 0x0014;
+enum ushort AF_APPLETALK = 0x0010;
+enum ushort AF_NETBIOS = 0x0011;
+enum ushort AF_VOICEVIEW = 0x0012;
+enum ushort AF_FIREFOX = 0x0013;
+enum ushort AF_UNKNOWN1 = 0x0014;
 
 enum : ushort
 {
-    AF_BAN     = cast(ushort) 0x0015,
-    AF_ATM     = cast(ushort) 0x0016,
-    AF_CLUSTER = cast(ushort) 0x0018,
+    AF_BAN     = 0x0015,
+    AF_ATM     = 0x0016,
+    AF_CLUSTER = 0x0018,
 }
 
-enum ushort AF_12844 = cast(ushort) 0x0019;
+enum ushort AF_12844 = 0x0019;
 
 enum : ushort
 {
-    AF_IRDA   = cast(ushort) 0x001a,
-    AF_NETDES = cast(ushort) 0x001c,
+    AF_IRDA   = 0x001a,
+    AF_NETDES = 0x001c,
 }
 
 enum : ushort
 {
-    AF_MAX        = cast(ushort) 0x001d,
-    AF_TCNPROCESS = cast(ushort) 0x001d,
-    AF_TCNMESSAGE = cast(ushort) 0x001e,
+    AF_MAX        = 0x001d,
+    AF_TCNPROCESS = 0x001d,
+    AF_TCNMESSAGE = 0x001e,
 }
 
-enum ushort AF_ICLFXBM = cast(ushort) 0x001f;
+enum ushort AF_ICLFXBM = 0x001f;
 
 enum : ushort
 {
-    AF_LINK   = cast(ushort) 0x0021,
-    AF_HYPERV = cast(ushort) 0x0022,
+    AF_LINK   = 0x0021,
+    AF_HYPERV = 0x0022,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sol-socket-socket-options))], [])*/int SOL_SOCKET = 0x0000ffff;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sol-socket-socket-options
+enum int SOL_SOCKET = 0x0000ffff;
 
 enum : uint
 {
@@ -1062,7 +1077,8 @@ enum : uint
 enum int SO_DEBUG = 0x00000001;
 enum int SO_ACCEPTCONN = 0x00000002;
 enum int SO_REUSEADDR = 0x00000004;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/so-keepalive))], [])*/int SO_KEEPALIVE = 0x00000008;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/so-keepalive
+enum int SO_KEEPALIVE = 0x00000008;
 enum int SO_DONTROUTE = 0x00000010;
 enum int SO_BROADCAST = 0x00000020;
 enum int SO_USELOOPBACK = 0x00000040;
@@ -1079,6 +1095,7 @@ enum int SO_ERROR = 0x00001007;
 enum : int
 {
     SO_TYPE      = 0x00001008,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/so-bsp-state
     SO_BSP_STATE = 0x00001009,
 }
 
@@ -1089,11 +1106,13 @@ enum : int
 }
 
 enum int SO_MAX_MSG_SIZE = 0x00002003;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/so-conditional-accept))], [])*/int SO_CONDITIONAL_ACCEPT = 0x00003002;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/so-conditional-accept
+enum int SO_CONDITIONAL_ACCEPT = 0x00003002;
 enum uint SO_PAUSE_ACCEPT = 0x00003003U;
 enum uint SO_COMPARTMENT_ID = 0x00003004U;
 enum int SO_RANDOMIZE_PORT = 0x00003005;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/so-port-scalability))], [])*/int SO_PORT_SCALABILITY = 0x00003006;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/so-port-scalability
+enum int SO_PORT_SCALABILITY = 0x00003006;
 
 enum : int
 {
@@ -1157,14 +1176,16 @@ enum : uint
     SIO_ROUTING_INTERFACE_CHANGE = 0x88000015U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-address-list-query))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-address-list-query
     SIO_ADDRESS_LIST_QUERY  = 0x48000016U,
     SIO_ADDRESS_LIST_CHANGE = 0x28000017U,
 }
 
 enum uint SIO_QUERY_TARGET_PNP_HANDLE = 0x48000018U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-rss-processor-info))], [])*/uint SIO_QUERY_RSS_PROCESSOR_INFO = 0x48000025U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sio-query-rss-processor-info
+enum uint SIO_QUERY_RSS_PROCESSOR_INFO = 0x48000025U;
 enum uint SIO_ADDRESS_LIST_SORT = 0xc8000019U;
 
 enum : uint
@@ -1443,7 +1464,8 @@ enum int IP_ADD_SOURCE_MEMBERSHIP = 0x0000000f;
 enum int IP_DROP_SOURCE_MEMBERSHIP = 0x00000010;
 enum int IP_BLOCK_SOURCE = 0x00000011;
 enum int IP_UNBLOCK_SOURCE = 0x00000012;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/ip-pktinfo))], [])*/int IP_PKTINFO = 0x00000013;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/ip-pktinfo
+enum int IP_PKTINFO = 0x00000013;
 enum int IP_HOPLIMIT = 0x00000015;
 
 enum : int
@@ -1534,8 +1556,9 @@ enum int IPV6_DROP_MEMBERSHIP = 0x0000000d;
 enum int IPV6_LEAVE_GROUP = 0x0000000d;
 enum int IPV6_DONTFRAG = 0x0000000e;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/ipv6-pktinfo))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/ipv6-pktinfo
     IPV6_PKTINFO  = 0x00000013,
     IPV6_HOPLIMIT = 0x00000015,
 }
@@ -1667,8 +1690,9 @@ enum : uint
 enum uint WCE_AF_IRDA = 0x00000016U;
 enum uint WCE_PF_IRDA = 0x00000016U;
 enum uint IRDA_PROTO_SOCK_STREAM = 0x00000001U;
-enum ushort PF_IRDA = cast(ushort) 0x001a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sol-irlmp-socket-options))], [])*/int SOL_IRLMP = 0x000000ff;
+enum ushort PF_IRDA = 0x001a;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/sol-irlmp-socket-options
+enum int SOL_IRLMP = 0x000000ff;
 enum int IRLMP_ENUMDEVICES = 0x00000010;
 
 enum : int
@@ -1921,14 +1945,18 @@ enum uint RES_SOFT_SEARCH = 0x00000001U;
 enum uint RES_FIND_MULTIPLE = 0x00000002U;
 enum uint RES_SERVICE = 0x00000004U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SERVICE_TYPE_VALUE_SAPIDA   = "SapId",
     SERVICE_TYPE_VALUE_SAPIDW   = "SapId",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SERVICE_TYPE_VALUE_CONNA    = "ConnectionOriented",
     SERVICE_TYPE_VALUE_CONNW    = "ConnectionOriented",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SERVICE_TYPE_VALUE_TCPPORTA = "TcpPort",
     SERVICE_TYPE_VALUE_TCPPORTW = "TcpPort",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SERVICE_TYPE_VALUE_UDPPORTA = "UdpPort",
     SERVICE_TYPE_VALUE_UDPPORTW = "UdpPort",
     SERVICE_TYPE_VALUE_SAPID    = "SapId",
@@ -1961,46 +1989,46 @@ enum int SOCKET_ERROR = 0xffffffff;
 
 enum : ushort
 {
-    PF_UNIX    = cast(ushort) 0x0001,
-    PF_IMPLINK = cast(ushort) 0x0003,
+    PF_UNIX    = 0x0001,
+    PF_IMPLINK = 0x0003,
 }
 
 enum : ushort
 {
-    PF_PUP   = cast(ushort) 0x0004,
-    PF_CHAOS = cast(ushort) 0x0005,
+    PF_PUP   = 0x0004,
+    PF_CHAOS = 0x0005,
 }
 
 enum : ushort
 {
-    PF_NS      = cast(ushort) 0x0006,
-    PF_IPX     = cast(ushort) 0x0006,
-    PF_ISO     = cast(ushort) 0x0007,
-    PF_OSI     = cast(ushort) 0x0007,
-    PF_ECMA    = cast(ushort) 0x0008,
-    PF_DATAKIT = cast(ushort) 0x0009,
+    PF_NS      = 0x0006,
+    PF_IPX     = 0x0006,
+    PF_ISO     = 0x0007,
+    PF_OSI     = 0x0007,
+    PF_ECMA    = 0x0008,
+    PF_DATAKIT = 0x0009,
 }
 
-enum ushort PF_CCITT = cast(ushort) 0x000a;
+enum ushort PF_CCITT = 0x000a;
 
 enum : ushort
 {
-    PF_SNA    = cast(ushort) 0x000b,
-    PF_DECnet = cast(ushort) 0x000c,
-    PF_DLI    = cast(ushort) 0x000d,
-    PF_LAT    = cast(ushort) 0x000e,
-    PF_HYLINK = cast(ushort) 0x000f,
+    PF_SNA    = 0x000b,
+    PF_DECnet = 0x000c,
+    PF_DLI    = 0x000d,
+    PF_LAT    = 0x000e,
+    PF_HYLINK = 0x000f,
 }
 
-enum ushort PF_APPLETALK = cast(ushort) 0x0010;
-enum ushort PF_VOICEVIEW = cast(ushort) 0x0012;
-enum ushort PF_FIREFOX = cast(ushort) 0x0013;
-enum ushort PF_UNKNOWN1 = cast(ushort) 0x0014;
+enum ushort PF_APPLETALK = 0x0010;
+enum ushort PF_VOICEVIEW = 0x0012;
+enum ushort PF_FIREFOX = 0x0013;
+enum ushort PF_UNKNOWN1 = 0x0014;
 
 enum : ushort
 {
-    PF_BAN = cast(ushort) 0x0015,
-    PF_MAX = cast(ushort) 0x001d,
+    PF_BAN = 0x0015,
+    PF_MAX = 0x001d,
 }
 
 enum uint SOMAXCONN = 0x00000005U;
@@ -2040,7 +2068,7 @@ enum : int
 }
 
 enum int PVD_CONFIG = 0x00003001;
-enum ushort PF_ATM = cast(ushort) 0x0016;
+enum ushort PF_ATM = 0x0016;
 enum uint MSG_INTERRUPT = 0x00000010U;
 enum uint FD_READ_BIT = 0x00000000U;
 enum uint FD_WRITE_BIT = 0x00000001U;
@@ -2141,10 +2169,12 @@ enum uint NS_LOCALNAME = 0x00000013U;
 enum uint RES_UNUSED_1 = 0x00000001U;
 enum uint RES_FLUSH_CACHE = 0x00000002U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SERVICE_TYPE_VALUE_IPXPORTA  = "IpxSocket",
     SERVICE_TYPE_VALUE_IPXPORTW  = "IpxSocket",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SERVICE_TYPE_VALUE_OBJECTIDA = "ObjectId",
     SERVICE_TYPE_VALUE_OBJECTIDW = "ObjectId",
     SERVICE_TYPE_VALUE_OBJECTID  = "ObjectId",
@@ -2531,7 +2561,8 @@ enum int IPX_DSTYPE = 0x00004002;
 enum int IPX_EXTENDED_ADDRESS = 0x00004004;
 enum int IPX_RECVHDR = 0x00004005;
 enum int IPX_MAXSIZE = 0x00004006;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMon2/ipx-address))], [])*/int IPX_ADDRESS = 0x00004007;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMon2/ipx-address
+enum int IPX_ADDRESS = 0x00004007;
 
 enum : int
 {
@@ -2608,8 +2639,9 @@ enum : uint
     ISO_EXP_DATA_NUSE = 0x00000001U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/nsproto-ipx-socket-options))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/nsproto-ipx-socket-options
     NSPROTO_IPX   = 0x000003e8U,
     NSPROTO_SPX   = 0x000004e8U,
     NSPROTO_SPXII = 0x000004e9U,
@@ -2835,7 +2867,8 @@ enum : uint
 }
 
 enum int SO_DONTLINGER = 0xffffff7f;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/so-exclusiveaddruse))], [])*/int SO_EXCLUSIVEADDRUSE = 0xfffffffb;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/so-exclusiveaddruse
+enum int SO_EXCLUSIVEADDRUSE = 0xfffffffb;
 enum int LM_HB_Extension = 0x00000080;
 
 enum : int
@@ -3217,8 +3250,8 @@ struct SOCKET_ADDRESS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_address_list
 struct SOCKET_ADDRESS_LIST
 {
-    int iAddressCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SOCKET_ADDRESS[1] Address;
+    int               iAddressCount;
+    SOCKET_ADDRESS[1] Address; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-csaddr_info
@@ -3261,7 +3294,7 @@ struct SCOPE_ID
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Level)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield143;
+            uint _bitfield143;
         }
         uint Value;
     }
@@ -4011,7 +4044,7 @@ struct IP_MSFILTER
     IN_ADDR             imsf_interface;
     MULTICAST_MODE_TYPE imsf_fmode;
     uint                imsf_numsrc;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IN_ADDR[1] imsf_slist;
+    IN_ADDR[1]          imsf_slist; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ipv6_mreq
@@ -4043,7 +4076,7 @@ struct GROUP_FILTER
     SOCKADDR_STORAGE    gf_group;
     MULTICAST_MODE_TYPE gf_fmode;
     uint                gf_numsrc;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SOCKADDR_STORAGE[1] gf_slist;
+    SOCKADDR_STORAGE[1] gf_slist; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-in_pktinfo
@@ -4231,13 +4264,13 @@ struct WCE_IRDA_DEVICE_INFO
 struct WINDOWS_DEVICELIST
 {
     uint numDevice;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WINDOWS_IRDA_DEVICE_INFO[1] Device;
+    WINDOWS_IRDA_DEVICE_INFO[1] Device; // Flexible array
 }
 
 struct WCE_DEVICELIST
 {
     uint numDevice;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WCE_IRDA_DEVICE_INFO[1] Device;
+    WCE_IRDA_DEVICE_INFO[1] Device; // Flexible array
 }
 
 struct WINDOWS_IAS_SET
@@ -4288,7 +4321,7 @@ struct WINDOWS_IAS_QUERY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_interface_offload_rod
 struct NL_INTERFACE_OFFLOAD_ROD
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TlGiantSendOffloadSupported)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield144;
+    ubyte _bitfield144;
 }
 
 struct NL_PATH_BANDWIDTH_ROD
@@ -4521,16 +4554,16 @@ struct SOCKET_SECURITY_SETTINGS
 struct SOCKET_SECURITY_SETTINGS_IPSEC
 {
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
-    uint  SecurityFlags;
-    uint  IpsecFlags;
-    GUID  AuthipMMPolicyKey;
-    GUID  AuthipQMPolicyKey;
-    GUID  Reserved;
-    ulong Reserved2;
-    uint  UserNameStringLen;
-    uint  DomainNameStringLen;
-    uint  PasswordStringLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] AllStrings;
+    uint     SecurityFlags;
+    uint     IpsecFlags;
+    GUID     AuthipMMPolicyKey;
+    GUID     AuthipQMPolicyKey;
+    GUID     Reserved;
+    ulong    Reserved2;
+    uint     UserNameStringLen;
+    uint     DomainNameStringLen;
+    uint     PasswordStringLen;
+    wchar[1] AllStrings; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_peer_target_name
@@ -4539,7 +4572,7 @@ struct SOCKET_PEER_TARGET_NAME
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
     SOCKADDR_STORAGE PeerAddress;
     uint             PeerTargetNameStringLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] AllStrings;
+    wchar[1]         AllStrings; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_query_template
@@ -4652,7 +4685,7 @@ struct Q2931_IE
 {
     Q2931_IE_TYPE IEType;
     uint          IELength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] IE;
+    ubyte[1]      IE; // Flexible array
 }
 
 struct AAL5_PARAMETERS
@@ -4743,10 +4776,10 @@ struct ATM_QOS_CLASS_IE
 
 struct ATM_TRANSIT_NETWORK_SELECTION_IE
 {
-    ubyte TypeOfNetworkId;
-    ubyte NetworkIdPlan;
-    ubyte NetworkIdLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] NetworkId;
+    ubyte    TypeOfNetworkId;
+    ubyte    NetworkIdPlan;
+    ubyte    NetworkIdLength;
+    ubyte[1] NetworkId; // Flexible array
 }
 
 struct ATM_CONNECTION_ID
@@ -4820,13 +4853,13 @@ struct NLA_BLOB
         CHAR[1] rawData;
         struct interfaceData
         {
-            uint dwType;
-            uint dwSpeed;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] adapterName;
+            uint    dwType;
+            uint    dwSpeed;
+            CHAR[1] adapterName; // Flexible array
         }
         struct locationData
         {
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] information;
+            CHAR[1] information; // Flexible array
         }
         struct connectivity
         {
@@ -4849,10 +4882,10 @@ struct NLA_BLOB
 
 struct WSAPOLLDATA
 {
-    int  result;
-    uint fds;
-    int  timeout;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WSAPOLLFD[1] fdArray;
+    int          result;
+    uint         fds;
+    int          timeout;
+    WSAPOLLFD[1] fdArray; // Flexible array
 }
 
 struct WSASENDMSG
@@ -5062,7 +5095,7 @@ struct SERVICE_TYPE_INFO
 {
     uint dwTypeNameOffset;
     uint dwValueCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_TYPE_VALUE[1] Values;
+    SERVICE_TYPE_VALUE[1] Values; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absa
@@ -5070,7 +5103,7 @@ struct SERVICE_TYPE_INFO_ABSA
 {
     PSTR lpTypeName;
     uint dwValueCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_TYPE_VALUE_ABSA[1] Values;
+    SERVICE_TYPE_VALUE_ABSA[1] Values; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absw
@@ -5078,7 +5111,7 @@ struct SERVICE_TYPE_INFO_ABSW
 {
     PWSTR lpTypeName;
     uint  dwValueCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_TYPE_VALUE_ABSW[1] Values;
+    SERVICE_TYPE_VALUE_ABSW[1] Values; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_address
@@ -5095,8 +5128,8 @@ struct SERVICE_ADDRESS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_addresses
 struct SERVICE_ADDRESSES
 {
-    uint dwAddressCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_ADDRESS[1] Addresses;
+    uint               dwAddressCount;
+    SERVICE_ADDRESS[1] Addresses; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infoa
@@ -5251,7 +5284,7 @@ union DL_OUI
     ubyte[3] Byte;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Local)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield145;
+        ubyte _bitfield145;
     }
 }
 
@@ -5322,7 +5355,7 @@ struct VLAN_TAG
         ushort Tag;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(User_Priority)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(3))], [])*/ushort _bitfield146;
+            ushort _bitfield146;
         }
     }
     ushort Type;
@@ -5353,7 +5386,7 @@ struct IPV4_HEADER
         ubyte VersionAndHeaderLength;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield147;
+            ubyte _bitfield147;
         }
     }
     union
@@ -5361,7 +5394,7 @@ struct IPV4_HEADER
         ubyte TypeOfServiceAndEcnField;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TypeOfService)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield148;
+            ubyte _bitfield148;
         }
     }
     ushort  TotalLength;
@@ -5371,7 +5404,7 @@ struct IPV4_HEADER
         ushort FlagsAndOffset;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DontUse2)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield149;
+            ushort _bitfield149;
         }
     }
     ubyte   TimeToLive;
@@ -5388,7 +5421,7 @@ struct IPV4_OPTION_HEADER
         ubyte OptionType;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CopiedFlag)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield150;
+            ubyte _bitfield150;
         }
     }
     ubyte OptionLength;
@@ -5403,7 +5436,7 @@ struct IPV4_TIMESTAMP_OPTION
         ubyte FlagsOverflow;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Overflow)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield151;
+            ubyte _bitfield151;
         }
     }
 }
@@ -5446,12 +5479,12 @@ struct ICMPV4_ADDRESS_MASK_MESSAGE
 
 struct ARP_HEADER
 {
-    ushort HardwareAddressSpace;
-    ushort ProtocolAddressSpace;
-    ubyte  HardwareAddressLength;
-    ubyte  ProtocolAddressLength;
-    ushort Opcode;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SenderHardwareAddress;
+    ushort   HardwareAddressSpace;
+    ushort   ProtocolAddressSpace;
+    ubyte    HardwareAddressLength;
+    ubyte    ProtocolAddressLength;
+    ushort   Opcode;
+    ubyte[1] SenderHardwareAddress; // Flexible array
 }
 
 struct IGMP_HEADER
@@ -5460,7 +5493,7 @@ struct IGMP_HEADER
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield152;
+            ubyte _bitfield152;
         }
         ubyte VersionType;
     }
@@ -5482,18 +5515,18 @@ struct IGMPV3_QUERY_HEADER
         ubyte MaxRespCode;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxRespCodeType)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield153;
+            ubyte _bitfield153;
         }
     }
     ushort  Checksum;
     IN_ADDR MulticastAddress;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield154;
+    ubyte   _bitfield154;
     union
     {
         ubyte QueriersQueryInterfaceCode;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QQCType)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield155;
+            ubyte _bitfield155;
         }
     }
     ushort  SourceCount;
@@ -5523,7 +5556,7 @@ struct IPV6_HEADER
         uint VersionClassFlow;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous2)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield156;
+            uint _bitfield156;
         }
     }
     ushort   PayloadLength;
@@ -5541,7 +5574,7 @@ struct IPV6_FRAGMENT_HEADER
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DontUse2)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield157;
+            ushort _bitfield157;
         }
         ushort OffsetAndFlags;
     }
@@ -5597,7 +5630,7 @@ union IPV6_ROUTER_ADVERTISEMENT_FLAGS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ManagedAddressConfiguration)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield158;
+        ubyte _bitfield158;
     }
     ubyte Value;
 }
@@ -5618,7 +5651,7 @@ union IPV6_NEIGHBOR_ADVERTISEMENT_FLAGS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Router)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield159;
+        ubyte    _bitfield159;
         ubyte[3] Reserved2;
     }
     uint Value;
@@ -5647,7 +5680,7 @@ struct ND_OPTION_PREFIX_INFO
         ubyte nd_opt_pi_flags_reserved;
         struct Flags
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OnLink)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield160;
+            ubyte _bitfield160;
         }
     }
     uint     nd_opt_pi_valid_time;
@@ -5690,7 +5723,7 @@ struct ND_OPTION_ROUTE_INFO
         ubyte nd_opt_ri_flags_reserved;
         struct Flags
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Preference)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield161;
+            ubyte _bitfield161;
         }
     }
     uint     nd_opt_ri_route_lifetime;
@@ -5722,7 +5755,7 @@ struct ND_OPTION_PREF64
         ushort nd_opt_p64_lifetime_plc;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(nd_opt_p64_scaled_lifetime)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield162;
+            ushort _bitfield162;
         }
     }
     ubyte[12] nd_opt_p64_prefix;
@@ -5744,18 +5777,18 @@ struct MLDV2_QUERY_HEADER
         ushort MaxRespCode;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxRespCodeMantissaLo)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield163;
+            ushort _bitfield163;
         }
     }
     ushort      Reserved;
     IN6_ADDR    MulticastAddress;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QueryReserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield164;
+    ubyte       _bitfield164;
     union
     {
         ubyte QueriersQueryInterfaceCode;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QQCType)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield165;
+            ubyte _bitfield165;
         }
     }
     ushort      SourceCount;
@@ -5783,7 +5816,7 @@ align (1):
     ushort th_dport;
     uint   th_seq;
     uint   th_ack;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(th_len)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield166;
+    ubyte  _bitfield166;
     ubyte  th_flags;
     ushort th_win;
     ushort th_sum;
@@ -5845,16 +5878,16 @@ align (1):
 struct TCP_OPT_FASTOPEN
 {
 align (1):
-    ubyte Kind;
-    ubyte Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cookie;
+    ubyte    Kind;
+    ubyte    Length;
+    ubyte[1] Cookie; // Flexible array
 }
 
 struct DL_TUNNEL_ADDRESS
 {
     COMPARTMENT_ID CompartmentId;
     SCOPE_ID       ScopeId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] IpAddress;
+    ubyte[1]       IpAddress; // Flexible array
 }
 
 struct DL_TEREDO_ADDRESS

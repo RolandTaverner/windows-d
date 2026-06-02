@@ -3,7 +3,7 @@
 module windows.win32.ui.input.pointer;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, POINT, RECT;
+public import windows.win32.foundation : BOOL, HANDLE, HWND, POINT, RECT;
 public import windows.win32.graphics.gdi : HMONITOR;
 public import windows.win32.ui.windowsandmessaging : POINTER_INPUT_TYPE;
 

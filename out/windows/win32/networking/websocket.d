@@ -3,7 +3,7 @@
 module windows.win32.networking.websocket;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, PSTR;
+public import windows.win32.foundation : HRESULT, PSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -102,9 +102,9 @@ struct WEB_SOCKET_PROPERTY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_http_header
 struct WEB_SOCKET_HTTP_HEADER
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR pcName;
+    PSTR pcName;
     uint ulNameLength;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR pcValue;
+    PSTR pcValue;
     uint ulValueLength;
 }
 

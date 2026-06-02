@@ -3,10 +3,9 @@
 module windows.win32.networking.ldap;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE, PSTR, PWSTR,
-                                                    WIN32_ERROR;
-public import windows.win32.security.authentication.identity.identity : SecPkgContext_IssuerListInfoEx;
-public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
+public import windows.win32.foundation : BOOLEAN, CHAR, HANDLE, PSTR, PWSTR, WIN32_ERROR;
+public import windows.win32.security.authentication.identity : SecPkgContext_IssuerListInfoEx;
+public import windows.win32.security.cryptography : CERT_CONTEXT;
 
 extern(Windows) @nogc nothrow:
 
@@ -200,6 +199,7 @@ enum uint LDAP_OPT_RETURN_REFS = 0x00000004U;
 enum : const(wchar)*
 {
     LDAP_CONTROL_REFERRALS_W = "1.2.840.113556.1.4.616",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CONTROL_REFERRALS   = "1.2.840.113556.1.4.616",
 }
 
@@ -340,8 +340,9 @@ enum : uint
     LDAP_VERSION_MAX = 0x00000003U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_VENDOR_NAME   = "Microsoft Corporation.",
     LDAP_VENDOR_NAME_W = "Microsoft Corporation.",
 }
@@ -349,24 +350,29 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 enum uint LDAP_VENDOR_VERSION = 0x000001feU;
 enum uint LDAP_FEATURE_INFO_VERSION = 0x00000001U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SORT_OID        = "1.2.840.113556.1.4.473",
     LDAP_SERVER_SORT_OID_W      = "1.2.840.113556.1.4.473",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_RESP_SORT_OID   = "1.2.840.113556.1.4.474",
     LDAP_SERVER_RESP_SORT_OID_W = "1.2.840.113556.1.4.474",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_PAGED_RESULT_OID_STRING   = "1.2.840.113556.1.4.319",
     LDAP_PAGED_RESULT_OID_STRING_W = "1.2.840.113556.1.4.319",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CONTROL_VLVREQUEST    = "2.16.840.1.113730.3.4.9",
     LDAP_CONTROL_VLVREQUEST_W  = "2.16.840.1.113730.3.4.9",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CONTROL_VLVRESPONSE   = "2.16.840.1.113730.3.4.10",
     LDAP_CONTROL_VLVRESPONSE_W = "2.16.840.1.113730.3.4.10",
 }
@@ -374,14 +380,16 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 enum uint LDAP_API_FEATURE_VIRTUAL_LIST_VIEW = 0x000003e9U;
 enum uint LDAP_VLVINFO_VERSION = 0x00000001U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_START_TLS_OID   = "1.3.6.1.4.1.1466.20037",
     LDAP_START_TLS_OID_W = "1.3.6.1.4.1.1466.20037",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_TTL_EXTENDED_OP_OID   = "1.3.6.1.4.1.1466.101.119.1",
     LDAP_TTL_EXTENDED_OP_OID_W = "1.3.6.1.4.1.1466.101.119.1",
 }
@@ -391,128 +399,159 @@ enum uint LDAP_OPT_CLIENT_CERTIFICATE = 0x00000080U;
 enum uint LDAP_OPT_SERVER_CERTIFICATE = 0x00000081U;
 enum uint LDAP_OPT_REF_DEREF_CONN_PER_MSG = 0x00000094U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_FORCE_UPDATE_OID   = "1.2.840.113556.1.4.1974",
     LDAP_SERVER_FORCE_UPDATE_OID_W = "1.2.840.113556.1.4.1974",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_PERMISSIVE_MODIFY_OID   = "1.2.840.113556.1.4.1413",
     LDAP_SERVER_PERMISSIVE_MODIFY_OID_W = "1.2.840.113556.1.4.1413",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SHOW_DELETED_OID    = "1.2.840.113556.1.4.417",
     LDAP_SERVER_SHOW_DELETED_OID_W  = "1.2.840.113556.1.4.417",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SHOW_RECYCLED_OID   = "1.2.840.113556.1.4.2064",
     LDAP_SERVER_SHOW_RECYCLED_OID_W = "1.2.840.113556.1.4.2064",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_EXPECTED_ENTRY_COUNT_OID   = "1.2.840.113556.1.4.2211",
     LDAP_SERVER_EXPECTED_ENTRY_COUNT_OID_W = "1.2.840.113556.1.4.2211",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SEARCH_HINTS_OID   = "1.2.840.113556.1.4.2206",
     LDAP_SERVER_SEARCH_HINTS_OID_W = "1.2.840.113556.1.4.2206",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SEARCH_HINT_INDEX_ONLY_OID        = "1.2.840.113556.1.4.2207",
     LDAP_SEARCH_HINT_INDEX_ONLY_OID_W      = "1.2.840.113556.1.4.2207",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SEARCH_HINT_SOFT_SIZE_LIMIT_OID   = "1.2.840.113556.1.4.2210",
     LDAP_SEARCH_HINT_SOFT_SIZE_LIMIT_OID_W = "1.2.840.113556.1.4.2210",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SEARCH_HINT_REQUIRED_INDEX_OID    = "1.2.840.113556.1.4.2306",
     LDAP_SEARCH_HINT_REQUIRED_INDEX_OID_W  = "1.2.840.113556.1.4.2306",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_UPDATE_STATS_OID   = "1.2.840.113556.1.4.2205",
     LDAP_SERVER_UPDATE_STATS_OID_W = "1.2.840.113556.1.4.2205",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_UPDATE_STATS_USN_OID            = "1.2.840.113556.1.4.2208",
     LDAP_UPDATE_STATS_USN_OID_W          = "1.2.840.113556.1.4.2208",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_UPDATE_STATS_INVOCATIONID_OID   = "1.2.840.113556.1.4.2209",
     LDAP_UPDATE_STATS_INVOCATIONID_OID_W = "1.2.840.113556.1.4.2209",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_GET_STATS_OID               = "1.2.840.113556.1.4.970",
     LDAP_SERVER_GET_STATS_OID_W             = "1.2.840.113556.1.4.970",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SHOW_DEACTIVATED_LINK_OID   = "1.2.840.113556.1.4.2065",
     LDAP_SERVER_SHOW_DEACTIVATED_LINK_OID_W = "1.2.840.113556.1.4.2065",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_POLICY_HINTS_DEPRECATED_OID   = "1.2.840.113556.1.4.2066",
     LDAP_SERVER_POLICY_HINTS_DEPRECATED_OID_W = "1.2.840.113556.1.4.2066",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_POLICY_HINTS_OID              = "1.2.840.113556.1.4.2239",
     LDAP_SERVER_POLICY_HINTS_OID_W            = "1.2.840.113556.1.4.2239",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_RANGE_OPTION_OID   = "1.2.840.113556.1.4.802",
     LDAP_SERVER_RANGE_OPTION_OID_W = "1.2.840.113556.1.4.802",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_CROSSDOM_MOVE_TARGET_OID   = "1.2.840.113556.1.4.521",
     LDAP_SERVER_CROSSDOM_MOVE_TARGET_OID_W = "1.2.840.113556.1.4.521",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_NOTIFICATION_OID   = "1.2.840.113556.1.4.528",
     LDAP_SERVER_NOTIFICATION_OID_W = "1.2.840.113556.1.4.528",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SHUTDOWN_NOTIFY_OID   = "1.2.840.113556.1.4.1907",
     LDAP_SERVER_SHUTDOWN_NOTIFY_OID_W = "1.2.840.113556.1.4.1907",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_LAZY_COMMIT_OID      = "1.2.840.113556.1.4.619",
     LDAP_SERVER_LAZY_COMMIT_OID_W    = "1.2.840.113556.1.4.619",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SD_FLAGS_OID         = "1.2.840.113556.1.4.801",
     LDAP_SERVER_SD_FLAGS_OID_W       = "1.2.840.113556.1.4.801",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_TREE_DELETE_EX_OID   = "1.2.840.113556.1.4.2204",
     LDAP_SERVER_TREE_DELETE_EX_OID_W = "1.2.840.113556.1.4.2204",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_TREE_DELETE_OID      = "1.2.840.113556.1.4.805",
     LDAP_SERVER_TREE_DELETE_OID_W    = "1.2.840.113556.1.4.805",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_ASQ_OID              = "1.2.840.113556.1.4.1504",
     LDAP_SERVER_ASQ_OID_W            = "1.2.840.113556.1.4.1504",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_DIRSYNC_OID          = "1.2.840.113556.1.4.841",
     LDAP_SERVER_DIRSYNC_OID_W        = "1.2.840.113556.1.4.841",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_DIRSYNC_EX_OID       = "1.2.840.113556.1.4.2090",
     LDAP_SERVER_DIRSYNC_EX_OID_W     = "1.2.840.113556.1.4.2090",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_EXTENDED_DN_OID      = "1.2.840.113556.1.4.529",
     LDAP_SERVER_EXTENDED_DN_OID_W    = "1.2.840.113556.1.4.529",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_VERIFY_NAME_OID      = "1.2.840.113556.1.4.1338",
     LDAP_SERVER_VERIFY_NAME_OID_W    = "1.2.840.113556.1.4.1338",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_DOMAIN_SCOPE_OID     = "1.2.840.113556.1.4.1339",
     LDAP_SERVER_DOMAIN_SCOPE_OID_W   = "1.2.840.113556.1.4.1339",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SEARCH_OPTIONS_OID   = "1.2.840.113556.1.4.1340",
     LDAP_SERVER_SEARCH_OPTIONS_OID_W = "1.2.840.113556.1.4.1340",
 }
@@ -523,204 +562,252 @@ enum : uint
     SERVER_SEARCH_FLAG_PHANTOM_ROOT = 0x00000002U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_QUOTA_CONTROL_OID   = "1.2.840.113556.1.4.1852",
     LDAP_SERVER_QUOTA_CONTROL_OID_W = "1.2.840.113556.1.4.1852",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_RANGE_RETRIEVAL_NOERR_OID   = "1.2.840.113556.1.4.1948",
     LDAP_SERVER_RANGE_RETRIEVAL_NOERR_OID_W = "1.2.840.113556.1.4.1948",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_DN_INPUT_OID       = "1.2.840.113556.1.4.2026",
     LDAP_SERVER_DN_INPUT_OID_W     = "1.2.840.113556.1.4.2026",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_SET_OWNER_OID      = "1.2.840.113556.1.4.2255",
     LDAP_SERVER_SET_OWNER_OID_W    = "1.2.840.113556.1.4.2255",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_BYPASS_QUOTA_OID   = "1.2.840.113556.1.4.2256",
     LDAP_SERVER_BYPASS_QUOTA_OID_W = "1.2.840.113556.1.4.2256",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_LINK_TTL_OID   = "1.2.840.113556.1.4.2309",
     LDAP_SERVER_LINK_TTL_OID_W = "1.2.840.113556.1.4.2309",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_BECOME_DOM_MASTER      = "becomeDomainMaster",
     LDAP_OPATT_BECOME_DOM_MASTER_W    = "becomeDomainMaster",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_BECOME_RID_MASTER      = "becomeRidMaster",
     LDAP_OPATT_BECOME_RID_MASTER_W    = "becomeRidMaster",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_BECOME_SCHEMA_MASTER   = "becomeSchemaMaster",
     LDAP_OPATT_BECOME_SCHEMA_MASTER_W = "becomeSchemaMaster",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_RECALC_HIERARCHY   = "recalcHierarchy",
     LDAP_OPATT_RECALC_HIERARCHY_W = "recalcHierarchy",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SCHEMA_UPDATE_NOW   = "schemaUpdateNow",
     LDAP_OPATT_SCHEMA_UPDATE_NOW_W = "schemaUpdateNow",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_BECOME_PDC          = "becomePdc",
     LDAP_OPATT_BECOME_PDC_W        = "becomePdc",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_FIXUP_INHERITANCE   = "fixupInheritance",
     LDAP_OPATT_FIXUP_INHERITANCE_W = "fixupInheritance",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_INVALIDATE_RID_POOL   = "invalidateRidPool",
     LDAP_OPATT_INVALIDATE_RID_POOL_W = "invalidateRidPool",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_ABANDON_REPL            = "abandonReplication",
     LDAP_OPATT_ABANDON_REPL_W          = "abandonReplication",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_DO_GARBAGE_COLLECTION   = "doGarbageCollection",
     LDAP_OPATT_DO_GARBAGE_COLLECTION_W = "doGarbageCollection",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SUBSCHEMA_SUBENTRY   = "subschemaSubentry",
     LDAP_OPATT_SUBSCHEMA_SUBENTRY_W = "subschemaSubentry",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_CURRENT_TIME      = "currentTime",
     LDAP_OPATT_CURRENT_TIME_W    = "currentTime",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SERVER_NAME       = "serverName",
     LDAP_OPATT_SERVER_NAME_W     = "serverName",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_NAMING_CONTEXTS   = "namingContexts",
     LDAP_OPATT_NAMING_CONTEXTS_W = "namingContexts",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_DEFAULT_NAMING_CONTEXT   = "defaultNamingContext",
     LDAP_OPATT_DEFAULT_NAMING_CONTEXT_W = "defaultNamingContext",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SUPPORTED_CONTROL   = "supportedControl",
     LDAP_OPATT_SUPPORTED_CONTROL_W = "supportedControl",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_HIGHEST_COMMITTED_USN   = "highestCommitedUSN",
     LDAP_OPATT_HIGHEST_COMMITTED_USN_W = "highestCommitedUSN",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SUPPORTED_LDAP_VERSION    = "supportedLDAPVersion",
     LDAP_OPATT_SUPPORTED_LDAP_VERSION_W  = "supportedLDAPVersion",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SUPPORTED_LDAP_POLICIES   = "supportedLDAPPolicies",
     LDAP_OPATT_SUPPORTED_LDAP_POLICIES_W = "supportedLDAPPolicies",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SCHEMA_NAMING_CONTEXT   = "schemaNamingContext",
     LDAP_OPATT_SCHEMA_NAMING_CONTEXT_W = "schemaNamingContext",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_CONFIG_NAMING_CONTEXT   = "configurationNamingContext",
     LDAP_OPATT_CONFIG_NAMING_CONTEXT_W = "configurationNamingContext",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_ROOT_DOMAIN_NAMING_CONTEXT   = "rootDomainNamingContext",
     LDAP_OPATT_ROOT_DOMAIN_NAMING_CONTEXT_W = "rootDomainNamingContext",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SUPPORTED_SASL_MECHANISM   = "supportedSASLMechanisms",
     LDAP_OPATT_SUPPORTED_SASL_MECHANISM_W = "supportedSASLMechanisms",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_DNS_HOST_NAME       = "dnsHostName",
     LDAP_OPATT_DNS_HOST_NAME_W     = "dnsHostName",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_LDAP_SERVICE_NAME   = "ldapServiceName",
     LDAP_OPATT_LDAP_SERVICE_NAME_W = "ldapServiceName",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_DS_SERVICE_NAME   = "dsServiceName",
     LDAP_OPATT_DS_SERVICE_NAME_W = "dsServiceName",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_OPATT_SUPPORTED_CAPABILITIES   = "supportedCapabilities",
     LDAP_OPATT_SUPPORTED_CAPABILITIES_W = "supportedCapabilities",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_OID                   = "1.2.840.113556.1.4.800",
     LDAP_CAP_ACTIVE_DIRECTORY_OID_W                 = "1.2.840.113556.1.4.800",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_V51_OID               = "1.2.840.113556.1.4.1670",
     LDAP_CAP_ACTIVE_DIRECTORY_V51_OID_W             = "1.2.840.113556.1.4.1670",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_LDAP_INTEG_OID        = "1.2.840.113556.1.4.1791",
     LDAP_CAP_ACTIVE_DIRECTORY_LDAP_INTEG_OID_W      = "1.2.840.113556.1.4.1791",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_ADAM_OID              = "1.2.840.113556.1.4.1851",
     LDAP_CAP_ACTIVE_DIRECTORY_ADAM_OID_W            = "1.2.840.113556.1.4.1851",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_PARTIAL_SECRETS_OID   = "1.2.840.113556.1.4.1920",
     LDAP_CAP_ACTIVE_DIRECTORY_PARTIAL_SECRETS_OID_W = "1.2.840.113556.1.4.1920",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_V60_OID               = "1.2.840.113556.1.4.1935",
     LDAP_CAP_ACTIVE_DIRECTORY_V60_OID_W             = "1.2.840.113556.1.4.1935",
     LDAP_CAP_ACTIVE_DIRECTORY_V61_OID               = "1.2.840.113556.1.4.1935",
     LDAP_CAP_ACTIVE_DIRECTORY_V61_OID_W             = "1.2.840.113556.1.4.1935",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_V61_R2_OID            = "1.2.840.113556.1.4.2080",
     LDAP_CAP_ACTIVE_DIRECTORY_V61_R2_OID_W          = "1.2.840.113556.1.4.2080",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_CAP_ACTIVE_DIRECTORY_W8_OID                = "1.2.840.113556.1.4.2237",
     LDAP_CAP_ACTIVE_DIRECTORY_W8_OID_W              = "1.2.840.113556.1.4.2237",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_MATCHING_RULE_BIT_AND                 = "1.2.840.113556.1.4.803",
     LDAP_MATCHING_RULE_BIT_AND_W               = "1.2.840.113556.1.4.803",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_MATCHING_RULE_BIT_OR                  = "1.2.840.113556.1.4.804",
     LDAP_MATCHING_RULE_BIT_OR_W                = "1.2.840.113556.1.4.804",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_MATCHING_RULE_TRANSITIVE_EVALUATION   = "1.2.840.113556.1.4.1941",
     LDAP_MATCHING_RULE_TRANSITIVE_EVALUATION_W = "1.2.840.113556.1.4.1941",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_MATCHING_RULE_DN_BINARY_COMPLEX       = "1.2.840.113556.1.4.2253",
     LDAP_MATCHING_RULE_DN_BINARY_COMPLEX_W     = "1.2.840.113556.1.4.2253",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_FAST_BIND_OID       = "1.2.840.113556.1.4.1781",
     LDAP_SERVER_FAST_BIND_OID_W     = "1.2.840.113556.1.4.1781",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_WHO_AM_I_OID        = "1.3.6.1.4.1.4203.1.11.3",
     LDAP_SERVER_WHO_AM_I_OID_W      = "1.3.6.1.4.1.4203.1.11.3",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LDAP_SERVER_BATCH_REQUEST_OID   = "1.2.840.113556.1.4.2212",
     LDAP_SERVER_BATCH_REQUEST_OID_W = "1.2.840.113556.1.4.2212",
 }
@@ -776,15 +863,15 @@ struct LDAP
         size_t    sb_naddr;
         ubyte[24] Reserved2;
     }
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ld_host;
+    PSTR      ld_host;
     uint      ld_version;
     ubyte     ld_lberoptions;
     uint      ld_deref;
     uint      ld_timelimit;
     uint      ld_sizelimit;
     uint      ld_errno;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ld_matched;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ld_error;
+    PSTR      ld_matched;
+    PSTR      ld_error;
     uint      ld_msgid;
     ubyte[25] Reserved3;
     uint      ld_cldaptries;
@@ -805,7 +892,7 @@ struct LDAP_TIMEVAL
 struct LDAP_BERVAL
 {
     uint bv_len;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR bv_val;
+    PSTR bv_val;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmessage
@@ -829,7 +916,7 @@ struct LDAPMessage
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrola
 struct LDAPControlA
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ldctl_oid;
+    PSTR        ldctl_oid;
     LDAP_BERVAL ldctl_value;
     BOOLEAN     ldctl_iscritical;
 }
@@ -837,7 +924,7 @@ struct LDAPControlA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrolw
 struct LDAPControlW
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR ldctl_oid;
+    PWSTR       ldctl_oid;
     LDAP_BERVAL ldctl_value;
     BOOLEAN     ldctl_iscritical;
 }
@@ -845,8 +932,8 @@ struct LDAPControlW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmodw
 struct LDAPModW
 {
-    uint mod_op;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR mod_type;
+    uint  mod_op;
+    PWSTR mod_type;
     union mod_vals
     {
         PWSTR*        modv_strvals;
@@ -858,7 +945,7 @@ struct LDAPModW
 struct LDAPModA
 {
     uint mod_op;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR mod_type;
+    PSTR mod_type;
     union mod_vals
     {
         PSTR*         modv_strvals;
@@ -869,7 +956,7 @@ struct LDAPModA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-berelement
 struct BerElement
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR opaque;
+    PSTR opaque;
 }
 
 struct LDAP_VERSION_INFO
@@ -897,7 +984,7 @@ struct LDAPAPIInfoW
     int    ldapai_api_version;
     int    ldapai_protocol_version;
     PWSTR* ldapai_extensions;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR ldapai_vendor_name;
+    PWSTR  ldapai_vendor_name;
     int    ldapai_vendor_version;
 }
 
@@ -912,24 +999,24 @@ struct LDAPAPIFeatureInfoA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfow
 struct LDAPAPIFeatureInfoW
 {
-    int ldapaif_info_version;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR ldapaif_name;
-    int ldapaif_version;
+    int   ldapaif_info_version;
+    PWSTR ldapaif_name;
+    int   ldapaif_version;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeyw
 struct LDAPSortKeyW
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR sk_attrtype;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR sk_matchruleoid;
+    PWSTR   sk_attrtype;
+    PWSTR   sk_matchruleoid;
     BOOLEAN sk_reverseorder;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeya
 struct LDAPSortKeyA
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR sk_attrtype;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR sk_matchruleoid;
+    PSTR    sk_attrtype;
+    PSTR    sk_matchruleoid;
     BOOLEAN sk_reverseorder;
 }
 

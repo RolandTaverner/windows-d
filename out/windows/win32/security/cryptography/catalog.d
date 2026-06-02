@@ -3,8 +3,8 @@
 module windows.win32.security.cryptography.catalog;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
-public import windows.win32.security.cryptography.cryptography : CERT_STRONG_SIGN_PARA, CRYPT_INTEGER_BLOB;
+public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
+public import windows.win32.security.cryptography : CERT_STRONG_SIGN_PARA, CRYPT_INTEGER_BLOB;
 public import windows.win32.security.cryptography.sip : SIP_INDIRECT_DATA;
 
 extern(Windows) @nogc nothrow:
@@ -50,10 +50,13 @@ enum : uint
 // Constants
 
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_CATALOG_LIST         = "1.3.6.1.4.1.311.12.1.1",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_CATALOG_LIST_MEMBER  = "1.3.6.1.4.1.311.12.1.2",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_CATALOG_LIST_MEMBER2 = "1.3.6.1.4.1.311.12.1.3",
 }
 

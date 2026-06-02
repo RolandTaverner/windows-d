@@ -3,7 +3,7 @@
 module windows.win32.system.tpmbaseservices;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -101,7 +101,7 @@ struct TBS_CONTEXT_PARAMS2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(includeTpm20)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield526;
+            uint _bitfield526;
         }
         uint asUINT32;
     }

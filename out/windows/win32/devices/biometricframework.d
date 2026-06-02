@@ -3,8 +3,8 @@
 module windows.win32.devices.biometricframework;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, HWND,
-                                                    POINT, PWSTR, RECT;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, HWND, POINT,
+                                         PWSTR, RECT;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -150,32 +150,32 @@ enum : uint
 
 enum : ushort
 {
-    WINBIO_DATA_FLAG_PRIVACY             = cast(ushort) 0x0002,
-    WINBIO_DATA_FLAG_INTEGRITY           = cast(ushort) 0x0001,
-    WINBIO_DATA_FLAG_SIGNED              = cast(ushort) 0x0004,
-    WINBIO_DATA_FLAG_RAW                 = cast(ushort) 0x0020,
-    WINBIO_DATA_FLAG_INTERMEDIATE        = cast(ushort) 0x0040,
-    WINBIO_DATA_FLAG_PROCESSED           = cast(ushort) 0x0080,
-    WINBIO_DATA_FLAG_OPTION_MASK_PRESENT = cast(ushort) 0x0008,
+    WINBIO_DATA_FLAG_PRIVACY             = 0x0002,
+    WINBIO_DATA_FLAG_INTEGRITY           = 0x0001,
+    WINBIO_DATA_FLAG_SIGNED              = 0x0004,
+    WINBIO_DATA_FLAG_RAW                 = 0x0020,
+    WINBIO_DATA_FLAG_INTERMEDIATE        = 0x0040,
+    WINBIO_DATA_FLAG_PROCESSED           = 0x0080,
+    WINBIO_DATA_FLAG_OPTION_MASK_PRESENT = 0x0008,
 }
 
 enum : ushort
 {
-    WINBIO_ANSI_381_PIXELS_PER_INCH                = cast(ushort) 0x0001,
-    WINBIO_ANSI_381_PIXELS_PER_CM                  = cast(ushort) 0x0002,
-    WINBIO_ANSI_381_IMG_UNCOMPRESSED               = cast(ushort) 0x0000,
-    WINBIO_ANSI_381_IMG_BIT_PACKED                 = cast(ushort) 0x0001,
-    WINBIO_ANSI_381_IMG_COMPRESSED_WSQ             = cast(ushort) 0x0002,
-    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG            = cast(ushort) 0x0003,
-    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG2000        = cast(ushort) 0x0004,
-    WINBIO_ANSI_381_IMG_COMPRESSED_PNG             = cast(ushort) 0x0005,
-    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_PLAIN       = cast(ushort) 0x0000,
-    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_ROLLED      = cast(ushort) 0x0001,
-    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_PLAIN    = cast(ushort) 0x0002,
-    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_ROLLED   = cast(ushort) 0x0003,
-    WINBIO_ANSI_381_IMP_TYPE_LATENT                = cast(ushort) 0x0007,
-    WINBIO_ANSI_381_IMP_TYPE_SWIPE                 = cast(ushort) 0x0008,
-    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_CONTACTLESS = cast(ushort) 0x0009,
+    WINBIO_ANSI_381_PIXELS_PER_INCH                = 0x0001,
+    WINBIO_ANSI_381_PIXELS_PER_CM                  = 0x0002,
+    WINBIO_ANSI_381_IMG_UNCOMPRESSED               = 0x0000,
+    WINBIO_ANSI_381_IMG_BIT_PACKED                 = 0x0001,
+    WINBIO_ANSI_381_IMG_COMPRESSED_WSQ             = 0x0002,
+    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG            = 0x0003,
+    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG2000        = 0x0004,
+    WINBIO_ANSI_381_IMG_COMPRESSED_PNG             = 0x0005,
+    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_PLAIN       = 0x0000,
+    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_ROLLED      = 0x0001,
+    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_PLAIN    = 0x0002,
+    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_ROLLED   = 0x0003,
+    WINBIO_ANSI_381_IMP_TYPE_LATENT                = 0x0007,
+    WINBIO_ANSI_381_IMP_TYPE_SWIPE                 = 0x0008,
+    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_CONTACTLESS = 0x0009,
 }
 
 enum : uint
@@ -1480,13 +1480,13 @@ struct WINBIO_SENSOR_ATTRIBUTES
     ushort[256]    SerialNumber;
     WINBIO_VERSION FirmwareVersion;
     uint           SupportedFormatEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WINBIO_REGISTERED_FORMAT[1] SupportedFormat;
+    WINBIO_REGISTERED_FORMAT[1] SupportedFormat; // Flexible array
 }
 
 struct WINBIO_DATA
 {
-    uint Size;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     Size;
+    ubyte[1] Data; // Flexible array
 }
 
 struct WINBIO_UPDATE_FIRMWARE

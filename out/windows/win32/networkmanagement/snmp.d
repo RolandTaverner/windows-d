@@ -3,8 +3,8 @@
 module windows.win32.networkmanagement.snmp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HWND, LPARAM, PSTR,
-                                                    WPARAM;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HWND, LPARAM, PSTR,
+                                         WPARAM;
 
 extern(Windows) @nogc nothrow:
 

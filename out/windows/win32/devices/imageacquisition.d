@@ -3,11 +3,10 @@
 module windows.win32.devices.imageacquisition;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE,
-                                                    HGLOBAL, HRESULT, HWND, PWSTR,
-                                                    RECT;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE, HGLOBAL,
+                                         HRESULT, HWND, PWSTR, RECT;
 public import windows.win32.graphics.gdi : HBITMAP;
-public import windows.win32.system.com.com : IStream, IUnknown, STGMEDIUM;
+public import windows.win32.system.com : IStream, IUnknown, STGMEDIUM;
 public import windows.win32.system.com.structuredstorage : IEnumSTATPROPSTG, PROPSPEC, PROPVARIANT,
                                                            STATPROPSETSTG;
 public import windows.win32.system.variant : VARENUM;
@@ -1674,7 +1673,8 @@ enum : uint
     ESC_TWAIN_PRIVATE_SUPPORTED_CAPS = 0x000007d2U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WIAU_DEBUG_TSTR = "S";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WIAU_DEBUG_TSTR = "S";
 enum uint g_dwDebugFlags = 0x00000000U;
 enum uint WIA_WSD_MANUFACTURER = 0x00009802U;
 enum const(wchar)* WIA_WSD_MANUFACTURER_STR = "Device manufacturer";
@@ -1753,24 +1753,24 @@ struct WIA_RAW_HEADER
 
 struct WIA_BARCODE_INFO
 {
-    uint Size;
-    uint Type;
-    uint Page;
-    uint Confidence;
-    uint XOffset;
-    uint YOffset;
-    uint Rotation;
-    uint Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Text;
+    uint     Size;
+    uint     Type;
+    uint     Page;
+    uint     Confidence;
+    uint     XOffset;
+    uint     YOffset;
+    uint     Rotation;
+    uint     Length;
+    wchar[1] Text; // Flexible array
 }
 
 struct WIA_BARCODES
 {
-    uint Tag;
-    uint Version;
-    uint Size;
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WIA_BARCODE_INFO[1] Barcodes;
+    uint                Tag;
+    uint                Version;
+    uint                Size;
+    uint                Count;
+    WIA_BARCODE_INFO[1] Barcodes; // Flexible array
 }
 
 struct WIA_PATCH_CODE_INFO
@@ -1784,26 +1784,26 @@ struct WIA_PATCH_CODES
     uint Version;
     uint Size;
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WIA_PATCH_CODE_INFO[1] PatchCodes;
+    WIA_PATCH_CODE_INFO[1] PatchCodes; // Flexible array
 }
 
 struct WIA_MICR_INFO
 {
-    uint Size;
-    uint Page;
-    uint Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Text;
+    uint     Size;
+    uint     Page;
+    uint     Length;
+    wchar[1] Text; // Flexible array
 }
 
 struct WIA_MICR
 {
-    uint   Tag;
-    uint   Version;
-    uint   Size;
-    wchar  Placeholder;
-    ushort Reserved;
-    uint   Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WIA_MICR_INFO[1] Micr;
+    uint             Tag;
+    uint             Version;
+    uint             Size;
+    wchar            Placeholder;
+    ushort           Reserved;
+    uint             Count;
+    WIA_MICR_INFO[1] Micr; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wia_xp/ns-wia_xp-wia_data_callback_header
@@ -2107,14 +2107,14 @@ struct VAL
 
 struct TWAIN_CAPABILITY
 {
-    int lSize;
-    int lMSG;
-    int lCapID;
-    int lConType;
-    int lRC;
-    int lCC;
-    int lDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    int      lSize;
+    int      lMSG;
+    int      lCapID;
+    int      lConType;
+    int      lRC;
+    int      lCC;
+    int      lDataSize;
+    ubyte[1] Data; // Flexible array
 }
 
 // Interfaces

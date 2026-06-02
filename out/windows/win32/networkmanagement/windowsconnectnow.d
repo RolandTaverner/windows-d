@@ -3,8 +3,8 @@
 module windows.win32.networkmanagement.windowsconnectnow;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, PROPERTYKEY, PWSTR;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : HRESULT, PROPERTYKEY, PWSTR;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -412,14 +412,14 @@ enum : uint
 enum uint WCN_FLAG_ENCRYPTED_VE = 0x00000004U;
 enum GUID SID_WcnProvider = GUID("c100beca-d33a-4a4b-bf23-bbef4663d017");
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 16))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_WCN_DeviceType_Category       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 16))], [])*/PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 16),
-    PKEY_WCN_DeviceType_SubCategoryOUI = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 16))], [])*/PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 17),
-    PKEY_WCN_DeviceType_SubCategory    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 16))], [])*/PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 18),
+    PKEY_WCN_DeviceType_Category       = PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 16),
+    PKEY_WCN_DeviceType_SubCategoryOUI = PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 17),
+    PKEY_WCN_DeviceType_SubCategory    = PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 18),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 32))], [])*/PROPERTYKEY PKEY_WCN_SSID = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 32))], [])*/PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 32);
+enum PROPERTYKEY PKEY_WCN_SSID = PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 32);
 
 // Structs
 

@@ -3,12 +3,11 @@
 module windows.win32.storage.imapi;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, BSTR, HRESULT, VARIANT_BOOL;
+public import windows.win32.foundation : BOOLEAN, BSTR, HRESULT, VARIANT_BOOL;
 public import windows.win32.system.addressbook : IMessage, LPALLOCATEBUFFER, LPALLOCATEMORE,
                                                  LPFREEBUFFER, SPropProblemArray,
                                                  SPropTagArray;
-public import windows.win32.system.com.com : IDispatch, IMalloc, IStream, IUnknown,
-                                             SAFEARRAY;
+public import windows.win32.system.com : IDispatch, IMalloc, IStream, IUnknown, SAFEARRAY;
 public import windows.win32.system.com.structuredstorage : IPropertyStorage, IStorage;
 public import windows.win32.system.ole : IEnumVARIANT;
 
@@ -748,8 +747,9 @@ enum : uint
     IMAPI2FS_MinorVersion = 0x00000000U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAPI2FS_FullVersion_STR  = "1.0",
     IMAPI2FS_FullVersion_WSTR = "1.0",
 }
@@ -857,7 +857,8 @@ enum : GUID
 
 enum GUID CLSID_SmtpCat = GUID("b23c35b7-9219-11d2-9e17-00c04fa322ba");
 enum GUID CATID_SMTP_DSN = GUID("22b55731-f5f8-4d23-bd8f-87b52371a73a");
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SZ_PROGID_SMTPCAT = "Smtp.Cat";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SZ_PROGID_SMTPCAT = "Smtp.Cat";
 enum HRESULT IMAPI_S_PROPERTIESIGNORED = HRESULT(0x00040200);
 enum HRESULT IMAPI_S_BUFFER_TO_SMALL = HRESULT(0x00040201);
 
@@ -942,8 +943,8 @@ struct LPMSGSESS
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/spropattrarray
 struct SPropAttrArray
 {
-    uint cValues;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aPropAttr;
+    uint    cValues;
+    uint[1] aPropAttr; // Flexible array
 }
 
 struct IMMP_MPV_STORE_DRIVER_HANDLE

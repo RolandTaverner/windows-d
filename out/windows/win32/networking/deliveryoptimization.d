@@ -3,8 +3,8 @@
 module windows.win32.networking.deliveryoptimization;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, PWSTR;
-public import windows.win32.system.com.com : IEnumUnknown, IUnknown;
+public import windows.win32.foundation : HRESULT, PWSTR;
+public import windows.win32.system.com : IEnumUnknown, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -103,8 +103,8 @@ struct DO_DOWNLOAD_RANGE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_ranges_info
 struct DO_DOWNLOAD_RANGES_INFO
 {
-    uint RangeCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DO_DOWNLOAD_RANGE[1] Ranges;
+    uint                 RangeCount;
+    DO_DOWNLOAD_RANGE[1] Ranges; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_status

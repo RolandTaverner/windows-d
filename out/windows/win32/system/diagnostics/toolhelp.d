@@ -3,7 +3,7 @@
 module windows.win32.system.diagnostics.toolhelp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HMODULE;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HMODULE;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,7 +3,7 @@
 module windows.win32.system.processstatus;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, HMODULE, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -64,7 +64,7 @@ union PSAPI_WORKING_SET_BLOCK
     size_t Flags;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VirtualPage)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/size_t _bitfield465;
+        size_t _bitfield465;
     }
 }
 
@@ -72,7 +72,7 @@ union PSAPI_WORKING_SET_BLOCK
 struct PSAPI_WORKING_SET_INFORMATION
 {
     size_t NumberOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PSAPI_WORKING_SET_BLOCK[1] WorkingSetInfo;
+    PSAPI_WORKING_SET_BLOCK[1] WorkingSetInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_ex_block
@@ -83,11 +83,11 @@ union PSAPI_WORKING_SET_EX_BLOCK
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Bad)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/size_t _bitfield466;
+            size_t _bitfield466;
         }
         struct Invalid
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Bad)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/size_t _bitfield467;
+            size_t _bitfield467;
         }
     }
 }

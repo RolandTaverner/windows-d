@@ -3,35 +3,33 @@
 module windows.win32.system.ole;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, DECIMAL,
-                                                    FILETIME, HANDLE, HGLOBAL, HINSTANCE,
-                                                    HRESULT, HRSRC, HTASK, HWND, LPARAM,
-                                                    LRESULT, POINT, POINTL, PSTR, PWSTR,
-                                                    RECT, RECTL, SIZE, SYSTEMTIME,
-                                                    VARIANT_BOOL, WPARAM;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, DECIMAL, FILETIME,
+                                         HANDLE, HGLOBAL, HINSTANCE, HRESULT,
+                                         HRSRC, HTASK, HWND, LPARAM, LRESULT,
+                                         POINT, POINTL, PSTR, PWSTR, RECT, RECTL,
+                                         SIZE, SYSTEMTIME, VARIANT_BOOL, WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP, HDC, HENHMETAFILE, HFONT, HMETAFILE,
                                            HPALETTE, HRGN, LOGPALETTE, TEXTMETRICW;
-public import windows.win32.system.com.com : BYTE_SIZEDARR, CALLCONV, CUSTDATA, CY, DISPPARAMS,
-                                             DVASPECT, DVTARGETDEVICE, DWORD_SIZEDARR,
-                                             EXCEPINFO, FLAGGED_WORD_BLOB, FORMATETC,
-                                             FUNCDESC, HYPER_SIZEDARR, IAdviseSink,
-                                             IBindCtx, IBindHost, IClassFactory,
-                                             IDLDESC, IDataObject, IDispatch,
-                                             IEnumFORMATETC, IEnumSTATDATA,
-                                             IEnumUnknown, IErrorLog, IMPLTYPEFLAGS,
-                                             IMoniker, INVOKEKIND, IPersist,
-                                             IPersistStream, IServiceProvider,
-                                             IStream, ITypeInfo, ITypeLib, IUnknown,
-                                             SAFEARRAY, SAFEARRAYBOUND, STGMEDIUM,
-                                             SYSKIND;
+public import windows.win32.system.com : BYTE_SIZEDARR, CALLCONV, CUSTDATA, CY, DISPPARAMS,
+                                         DVASPECT, DVTARGETDEVICE, DWORD_SIZEDARR,
+                                         EXCEPINFO, FLAGGED_WORD_BLOB, FORMATETC,
+                                         FUNCDESC, HYPER_SIZEDARR, IAdviseSink,
+                                         IBindCtx, IBindHost, IClassFactory,
+                                         IDLDESC, IDataObject, IDispatch,
+                                         IEnumFORMATETC, IEnumSTATDATA, IEnumUnknown,
+                                         IErrorLog, IMPLTYPEFLAGS, IMoniker,
+                                         INVOKEKIND, IPersist, IPersistStream,
+                                         IServiceProvider, IStream, ITypeInfo,
+                                         ITypeLib, IUnknown, SAFEARRAY, SAFEARRAYBOUND,
+                                         STGMEDIUM, SYSKIND;
 public import windows.win32.system.com.structuredstorage : IPersistStorage, IPropertyBag, IPropertyBag2,
                                                            IStorage, OLESTREAM;
-public import windows.win32.system.com.com : TYPEDESC, TYPEKIND, VARDESC, WORD_SIZEDARR;
-public import windows.win32.system.memory.memory : GLOBAL_ALLOC_FLAGS;
+public import windows.win32.system.com : TYPEDESC, TYPEKIND, VARDESC, WORD_SIZEDARR;
+public import windows.win32.system.memory : GLOBAL_ALLOC_FLAGS;
 public import windows.win32.system.systemservices : MODIFIERKEYS_FLAGS;
 public import windows.win32.system.variant : VARENUM, VARIANT;
 public import windows.win32.ui.controls.dialogs : OPENFILENAMEA, OPENFILENAMEW;
-public import windows.win32.ui.controls.controls : PROPSHEETHEADERA_V2, PROPSHEETHEADERW_V2;
+public import windows.win32.ui.controls : PROPSHEETHEADERA_V2, PROPSHEETHEADERW_V2;
 public import windows.win32.ui.windowsandmessaging : HACCEL, HCURSOR, HICON, HMENU,
                                                      MENU_ITEM_FLAGS, MSG;
 
@@ -1159,7 +1157,8 @@ enum uint VT_STREAMED_PROPSET = 0x00000049U;
 enum uint VT_STORED_PROPSET = 0x0000004aU;
 enum uint VT_BLOB_PROPSET = 0x0000004bU;
 enum uint VT_VERBOSE_ENUM = 0x0000004cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/ocm--base))], [])*/uint OCM__BASE = 0x00002000U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/ocm--base
+enum uint OCM__BASE = 0x00002000U;
 
 enum : int
 {
@@ -1312,8 +1311,10 @@ enum : uint
     DISPID_PICT_RENDER = 0x00000006U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STDOLE_TLB = "stdole2.tlb";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STDTYPE_TLB = "stdole2.tlb";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STDOLE_TLB = "stdole2.tlb";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STDTYPE_TLB = "stdole2.tlb";
 enum int GC_WCH_SIBLING = 0x00000001;
 enum uint TIFLAGS_EXTENDDISPATCHONLY = 0x00000001U;
 enum int OLECMDERR_E_NOTSUPPORTED = 0x80040100;
@@ -1976,12 +1977,12 @@ struct SAFEARRAYUNION
 
 struct _wireSAFEARRAY
 {
-    ushort         cDims;
-    ushort         fFeatures;
-    uint           cbElements;
-    uint           cLocks;
-    SAFEARRAYUNION uArrayStructs;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SAFEARRAYBOUND[1] rgsabound;
+    ushort            cDims;
+    ushort            fFeatures;
+    uint              cbElements;
+    uint              cLocks;
+    SAFEARRAYUNION    uArrayStructs;
+    SAFEARRAYBOUND[1] rgsabound; // Flexible array
 }
 
 struct _wireBRECORD
@@ -2052,9 +2053,9 @@ struct _wireVARIANT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-arraydesc
 struct ARRAYDESC
 {
-    TYPEDESC tdescElem;
-    ushort   cDims;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SAFEARRAYBOUND[1] rgbounds;
+    TYPEDESC          tdescElem;
+    ushort            cDims;
+    SAFEARRAYBOUND[1] rgbounds; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-paramdescex
@@ -2114,7 +2115,7 @@ struct OLEVERB
     OLEIVERB        lVerb;
     PWSTR           lpszVerbName;
     MENU_ITEM_FLAGS fuFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEVERBATTRIB))], [])*/uint grfAttribs;
+    uint            grfAttribs;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-numparse
@@ -2175,7 +2176,7 @@ struct CONTROLINFO
     uint   cb;
     HACCEL hAccel;
     ushort cAccel;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CTRLINFO))], [])*/uint dwFlags;
+    uint   dwFlags;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-pointf
@@ -2241,7 +2242,7 @@ struct QACONTAINER
     IAdviseSinkEx       pAdviseSink;
     IPropertyNotifySink pPropertyNotifySink;
     IUnknown            pUnkEventSink;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QACONTAINERFLAGS))], [])*/uint dwAmbientFlags;
+    uint                dwAmbientFlags;
     uint                colorFore;
     uint                colorBack;
     IFont               pFont;
@@ -2259,11 +2260,11 @@ struct QACONTAINER
 struct QACONTROL
 {
     uint cbSize;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEMISC))], [])*/uint dwMiscStatus;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VIEWSTATUS))], [])*/uint dwViewStatus;
+    uint dwMiscStatus;
+    uint dwViewStatus;
     uint dwEventCookie;
     uint dwPropNotifyCookie;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(POINTERINACTIVE))], [])*/uint dwPointerActivationPolicy;
+    uint dwPointerActivationPolicy;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-ocpfiparams
@@ -2299,7 +2300,7 @@ struct FONTDESC
 struct PICTDESC
 {
     uint cbSizeofstruct;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PICTYPE))], [])*/uint picType;
+    uint picType;
     union
     {
         struct bmp
@@ -2334,27 +2335,27 @@ struct PAGERANGE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-pageset
 struct PAGESET
 {
-    uint cbStruct;
-    BOOL fOddPages;
-    BOOL fEvenPages;
-    uint cPageRange;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PAGERANGE[1] rgPages;
+    uint         cbStruct;
+    BOOL         fOddPages;
+    BOOL         fEvenPages;
+    uint         cPageRange;
+    PAGERANGE[1] rgPages; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-olecmd
 struct OLECMD
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECMDID))], [])*/uint cmdID;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECMDF))], [])*/uint cmdf;
+    uint cmdID;
+    uint cmdf;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-olecmdtext
 struct OLECMDTEXT
 {
-    uint cmdtextf;
-    uint cwActual;
-    uint cwBuf;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] rgwz;
+    uint     cmdtextf;
+    uint     cwActual;
+    uint     cwBuf;
+    wchar[1] rgwz; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjectw

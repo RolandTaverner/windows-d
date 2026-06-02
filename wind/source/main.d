@@ -484,6 +484,23 @@ int main(string[] args)
 
     skipMethods = [
         "CreateDispatcherQueueController" : true,
+        "StackWalk": true,
+        "SymGetLineNext": true,
+        "SymGetLinePrev": true,
+        "SymUnDName": true,
+        "SymRegisterCallback": true,
+        "SymGetSymFromAddr": true,
+        "SymGetSymFromName": true,
+        "SymEnumerateSymbols": true,
+        "SymEnumerateSymbolsW": true,
+        "SymGetSymNext": true,
+        "SymGetSymPrev": true,
+        "SymEnumerateModules": true,
+        "EnumerateLoadedModules": true,
+        "SymGetModuleInfo": true,
+        "SymGetModuleInfoW": true,
+        "SymGetLineFromAddr": true,
+        "SymGetLineFromName": true,
     ];
 
     if (docsDirectory.length)

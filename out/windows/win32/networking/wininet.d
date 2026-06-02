@@ -3,19 +3,16 @@
 module windows.win32.networking.wininet;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE,
-                                                    HINSTANCE, HRESULT, HWND, PSTR,
-                                                    PWSTR, SYSTEMTIME;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, FILETIME, HANDLE, HINSTANCE,
+                                         HRESULT, HWND, PSTR, PWSTR, SYSTEMTIME;
 public import windows.win32.graphics.gdi : HBITMAP;
 public import windows.win32.networking.winhttp : WIN_HTTP_CREATE_URL_FLAGS;
-public import windows.win32.security.authentication.identity.identity : SecPkgContext_Bindings,
-                                                                        SecPkgContext_CipherInfo,
-                                                                        SecPkgContext_ConnectionInfo;
-public import windows.win32.security.cryptography.cryptography : ALG_ID, CERT_CHAIN_CONTEXT,
-                                                                 CERT_CONTEXT;
+public import windows.win32.security.authentication.identity : SecPkgContext_Bindings, SecPkgContext_CipherInfo,
+                                                               SecPkgContext_ConnectionInfo;
+public import windows.win32.security.cryptography : ALG_ID, CERT_CHAIN_CONTEXT, CERT_CONTEXT;
 public import windows.win32.storage.filesystem : WIN32_FIND_DATAA, WIN32_FIND_DATAW;
-public import windows.win32.system.com.com : IUnknown;
-public import windows.win32.system.winrt.winrt : IInspectable;
+public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.winrt : IInspectable;
 
 extern(Windows) @nogc nothrow:
 
@@ -360,9 +357,9 @@ enum uint INTERNET_INVALID_PORT_NUMBER = 0x00000000U;
 
 enum : ushort
 {
-    INTERNET_DEFAULT_FTP_PORT    = cast(ushort) 0x0015,
-    INTERNET_DEFAULT_GOPHER_PORT = cast(ushort) 0x0046,
-    INTERNET_DEFAULT_SOCKS_PORT  = cast(ushort) 0x0438,
+    INTERNET_DEFAULT_FTP_PORT    = 0x0015,
+    INTERNET_DEFAULT_GOPHER_PORT = 0x0046,
+    INTERNET_DEFAULT_SOCKS_PORT  = 0x0438,
 }
 
 enum : uint
@@ -829,8 +826,9 @@ enum : uint
 enum uint HTTP_MAJOR_VERSION = 0x00000001U;
 enum uint HTTP_MINOR_VERSION = 0x00000000U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     HTTP_VERSIONA = "HTTP/1.0",
     HTTP_VERSIONW = "HTTP/1.0",
 }
@@ -1781,11 +1779,14 @@ enum : uint
     INTERNET_AUTOPROXY_INIT_ONLYQUERY    = 0x00000008U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTR_DIAL_AUTOCONNECT = "AutoConnect";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTR_LEASH_LEGACY_COOKIES = "LeashLegacyCookies";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGSTR_DIAL_AUTOCONNECT = "AutoConnect";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGSTR_LEASH_LEGACY_COOKIES = "LeashLegacyCookies";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     LOCAL_NAMESPACE_PREFIX   = "Local\\",
     LOCAL_NAMESPACE_PREFIX_W = "Local\\",
 }
@@ -2460,7 +2461,7 @@ struct INTERNET_CACHE_CONFIG_INFOA
             CHAR[260] CachePath;
             uint      dwCacheSize;
         }
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/INTERNET_CACHE_CONFIG_PATH_ENTRYA[1] CachePaths;
+        INTERNET_CACHE_CONFIG_PATH_ENTRYA[1] CachePaths; // Flexible array
     }
     uint dwNormalUsage;
     uint dwExemptUsage;
@@ -2483,7 +2484,7 @@ struct INTERNET_CACHE_CONFIG_INFOW
             wchar[260] CachePath;
             uint       dwCacheSize;
         }
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/INTERNET_CACHE_CONFIG_PATH_ENTRYW[1] CachePaths;
+        INTERNET_CACHE_CONFIG_PATH_ENTRYW[1] CachePaths; // Flexible array
     }
     uint dwNormalUsage;
     uint dwExemptUsage;

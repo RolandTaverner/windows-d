@@ -4,9 +4,9 @@ module windows.win32.system.assessmenttool;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMNodeList;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, HWND, PWSTR;
+public import windows.win32.foundation : BSTR, HRESULT, HWND, PWSTR;
 public import windows.win32.graphics.gdi : HBITMAP;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.accessibility : IAccessible;
 

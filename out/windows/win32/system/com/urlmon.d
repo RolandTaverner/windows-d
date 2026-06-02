@@ -4,15 +4,14 @@ module windows.win32.system.com.urlmon;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLElement;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HANDLE_PTR, HRESULT,
-                                                    HWND, PSTR, PWSTR, SYSTEMTIME,
-                                                    VARIANT_BOOL;
-public import windows.win32.system.com.com : BINDINFO, CLSCTX, FORMATETC, IBindCtx,
-                                             IBindStatusCallback, IBinding,
-                                             IClassFactory, IEnumFORMATETC,
-                                             IEnumString, IMoniker, IServiceProvider,
-                                             IStream, IUnknown, IUri, IUriBuilder,
-                                             QUERYCONTEXT, STGMEDIUM, uCLSSPEC;
+public import windows.win32.foundation : BOOL, HANDLE, HANDLE_PTR, HRESULT, HWND,
+                                         PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.system.com : BINDINFO, CLSCTX, FORMATETC, IBindCtx,
+                                         IBindStatusCallback, IBinding, IClassFactory,
+                                         IEnumFORMATETC, IEnumString, IMoniker,
+                                         IServiceProvider, IStream, IUnknown,
+                                         IUri, IUriBuilder, QUERYCONTEXT, STGMEDIUM,
+                                         uCLSSPEC;
 
 extern(Windows) @nogc nothrow:
 

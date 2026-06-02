@@ -3,7 +3,7 @@
 module windows.win32.graphics.opengl;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, COLORREF, PROC, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, COLORREF, PROC, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : EMR, HDC, HENHMETAFILE;
 
 extern(Windows) @nogc nothrow:
@@ -1368,7 +1368,7 @@ struct PIXELFORMATDESCRIPTOR
     ubyte          cDepthBits;
     ubyte          cStencilBits;
     ubyte          cAuxBuffers;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PFD_LAYER_TYPE))], [])*/ubyte iLayerType;
+    ubyte          iLayerType;
     ubyte          bReserved;
     uint           dwLayerMask;
     uint           dwVisibleMask;

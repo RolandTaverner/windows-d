@@ -3,7 +3,7 @@
 module windows.win32.system.restartmanager;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, PWSTR, WIN32_ERROR;
+public import windows.win32.foundation : BOOL, FILETIME, PWSTR, WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 
@@ -116,7 +116,7 @@ struct RM_PROCESS_INFO
     wchar[256]        strAppName;
     wchar[64]         strServiceShortName;
     RM_APP_TYPE       ApplicationType;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(RM_APP_STATUS))], [])*/uint AppStatus;
+    uint              AppStatus;
     uint              TSSessionId;
     BOOL              bRestartable;
 }

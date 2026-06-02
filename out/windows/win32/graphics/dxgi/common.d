@@ -3,7 +3,7 @@
 module windows.win32.graphics.dxgi.common;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL;
+public import windows.win32.foundation : BOOL;
 
 extern(Windows) @nogc nothrow:
 

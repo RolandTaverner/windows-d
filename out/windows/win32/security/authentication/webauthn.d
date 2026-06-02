@@ -3,8 +3,8 @@
 module windows.win32.security.authentication.webauthn;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, PWSTR;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HRESULT, HWND, PWSTR;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -125,13 +125,19 @@ enum : uint
     WEBAUTHN_CTAP_TRANSPORT_FLAGS_MASK = 0x0000007fU,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WEBAUTHN_CTAP_TRANSPORT_USB_STRING        = "usb",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WEBAUTHN_CTAP_TRANSPORT_NFC_STRING        = "nfc",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WEBAUTHN_CTAP_TRANSPORT_BLE_STRING        = "ble",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WEBAUTHN_CTAP_TRANSPORT_SMART_CARD_STRING = "smart-card",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WEBAUTHN_CTAP_TRANSPORT_HYBRID_STRING     = "hybrid",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WEBAUTHN_CTAP_TRANSPORT_INTERNAL_STRING   = "internal",
 }
 

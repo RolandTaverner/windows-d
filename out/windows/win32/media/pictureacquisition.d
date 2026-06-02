@@ -3,10 +3,10 @@
 module windows.win32.media.pictureacquisition;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT, HWND,
-                                                    PROPERTYKEY, PWSTR, SIZE;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HRESULT, HWND,
+                                         PROPERTYKEY, PWSTR, SIZE;
 public import windows.win32.graphics.gdi : HBITMAP;
-public import windows.win32.system.com.com : IEnumString, IStream, IUnknown;
+public import windows.win32.system.com : IEnumString, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
 public import windows.win32.ui.windowsandmessaging : HICON;
@@ -81,17 +81,17 @@ enum : int
 // Constants
 
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PhotoAcquire_RelativePathname     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 2),
-    PKEY_PhotoAcquire_FinalFilename        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 3),
-    PKEY_PhotoAcquire_GroupTag             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 4),
-    PKEY_PhotoAcquire_TransferResult       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 5),
-    PKEY_PhotoAcquire_OriginalFilename     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 6),
-    PKEY_PhotoAcquire_CameraSequenceNumber = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 7),
-    PKEY_PhotoAcquire_IntermediateFile     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 8),
-    PKEY_PhotoAcquire_SkipImport           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 9),
-    PKEY_PhotoAcquire_DuplicateDetectionID = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({15872887, 31430, 19322, 132, 67, 52, 94, 115, 31, 165, 122}, 2))], [])*/PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 10),
+    PKEY_PhotoAcquire_RelativePathname     = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 2),
+    PKEY_PhotoAcquire_FinalFilename        = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 3),
+    PKEY_PhotoAcquire_GroupTag             = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 4),
+    PKEY_PhotoAcquire_TransferResult       = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 5),
+    PKEY_PhotoAcquire_OriginalFilename     = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 6),
+    PKEY_PhotoAcquire_CameraSequenceNumber = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 7),
+    PKEY_PhotoAcquire_IntermediateFile     = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 8),
+    PKEY_PhotoAcquire_SkipImport           = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 9),
+    PKEY_PhotoAcquire_DuplicateDetectionID = PROPERTYKEY(GUID("00F23377-7AC6-4B7A-8443-345E731FA57A"), 10),
 }
 
 enum int PROGRESS_INDETERMINATE = 0xffffffff;

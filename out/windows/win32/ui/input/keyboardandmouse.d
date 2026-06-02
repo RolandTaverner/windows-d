@@ -3,7 +3,7 @@
 module windows.win32.ui.input.keyboardandmouse;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HWND, POINT, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, CHAR, HWND, POINT, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -609,9 +609,9 @@ struct VK_VSC
 
 struct VK_TO_WCHARS1
 {
-    ubyte VirtualKey;
-    ubyte Attributes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wch;
+    ubyte    VirtualKey;
+    ubyte    Attributes;
+    wchar[1] wch; // Flexible array
 }
 
 struct VK_TO_WCHARS2
@@ -694,9 +694,9 @@ struct DEADKEY
 
 struct LIGATURE1
 {
-    ubyte  VirtualKey;
-    ushort ModificationNumber;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wch;
+    ubyte    VirtualKey;
+    ushort   ModificationNumber;
+    wchar[1] wch; // Flexible array
 }
 
 struct LIGATURE2

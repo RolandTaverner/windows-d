@@ -3,7 +3,7 @@
 module windows.win32.system.restore;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, WIN32_ERROR;
+public import windows.win32.foundation : BOOL, CHAR, FILETIME, WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 

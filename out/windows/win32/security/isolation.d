@@ -3,9 +3,9 @@
 module windows.win32.security.isolation;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
-public import windows.win32.security.security : PSID, SID_AND_ATTRIBUTES;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.security : PSID, SID_AND_ATTRIBUTES;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:

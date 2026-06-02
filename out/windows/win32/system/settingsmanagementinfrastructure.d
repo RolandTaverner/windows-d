@@ -3,8 +3,8 @@
 module windows.win32.system.settingsmanagementinfrastructure;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HMODULE, HRESULT, PWSTR;
-public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HMODULE, HRESULT, PWSTR;
+public import windows.win32.system.com : IStream, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

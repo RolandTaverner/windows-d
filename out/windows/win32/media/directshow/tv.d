@@ -3,29 +3,27 @@
 module windows.win32.media.directshow.tv;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
-                                                    HWND, PWSTR, RECT, SIZE, VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT, HWND,
+                                         PWSTR, RECT, SIZE, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HDC;
-public import windows.win32.media.directshow.directshow : AnalogVideoStandard, BinaryConvolutionCodeRate,
-                                                          ComponentCategory, ComponentStatus,
-                                                          DVBSystemType, FECMethod,
-                                                          GuardInterval, HierarchyAlpha,
-                                                          IESEvent, IESEvents, IEnumFilters,
-                                                          IFilterGraph, IGraphBuilder,
-                                                          IMediaSeeking, IPin,
-                                                          IVMRImageCompositor, IVMRMixerBitmap,
-                                                          IVMRSurfaceAllocator, LNB_Source,
-                                                          MPEG2StreamType, ModulationType,
-                                                          Pilot, Polarisation, RollOff,
-                                                          SpectralInversion, TVAudioMode,
-                                                          TransmissionMode, TunerInputType,
-                                                          VMRALPHABITMAP;
+public import windows.win32.media.directshow : AnalogVideoStandard, BinaryConvolutionCodeRate,
+                                               ComponentCategory, ComponentStatus,
+                                               DVBSystemType, FECMethod, GuardInterval,
+                                               HierarchyAlpha, IESEvent, IESEvents,
+                                               IEnumFilters, IFilterGraph, IGraphBuilder,
+                                               IMediaSeeking, IPin, IVMRImageCompositor,
+                                               IVMRMixerBitmap, IVMRSurfaceAllocator,
+                                               LNB_Source, MPEG2StreamType,
+                                               ModulationType, Pilot, Polarisation,
+                                               RollOff, SpectralInversion, TVAudioMode,
+                                               TransmissionMode, TunerInputType,
+                                               VMRALPHABITMAP;
 public import windows.win32.media.kernelstreaming : KSDATAFORMAT, KSEVENTDATA, KSIDENTIFIER,
                                                     KSM_NODE, KSP_NODE;
 public import windows.win32.media.mediafoundation : AM_MEDIA_TYPE, IMFVideoPresenter;
-public import windows.win32.security.security : PSID;
-public import windows.win32.system.com.com : IDispatch, IEnumGUID, IEnumMoniker, IPersist,
-                                             IUnknown, SAFEARRAY;
+public import windows.win32.security : PSID;
+public import windows.win32.system.com : IDispatch, IEnumGUID, IEnumMoniker, IPersist,
+                                         IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IEnumVARIANT, IPictureDisp;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
@@ -1904,65 +1902,65 @@ align (1):
 struct SECTION
 {
 align (1):
-    ubyte TableId;
+    ubyte    TableId;
     union Header
     {
     align (1):
         MPEG_HEADER_BITS_MIDL S;
         ushort W;
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SectionData;
+    ubyte[1] SectionData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-long_section
 struct LONG_SECTION
 {
 align (1):
-    ubyte  TableId;
+    ubyte    TableId;
     union Header
     {
     align (1):
         MPEG_HEADER_BITS_MIDL S;
         ushort W;
     }
-    ushort TableIdExtension;
+    ushort   TableIdExtension;
     union Version
     {
         MPEG_HEADER_VERSION_BITS_MIDL S;
         ubyte B;
     }
-    ubyte  SectionNumber;
-    ubyte  LastSectionNumber;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RemainingData;
+    ubyte    SectionNumber;
+    ubyte    LastSectionNumber;
+    ubyte[1] RemainingData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_section
 struct DSMCC_SECTION
 {
 align (1):
-    ubyte  TableId;
+    ubyte    TableId;
     union Header
     {
     align (1):
         MPEG_HEADER_BITS_MIDL S;
         ushort W;
     }
-    ushort TableIdExtension;
+    ushort   TableIdExtension;
     union Version
     {
         MPEG_HEADER_VERSION_BITS_MIDL S;
         ubyte B;
     }
-    ubyte  SectionNumber;
-    ubyte  LastSectionNumber;
-    ubyte  ProtocolDiscriminator;
-    ubyte  DsmccType;
-    ushort MessageId;
-    uint   TransactionId;
-    ubyte  Reserved;
-    ubyte  AdaptationLength;
-    ushort MessageLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RemainingData;
+    ubyte    SectionNumber;
+    ubyte    LastSectionNumber;
+    ubyte    ProtocolDiscriminator;
+    ubyte    DsmccType;
+    ushort   MessageId;
+    uint     TransactionId;
+    ubyte    Reserved;
+    ubyte    AdaptationLength;
+    ushort   MessageLength;
+    ubyte[1] RemainingData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_rqst_packet
@@ -1977,8 +1975,8 @@ align (1):
 struct MPEG_PACKET_LIST
 {
 align (1):
-    ushort wPacketCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MPEG_RQST_PACKET[1]* PacketList;
+    ushort               wPacketCount;
+    MPEG_RQST_PACKET[1]* PacketList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_filter_options
@@ -2189,7 +2187,7 @@ struct Mpeg2TableSampleHdr
 align (1):
     ubyte    SectionCount;
     ubyte[3] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/int[1] SectionOffsets;
+    int[1]   SectionOffsets; // Flexible array
 }
 
 struct ProgramElement
@@ -2212,12 +2210,12 @@ struct UDCR_TAG
 
 struct PIC_SEQ_SAMPLE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield100;
+    uint _bitfield100;
 }
 
 struct SAMPLE_SEQ_OFFSET
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield101;
+    uint _bitfield101;
 }
 
 struct VA_OPTIONAL_VIDEO_PROPERTIES
@@ -2240,7 +2238,7 @@ struct TRANSPORT_PROPERTIES
     {
         struct Others
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(56))], [])*/long _bitfield102;
+            long _bitfield102;
         }
         long Value;
     }
@@ -2248,11 +2246,11 @@ struct TRANSPORT_PROPERTIES
 
 struct PBDA_TAG_ATTRIBUTE
 {
-    GUID   TableUUId;
-    ubyte  TableId;
-    ushort VersionNo;
-    uint   TableDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] TableData;
+    GUID     TableUUId;
+    ubyte    TableId;
+    ushort   VersionNo;
+    uint     TableDataSize;
+    ubyte[1] TableData; // Flexible array
 }
 
 struct CAPTURE_STREAMTIME
@@ -2320,24 +2318,24 @@ struct KSM_BDA_DEBUG_LEVEL
     KSIDENTIFIER Method;
     ubyte        ucDebugLevel;
     uint         ulDebugStringSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbDebugString;
+    ubyte[1]     argbDebugString; // Flexible array
 }
 
 struct BDA_DEBUG_DATA
 {
-    int  lResult;
-    GUID uuidDebugDataType;
-    uint ulDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbDebugData;
+    int      lResult;
+    GUID     uuidDebugDataType;
+    uint     ulDataSize;
+    ubyte[1] argbDebugData; // Flexible array
 }
 
 struct BDA_EVENT_DATA
 {
-    int  lResult;
-    uint ulEventID;
-    GUID uuidEventType;
-    uint ulEventDataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbEventData;
+    int      lResult;
+    uint     ulEventID;
+    GUID     uuidEventType;
+    uint     ulEventDataLength;
+    ubyte[1] argbEventData; // Flexible array
 }
 
 struct KSM_BDA_EVENT_COMPLETE
@@ -2357,7 +2355,7 @@ struct KSM_BDA_BUFFER
 {
     KSM_NODE NodeMethod;
     uint     ulBufferSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbBuffer;
+    ubyte[1] argbBuffer; // Flexible array
 }
 
 struct KSM_BDA_WMDRM_LICENSE
@@ -2371,7 +2369,7 @@ struct KSM_BDA_WMDRM_RENEWLICENSE
     KSM_NODE NodeMethod;
     uint     ulXMRLicenseLength;
     uint     ulEntitlementTokenLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbDataBuffer;
+    ubyte[1] argbDataBuffer; // Flexible array
 }
 
 struct KSM_BDA_WMDRMTUNER_PURCHASEENTITLEMENT
@@ -2380,7 +2378,7 @@ struct KSM_BDA_WMDRMTUNER_PURCHASEENTITLEMENT
     uint     ulDialogRequest;
     CHAR[12] cLanguage;
     uint     ulPurchaseTokenLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbDataBuffer;
+    ubyte[1] argbDataBuffer; // Flexible array
 }
 
 struct KSM_BDA_WMDRMTUNER_SETPIDPROTECTION
@@ -2406,7 +2404,7 @@ struct KSM_BDA_TUNER_TUNEREQUEST
 {
     KSIDENTIFIER Method;
     uint         ulTuneLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbTuneData;
+    ubyte[1]     argbTuneData; // Flexible array
 }
 
 struct KSM_BDA_GPNV_GETVALUE
@@ -2414,7 +2412,7 @@ struct KSM_BDA_GPNV_GETVALUE
     KSIDENTIFIER Method;
     uint         ulNameLength;
     CHAR[12]     cLanguage;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbData;
+    ubyte[1]     argbData; // Flexible array
 }
 
 struct KSM_BDA_GPNV_SETVALUE
@@ -2424,7 +2422,7 @@ struct KSM_BDA_GPNV_SETVALUE
     CHAR[12]     cLanguage;
     uint         ulNameLength;
     uint         ulValueLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbName;
+    ubyte[1]     argbName; // Flexible array
 }
 
 struct KSM_BDA_GPNV_NAMEINDEX
@@ -2444,7 +2442,7 @@ struct KSM_BDA_SCAN_FILTER
     KSIDENTIFIER Method;
     uint         ulScanModulationTypeSize;
     ulong        AnalogVideoStandards;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbScanModulationTypes;
+    ubyte[1]     argbScanModulationTypes; // Flexible array
 }
 
 struct KSM_BDA_SCAN_START
@@ -2464,7 +2462,7 @@ struct KSM_BDA_GDDS_SERVICEFROMTUNEXML
 {
     KSIDENTIFIER Method;
     uint         ulTuneXmlLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbTuneXml;
+    ubyte[1]     argbTuneXml; // Flexible array
 }
 
 struct KSM_BDA_USERACTIVITY_USEREASON
@@ -2480,14 +2478,14 @@ struct KSM_BDA_CAS_ENTITLEMENTTOKEN
     CHAR[12] cLanguage;
     uint     ulRequestType;
     uint     ulEntitlementTokenLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbEntitlementToken;
+    ubyte[1] argbEntitlementToken; // Flexible array
 }
 
 struct KSM_BDA_CAS_CAPTURETOKEN
 {
     KSM_NODE NodeMethod;
     uint     ulTokenLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbToken;
+    ubyte[1] argbToken; // Flexible array
 }
 
 struct KSM_BDA_CAS_OPENBROADCASTMMI
@@ -2512,7 +2510,7 @@ struct KSM_BDA_ISDBCAS_REQUEST
     KSM_NODE NodeMethod;
     uint     ulRequestID;
     uint     ulIsdbCommandSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] argbIsdbCommandData;
+    ubyte[1] argbIsdbCommandData; // Flexible array
 }
 
 struct KSM_BDA_TS_SELECTOR_SETTSID
@@ -2576,10 +2574,10 @@ struct ChannelInfo
 
 struct SpanningEventDescriptor
 {
-    ushort wDataLen;
-    ushort wProgNumber;
-    ushort wSID;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bDescriptor;
+    ushort   wDataLen;
+    ushort   wProgNumber;
+    ushort   wSID;
+    ubyte[1] bDescriptor; // Flexible array
 }
 
 struct DVBScramblingControlSpanningEvent
@@ -2590,19 +2588,19 @@ struct DVBScramblingControlSpanningEvent
 
 struct SpanningEventEmmMessage
 {
-    ubyte  bCAbroadcasterGroupId;
-    ubyte  bMessageControl;
-    ushort wServiceId;
-    ushort wTableIdExtension;
-    ubyte  bDeletionStatus;
-    ubyte  bDisplayingDuration1;
-    ubyte  bDisplayingDuration2;
-    ubyte  bDisplayingDuration3;
-    ubyte  bDisplayingCycle;
-    ubyte  bFormatVersion;
-    ubyte  bDisplayPosition;
-    ushort wMessageLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] szMessageArea;
+    ubyte    bCAbroadcasterGroupId;
+    ubyte    bMessageControl;
+    ushort   wServiceId;
+    ushort   wTableIdExtension;
+    ubyte    bDeletionStatus;
+    ubyte    bDisplayingDuration1;
+    ubyte    bDisplayingDuration2;
+    ubyte    bDisplayingDuration3;
+    ubyte    bDisplayingCycle;
+    ubyte    bFormatVersion;
+    ubyte    bDisplayPosition;
+    ushort   wMessageLength;
+    wchar[1] szMessageArea; // Flexible array
 }
 
 struct LanguageInfo
@@ -2621,8 +2619,8 @@ struct DualMonoInfo
 
 struct PIDListSpanningEvent
 {
-    ushort wPIDCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] pulPIDs;
+    ushort  wPIDCount;
+    uint[1] pulPIDs; // Flexible array
 }
 
 struct RATING_ATTRIBUTE
@@ -2636,7 +2634,7 @@ struct RATING_SYSTEM
 {
 align (1):
     GUID              rating_system_id;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield103;
+    ubyte             _bitfield103;
     ubyte[3]          country_code;
     uint              rating_attribute_count;
     RATING_ATTRIBUTE* lpratingattrib;
@@ -2665,7 +2663,7 @@ struct DvbParentalRatingParam
 struct DvbParentalRatingDescriptor
 {
     uint ulNumParams;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DvbParentalRatingParam[1] pParams;
+    DvbParentalRatingParam[1] pParams; // Flexible array
 }
 
 struct KSPROPERTY_BDA_RF_TUNER_CAPS_S
@@ -2715,20 +2713,20 @@ struct KSEVENTDATA_BDA_RF_TUNER_SCAN_S
 struct PID_BITS
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ProgramId)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield104;
+    ushort _bitfield104;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2bits/ns-mpeg2bits-mpeg_header_bits
 struct MPEG_HEADER_BITS
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SectionSyntaxIndicator)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield105;
+    ushort _bitfield105;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2bits/ns-mpeg2bits-mpeg_header_version_bits
 struct MPEG_HEADER_VERSION_BITS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield106;
+    ubyte _bitfield106;
 }
 
 // Interfaces

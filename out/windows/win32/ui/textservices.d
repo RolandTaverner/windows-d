@@ -3,12 +3,11 @@
 module windows.win32.ui.textservices;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HANDLE, HRESULT,
-                                                    HWND, LPARAM, POINT, PWSTR, RECT,
-                                                    SIZE, WPARAM;
+public import windows.win32.foundation : BOOL, BSTR, COLORREF, HANDLE, HRESULT, HWND,
+                                         LPARAM, POINT, PWSTR, RECT, SIZE, WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP;
-public import windows.win32.system.com.com : FORMATETC, IDataObject, IEnumGUID, IEnumString,
-                                             IEnumUnknown, IStream, IUnknown;
+public import windows.win32.system.com : FORMATETC, IDataObject, IEnumGUID, IEnumString,
+                                         IEnumUnknown, IStream, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.input.keyboardandmouse : HKL;
 public import windows.win32.ui.windowsandmessaging : HICON, MSG;
@@ -858,6 +857,7 @@ enum uint TKBL_OPT_TRADITIONAL_CHINESE_PHONETIC = 0x00000404U;
 enum : const(wchar)*
 {
     TF_FLOATINGLANGBAR_WNDTITLEW = "TF_FloatingLangBar_WndTitle",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     TF_FLOATINGLANGBAR_WNDTITLEA = "TF_FloatingLangBar_WndTitle",
     TF_FLOATINGLANGBAR_WNDTITLE  = "TF_FloatingLangBar_WndTitle",
 }

@@ -3,10 +3,10 @@
 module windows.win32.system.dataexchange;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HWND, LPARAM, PSTR,
-                                                    PWSTR, WPARAM;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HWND, LPARAM, PSTR,
+                                         PWSTR, WPARAM;
 public import windows.win32.graphics.gdi : HDC, HENHMETAFILE, HMETAFILE;
-public import windows.win32.security.security : SECURITY_QUALITY_OF_SERVICE;
+public import windows.win32.security : SECURITY_QUALITY_OF_SERVICE;
 
 extern(Windows) @nogc nothrow:
 
@@ -122,14 +122,23 @@ enum : uint
 enum : uint
 {
     WM_DDE_FIRST     = 0x000003e0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-initiate
     WM_DDE_INITIATE  = 0x000003e0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-terminate
     WM_DDE_TERMINATE = 0x000003e1U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-advise
     WM_DDE_ADVISE    = 0x000003e2U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-unadvise
     WM_DDE_UNADVISE  = 0x000003e3U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-ack
     WM_DDE_ACK       = 0x000003e4U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-data
     WM_DDE_DATA      = 0x000003e5U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-request
     WM_DDE_REQUEST   = 0x000003e6U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-poke
     WM_DDE_POKE      = 0x000003e7U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-dde-execute
     WM_DDE_EXECUTE   = 0x000003e8U,
     WM_DDE_LAST      = 0x000003e8U,
 }
@@ -305,43 +314,43 @@ struct HDDEDATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddeack
 struct DDEACK
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAck)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield367;
+    ushort _bitfield367;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddeadvise
 struct DDEADVISE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield368;
-    short cfFormat;
+    ushort _bitfield368;
+    short  cfFormat;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddedata
 struct DDEDATA
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield369;
-    short cfFormat;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Value;
+    ushort   _bitfield369;
+    short    cfFormat;
+    ubyte[1] Value; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddepoke
 struct DDEPOKE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield370;
-    short cfFormat;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Value;
+    ushort   _bitfield370;
+    short    cfFormat;
+    ubyte[1] Value; // Flexible array
 }
 
 struct DDELN
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield371;
-    short cfFormat;
+    ushort _bitfield371;
+    short  cfFormat;
 }
 
 struct DDEUP
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield372;
-    short cfFormat;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] rgb;
+    ushort   _bitfield372;
+    short    cfFormat;
+    ubyte[1] rgb; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-hszpair
@@ -429,23 +438,23 @@ struct MONCBSTRUCT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructa
 struct MONHSZSTRUCTA
 {
-    uint   cb;
-    BOOL   fsAction;
-    uint   dwTime;
-    HSZ    hsz;
-    HANDLE hTask;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] str;
+    uint    cb;
+    BOOL    fsAction;
+    uint    dwTime;
+    HSZ     hsz;
+    HANDLE  hTask;
+    CHAR[1] str; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructw
 struct MONHSZSTRUCTW
 {
-    uint   cb;
-    BOOL   fsAction;
-    uint   dwTime;
-    HSZ    hsz;
-    HANDLE hTask;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] str;
+    uint     cb;
+    BOOL     fsAction;
+    uint     dwTime;
+    HSZ      hsz;
+    HANDLE   hTask;
+    wchar[1] str; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monerrstruct

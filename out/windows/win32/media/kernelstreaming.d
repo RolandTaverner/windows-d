@@ -3,12 +3,12 @@
 module windows.win32.media.kernelstreaming;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, DEVPROPKEY, HANDLE, HRESULT,
-                                                    LUID, PWSTR, RECT, SIZE;
-public import windows.win32.media.directshow.directshow : IMediaSample, IMemAllocator, IPin;
+public import windows.win32.foundation : BOOL, CHAR, DEVPROPKEY, HANDLE, HRESULT,
+                                         LUID, PWSTR, RECT, SIZE;
+public import windows.win32.media.directshow : IMediaSample, IMemAllocator, IPin;
 public import windows.win32.media.mediafoundation : AM_MEDIA_TYPE;
-public import windows.win32.media.media : TIMECODE_SAMPLE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.media : TIMECODE_SAMPLE;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -2002,8 +2002,8 @@ enum : uint
 
 enum uint KSPIN_FLAG_PROCESS_IF_ANY_IN_RUN_STATE = 0x01000000U;
 enum uint KSPIN_FLAG_DENY_USERMODE_ACCESS = 0x80000000U;
-enum PWSTR RT_STRING = PWSTR(cast(ushort) 0x0006);
-enum PWSTR RT_RCDATA = PWSTR(cast(ushort) 0x000a);
+enum PWSTR RT_STRING = PWSTR(cast(wchar*) 0x0006);
+enum PWSTR RT_RCDATA = PWSTR(cast(wchar*) 0x000a);
 enum uint WAVE_FORMAT_EXTENSIBLE = 0x0000fffeU;
 
 enum : uint
@@ -2019,13 +2019,13 @@ enum : uint
     KSDSOUND_BUFFER_CTRL_POSITIONNOTIFY = 0x00000010U,
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({333448406, 45158, 17341, 145, 59, 164, 21, 205, 19, 218, 135}, 2))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_KsAudio_PacketSize_Constraints          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({333448406, 45158, 17341, 145, 59, 164, 21, 205, 19, 218, 135}, 2))], [])*/DEVPROPKEY(GUID("13E004D6-B066-43BD-913B-A415CD13DA87"), 2),
-    DEVPKEY_KsAudio_Controller_DeviceInterface_Path = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({333448406, 45158, 17341, 145, 59, 164, 21, 205, 19, 218, 135}, 2))], [])*/DEVPROPKEY(GUID("13E004D6-B066-43BD-913B-A415CD13DA87"), 3),
+    DEVPKEY_KsAudio_PacketSize_Constraints          = DEVPROPKEY(GUID("13E004D6-B066-43BD-913B-A415CD13DA87"), 2),
+    DEVPKEY_KsAudio_Controller_DeviceInterface_Path = DEVPROPKEY(GUID("13E004D6-B066-43BD-913B-A415CD13DA87"), 3),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2483353473, 29073, 16539, 139, 11, 128, 191, 110, 194, 41, 174}, 2))], [])*/DEVPROPKEY DEVPKEY_KsAudio_PacketSize_Constraints2 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2483353473, 29073, 16539, 139, 11, 128, 191, 110, 194, 41, 174}, 2))], [])*/DEVPROPKEY(GUID("9404F781-7191-409B-8B0B-80BF6EC229AE"), 2);
+enum DEVPROPKEY DEVPKEY_KsAudio_PacketSize_Constraints2 = DEVPROPKEY(GUID("9404F781-7191-409B-8B0B-80BF6EC229AE"), 2);
 enum int KSAUDIO_STEREO_SPEAKER_GEOMETRY_HEADPHONE = 0xffffffff;
 
 enum : uint
@@ -3128,9 +3128,9 @@ struct KSPIN_CONNECT
 
 struct KSPIN_PHYSICALCONNECTION
 {
-    uint Size;
-    uint Pin;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] SymbolicLinkName;
+    uint     Size;
+    uint     Pin;
+    wchar[1] SymbolicLinkName; // Flexible array
 }
 
 struct KSALLOCATOR_FRAMING
@@ -3192,11 +3192,11 @@ struct KS_FRAMING_ITEM
 
 struct KSALLOCATOR_FRAMING_EX
 {
-    uint           CountItems;
-    uint           PinFlags;
-    KS_COMPRESSION OutputCompression;
-    uint           PinWeight;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/KS_FRAMING_ITEM[1] FramingItem;
+    uint               CountItems;
+    uint               PinFlags;
+    KS_COMPRESSION     OutputCompression;
+    uint               PinWeight;
+    KS_FRAMING_ITEM[1] FramingItem; // Flexible array
 }
 
 struct KSSTREAMALLOCATOR_STATUS
@@ -3253,7 +3253,7 @@ struct KSSTREAM_UVC_METADATATYPE_TIMESTAMP
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield107;
+            ushort _bitfield107;
         }
         ushort SCRToken;
     }
@@ -3393,7 +3393,7 @@ struct KSAUDIO_PACKETSIZE_CONSTRAINTS
     uint PacketSizeFileAlignment;
     uint Reserved;
     uint NumProcessingModeConstraints;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/KSAUDIO_PACKETSIZE_PROCESSINGMODE_CONSTRAINT[1] ProcessingModeConstraints;
+    KSAUDIO_PACKETSIZE_PROCESSINGMODE_CONSTRAINT[1] ProcessingModeConstraints; // Flexible array
 }
 
 struct KSAUDIO_PACKETSIZE_CONSTRAINTS2
@@ -3402,7 +3402,7 @@ struct KSAUDIO_PACKETSIZE_CONSTRAINTS2
     uint PacketSizeFileAlignment;
     uint MaxPacketSizeInBytes;
     uint NumProcessingModeConstraints;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/KSAUDIO_PACKETSIZE_PROCESSINGMODE_CONSTRAINT[1] ProcessingModeConstraints;
+    KSAUDIO_PACKETSIZE_PROCESSINGMODE_CONSTRAINT[1] ProcessingModeConstraints; // Flexible array
 }
 
 struct KSAUDIO_MICROPHONE_COORDINATES
@@ -3426,7 +3426,7 @@ struct KSAUDIO_MIC_ARRAY_GEOMETRY
     ushort usFrequencyBandLo;
     ushort usFrequencyBandHi;
     ushort usNumberOfMicrophones;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/KSAUDIO_MICROPHONE_COORDINATES[1] KsMicCoord;
+    KSAUDIO_MICROPHONE_COORDINATES[1] KsMicCoord; // Flexible array
 }
 
 struct DS3DVECTOR
@@ -3723,9 +3723,9 @@ struct KSAUDIO_MIX_CAPS
 
 struct KSAUDIO_MIXCAP_TABLE
 {
-    uint InputChannels;
-    uint OutputChannels;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/KSAUDIO_MIX_CAPS[1] Capabilities;
+    uint                InputChannels;
+    uint                OutputChannels;
+    KSAUDIO_MIX_CAPS[1] Capabilities; // Flexible array
 }
 
 struct KSAUDIO_POSITIONEX
@@ -3992,10 +3992,10 @@ struct KSPROPERTY_SPPAL
 
 struct KS_COLCON
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(emph2col)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(patcol)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield2;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(emph2con)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield3;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(patcon)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield4;
+    ubyte _bitfield1;
+    ubyte _bitfield2;
+    ubyte _bitfield3;
+    ubyte _bitfield4;
 }
 
 struct KSPROPERTY_SPHLI
@@ -4020,7 +4020,7 @@ struct KS_DVDCOPY_CHLGKEY
 struct KS_DVDCOPY_BUSKEY
 {
     ubyte[5] BusKey;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Reserved;
+    ubyte[1] Reserved; // Flexible array
 }
 
 struct KS_DVDCOPY_DISCKEY
@@ -4165,7 +4165,7 @@ struct KS_MPEG1VIDEOINFO
     KS_VIDEOINFOHEADER hdr;
     uint               dwStartTimeCode;
     uint               cbSequenceHeader;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bSequenceHeader;
+    ubyte[1]           bSequenceHeader; // Flexible array
 }
 
 struct KS_MPEGVIDEOINFO2
@@ -4176,7 +4176,7 @@ struct KS_MPEGVIDEOINFO2
     uint                dwProfile;
     uint                dwLevel;
     uint                dwFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] bSequenceHeader;
+    uint[1]             bSequenceHeader; // Flexible array
 }
 
 struct KS_H264VIDEOINFO
@@ -5237,10 +5237,10 @@ struct KSCAMERA_EXTENDEDPROP_BACKGROUNDSEGMENTATION_CONFIGCAPS
 struct KSCAMERA_METADATA_BACKGROUNDSEGMENTATIONMASK
 {
     KSCAMERA_METADATA_ITEMHEADER Header;
-    RECT MaskCoverageBoundingBox;
-    SIZE MaskResolution;
-    RECT ForegroundBoundingBox;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] MaskData;
+    RECT     MaskCoverageBoundingBox;
+    SIZE     MaskResolution;
+    RECT     ForegroundBoundingBox;
+    ubyte[1] MaskData; // Flexible array
 }
 
 struct KSCAMERA_EXTENDEDPROP_PROFILE
@@ -5344,7 +5344,7 @@ struct KSPROPERTY_NETWORKCAMERACONTROL_METADATA_INFO
 struct KSPROPERTY_NETWORKCAMERACONTROL_EVENT_INFO
 {
     KSCAMERA_METADATA_ITEMHEADER Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] EventFilter;
+    wchar[1] EventFilter; // Flexible array
 }
 
 struct DEVCAPS
@@ -5606,10 +5606,10 @@ struct KSPROPERTY_VIDEOCOMPRESSION_S1
 
 struct KSDISPLAYCHANGE
 {
-    uint PelsWidth;
-    uint PelsHeight;
-    uint BitsPerPel;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] DeviceID;
+    uint     PelsWidth;
+    uint     PelsHeight;
+    uint     BitsPerPel;
+    wchar[1] DeviceID; // Flexible array
 }
 
 struct KSPROPERTY_VIDEOCONTROL_CAPS_S
@@ -5947,6 +5947,7 @@ HRESULT KsGetMediaType(int Position, AM_MEDIA_TYPE* AmMediaType, HANDLE FilterHa
 
 // Interfaces
 
+@GUID("00000000-0000-0000-0000-000000000000")
 struct GUID_NULL;
 
 @GUID("97e99ba0-bdea-11cf-a5d6-28db04c10000")

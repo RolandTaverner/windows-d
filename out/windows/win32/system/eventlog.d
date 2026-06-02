@@ -3,9 +3,8 @@
 module windows.win32.system.eventlog;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
-                                                    SYSTEMTIME;
-public import windows.win32.security.security : PSID;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR, SYSTEMTIME;
+public import windows.win32.security : PSID;
 
 extern(Windows) @nogc nothrow:
 

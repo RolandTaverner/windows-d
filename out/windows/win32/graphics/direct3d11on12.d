@@ -3,13 +3,13 @@
 module windows.win32.graphics.direct3d11on12;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT;
-public import windows.win32.graphics.direct3d.direct3d : D3D_FEATURE_LEVEL;
+public import windows.win32.foundation : HRESULT;
+public import windows.win32.graphics.direct3d : D3D_FEATURE_LEVEL;
 public import windows.win32.graphics.direct3d11 : ID3D11Device, ID3D11DeviceContext,
                                                   ID3D11Resource;
 public import windows.win32.graphics.direct3d12 : D3D12_RESOURCE_STATES, ID3D12CommandQueue,
                                                   ID3D12Fence;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,8 +3,8 @@
 module windows.win32.storage.filehistory;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HRESULT;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

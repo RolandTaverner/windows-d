@@ -3,10 +3,10 @@
 module windows.win32.graphics.dwm;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, LPARAM, LRESULT,
-                                                    POINT, RECT, SIZE, WPARAM;
+public import windows.win32.foundation : BOOL, HRESULT, HWND, LPARAM, LRESULT, POINT,
+                                         RECT, SIZE, WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP, HRGN;
-public import windows.win32.ui.controls.controls : MARGINS;
+public import windows.win32.ui.controls : MARGINS;
 
 extern(Windows) @nogc nothrow:
 

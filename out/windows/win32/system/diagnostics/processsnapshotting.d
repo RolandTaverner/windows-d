@@ -3,9 +3,9 @@
 module windows.win32.system.diagnostics.processsnapshotting;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PWSTR;
-public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT;
-public import windows.win32.system.memory.memory : MEMORY_BASIC_INFORMATION;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PWSTR;
+public import windows.win32.system.diagnostics.debug_ : CONTEXT;
+public import windows.win32.system.memory : MEMORY_BASIC_INFORMATION;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,8 +3,8 @@
 module windows.win32.system.eventnotificationservice;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com.com : IDispatch;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com : IDispatch;
 
 extern(Windows) @nogc nothrow:
 

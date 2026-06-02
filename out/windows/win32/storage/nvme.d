@@ -3,7 +3,7 @@
 module windows.win32.storage.nvme;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : CHAR;
+public import windows.win32.foundation : CHAR;
 
 extern(Windows) @nogc nothrow:
 
@@ -1336,7 +1336,8 @@ enum : uint
     NVMEOF_TRANSPORT_SAS_MAX_LEN    = 0x00000100U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NVMEOF_DISCOVERY_NQN = "nqn.2014-08.org.nvmexpress.discovery";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* NVMEOF_DISCOVERY_NQN = "nqn.2014-08.org.nvmexpress.discovery";
 enum uint NVMEOF_DISCOVERY_LOG_VERSION_0 = 0x00000000U;
 
 enum : uint
@@ -1364,7 +1365,8 @@ enum : uint
 }
 
 enum uint NVMEOF_DHCHAP_PROTOCOL_ID = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NVMEOF_DHCHAP_PREFIX_V1 = "DHHC-1:";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* NVMEOF_DHCHAP_PREFIX_V1 = "DHHC-1:";
 
 enum : uint
 {
@@ -1382,7 +1384,7 @@ union NVME_CONTROLLER_CAPABILITIES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(61)), FixedArgSig(ElementSig(3))], [])*/ulong _bitfield181;
+        ulong _bitfield181;
     }
     ulong AsUlonglong;
 }
@@ -1392,7 +1394,7 @@ union NVME_VERSION
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MJR)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield182;
+        uint _bitfield182;
     }
     uint AsUlong;
 }
@@ -1402,7 +1404,7 @@ union NVME_CONTROLLER_CONFIGURATION
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(25)), FixedArgSig(ElementSig(7))], [])*/uint _bitfield183;
+        uint _bitfield183;
     }
     uint AsUlong;
 }
@@ -1412,7 +1414,7 @@ union NVME_CONTROLLER_STATUS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield184;
+        uint _bitfield184;
     }
     uint AsUlong;
 }
@@ -1428,7 +1430,7 @@ union NVME_ADMIN_QUEUE_ATTRIBUTES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield185;
+        uint _bitfield185;
     }
     uint AsUlong;
 }
@@ -1438,7 +1440,7 @@ union NVME_ADMIN_SUBMISSION_QUEUE_BASE_ADDRESS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ASQB)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(52))], [])*/ulong _bitfield186;
+        ulong _bitfield186;
     }
     ulong AsUlonglong;
 }
@@ -1448,7 +1450,7 @@ union NVME_ADMIN_COMPLETION_QUEUE_BASE_ADDRESS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ACQB)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(52))], [])*/ulong _bitfield187;
+        ulong _bitfield187;
     }
     ulong AsUlonglong;
 }
@@ -1458,7 +1460,7 @@ union NVME_CONTROLLER_MEMORY_BUFFER_LOCATION
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OFST)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield188;
+        uint _bitfield188;
     }
     uint AsUlong;
 }
@@ -1468,7 +1470,7 @@ union NVME_CONTROLLER_MEMORY_BUFFER_SIZE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SZ)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield189;
+        uint _bitfield189;
     }
     uint AsUlong;
 }
@@ -1492,7 +1494,7 @@ union NVME_SUBMISSION_QUEUE_TAIL_DOORBELL
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield190;
+        uint _bitfield190;
     }
     uint AsUlong;
 }
@@ -1502,7 +1504,7 @@ union NVME_COMPLETION_QUEUE_HEAD_DOORBELL
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield191;
+        uint _bitfield191;
     }
     uint AsUlong;
 }
@@ -1528,7 +1530,7 @@ struct NVME_CONTROLLER_REGISTERS
     NVME_CONTROLLER_READY_TIMEOUTS CRTO;
     uint[933]    Reserved2;
     uint[64]     Reserved3;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Doorbells;
+    uint[1]      Doorbells; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_status
@@ -1536,7 +1538,7 @@ union NVME_COMMAND_STATUS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DNR)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield192;
+        ushort _bitfield192;
     }
     ushort AsUshort;
 }
@@ -1569,7 +1571,7 @@ struct NVME_COMPLETION_ENTRY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_dw0_async_event_request
 struct NVME_COMPLETION_DW0_ASYNC_EVENT_REQUEST
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield193;
+    uint _bitfield193;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_abort
@@ -1577,7 +1579,7 @@ union NVME_CDW10_ABORT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CID)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield194;
+        uint _bitfield194;
     }
     uint AsUlong;
 }
@@ -1587,7 +1589,7 @@ union NVME_CDW10_IDENTIFY
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CNTID)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield195;
+        uint _bitfield195;
     }
     uint AsUlong;
 }
@@ -1602,7 +1604,7 @@ union NVME_CDW11_IDENTIFY
     }
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSI)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield196;
+        uint _bitfield196;
     }
     uint AsUlong;
 }
@@ -1611,7 +1613,7 @@ union NVME_CDW14_IDENTIFY
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield197;
+        uint _bitfield197;
     }
     uint AsUlong;
 }
@@ -1623,7 +1625,7 @@ union NVME_LBA_FORMAT
     {
         ushort MS;
         ubyte  LBADS;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield198;
+        ubyte  _bitfield198;
     }
     uint AsUlong;
 }
@@ -1632,7 +1634,7 @@ union NVM_RESERVATION_CAPABILITIES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield199;
+        ubyte _bitfield199;
     }
     ubyte AsUchar;
 }
@@ -1645,37 +1647,37 @@ struct NVME_IDENTIFY_NAMESPACE_DATA
     ulong               NUSE;
     struct NSFEAT
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield200;
+        ubyte _bitfield200;
     }
     ubyte               NLBAF;
     struct FLBAS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield201;
+        ubyte _bitfield201;
     }
     struct MC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield202;
+        ubyte _bitfield202;
     }
     struct DPC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield203;
+        ubyte _bitfield203;
     }
     struct DPS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield204;
+        ubyte _bitfield204;
     }
     struct NMIC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield205;
+        ubyte _bitfield205;
     }
     NVM_RESERVATION_CAPABILITIES RESCAP;
     struct FPI
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Supported)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield206;
+        ubyte _bitfield206;
     }
     struct DLFEAT
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield207;
+        ubyte _bitfield207;
     }
     ushort              NAWUN;
     ushort              NAWUPF;
@@ -1698,7 +1700,7 @@ struct NVME_IDENTIFY_NAMESPACE_DATA
     ubyte[3]            Reserved3;
     struct NSATTR
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield208;
+        ubyte _bitfield208;
     }
     ushort              NVMSETID;
     ushort              ENDGID;
@@ -1713,18 +1715,18 @@ struct NVME_POWER_STATE_DESC
 {
     ushort   MP;
     ubyte    Reserved0;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield1;
+    ubyte    _bitfield1;
     uint     ENLAT;
     uint     EXLAT;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield2;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved3)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield3;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved4)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield4;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved5)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield5;
+    ubyte    _bitfield2;
+    ubyte    _bitfield3;
+    ubyte    _bitfield4;
+    ubyte    _bitfield5;
     ushort   IDLP;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IPS)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield6;
+    ubyte    _bitfield6;
     ubyte    Reserved7;
     ushort   ACTP;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(APS)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield7;
+    ubyte    _bitfield7;
     ubyte[9] Reserved9;
 }
 
@@ -1740,7 +1742,7 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ubyte[3]    IEEE;
     struct CMIC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield209;
+        ubyte _bitfield209;
     }
     ubyte       MDTS;
     ushort      CNTLID;
@@ -1749,15 +1751,15 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     uint        RTD3E;
     struct OAES
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DiscoveryLogChanged)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield210;
+        uint _bitfield210;
     }
     struct CTRATT
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield211;
+        uint _bitfield211;
     }
     struct RRLS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReadRecoveryLevel15)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield212;
+        ushort _bitfield212;
     }
     ubyte[9]    Reserved0;
     ubyte       CNTRLTYPE;
@@ -1772,27 +1774,27 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ubyte       MEC;
     struct OACS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield213;
+        ushort _bitfield213;
     }
     ubyte       ACL;
     ubyte       AERL;
     struct FRMW
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield214;
+        ubyte _bitfield214;
     }
     struct LPA
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield215;
+        ubyte _bitfield215;
     }
     ubyte       ELPE;
     ubyte       NPSS;
     struct AVSCC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield216;
+        ubyte _bitfield216;
     }
     struct APSTA
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield217;
+        ubyte _bitfield217;
     }
     ushort      WCTEMP;
     ushort      CCTEMP;
@@ -1803,7 +1805,7 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ubyte[16]   UNVMCAP;
     struct RPMBS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(AccessSize)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield218;
+        uint _bitfield218;
     }
     ushort      EDSTT;
     ubyte       DSTO;
@@ -1811,13 +1813,13 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ushort      KAS;
     struct HCTMA
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield219;
+        ushort _bitfield219;
     }
     ushort      MNTMT;
     ushort      MXTMT;
     struct SANICAP
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NODMMAS)), FixedArgSig(ElementSig(30)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield220;
+        uint _bitfield220;
     }
     uint        HMMINDS;
     ushort      HMMAXD;
@@ -1826,7 +1828,7 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ubyte       ANATT;
     struct ANACAP
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SupportNonZeroANAGRPID)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield221;
+        ubyte _bitfield221;
     }
     uint        ANAGRPMAX;
     uint        NANAGRPID;
@@ -1840,45 +1842,45 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ubyte[124]  Reserved4;
     struct SQES
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxEntrySize)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield222;
+        ubyte _bitfield222;
     }
     struct CQES
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxEntrySize)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield223;
+        ubyte _bitfield223;
     }
     ushort      MAXCMD;
     uint        NN;
     struct ONCS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield224;
+        ushort _bitfield224;
     }
     struct FUSES
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield225;
+        ushort _bitfield225;
     }
     struct FNA
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield226;
+        ubyte _bitfield226;
     }
     struct VWC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield227;
+        ubyte _bitfield227;
     }
     ushort      AWUN;
     ushort      AWUPF;
     struct NVSCC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield228;
+        ubyte _bitfield228;
     }
     struct NWPC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield229;
+        ubyte _bitfield229;
     }
     ushort      ACWU;
     ushort      CopyDescFormats;
     struct SGLS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield230;
+        uint _bitfield230;
     }
     uint        MNAN;
     ubyte[16]   MAXDNA;
@@ -1891,12 +1893,12 @@ struct NVME_IDENTIFY_CONTROLLER_DATA
     ushort      ICDOFF;
     struct FCATT
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield231;
+        ubyte _bitfield231;
     }
     ubyte       MSDBD;
     struct OFCS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield232;
+        ushort _bitfield232;
     }
     ubyte       DCTYPE;
     ubyte[241]  Reserved8;
@@ -1914,7 +1916,7 @@ struct NVME_IDENTIFY_NAMESPACE_DESCRIPTOR
     ubyte    NIDT;
     ubyte    NIDL;
     ubyte[2] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] NID;
+    ubyte[1] NID; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_set_attributes_entry
@@ -1935,7 +1937,7 @@ struct NVM_SET_LIST
 {
     ubyte      IdentifierCount;
     ubyte[127] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_SET_ATTRIBUTES_ENTRY[1] Entry;
+    NVME_SET_ATTRIBUTES_ENTRY[1] Entry; // Flexible array
 }
 
 struct NVME_LBA_ZONE_FORMAT
@@ -1949,11 +1951,11 @@ struct NVME_IDENTIFY_SPECIFIC_NAMESPACE_IO_COMMAND_SET
 {
     struct ZOC
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield233;
+        ushort _bitfield233;
     }
     struct OZCS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield234;
+        ushort _bitfield234;
     }
     uint        MAR;
     uint        MOR;
@@ -1991,7 +1993,7 @@ struct NVME_CONTROLLER_LIST
 
 struct NVME_UUID_LIST_ENTRY
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield235;
+    ubyte     _bitfield235;
     ubyte[15] Reserved1;
     ubyte[16] UUID;
 }
@@ -2003,7 +2005,7 @@ struct NVME_UUID_LIST
 
 struct IO_COMMAND_SET_VECTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(61))], [])*/ulong _bitfield236;
+    ulong _bitfield236;
 }
 
 struct NVME_IDENTIFY_IO_COMMAND_SET
@@ -2017,7 +2019,7 @@ struct NVME_LBA_RANGET_TYPE_ENTRY
     ubyte     Type;
     struct Attributes
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield237;
+        ubyte _bitfield237;
     }
     ubyte[14] Reserved0;
     ulong     SLBA;
@@ -2032,7 +2034,7 @@ struct NVME_WCS_DEVICE_RESET_ACTION
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield238;
+            ubyte _bitfield238;
         }
         ubyte AsUCHAR;
     }
@@ -2044,7 +2046,7 @@ struct NVME_WCS_DEVICE_CAPABILITIES
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield239;
+            uint _bitfield239;
         }
         uint AsULONG;
     }
@@ -2251,7 +2253,7 @@ struct LATENCY_MONITOR_FEATURE_STATUS
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield240;
+            ubyte _bitfield240;
         }
         ubyte AsUchar;
     }
@@ -2265,7 +2267,7 @@ struct ACTIVE_LATENCY_CONFIGURATION
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield241;
+            ushort _bitfield241;
         }
         ushort AsUshort;
     }
@@ -2317,13 +2319,13 @@ align (1):
 struct LATENCY_STAMP_UNITS
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield242;
+    ushort _bitfield242;
 }
 
 struct DEBUG_BIT_FIELD
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield243;
+    ushort _bitfield243;
 }
 
 struct NVME_OCP_DEVICE_LATENCY_MONITOR_LOG
@@ -2365,7 +2367,7 @@ align (1):
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield244;
+            ubyte _bitfield244;
         }
         ubyte AsUchar;
     }
@@ -2376,7 +2378,7 @@ align (1):
 
 struct DSSD_POWER_STATE_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ValidDSSDPowerState)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield245;
+    ubyte _bitfield245;
 }
 
 struct NVME_OCP_DEVICE_CAPABILITIES_LOG
@@ -2389,7 +2391,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield246;
+            ushort _bitfield246;
         }
         ushort AsUshort;
     }
@@ -2399,7 +2401,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield247;
+            ushort _bitfield247;
         }
         ushort AsUshort;
     }
@@ -2409,7 +2411,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield248;
+            ushort _bitfield248;
         }
         ushort AsUshort;
     }
@@ -2419,7 +2421,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield249;
+            ushort _bitfield249;
         }
         ushort AsUshort;
     }
@@ -2429,7 +2431,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield250;
+            ushort _bitfield250;
         }
         ushort AsUshort;
     }
@@ -2439,7 +2441,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield251;
+            ushort _bitfield251;
         }
         ushort AsUshort;
     }
@@ -2474,7 +2476,7 @@ align (1):
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield252;
+            ubyte _bitfield252;
         }
         ubyte AsUchar;
     }
@@ -2562,7 +2564,7 @@ union NVME_CDW10_CREATE_IO_QUEUE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QSIZE)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield253;
+        uint _bitfield253;
     }
     uint AsUlong;
 }
@@ -2572,7 +2574,7 @@ union NVME_CDW11_CREATE_IO_CQ
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IV)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield254;
+        uint _bitfield254;
     }
     uint AsUlong;
 }
@@ -2581,7 +2583,7 @@ union NVME_CDW10_DELETE_IO_QUEUE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield255;
+        uint _bitfield255;
     }
     uint AsUlong;
 }
@@ -2591,7 +2593,7 @@ union NVME_CDW11_CREATE_IO_SQ
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CQID)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield256;
+        uint _bitfield256;
     }
     uint AsUlong;
 }
@@ -2601,7 +2603,7 @@ union NVME_CDW10_GET_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(21))], [])*/uint _bitfield257;
+        uint _bitfield257;
     }
     uint AsUlong;
 }
@@ -2611,7 +2613,7 @@ union NVME_CDW10_SET_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SV)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield258;
+        uint _bitfield258;
     }
     uint AsUlong;
 }
@@ -2620,7 +2622,7 @@ struct NVME_GET_FEATURE_TIMESTAMP
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(52)), FixedArgSig(ElementSig(12))], [])*/ulong _bitfield259;
+        ulong _bitfield259;
     }
     ulong AsUlonglong;
 }
@@ -2630,7 +2632,7 @@ union NVME_CDW11_FEATURE_NUMBER_OF_QUEUES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NCQ)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield260;
+        uint _bitfield260;
     }
     uint AsUlong;
 }
@@ -2640,7 +2642,7 @@ union NVME_CDW11_FEATURE_INTERRUPT_COALESCING
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield261;
+        uint _bitfield261;
     }
     uint AsUlong;
 }
@@ -2650,7 +2652,7 @@ union NVME_CDW11_FEATURE_INTERRUPT_VECTOR_CONFIG
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield262;
+        uint _bitfield262;
     }
     uint AsUlong;
 }
@@ -2660,7 +2662,7 @@ union NVME_CDW11_FEATURE_WRITE_ATOMICITY_NORMAL
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield263;
+        uint _bitfield263;
     }
     uint AsUlong;
 }
@@ -2670,7 +2672,7 @@ union NVME_CDW11_FEATURE_NON_OPERATIONAL_POWER_STATE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield264;
+        uint _bitfield264;
     }
     uint AsUlong;
 }
@@ -2680,7 +2682,7 @@ union NVME_CDW11_FEATURE_LBA_RANGE_TYPE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield265;
+        uint _bitfield265;
     }
     uint AsUlong;
 }
@@ -2690,7 +2692,7 @@ union NVME_CDW11_FEATURE_ARBITRATION
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HPW)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield266;
+        uint _bitfield266;
     }
     uint AsUlong;
 }
@@ -2700,7 +2702,7 @@ union NVME_CDW11_FEATURE_VOLATILE_WRITE_CACHE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield267;
+        uint _bitfield267;
     }
     uint AsUlong;
 }
@@ -2710,7 +2712,7 @@ union NVME_CDW11_FEATURE_SUPPORTED_CAPABILITY
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield268;
+        uint _bitfield268;
     }
     uint AsUlong;
 }
@@ -2720,7 +2722,7 @@ union NVME_CDW11_FEATURE_ASYNC_EVENT_CONFIG
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DiscoveryLogPageChange)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield269;
+        uint _bitfield269;
     }
     uint AsUlong;
 }
@@ -2730,7 +2732,7 @@ union NVME_CDW11_FEATURE_POWER_MANAGEMENT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield270;
+        uint _bitfield270;
     }
     uint AsUlong;
 }
@@ -2740,7 +2742,7 @@ union NVME_CDW11_FEATURE_AUTO_POWER_STATE_TRANSITION
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield271;
+        uint _bitfield271;
     }
     uint AsUlong;
 }
@@ -2748,7 +2750,7 @@ union NVME_CDW11_FEATURE_AUTO_POWER_STATE_TRANSITION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_auto_power_state_transition_entry
 struct NVME_AUTO_POWER_STATE_TRANSITION_ENTRY
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IdleTimePriorToTransition)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield272;
+    uint _bitfield272;
     uint Reserved1;
 }
 
@@ -2757,7 +2759,7 @@ union NVME_CDW11_FEATURE_TEMPERATURE_THRESHOLD
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield273;
+        uint _bitfield273;
     }
     uint AsUlong;
 }
@@ -2766,7 +2768,7 @@ union NVME_CDW11_FEATURE_ERROR_RECOVERY
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield274;
+        uint _bitfield274;
     }
     uint AsUlong;
 }
@@ -2776,7 +2778,7 @@ union NVME_CDW11_FEATURE_HOST_MEMORY_BUFFER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield275;
+        uint _bitfield275;
     }
     uint AsUlong;
 }
@@ -2796,7 +2798,7 @@ union NVME_CDW13_FEATURE_HOST_MEMORY_BUFFER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HMDLLA)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield276;
+        uint _bitfield276;
     }
     uint AsUlong;
 }
@@ -2841,7 +2843,7 @@ union NVME_CDW11_FEATURE_IO_COMMAND_SET_PROFILE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield277;
+        uint _bitfield277;
     }
     uint AsUlong;
 }
@@ -2850,7 +2852,7 @@ union NVME_CDW11_FEATURE_GET_HOST_METADATA
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield278;
+        uint _bitfield278;
     }
     uint AsUlong;
 }
@@ -2859,15 +2861,15 @@ union NVME_CDW11_FEATURE_SET_HOST_METADATA
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(17))], [])*/uint _bitfield279;
+        uint _bitfield279;
     }
     uint AsUlong;
 }
 
 struct NVME_HOST_METADATA_ELEMENT_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELEN)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield280;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] EVAL;
+    uint     _bitfield280;
+    ubyte[1] EVAL; // Flexible array
 }
 
 struct NVME_FEATURE_HOST_METADATA_DATA
@@ -2881,7 +2883,7 @@ union NVME_CDW0_FEATURE_ERROR_INJECTION
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield281;
+        uint _bitfield281;
     }
     uint AsUlong;
 }
@@ -2892,7 +2894,7 @@ struct NVME_ERROR_INJECTION_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield282;
+            ubyte _bitfield282;
         }
         ubyte AsUchar;
     }
@@ -2905,7 +2907,7 @@ union NVME_CDW11_FEATURE_CLEAR_FW_UPDATE_HISTORY
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Clear)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield283;
+        uint _bitfield283;
     }
     uint AsUlong;
 }
@@ -2914,7 +2916,7 @@ union NVME_CDW11_FEATURE_READONLY_WRITETHROUGH_MODE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(EOLBehavior)), FixedArgSig(ElementSig(30)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield284;
+        uint _bitfield284;
     }
     uint AsUlong;
 }
@@ -2923,7 +2925,7 @@ union NVME_CDW0_FEATURE_READONLY_WRITETHROUGH_MODE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield285;
+        uint _bitfield285;
     }
     uint AsUlong;
 }
@@ -2932,7 +2934,7 @@ union NVME_CDW11_FEATURE_CLEAR_PCIE_CORRECTABLE_ERROR_COUNTERS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Clear)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield286;
+        uint _bitfield286;
     }
     uint AsUlong;
 }
@@ -2941,7 +2943,7 @@ union NVME_CDW11_FEATURE_ENABLE_IEEE1667_SILO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Enable)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield287;
+        uint _bitfield287;
     }
     uint AsUlong;
 }
@@ -2950,7 +2952,7 @@ union NVME_CDW0_FEATURE_ENABLE_IEEE1667_SILO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield288;
+        uint _bitfield288;
     }
     uint AsUlong;
 }
@@ -2975,14 +2977,14 @@ union NVME_CDW0_FEATURE_DSSD_POWER_STATE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield289;
+        uint _bitfield289;
     }
     uint AsUlong;
 }
 
 struct NVME_CDW11_FEATURE_HOST_IDENTIFIER
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield290;
+    uint _bitfield290;
 }
 
 struct NVME_FEATURE_HOST_IDENTIFIER_DATA
@@ -2992,12 +2994,12 @@ struct NVME_FEATURE_HOST_IDENTIFIER_DATA
 
 struct NVME_CDW11_FEATURE_RESERVATION_PERSISTENCE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield291;
+    uint _bitfield291;
 }
 
 struct NVME_CDW11_FEATURE_RESERVATION_NOTIFICATION_MASK
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield292;
+    uint _bitfield292;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_features
@@ -3060,7 +3062,7 @@ union NVME_CDW10_GET_LOG_PAGE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield293;
+        uint _bitfield293;
     }
     uint AsUlong;
 }
@@ -3069,7 +3071,7 @@ union NVME_CDW10_GET_LOG_PAGE_V121
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NUMDL)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield294;
+        uint _bitfield294;
     }
     uint AsUlong;
 }
@@ -3079,7 +3081,7 @@ union NVME_CDW10_GET_LOG_PAGE_V13
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NUMDL)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield295;
+        uint _bitfield295;
     }
     uint AsUlong;
 }
@@ -3088,7 +3090,7 @@ union NVME_CDW10_GET_LOG_PAGE_V20
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NUMDL)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield296;
+        uint _bitfield296;
     }
     uint AsUlong;
 }
@@ -3098,7 +3100,7 @@ union NVME_CDW11_GET_LOG_PAGE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LogSpecificIdentifier)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield297;
+        uint _bitfield297;
     }
     uint AsUlong;
 }
@@ -3121,7 +3123,7 @@ union NVME_CDW14_GET_LOG_PAGE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CommandSetIdentifier)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield298;
+        uint _bitfield298;
     }
     uint AsUlong;
 }
@@ -3130,19 +3132,19 @@ union NVME_CDW14_GET_LOG_PAGE_V20
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CommandSetIdentifier)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield299;
+        uint _bitfield299;
     }
     uint AsUlong;
 }
 
 struct NVME_LID_SPECIFIC_PERSISTENT_EVENT_LOG
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield300;
+    ushort _bitfield300;
 }
 
 struct NVME_LID_SUPPORTED_AND_EFFECTS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LIDSpecific)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield301;
+    uint _bitfield301;
 }
 
 struct NVME_SUPPORTED_LOG_PAGES_LOG
@@ -3159,7 +3161,7 @@ struct NVME_ERROR_INFO_LOG
     NVME_COMMAND_STATUS Status;
     struct ParameterErrorLocation
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield302;
+        ushort _bitfield302;
     }
     ulong               Lba;
     uint                NameSpace;
@@ -3178,7 +3180,7 @@ struct NVME_HEALTH_INFO_LOG
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield303;
+            ubyte _bitfield303;
         }
         ubyte AsUchar;
     }
@@ -3249,7 +3251,7 @@ struct NVME_FIRMWARE_SLOT_INFO_LOG
 {
     struct AFI
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield304;
+        ubyte _bitfield304;
     }
     ubyte[7]   Reserved0;
     ulong[7]   FRS;
@@ -3274,7 +3276,7 @@ union NVME_COMMAND_EFFECTS_DATA
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield305;
+        uint _bitfield305;
     }
     uint AsUlong;
 }
@@ -3293,12 +3295,12 @@ struct NVME_DEVICE_SELF_TEST_RESULT_DATA
 align (1):
     struct Status
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CodeValue)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield306;
+        ubyte _bitfield306;
     }
     ubyte  SegmentNumber;
     struct ValidDiagnostics
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield307;
+        ubyte _bitfield307;
     }
     ubyte  Reserved;
     ulong  POH;
@@ -3306,7 +3308,7 @@ align (1):
     ulong  FailingLBA;
     struct StatusCodeType
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield308;
+        ubyte _bitfield308;
     }
     ubyte  StatusCode;
     ushort VendorSpecific;
@@ -3317,11 +3319,11 @@ struct NVME_DEVICE_SELF_TEST_LOG
 {
     struct CurrentOperation
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield309;
+        ubyte _bitfield309;
     }
     struct CurrentCompletion
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield310;
+        ubyte _bitfield310;
     }
     ubyte[2] Reserved;
     NVME_DEVICE_SELF_TEST_RESULT_DATA[20] ResultData;
@@ -3380,7 +3382,7 @@ align (1):
 
 struct NVME_FID_SUPPORTED_AND_EFFECTS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield311;
+    uint _bitfield311;
 }
 
 struct NVME_FEATURE_IDENTIFIERS_EFFECTS_LOG
@@ -3390,7 +3392,7 @@ struct NVME_FEATURE_IDENTIFIERS_EFFECTS_LOG
 
 struct NVME_NVME_MI_COMMANDS_SUPPORTED_AND_EFFECTS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield312;
+    uint _bitfield312;
 }
 
 struct NVME_NVME_MI_COMMANDS_SUPPORTED_AND_EFFECTS_LOG
@@ -3412,7 +3414,7 @@ struct NVME_RESERVATION_NOTIFICATION_LOG
 
 struct NVME_SANITIZE_STATUS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield313;
+    ushort _bitfield313;
 }
 
 struct NVME_SANITIZE_STATUS_LOG
@@ -3446,7 +3448,7 @@ union NVME_CDW10_FIRMWARE_ACTIVATE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield314;
+        uint _bitfield314;
     }
     uint AsUlong;
 }
@@ -3456,7 +3458,7 @@ union NVME_CDW10_FORMAT_NVM
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(18))], [])*/uint _bitfield315;
+        uint _bitfield315;
     }
     uint AsUlong;
 }
@@ -3465,7 +3467,7 @@ union NVME_CDW10_SANITIZE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield316;
+        uint _bitfield316;
     }
     uint AsUlong;
 }
@@ -3481,14 +3483,14 @@ union NVME_CDW11_SANITIZE
 
 struct NVME_CDW0_RESERVATION_PERSISTENCE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield317;
+    uint _bitfield317;
 }
 
 union NVME_CDW10_RESERVATION_ACQUIRE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield318;
+        uint _bitfield318;
     }
     uint AsUlong;
 }
@@ -3503,7 +3505,7 @@ union NVME_CDW10_RESERVATION_REGISTER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CPTPL)), FixedArgSig(ElementSig(30)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield319;
+        uint _bitfield319;
     }
     uint AsUlong;
 }
@@ -3518,7 +3520,7 @@ union NVME_CDW10_RESERVATION_RELEASE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield320;
+        uint _bitfield320;
     }
     uint AsUlong;
 }
@@ -3541,7 +3543,7 @@ union NVME_CDW11_RESERVATION_REPORT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield321;
+        uint _bitfield321;
     }
     uint AsUlong;
 }
@@ -3562,7 +3564,7 @@ struct NVME_REGISTERED_CONTROLLER_DATA
     ushort   CNTLID;
     struct RCSTS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield322;
+        ubyte _bitfield322;
     }
     ubyte[5] Reserved;
     ubyte[8] HOSTID;
@@ -3572,7 +3574,7 @@ struct NVME_REGISTERED_CONTROLLER_DATA
 struct NVME_RESERVATION_REPORT_STATUS_DATA_STRUCTURE
 {
     NVME_RESERVATION_REPORT_STATUS_HEADER Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_REGISTERED_CONTROLLER_DATA[1] RegisteredControllersData;
+    NVME_REGISTERED_CONTROLLER_DATA[1] RegisteredControllersData; // Flexible array
 }
 
 struct NVME_REGISTERED_CONTROLLER_EXTENDED_DATA
@@ -3580,7 +3582,7 @@ struct NVME_REGISTERED_CONTROLLER_EXTENDED_DATA
     ushort    CNTLID;
     struct RCSTS
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield323;
+        ubyte _bitfield323;
     }
     ubyte[5]  Reserved;
     ulong     RKEY;
@@ -3592,7 +3594,7 @@ struct NVME_RESERVATION_REPORT_STATUS_EXTENDED_DATA_STRUCTURE
 {
     NVME_RESERVATION_REPORT_STATUS_HEADER Header;
     ubyte[40] Reserved1;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_REGISTERED_CONTROLLER_EXTENDED_DATA[1] RegisteredControllersExtendedData;
+    NVME_REGISTERED_CONTROLLER_EXTENDED_DATA[1] RegisteredControllersExtendedData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_directive_receive
@@ -3606,7 +3608,7 @@ union NVME_CDW11_DIRECTIVE_RECEIVE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DSPEC)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield324;
+        uint _bitfield324;
     }
     uint AsUlong;
 }
@@ -3622,7 +3624,7 @@ union NVME_CDW11_DIRECTIVE_SEND
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DSPEC)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield325;
+        uint _bitfield325;
     }
     uint AsUlong;
 }
@@ -3630,7 +3632,7 @@ union NVME_CDW11_DIRECTIVE_SEND
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_identify_return_parameters_descriptor
 struct NVME_DIRECTIVE_IDENTIFY_RETURN_PARAMETERS_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield326;
+    ubyte     _bitfield326;
     ubyte[31] Reserved1;
 }
 
@@ -3646,7 +3648,7 @@ union NVME_CDW12_DIRECTIVE_SEND_IDENTIFY_ENABLE_DIRECTIVE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield327;
+        uint _bitfield327;
     }
     uint AsUlong;
 }
@@ -3677,7 +3679,7 @@ union NVME_CDW12_DIRECTIVE_RECEIVE_STREAMS_ALLOCATE_RESOURCES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield328;
+        uint _bitfield328;
     }
     uint AsUlong;
 }
@@ -3687,7 +3689,7 @@ struct NVME_COMPLETION_DW0_DIRECTIVE_RECEIVE_STREAMS_ALLOCATE_RESOURCES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield329;
+        uint _bitfield329;
     }
     uint AsUlong;
 }
@@ -3711,7 +3713,7 @@ union NVME_CDW10_SECURITY_SEND_RECEIVE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SECP)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield330;
+        uint _bitfield330;
     }
     uint AsUlong;
 }
@@ -3733,7 +3735,7 @@ union NVME_CDW12_READ_WRITE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LR)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield331;
+        uint _bitfield331;
     }
     uint AsUlong;
 }
@@ -3745,7 +3747,7 @@ union NVME_CDW13_READ_WRITE
     {
         struct DSM
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Incompressible)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield332;
+            ubyte _bitfield332;
         }
         ubyte  Reserved;
         ushort DSPEC;
@@ -3758,7 +3760,7 @@ union NVME_CDW15_READ_WRITE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELBATM)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield333;
+        uint _bitfield333;
     }
     uint AsUlong;
 }
@@ -3768,7 +3770,7 @@ union NVME_CONTEXT_ATTRIBUTES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CommandAccessSize)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield334;
+        uint _bitfield334;
     }
     uint AsUlong;
 }
@@ -3786,7 +3788,7 @@ union NVME_CDW10_DATASET_MANAGEMENT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield335;
+        uint _bitfield335;
     }
     uint AsUlong;
 }
@@ -3796,7 +3798,7 @@ union NVME_CDW11_DATASET_MANAGEMENT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield336;
+        uint _bitfield336;
     }
     uint AsUlong;
 }
@@ -3805,7 +3807,7 @@ union NVME_CDW12_VERIFYCOMMAND
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LR)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield337;
+        uint _bitfield337;
     }
     uint AsUlong;
 }
@@ -3814,7 +3816,7 @@ union NVME_CDW15_VERIFY_COMMAND
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELBATM)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield338;
+        uint _bitfield338;
     }
     uint AsUlong;
 }
@@ -3823,15 +3825,15 @@ struct NVME_ZONE_DESCRIPTOR
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield339;
+        ubyte _bitfield339;
     }
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ZS)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield340;
+        ubyte _bitfield340;
     }
     struct ZA
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ZDEV)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield341;
+        ubyte _bitfield341;
     }
     ubyte[5]  Reserved3;
     ulong     ZCAP;
@@ -3849,7 +3851,7 @@ union NVME_CDW13_ZONE_MANAGEMENT_SEND
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(9)), FixedArgSig(ElementSig(23))], [])*/uint _bitfield342;
+        uint _bitfield342;
     }
     uint AsUlong;
 }
@@ -3858,7 +3860,7 @@ struct NVME_REPORT_ZONE_INFO
 {
     ulong    ZoneCount;
     ulong[7] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_ZONE_DESCRIPTOR[1] ZoneDescriptor;
+    NVME_ZONE_DESCRIPTOR[1] ZoneDescriptor; // Flexible array
 }
 
 struct NVME_ZONE_DESCRIPTOR_EXTENSION
@@ -3869,14 +3871,14 @@ struct NVME_ZONE_DESCRIPTOR_EXTENSION
 struct NVME_ZONE_EXTENDED_REPORT_ZONE_DESC
 {
     NVME_ZONE_DESCRIPTOR ZoneDescriptor;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_ZONE_DESCRIPTOR_EXTENSION[1] ZoneDescriptorExtension;
+    NVME_ZONE_DESCRIPTOR_EXTENSION[1] ZoneDescriptorExtension; // Flexible array
 }
 
 struct NVME_EXTENDED_REPORT_ZONE_INFO
 {
     ulong    ZoneCount;
     ulong[7] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_ZONE_EXTENDED_REPORT_ZONE_DESC[1] Desc;
+    NVME_ZONE_EXTENDED_REPORT_ZONE_DESC[1] Desc; // Flexible array
 }
 
 struct NVME_CDW10_ZONE_MANAGEMENT_RECEIVE
@@ -3888,7 +3890,7 @@ union NVME_CDW13_ZONE_MANAGEMENT_RECEIVE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield343;
+        uint _bitfield343;
     }
     uint AsUlong;
 }
@@ -3902,7 +3904,7 @@ union NVME_CDW12_ZONE_APPEND
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LR)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield344;
+        uint _bitfield344;
     }
     uint AsUlong;
 }
@@ -3911,7 +3913,7 @@ union NVME_CDW15_ZONE_APPEND
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LBATM)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield345;
+        uint _bitfield345;
     }
     uint AsUlong;
 }
@@ -3920,7 +3922,7 @@ union NVME_CDW10_DEVICE_SELF_TEST
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield346;
+        uint _bitfield346;
     }
     uint AsUlong;
 }
@@ -3929,7 +3931,7 @@ union NVME_CDW10_DISCOVERY_INFO_MGMT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield347;
+        uint _bitfield347;
     }
     uint AsUlong;
 }
@@ -3939,7 +3941,7 @@ union NVME_COMMAND_DWORD0
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CID)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield348;
+        uint _bitfield348;
     }
     uint AsUlong;
 }
@@ -3949,7 +3951,7 @@ union NVME_PRP_ENTRY
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PBAO)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(62))], [])*/ulong _bitfield349;
+        ulong _bitfield349;
     }
     ulong AsUlonglong;
 }
@@ -4267,7 +4269,7 @@ struct NVME_SGL_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield350;
+            ubyte _bitfield350;
         }
         ubyte AsUchar;
     }
@@ -4282,7 +4284,7 @@ struct NVME_SGL_DATABLOCK_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield351;
+            ubyte _bitfield351;
         }
         ubyte AsUchar;
     }
@@ -4297,7 +4299,7 @@ struct NVME_SGL_BITBUCKET_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield352;
+            ubyte _bitfield352;
         }
         ubyte AsUchar;
     }
@@ -4312,7 +4314,7 @@ struct NVME_SGL_SEGMENT_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield353;
+            ubyte _bitfield353;
         }
         ubyte AsUchar;
     }
@@ -4327,7 +4329,7 @@ struct NVME_SGL_LASTSEG_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield354;
+            ubyte _bitfield354;
         }
         ubyte AsUchar;
     }
@@ -4342,7 +4344,7 @@ struct NVME_SGL_KEYDATABLOCK_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield355;
+            ubyte _bitfield355;
         }
         ubyte AsUchar;
     }
@@ -4357,7 +4359,7 @@ struct NVME_SGL_TRANSPORTDATA_DESC
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield356;
+            ubyte _bitfield356;
         }
         ubyte AsUchar;
     }
@@ -4397,7 +4399,7 @@ struct NVMEOF_CONNECT_COMMAND
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield357;
+            ubyte _bitfield357;
         }
         ubyte AsUchar;
     }
@@ -4427,7 +4429,7 @@ struct NVMEOF_CONNECT_RESPONSE
             {
                 struct
                 {
-                    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield358;
+                    ushort _bitfield358;
                 }
                 ushort AsUshort;
             }
@@ -4471,7 +4473,7 @@ struct NVMEOF_PROPERTY_GET_COMMAND
     ubyte[35] Reserved1;
     struct ATTRIB
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield359;
+        ubyte _bitfield359;
     }
     ubyte[3]  Reserved2;
     uint      OFST;
@@ -4504,7 +4506,7 @@ struct NVMEOF_PROPERTY_SET_COMMAND
     ubyte[35] Reserved1;
     struct ATTRIB
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield360;
+        ubyte _bitfield360;
     }
     ubyte[3]  Reserved2;
     uint      OFST;
@@ -4588,7 +4590,7 @@ struct NVME_DISCOVERY_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield361;
+            ubyte _bitfield361;
         }
         ubyte AsUchar;
     }
@@ -4599,7 +4601,7 @@ struct NVME_DISCOVERY_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield362;
+            ushort _bitfield362;
         }
         ushort AsUshort;
     }
@@ -4620,7 +4622,7 @@ struct NVME_EXTENDED_DISCOVERY_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield363;
+            ubyte _bitfield363;
         }
         ubyte AsUchar;
     }
@@ -4631,7 +4633,7 @@ struct NVME_EXTENDED_DISCOVERY_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield364;
+            ushort _bitfield364;
         }
         ushort AsUshort;
     }
@@ -4648,9 +4650,9 @@ struct NVME_EXTENDED_DISCOVERY_ENTRY
 
 struct NVME_EXTENDED_ATTR
 {
-    ushort EXATTYPE;
-    ushort EXATLEN;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] EXATVAL;
+    ushort   EXATTYPE;
+    ushort   EXATLEN;
+    ubyte[1] EXATVAL; // Flexible array
 }
 
 struct NVME_DISCOVERY_HEADER
@@ -4662,7 +4664,7 @@ struct NVME_DISCOVERY_HEADER
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield365;
+            ubyte _bitfield365;
         }
         ubyte AsUchar;
     }
@@ -4684,7 +4686,7 @@ struct NVME_DISCOVERY_INFO_MGMT_HEADER
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/ushort _bitfield366;
+            ushort _bitfield366;
         }
         ushort AsUshort;
     }

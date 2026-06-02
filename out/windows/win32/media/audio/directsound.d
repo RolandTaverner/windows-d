@@ -3,11 +3,10 @@
 module windows.win32.media.audio.directsound;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, PSTR,
-                                                    PWSTR;
-public import windows.win32.graphics.direct3d.direct3d : D3DVECTOR;
-public import windows.win32.media.audio.audio : WAVEFORMATEX;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, PSTR, PWSTR;
+public import windows.win32.graphics.direct3d : D3DVECTOR;
+public import windows.win32.media.audio : WAVEFORMATEX;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

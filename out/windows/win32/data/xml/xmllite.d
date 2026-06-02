@@ -3,8 +3,8 @@
 module windows.win32.data.xml.xmllite;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.system.com.com : IMalloc, IUnknown;
+public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.system.com : IMalloc, IUnknown;
 
 extern(Windows) @nogc nothrow:
 

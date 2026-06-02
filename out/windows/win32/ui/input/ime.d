@@ -3,11 +3,10 @@
 module windows.win32.ui.input.ime;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
-                                                    LRESULT, POINT, PSTR, PWSTR, RECT,
-                                                    WPARAM;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
+                                         LRESULT, POINT, PSTR, PWSTR, RECT, WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP, LOGFONTA, LOGFONTW;
-public import windows.win32.system.com.com : IClassFactory, IUnknown, SAFEARRAY;
+public import windows.win32.system.com : IClassFactory, IUnknown, SAFEARRAY;
 public import windows.win32.ui.input.keyboardandmouse : HKL;
 public import windows.win32.ui.windowsandmessaging : HICON, MSG;
 
@@ -475,16 +474,26 @@ enum : int
 
 enum uint STYLE_DESCRIPTION_SIZE = 0x00000020U;
 enum uint IMEMENUITEM_STRING_SIZE = 0x00000050U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcandidatepos))], [])*/uint IMC_GETCANDIDATEPOS = 0x00000007U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcandidatepos))], [])*/uint IMC_SETCANDIDATEPOS = 0x00000008U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionfont))], [])*/uint IMC_GETCOMPOSITIONFONT = 0x00000009U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionfont))], [])*/uint IMC_SETCOMPOSITIONFONT = 0x0000000aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionwindow))], [])*/uint IMC_GETCOMPOSITIONWINDOW = 0x0000000bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionwindow))], [])*/uint IMC_SETCOMPOSITIONWINDOW = 0x0000000cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getstatuswindowpos))], [])*/uint IMC_GETSTATUSWINDOWPOS = 0x0000000fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setstatuswindowpos))], [])*/uint IMC_SETSTATUSWINDOWPOS = 0x00000010U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-closestatuswindow))], [])*/uint IMC_CLOSESTATUSWINDOW = 0x00000021U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-openstatuswindow))], [])*/uint IMC_OPENSTATUSWINDOW = 0x00000022U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-getcandidatepos
+enum uint IMC_GETCANDIDATEPOS = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-setcandidatepos
+enum uint IMC_SETCANDIDATEPOS = 0x00000008U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionfont
+enum uint IMC_GETCOMPOSITIONFONT = 0x00000009U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionfont
+enum uint IMC_SETCOMPOSITIONFONT = 0x0000000aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionwindow
+enum uint IMC_GETCOMPOSITIONWINDOW = 0x0000000bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionwindow
+enum uint IMC_SETCOMPOSITIONWINDOW = 0x0000000cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-getstatuswindowpos
+enum uint IMC_GETSTATUSWINDOWPOS = 0x0000000fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-setstatuswindowpos
+enum uint IMC_SETSTATUSWINDOWPOS = 0x00000010U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-closestatuswindow
+enum uint IMC_CLOSESTATUSWINDOW = 0x00000021U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imc-openstatuswindow
+enum uint IMC_OPENSTATUSWINDOW = 0x00000022U;
 enum uint NI_FINALIZECONVERSIONRESULT = 0x00000014U;
 
 enum : uint
@@ -635,32 +644,52 @@ enum : uint
     IME_CAND_STROKE  = 0x00000005U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closestatuswindow))], [])*/uint IMN_CLOSESTATUSWINDOW = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-openstatuswindow))], [])*/uint IMN_OPENSTATUSWINDOW = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-changecandidate))], [])*/uint IMN_CHANGECANDIDATE = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closecandidate))], [])*/uint IMN_CLOSECANDIDATE = 0x00000004U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-opencandidate))], [])*/uint IMN_OPENCANDIDATE = 0x00000005U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setconversionmode))], [])*/uint IMN_SETCONVERSIONMODE = 0x00000006U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setsentencemode))], [])*/uint IMN_SETSENTENCEMODE = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-closestatuswindow
+enum uint IMN_CLOSESTATUSWINDOW = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-openstatuswindow
+enum uint IMN_OPENSTATUSWINDOW = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-changecandidate
+enum uint IMN_CHANGECANDIDATE = 0x00000003U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-closecandidate
+enum uint IMN_CLOSECANDIDATE = 0x00000004U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-opencandidate
+enum uint IMN_OPENCANDIDATE = 0x00000005U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setconversionmode
+enum uint IMN_SETCONVERSIONMODE = 0x00000006U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setsentencemode
+enum uint IMN_SETSENTENCEMODE = 0x00000007U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setopenstatus))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setopenstatus
     IMN_SETOPENSTATUS        = 0x00000008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setcandidatepos
     IMN_SETCANDIDATEPOS      = 0x00000009U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setcompositionfont
     IMN_SETCOMPOSITIONFONT   = 0x0000000aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setcompositionwindow
     IMN_SETCOMPOSITIONWINDOW = 0x0000000bU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setstatuswindowpos))], [])*/uint IMN_SETSTATUSWINDOWPOS = 0x0000000cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-guideline))], [])*/uint IMN_GUIDELINE = 0x0000000dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-setstatuswindowpos
+enum uint IMN_SETSTATUSWINDOWPOS = 0x0000000cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imn-guideline
+enum uint IMN_GUIDELINE = 0x0000000dU;
 enum uint IMN_PRIVATE = 0x0000000eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionwindow))], [])*/uint IMR_COMPOSITIONWINDOW = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-candidatewindow))], [])*/uint IMR_CANDIDATEWINDOW = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionfont))], [])*/uint IMR_COMPOSITIONFONT = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-reconvertstring))], [])*/uint IMR_RECONVERTSTRING = 0x00000004U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-confirmreconvertstring))], [])*/uint IMR_CONFIRMRECONVERTSTRING = 0x00000005U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-querycharposition))], [])*/uint IMR_QUERYCHARPOSITION = 0x00000006U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-documentfeed))], [])*/uint IMR_DOCUMENTFEED = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-compositionwindow
+enum uint IMR_COMPOSITIONWINDOW = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-candidatewindow
+enum uint IMR_CANDIDATEWINDOW = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-compositionfont
+enum uint IMR_COMPOSITIONFONT = 0x00000003U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-reconvertstring
+enum uint IMR_RECONVERTSTRING = 0x00000004U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-confirmreconvertstring
+enum uint IMR_CONFIRMRECONVERTSTRING = 0x00000005U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-querycharposition
+enum uint IMR_QUERYCHARPOSITION = 0x00000006U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/imr-documentfeed
+enum uint IMR_DOCUMENTFEED = 0x00000007U;
 
 enum : int
 {
@@ -1324,13 +1353,13 @@ struct CANDIDATEFORM
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidatelist
 struct CANDIDATELIST
 {
-    uint dwSize;
-    uint dwStyle;
-    uint dwCount;
-    uint dwSelection;
-    uint dwPageStart;
-    uint dwPageSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwOffset;
+    uint    dwSize;
+    uint    dwStyle;
+    uint    dwCount;
+    uint    dwSelection;
+    uint    dwPageStart;
+    uint    dwPageSize;
+    uint[1] dwOffset; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerworda
@@ -1443,7 +1472,7 @@ align (1):
     }
     uint   WDD_nReserve1;
     ushort nPos;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous3)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(10))], [])*/ushort _bitfield542;
+    ushort _bitfield542;
     void*  pReserved;
 }
 
@@ -1658,8 +1687,8 @@ struct TRANSMSG
 
 struct TRANSMSGLIST
 {
-    uint uMsgCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRANSMSG[1] TransMsg;
+    uint        uMsgCount;
+    TRANSMSG[1] TransMsg; // Flexible array
 }
 
 struct CANDIDATEINFO
@@ -1722,8 +1751,8 @@ struct APPLETIDLIST
 
 struct IMESTRINGCANDIDATE
 {
-    uint uCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] lpwstr;
+    uint     uCount;
+    PWSTR[1] lpwstr; // Flexible array
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -1736,8 +1765,8 @@ struct IMEITEM
 
 struct IMEITEMCANDIDATE
 {
-    uint uCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IMEITEM[1] imeItem;
+    uint       uCount;
+    IMEITEM[1] imeItem; // Flexible array
 }
 
 struct IMESTRINGINFO
@@ -1748,9 +1777,9 @@ struct IMESTRINGINFO
 
 struct IMEFAREASTINFO
 {
-    uint dwSize;
-    uint dwType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwData;
+    uint    dwSize;
+    uint    dwType;
+    uint[1] dwData; // Flexible array
 }
 
 struct IMESTRINGCANDIDATEINFO
@@ -1760,7 +1789,7 @@ struct IMESTRINGCANDIDATEINFO
     uint            fInfoMask;
     int             iSelIndex;
     uint            uCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] lpwstr;
+    PWSTR[1]        lpwstr; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imecompositionstringinfo

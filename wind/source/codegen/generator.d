@@ -23,6 +23,8 @@ import climetadata.mdcollection.entitytypes;
 import climetadata.mdcollection.sigtnature;
 import climetadata.utils.memcast;
 import codegen.attributes.common;
+import codegen.attributes.constant;
+import codegen.attributes.flexiblearray;
 import codegen.attributes.guid;
 
 enum maxLineWidth = 120;
@@ -69,7 +71,7 @@ public struct Generator
             }
             else
             {
-                auto aa = [child : true];            
+                auto aa = [child : true];
                 nestedMap[parent] = aa;
             }
         }
@@ -90,21 +92,13 @@ public struct Generator
             }
         }
 
-        // foreach (parent, children; nestedMap) {
-        //     writeln(parent.getTypeName());
-        //     foreach(child, _; children)
-        //     {
-        //         writeln("         ", child.getTypeName());
-        //     }
-        // }
-
         foreach(namespace; namespaces)
         {
             auto rb = new RedBlackTree!string();
             dependencies[namespace] = rb;
 
             foreach(type; getTypeDefs(db, namespace))
-            {            
+            {
                 buildDependencies(type, namespace, rb);
             }
         }
@@ -116,6 +110,8 @@ public struct Generator
 
         foreach(namespace; namespaces)
         {
+            //if (!namespace.startsWith("Windows.Win32.System.WinRT")) continue;
+
             string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
             string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
             mkdirRecurse(dirName(path));
@@ -143,9 +139,9 @@ public struct Generator
         foreach(field; type.getFieldList())
         {
             auto dep = fullnameof(field.getSignature().typeSig.type);
-            if (dep.length && dep[0] != '.' && !dep.startsWith(namespace ~ '.'))
+            if (dep.fullName.length && dep.fullName[0] != '.' && dep.namespace != namespace)
             {
-                rb.insert(dep);
+                rb.insert(dep.fullName);
             }
         }
 
@@ -162,42 +158,43 @@ public struct Generator
             auto sig = meth.getSignature();
 
             auto dep = fullnameof(sig.retSig.typeSig.type);
-            if (dep.length && dep[0] != '.' && !dep.startsWith(namespace ~ '.'))
+            if (dep.fullName.length && dep.fullName[0] != '.' && dep.namespace != namespace)
             {
-                rb.insert(dep);
+                rb.insert(dep.fullName);
             }
 
             foreach(par; sig.params)
             {
                 dep = fullnameof(par.typeSig.type);
-                if (dep.length && dep[0] != '.' && !dep.startsWith(namespace ~ '.'))
+                if (dep.fullName.length && dep.fullName[0] != '.' && dep.namespace != namespace)
                 {
-                    rb.insert(dep);
+                    rb.insert(dep.fullName);
                 }
             }
         }
 
         foreach (interf; type.getInterfaces())
         {
-            auto dep = fullnameof(interf.getInterface());
-            if (namespace == "Windows.Win32.DirectShow" && dep == "Windows.Win32.Mmc.IComponent")
+            FullTypeName dep = fullnameof(interf.getInterface());
+
+            if (namespace == "Windows.Win32.DirectShow" && dep.fullName == "Windows.Win32.Mmc.IComponent")
             {
-                dep = "Windows.Win32.DirectShow.IComponent";
+                dep = FullTypeName("IComponent", "Windows.Win32.DirectShow", "Windows.Win32.DirectShow.IComponent");
             }
-            else if (namespace == "Windows.Win32.Controls" && dep == "Windows.Win32.Mmc.IImageList")
+            else if (namespace == "Windows.Win32.Controls" && dep.fullName == "Windows.Win32.Mmc.IImageList")
             {
-                dep = "Windows.Win32.Controls.IImageList";
+                dep = FullTypeName("IImageList", "Windows.Win32.Controls", "Windows.Win32.Controls.IImageList");
             }
-            else if (namespace == "Windows.Win32.Mmc" && dep == "Windows.Win32.DirectShow.IComponent")
+            else if (namespace == "Windows.Win32.Mmc" && dep.fullName == "Windows.Win32.DirectShow.IComponent")
             {
-                dep = "Windows.Win32.Mmc.IComponent";
+                dep = FullTypeName("IComponent", "Windows.Win32.Mmc", "Windows.Win32.Mmc.IComponent");
             }
 
-            if (dep.length && dep[0] != '.' && !dep.startsWith(namespace))
+            if (dep.fullName.length && dep.fullName[0] != '.' && dep.namespace != namespace)
             {
-                rb.insert(dep);   
+                rb.insert(dep.fullName);   
             }
-        }   
+        }
 
         if (type.isValueType())
         {
@@ -242,15 +239,16 @@ public struct Generator
         ptrdiff_t w, v;
         foreach(i; imports)
         {
-            atLeastOne = true;
             auto n = getNamespace(i);
             auto importName = getName(i);
-            
+
             // Guid implemented as GUID at windows.core
             if (n == "System" && importName == "Guid")
             {
                 continue;
             }
+
+            atLeastOne = true;
 
             if (n != lastNamespace)
             {
@@ -392,7 +390,7 @@ public struct Generator
                         if (!ct.isNull)
                         {
                             f.writef(" = ");
-                            dumpConstant(f, ct.get.value);
+                            dumpConstant(f, ct.get.value, true);
                         }
                     }
                     f.writeln(",");
@@ -402,7 +400,7 @@ public struct Generator
         }
     }
 
-    private void dumpConstant(scope ref std.stdio.File f, ConstantEntity.ConstantValue v)
+    private void dumpConstant(scope ref std.stdio.File f, ConstantEntity.ConstantValue v, bool addCast)
     {
         import std.math.algebraic : abs;
         import std.math.traits : signbit, isInfinity, isNaN;
@@ -421,9 +419,15 @@ public struct Generator
         else if (auto i = v.peek!uint)
             f.writef("0x%08xU", *i);
         else if (auto i = v.peek!short)
-            f.writef("cast(short) 0x%04x", *i);
+        {
+            if (addCast) f.write("cast(short) ");
+            f.writef("0x%04x", *i);
+        }
         else if (auto i = v.peek!ushort)
-            f.writef("cast(ushort) 0x%04x", *i);
+        {
+            if (addCast) f.write("cast(ushort) ");
+            f.writef("0x%04x", *i);
+        }
         else if (auto i = v.peek!byte)
             f.writef("0x%02x", *i);
         else if (auto i = v.peek!ubyte)
@@ -528,18 +532,37 @@ public struct Generator
         {
             isStruct = true;
         }
-        auto isPropKey = typeText.endsWith("/PROPERTYKEY") || typeText.endsWith("/DEVPROPKEY"); // TODO: get type name instead of typeText here, getFieldTypeText() change may break this
-        auto isSidIdAuth = typeText.endsWith("/SID_IDENTIFIER_AUTHORITY");
-        auto isHandle = typeText.endsWith("/SID_IDENTIFIER_AUTHORITY");
+        auto isPropKey = typeText == "PROPERTYKEY" || typeText == "DEVPROPKEY";
+        auto isSidIdAuth = typeText == "SID_IDENTIFIER_AUTHORITY";
+        KnownConstantType constKnownType = KnownConstantType.UNKNOWN;
+        if (isPropKey)
+        {
+            constKnownType = KnownConstantType.PROPERTYKEY;
+        }
+        if (isSidIdAuth)
+        {
+            constKnownType = KnownConstantType.SID_IDENTIFIER_AUTHORITY;
+        }
+        auto needPVoidCast = typeText == "HANDLE" || typeText == "HKEY" || typeText == "BCRYPT_ALG_HANDLE" 
+            || typeText == "CONDITION_VARIABLE" || typeText == "SRWLOCK" || typeText == "INIT_ONCE" 
+            || typeText == "DPI_AWARENESS_CONTEXT" || typeText == "HBITMAP" || typeText == "HWND";
+        auto isPSTR = typeText == "PSTR";
+        auto isPWSTR = typeText == "PWSTR";
 
         if (flds.length == 1)
         {
+            if (!wasOne)
+                f.writeln;
+
             auto fx = flds[0];
             auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
             auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
-
-            if (!wasOne)
-                f.writeln;
+            auto constAttribute = ConstantAttribute(guidAttribute.getUnhandledAttributes(), constKnownType);
+            foreach(ca; constAttribute.getUnhandledAttributes())
+            {
+                f.writefln("//CONST ATTR: %s : %s", ca.name(), ca.value());
+            }
+            f.dumpDocAttr(fieldAttrs);
             f.write("enum ");
             f.write(typeText);   
             f.write(" ");
@@ -562,30 +585,30 @@ public struct Generator
             if (fx.getFlags().isLiteral())
             {
                 assert(!fx.getConstant().isNull, "isLiteral() field must has not null Constant");
-                dumpConstant(f, fx.getConstant().get.value);
+                if (needPVoidCast)
+                    f.write("cast(void*) ");
+                else if (isPSTR)
+                    f.write("cast(ubyte*) ");
+                else if (isPWSTR)
+                    f.write("cast(wchar*) ");
+
+                dumpConstant(f, fx.getConstant().get.value, isStruct && !(needPVoidCast || isPSTR || isPWSTR));
             }
             else
             {
-                if (!guidAttribute.getGuid().empty)
+                if (!guidAttribute.getGuid().isNull)
                 {
-                    f.writef("\"%s\"", guidAttribute.getGuid());
+                    f.writef("\"%s\"", guidAttribute.getGuid().get);
+                }
+                else if (constAttribute.getConstantValue().length != 0)
+                {
+                    if (needPVoidCast)
+                        f.write("cast(void*) ");
+                    f.write(constAttribute.getConstantValue());
                 }
                 else
                 {
-                    foreach(ca; fx.getCustomAttributes())
-                    {
-                        if (ca.name() == "ConstantAttribute")
-                        {
-                            auto constValue = readConstantValue(ca, isPropKey, isSidIdAuth);
-                            f.write(constValue);
-                            break;
-                        }
-                        else
-                        {
-                            // TODO: throw
-                            writeln("ERROR ", fx.getName(), "no GuidAttribute or ConstantAttribute");
-                        }
-                    }
+                    throw new Exception("Can't get initializer for struct constant");
                 }
             }
 
@@ -608,19 +631,19 @@ public struct Generator
             f.writeln("{");
             foreach(fx; flds)
             {
-                f.write("".padLeft(' ', 4));
-                foreach(ca; fx.getCustomAttributes())
+                auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
+                auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
+                auto constAttribute = ConstantAttribute(guidAttribute.getUnhandledAttributes(),
+                    isPropKey ? KnownConstantType.PROPERTYKEY : KnownConstantType.SID_IDENTIFIER_AUTHORITY);
+                foreach(ca; constAttribute.getUnhandledAttributes())
                 {
-                    if (ca.name() == "ObsoleteAttribute")
-                    {
-                        auto fixed = ca.value.fixed[0];
-                        auto element = fixed.value.get!ElementSig;
-                        auto msg = element.value.get!string;
-                        f.writefln("deprecated(\"%s\") ", msg);
-                        f.write("".padLeft(' ', 4));
-                        break;
-                    }
+                    f.write("".padLeft(' ', 4));
+                    f.writefln("//CONST ATTR: %s : %s", ca.name(), ca.value());
                 }
+                f.dumpDocAttr(fieldAttrs, 1);
+                f.dumpObsoleteAttr(fieldAttrs, 1);
+                f.write("".padLeft(' ', 4));
+
                 auto constName = fx.getName();
                 if (constName in structNames)
                 {
@@ -641,28 +664,30 @@ public struct Generator
                 if (fx.getFlags().isLiteral())
                 {
                     assert(!fx.getConstant().isNull, "isLiteral() field must has not null Constant");
-                    dumpConstant(f, fx.getConstant().get.value);
+                    if (needPVoidCast)
+                        f.write("cast(void*) ");
+                    else if (isPSTR)
+                        f.write("cast(ubyte*) ");
+                    else if (isPWSTR)
+                        f.write("cast(wchar*) ");
+
+                    dumpConstant(f, fx.getConstant().get.value, isStruct && !(needPVoidCast || isPSTR || isPWSTR));
                 }
                 else
                 {
-                    foreach(ca; fx.getCustomAttributes())
+                    if (!guidAttribute.getGuid().isNull)
                     {
-                        if (ca.name() == "GuidAttribute")
-                        {
-                            f.writef("\"%s\"", readGuid(ca).toString());
-                            break;
-                        }
-                        else if (ca.name() == "ConstantAttribute")
-                        {
-                            auto constValue = readConstantValue(ca, isPropKey, isSidIdAuth);
-                            f.write(constValue);
-                            break;
-                        }
-                        else
-                        {
-                            // TODO: throw
-                            writeln("ERROR ", fx.getName(), " no GuidAttribute or ConstantAttribute");
-                        }
+                        f.writef("\"%s\"", guidAttribute.getGuid().get);
+                    }
+                    else if (constAttribute.getConstantValue().length != 0)
+                    {
+                        if (needPVoidCast)
+                            f.write("cast(void*) ");
+                        f.write(constAttribute.getConstantValue());
+                    }
+                    else
+                    {
+                        throw new Exception("Can't get initializer for struct constant");
                     }
                 }
                 if (isStruct)
@@ -685,6 +710,8 @@ public struct Generator
             {
                 auto structAttrs = CommonAttributes(s.getAttributes());
                 auto arch = structAttrs.getSupportedArchitecture();
+                structArch[s.getTypeNamespace() ~ "." ~ s.getTypeName()] = arch;
+
                 if (arch == SupportedArchitecture.None)
                 {
                     f.write(format("// Type %s attributed with SupportedArchitecture.None\n", s.getTypeName()));
@@ -720,9 +747,11 @@ public struct Generator
 
         // MDMatcher* doc = level == 0 && docs ? findDoc(struc.name) : null;
         // if (doc)
-        //     dumpDocumentation(f, doc.description, 0); 
+        //     dumpDocumentation(f, doc.description, 0);
 
-        foreach(ca; structAttrs.getUnhandledAttributes())
+        auto guidAttr = GuidAttribute(structAttrs.getUnhandledAttributes());
+
+        foreach(ca; guidAttr.getUnhandledAttributes())
         {
             if (ca.name() == "NativeTypedefAttribute")
             {
@@ -743,7 +772,7 @@ public struct Generator
             }
         }
 
-        f.dumpDocAttr(structAttrs, level).dumpObsoleteAttr(structAttrs, level);
+        f.dumpDocAttr(structAttrs, level).dumpObsoleteAttr(structAttrs, level).dumpGuidAttr(guidAttr, level);
 
         string[string] types;
 
@@ -769,7 +798,7 @@ public struct Generator
                 maxNameLen = name.length;
             auto type = getFieldTypeText(fx, safeWords, true);
             if (type.length > maxTypeLen && type.length <= maxFieldAlignment)
-                maxTypeLen = type.length;    
+                maxTypeLen = type.length;
             types[name] = type;
         }
 
@@ -803,7 +832,7 @@ public struct Generator
         foreach(fx; struc.getFieldList())
         {
             auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
-
+            auto flexibleArrayAttr = FlexibleArrayAttribute(fieldAttrs.getUnhandledAttributes());
             if (nestedClasses)
             {
                 auto td = resolveType(fx.getSignature().typeSig.type);
@@ -818,7 +847,7 @@ public struct Generator
                 }
             }
 
-            string name = safeWords.get(fx.getName(), fx.getName());        
+            string name = safeWords.get(fx.getName(), fx.getName());
             auto type = types[name];
             if (name == "_bitfield" || name == type)
             {
@@ -847,10 +876,17 @@ public struct Generator
                 if (name.length < maxNameLen)
                     f.write("".padLeft(' ' , maxNameLen - name.length));
                 f.writef(" = ");
-                dumpConstant(f, ct.get.value);
+                dumpConstant(f, ct.get.value, true);
             }
-            f.writeln(";");
-        }  
+            if (flexibleArrayAttr.getFlexibleArray())
+            {
+                f.writeln("; // Flexible array");
+            }
+            else
+            {
+                f.writeln(";");
+            }
+        }
         f.write("".padLeft(' ', level * 4));
         f.writeln("}");
     }
@@ -904,7 +940,7 @@ public struct Generator
                 auto element = fixed.value.get!ElementSig;
                 auto v = element.value.get!int;
                 if (v == 1 || v == 3)
-                    conv = "Windows";            
+                    conv = "Windows";
                 else if (v == 2)
                     conv = "C";
                 else
@@ -1193,7 +1229,7 @@ public struct Generator
 
             f.dumpDocAttr(intfAttrs, 0).dumpObsoleteAttr(intfAttrs, 0).dumpGuidAttr(guidAttribute);
 
-            if (!guidAttribute.getGuid().empty)
+            if (!guidAttribute.getGuid().isNull)
             {
                 hasGuid = true;
             }
@@ -1207,7 +1243,7 @@ public struct Generator
             }
 
             f.writef("interface %s", name);
-            bool atLeastOne;    
+            bool atLeastOne;
 
             foreach (interf; intf.getInterfaces())
             {
@@ -1278,6 +1314,7 @@ public struct Generator
     private const string outDirectory;
     private const bool[string] skipInterfaces;
     private const bool[string] skipMethods;
+    private SupportedArchitecture[string] structArch;
 }
 
 alias StringSet = RedBlackTree!string;
@@ -1291,13 +1328,20 @@ auto getNamespaces(const Database* db, ref const string[] ignored)
     return chain(defSet, refSet).filter!(a => a.length > 0 && !ignored.canFind(a)).array.sort.uniq;
 }
 
-string fullnameof(T)(T value)
+private struct FullTypeName
+{
+    string name;
+    string namespace;
+    string fullName;
+}
+
+private FullTypeName fullnameof(T)(T value)
 {
     if (auto td = value.peek!TypeDefEntity)
-        return td.getTypeNamespace() ~ "." ~ td.getTypeName();
-    else if (auto td = value.peek!TypeRefEntity)
-        return td.getTypeNamespace() ~ "." ~ td.getTypeName();
-    return null;
+        return FullTypeName(td.getTypeName(), td.getTypeNamespace(), td.getTypeNamespace() ~ "." ~ td.getTypeName());
+    else if (auto tr = value.peek!TypeRefEntity)
+        return FullTypeName(tr.getTypeName(), tr.getTypeNamespace(), tr.getTypeNamespace() ~ "." ~ tr.getTypeName());
+    return FullTypeName();
 }
 
 string makePath(string outDir, string namespace, 
@@ -1325,10 +1369,9 @@ string makePath(string outDir, string namespace,
 
     if (needMove)
     {
-        assert(lastPart.length != 0);
         if (result.length)
             result ~= dirSeparator;
-        result ~= lastPart;
+        result ~= "package";
     }
 
     return buildPath(outDir, result);
@@ -1338,10 +1381,10 @@ string makeModuleName(string namespace, ref const string[string] config,
     scope ref const string[string] safeWords, scope ref const bool[string] nestedNamespaces)
 {
     bool needMove = false;
-    if (namespace in nestedNamespaces)
-    {
-        needMove = true;
-    }
+    // if (namespace in nestedNamespaces)
+    // {
+    //     needMove = true;
+    // }
 
     string result;
     string lastPart = "";
@@ -1395,8 +1438,7 @@ auto getEnums(const Database* db, string namespace)
 
 auto getStructs(const Database* db, string namespace)
 {
-    return getTypeDefs(db, namespace).filter!(a => a.isValueType 
-                                              && !a.getAttributes().any!(c => c.name == "GuidAttribute"));
+    return getTypeDefs(db, namespace).filter!(a => a.isValueType() && !a.getAttributes().any!(c => c.name == "GuidAttribute"));
 }
 
 auto getDelegates(const Database* db, string namespace)
@@ -1572,231 +1614,9 @@ string getFieldTypeText(scope ref const FieldEntity field, scope ref const strin
             auto element = fixed.value().get!ElementSig;
             nativeReplacement = element.value().get!int;
         }
-        // else if (ca.name() == "DocumentationAttribute") // TODO: uncomment
-        // {
-        //     // do nothing
-        // }
-        else if (ca.name() == "NotNullTerminated")
-        {
-            //cant't find any use
-        }
-        else if(ca.name() == "ObsoleteAttribute" || ca.name() == "GuidConstAttribute")
-        {
-            //ignore now, use when writing field
-        }
-        else
-        {
-            s = format("/*FIELD ATTR: %s : %s*/", ca.name(), ca.value());
-        }
     }
     s ~= getTypeText(field.getSignature().typeSig, safeWords, isConst, nativeReplacement);
     return s;
-}
-
-private UUID readGuid(scope ref const CustomAttributeEntity ca)
-{
-    assert(ca.name() == "GuidAttribute", "readGuid: CustomAttribute.name() != \"GuidAttribute\"");
-    auto sig = ca.value();
-
-    assert(sig.fixed.length == 11);
-
-    auto a = sig.fixed[0].value.get!ElementSig.value.get!uint;
-    auto b = sig.fixed[1].value.get!ElementSig.value.get!ushort;
-    auto c = sig.fixed[2].value.get!ElementSig.value.get!ushort;
-    auto d = sig.fixed[3].value.get!ElementSig.value.get!ubyte;
-    auto e = sig.fixed[4].value.get!ElementSig.value.get!ubyte;
-    auto f = sig.fixed[5].value.get!ElementSig.value.get!ubyte;
-    auto g = sig.fixed[6].value.get!ElementSig.value.get!ubyte;
-    auto h = sig.fixed[7].value.get!ElementSig.value.get!ubyte;
-    auto i = sig.fixed[8].value.get!ElementSig.value.get!ubyte;
-    auto j = sig.fixed[9].value.get!ElementSig.value.get!ubyte;
-    auto k = sig.fixed[10].value.get!ElementSig.value.get!ubyte;
-
-    ubyte a0 = (a >> (0 * 8)) & 0xFF; 
-    ubyte a1 = (a >> (1 * 8)) & 0xFF;
-    ubyte a2 = (a >> (2 * 8)) & 0xFF;
-    ubyte a3 = (a >> (3 * 8)) & 0xFF;
-
-    ubyte b0 = (b >> (0 * 8)) & 0xFF; 
-    ubyte b1 = (b >> (1 * 8)) & 0xFF;
-
-    ubyte c0 = (c >> (0 * 8)) & 0xFF; 
-    ubyte c1 = (c >> (1 * 8)) & 0xFF;
-
-    auto guid = UUID(a3, a2, a1, a0, b1, b0, c1, c0, d, e, f, g, h, i, j, k);
-
-    return guid;
-}
-
-private string readConstantValue(scope ref const CustomAttributeEntity ca, bool isPropKey, bool isSidIdAuth)
-{
-    assert(ca.name() == "ConstantAttribute");
-    auto sig = ca.value();
-    
-    if (sig.fixed.length != 1)
-    {
-        throw new Exception(format("ConstantAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
-    }
-
-    auto element = sig.fixed[0].value.peek!ElementSig;
-    assert(element != null);
-
-    // propkey (PROPERTYKEY/DEVPROPKEY) values are strings like "{4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 2"
-    if (isPropKey)
-    {
-        if (element.value.peek!string == null)
-        {
-            throw new Exception("ConstantAttribute fixed[0] FixedArgSig element's value is not string");
-        }
-        const string strValue = element.value.get!string;
-        if (strValue.count('{') != 1)
-        {
-            throw new Exception("ConstantAttribute: invalid PROPERTYKEY value: '{' count != 1");
-        }
-        if (strValue.count('}') != 1)
-        {
-            throw new Exception("ConstantAttribute: invalid PROPERTYKEY value: '}' count != 1");
-        }
-
-        auto idxOpenBr = strValue.indexOf('{');
-        auto idxCloseBr = strValue.indexOf('}');
-        auto guidStr = strValue[idxOpenBr + 1 .. idxCloseBr];
-        string[] guidParts = guidStr.split(",").map!(s => s.strip).array;
-        if (guidParts.length != 11)
-        {
-            throw new Exception(format("ConstantAttribute: invalid GUID components count %s != 11", guidParts.length));
-        }
-        string[] guidPartsHex = [
-            format("%08X", to!uint(guidParts[0])),
-            format("%04X", to!ushort(guidParts[1])),
-            format("%04X", to!ushort(guidParts[2])),
-            format("%02X", to!ubyte(guidParts[3])),
-            format("%02X", to!ubyte(guidParts[4])),
-            format("%02X", to!ubyte(guidParts[5])),
-            format("%02X", to!ubyte(guidParts[6])),
-            format("%02X", to!ubyte(guidParts[7])),
-            format("%02X", to!ubyte(guidParts[8])),
-            format("%02X", to!ubyte(guidParts[9])),
-            format("%02X", to!ubyte(guidParts[10])),
-            ];
-
-        auto guidValue = guidPartsHex[0] 
-            ~ "-" ~ guidPartsHex[1] 
-            ~ "-" ~ guidPartsHex[2]
-            ~ "-" ~ guidPartsHex[3] ~ guidPartsHex[4]
-            ~ "-" ~ guidPartsHex[5 .. $].join();
-
-        auto pidStr = strValue[idxCloseBr + 1 .. $];
-
-        return "GUID(\"" ~ guidValue ~ "\")" ~ pidStr;
-    }
-    else if (isSidIdAuth)
-    {
-        if (element.value.peek!string == null)
-        {
-            throw new Exception("ConstantAttribute fixed[0] FixedArgSig element's value is not string");
-        }
-        const string strValue = element.value.get!string;
-        if (strValue.count('{') != 1)
-        {
-            throw new Exception("ConstantAttribute: invalid SID_IDENTIFIER_AUTHORITY value: '{' count != 1");
-        }
-        if (strValue.count('}') != 1)
-        {
-            throw new Exception("ConstantAttribute: invalid SID_IDENTIFIER_AUTHORITY value: '}' count != 1");
-        }
-        auto idxOpenBr = strValue.indexOf('{');
-        auto idxCloseBr = strValue.indexOf('}');
-        auto arrayStr = strValue[idxOpenBr + 1 .. idxCloseBr];
-        return "[" ~ arrayStr ~ "]";
-    }
-
-    // This is unused
-
-    import std.math.algebraic : abs;
-    import std.math.traits : signbit, isInfinity, isNaN;
-
-    if (auto s = element.value.peek!bool)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!wchar) // TODO: to '\u00A9' form
-        return format("%s", *s);
-    else if (auto s = element.value.peek!ubyte)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!byte)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!ushort)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!short)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!uint)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!int)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!ulong)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!long)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!float)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!double)
-        return format("%s", *s);
-    else if (auto s = element.value.peek!string)
-        return format("\"string %s\"", *s); // TODO: escape?
-    else if (auto s = element.value.peek!SystemType)
-        return format("SystemType %s", *s); // TODO: unused
-    else if (auto s = element.value.peek!EnumDefinition)
-        return format("EnumDefinition %s", *s); // TODO: unused
-    else
-        return "null";
-
-    // if (auto s = element.peek!wstring)
-    //     return format("\"%s\"", *s);
-    // // else if (auto n = v.peek!(typeof(null)))
-    // //     return ("null");
-    // else if (auto i = v.peek!int)
-    //     f.writef("0x%08x", *i);
-    // else if (auto i = v.peek!uint)
-    //     f.writef("0x%08x", *i);
-    // else if (auto i = v.peek!short)
-    //     f.writef("0x%04x", *i);
-    // else if (auto i = v.peek!ushort)
-    //     f.writef("0x%04x", *i);
-    // else if (auto i = v.peek!byte)
-    //     f.writef("0x%02x", *i);
-    // else if (auto i = v.peek!ubyte)
-    //     f.writef("0x%02x", *i);
-    // else if (auto i = v.peek!long)
-    //     f.writef("0x%016x", *i);
-    // else if (auto i = v.peek!ulong)
-    //     f.writef("0x%016x", *i);
-    // else if (auto i = v.peek!float)
-    // {
-    //     if (signbit(*i))
-    //         f.write("-");
-    //     if (isNaN(*i))
-    //         f.write("float.nan");
-    //     else if (isInfinity(*i))
-    //         f.write("float.infinity");
-    //     else
-    //         f.writef("%a", abs(*i));
-    // }
-    // else if (auto i = v.peek!double)
-    // {
-    //     if (signbit(*i))
-    //         f.write("-");
-    //     if (isNaN(*i))
-    //         f.write("double.nan");
-    //     else if (isInfinity(*i))
-    //         f.write("double.infinity");
-    //     else
-    //         f.writef("%a", abs(*i));
-    // }
-    // else
-    // {
-    //     f.write(v);
-    // }
-
-    return "";
 }
 
 private Nullable!TypeDefEntity resolveType(scope ref const TypeSig.TypeValue v)
@@ -1868,16 +1688,6 @@ string getParamText(scope ref const ParamSig sig, scope ref const ParamEntity pa
     return s;
 }
 
-void dumpGUIDAttr(scope ref std.stdio.File f, scope ref const CustomAttributeEntity ca)
-{
-    f.writefln("@GUID(\"%s\")", readGuid(ca));
-}
-
-void dumpGUIDAttr(scope ref std.stdio.File f, in UUID guid)
-{
-    f.writefln("@GUID(\"%s\")", guid);
-}
-
 string nameof(T)(T value)
 {
     if (auto td = value.peek!TypeDefEntity)
@@ -1942,13 +1752,13 @@ private ref std.stdio.File dumpObsoleteAttr(return scope ref std.stdio.File f, s
 
 private ref std.stdio.File dumpGuidAttr(return scope ref std.stdio.File f, scope ref const GuidAttribute ca, const int level = 0)
 {
-    if (!ca.getGuid().empty)
+    if (!ca.getGuid().isNull)
     {
         if (level != 0)
         {
             f.write("".padLeft(' ', level * 4));
         }
-        f.writefln("@GUID(\"%s\")", ca.getGuid());
+        f.writefln("@GUID(\"%s\")", ca.getGuid().get);
     }
 
     return f;

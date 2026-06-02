@@ -3,7 +3,7 @@
 module windows.win32.ui.magnification;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HWND, RECT;
+public import windows.win32.foundation : BOOL, HWND, RECT;
 public import windows.win32.graphics.gdi : HRGN;
 
 extern(Windows) @nogc nothrow:
@@ -22,8 +22,9 @@ enum : uint
 // Constants
 
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WC_MAGNIFIERA = "Magnifier",
     WC_MAGNIFIERW = "Magnifier",
     WC_MAGNIFIER  = "Magnifier",

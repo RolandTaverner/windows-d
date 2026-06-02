@@ -4,10 +4,9 @@ module windows.win32.media.mediafoundation;
 
 public import windows.core;
 public import windows.win32.devices.properties : DEVPROPTYPE;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, DEVPROPKEY,
-                                                    FILETIME, HANDLE, HRESULT, HWND,
-                                                    LUID, POINT, PSTR, PWSTR, RECT,
-                                                    SIZE, VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, DEVPROPKEY,
+                                         FILETIME, HANDLE, HRESULT, HWND, LUID,
+                                         POINT, PSTR, PWSTR, RECT, SIZE, VARIANT_BOOL;
 public import windows.win32.graphics.direct3d12 : D3D12_BARRIER_GROUP, D3D12_COMMAND_LIST_SUPPORT_FLAGS,
                                                   D3D12_DISCARD_REGION, D3D12_PREDICATION_OP,
                                                   D3D12_QUERY_TYPE, D3D12_RESOURCE_BARRIER,
@@ -25,13 +24,13 @@ public import windows.win32.graphics.direct3d9 : D3DAUTHENTICATEDCHANNELTYPE, D3
                                                  IDirect3DDevice9Ex, IDirect3DSurface9;
 public import windows.win32.graphics.dxgi.common : DXGI_COLOR_SPACE_TYPE, DXGI_FORMAT, DXGI_RATIONAL;
 public import windows.win32.graphics.gdi : BITMAPINFOHEADER, HDC, HMONITOR;
-public import windows.win32.media.audio.audio : AudioObjectType, ISpatialAudioMetadataItems,
-                                                WAVEFORMATEX;
+public import windows.win32.media.audio : AudioObjectType, ISpatialAudioMetadataItems,
+                                          WAVEFORMATEX;
 public import windows.win32.media.dxmediaobjects : DMO_MEDIA_TYPE, IMediaBuffer;
-public import windows.win32.system.com.com : IClassFactory, IStream, IUnknown;
+public import windows.win32.system.com : IClassFactory, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.system.winrt.winrt : IInspectable;
+public import windows.win32.system.winrt : IInspectable;
 public import windows.win32.ui.shell.propertiessystem : INamedPropertyStore, IPropertyStore;
 
 extern(Windows) @nogc nothrow:
@@ -7375,11 +7374,11 @@ enum uint MF_QUOTA_EXCEEDED_ERR = 0x80700016U;
 enum uint MF_PARSE_ERR = 0x80700051U;
 enum uint MF_TYPE_ERR = 0x80704005U;
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1859937037, 49891, 17335, 178, 209, 32, 82, 90, 26, 241, 32}, 3))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_DeviceInterface_IsVirtualCamera                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1859937037, 49891, 17335, 178, 209, 32, 82, 90, 26, 241, 32}, 3))], [])*/DEVPROPKEY(GUID("6EDC630D-C2E3-43B7-B2D1-20525A1AF120"), 3),
-    DEVPKEY_DeviceInterface_IsWindowsCameraEffectAvailable = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1859937037, 49891, 17335, 178, 209, 32, 82, 90, 26, 241, 32}, 3))], [])*/DEVPROPKEY(GUID("6EDC630D-C2E3-43B7-B2D1-20525A1AF120"), 4),
-    DEVPKEY_DeviceInterface_VirtualCameraAssociatedCameras = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1859937037, 49891, 17335, 178, 209, 32, 82, 90, 26, 241, 32}, 3))], [])*/DEVPROPKEY(GUID("6EDC630D-C2E3-43B7-B2D1-20525A1AF120"), 5),
+    DEVPKEY_DeviceInterface_IsVirtualCamera                = DEVPROPKEY(GUID("6EDC630D-C2E3-43B7-B2D1-20525A1AF120"), 3),
+    DEVPKEY_DeviceInterface_IsWindowsCameraEffectAvailable = DEVPROPKEY(GUID("6EDC630D-C2E3-43B7-B2D1-20525A1AF120"), 4),
+    DEVPKEY_DeviceInterface_VirtualCameraAssociatedCameras = DEVPROPKEY(GUID("6EDC630D-C2E3-43B7-B2D1-20525A1AF120"), 5),
 }
 
 enum const(wchar)* g_wszSpeechFormatCaps = "SpeechFormatCap";
@@ -8588,7 +8587,7 @@ struct MPEG1VIDEOINFO
     VIDEOINFOHEADER hdr;
     uint            dwStartTimeCode;
     uint            cbSequenceHeader;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bSequenceHeader;
+    ubyte[1]        bSequenceHeader; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvdmedia/ns-dvdmedia-videoinfoheader2
@@ -8621,7 +8620,7 @@ struct MPEG2VIDEOINFO
     uint                 dwProfile;
     uint                 dwLevel;
     MPEG2VIDEOINFO_FLAGS dwFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwSequenceHeader;
+    uint[1]              dwSequenceHeader; // Flexible array
 }
 
 version(X86_64)
@@ -10997,7 +10996,7 @@ struct DXVABufferInfo
 
 struct DXVA_ExtendedFormat
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VideoTransferFunction)), FixedArgSig(ElementSig(27)), FixedArgSig(ElementSig(5))], [])*/uint _bitfield108;
+    uint _bitfield108;
 }
 
 struct DXVA_Frequency
@@ -11267,7 +11266,7 @@ struct DXVAHD_BLT_STATE_OUTPUT_COLOR_SPACE_DATA
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield109;
+            uint _bitfield109;
         }
         uint Value;
     }
@@ -11314,7 +11313,7 @@ struct DXVAHD_STREAM_STATE_INPUT_COLOR_SPACE_DATA
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield110;
+            uint _bitfield110;
         }
         uint Value;
     }
@@ -11390,14 +11389,14 @@ struct DXVAHD_STREAM_STATE_PRIVATE_DATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxvahd/ns-dxvahd-dxvahd_stream_data
 struct DXVAHD_STREAM_DATA
 {
-    BOOL              Enable;
-    uint              OutputIndex;
-    uint              InputFrameOrField;
-    uint              PastFrames;
-    uint              FutureFrames;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountParamIndex", FixedArgSig(ElementSig(3)))])*/IDirect3DSurface9* ppPastSurfaces;
-    IDirect3DSurface9 pInputSurface;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountParamIndex", FixedArgSig(ElementSig(4)))])*/IDirect3DSurface9* ppFutureSurfaces;
+    BOOL               Enable;
+    uint               OutputIndex;
+    uint               InputFrameOrField;
+    uint               PastFrames;
+    uint               FutureFrames;
+    IDirect3DSurface9* ppPastSurfaces;
+    IDirect3DSurface9  pInputSurface;
+    IDirect3DSurface9* ppFutureSurfaces;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxvahd/ns-dxvahd-dxvahd_stream_state_private_ivtc_data
@@ -11494,7 +11493,7 @@ struct DXVA2_ExtendedFormat
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VideoTransferFunction)), FixedArgSig(ElementSig(27)), FixedArgSig(ElementSig(5))], [])*/uint _bitfield111;
+            uint _bitfield111;
         }
         uint value;
     }
@@ -11650,7 +11649,7 @@ struct DXVA2_ConfigPictureDecode
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxva2api/ns-dxva2api-dxva2_decodebufferdesc
 struct DXVA2_DecodeBufferDesc
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DXVA2_BufferfType))], [])*/uint CompressedBufferType;
+    uint  CompressedBufferType;
     uint  BufferIndex;
     uint  DataOffset;
     uint  DataSize;
@@ -11947,9 +11946,9 @@ union MFPaletteEntry
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/ns-mfobjects-mfvideosurfaceinfo
 struct MFVideoSurfaceInfo
 {
-    uint Format;
-    uint PaletteEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MFPaletteEntry[1] Palette;
+    uint              Format;
+    uint              PaletteEntries;
+    MFPaletteEntry[1] Palette; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfobjects/ns-mfobjects-mfvideocompressedinfo
@@ -12135,7 +12134,7 @@ struct MFINPUTTRUSTAUTHORITY_ACCESS_PARAMS
     uint cbExtensionOffset;
     uint cbExtensionSize;
     uint cActions;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MFINPUTTRUSTAUTHORITY_ACCESS_ACTION[1] rgOutputActions;
+    MFINPUTTRUSTAUTHORITY_ACCESS_ACTION[1] rgOutputActions; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/ns-mfidl-mf_transcode_sink_info
@@ -12310,16 +12309,16 @@ struct MOVE_RECT
 
 struct DIRTYRECT_INFO
 {
-    uint FrameNumber;
-    uint NumDirtyRects;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RECT[1] DirtyRects;
+    uint    FrameNumber;
+    uint    NumDirtyRects;
+    RECT[1] DirtyRects; // Flexible array
 }
 
 struct MOVEREGION_INFO
 {
-    uint FrameNumber;
-    uint NumMoveRegions;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MOVE_RECT[1] MoveRegions;
+    uint         FrameNumber;
+    uint         NumMoveRegions;
+    MOVE_RECT[1] MoveRegions; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-roi_area
@@ -12434,7 +12433,7 @@ struct MFCameraExtrinsic_CalibratedTransform
 struct MFCameraExtrinsics
 {
     uint TransformCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MFCameraExtrinsic_CalibratedTransform[1] CalibratedTransforms;
+    MFCameraExtrinsic_CalibratedTransform[1] CalibratedTransforms; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-mfcameraintrinsic_pinholecameramodel
@@ -12467,7 +12466,7 @@ struct MFPinholeCameraIntrinsic_IntrinsicModel
 struct MFPinholeCameraIntrinsics
 {
     uint IntrinsicModelCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MFPinholeCameraIntrinsic_IntrinsicModel[1] IntrinsicModels;
+    MFPinholeCameraIntrinsic_IntrinsicModel[1] IntrinsicModels; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfmp2dlna/ns-mfmp2dlna-mfmpeg2dlnasinkstats

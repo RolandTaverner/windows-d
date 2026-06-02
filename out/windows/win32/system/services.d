@@ -3,8 +3,8 @@
 module windows.win32.system.services;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
-public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
+public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -205,8 +205,10 @@ enum uint SERVICE_ALL_ACCESS = 0x000f01ffU;
 enum uint SC_MANAGER_ALL_ACCESS = 0x000f003fU;
 enum const(wchar)* SERVICES_ACTIVE_DATABASEW = "ServicesActive";
 enum const(wchar)* SERVICES_FAILED_DATABASEW = "ServicesFailed";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SERVICES_ACTIVE_DATABASEA = "ServicesActive";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SERVICES_FAILED_DATABASEA = "ServicesFailed";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SERVICES_ACTIVE_DATABASEA = "ServicesActive";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SERVICES_FAILED_DATABASEA = "ServicesFailed";
 enum const(wchar)* SERVICES_ACTIVE_DATABASE = "ServicesActive";
 enum const(wchar)* SERVICES_FAILED_DATABASE = "ServicesFailed";
 
@@ -442,8 +444,8 @@ struct SERVICE_CUSTOM_SYSTEM_STATE_CHANGE_DATA_ITEM
         SERVICE_TRIGGER_CUSTOM_STATE_ID CustomStateId;
         struct s
         {
-            uint DataOffset;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+            uint     DataOffset;
+            ubyte[1] Data; // Flexible array
         }
     }
 }

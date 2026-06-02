@@ -3,7 +3,7 @@
 module windows.win32.system.hostcomputenetwork;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE, HRESULT, PWSTR;
+public import windows.win32.foundation : HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

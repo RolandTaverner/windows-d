@@ -3,7 +3,7 @@
 module windows.win32.ui.interactioncontext;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT;
+public import windows.win32.foundation : HRESULT;
 public import windows.win32.ui.input.pointer : POINTER_INFO;
 public import windows.win32.ui.windowsandmessaging : POINTER_INPUT_TYPE;
 

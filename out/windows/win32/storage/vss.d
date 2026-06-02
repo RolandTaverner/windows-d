@@ -4,9 +4,9 @@ module windows.win32.storage.vss;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR;
 public import windows.win32.storage.virtualdiskservice : VDS_LUN_INFORMATION;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

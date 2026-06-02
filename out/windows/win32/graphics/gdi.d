@@ -3,10 +3,10 @@
 module windows.win32.graphics.gdi;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, COLORREF, HANDLE, HGLOBAL,
-                                                    HINSTANCE, HMODULE, HWND, LPARAM,
-                                                    POINT, POINTL, POINTS, PSTR, PWSTR,
-                                                    RECT, RECTL, SIZE, WPARAM;
+public import windows.win32.foundation : BOOL, CHAR, COLORREF, HANDLE, HGLOBAL,
+                                         HINSTANCE, HMODULE, HWND, LPARAM, POINT,
+                                         POINTL, POINTS, PSTR, PWSTR, RECT, RECTL,
+                                         SIZE, WPARAM;
 
 extern(Windows) @nogc nothrow:
 
@@ -2910,14 +2910,14 @@ struct BITMAPV5HEADER
 struct BITMAPINFO
 {
     BITMAPINFOHEADER bmiHeader;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RGBQUAD[1] bmiColors;
+    RGBQUAD[1]       bmiColors; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapcoreinfo
 struct BITMAPCOREINFO
 {
     BITMAPCOREHEADER bmciHeader;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RGBTRIPLE[1] bmciColors;
+    RGBTRIPLE[1]     bmciColors; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
@@ -2934,15 +2934,15 @@ align (2):
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-handletable
 struct HANDLETABLE
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/HGDIOBJ[1] objectHandle;
+    HGDIOBJ[1] objectHandle; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-metarecord
 struct METARECORD
 {
-    uint   rdSize;
-    ushort rdFunction;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] rdParm;
+    uint      rdSize;
+    ushort    rdFunction;
+    ushort[1] rdParm; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-metaheader
@@ -2962,8 +2962,8 @@ align (2):
 struct ENHMETARECORD
 {
     ENHANCED_METAFILE_RECORD_TYPE iType;
-    uint nSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dParm;
+    uint    nSize;
+    uint[1] dParm; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enhmetaheader
@@ -3126,7 +3126,7 @@ struct LOGBRUSH32
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logpen
 struct LOGPEN
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PEN_STYLE))], [])*/uint lopnStyle;
+    uint     lopnStyle;
     POINT    lopnWidth;
     COLORREF lopnColor;
 }
@@ -3134,24 +3134,24 @@ struct LOGPEN
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-extlogpen
 struct EXTLOGPEN
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PEN_STYLE))], [])*/uint elpPenStyle;
+    uint     elpPenStyle;
     uint     elpWidth;
     uint     elpBrushStyle;
     COLORREF elpColor;
     size_t   elpHatch;
     uint     elpNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] elpStyleEntry;
+    uint[1]  elpStyleEntry; // Flexible array
 }
 
 struct EXTLOGPEN32
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PEN_STYLE))], [])*/uint elpPenStyle;
+    uint     elpPenStyle;
     uint     elpWidth;
     uint     elpBrushStyle;
     COLORREF elpColor;
     uint     elpHatch;
     uint     elpNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] elpStyleEntry;
+    uint[1]  elpStyleEntry; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-paletteentry
@@ -3166,9 +3166,9 @@ struct PALETTEENTRY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logpalette
 struct LOGPALETTE
 {
-    ushort palVersion;
-    ushort palNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PALETTEENTRY[1] palPalEntry;
+    ushort          palVersion;
+    ushort          palNumEntries;
+    PALETTEENTRY[1] palPalEntry; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-logfonta
@@ -3434,7 +3434,7 @@ struct RGNDATAHEADER
 struct RGNDATA
 {
     RGNDATAHEADER rdh;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] Buffer;
+    CHAR[1]       Buffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-abc
@@ -3587,9 +3587,9 @@ struct POINTFX
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-ttpolycurve
 struct TTPOLYCURVE
 {
-    ushort wType;
-    ushort cpfx;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/POINTFX[1] apfx;
+    ushort     wType;
+    ushort     cpfx;
+    POINTFX[1] apfx; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-ttpolygonheader
@@ -3646,11 +3646,11 @@ struct WCRANGE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-glyphset
 struct GLYPHSET
 {
-    uint cbThis;
-    uint flAccel;
-    uint cGlyphsSupported;
-    uint cRanges;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WCRANGE[1] ranges;
+    uint       cbThis;
+    uint       flAccel;
+    uint       cGlyphsSupported;
+    uint       cRanges;
+    WCRANGE[1] ranges; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-designvector
@@ -3866,11 +3866,11 @@ struct EMRRESIZEPALETTE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetpaletteentries
 struct EMRSETPALETTEENTRIES
 {
-    EMR  emr;
-    uint ihPal;
-    uint iStart;
-    uint cEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PALETTEENTRY[1] aPalEntries;
+    EMR             emr;
+    uint            ihPal;
+    uint            iStart;
+    uint            cEntries;
+    PALETTEENTRY[1] aPalEntries; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetcoloradjustment
@@ -3883,9 +3883,9 @@ struct EMRSETCOLORADJUSTMENT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrgdicomment
 struct EMRGDICOMMENT
 {
-    EMR  emr;
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    EMR      emr;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emreof
@@ -4018,19 +4018,19 @@ struct EMRANGLEARC
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolyline
 struct EMRPOLYLINE
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  cptl;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/POINTL[1] aptl;
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      cptl;
+    POINTL[1] aptl; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolyline16
 struct EMRPOLYLINE16
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  cpts;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/POINTS[1] apts;
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      cpts;
+    POINTS[1] apts; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolydraw
@@ -4040,7 +4040,7 @@ struct EMRPOLYDRAW
     RECTL     rclBounds;
     uint      cptl;
     POINTL[1] aptl;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abTypes;
+    ubyte[1]  abTypes; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolydraw16
@@ -4050,68 +4050,68 @@ struct EMRPOLYDRAW16
     RECTL     rclBounds;
     uint      cpts;
     POINTS[1] apts;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abTypes;
+    ubyte[1]  abTypes; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolypolyline
 struct EMRPOLYPOLYLINE
 {
-    EMR     emr;
-    RECTL   rclBounds;
-    uint    nPolys;
-    uint    cptl;
-    uint[1] aPolyCounts;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/POINTL[1] aptl;
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      nPolys;
+    uint      cptl;
+    uint[1]   aPolyCounts;
+    POINTL[1] aptl; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolypolyline16
 struct EMRPOLYPOLYLINE16
 {
-    EMR     emr;
-    RECTL   rclBounds;
-    uint    nPolys;
-    uint    cpts;
-    uint[1] aPolyCounts;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/POINTS[1] apts;
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      nPolys;
+    uint      cpts;
+    uint[1]   aPolyCounts;
+    POINTS[1] apts; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrinvertrgn
 struct EMRINVERTRGN
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  cbRgnData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RgnData;
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbRgnData;
+    ubyte[1] RgnData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrfillrgn
 struct EMRFILLRGN
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  cbRgnData;
-    uint  ihBrush;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RgnData;
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbRgnData;
+    uint     ihBrush;
+    ubyte[1] RgnData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrframergn
 struct EMRFRAMERGN
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  cbRgnData;
-    uint  ihBrush;
-    SIZE  szlStroke;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RgnData;
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbRgnData;
+    uint     ihBrush;
+    SIZE     szlStroke;
+    ubyte[1] RgnData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrextselectcliprgn
 struct EMREXTSELECTCLIPRGN
 {
-    EMR  emr;
-    uint cbRgnData;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(RGN_COMBINE_MODE))], [])*/uint iMode;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RgnData;
+    EMR      emr;
+    uint     cbRgnData;
+    uint     iMode;
+    ubyte[1] RgnData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrexttextouta
@@ -4128,13 +4128,13 @@ struct EMREXTTEXTOUTA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolytextouta
 struct EMRPOLYTEXTOUTA
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  iGraphicsMode;
-    float exScale;
-    float eyScale;
-    int   cStrings;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EMRTEXT[1] aemrtext;
+    EMR        emr;
+    RECTL      rclBounds;
+    uint       iGraphicsMode;
+    float      exScale;
+    float      eyScale;
+    int        cStrings;
+    EMRTEXT[1] aemrtext; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrbitblt
@@ -4356,18 +4356,18 @@ struct EMRFORMAT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrglsrecord
 struct EMRGLSRECORD
 {
-    EMR  emr;
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    EMR      emr;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrglsboundedrecord
 struct EMRGLSBOUNDEDRECORD
 {
-    EMR   emr;
-    RECTL rclBounds;
-    uint  cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetcolorspace
@@ -4379,40 +4379,40 @@ struct EMRSETCOLORSPACE
 
 struct EMREXTESCAPE
 {
-    EMR emr;
-    int iEscape;
-    int cbEscData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] EscData;
+    EMR      emr;
+    int      iEscape;
+    int      cbEscData;
+    ubyte[1] EscData; // Flexible array
 }
 
 struct EMRNAMEDESCAPE
 {
-    EMR emr;
-    int iEscape;
-    int cbDriver;
-    int cbEscData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] EscData;
+    EMR      emr;
+    int      iEscape;
+    int      cbDriver;
+    int      cbEscData;
+    ubyte[1] EscData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrseticmprofile
 struct EMRSETICMPROFILE
 {
-    EMR  emr;
-    uint dwFlags;
-    uint cbName;
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    EMR      emr;
+    uint     dwFlags;
+    uint     cbName;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcolormatchtotarget
 struct EMRCOLORMATCHTOTARGET
 {
-    EMR  emr;
-    uint dwAction;
-    uint dwFlags;
-    uint cbName;
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    EMR      emr;
+    uint     dwAction;
+    uint     dwFlags;
+    uint     cbName;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcolorcorrectpalette
@@ -4456,7 +4456,7 @@ struct EMRGRADIENTFILL
     uint          nVer;
     uint          nTri;
     GRADIENT_FILL ulMode;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRIVERTEX[1] Ver;
+    TRIVERTEX[1]  Ver; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrtransparentblt

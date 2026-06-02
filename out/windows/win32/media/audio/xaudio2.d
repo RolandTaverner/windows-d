@@ -3,9 +3,9 @@
 module windows.win32.media.audio.xaudio2;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.media.audio.audio : AUDIO_STREAM_CATEGORY, WAVEFORMATEX;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.media.audio : AUDIO_STREAM_CATEGORY, WAVEFORMATEX;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -133,10 +133,12 @@ enum : float
     FXECHO_DEFAULT_DELAY = 0x1.f4p+8,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     XAUDIO2_DLL_A  = "xaudio2_9.dll",
     XAUDIO2_DLL_W  = "xaudio2_9.dll",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     XAUDIO2D_DLL_A = "xaudio2_9d.dll",
     XAUDIO2D_DLL_W = "xaudio2_9d.dll",
     XAUDIO2_DLL    = "xaudio2_9.dll",

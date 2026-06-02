@@ -3,21 +3,20 @@
 module windows.win32.networking.activedirectory;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
-                                                    HANDLE, HINSTANCE, HRESULT, HWND,
-                                                    LPARAM, PSTR, PWSTR, SYSTEMTIME,
-                                                    VARIANT_BOOL, WPARAM;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME, HANDLE,
+                                         HINSTANCE, HRESULT, HWND, LPARAM, PSTR,
+                                         PWSTR, SYSTEMTIME, VARIANT_BOOL, WPARAM;
 public import windows.win32.networking.winsock : SOCKET_ADDRESS;
-public import windows.win32.security.authentication.identity.identity : LSA_FOREST_TRUST_INFORMATION;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR, PSID;
-public import windows.win32.system.com.com : DISPPARAMS, EXCEPINFO, IDataObject, IDispatch,
-                                             IPersist, ITypeInfo, IUnknown;
+public import windows.win32.security.authentication.identity : LSA_FOREST_TRUST_INFORMATION;
+public import windows.win32.security : PSECURITY_DESCRIPTOR, PSID;
+public import windows.win32.system.com : DISPPARAMS, EXCEPINFO, IDataObject, IDispatch,
+                                         IPersist, ITypeInfo, IUnknown;
 public import windows.win32.system.com.structuredstorage : IPropertyBag;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls.controls : LPFNSVADDPROPSHEETPAGE;
-public import windows.win32.ui.shell.shell : BFFCALLBACK;
+public import windows.win32.ui.controls : LPFNSVADDPROPSHEETPAGE;
+public import windows.win32.ui.shell : BFFCALLBACK;
 public import windows.win32.ui.windowsandmessaging : DLGPROC, HICON;
 
 extern(Windows) @nogc nothrow:
@@ -620,15 +619,23 @@ enum : int
 // Constants
 
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-pageinit))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-pageinit
     WM_ADSPROP_NOTIFY_PAGEINIT   = 0x0000084dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-pagehwnd
     WM_ADSPROP_NOTIFY_PAGEHWND   = 0x0000084eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-change
     WM_ADSPROP_NOTIFY_CHANGE     = 0x0000084fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-apply
     WM_ADSPROP_NOTIFY_APPLY      = 0x00000850U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-setfocus
     WM_ADSPROP_NOTIFY_SETFOCUS   = 0x00000851U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-foreground
     WM_ADSPROP_NOTIFY_FOREGROUND = 0x00000852U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-exit
     WM_ADSPROP_NOTIFY_EXIT       = 0x00000853U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-error
     WM_ADSPROP_NOTIFY_ERROR      = 0x00000856U,
 }
 
@@ -642,25 +649,34 @@ enum : ulong
 
 enum uint CQFF_NOGLOBALPAGES = 0x00000001U;
 enum uint CQFF_ISOPTIONAL = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-initialize))], [])*/uint CQPM_INITIALIZE = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-initialize
+enum uint CQPM_INITIALIZE = 0x00000001U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-release))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-release
     CQPM_RELEASE       = 0x00000002U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-enable
     CQPM_ENABLE        = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-getparameters
     CQPM_GETPARAMETERS = 0x00000005U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-clearform))], [])*/uint CQPM_CLEARFORM = 0x00000006U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-clearform
+enum uint CQPM_CLEARFORM = 0x00000006U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-persist))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-persist
     CQPM_PERSIST              = 0x00000007U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-help
     CQPM_HELP                 = 0x00000008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-setdefaultparameters
     CQPM_SETDEFAULTPARAMETERS = 0x00000009U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-handlerspecific))], [])*/uint CQPM_HANDLERSPECIFIC = 0x10000000U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cqpm-handlerspecific
+enum uint CQPM_HANDLERSPECIFIC = 0x10000000U;
 enum uint OQWF_OKCANCEL = 0x00000001U;
 enum uint OQWF_DEFAULTFORM = 0x00000002U;
 enum uint OQWF_SINGLESELECT = 0x00000004U;
@@ -725,13 +741,16 @@ enum : uint
     DSPROVIDER_AD_LDS   = 0x00000020U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dsobjectnames))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-dsobjectnames
     CFSTR_DSOBJECTNAMES           = "DsObjectNames",
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-ds-display-spec-options
     CFSTR_DS_DISPLAY_SPEC_OPTIONS = "DsDisplaySpecOptions",
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-ds-display-spec-options))], [])*/const(wchar)* CFSTR_DSDISPLAYSPECOPTIONS = "DsDisplaySpecOptions";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-ds-display-spec-options
+enum const(wchar)* CFSTR_DSDISPLAYSPECOPTIONS = "DsDisplaySpecOptions";
 enum const(wchar)* DS_PROP_SHELL_PREFIX = "shell";
 enum const(wchar)* DS_PROP_ADMIN_PREFIX = "admin";
 enum uint DSDSOF_HASUSERANDSERVERINFO = 0x00000001U;
@@ -743,7 +762,8 @@ enum : uint
     DSDSOF_DSAVAILABLE  = 0x40000000U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dspropertypageinfo))], [])*/const(wchar)* CFSTR_DSPROPERTYPAGEINFO = "DsPropPageInfo";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-dspropertypageinfo
+enum const(wchar)* CFSTR_DSPROPERTYPAGEINFO = "DsPropPageInfo";
 enum const(wchar)* DSPROP_ATTRCHANGED_MSG = "DsPropAttrChanged";
 
 enum : uint
@@ -963,9 +983,11 @@ enum : uint
 enum uint DSQPF_HASCREDENTIALS = 0x00000020U;
 enum uint DSQPF_NOCHOOSECOLUMNS = 0x00000040U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dsqueryparams))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-dsqueryparams
     CFSTR_DSQUERYPARAMS = "DsQueryParameters",
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-dsqueryscope
     CFSTR_DSQUERYSCOPE  = "DsQueryScope",
 }
 
@@ -1024,8 +1046,9 @@ enum : uint
     DS_BEHAVIOR_WINTHRESHOLD               = 0x00000007U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DS_SYNCED_EVENT_NAME   = "NTDSInitialSyncsCompleted",
     DS_SYNCED_EVENT_NAME_W = "NTDSInitialSyncsCompleted",
 }
@@ -1276,17 +1299,28 @@ enum : uint
     NTDSSITELINK_OPT_DISABLE_COMPRESSION = 0x00000004U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_USERS_CONTAINER_A = "a9d1ca15768811d1aded00c04fd8d5cd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_COMPUTRS_CONTAINER_A = "aa312825768811d1aded00c04fd8d5cd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_SYSTEMS_CONTAINER_A = "ab1d30f3768811d1aded00c04fd8d5cd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_DOMAIN_CONTROLLERS_CONTAINER_A = "a361b2ffffd211d1aa4b00c04fd7d83a";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_INFRASTRUCTURE_CONTAINER_A = "2fbac1870ade11d297c400c04fd8d5cd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_DELETED_OBJECTS_CONTAINER_A = "18e2ea80684f11d2b9aa00c04f79f805";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_LOSTANDFOUND_CONTAINER_A = "ab8153b7768811d1aded00c04fd8d5cd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_FOREIGNSECURITYPRINCIPALS_CONTAINER_A = "22b70c67d56e4efb91e9300fca3dc1aa";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_PROGRAM_DATA_CONTAINER_A = "09460c08ae1e4a4ea0f64aee7daa1e5a";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_MICROSOFT_PROGRAM_DATA_CONTAINER_A = "f4be92a4c777485e878e9421d53087db";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_NTDS_QUOTAS_CONTAINER_A = "6227f0af1fc2410d8e3bb10615bb5b0f";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_USERS_CONTAINER_A = "a9d1ca15768811d1aded00c04fd8d5cd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_COMPUTRS_CONTAINER_A = "aa312825768811d1aded00c04fd8d5cd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_SYSTEMS_CONTAINER_A = "ab1d30f3768811d1aded00c04fd8d5cd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_DOMAIN_CONTROLLERS_CONTAINER_A = "a361b2ffffd211d1aa4b00c04fd7d83a";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_INFRASTRUCTURE_CONTAINER_A = "2fbac1870ade11d297c400c04fd8d5cd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_DELETED_OBJECTS_CONTAINER_A = "18e2ea80684f11d2b9aa00c04f79f805";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_LOSTANDFOUND_CONTAINER_A = "ab8153b7768811d1aded00c04fd8d5cd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_FOREIGNSECURITYPRINCIPALS_CONTAINER_A = "22b70c67d56e4efb91e9300fca3dc1aa";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_PROGRAM_DATA_CONTAINER_A = "09460c08ae1e4a4ea0f64aee7daa1e5a";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_MICROSOFT_PROGRAM_DATA_CONTAINER_A = "f4be92a4c777485e878e9421d53087db";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GUID_NTDS_QUOTAS_CONTAINER_A = "6227f0af1fc2410d8e3bb10615bb5b0f";
 enum const(wchar)* GUID_USERS_CONTAINER_W = "a9d1ca15768811d1aded00c04fd8d5cd";
 enum const(wchar)* GUID_COMPUTRS_CONTAINER_W = "aa312825768811d1aded00c04fd8d5cd";
 enum const(wchar)* GUID_SYSTEMS_CONTAINER_W = "ab1d30f3768811d1aded00c04fd8d5cd";
@@ -1390,30 +1424,36 @@ enum : uint
 
 enum uint DS_REPL_NBR_PARTIAL_ATTRIBUTE_SET = 0x40000000U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ADAM_SCP_SITE_NAME_STRING   = "site:",
     ADAM_SCP_SITE_NAME_STRING_W = "site:",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ADAM_SCP_PARTITION_STRING   = "partition:",
     ADAM_SCP_PARTITION_STRING_W = "partition:",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ADAM_SCP_INSTANCE_NAME_STRING   = "instance:",
     ADAM_SCP_INSTANCE_NAME_STRING_W = "instance:",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ADAM_SCP_FSMO_STRING          = "fsmo:",
     ADAM_SCP_FSMO_STRING_W        = "fsmo:",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ADAM_SCP_FSMO_NAMING_STRING   = "naming",
     ADAM_SCP_FSMO_NAMING_STRING_W = "naming",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ADAM_SCP_FSMO_SCHEMA_STRING   = "schema",
     ADAM_SCP_FSMO_SCHEMA_STRING_W = "schema",
 }
@@ -1430,26 +1470,31 @@ enum uint FLAG_DOMAIN_OPTIONAL_FEATURE = 0x00000002U;
 enum uint FLAG_DISABLABLE_OPTIONAL_FEATURE = 0x00000004U;
 enum uint FLAG_SERVER_OPTIONAL_FEATURE = 0x00000008U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     GUID_RECYCLE_BIN_OPTIONAL_FEATURE_A = "d8dc6d76d0ac5e44f3b9a7f9b6744f2a",
     GUID_RECYCLE_BIN_OPTIONAL_FEATURE_W = "d8dc6d76d0ac5e44f3b9a7f9b6744f2a",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     GUID_PRIVILEGED_ACCESS_MANAGEMENT_OPTIONAL_FEATURE_A = "73e843ece8cc4046b4ab07ffe4ab5bcd",
     GUID_PRIVILEGED_ACCESS_MANAGEMENT_OPTIONAL_FEATURE_W = "73e843ece8cc4046b4ab07ffe4ab5bcd",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     GUID_DATABASE_32K_PAGES_OPTIONAL_FEATURE_A    = "c62a9852731e4f75ae2473ae2775aab8",
     GUID_DATABASE_32K_PAGES_OPTIONAL_FEATURE_W    = "c62a9852731e4f75ae2473ae2775aab8",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     GUID_DATABASE_32K_PAGES_OPTIONAL_FEATURE_BYTE = "Æ*RsOu®$s®'uª¸",
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dsop-ds-selection-list))], [])*/const(wchar)* CFSTR_DSOP_DS_SELECTION_LIST = "CFSTR_DSOP_DS_SELECTION_LIST";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/AD/cfstr-dsop-ds-selection-list
+enum const(wchar)* CFSTR_DSOP_DS_SELECTION_LIST = "CFSTR_DSOP_DS_SELECTION_LIST";
 
 enum : uint
 {
@@ -2144,9 +2189,9 @@ struct DSOBJECT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsobjectnames
 struct DSOBJECTNAMES
 {
-    GUID clsidNamespace;
-    uint cItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DSOBJECT[1] aObjects;
+    GUID        clsidNamespace;
+    uint        cItems;
+    DSOBJECT[1] aObjects; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsdisplayspecoptions
@@ -2184,19 +2229,19 @@ struct DOMAINDESC
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-domain_tree
 struct DOMAIN_TREE
 {
-    uint dsSize;
-    uint dwCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOMAINDESC[1] aDomains;
+    uint          dsSize;
+    uint          dwCount;
+    DOMAINDESC[1] aDomains; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsclasscreationinfo
 struct DSCLASSCREATIONINFO
 {
-    uint dwFlags;
-    GUID clsidWizardDialog;
-    GUID clsidWizardPrimaryPage;
-    uint cWizardExtensions;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] aWizardExtensions;
+    uint    dwFlags;
+    GUID    clsidWizardDialog;
+    GUID    clsidWizardPrimaryPage;
+    uint    cWizardExtensions;
+    GUID[1] aWizardExtensions; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfow
@@ -2322,9 +2367,9 @@ struct DS_SELECTION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-ds_selection_list
 struct DS_SELECTION_LIST
 {
-    uint cItems;
-    uint cFetchedAttributes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_SELECTION[1] aDsSelection;
+    uint            cItems;
+    uint            cFetchedAttributes;
+    DS_SELECTION[1] aDsSelection; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryinitparams
@@ -2353,21 +2398,21 @@ struct DSCOLUMN
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryparams
 struct DSQUERYPARAMS
 {
-    uint      cbStruct;
-    uint      dwFlags;
-    HINSTANCE hInstance;
-    int       offsetQuery;
-    int       iColumns;
-    uint      dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DSCOLUMN[1] aColumns;
+    uint        cbStruct;
+    uint        dwFlags;
+    HINSTANCE   hInstance;
+    int         offsetQuery;
+    int         iColumns;
+    uint        dwReserved;
+    DSCOLUMN[1] aColumns; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryclasslist
 struct DSQUERYCLASSLIST
 {
-    uint cbStruct;
-    int  cClasses;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] offsetClass;
+    uint    cbStruct;
+    int     cClasses;
+    uint[1] offsetClass; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/ns-dsadmin-dsa_newobj_dispinfo
@@ -2411,10 +2456,10 @@ struct SCHEDULE_HEADER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schedule/ns-schedule-schedule
 struct SCHEDULE
 {
-    uint Size;
-    uint Bandwidth;
-    uint NumberOfSchedules;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCHEDULE_HEADER[1] Schedules;
+    uint               Size;
+    uint               Bandwidth;
+    uint               NumberOfSchedules;
+    SCHEDULE_HEADER[1] Schedules; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itema
@@ -2671,9 +2716,9 @@ struct DS_REPL_NEIGHBORW_BLOB
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborsw
 struct DS_REPL_NEIGHBORSW
 {
-    uint cNumNeighbors;
-    uint dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_NEIGHBORW[1] rgNeighbor;
+    uint                 cNumNeighbors;
+    uint                 dwReserved;
+    DS_REPL_NEIGHBORW[1] rgNeighbor; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor
@@ -2712,25 +2757,25 @@ struct DS_REPL_CURSOR_BLOB
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors
 struct DS_REPL_CURSORS
 {
-    uint cNumCursors;
-    uint dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_CURSOR[1] rgCursor;
+    uint              cNumCursors;
+    uint              dwReserved;
+    DS_REPL_CURSOR[1] rgCursor; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors_2
 struct DS_REPL_CURSORS_2
 {
-    uint cNumCursors;
-    uint dwEnumerationContext;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_CURSOR_2[1] rgCursor;
+    uint                cNumCursors;
+    uint                dwEnumerationContext;
+    DS_REPL_CURSOR_2[1] rgCursor; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors_3w
 struct DS_REPL_CURSORS_3W
 {
-    uint cNumCursors;
-    uint dwEnumerationContext;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_CURSOR_3W[1] rgCursor;
+    uint                 cNumCursors;
+    uint                 dwEnumerationContext;
+    DS_REPL_CURSOR_3W[1] rgCursor; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data
@@ -2773,7 +2818,7 @@ struct DS_REPL_OBJ_META_DATA
 {
     uint cNumEntries;
     uint dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_ATTR_META_DATA[1] rgMetaData;
+    DS_REPL_ATTR_META_DATA[1] rgMetaData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_obj_meta_data_2
@@ -2781,7 +2826,7 @@ struct DS_REPL_OBJ_META_DATA_2
 {
     uint cNumEntries;
     uint dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_ATTR_META_DATA_2[1] rgMetaData;
+    DS_REPL_ATTR_META_DATA_2[1] rgMetaData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failurew
@@ -2809,7 +2854,7 @@ struct DS_REPL_KCC_DSA_FAILURESW
 {
     uint cNumEntries;
     uint dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_KCC_DSA_FAILUREW[1] rgDsaFailure;
+    DS_REPL_KCC_DSA_FAILUREW[1] rgDsaFailure; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_opw
@@ -2845,9 +2890,9 @@ struct DS_REPL_OPW_BLOB
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_pending_opsw
 struct DS_REPL_PENDING_OPSW
 {
-    FILETIME ftimeCurrentOpStarted;
-    uint     cNumPendingOps;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_OPW[1] rgPendingOp;
+    FILETIME       ftimeCurrentOpStarted;
+    uint           cNumPendingOps;
+    DS_REPL_OPW[1] rgPendingOp; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data
@@ -2943,7 +2988,7 @@ struct DS_REPL_ATTR_VALUE_META_DATA
 {
     uint cNumEntries;
     uint dwEnumerationContext;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_VALUE_META_DATA[1] rgMetaData;
+    DS_REPL_VALUE_META_DATA[1] rgMetaData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data_2
@@ -2951,7 +2996,7 @@ struct DS_REPL_ATTR_VALUE_META_DATA_2
 {
     uint cNumEntries;
     uint dwEnumerationContext;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_VALUE_META_DATA_2[1] rgMetaData;
+    DS_REPL_VALUE_META_DATA_2[1] rgMetaData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data_ext
@@ -2959,7 +3004,7 @@ struct DS_REPL_ATTR_VALUE_META_DATA_EXT
 {
     uint cNumEntries;
     uint dwEnumerationContext;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_VALUE_META_DATA_EXT[1] rgMetaData;
+    DS_REPL_VALUE_META_DATA_EXT[1] rgMetaData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_queue_statisticsw

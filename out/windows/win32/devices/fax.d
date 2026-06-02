@@ -3,15 +3,15 @@
 module windows.win32.devices.fax;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, DEVPROPKEY, FILETIME,
-                                                    HANDLE, HINSTANCE, HRESULT, HWND,
-                                                    PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, DEVPROPKEY, FILETIME,
+                                         HANDLE, HINSTANCE, HRESULT, HWND, PSTR,
+                                         PWSTR, SYSTEMTIME, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HDC;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.io : OVERLAPPED;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
+public import windows.win32.ui.controls : HPROPSHEETPAGE;
 
 extern(Windows) @nogc nothrow:
 
@@ -680,10 +680,14 @@ enum : uint
 }
 
 enum uint MAX_NOTIFICATION_DATA = 0x00000040U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_ADD_DEVICE_BROADCAST_ACTION = "Arrival";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_REMOVE_DEVICE_BROADCAST_ACTION = "Removal";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_ADD_DEVICE_BROADCAST_STRING = "STI\\";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_REMOVE_DEVICE_BROADCAST_STRING = "STI\\";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STI_ADD_DEVICE_BROADCAST_ACTION = "Arrival";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STI_REMOVE_DEVICE_BROADCAST_ACTION = "Removal";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STI_ADD_DEVICE_BROADCAST_STRING = "STI\\";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STI_REMOVE_DEVICE_BROADCAST_STRING = "STI\\";
 
 enum : uint
 {
@@ -800,28 +804,35 @@ enum : const(wchar)*
 
 enum const(wchar)* REGSTR_VAL_BAUDRATE = "BaudRate";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STI_DEVICE_VALUE_TWAIN_NAME_A            = "TwainDS",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STI_DEVICE_VALUE_ISIS_NAME_A             = "ISISDriverName",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STI_DEVICE_VALUE_ICM_PROFILE_A           = "ICMProfile",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STI_DEVICE_VALUE_DEFAULT_LAUNCHAPP_A     = "DefaultLaunchApp",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STI_DEVICE_VALUE_TIMEOUT_A               = "PollTimeout",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STI_DEVICE_VALUE_DISABLE_NOTIFICATIONS_A = "DisableNotifications",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTR_VAL_BAUDRATE_A = "BaudRate";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGSTR_VAL_BAUDRATE_A = "BaudRate";
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1809653702, 33039, 4560, 190, 199, 8, 0, 43, 226, 9, 47}, 2))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_WIA_DeviceType = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1809653702, 33039, 4560, 190, 199, 8, 0, 43, 226, 9, 47}, 2))], [])*/DEVPROPKEY(GUID("6BDD1FC6-810F-11D0-BEC7-08002BE2092F"), 2),
-    DEVPKEY_WIA_USDClassId = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1809653702, 33039, 4560, 190, 199, 8, 0, 43, 226, 9, 47}, 2))], [])*/DEVPROPKEY(GUID("6BDD1FC6-810F-11D0-BEC7-08002BE2092F"), 3),
+    DEVPKEY_WIA_DeviceType = DEVPROPKEY(GUID("6BDD1FC6-810F-11D0-BEC7-08002BE2092F"), 2),
+    DEVPKEY_WIA_USDClassId = DEVPROPKEY(GUID("6BDD1FC6-810F-11D0-BEC7-08002BE2092F"), 3),
 }
 
 enum uint STI_USD_GENCAP_NATIVE_PUSHSUPPORT = 0x00000001U;
 enum uint STI_DEVICE_CREATE_FOR_MONITOR = 0x01000000U;
 enum int lDEFAULT_PREFETCH_SIZE = 0x00000064;
-enum ushort wcharREASSIGN_RECIPIENTS_DELIMITER = cast(ushort) 0x003b;
+enum ushort wcharREASSIGN_RECIPIENTS_DELIMITER = 0x003b;
 
 // Callbacks
 

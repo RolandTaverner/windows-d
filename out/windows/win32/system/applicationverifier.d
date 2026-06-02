@@ -3,7 +3,7 @@
 module windows.win32.system.applicationverifier;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE;
+public import windows.win32.foundation : HANDLE;
 
 extern(Windows) @nogc nothrow:
 

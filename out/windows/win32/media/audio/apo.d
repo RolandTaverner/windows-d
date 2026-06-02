@@ -3,12 +3,12 @@
 module windows.win32.media.audio.apo;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, LPARAM, PROPERTYKEY,
-                                                    PWSTR;
-public import windows.win32.media.audio.audio : AUDIO_SYSTEMEFFECTS_PROPERTYSTORE_TYPE, AUDIO_VOLUME_NOTIFICATION_DATA,
-                                                IMMDevice, IMMDeviceCollection,
-                                                WAVEFORMATEX;
-public import windows.win32.system.com.com : IServiceProvider, IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, LPARAM, PROPERTYKEY,
+                                         PWSTR;
+public import windows.win32.media.audio : AUDIO_SYSTEMEFFECTS_PROPERTYSTORE_TYPE, AUDIO_VOLUME_NOTIFICATION_DATA,
+                                          IMMDevice, IMMDeviceCollection,
+                                          WAVEFORMATEX;
+public import windows.win32.system.com : IServiceProvider, IUnknown;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
 
 extern(Windows) @nogc nothrow:
@@ -145,93 +145,96 @@ enum double AUDIO_MAX_FRAMERATE = 0x1.77p+18;
 enum uint AUDIO_MIN_CHANNELS = 0x00000001U;
 enum uint AUDIO_MAX_CHANNELS = 0x00001000U;
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 0))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_Association       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 0))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 0),
-    PKEY_FX_PreMixEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 0))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 1),
+    PKEY_FX_Association       = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 0),
+    PKEY_FX_PreMixEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 1),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 2))], [])*/PROPERTYKEY PKEY_FX_PostMixEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 2))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 2);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 3))], [])*/PROPERTYKEY PKEY_FX_UserInterfaceClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 3))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 3);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 4))], [])*/PROPERTYKEY PKEY_FX_FriendlyName = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 4))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 4);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 5))], [])*/PROPERTYKEY PKEY_FX_StreamEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 5))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 5);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 6))], [])*/PROPERTYKEY PKEY_FX_ModeEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 6))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 6);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 7))], [])*/PROPERTYKEY PKEY_FX_EndpointEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 7))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 7);
+enum PROPERTYKEY PKEY_FX_PostMixEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 2);
+enum PROPERTYKEY PKEY_FX_UserInterfaceClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 3);
+enum PROPERTYKEY PKEY_FX_FriendlyName = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 4);
+enum PROPERTYKEY PKEY_FX_StreamEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 5);
+enum PROPERTYKEY PKEY_FX_ModeEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 6);
+enum PROPERTYKEY PKEY_FX_EndpointEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 7);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 8))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_KeywordDetector_StreamEffectClsid   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 8))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 8),
-    PKEY_FX_KeywordDetector_ModeEffectClsid     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 8))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 9),
-    PKEY_FX_KeywordDetector_EndpointEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 8))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 10),
+    PKEY_FX_KeywordDetector_StreamEffectClsid   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 8),
+    PKEY_FX_KeywordDetector_ModeEffectClsid     = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 9),
+    PKEY_FX_KeywordDetector_EndpointEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 10),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 11))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_Offload_StreamEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 11))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 11),
-    PKEY_FX_Offload_ModeEffectClsid   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 11))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 12),
+    PKEY_FX_Offload_StreamEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 11),
+    PKEY_FX_Offload_ModeEffectClsid   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 12),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_CompositeFX_StreamEffectClsid                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 13),
-    PKEY_CompositeFX_ModeEffectClsid                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 14),
-    PKEY_CompositeFX_EndpointEffectClsid                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 15),
-    PKEY_CompositeFX_KeywordDetector_StreamEffectClsid   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 16),
-    PKEY_CompositeFX_KeywordDetector_ModeEffectClsid     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 17),
-    PKEY_CompositeFX_KeywordDetector_EndpointEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 13))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 18),
+    PKEY_CompositeFX_StreamEffectClsid                   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 13),
+    PKEY_CompositeFX_ModeEffectClsid                     = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 14),
+    PKEY_CompositeFX_EndpointEffectClsid                 = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 15),
+    PKEY_CompositeFX_KeywordDetector_StreamEffectClsid   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 16),
+    PKEY_CompositeFX_KeywordDetector_ModeEffectClsid     = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 17),
+    PKEY_CompositeFX_KeywordDetector_EndpointEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 18),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 19))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_CompositeFX_Offload_StreamEffectClsid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 19))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 19),
-    PKEY_CompositeFX_Offload_ModeEffectClsid   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 19))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 20),
+    PKEY_CompositeFX_Offload_StreamEffectClsid = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 19),
+    PKEY_CompositeFX_Offload_ModeEffectClsid   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 20),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 21))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_SupportAppLauncher = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 21))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 21),
-    PKEY_FX_SupportedFormats   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 21))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 22),
+    PKEY_FX_SupportAppLauncher = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 21),
+    PKEY_FX_SupportedFormats   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 22),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 23))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_Enumerator   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 23))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 23),
-    PKEY_FX_VersionMajor = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 23))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 24),
-    PKEY_FX_VersionMinor = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 23))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 25),
+    PKEY_FX_Enumerator   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 23),
+    PKEY_FX_VersionMajor = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 24),
+    PKEY_FX_VersionMinor = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 25),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 26))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_Author                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 26))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 26),
-    PKEY_FX_ObjectId                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 26))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 27),
-    PKEY_FX_State                    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 26))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 28),
-    PKEY_FX_EffectPackSchema_Version = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 26))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 29),
+    PKEY_FX_Author                   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 26),
+    PKEY_FX_ObjectId                 = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 27),
+    PKEY_FX_State                    = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 28),
+    PKEY_FX_EffectPackSchema_Version = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 29),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 30))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_ApplyToBluetooth = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 30))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 30),
-    PKEY_FX_ApplyToUsb       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 30))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 31),
-    PKEY_FX_ApplyToRender    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 30))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 32),
-    PKEY_FX_ApplyToCapture   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 30))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 33),
+    PKEY_FX_ApplyToBluetooth = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 30),
+    PKEY_FX_ApplyToUsb       = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 31),
+    PKEY_FX_ApplyToRender    = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 32),
+    PKEY_FX_ApplyToCapture   = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 33),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 34))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_FX_RequestSetAsDefault         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 34))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 34),
-    PKEY_FX_RequestSetAsDefaultPriority = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 34))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 35),
+    PKEY_FX_RequestSetAsDefault         = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 34),
+    PKEY_FX_RequestSetAsDefaultPriority = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 35),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 36))], [])*/PROPERTYKEY PKEY_FX_OEM_Preferred_EffectPack_Id = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 36))], [])*/PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 36);
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-sfx-processingmodes-supported-for-streaming))], [])*/PROPERTYKEY PKEY_SFX_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-sfx-processingmodes-supported-for-streaming))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 5);
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-mfx-processingmodes-supported-for-streaming))], [])*/PROPERTYKEY PKEY_MFX_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-mfx-processingmodes-supported-for-streaming))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 6);
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-efx-processingmodes-supported-for-streaming))], [])*/PROPERTYKEY PKEY_EFX_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-efx-processingmodes-supported-for-streaming))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 7);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 8))], [])*/PROPERTYKEY PKEY_SFX_KeywordDetector_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 8))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 8);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 9))], [])*/PROPERTYKEY PKEY_MFX_KeywordDetector_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 9))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 9);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 10))], [])*/PROPERTYKEY PKEY_EFX_KeywordDetector_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 10))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 10);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 11))], [])*/PROPERTYKEY PKEY_SFX_Offload_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 11))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 11);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 12))], [])*/PROPERTYKEY PKEY_MFX_Offload_ProcessingModes_Supported_For_Streaming = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 12))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 12);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 13))], [])*/PROPERTYKEY PKEY_APO_SWFallback_ProcessingModes = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3550034495, 39362, 17410, 181, 236, 169, 42, 3, 103, 102, 75}, 13))], [])*/PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 13);
+enum PROPERTYKEY PKEY_FX_OEM_Preferred_EffectPack_Id = PROPERTYKEY(GUID("D04E05A6-594B-4FB6-A80D-01AF5EED7D1D"), 36);
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/CoreAudio/pkey-sfx-processingmodes-supported-for-streaming
+enum PROPERTYKEY PKEY_SFX_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 5);
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/CoreAudio/pkey-mfx-processingmodes-supported-for-streaming
+enum PROPERTYKEY PKEY_MFX_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 6);
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/CoreAudio/pkey-efx-processingmodes-supported-for-streaming
+enum PROPERTYKEY PKEY_EFX_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 7);
+enum PROPERTYKEY PKEY_SFX_KeywordDetector_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 8);
+enum PROPERTYKEY PKEY_MFX_KeywordDetector_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 9);
+enum PROPERTYKEY PKEY_EFX_KeywordDetector_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 10);
+enum PROPERTYKEY PKEY_SFX_Offload_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 11);
+enum PROPERTYKEY PKEY_MFX_Offload_ProcessingModes_Supported_For_Streaming = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 12);
+enum PROPERTYKEY PKEY_APO_SWFallback_ProcessingModes = PROPERTYKEY(GUID("D3993A3F-99C2-4402-B5EC-A92A0367664B"), 13);
 enum GUID PKEY_FX_EffectPack_Schema_V1 = GUID("7abf23d9-727e-4d0b-86a3-dd501d260001");
 
 enum : GUID
@@ -240,7 +243,7 @@ enum : GUID
     SID_AudioProcessingObjectLoggingService = GUID("8b8008af-09f9-456e-a173-bdb58499bce7"),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1257995144, 42579, 17573, 153, 219, 104, 127, 215, 74, 240, 187}, 2))], [])*/PROPERTYKEY PKEY_AudioEnvironment_SpatialAudioActive = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1257995144, 42579, 17573, 153, 219, 104, 127, 215, 74, 240, 187}, 2))], [])*/PROPERTYKEY(GUID("4AFB7B88-A653-44A5-99DB-687FD74AF0BB"), 2);
+enum PROPERTYKEY PKEY_AudioEnvironment_SpatialAudioActive = PROPERTYKEY(GUID("4AFB7B88-A653-44A5-99DB-687FD74AF0BB"), 2);
 
 enum : uint
 {
@@ -307,7 +310,7 @@ struct APO_REG_PROPERTIES
     uint       u32MaxOutputConnections;
     uint       u32MaxInstances;
     uint       u32NumAPOInterfaces;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] iidAPOInterfaceList;
+    GUID[1]    iidAPOInterfaceList; // Flexible array
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -406,13 +409,13 @@ struct AUDIO_SYSTEMEFFECTS_PROPERTY_CHANGE_NOTIFICATION
 struct AUDIO_VOLUME_NOTIFICATION_DATA2
 {
     AUDIO_VOLUME_NOTIFICATION_DATA* notificationData;
-    float masterVolumeInDb;
-    float volumeMinInDb;
-    float volumeMaxInDb;
-    float volumeIncrementInDb;
-    uint  step;
-    uint  stepCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/float[1] channelVolumesInDb;
+    float    masterVolumeInDb;
+    float    volumeMinInDb;
+    float    volumeMaxInDb;
+    float    volumeIncrementInDb;
+    uint     step;
+    uint     stepCount;
+    float[1] channelVolumesInDb; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_change_notification2

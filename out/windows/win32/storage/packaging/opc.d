@@ -3,10 +3,10 @@
 module windows.win32.storage.packaging.opc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
-public import windows.win32.system.com.com : IStream, IUnknown, IUri;
+public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.security.cryptography : CERT_CONTEXT;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.system.com : IStream, IUnknown, IUri;
 
 extern(Windows) @nogc nothrow:
 

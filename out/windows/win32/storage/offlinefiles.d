@@ -3,8 +3,8 @@
 module windows.win32.storage.offlinefiles;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HRESULT, HWND, PWSTR;
-public import windows.win32.system.com.com : BYTE_BLOB, IUnknown;
+public import windows.win32.foundation : BOOL, FILETIME, HRESULT, HWND, PWSTR;
+public import windows.win32.system.com : BYTE_BLOB, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

@@ -3,16 +3,14 @@
 module windows.win32.security.cryptography.ui;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND,
-                                                    LPARAM, PSTR, PWSTR, WPARAM;
-public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT,
-                                                                 CRL_CONTEXT, CRYPT_ATTRIBUTES,
-                                                                 CRYPT_INTEGER_BLOB,
-                                                                 CRYPT_KEY_FLAGS,
-                                                                 CRYPT_KEY_PROV_INFO,
-                                                                 CTL_CONTEXT, HCERTSTORE;
+public import windows.win32.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND,
+                                         LPARAM, PSTR, PWSTR, WPARAM;
+public import windows.win32.security.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT, CRL_CONTEXT,
+                                                    CRYPT_ATTRIBUTES, CRYPT_INTEGER_BLOB,
+                                                    CRYPT_KEY_FLAGS, CRYPT_KEY_PROV_INFO,
+                                                    CTL_CONTEXT, HCERTSTORE;
 public import windows.win32.security.wintrust : CRYPT_PROVIDER_DATA;
-public import windows.win32.ui.controls.controls : PROPSHEETPAGEA, PROPSHEETPAGEW;
+public import windows.win32.ui.controls : PROPSHEETPAGEA, PROPSHEETPAGEW;
 
 extern(Windows) @nogc nothrow:
 
@@ -240,7 +238,8 @@ enum : uint
 }
 
 enum GUID CERT_CERTIFICATE_ACTION_VERIFY = GUID("7801ebd0-cf4b-11d0-851f-0060979387ea");
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szCERT_CERTIFICATE_ACTION_VERIFY = "{7801ebd0-cf4b-11d0-851f-0060979387ea}";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szCERT_CERTIFICATE_ACTION_VERIFY = "{7801ebd0-cf4b-11d0-851f-0060979387ea}";
 
 enum : uint
 {

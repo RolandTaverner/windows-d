@@ -3,7 +3,7 @@
 module windows.win32.devices.serialcommunication;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY;
+public import windows.win32.foundation : BOOL, BOOLEAN, DEVPROPKEY;
 
 extern(Windows) @nogc nothrow:
 
@@ -22,11 +22,11 @@ enum : int
 // Constants
 
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1282142556, 19459, 19116, 145, 245, 100, 192, 248, 82, 188, 244}, 2))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_DeviceInterface_Serial_UsbVendorId  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1282142556, 19459, 19116, 145, 245, 100, 192, 248, 82, 188, 244}, 2))], [])*/DEVPROPKEY(GUID("4C6BF15C-4C03-4AAC-91F5-64C0F852BCF4"), 2),
-    DEVPKEY_DeviceInterface_Serial_UsbProductId = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1282142556, 19459, 19116, 145, 245, 100, 192, 248, 82, 188, 244}, 2))], [])*/DEVPROPKEY(GUID("4C6BF15C-4C03-4AAC-91F5-64C0F852BCF4"), 3),
-    DEVPKEY_DeviceInterface_Serial_PortName     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1282142556, 19459, 19116, 145, 245, 100, 192, 248, 82, 188, 244}, 2))], [])*/DEVPROPKEY(GUID("4C6BF15C-4C03-4AAC-91F5-64C0F852BCF4"), 4),
+    DEVPKEY_DeviceInterface_Serial_UsbVendorId  = DEVPROPKEY(GUID("4C6BF15C-4C03-4AAC-91F5-64C0F852BCF4"), 2),
+    DEVPKEY_DeviceInterface_Serial_UsbProductId = DEVPROPKEY(GUID("4C6BF15C-4C03-4AAC-91F5-64C0F852BCF4"), 3),
+    DEVPKEY_DeviceInterface_Serial_PortName     = DEVPROPKEY(GUID("4C6BF15C-4C03-4AAC-91F5-64C0F852BCF4"), 4),
 }
 
 enum : uint
@@ -118,10 +118,10 @@ enum uint SPACE_PARITY = 0x00000004U;
 
 enum : ushort
 {
-    SERIAL_LSRMST_ESCAPE     = cast(ushort) 0x0000,
-    SERIAL_LSRMST_LSR_DATA   = cast(ushort) 0x0001,
-    SERIAL_LSRMST_LSR_NODATA = cast(ushort) 0x0002,
-    SERIAL_LSRMST_MST        = cast(ushort) 0x0003,
+    SERIAL_LSRMST_ESCAPE     = 0x0000,
+    SERIAL_LSRMST_LSR_DATA   = 0x0001,
+    SERIAL_LSRMST_LSR_NODATA = 0x0002,
+    SERIAL_LSRMST_MST        = 0x0003,
 }
 
 enum uint IOCTL_INTERNAL_SERENUM_REMOVE_SELF = 0x00370207U;
@@ -162,12 +162,12 @@ struct SERIALPERF_STATS
 
 struct SERIALCONFIG
 {
-    uint   Size;
-    ushort Version;
-    uint   SubType;
-    uint   ProvOffset;
-    uint   ProviderSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ProviderData;
+    uint     Size;
+    ushort   Version;
+    uint     SubType;
+    uint     ProvOffset;
+    uint     ProviderSize;
+    wchar[1] ProviderData; // Flexible array
 }
 
 struct SERIAL_LINE_CONTROL
@@ -242,32 +242,32 @@ struct SERIAL_XOFF_COUNTER
 
 struct SERIAL_COMMPROP
 {
-    ushort PacketLength;
-    ushort PacketVersion;
-    uint   ServiceMask;
-    uint   Reserved1;
-    uint   MaxTxQueue;
-    uint   MaxRxQueue;
-    uint   MaxBaud;
-    uint   ProvSubType;
-    uint   ProvCapabilities;
-    uint   SettableParams;
-    uint   SettableBaud;
-    ushort SettableData;
-    ushort SettableStopParity;
-    uint   CurrentTxQueue;
-    uint   CurrentRxQueue;
-    uint   ProvSpec1;
-    uint   ProvSpec2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ProvChar;
+    ushort   PacketLength;
+    ushort   PacketVersion;
+    uint     ServiceMask;
+    uint     Reserved1;
+    uint     MaxTxQueue;
+    uint     MaxRxQueue;
+    uint     MaxBaud;
+    uint     ProvSubType;
+    uint     ProvCapabilities;
+    uint     SettableParams;
+    uint     SettableBaud;
+    ushort   SettableData;
+    ushort   SettableStopParity;
+    uint     CurrentTxQueue;
+    uint     CurrentRxQueue;
+    uint     ProvSpec1;
+    uint     ProvSpec2;
+    wchar[1] ProvChar; // Flexible array
 }
 
 struct SERENUM_PORT_DESC
 {
-    uint  Size;
-    void* PortHandle;
-    long  PortAddress;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] Reserved;
+    uint      Size;
+    void*     PortHandle;
+    long      PortAddress;
+    ushort[1] Reserved; // Flexible array
 }
 
 struct SERENUM_PORT_PARAMETERS

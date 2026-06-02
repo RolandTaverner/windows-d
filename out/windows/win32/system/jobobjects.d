@@ -3,8 +3,8 @@
 module windows.win32.system.jobobjects;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, PSTR, PWSTR;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES, TOKEN_GROUPS, TOKEN_PRIVILEGES;
+public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security : SECURITY_ATTRIBUTES, TOKEN_GROUPS, TOKEN_PRIVILEGES;
 public import windows.win32.system.threading : IO_COUNTERS;
 
 extern(Windows) @nogc nothrow:
@@ -199,7 +199,7 @@ struct JOBOBJECT_IO_RATE_CONTROL_INFORMATION
     long         ReservationIops;
     const(PWSTR) VolumeName;
     uint         BaseIoSize;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(JOB_OBJECT_IO_RATE_CONTROL_FLAGS))], [])*/uint ControlFlags;
+    uint         ControlFlags;
 }
 
 struct JOB_SET_ARRAY
@@ -250,9 +250,9 @@ struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list
 struct JOBOBJECT_BASIC_PROCESS_ID_LIST
 {
-    uint NumberOfAssignedProcesses;
-    uint NumberOfProcessIdsInList;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/size_t[1] ProcessIdList;
+    uint      NumberOfAssignedProcesses;
+    uint      NumberOfProcessIdsInList;
+    size_t[1] ProcessIdList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_ui_restrictions

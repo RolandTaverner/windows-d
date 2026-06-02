@@ -4,9 +4,9 @@ module windows.win32.devices.enumeration.pnp;
 
 public import windows.core;
 public import windows.win32.devices.properties : DEVPROPERTY;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
-public import windows.win32.security.security : SECURITY_DESCRIPTOR;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
+public import windows.win32.security : SECURITY_DESCRIPTOR;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -149,8 +149,8 @@ struct SW_DEVICE_CREATE_INFO
 {
     uint         cbSize;
     const(PWSTR) pszInstanceId;
-    /*FIELD ATTR: NullNullTerminatedAttribute : CustomAttributeSig([], [])*/const(PWSTR) pszzHardwareIds;
-    /*FIELD ATTR: NullNullTerminatedAttribute : CustomAttributeSig([], [])*/const(PWSTR) pszzCompatibleIds;
+    const(PWSTR) pszzHardwareIds;
+    const(PWSTR) pszzCompatibleIds;
     const(GUID)* pContainerId;
     uint         CapabilityFlags;
     const(PWSTR) pszDeviceDescription;

@@ -3,12 +3,11 @@
 module windows.win32.graphics.directdraw;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HINSTANCE, HRESULT,
-                                                    HWND, PSTR, PWSTR, RECT, RECTL,
-                                                    SIZE;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HINSTANCE, HRESULT, HWND,
+                                         PSTR, PWSTR, RECT, RECTL, SIZE;
 public import windows.win32.graphics.gdi : HDC, HMONITOR, HPALETTE, PALETTEENTRY,
                                            RGNDATA;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -30,13 +29,16 @@ enum int DDENUM_ATTACHEDSECONDARYDEVICES = 0x00000001;
 enum int DDENUM_DETACHEDSECONDARYDEVICES = 0x00000002;
 enum int DDENUM_NONDISPLAYDEVICES = 0x00000004;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     REGSTR_KEY_DDHW_DESCRIPTION = "Description",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     REGSTR_KEY_DDHW_DRIVERNAME  = "DriverName",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTR_PATH_DDHW = "Hardware\\DirectDrawDrivers";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGSTR_PATH_DDHW = "Hardware\\DirectDrawDrivers";
 
 enum : int
 {
@@ -932,8 +934,10 @@ enum uint DDCREATEDRIVEROBJECT = 0x0000000aU;
 enum uint DDGET32BITDRIVERNAME = 0x0000000bU;
 enum uint DDNEWCALLBACKFNS = 0x0000000cU;
 enum uint DDVERSIONINFO = 0x0000000dU;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DDHAL_DRIVER_DLLNAME = "DDRAW16.DLL";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DDHAL_APP_DLLNAME = "DDRAW.DLL";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* DDHAL_DRIVER_DLLNAME = "DDRAW16.DLL";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* DDHAL_APP_DLLNAME = "DDRAW.DLL";
 enum uint CCHDEVICENAME = 0x00000020U;
 enum uint MAX_DRIVER_NAME = 0x00000020U;
 enum uint MAX_PALETTE_SIZE = 0x00000100U;

@@ -3,8 +3,8 @@
 module windows.win32.system.systeminformation;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
-                                                    HRESULT, PSTR, PWSTR, SYSTEMTIME;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
+                                         HRESULT, PSTR, PWSTR, SYSTEMTIME;
 
 extern(Windows) @nogc nothrow:
 
@@ -710,11 +710,11 @@ struct SYSTEM_LOGICAL_PROCESSOR_INFORMATION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_relationship
 struct PROCESSOR_RELATIONSHIP
 {
-    ubyte     Flags;
-    ubyte     EfficiencyClass;
-    ubyte[20] Reserved;
-    ushort    GroupCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GROUP_AFFINITY[1] GroupMask;
+    ubyte             Flags;
+    ubyte             EfficiencyClass;
+    ubyte[20]         Reserved;
+    ushort            GroupCount;
+    GROUP_AFFINITY[1] GroupMask; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-numa_node_relationship
@@ -725,8 +725,8 @@ struct NUMA_NODE_RELATIONSHIP
     ushort    GroupCount;
     union
     {
-        GROUP_AFFINITY GroupMask;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GROUP_AFFINITY[1] GroupMasks;
+        GROUP_AFFINITY    GroupMask;
+        GROUP_AFFINITY[1] GroupMasks; // Flexible array
     }
 }
 
@@ -742,8 +742,8 @@ struct CACHE_RELATIONSHIP
     ushort               GroupCount;
     union
     {
-        GROUP_AFFINITY GroupMask;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GROUP_AFFINITY[1] GroupMasks;
+        GROUP_AFFINITY    GroupMask;
+        GROUP_AFFINITY[1] GroupMasks; // Flexible array
     }
 }
 
@@ -762,7 +762,7 @@ struct GROUP_RELATIONSHIP
     ushort    MaximumGroupCount;
     ushort    ActiveGroupCount;
     ubyte[20] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PROCESSOR_GROUP_INFO[1] GroupInfo;
+    PROCESSOR_GROUP_INFO[1] GroupInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_logical_processor_information_ex
@@ -800,7 +800,7 @@ struct SYSTEM_CPU_SET_INFORMATION
                 ubyte AllFlags;
                 struct
                 {
-                    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield481;
+                    ubyte _bitfield481;
                 }
             }
             union
@@ -825,7 +825,7 @@ struct SYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION
 
 struct SYSTEM_SUPPORTED_PROCESSOR_ARCHITECTURES_INFORMATION
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedZero0)), FixedArgSig(ElementSig(21)), FixedArgSig(ElementSig(11))], [])*/uint _bitfield482;
+    uint _bitfield482;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-osversioninfoa

@@ -3,17 +3,17 @@
 module windows.win32.security.wintrust;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HRESULT,
-                                                    HWND, PSTR, PWSTR;
-public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CHAIN_ELEMENT,
-                                                                 CERT_CHAIN_PARA, CERT_CONTEXT,
-                                                                 CERT_INFO, CERT_STRONG_SIGN_PARA,
-                                                                 CERT_USAGE_MATCH, CMSG_SIGNER_INFO,
-                                                                 CRYPT_ALGORITHM_IDENTIFIER,
-                                                                 CRYPT_ATTRIBUTE_TYPE_VALUE,
-                                                                 CRYPT_BIT_BLOB, CRYPT_INTEGER_BLOB,
-                                                                 CTL_CONTEXT, HCERTCHAINENGINE,
-                                                                 HCERTSTORE;
+public import windows.win32.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HRESULT,
+                                         HWND, PSTR, PWSTR;
+public import windows.win32.security.cryptography : CERT_CHAIN_CONTEXT, CERT_CHAIN_ELEMENT,
+                                                    CERT_CHAIN_PARA, CERT_CONTEXT,
+                                                    CERT_INFO, CERT_STRONG_SIGN_PARA,
+                                                    CERT_USAGE_MATCH, CMSG_SIGNER_INFO,
+                                                    CRYPT_ALGORITHM_IDENTIFIER,
+                                                    CRYPT_ATTRIBUTE_TYPE_VALUE,
+                                                    CRYPT_BIT_BLOB, CRYPT_INTEGER_BLOB,
+                                                    CTL_CONTEXT, HCERTCHAINENGINE,
+                                                    HCERTSTORE;
 public import windows.win32.security.cryptography.sip : SIP_DISPATCH_INFO, SIP_INDIRECT_DATA,
                                                         SIP_SUBJECTINFO;
 
@@ -222,97 +222,143 @@ enum : const(wchar)*
 
 enum uint WT_ADD_ACTION_ID_RET_RESULT_FLAG = 0x00000001U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_TRUSTED_CODESIGNING_CA_LIST = "1.3.6.1.4.1.311.2.2.1",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_TRUSTED_CLIENT_AUTH_CA_LIST = "1.3.6.1.4.1.311.2.2.2",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_TRUSTED_SERVER_AUTH_CA_LIST = "1.3.6.1.4.1.311.2.2.3",
 }
 
 enum const(wchar)* SPC_COMMON_NAME_OBJID = "2.5.4.3";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_TIME_STAMP_REQUEST_OBJID = "1.3.6.1.4.1.311.3.2.1";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_INDIRECT_DATA_OBJID = "1.3.6.1.4.1.311.2.1.4";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_SP_AGENCY_INFO_OBJID = "1.3.6.1.4.1.311.2.1.10";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_STATEMENT_TYPE_OBJID = "1.3.6.1.4.1.311.2.1.11";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_SP_OPUS_INFO_OBJID = "1.3.6.1.4.1.311.2.1.12";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_CERT_EXTENSIONS_OBJID = "1.3.6.1.4.1.311.2.1.14";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_PE_IMAGE_DATA_OBJID = "1.3.6.1.4.1.311.2.1.15";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_RAW_FILE_DATA_OBJID = "1.3.6.1.4.1.311.2.1.18";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_STRUCTURED_STORAGE_DATA_OBJID = "1.3.6.1.4.1.311.2.1.19";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_JAVA_CLASS_DATA_OBJID = "1.3.6.1.4.1.311.2.1.20";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_INDIVIDUAL_SP_KEY_PURPOSE_OBJID = "1.3.6.1.4.1.311.2.1.21";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_COMMERCIAL_SP_KEY_PURPOSE_OBJID = "1.3.6.1.4.1.311.2.1.22";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_CAB_DATA_OBJID = "1.3.6.1.4.1.311.2.1.25";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_GLUE_RDN_OBJID = "1.3.6.1.4.1.311.2.1.25";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_MINIMAL_CRITERIA_OBJID = "1.3.6.1.4.1.311.2.1.26";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_FINANCIAL_CRITERIA_OBJID = "1.3.6.1.4.1.311.2.1.27";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_LINK_OBJID = "1.3.6.1.4.1.311.2.1.28";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_SIGINFO_OBJID = "1.3.6.1.4.1.311.2.1.30";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_TIME_STAMP_REQUEST_OBJID = "1.3.6.1.4.1.311.3.2.1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_INDIRECT_DATA_OBJID = "1.3.6.1.4.1.311.2.1.4";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_SP_AGENCY_INFO_OBJID = "1.3.6.1.4.1.311.2.1.10";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_STATEMENT_TYPE_OBJID = "1.3.6.1.4.1.311.2.1.11";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_SP_OPUS_INFO_OBJID = "1.3.6.1.4.1.311.2.1.12";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_CERT_EXTENSIONS_OBJID = "1.3.6.1.4.1.311.2.1.14";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_PE_IMAGE_DATA_OBJID = "1.3.6.1.4.1.311.2.1.15";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_RAW_FILE_DATA_OBJID = "1.3.6.1.4.1.311.2.1.18";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_STRUCTURED_STORAGE_DATA_OBJID = "1.3.6.1.4.1.311.2.1.19";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_JAVA_CLASS_DATA_OBJID = "1.3.6.1.4.1.311.2.1.20";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_INDIVIDUAL_SP_KEY_PURPOSE_OBJID = "1.3.6.1.4.1.311.2.1.21";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_COMMERCIAL_SP_KEY_PURPOSE_OBJID = "1.3.6.1.4.1.311.2.1.22";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_CAB_DATA_OBJID = "1.3.6.1.4.1.311.2.1.25";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_GLUE_RDN_OBJID = "1.3.6.1.4.1.311.2.1.25";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_MINIMAL_CRITERIA_OBJID = "1.3.6.1.4.1.311.2.1.26";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_FINANCIAL_CRITERIA_OBJID = "1.3.6.1.4.1.311.2.1.27";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_LINK_OBJID = "1.3.6.1.4.1.311.2.1.28";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_SIGINFO_OBJID = "1.3.6.1.4.1.311.2.1.30";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SPC_PE_IMAGE_PAGE_HASHES_V1_OBJID = "1.3.6.1.4.1.311.2.3.1",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     SPC_PE_IMAGE_PAGE_HASHES_V2_OBJID = "1.3.6.1.4.1.311.2.3.2",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szOID_NESTED_SIGNATURE = "1.3.6.1.4.1.311.2.4.1";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szOID_INTENT_TO_SEAL = "1.3.6.1.4.1.311.2.4.2";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szOID_NESTED_SIGNATURE = "1.3.6.1.4.1.311.2.4.1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szOID_INTENT_TO_SEAL = "1.3.6.1.4.1.311.2.4.2";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SEALING_SIGNATURE = "1.3.6.1.4.1.311.2.4.3",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SEALING_TIMESTAMP = "1.3.6.1.4.1.311.2.4.4",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szOID_ENHANCED_HASH = "1.3.6.1.4.1.311.2.5.1";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_RELAXED_PE_MARKER_CHECK_OBJID = "1.3.6.1.4.1.311.2.6.1";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_ENCRYPTED_DIGEST_RETRY_COUNT_OBJID = "1.3.6.1.4.1.311.2.6.2";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szOID_ENHANCED_HASH = "1.3.6.1.4.1.311.2.5.1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_RELAXED_PE_MARKER_CHECK_OBJID = "1.3.6.1.4.1.311.2.6.1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_ENCRYPTED_DIGEST_RETRY_COUNT_OBJID = "1.3.6.1.4.1.311.2.6.2";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_INTERNAL_NAME     = "1.3.6.1.4.1.311.2.7.1",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_FILE_VERSION      = "1.3.6.1.4.1.311.2.7.2",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_FILE_DESCRIPTION  = "1.3.6.1.4.1.311.2.7.3",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_PRODUCT           = "1.3.6.1.4.1.311.2.7.4",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_PRODUCT_VERSION   = "1.3.6.1.4.1.311.2.7.5",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_ORIGINAL_FILENAME = "1.3.6.1.4.1.311.2.7.6",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_LANGUAGE          = "1.3.6.1.4.1.311.2.7.7",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_AUTHOR            = "1.3.6.1.4.1.311.2.7.8",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_PUBLISH_TIME      = "1.3.6.1.4.1.311.2.7.9",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     szOID_SIGNED_ATTRIBUTE_SOURCE_URL        = "1.3.6.1.4.1.311.2.7.10",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szOID_PKCS_9_SEQUENCE_NUMBER = "1.2.840.113549.1.9.25.4";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* CAT_NAMEVALUE_OBJID = "1.3.6.1.4.1.311.12.2.1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szOID_PKCS_9_SEQUENCE_NUMBER = "1.2.840.113549.1.9.25.4";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* CAT_NAMEVALUE_OBJID = "1.3.6.1.4.1.311.12.2.1";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     CAT_MEMBERINFO_OBJID  = "1.3.6.1.4.1.311.12.2.2",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     CAT_MEMBERINFO2_OBJID = "1.3.6.1.4.1.311.12.2.3",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_WINDOWS_HELLO_COMPATIBILITY_OBJID = "1.3.6.1.4.1.311.10.41.1";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SPC_NATURAL_AUTH_PLUGIN_OBJID = "1.3.6.1.4.1.311.96.1.1";
-enum PSTR SPC_SP_AGENCY_INFO_STRUCT = PSTR(0x000007d0);
-enum PSTR SPC_MINIMAL_CRITERIA_STRUCT = PSTR(0x000007d1);
-enum PSTR SPC_FINANCIAL_CRITERIA_STRUCT = PSTR(0x000007d2);
-enum PSTR SPC_INDIRECT_DATA_CONTENT_STRUCT = PSTR(0x000007d3);
-enum PSTR SPC_PE_IMAGE_DATA_STRUCT = PSTR(0x000007d4);
-enum PSTR SPC_LINK_STRUCT = PSTR(0x000007d5);
-enum PSTR SPC_STATEMENT_TYPE_STRUCT = PSTR(0x000007d6);
-enum PSTR SPC_SP_OPUS_INFO_STRUCT = PSTR(0x000007d7);
-enum PSTR SPC_CAB_DATA_STRUCT = PSTR(0x000007d8);
-enum PSTR SPC_JAVA_CLASS_DATA_STRUCT = PSTR(0x000007d9);
-enum PSTR INTENT_TO_SEAL_ATTRIBUTE_STRUCT = PSTR(0x000007da);
-enum PSTR SEALING_SIGNATURE_ATTRIBUTE_STRUCT = PSTR(0x000007db);
-enum PSTR SEALING_TIMESTAMP_ATTRIBUTE_STRUCT = PSTR(0x000007dc);
-enum PSTR SPC_SIGINFO_STRUCT = PSTR(0x00000852);
-enum PSTR CAT_NAMEVALUE_STRUCT = PSTR(0x000008ad);
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_WINDOWS_HELLO_COMPATIBILITY_OBJID = "1.3.6.1.4.1.311.10.41.1";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SPC_NATURAL_AUTH_PLUGIN_OBJID = "1.3.6.1.4.1.311.96.1.1";
+enum PSTR SPC_SP_AGENCY_INFO_STRUCT = PSTR(cast(ubyte*) 0x000007d0);
+enum PSTR SPC_MINIMAL_CRITERIA_STRUCT = PSTR(cast(ubyte*) 0x000007d1);
+enum PSTR SPC_FINANCIAL_CRITERIA_STRUCT = PSTR(cast(ubyte*) 0x000007d2);
+enum PSTR SPC_INDIRECT_DATA_CONTENT_STRUCT = PSTR(cast(ubyte*) 0x000007d3);
+enum PSTR SPC_PE_IMAGE_DATA_STRUCT = PSTR(cast(ubyte*) 0x000007d4);
+enum PSTR SPC_LINK_STRUCT = PSTR(cast(ubyte*) 0x000007d5);
+enum PSTR SPC_STATEMENT_TYPE_STRUCT = PSTR(cast(ubyte*) 0x000007d6);
+enum PSTR SPC_SP_OPUS_INFO_STRUCT = PSTR(cast(ubyte*) 0x000007d7);
+enum PSTR SPC_CAB_DATA_STRUCT = PSTR(cast(ubyte*) 0x000007d8);
+enum PSTR SPC_JAVA_CLASS_DATA_STRUCT = PSTR(cast(ubyte*) 0x000007d9);
+enum PSTR INTENT_TO_SEAL_ATTRIBUTE_STRUCT = PSTR(cast(ubyte*) 0x000007da);
+enum PSTR SEALING_SIGNATURE_ATTRIBUTE_STRUCT = PSTR(cast(ubyte*) 0x000007db);
+enum PSTR SEALING_TIMESTAMP_ATTRIBUTE_STRUCT = PSTR(cast(ubyte*) 0x000007dc);
+enum PSTR SPC_SIGINFO_STRUCT = PSTR(cast(ubyte*) 0x00000852);
+enum PSTR CAT_NAMEVALUE_STRUCT = PSTR(cast(ubyte*) 0x000008ad);
 
 enum : PSTR
 {
-    CAT_MEMBERINFO_STRUCT  = PSTR(0x000008ae),
-    CAT_MEMBERINFO2_STRUCT = PSTR(0x000008af),
+    CAT_MEMBERINFO_STRUCT  = PSTR(cast(ubyte*) 0x000008ae),
+    CAT_MEMBERINFO2_STRUCT = PSTR(cast(ubyte*) 0x000008af),
 }
 
 enum uint SPC_UUID_LENGTH = 0x00000010U;
@@ -870,10 +916,10 @@ struct SEALING_TIMESTAMP_ATTRIBUTE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-win_certificate
 struct WIN_CERTIFICATE
 {
-    uint   dwLength;
-    ushort wRevision;
-    ushort wCertificateType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bCertificate;
+    uint     dwLength;
+    ushort   wRevision;
+    ushort   wCertificateType;
+    ubyte[1] bCertificate; // Flexible array
 }
 
 struct WIN_TRUST_ACTDATA_CONTEXT_WITH_SUBJECT

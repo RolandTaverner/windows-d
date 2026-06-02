@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.internetconnectionwizard;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : PSTR;
+public import windows.win32.foundation : PSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -11,8 +11,10 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ICW_REGPATHSETTINGS = "Software\\Microsoft\\Internet Connection Wizard";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ICW_REGKEYCOMPLETED = "Completed";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ICW_REGPATHSETTINGS = "Software\\Microsoft\\Internet Connection Wizard";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ICW_REGKEYCOMPLETED = "Completed";
 
 enum : uint
 {

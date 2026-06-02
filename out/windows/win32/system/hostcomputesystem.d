@@ -3,8 +3,8 @@
 module windows.win32.system.hostcomputesystem;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE, HRESULT, PWSTR;
-public import windows.win32.security.security : SECURITY_DESCRIPTOR;
+public import windows.win32.foundation : HANDLE, HRESULT, PWSTR;
+public import windows.win32.security : SECURITY_DESCRIPTOR;
 
 extern(Windows) @nogc nothrow:
 

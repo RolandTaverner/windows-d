@@ -3,8 +3,8 @@
 module windows.win32.system.virtualdosmachines;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, LPARAM, PSTR;
-public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, DEBUG_EVENT, LDT_ENTRY;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, LPARAM, PSTR;
+public import windows.win32.system.diagnostics.debug_ : CONTEXT, DEBUG_EVENT, LDT_ENTRY;
 public import windows.win32.system.kernel : FLOATING_SAVE_AREA;
 
 extern(Windows) @nogc nothrow:
@@ -363,7 +363,7 @@ version(X86_64)
             }
             struct Bits
             {
-                /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BaseHi)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield527;
+                uint _bitfield527;
             }
         }
     }
@@ -386,7 +386,7 @@ version(AArch64)
             }
             struct Bits
             {
-                /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BaseHi)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield528;
+                uint _bitfield528;
             }
         }
     }

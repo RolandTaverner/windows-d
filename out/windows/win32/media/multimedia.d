@@ -3,19 +3,18 @@
 module windows.win32.media.multimedia;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, FARPROC, HANDLE, HINSTANCE,
-                                                    HMODULE, HRESULT, HTASK, HWND,
-                                                    LPARAM, LRESULT, POINT, PSTR, PWSTR,
-                                                    RECT;
+public import windows.win32.foundation : BOOL, CHAR, FARPROC, HANDLE, HINSTANCE,
+                                         HMODULE, HRESULT, HTASK, HWND, LPARAM,
+                                         LRESULT, POINT, PSTR, PWSTR, RECT;
 public import windows.win32.graphics.gdi : BITMAPINFO, BITMAPINFOHEADER, HDC, HPALETTE,
                                            PALETTEENTRY;
-public import windows.win32.media.audio.audio : HMIXER, HWAVE, WAVEFORMAT, WAVEFORMATEX,
-                                                WAVEHDR;
-public import windows.win32.media.media : LPTIMECALLBACK;
-public import windows.win32.system.com.com : IPersistFile, IUnknown;
+public import windows.win32.media.audio : HMIXER, HWAVE, WAVEFORMAT, WAVEFORMATEX,
+                                          WAVEHDR;
+public import windows.win32.media : LPTIMECALLBACK;
+public import windows.win32.system.com : IPersistFile, IUnknown;
 public import windows.win32.system.io : OVERLAPPED;
 public import windows.win32.ui.controls.dialogs : OPENFILENAMEA, OPENFILENAMEW;
-public import windows.win32.ui.controls.controls : LPFNSVADDPROPSHEETPAGE;
+public import windows.win32.ui.controls : LPFNSVADDPROPSHEETPAGE;
 
 extern(Windows) @nogc nothrow:
 
@@ -36,27 +35,38 @@ enum uint DRV_MCI_FIRST = 0x00000800U;
 enum uint ACMDM_BASE = 0x00006000U;
 enum uint ICM_RESERVED = 0x00005000U;
 enum int MCI_TEST = 0x00000020;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-capture))], [])*/uint MCI_CAPTURE = 0x00000870U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-monitor))], [])*/uint MCI_MONITOR = 0x00000871U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-reserve))], [])*/uint MCI_RESERVE = 0x00000872U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-capture
+enum uint MCI_CAPTURE = 0x00000870U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-monitor
+enum uint MCI_MONITOR = 0x00000871U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-reserve
+enum uint MCI_RESERVE = 0x00000872U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-setaudio))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-setaudio
     MCI_SETAUDIO = 0x00000873U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-signal
     MCI_SIGNAL   = 0x00000875U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-setvideo
     MCI_SETVIDEO = 0x00000876U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-quality))], [])*/uint MCI_QUALITY = 0x00000877U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-quality
+enum uint MCI_QUALITY = 0x00000877U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-list))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-list
     MCI_LIST      = 0x00000878U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-undo
     MCI_UNDO      = 0x00000879U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-configure
     MCI_CONFIGURE = 0x0000087aU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-restore))], [])*/uint MCI_RESTORE = 0x0000087bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-restore
+enum uint MCI_RESTORE = 0x0000087bU;
 
 enum : uint
 {
@@ -3435,88 +3445,135 @@ enum : uint
     ICM_RESERVED_HIGH = 0x00006000U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getstate))], [])*/uint ICM_GETSTATE = 0x00005000U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-setstate))], [])*/uint ICM_SETSTATE = 0x00005001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getinfo))], [])*/uint ICM_GETINFO = 0x00005002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-configure))], [])*/uint ICM_CONFIGURE = 0x0000500aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-getstate
+enum uint ICM_GETSTATE = 0x00005000U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-setstate
+enum uint ICM_SETSTATE = 0x00005001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-getinfo
+enum uint ICM_GETINFO = 0x00005002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-configure
+enum uint ICM_CONFIGURE = 0x0000500aU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-about))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-about
     ICM_ABOUT         = 0x0000500bU,
     ICM_GETERRORTEXT  = 0x0000500cU,
     ICM_GETFORMATNAME = 0x00005014U,
 }
 
 enum uint ICM_ENUMFORMATS = 0x00005015U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultquality))], [])*/uint ICM_GETDEFAULTQUALITY = 0x0000501eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getquality))], [])*/uint ICM_GETQUALITY = 0x0000501fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultquality
+enum uint ICM_GETDEFAULTQUALITY = 0x0000501eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-getquality
+enum uint ICM_GETQUALITY = 0x0000501fU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-setquality))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-setquality
     ICM_SETQUALITY          = 0x00005020U,
     ICM_SET                 = 0x00005028U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-get
     ICM_GET                 = 0x00005029U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-get-format
     ICM_COMPRESS_GET_FORMAT = 0x00004004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-get-size
     ICM_COMPRESS_GET_SIZE   = 0x00004005U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-query
     ICM_COMPRESS_QUERY      = 0x00004006U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-begin
     ICM_COMPRESS_BEGIN      = 0x00004007U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress
     ICM_COMPRESS            = 0x00004008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-end
     ICM_COMPRESS_END        = 0x00004009U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-get-format))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-get-format
     ICM_DECOMPRESS_GET_FORMAT  = 0x0000400aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-query
     ICM_DECOMPRESS_QUERY       = 0x0000400bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-begin
     ICM_DECOMPRESS_BEGIN       = 0x0000400cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress
     ICM_DECOMPRESS             = 0x0000400dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-end
     ICM_DECOMPRESS_END         = 0x0000400eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-set-palette
     ICM_DECOMPRESS_SET_PALETTE = 0x0000401dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-get-palette
     ICM_DECOMPRESS_GET_PALETTE = 0x0000401eU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-query))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-query
     ICM_DRAW_QUERY         = 0x0000401fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-begin
     ICM_DRAW_BEGIN         = 0x0000400fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-get-palette
     ICM_DRAW_GET_PALETTE   = 0x00004010U,
     ICM_DRAW_UPDATE        = 0x00004011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-start
     ICM_DRAW_START         = 0x00004012U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-stop
     ICM_DRAW_STOP          = 0x00004013U,
     ICM_DRAW_BITS          = 0x00004014U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-end
     ICM_DRAW_END           = 0x00004015U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-gettime
     ICM_DRAW_GETTIME       = 0x00004020U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw
     ICM_DRAW               = 0x00004021U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-window
     ICM_DRAW_WINDOW        = 0x00004022U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-settime
     ICM_DRAW_SETTIME       = 0x00004023U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-realize
     ICM_DRAW_REALIZE       = 0x00004024U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-flush
     ICM_DRAW_FLUSH         = 0x00004025U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-renderbuffer
     ICM_DRAW_RENDERBUFFER  = 0x00004026U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-start-play
     ICM_DRAW_START_PLAY    = 0x00004027U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-stop-play
     ICM_DRAW_STOP_PLAY     = 0x00004028U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-suggestformat
     ICM_DRAW_SUGGESTFORMAT = 0x00004032U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-changepalette
     ICM_DRAW_CHANGEPALETTE = 0x00004033U,
     ICM_DRAW_IDLE          = 0x00004034U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getbufferswanted))], [])*/uint ICM_GETBUFFERSWANTED = 0x00004029U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultkeyframerate))], [])*/uint ICM_GETDEFAULTKEYFRAMERATE = 0x0000402aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-getbufferswanted
+enum uint ICM_GETBUFFERSWANTED = 0x00004029U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultkeyframerate
+enum uint ICM_GETDEFAULTKEYFRAMERATE = 0x0000402aU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-decompressex-begin))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompressex-begin
     ICM_DECOMPRESSEX_BEGIN = 0x0000403cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompressex-query
     ICM_DECOMPRESSEX_QUERY = 0x0000403dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompressex
     ICM_DECOMPRESSEX       = 0x0000403eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-decompressex-end
     ICM_DECOMPRESSEX_END   = 0x0000403fU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-frames-info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-frames-info
     ICM_COMPRESS_FRAMES_INFO = 0x00004046U,
     ICM_COMPRESS_FRAMES      = 0x00004047U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-set-status-proc))], [])*/uint ICM_SET_STATUS_PROC = 0x00004048U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/icm-set-status-proc
+enum uint ICM_SET_STATUS_PROC = 0x00004048U;
 
 enum : uint
 {
@@ -3746,63 +3803,103 @@ enum : uint
     MCIWNDF_RECORD           = 0x00002000U,
     MCIWNDF_NOERRORDLG       = 0x00004000U,
     MCIWNDF_NOOPEN           = 0x00008000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getdeviceid
     MCIWNDM_GETDEVICEID      = 0x00000464U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getstart
     MCIWNDM_GETSTART         = 0x00000467U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getlength
     MCIWNDM_GETLENGTH        = 0x00000468U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getend
     MCIWNDM_GETEND           = 0x00000469U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-eject
     MCIWNDM_EJECT            = 0x0000046bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setzoom
     MCIWNDM_SETZOOM          = 0x0000046cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getzoom
     MCIWNDM_GETZOOM          = 0x0000046dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setvolume
     MCIWNDM_SETVOLUME        = 0x0000046eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getvolume
     MCIWNDM_GETVOLUME        = 0x0000046fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setspeed
     MCIWNDM_SETSPEED         = 0x00000470U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getspeed
     MCIWNDM_GETSPEED         = 0x00000471U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setrepeat
     MCIWNDM_SETREPEAT        = 0x00000472U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getrepeat
     MCIWNDM_GETREPEAT        = 0x00000473U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-realize
     MCIWNDM_REALIZE          = 0x00000476U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-validatemedia
     MCIWNDM_VALIDATEMEDIA    = 0x00000479U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-playfrom))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-playfrom
     MCIWNDM_PLAYFROM         = 0x0000047aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-playto
     MCIWNDM_PLAYTO           = 0x0000047bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getpalette
     MCIWNDM_GETPALETTE       = 0x0000047eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setpalette
     MCIWNDM_SETPALETTE       = 0x0000047fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-settimers
     MCIWNDM_SETTIMERS        = 0x00000481U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setactivetimer
     MCIWNDM_SETACTIVETIMER   = 0x00000482U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setinactivetimer
     MCIWNDM_SETINACTIVETIMER = 0x00000483U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getactivetimer))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getactivetimer
     MCIWNDM_GETACTIVETIMER   = 0x00000484U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getinactivetimer
     MCIWNDM_GETINACTIVETIMER = 0x00000485U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-changestyles))], [])*/uint MCIWNDM_CHANGESTYLES = 0x00000487U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-changestyles
+enum uint MCIWNDM_CHANGESTYLES = 0x00000487U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getstyles))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getstyles
     MCIWNDM_GETSTYLES     = 0x00000488U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getalias
     MCIWNDM_GETALIAS      = 0x00000489U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-playreverse
     MCIWNDM_PLAYREVERSE   = 0x0000048bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-get-source
     MCIWNDM_GET_SOURCE    = 0x0000048cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-put-source
     MCIWNDM_PUT_SOURCE    = 0x0000048dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-get-dest
     MCIWNDM_GET_DEST      = 0x0000048eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-put-dest
     MCIWNDM_PUT_DEST      = 0x0000048fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-can-play
     MCIWNDM_CAN_PLAY      = 0x00000490U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-can-window
     MCIWNDM_CAN_WINDOW    = 0x00000491U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-can-record
     MCIWNDM_CAN_RECORD    = 0x00000492U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-can-save
     MCIWNDM_CAN_SAVE      = 0x00000493U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-can-eject
     MCIWNDM_CAN_EJECT     = 0x00000494U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-can-config
     MCIWNDM_CAN_CONFIG    = 0x00000495U,
     MCIWNDM_PALETTEKICK   = 0x00000496U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-openinterface
     MCIWNDM_OPENINTERFACE = 0x00000497U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setowner))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setowner
     MCIWNDM_SETOWNER       = 0x00000498U,
     MCIWNDM_SENDSTRINGA    = 0x00000465U,
     MCIWNDM_GETPOSITIONA   = 0x00000466U,
@@ -3842,29 +3939,45 @@ enum : uint
 enum : uint
 {
     MCIWNDM_OPENW         = 0x000004fcU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-sendstring
     MCIWNDM_SENDSTRING    = 0x000004c9U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getposition
     MCIWNDM_GETPOSITION   = 0x000004caU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getmode
     MCIWNDM_GETMODE       = 0x000004ceU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-settimeformat
     MCIWNDM_SETTIMEFORMAT = 0x000004dbU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-gettimeformat))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-gettimeformat
     MCIWNDM_GETTIMEFORMAT = 0x000004dcU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getfilename
     MCIWNDM_GETFILENAME   = 0x000004e0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getdevice
     MCIWNDM_GETDEVICE     = 0x000004e1U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-geterror
     MCIWNDM_GETERROR      = 0x000004e4U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-new
     MCIWNDM_NEW           = 0x000004eaU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-returnstring
     MCIWNDM_RETURNSTRING  = 0x000004eeU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-open))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-open
     MCIWNDM_OPEN        = 0x000004fcU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-notifymode
     MCIWNDM_NOTIFYMODE  = 0x000004c8U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-notifypos
     MCIWNDM_NOTIFYPOS   = 0x000004c9U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-notifysize
     MCIWNDM_NOTIFYSIZE  = 0x000004caU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-notifymedia
     MCIWNDM_NOTIFYMEDIA = 0x000004cbU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-notifyerror
     MCIWNDM_NOTIFYERROR = 0x000004cdU,
 }
 
@@ -3874,28 +3987,42 @@ enum : int
     MCIWND_END   = 0xfffffffe,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-open))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-open
     MCI_OPEN   = 0x00000803U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-close
     MCI_CLOSE  = 0x00000804U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-play
     MCI_PLAY   = 0x00000806U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-seek
     MCI_SEEK   = 0x00000807U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-stop
     MCI_STOP   = 0x00000808U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-pause
     MCI_PAUSE  = 0x00000809U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-step
     MCI_STEP   = 0x0000080eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-record
     MCI_RECORD = 0x0000080fU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-save))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-save
     MCI_SAVE   = 0x00000813U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-cut
     MCI_CUT    = 0x00000851U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-copy
     MCI_COPY   = 0x00000852U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-paste
     MCI_PASTE  = 0x00000853U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-resume
     MCI_RESUME = 0x00000855U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-delete))], [])*/uint MCI_DELETE = 0x00000856U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-delete
+enum uint MCI_DELETE = 0x00000856U;
 
 enum : uint
 {
@@ -4048,27 +4175,40 @@ enum : uint
     WM_CAP_SET_CALLBACK_STATUSW     = 0x00000467U,
     WM_CAP_SET_CALLBACK_ERRORA      = 0x00000402U,
     WM_CAP_SET_CALLBACK_STATUSA     = 0x00000403U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-error
     WM_CAP_SET_CALLBACK_ERROR       = 0x00000466U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-status
     WM_CAP_SET_CALLBACK_STATUS      = 0x00000467U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-yield
     WM_CAP_SET_CALLBACK_YIELD       = 0x00000404U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-frame
     WM_CAP_SET_CALLBACK_FRAME       = 0x00000405U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-videostream
     WM_CAP_SET_CALLBACK_VIDEOSTREAM = 0x00000406U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-wavestream
     WM_CAP_SET_CALLBACK_WAVESTREAM  = 0x00000407U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-user-data))], [])*/uint WM_CAP_GET_USER_DATA = 0x00000408U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-user-data))], [])*/uint WM_CAP_SET_USER_DATA = 0x00000409U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-user-data
+enum uint WM_CAP_GET_USER_DATA = 0x00000408U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-user-data
+enum uint WM_CAP_SET_USER_DATA = 0x00000409U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-connect))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-connect
     WM_CAP_DRIVER_CONNECT      = 0x0000040aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-disconnect
     WM_CAP_DRIVER_DISCONNECT   = 0x0000040bU,
     WM_CAP_DRIVER_GET_NAMEA    = 0x0000040cU,
     WM_CAP_DRIVER_GET_VERSIONA = 0x0000040dU,
     WM_CAP_DRIVER_GET_NAMEW    = 0x00000470U,
     WM_CAP_DRIVER_GET_VERSIONW = 0x00000471U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-get-name
     WM_CAP_DRIVER_GET_NAME     = 0x00000470U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-get-version
     WM_CAP_DRIVER_GET_VERSION  = 0x00000471U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-get-caps
     WM_CAP_DRIVER_GET_CAPS     = 0x0000040eU,
 }
 
@@ -4082,66 +4222,100 @@ enum : uint
     WM_CAP_FILE_GET_CAPTURE_FILEW = 0x00000479U,
     WM_CAP_FILE_SAVEASW           = 0x0000047bU,
     WM_CAP_FILE_SAVEDIBW          = 0x0000047dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-file-set-capture-file
     WM_CAP_FILE_SET_CAPTURE_FILE  = 0x00000478U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-file-get-capture-file
     WM_CAP_FILE_GET_CAPTURE_FILE  = 0x00000479U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-file-saveas
     WM_CAP_FILE_SAVEAS            = 0x0000047bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-file-savedib
     WM_CAP_FILE_SAVEDIB           = 0x0000047dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-file-allocate
     WM_CAP_FILE_ALLOCATE          = 0x00000416U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-file-set-infochunk
     WM_CAP_FILE_SET_INFOCHUNK     = 0x00000418U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-edit-copy))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-edit-copy
     WM_CAP_EDIT_COPY       = 0x0000041eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-audioformat
     WM_CAP_SET_AUDIOFORMAT = 0x00000423U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-audioformat))], [])*/uint WM_CAP_GET_AUDIOFORMAT = 0x00000424U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-audioformat
+enum uint WM_CAP_GET_AUDIOFORMAT = 0x00000424U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videoformat))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videoformat
     WM_CAP_DLG_VIDEOFORMAT  = 0x00000429U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videosource
     WM_CAP_DLG_VIDEOSOURCE  = 0x0000042aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videodisplay
     WM_CAP_DLG_VIDEODISPLAY = 0x0000042bU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-videoformat))], [])*/uint WM_CAP_GET_VIDEOFORMAT = 0x0000042cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-videoformat))], [])*/uint WM_CAP_SET_VIDEOFORMAT = 0x0000042dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videocompression))], [])*/uint WM_CAP_DLG_VIDEOCOMPRESSION = 0x0000042eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-videoformat
+enum uint WM_CAP_GET_VIDEOFORMAT = 0x0000042cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-videoformat
+enum uint WM_CAP_SET_VIDEOFORMAT = 0x0000042dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videocompression
+enum uint WM_CAP_DLG_VIDEOCOMPRESSION = 0x0000042eU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-preview))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-preview
     WM_CAP_SET_PREVIEW       = 0x00000432U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-overlay
     WM_CAP_SET_OVERLAY       = 0x00000433U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-previewrate
     WM_CAP_SET_PREVIEWRATE   = 0x00000434U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-scale
     WM_CAP_SET_SCALE         = 0x00000435U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-status
     WM_CAP_GET_STATUS        = 0x00000436U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-scroll
     WM_CAP_SET_SCROLL        = 0x00000437U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-grab-frame
     WM_CAP_GRAB_FRAME        = 0x0000043cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-grab-frame-nostop
     WM_CAP_GRAB_FRAME_NOSTOP = 0x0000043dU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-sequence))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-sequence
     WM_CAP_SEQUENCE           = 0x0000043eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-sequence-nofile
     WM_CAP_SEQUENCE_NOFILE    = 0x0000043fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-sequence-setup
     WM_CAP_SET_SEQUENCE_SETUP = 0x00000440U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-sequence-setup))], [])*/uint WM_CAP_GET_SEQUENCE_SETUP = 0x00000441U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-sequence-setup
+enum uint WM_CAP_GET_SEQUENCE_SETUP = 0x00000441U;
 enum uint WM_CAP_SET_MCI_DEVICEA = 0x00000442U;
 enum uint WM_CAP_GET_MCI_DEVICEA = 0x00000443U;
 enum uint WM_CAP_SET_MCI_DEVICEW = 0x000004a6U;
 enum uint WM_CAP_GET_MCI_DEVICEW = 0x000004a7U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-mci-device))], [])*/uint WM_CAP_SET_MCI_DEVICE = 0x000004a6U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-mci-device))], [])*/uint WM_CAP_GET_MCI_DEVICE = 0x000004a7U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-mci-device
+enum uint WM_CAP_SET_MCI_DEVICE = 0x000004a6U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-mci-device
+enum uint WM_CAP_GET_MCI_DEVICE = 0x000004a7U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-stop))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-stop
     WM_CAP_STOP               = 0x00000444U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-abort
     WM_CAP_ABORT              = 0x00000445U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-single-frame-open
     WM_CAP_SINGLE_FRAME_OPEN  = 0x00000446U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-single-frame-close
     WM_CAP_SINGLE_FRAME_CLOSE = 0x00000447U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-single-frame
     WM_CAP_SINGLE_FRAME       = 0x00000448U,
 }
 
@@ -4151,14 +4325,20 @@ enum : uint
     WM_CAP_PAL_SAVEA        = 0x00000451U,
     WM_CAP_PAL_OPENW        = 0x000004b4U,
     WM_CAP_PAL_SAVEW        = 0x000004b5U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-pal-open
     WM_CAP_PAL_OPEN         = 0x000004b4U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-pal-save
     WM_CAP_PAL_SAVE         = 0x000004b5U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-pal-paste
     WM_CAP_PAL_PASTE        = 0x00000452U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-pal-autocreate
     WM_CAP_PAL_AUTOCREATE   = 0x00000453U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-pal-manualcreate
     WM_CAP_PAL_MANUALCREATE = 0x00000454U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-capcontrol))], [])*/uint WM_CAP_SET_CALLBACK_CAPCONTROL = 0x00000455U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-capcontrol
+enum uint WM_CAP_SET_CALLBACK_CAPCONTROL = 0x00000455U;
 enum uint WM_CAP_UNICODE_END = 0x000004b5U;
 enum uint WM_CAP_END = 0x000004b5U;
 
@@ -4389,30 +4569,40 @@ enum : uint
     JOYCAPS_POVCTS  = 0x00000040U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-load))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-load
     DRV_LOAD   = 0x00000001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-enable
     DRV_ENABLE = 0x00000002U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-open))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-open
     DRV_OPEN    = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-close
     DRV_CLOSE   = 0x00000004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-disable
     DRV_DISABLE = 0x00000005U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-free))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-free
     DRV_FREE      = 0x00000006U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-configure
     DRV_CONFIGURE = 0x00000007U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-queryconfigure))], [])*/uint DRV_QUERYCONFIGURE = 0x00000008U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-install))], [])*/uint DRV_INSTALL = 0x00000009U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-queryconfigure
+enum uint DRV_QUERYCONFIGURE = 0x00000008U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-install
+enum uint DRV_INSTALL = 0x00000009U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-remove))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-remove
     DRV_REMOVE   = 0x0000000aU,
     DRV_RESERVED = 0x00000800U,
 }
@@ -4682,7 +4872,8 @@ enum : uint
 
 enum uint TDD_BEGINMINPERIOD = 0x00000810U;
 enum uint TDD_ENDMINPERIOD = 0x00000814U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* JOY_CONFIGCHANGED_MSGSTRING = "MSJSTICK_VJOYD_MSGSTR";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* JOY_CONFIGCHANGED_MSGSTRING = "MSJSTICK_VJOYD_MSGSTR";
 
 enum : uint
 {
@@ -4770,8 +4961,10 @@ enum : uint
 
 enum uint TASKERR_NOTASKSUPPORT = 0x00000001U;
 enum uint TASKERR_OUTOFMEMORY = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-exitsession))], [])*/uint DRV_EXITSESSION = 0x0000000bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-power))], [])*/uint DRV_POWER = 0x0000000fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-exitsession
+enum uint DRV_EXITSESSION = 0x0000000bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/drv-power
+enum uint DRV_POWER = 0x0000000fU;
 
 enum : uint
 {
@@ -4887,18 +5080,25 @@ enum : uint
     MMIO_CREATELIST = 0x00000040U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mmiom-read))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-read
     MMIOM_READ       = 0x00000000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-write
     MMIOM_WRITE      = 0x00000001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-seek
     MMIOM_SEEK       = 0x00000002U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-open
     MMIOM_OPEN       = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-close
     MMIOM_CLOSE      = 0x00000004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-writeflush
     MMIOM_WRITEFLUSH = 0x00000005U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mmiom-rename))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mmiom-rename
     MMIOM_RENAME = 0x00000006U,
     MMIOM_USER   = 0x00008000U,
 }
@@ -7196,9 +7396,11 @@ enum uint VFW_USE_DEVICE_HANDLE = 0x00000001U;
 enum uint VFW_USE_STREAM_HANDLE = 0x00000002U;
 enum uint VFW_QUERY_DEV_CHANGED = 0x00000100U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     TARGET_DEVICE_FRIENDLY_NAME    = "TargetDeviceFriendlyName",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     TARGET_DEVICE_OPEN_EXCLUSIVELY = "TargetDeviceOpenExclusively",
 }
 
@@ -7334,48 +7536,65 @@ enum uint MCIERR_CUSTOM_DRIVER_BASE = 0x00000200U;
 enum : uint
 {
     MCI_FIRST  = 0x00000800U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-escape
     MCI_ESCAPE = 0x00000805U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-info
     MCI_INFO       = 0x0000080aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-getdevcaps
     MCI_GETDEVCAPS = 0x0000080bU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-spin))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-spin
     MCI_SPIN    = 0x0000080cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-set
     MCI_SET     = 0x0000080dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-sysinfo
     MCI_SYSINFO = 0x00000810U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-break))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-break
     MCI_BREAK  = 0x00000811U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-status
     MCI_STATUS = 0x00000814U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-cue))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-cue
     MCI_CUE     = 0x00000830U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-realize
     MCI_REALIZE = 0x00000840U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-window))], [])*/uint MCI_WINDOW = 0x00000841U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-window
+enum uint MCI_WINDOW = 0x00000841U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-put))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-put
     MCI_PUT    = 0x00000842U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-where
     MCI_WHERE  = 0x00000843U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-freeze
     MCI_FREEZE = 0x00000844U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-unfreeze))], [])*/uint MCI_UNFREEZE = 0x00000845U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-unfreeze
+enum uint MCI_UNFREEZE = 0x00000845U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-load))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-load
     MCI_LOAD          = 0x00000850U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-update
     MCI_UPDATE        = 0x00000854U,
     MCI_USER_MESSAGES = 0x00000c00U,
 }

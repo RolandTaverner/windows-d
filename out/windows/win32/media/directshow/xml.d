@@ -4,9 +4,9 @@ module windows.win32.media.directshow.xml;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLElement;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, PWSTR;
-public import windows.win32.media.directshow.directshow : IGraphBuilder;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BSTR, HRESULT, PWSTR;
+public import windows.win32.media.directshow : IGraphBuilder;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

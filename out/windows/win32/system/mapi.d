@@ -3,7 +3,7 @@
 module windows.win32.system.mapi;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : PSTR, PWSTR;
+public import windows.win32.foundation : PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

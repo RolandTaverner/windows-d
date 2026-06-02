@@ -3,10 +3,10 @@
 module windows.win32.system.console;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, COLORREF, HANDLE, HRESULT,
-                                                    HWND, NTSTATUS, PSTR, PWSTR, RECT;
+public import windows.win32.foundation : BOOL, CHAR, COLORREF, HANDLE, HRESULT, HWND,
+                                         NTSTATUS, PSTR, PWSTR, RECT;
 public import windows.win32.graphics.gdi : BITMAPINFO, HPALETTE;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
 public import windows.win32.ui.windowsandmessaging : HCURSOR, HICON, HMENU;
 
 extern(Windows) @nogc nothrow:

@@ -3,8 +3,7 @@
 module windows.win32.data.rightsmanagement;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FARPROC, HRESULT, HWND, PWSTR,
-                                                    SYSTEMTIME;
+public import windows.win32.foundation : BOOL, FARPROC, HRESULT, HWND, PWSTR, SYSTEMTIME;
 
 extern(Windows) @nogc nothrow:
 

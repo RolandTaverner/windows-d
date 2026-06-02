@@ -3,7 +3,7 @@
 module windows.win32.devices.nfp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : DEVPROPKEY;
+public import windows.win32.foundation : DEVPROPKEY;
 
 extern(Windows) @nogc nothrow:
 
@@ -12,7 +12,7 @@ extern(Windows) @nogc nothrow:
 
 
 enum GUID GUID_DEVINTERFACE_NFP = GUID("fb3842cd-9e2a-4f83-8fcc-4b0761139ae9");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4214768333, 40490, 20355, 143, 204, 75, 7, 97, 19, 154, 233}, 2))], [])*/DEVPROPKEY DEVPKEY_NFP_Capabilities = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4214768333, 40490, 20355, 143, 204, 75, 7, 97, 19, 154, 233}, 2))], [])*/DEVPROPKEY(GUID("FB3842CD-9E2A-4F83-8FCC-4B0761139AE9"), 2);
+enum DEVPROPKEY DEVPKEY_NFP_Capabilities = DEVPROPKEY(GUID("FB3842CD-9E2A-4F83-8FCC-4B0761139AE9"), 2);
 enum uint IOCTL_NFP_GET_NEXT_SUBSCRIBED_MESSAGE = 0x00510040U;
 
 enum : uint
@@ -34,7 +34,7 @@ enum : uint
 
 struct SUBSCRIBED_MESSAGE
 {
-    uint cbPayloadHint;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] payload;
+    uint     cbPayloadHint;
+    ubyte[1] payload; // Flexible array
 }
 

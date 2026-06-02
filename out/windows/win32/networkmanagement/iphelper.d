@@ -3,8 +3,8 @@
 module windows.win32.networkmanagement.iphelper;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, HANDLE, PSTR,
-                                                    PWSTR, WIN32_ERROR;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, HANDLE, PSTR, PWSTR,
+                                         WIN32_ERROR;
 public import windows.win32.networkmanagement.ndis : IF_OPER_STATUS, NDIS_MEDIUM, NDIS_PHYSICAL_MEDIUM,
                                                      NET_IF_ACCESS_TYPE, NET_IF_ADMIN_STATUS,
                                                      NET_IF_COMPARTMENT_ID,
@@ -1341,21 +1341,21 @@ struct IP_ADAPTER_INDEX_MAP
 struct IP_INTERFACE_INFO
 {
     int NumAdapters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IP_ADAPTER_INDEX_MAP[1] Adapter;
+    IP_ADAPTER_INDEX_MAP[1] Adapter; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipexport/ns-ipexport-ip_unidirectional_adapter_address
 struct IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 {
-    uint NumAdapters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Address;
+    uint    NumAdapters;
+    uint[1] Address; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipexport/ns-ipexport-ip_adapter_order_map
 struct IP_ADAPTER_ORDER_MAP
 {
-    uint NumAdapters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] AdapterOrder;
+    uint    NumAdapters;
+    uint[1] AdapterOrder; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipexport/ns-ipexport-ip_mcast_counter_info
@@ -1370,8 +1370,8 @@ struct IP_MCAST_COUNTER_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iprtrmib/ns-iprtrmib-mib_opaque_query
 struct MIB_OPAQUE_QUERY
 {
-    uint dwVarId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] rgdwVarIndex;
+    uint    dwVarId;
+    uint[1] rgdwVarIndex; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ifmib/ns-ifmib-mib_ifnumber
@@ -1412,8 +1412,8 @@ struct MIB_IFROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ifmib/ns-ifmib-mib_iftable
 struct MIB_IFTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IFROW[1] table;
+    uint         dwNumEntries;
+    MIB_IFROW[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipaddrrow_xp
@@ -1443,8 +1443,8 @@ struct MIB_IPADDRROW_W2K
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipaddrtable
 struct MIB_IPADDRTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPADDRROW_XP[1] table;
+    uint                dwNumEntries;
+    MIB_IPADDRROW_XP[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipforwardnumber
@@ -1483,8 +1483,8 @@ struct MIB_IPFORWARDROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipforwardtable
 struct MIB_IPFORWARDTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPFORWARDROW[1] table;
+    uint                dwNumEntries;
+    MIB_IPFORWARDROW[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipnetrow_lh
@@ -1514,8 +1514,8 @@ struct MIB_IPNETROW_W2K
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipnettable
 struct MIB_IPNETTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPNETROW_LH[1] table;
+    uint               dwNumEntries;
+    MIB_IPNETROW_LH[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipstats_lh
@@ -1660,14 +1660,14 @@ struct MIB_IPMCAST_MFE
     uint ulNumOutIf;
     uint fFlags;
     uint dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_OIF_XP[1] rgmioOutInfo;
+    MIB_IPMCAST_OIF_XP[1] rgmioOutInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_mfe_table
 struct MIB_MFE_TABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_MFE[1] table;
+    uint               dwNumEntries;
+    MIB_IPMCAST_MFE[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipmcast_oif_stats_lh
@@ -1713,14 +1713,14 @@ struct MIB_IPMCAST_MFE_STATS
     uint ulInOctets;
     uint ulPktsDifferentIf;
     uint ulQueueOverflow;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_OIF_STATS_LH[1] rgmiosOutStats;
+    MIB_IPMCAST_OIF_STATS_LH[1] rgmiosOutStats; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_mfe_stats_table
 struct MIB_MFE_STATS_TABLE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_MFE_STATS[1] table;
+    MIB_IPMCAST_MFE_STATS[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipmcast_mfe_stats_ex_xp
@@ -1747,14 +1747,14 @@ struct MIB_IPMCAST_MFE_STATS_EX_XP
     uint ulInDiscards;
     uint ulInHdrErrors;
     uint ulTotalOutPackets;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_OIF_STATS_LH[1] rgmiosOutStats;
+    MIB_IPMCAST_OIF_STATS_LH[1] rgmiosOutStats; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_mfe_stats_table_ex_xp
 struct MIB_MFE_STATS_TABLE_EX_XP
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_MFE_STATS_EX_XP[1]* table;
+    MIB_IPMCAST_MFE_STATS_EX_XP[1]* table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ipmib/ns-ipmib-mib_ipmcast_global
@@ -1778,7 +1778,7 @@ struct MIB_IPMCAST_IF_ENTRY
 struct MIB_IPMCAST_IF_TABLE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_IF_ENTRY[1] table;
+    MIB_IPMCAST_IF_ENTRY[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcprow_lh
@@ -1786,7 +1786,7 @@ struct MIB_TCPROW_LH
 {
     union
     {
-        /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MIB_TCP_STATE))], [])*/uint dwState;
+        uint          dwState;
         MIB_TCP_STATE State;
     }
     uint dwLocalAddr;
@@ -1798,7 +1798,7 @@ struct MIB_TCPROW_LH
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcprow_w2k
 struct MIB_TCPROW_W2K
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MIB_TCP_STATE))], [])*/uint dwState;
+    uint dwState;
     uint dwLocalAddr;
     uint dwLocalPort;
     uint dwRemoteAddr;
@@ -1808,8 +1808,8 @@ struct MIB_TCPROW_W2K
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcptable
 struct MIB_TCPTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCPROW_LH[1] table;
+    uint             dwNumEntries;
+    MIB_TCPROW_LH[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcprow2
@@ -1827,14 +1827,14 @@ struct MIB_TCPROW2
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcptable2
 struct MIB_TCPTABLE2
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCPROW2[1] table;
+    uint           dwNumEntries;
+    MIB_TCPROW2[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcprow_owner_pid
 struct MIB_TCPROW_OWNER_PID
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MIB_TCP_STATE))], [])*/uint dwState;
+    uint dwState;
     uint dwLocalAddr;
     uint dwLocalPort;
     uint dwRemoteAddr;
@@ -1846,13 +1846,13 @@ struct MIB_TCPROW_OWNER_PID
 struct MIB_TCPTABLE_OWNER_PID
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCPROW_OWNER_PID[1] table;
+    MIB_TCPROW_OWNER_PID[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcprow_owner_module
 struct MIB_TCPROW_OWNER_MODULE
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MIB_TCP_STATE))], [])*/uint dwState;
+    uint      dwState;
     uint      dwLocalAddr;
     uint      dwLocalPort;
     uint      dwRemoteAddr;
@@ -1866,7 +1866,7 @@ struct MIB_TCPROW_OWNER_MODULE
 struct MIB_TCPTABLE_OWNER_MODULE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCPROW_OWNER_MODULE[1] table;
+    MIB_TCPROW_OWNER_MODULE[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcp6row
@@ -1884,8 +1884,8 @@ struct MIB_TCP6ROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcp6table
 struct MIB_TCP6TABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCP6ROW[1] table;
+    uint           dwNumEntries;
+    MIB_TCP6ROW[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcp6row2
@@ -1905,8 +1905,8 @@ struct MIB_TCP6ROW2
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcp6table2
 struct MIB_TCP6TABLE2
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCP6ROW2[1] table;
+    uint            dwNumEntries;
+    MIB_TCP6ROW2[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcp6row_owner_pid
@@ -1918,7 +1918,7 @@ struct MIB_TCP6ROW_OWNER_PID
     ubyte[16] ucRemoteAddr;
     uint      dwRemoteScopeId;
     uint      dwRemotePort;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MIB_TCP_STATE))], [])*/uint dwState;
+    uint      dwState;
     uint      dwOwningPid;
 }
 
@@ -1926,7 +1926,7 @@ struct MIB_TCP6ROW_OWNER_PID
 struct MIB_TCP6TABLE_OWNER_PID
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCP6ROW_OWNER_PID[1] table;
+    MIB_TCP6ROW_OWNER_PID[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcp6row_owner_module
@@ -1938,7 +1938,7 @@ struct MIB_TCP6ROW_OWNER_MODULE
     ubyte[16] ucRemoteAddr;
     uint      dwRemoteScopeId;
     uint      dwRemotePort;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MIB_TCP_STATE))], [])*/uint dwState;
+    uint      dwState;
     uint      dwOwningPid;
     long      liCreateTimestamp;
     ulong[16] OwningModuleInfo;
@@ -1948,7 +1948,7 @@ struct MIB_TCP6ROW_OWNER_MODULE
 struct MIB_TCP6TABLE_OWNER_MODULE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_TCP6ROW_OWNER_MODULE[1] table;
+    MIB_TCP6ROW_OWNER_MODULE[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tcpmib/ns-tcpmib-mib_tcpstats_lh
@@ -2025,8 +2025,8 @@ struct MIB_UDPROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udptable
 struct MIB_UDPTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDPROW[1] table;
+    uint          dwNumEntries;
+    MIB_UDPROW[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udprow_owner_pid
@@ -2041,7 +2041,7 @@ struct MIB_UDPROW_OWNER_PID
 struct MIB_UDPTABLE_OWNER_PID
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDPROW_OWNER_PID[1] table;
+    MIB_UDPROW_OWNER_PID[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udprow_owner_module
@@ -2055,7 +2055,7 @@ struct MIB_UDPROW_OWNER_MODULE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SpecificPortBind)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/int _bitfield118;
+            int _bitfield118;
         }
         int dwFlags;
     }
@@ -2066,7 +2066,7 @@ struct MIB_UDPROW_OWNER_MODULE
 struct MIB_UDPTABLE_OWNER_MODULE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDPROW_OWNER_MODULE[1] table;
+    MIB_UDPROW_OWNER_MODULE[1] table; // Flexible array
 }
 
 struct MIB_UDPROW2
@@ -2079,7 +2079,7 @@ struct MIB_UDPROW2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SpecificPortBind)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/int _bitfield119;
+            int _bitfield119;
         }
         int dwFlags;
     }
@@ -2090,8 +2090,8 @@ struct MIB_UDPROW2
 
 struct MIB_UDPTABLE2
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDPROW2[1] table;
+    uint           dwNumEntries;
+    MIB_UDPROW2[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udp6row
@@ -2105,8 +2105,8 @@ struct MIB_UDP6ROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udp6table
 struct MIB_UDP6TABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDP6ROW[1] table;
+    uint           dwNumEntries;
+    MIB_UDP6ROW[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udp6row_owner_pid
@@ -2122,7 +2122,7 @@ struct MIB_UDP6ROW_OWNER_PID
 struct MIB_UDP6TABLE_OWNER_PID
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDP6ROW_OWNER_PID[1] table;
+    MIB_UDP6ROW_OWNER_PID[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udp6row_owner_module
@@ -2137,7 +2137,7 @@ struct MIB_UDP6ROW_OWNER_MODULE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SpecificPortBind)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/int _bitfield120;
+            int _bitfield120;
         }
         int dwFlags;
     }
@@ -2148,7 +2148,7 @@ struct MIB_UDP6ROW_OWNER_MODULE
 struct MIB_UDP6TABLE_OWNER_MODULE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDP6ROW_OWNER_MODULE[1] table;
+    MIB_UDP6ROW_OWNER_MODULE[1] table; // Flexible array
 }
 
 struct MIB_UDP6ROW2
@@ -2162,7 +2162,7 @@ struct MIB_UDP6ROW2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SpecificPortBind)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/int _bitfield121;
+            int _bitfield121;
         }
         int dwFlags;
     }
@@ -2174,8 +2174,8 @@ struct MIB_UDP6ROW2
 
 struct MIB_UDP6TABLE2
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UDP6ROW2[1] table;
+    uint            dwNumEntries;
+    MIB_UDP6ROW2[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/udpmib/ns-udpmib-mib_udpstats
@@ -2201,8 +2201,8 @@ struct MIB_UDPSTATS2
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iprtrmib/ns-iprtrmib-tcpip_owner_module_basic_info
 struct TCPIP_OWNER_MODULE_BASIC_INFO
 {
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR pModuleName;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR pModulePath;
+    PWSTR pModuleName;
+    PWSTR pModulePath;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iprtrmib/ns-iprtrmib-mib_ipmcast_boundary
@@ -2218,7 +2218,7 @@ struct MIB_IPMCAST_BOUNDARY
 struct MIB_IPMCAST_BOUNDARY_TABLE
 {
     uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPMCAST_BOUNDARY[1] table;
+    MIB_IPMCAST_BOUNDARY[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iprtrmib/ns-iprtrmib-mib_boundaryrow
@@ -2253,8 +2253,8 @@ struct MIB_IPDESTROW
 
 struct MIB_IPDESTTABLE
 {
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPDESTROW[1] table;
+    uint             dwNumEntries;
+    MIB_IPDESTROW[1] table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iprtrmib/ns-iprtrmib-mib_best_if
@@ -2293,8 +2293,8 @@ struct MIB_OPAQUE_INFO
     uint dwId;
     union
     {
-        ulong ullAlign;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] rgbyData;
+        ulong    ullAlign;
+        ubyte[1] rgbyData; // Flexible array
     }
 }
 
@@ -2498,14 +2498,14 @@ struct IP_ADAPTER_ADDRESSES_LH
         }
     }
     IP_ADAPTER_ADDRESSES_LH* Next;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR AdapterName;
+    PSTR           AdapterName;
     IP_ADAPTER_UNICAST_ADDRESS_LH* FirstUnicastAddress;
     IP_ADAPTER_ANYCAST_ADDRESS_XP* FirstAnycastAddress;
     IP_ADAPTER_MULTICAST_ADDRESS_XP* FirstMulticastAddress;
     IP_ADAPTER_DNS_SERVER_ADDRESS_XP* FirstDnsServerAddress;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR DnsSuffix;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Description;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR FriendlyName;
+    PWSTR          DnsSuffix;
+    PWSTR          Description;
+    PWSTR          FriendlyName;
     ubyte[8]       PhysicalAddress;
     uint           PhysicalAddressLength;
     union
@@ -2513,7 +2513,7 @@ struct IP_ADAPTER_ADDRESSES_LH
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Ipv6ManagedAddressConfigurationSupported)), FixedArgSig(ElementSig(9)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield122;
+            uint _bitfield122;
         }
     }
     uint           Mtu;
@@ -2554,14 +2554,14 @@ struct IP_ADAPTER_ADDRESSES_XP
         }
     }
     IP_ADAPTER_ADDRESSES_XP* Next;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR AdapterName;
+    PSTR           AdapterName;
     IP_ADAPTER_UNICAST_ADDRESS_XP* FirstUnicastAddress;
     IP_ADAPTER_ANYCAST_ADDRESS_XP* FirstAnycastAddress;
     IP_ADAPTER_MULTICAST_ADDRESS_XP* FirstMulticastAddress;
     IP_ADAPTER_DNS_SERVER_ADDRESS_XP* FirstDnsServerAddress;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR DnsSuffix;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Description;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR FriendlyName;
+    PWSTR          DnsSuffix;
+    PWSTR          Description;
+    PWSTR          FriendlyName;
     ubyte[8]       PhysicalAddress;
     uint           PhysicalAddressLength;
     uint           Flags;
@@ -2892,7 +2892,7 @@ struct MIB_IF_ROW2
     NET_IF_DIRECTION_TYPE DirectionType;
     struct InterfaceAndOperStatusFlags
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(EndPointInterface)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield123;
+        ubyte _bitfield123;
     }
     IF_OPER_STATUS       OperStatus;
     NET_IF_ADMIN_STATUS  AdminStatus;
@@ -2924,8 +2924,8 @@ struct MIB_IF_ROW2
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_if_table2
 struct MIB_IF_TABLE2
 {
-    uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IF_ROW2[1] Table;
+    uint           NumEntries;
+    MIB_IF_ROW2[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ipinterface_row
@@ -2972,7 +2972,7 @@ struct MIB_IPINTERFACE_ROW
 struct MIB_IPINTERFACE_TABLE
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPINTERFACE_ROW[1] Table;
+    MIB_IPINTERFACE_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ifstack_row
@@ -2992,15 +2992,15 @@ struct MIB_INVERTEDIFSTACK_ROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ifstack_table
 struct MIB_IFSTACK_TABLE
 {
-    uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IFSTACK_ROW[1] Table;
+    uint               NumEntries;
+    MIB_IFSTACK_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_invertedifstack_table
 struct MIB_INVERTEDIFSTACK_TABLE
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_INVERTEDIFSTACK_ROW[1] Table;
+    MIB_INVERTEDIFSTACK_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ip_network_connection_bandwidth_estimates
@@ -3031,7 +3031,7 @@ struct MIB_UNICASTIPADDRESS_ROW
 struct MIB_UNICASTIPADDRESS_TABLE
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_UNICASTIPADDRESS_ROW[1] Table;
+    MIB_UNICASTIPADDRESS_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_anycastipaddress_row
@@ -3047,7 +3047,7 @@ struct MIB_ANYCASTIPADDRESS_ROW
 struct MIB_ANYCASTIPADDRESS_TABLE
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_ANYCASTIPADDRESS_ROW[1] Table;
+    MIB_ANYCASTIPADDRESS_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_multicastipaddress_row
@@ -3063,7 +3063,7 @@ struct MIB_MULTICASTIPADDRESS_ROW
 struct MIB_MULTICASTIPADDRESS_TABLE
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_MULTICASTIPADDRESS_ROW[1] Table;
+    MIB_MULTICASTIPADDRESS_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-ip_address_prefix
@@ -3097,7 +3097,7 @@ struct MIB_IPFORWARD_ROW2
 struct MIB_IPFORWARD_TABLE2
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPFORWARD_ROW2[1] Table;
+    MIB_IPFORWARD_ROW2[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ippath_row
@@ -3124,8 +3124,8 @@ struct MIB_IPPATH_ROW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ippath_table
 struct MIB_IPPATH_TABLE
 {
-    uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPPATH_ROW[1] Table;
+    uint              NumEntries;
+    MIB_IPPATH_ROW[1] Table; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ipnet_row2
@@ -3141,7 +3141,7 @@ struct MIB_IPNET_ROW2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsUnreachable)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield124;
+            ubyte _bitfield124;
         }
         ubyte Flags;
     }
@@ -3155,8 +3155,8 @@ struct MIB_IPNET_ROW2
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netioapi/ns-netioapi-mib_ipnet_table2
 struct MIB_IPNET_TABLE2
 {
-    uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_IPNET_ROW2[1] Table;
+    uint              NumEntries;
+    MIB_IPNET_ROW2[1] Table; // Flexible array
 }
 
 struct DNS_SETTINGS
@@ -3305,7 +3305,7 @@ struct MIB_FL_VIRTUAL_INTERFACE_ROW
 struct MIB_FL_VIRTUAL_INTERFACE_TABLE
 {
     uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIB_FL_VIRTUAL_INTERFACE_ROW[1] Table;
+    MIB_FL_VIRTUAL_INTERFACE_ROW[1] Table; // Flexible array
 }
 
 struct PF_FILTER_DESCRIPTOR
@@ -3333,22 +3333,22 @@ struct PF_FILTER_STATS
 
 struct PF_INTERFACE_STATS
 {
-    void*            pvDriverContext;
-    uint             dwFlags;
-    uint             dwInDrops;
-    uint             dwOutDrops;
-    PFFORWARD_ACTION eaInAction;
-    PFFORWARD_ACTION eaOutAction;
-    uint             dwNumInFilters;
-    uint             dwNumOutFilters;
-    uint             dwFrag;
-    uint             dwSpoof;
-    uint             dwReserved1;
-    uint             dwReserved2;
-    long             liSYN;
-    long             liTotalLogged;
-    uint             dwLostLogEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PF_FILTER_STATS[1] FilterInfo;
+    void*              pvDriverContext;
+    uint               dwFlags;
+    uint               dwInDrops;
+    uint               dwOutDrops;
+    PFFORWARD_ACTION   eaInAction;
+    PFFORWARD_ACTION   eaOutAction;
+    uint               dwNumInFilters;
+    uint               dwNumOutFilters;
+    uint               dwFrag;
+    uint               dwSpoof;
+    uint               dwReserved1;
+    uint               dwReserved2;
+    long               liSYN;
+    long               liTotalLogged;
+    uint               dwLostLogEntries;
+    PF_FILTER_STATS[1] FilterInfo; // Flexible array
 }
 
 struct PF_LATEBIND_INFO
@@ -3368,7 +3368,7 @@ struct PFLOGFRAME
     ushort      wSizeOfIpHeader;
     uint        dwInterfaceName;
     uint        dwIPIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bPacketData;
+    ubyte[1]    bPacketData; // Flexible array
 }
 
 // Functions

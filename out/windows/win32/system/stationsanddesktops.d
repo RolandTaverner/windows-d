@@ -3,10 +3,10 @@
 module windows.win32.system.stationsanddesktops;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, LPARAM, LUID, PSTR,
-                                                    PWSTR, WPARAM;
+public import windows.win32.foundation : BOOL, HANDLE, HWND, LPARAM, LUID, PSTR,
+                                         PWSTR, WPARAM;
 public import windows.win32.graphics.gdi : DEVMODEA, DEVMODEW;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
 public import windows.win32.ui.windowsandmessaging : WNDENUMPROC;
 
 extern(Windows) @nogc nothrow:

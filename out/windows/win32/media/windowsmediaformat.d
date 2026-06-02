@@ -3,10 +3,9 @@
 module windows.win32.media.windowsmediaformat;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, LPARAM, PWSTR,
-                                                    RECT;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, LPARAM, PWSTR, RECT;
 public import windows.win32.graphics.gdi : BITMAPINFOHEADER;
-public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.system.com : IStream, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -382,22 +381,39 @@ enum : uint
 {
     WMT_VIDEOIMAGE_MAGIC_NUMBER             = 0x1d4a45f2U,
     WMT_VIDEOIMAGE_MAGIC_NUMBER_2           = 0x1d4a45f3U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-bow-tie
     WMT_VIDEOIMAGE_TRANSITION_BOW_TIE       = 0x0000000bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-circle
     WMT_VIDEOIMAGE_TRANSITION_CIRCLE        = 0x0000000cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-cross-fade
     WMT_VIDEOIMAGE_TRANSITION_CROSS_FADE    = 0x0000000dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-diagonal
     WMT_VIDEOIMAGE_TRANSITION_DIAGONAL      = 0x0000000eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-diamond
     WMT_VIDEOIMAGE_TRANSITION_DIAMOND       = 0x0000000fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-fade-to-color
     WMT_VIDEOIMAGE_TRANSITION_FADE_TO_COLOR = 0x00000010U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-filled-v
     WMT_VIDEOIMAGE_TRANSITION_FILLED_V      = 0x00000011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-flip
     WMT_VIDEOIMAGE_TRANSITION_FLIP          = 0x00000012U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-inset
     WMT_VIDEOIMAGE_TRANSITION_INSET         = 0x00000013U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-iris
     WMT_VIDEOIMAGE_TRANSITION_IRIS          = 0x00000014U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-page-roll
     WMT_VIDEOIMAGE_TRANSITION_PAGE_ROLL     = 0x00000015U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-rectangle
     WMT_VIDEOIMAGE_TRANSITION_RECTANGLE     = 0x00000017U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-reveal
     WMT_VIDEOIMAGE_TRANSITION_REVEAL        = 0x00000018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-slide
     WMT_VIDEOIMAGE_TRANSITION_SLIDE         = 0x0000001bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-split
     WMT_VIDEOIMAGE_TRANSITION_SPLIT         = 0x0000001dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-star
     WMT_VIDEOIMAGE_TRANSITION_STAR          = 0x0000001eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wmformat/wmt-videoimage-transition-wheel
     WMT_VIDEOIMAGE_TRANSITION_WHEEL         = 0x0000001fU,
 }
 
@@ -1082,11 +1098,11 @@ struct WMT_WEBSTREAM_FORMAT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/ns-wmsdkidl-wmt_webstream_sample_header
 struct WMT_WEBSTREAM_SAMPLE_HEADER
 {
-    ushort cbLength;
-    ushort wPart;
-    ushort cTotalParts;
-    ushort wSampleType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wszURL;
+    ushort   cbLength;
+    ushort   wPart;
+    ushort   cTotalParts;
+    ushort   wSampleType;
+    wchar[1] wszURL; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/ns-wmsdkidl-wm_address_accessentry
@@ -1268,7 +1284,7 @@ struct WMMPEG2VIDEOINFO
     uint               dwProfile;
     uint               dwLevel;
     uint               dwFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwSequenceHeader;
+    uint[1]            dwSequenceHeader; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmsdkidl/ns-wmsdkidl-wmscriptformat

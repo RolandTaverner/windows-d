@@ -3,13 +3,13 @@
 module windows.win32.media.audio.directmusic;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND,
-                                                    PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND, PSTR,
+                                         PWSTR;
 public import windows.win32.media.audio.directsound : IDirectSound, IDirectSoundBuffer;
-public import windows.win32.media.audio.audio : HMIDI, WAVEFORMATEX;
-public import windows.win32.media.media : IReferenceClock;
+public import windows.win32.media.audio : HMIDI, WAVEFORMATEX;
+public import windows.win32.media : IReferenceClock;
 public import windows.win32.media.multimedia : MIDIOPENSTRMID;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -398,7 +398,8 @@ enum GUID DLSID_SampleMemorySize = GUID("178f2f28-c364-11d1-a760-0000f875ac12");
 enum GUID DLSID_ManufacturersID = GUID("b03e1181-8095-11d2-a1ef-00600833dbd8");
 enum GUID DLSID_ProductID = GUID("b03e1182-8095-11d2-a1ef-00600833dbd8");
 enum GUID DLSID_SamplePlaybackRate = GUID("2a91f713-a4bf-11d2-bbdf-00600833dbd8");
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTR_PATH_SOFTWARESYNTHS = "Software\\Microsoft\\DirectMusic\\SoftwareSynths";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGSTR_PATH_SOFTWARESYNTHS = "Software\\Microsoft\\DirectMusic\\SoftwareSynths";
 enum uint REFRESH_F_LASTBUFFER = 0x00000001U;
 enum GUID CLSID_DirectMusicSynthSink = GUID("aec17ce3-a514-11d1-afa6-00aa0024d8b6");
 
@@ -561,7 +562,7 @@ struct DMUS_DOWNLOADINFO
 
 struct DMUS_OFFSETTABLE
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] ulOffsetTable;
+    uint[1] ulOffsetTable; // Flexible array
 }
 
 struct DMUS_INSTRUMENT
@@ -585,7 +586,7 @@ struct DMUS_REGION
     uint     ulFirstExtCkIdx;
     WAVELINK WaveLink;
     WSMPL    WSMP;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLOOP[1] WLOOP;
+    WLOOP[1] WLOOP; // Flexible array
 }
 
 struct DMUS_LFOPARAMS
@@ -901,12 +902,12 @@ align (1):
 struct MIDIOPENDESC
 {
 align (1):
-    HMIDI  hMidi;
-    size_t dwCallback;
-    size_t dwInstance;
-    size_t dnDevNode;
-    uint   cIds;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIDIOPENSTRMID[1] rgIds;
+    HMIDI             hMidi;
+    size_t            dwCallback;
+    size_t            dwInstance;
+    size_t            dnDevNode;
+    uint              cIds;
+    MIDIOPENSTRMID[1] rgIds; // Flexible array
 }
 
 // Interfaces

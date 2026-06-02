@@ -3,9 +3,9 @@
 module windows.win32.system.messagequeuing;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HANDLE, HRESULT, PWSTR, VARIANT_BOOL;
-public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BSTR, HANDLE, HRESULT, PWSTR, VARIANT_BOOL;
+public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.system.distributedtransactioncoordinator : ITransaction;
 public import windows.win32.system.io : OVERLAPPED;

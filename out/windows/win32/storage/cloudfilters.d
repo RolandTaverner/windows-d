@@ -3,8 +3,7 @@
 module windows.win32.storage.cloudfilters;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, HANDLE, HRESULT, NTSTATUS,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOLEAN, HANDLE, HRESULT, NTSTATUS, PWSTR;
 public import windows.win32.storage.filesystem : FILE_BASIC_INFO, FILE_INFO_BY_HANDLE_CLASS,
                                                  WIN32_FIND_DATAA;
 public import windows.win32.system.correlationvector : CORRELATION_VECTOR;
@@ -809,7 +808,7 @@ struct CF_PLACEHOLDER_BASIC_INFO
     long             FileId;
     long             SyncRootFileId;
     uint             FileIdentityLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] FileIdentity;
+    ubyte[1]         FileIdentity; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfapi/ns-cfapi-cf_placeholder_standard_info
@@ -824,7 +823,7 @@ struct CF_PLACEHOLDER_STANDARD_INFO
     long             FileId;
     long             SyncRootFileId;
     uint             FileIdentityLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] FileIdentity;
+    ubyte[1]         FileIdentity; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfapi/ns-cfapi-cf_sync_root_basic_info
@@ -853,7 +852,7 @@ struct CF_SYNC_ROOT_STANDARD_INFO
     wchar[256]           ProviderName;
     wchar[256]           ProviderVersion;
     uint                 SyncRootIdentityLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SyncRootIdentity;
+    ubyte[1]             SyncRootIdentity; // Flexible array
 }
 
 // Functions

@@ -3,8 +3,8 @@
 module windows.win32.devices.functiondiscovery;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
-public import windows.win32.system.com.com : IServiceProvider, IUnknown, STGM;
+public import windows.win32.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
+public import windows.win32.system.com : IServiceProvider, IUnknown, STGM;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
 
@@ -81,7 +81,7 @@ enum GUID SID_UnpairProvider = GUID("89a502fc-857b-4698-a0b7-027192002f9e");
 enum GUID SID_DeviceDisplayStatusManager = GUID("f59aa553-8309-46ca-9736-1ac3c62d6031");
 enum GUID SID_FunctionDiscoveryProviderRefresh = GUID("2b4cbdc9-31c4-40d4-a62d-772aa174ed52");
 enum GUID SID_UninstallDeviceFunction = GUID("c920566e-5671-4496-8025-bf0b89bd44cd");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({146850387, 41300, 18246, 144, 5, 130, 222, 83, 23, 20, 139}, 1))], [])*/PROPERTYKEY PKEY_FunctionInstance = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({146850387, 41300, 18246, 144, 5, 130, 222, 83, 23, 20, 139}, 1))], [])*/PROPERTYKEY(GUID("08C0C253-A154-4746-9005-82DE5317148B"), 1);
+enum PROPERTYKEY PKEY_FunctionInstance = PROPERTYKEY(GUID("08C0C253-A154-4746-9005-82DE5317148B"), 1);
 enum GUID FMTID_FD = GUID("904b03a2-471d-423c-a584-f3483238a146");
 
 enum : uint
@@ -96,69 +96,69 @@ enum : GUID
     FMTID_DeviceInterface = GUID("53808008-07bb-4661-bc3c-b5953e708560"),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_DeviceDisplay_Address                          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 51),
-    PKEY_DeviceDisplay_DiscoveryMethod                  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 52),
-    PKEY_DeviceDisplay_IsEncrypted                      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 53),
-    PKEY_DeviceDisplay_IsAuthenticated                  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 54),
-    PKEY_DeviceDisplay_IsConnected                      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 55),
-    PKEY_DeviceDisplay_IsPaired                         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 56),
-    PKEY_DeviceDisplay_Icon                             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 57),
-    PKEY_DeviceDisplay_Version                          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 65),
-    PKEY_DeviceDisplay_Last_Seen                        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 66),
-    PKEY_DeviceDisplay_Last_Connected                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 67),
-    PKEY_DeviceDisplay_IsShowInDisconnectedState        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 68),
-    PKEY_DeviceDisplay_IsLocalMachine                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 70),
-    PKEY_DeviceDisplay_MetadataPath                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 71),
-    PKEY_DeviceDisplay_IsMetadataSearchInProgress       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 72),
-    PKEY_DeviceDisplay_MetadataChecksum                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 73),
-    PKEY_DeviceDisplay_IsNotInterestingForDisplay       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 74),
-    PKEY_DeviceDisplay_LaunchDeviceStageOnDeviceConnect = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 76),
-    PKEY_DeviceDisplay_LaunchDeviceStageFromExplorer    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 51))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 77),
+    PKEY_DeviceDisplay_Address                          = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 51),
+    PKEY_DeviceDisplay_DiscoveryMethod                  = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 52),
+    PKEY_DeviceDisplay_IsEncrypted                      = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 53),
+    PKEY_DeviceDisplay_IsAuthenticated                  = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 54),
+    PKEY_DeviceDisplay_IsConnected                      = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 55),
+    PKEY_DeviceDisplay_IsPaired                         = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 56),
+    PKEY_DeviceDisplay_Icon                             = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 57),
+    PKEY_DeviceDisplay_Version                          = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 65),
+    PKEY_DeviceDisplay_Last_Seen                        = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 66),
+    PKEY_DeviceDisplay_Last_Connected                   = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 67),
+    PKEY_DeviceDisplay_IsShowInDisconnectedState        = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 68),
+    PKEY_DeviceDisplay_IsLocalMachine                   = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 70),
+    PKEY_DeviceDisplay_MetadataPath                     = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 71),
+    PKEY_DeviceDisplay_IsMetadataSearchInProgress       = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 72),
+    PKEY_DeviceDisplay_MetadataChecksum                 = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 73),
+    PKEY_DeviceDisplay_IsNotInterestingForDisplay       = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 74),
+    PKEY_DeviceDisplay_LaunchDeviceStageOnDeviceConnect = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 76),
+    PKEY_DeviceDisplay_LaunchDeviceStageFromExplorer    = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 77),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_DeviceDisplay_BaselineExperienceId         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 78),
-    PKEY_DeviceDisplay_IsDeviceUniquelyIdentifiable = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 79),
-    PKEY_DeviceDisplay_AssociationArray             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 80),
-    PKEY_DeviceDisplay_DeviceDescription1           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 81),
-    PKEY_DeviceDisplay_DeviceDescription2           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 82),
-    PKEY_DeviceDisplay_IsNotWorkingProperly         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 83),
-    PKEY_DeviceDisplay_IsSharedDevice               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 84),
-    PKEY_DeviceDisplay_IsNetworkDevice              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 85),
-    PKEY_DeviceDisplay_IsDefaultDevice              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 86),
-    PKEY_DeviceDisplay_MetadataCabinet              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 87),
-    PKEY_DeviceDisplay_RequiresPairingElevation     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 88),
-    PKEY_DeviceDisplay_ExperienceId                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 89),
-    PKEY_DeviceDisplay_Category                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 90),
-    PKEY_DeviceDisplay_Category_Desc_Singular       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 91),
-    PKEY_DeviceDisplay_Category_Desc_Plural         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 92),
-    PKEY_DeviceDisplay_Category_Icon                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 93),
-    PKEY_DeviceDisplay_CategoryGroup_Desc           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 94),
-    PKEY_DeviceDisplay_CategoryGroup_Icon           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 95),
-    PKEY_DeviceDisplay_PrimaryCategory              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 97),
-    PKEY_DeviceDisplay_UnpairUninstall              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 98),
-    PKEY_DeviceDisplay_RequiresUninstallElevation   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 99),
-    PKEY_DeviceDisplay_DeviceFunctionSubRank        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 100),
-    PKEY_DeviceDisplay_AlwaysShowDeviceAsConnected  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 101),
-    PKEY_DeviceDisplay_FriendlyName                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12288),
-    PKEY_DeviceDisplay_Manufacturer                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8192),
-    PKEY_DeviceDisplay_ModelName                    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8194),
-    PKEY_DeviceDisplay_ModelNumber                  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8195),
-    PKEY_DeviceDisplay_InstallInProgress            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2026065864, 4170, 19146, 158, 164, 82, 77, 82, 153, 110, 87}, 78))], [])*/PROPERTYKEY(GUID("83DA6326-97A6-4088-9453-A1923F573B29"), 9),
+    PKEY_DeviceDisplay_BaselineExperienceId         = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 78),
+    PKEY_DeviceDisplay_IsDeviceUniquelyIdentifiable = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 79),
+    PKEY_DeviceDisplay_AssociationArray             = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 80),
+    PKEY_DeviceDisplay_DeviceDescription1           = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 81),
+    PKEY_DeviceDisplay_DeviceDescription2           = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 82),
+    PKEY_DeviceDisplay_IsNotWorkingProperly         = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 83),
+    PKEY_DeviceDisplay_IsSharedDevice               = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 84),
+    PKEY_DeviceDisplay_IsNetworkDevice              = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 85),
+    PKEY_DeviceDisplay_IsDefaultDevice              = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 86),
+    PKEY_DeviceDisplay_MetadataCabinet              = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 87),
+    PKEY_DeviceDisplay_RequiresPairingElevation     = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 88),
+    PKEY_DeviceDisplay_ExperienceId                 = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 89),
+    PKEY_DeviceDisplay_Category                     = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 90),
+    PKEY_DeviceDisplay_Category_Desc_Singular       = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 91),
+    PKEY_DeviceDisplay_Category_Desc_Plural         = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 92),
+    PKEY_DeviceDisplay_Category_Icon                = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 93),
+    PKEY_DeviceDisplay_CategoryGroup_Desc           = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 94),
+    PKEY_DeviceDisplay_CategoryGroup_Icon           = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 95),
+    PKEY_DeviceDisplay_PrimaryCategory              = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 97),
+    PKEY_DeviceDisplay_UnpairUninstall              = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 98),
+    PKEY_DeviceDisplay_RequiresUninstallElevation   = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 99),
+    PKEY_DeviceDisplay_DeviceFunctionSubRank        = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 100),
+    PKEY_DeviceDisplay_AlwaysShowDeviceAsConnected  = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 101),
+    PKEY_DeviceDisplay_FriendlyName                 = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12288),
+    PKEY_DeviceDisplay_Manufacturer                 = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8192),
+    PKEY_DeviceDisplay_ModelName                    = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8194),
+    PKEY_DeviceDisplay_ModelNumber                  = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8195),
+    PKEY_DeviceDisplay_InstallInProgress            = PROPERTYKEY(GUID("83DA6326-97A6-4088-9453-A1923F573B29"), 9),
 }
 
 enum GUID FMTID_Pairing = GUID("8807cae6-7db6-4f10-8ee4-435eaa1392bc");
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2282212070, 32182, 20240, 142, 228, 67, 94, 170, 19, 146, 188}, 1))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Pairing_ListItemText        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2282212070, 32182, 20240, 142, 228, 67, 94, 170, 19, 146, 188}, 1))], [])*/PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 1),
-    PKEY_Pairing_ListItemDescription = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2282212070, 32182, 20240, 142, 228, 67, 94, 170, 19, 146, 188}, 1))], [])*/PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 2),
-    PKEY_Pairing_ListItemIcon        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2282212070, 32182, 20240, 142, 228, 67, 94, 170, 19, 146, 188}, 1))], [])*/PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 3),
-    PKEY_Pairing_ListItemDefault     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2282212070, 32182, 20240, 142, 228, 67, 94, 170, 19, 146, 188}, 1))], [])*/PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 4),
-    PKEY_Pairing_IsWifiOnlyDevice    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2282212070, 32182, 20240, 142, 228, 67, 94, 170, 19, 146, 188}, 1))], [])*/PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 16),
+    PKEY_Pairing_ListItemText        = PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 1),
+    PKEY_Pairing_ListItemDescription = PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 2),
+    PKEY_Pairing_ListItemIcon        = PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 3),
+    PKEY_Pairing_ListItemDefault     = PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 4),
+    PKEY_Pairing_IsWifiOnlyDevice    = PROPERTYKEY(GUID("8807CAE6-7DB6-4F10-8EE4-435EAA1392BC"), 16),
 }
 
 enum : const(wchar)*
@@ -175,7 +175,7 @@ enum : const(wchar)*
     DEVICEDISPLAY_DISCOVERYMETHOD_ASP_INFRA    = "AspInfra",
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3941498653, 27187, 17617, 148, 65, 95, 70, 222, 242, 49, 152}, 9))], [])*/PROPERTYKEY PKEY_Device_BIOSVersion = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3941498653, 27187, 17617, 148, 65, 95, 70, 222, 242, 49, 152}, 9))], [])*/PROPERTYKEY(GUID("EAEE7F1D-6A33-44D1-9441-5F46DEF23198"), 9);
+enum PROPERTYKEY PKEY_Device_BIOSVersion = PROPERTYKEY(GUID("EAEE7F1D-6A33-44D1-9441-5F46DEF23198"), 9);
 
 enum : GUID
 {
@@ -183,37 +183,37 @@ enum : GUID
     FMTID_PNPX = GUID("656a3bb3-ecc0-43fd-8477-4ae0404a96cd"),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4096))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_GlobalIdentity  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4096))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4096),
-    PKEY_PNPX_Types           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4096))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4097),
-    PKEY_PNPX_Scopes          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4096))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4098),
-    PKEY_PNPX_XAddrs          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4096))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4099),
-    PKEY_PNPX_MetadataVersion = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4096))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4100),
+    PKEY_PNPX_GlobalIdentity  = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4096),
+    PKEY_PNPX_Types           = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4097),
+    PKEY_PNPX_Scopes          = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4098),
+    PKEY_PNPX_XAddrs          = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4099),
+    PKEY_PNPX_MetadataVersion = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4100),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_ID              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4101),
-    PKEY_PNPX_RemoteAddress   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4102),
-    PKEY_PNPX_RootProxy       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4103),
-    PKEY_PNPX_ManufacturerUrl = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8193),
-    PKEY_PNPX_ModelUrl        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8196),
-    PKEY_PNPX_Upc             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8197),
-    PKEY_PNPX_PresentationUrl = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 4101))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8198),
+    PKEY_PNPX_ID              = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4101),
+    PKEY_PNPX_RemoteAddress   = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4102),
+    PKEY_PNPX_RootProxy       = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 4103),
+    PKEY_PNPX_ManufacturerUrl = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8193),
+    PKEY_PNPX_ModelUrl        = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8196),
+    PKEY_PNPX_Upc             = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8197),
+    PKEY_PNPX_PresentationUrl = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 8198),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12289))], [])*/PROPERTYKEY PKEY_PNPX_FirmwareVersion = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12289))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12289);
+enum PROPERTYKEY PKEY_PNPX_FirmwareVersion = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12289);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12290))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_SerialNumber     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12290))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12290),
-    PKEY_PNPX_DeviceCategory   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12290))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12292),
-    PKEY_PNPX_SecureChannel    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12290))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28673),
-    PKEY_PNPX_CompactSignature = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12290))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28674),
+    PKEY_PNPX_SerialNumber     = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12290),
+    PKEY_PNPX_DeviceCategory   = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12292),
+    PKEY_PNPX_SecureChannel    = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28673),
+    PKEY_PNPX_CompactSignature = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28674),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 28675))], [])*/PROPERTYKEY PKEY_PNPX_DeviceCertHash = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 28675))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28675);
+enum PROPERTYKEY PKEY_PNPX_DeviceCertHash = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28675);
 
 enum : const(wchar)*
 {
@@ -235,51 +235,51 @@ enum : const(wchar)*
     PNPX_DEVICECATEGORY_OTHER                  = "Other",
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12293))], [])*/PROPERTYKEY PKEY_PNPX_DeviceCategory_Desc = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12293))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12293);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12304))], [])*/PROPERTYKEY PKEY_PNPX_Category_Desc_NonPlural = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12304))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12304);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12294))], [])*/PROPERTYKEY PKEY_PNPX_PhysicalAddress = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12294))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12294);
+enum PROPERTYKEY PKEY_PNPX_DeviceCategory_Desc = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12293);
+enum PROPERTYKEY PKEY_PNPX_Category_Desc_NonPlural = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12304);
+enum PROPERTYKEY PKEY_PNPX_PhysicalAddress = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12294);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12295))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_NetworkInterfaceLuid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12295))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12295),
-    PKEY_PNPX_NetworkInterfaceGuid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12295))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12296),
+    PKEY_PNPX_NetworkInterfaceLuid = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12295),
+    PKEY_PNPX_NetworkInterfaceGuid = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12296),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_IpAddress          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12297),
-    PKEY_PNPX_ServiceAddress     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16384),
-    PKEY_PNPX_ServiceId          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16385),
-    PKEY_PNPX_ServiceTypes       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16386),
-    PKEY_PNPX_ServiceControlUrl  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16388),
-    PKEY_PNPX_ServiceDescUrl     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16389),
-    PKEY_PNPX_ServiceEventSubUrl = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 12297))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16390),
+    PKEY_PNPX_IpAddress          = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 12297),
+    PKEY_PNPX_ServiceAddress     = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16384),
+    PKEY_PNPX_ServiceId          = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16385),
+    PKEY_PNPX_ServiceTypes       = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16386),
+    PKEY_PNPX_ServiceControlUrl  = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16388),
+    PKEY_PNPX_ServiceDescUrl     = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16389),
+    PKEY_PNPX_ServiceEventSubUrl = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 16390),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 20480))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_DomainName = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 20480))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 20480),
-    PKEY_PNPX_ShareName  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 20480))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 20482),
+    PKEY_PNPX_DomainName = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 20480),
+    PKEY_PNPX_ShareName  = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 20482),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 24576))], [])*/PROPERTYKEY PKEY_SSDP_AltLocationInfo = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 24576))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 24576);
+enum PROPERTYKEY PKEY_SSDP_AltLocationInfo = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 24576);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 24577))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_SSDP_DevLifeTime      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 24577))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 24577),
-    PKEY_SSDP_NetworkInterface = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 24577))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 24578),
+    PKEY_SSDP_DevLifeTime      = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 24577),
+    PKEY_SSDP_NetworkInterface = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 24578),
 }
 
 enum GUID FMTID_PNPXDynamicProperty = GUID("4fc5077e-b686-44be-93e3-86cafe368ccd");
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1338312574, 46726, 17598, 147, 227, 134, 202, 254, 54, 140, 205}, 1))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_Installable     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1338312574, 46726, 17598, 147, 227, 134, 202, 254, 54, 140, 205}, 1))], [])*/PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 1),
-    PKEY_PNPX_Associated      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1338312574, 46726, 17598, 147, 227, 134, 202, 254, 54, 140, 205}, 1))], [])*/PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 2),
-    PKEY_PNPX_CompatibleTypes = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1338312574, 46726, 17598, 147, 227, 134, 202, 254, 54, 140, 205}, 1))], [])*/PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 3),
+    PKEY_PNPX_Installable     = PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 1),
+    PKEY_PNPX_Associated      = PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 2),
+    PKEY_PNPX_CompatibleTypes = PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 3),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1338312574, 46726, 17598, 147, 227, 134, 202, 254, 54, 140, 205}, 4))], [])*/PROPERTYKEY PKEY_PNPX_InstallState = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1338312574, 46726, 17598, 147, 227, 134, 202, 254, 54, 140, 205}, 4))], [])*/PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 4);
+enum PROPERTYKEY PKEY_PNPX_InstallState = PROPERTYKEY(GUID("4FC5077E-B686-44BE-93E3-86CAFE368CCD"), 4);
 
 enum : uint
 {
@@ -289,230 +289,233 @@ enum : uint
     PNPX_INSTALLSTATE_FAILED       = 0x00000003U,
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 28672))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_PNPX_Removable       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 28672))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28672),
-    PKEY_PNPX_IPBusEnumerated = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 28672))], [])*/PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28688),
+    PKEY_PNPX_Removable       = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28672),
+    PKEY_PNPX_IPBusEnumerated = PROPERTYKEY(GUID("656A3BB3-ECC0-43FD-8477-4AE0404A96CD"), 28688),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_WNET_Scope       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 1),
-    PKEY_WNET_Type        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 2),
-    PKEY_WNET_DisplayType = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 3),
-    PKEY_WNET_Usage       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 4),
-    PKEY_WNET_LocalName   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 5),
-    PKEY_WNET_RemoteName  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 6),
-    PKEY_WNET_Comment     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 7),
-    PKEY_WNET_Provider    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3736970298, 14259, 17283, 145, 231, 68, 152, 218, 41, 149, 171}, 1))], [])*/PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 8),
+    PKEY_WNET_Scope       = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 1),
+    PKEY_WNET_Type        = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 2),
+    PKEY_WNET_DisplayType = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 3),
+    PKEY_WNET_Usage       = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 4),
+    PKEY_WNET_LocalName   = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 5),
+    PKEY_WNET_RemoteName  = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 6),
+    PKEY_WNET_Comment     = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 7),
+    PKEY_WNET_Provider    = PROPERTYKEY(GUID("DEBDA43A-37B3-4383-91E7-4498DA2995AB"), 8),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_WCN_Version          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B80-4684-11DA-A26A-0002B3988E81"), 1),
-    PKEY_WCN_RequestType      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B81-4684-11DA-A26A-0002B3988E81"), 2),
-    PKEY_WCN_AuthType         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B82-4684-11DA-A26A-0002B3988E81"), 3),
-    PKEY_WCN_EncryptType      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B83-4684-11DA-A26A-0002B3988E81"), 4),
-    PKEY_WCN_ConnType         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B84-4684-11DA-A26A-0002B3988E81"), 5),
-    PKEY_WCN_ConfigMethods    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B85-4684-11DA-A26A-0002B3988E81"), 6),
-    PKEY_WCN_RfBand           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B87-4684-11DA-A26A-0002B3988E81"), 8),
-    PKEY_WCN_AssocState       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B88-4684-11DA-A26A-0002B3988E81"), 9),
-    PKEY_WCN_ConfigError      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 10),
-    PKEY_WCN_ConfigState      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 11),
-    PKEY_WCN_DevicePasswordId = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342720, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 1))], [])*/PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 12),
+    PKEY_WCN_Version          = PROPERTYKEY(GUID("88190B80-4684-11DA-A26A-0002B3988E81"), 1),
+    PKEY_WCN_RequestType      = PROPERTYKEY(GUID("88190B81-4684-11DA-A26A-0002B3988E81"), 2),
+    PKEY_WCN_AuthType         = PROPERTYKEY(GUID("88190B82-4684-11DA-A26A-0002B3988E81"), 3),
+    PKEY_WCN_EncryptType      = PROPERTYKEY(GUID("88190B83-4684-11DA-A26A-0002B3988E81"), 4),
+    PKEY_WCN_ConnType         = PROPERTYKEY(GUID("88190B84-4684-11DA-A26A-0002B3988E81"), 5),
+    PKEY_WCN_ConfigMethods    = PROPERTYKEY(GUID("88190B85-4684-11DA-A26A-0002B3988E81"), 6),
+    PKEY_WCN_RfBand           = PROPERTYKEY(GUID("88190B87-4684-11DA-A26A-0002B3988E81"), 8),
+    PKEY_WCN_AssocState       = PROPERTYKEY(GUID("88190B88-4684-11DA-A26A-0002B3988E81"), 9),
+    PKEY_WCN_ConfigError      = PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 10),
+    PKEY_WCN_ConfigState      = PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 11),
+    PKEY_WCN_DevicePasswordId = PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 12),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342729, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 13))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_WCN_OSVersion       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342729, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 13))], [])*/PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 13),
-    PKEY_WCN_VendorExtension = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342729, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 13))], [])*/PROPERTYKEY(GUID("88190B8A-4684-11DA-A26A-0002B3988E81"), 14),
+    PKEY_WCN_OSVersion       = PROPERTYKEY(GUID("88190B89-4684-11DA-A26A-0002B3988E81"), 13),
+    PKEY_WCN_VendorExtension = PROPERTYKEY(GUID("88190B8A-4684-11DA-A26A-0002B3988E81"), 14),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 15))], [])*/PROPERTYKEY PKEY_WCN_RegistrarType = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 15))], [])*/PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 15);
+enum PROPERTYKEY PKEY_WCN_RegistrarType = PROPERTYKEY(GUID("88190B8B-4684-11DA-A26A-0002B3988E81"), 15);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Hardware_Devinst          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4097),
-    PKEY_Hardware_DisplayAttribute = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 5),
-    PKEY_Hardware_DriverDate       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 11),
-    PKEY_Hardware_DriverProvider   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 10),
-    PKEY_Hardware_DriverVersion    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 9),
-    PKEY_Hardware_Function         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4099),
-    PKEY_Hardware_Icon             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 3),
-    PKEY_Hardware_Image            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4098),
-    PKEY_Hardware_Manufacturer     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 6),
-    PKEY_Hardware_Model            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 7),
-    PKEY_Hardware_Name             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 2),
-    PKEY_Hardware_SerialNumber     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 8),
-    PKEY_Hardware_ShellAttributes  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4100),
-    PKEY_Hardware_Status           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1588543218, 57546, 17816, 191, 6, 113, 237, 29, 157, 217, 83}, 4097))], [])*/PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4096),
+    PKEY_Hardware_Devinst          = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4097),
+    PKEY_Hardware_DisplayAttribute = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 5),
+    PKEY_Hardware_DriverDate       = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 11),
+    PKEY_Hardware_DriverProvider   = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 10),
+    PKEY_Hardware_DriverVersion    = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 9),
+    PKEY_Hardware_Function         = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4099),
+    PKEY_Hardware_Icon             = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 3),
+    PKEY_Hardware_Image            = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4098),
+    PKEY_Hardware_Manufacturer     = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 6),
+    PKEY_Hardware_Model            = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 7),
+    PKEY_Hardware_Name             = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 2),
+    PKEY_Hardware_SerialNumber     = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 8),
+    PKEY_Hardware_ShellAttributes  = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4100),
+    PKEY_Hardware_Status           = PROPERTYKEY(GUID("5EAF3EF2-E0CA-4598-BF06-71ED1D9DD953"), 4096),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_NAME                      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("B725F130-47EF-101A-A5F1-02608C9EEBAC"), 10),
-    PKEY_Device_DeviceDesc         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 2),
-    PKEY_Device_HardwareIds        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 3),
-    PKEY_Device_CompatibleIds      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 4),
-    PKEY_Device_Service            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 6),
-    PKEY_Device_Class              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 9),
-    PKEY_Device_ClassGuid          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 10),
-    PKEY_Device_Driver             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 11),
-    PKEY_Device_ConfigFlags        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 12),
-    PKEY_Device_Manufacturer       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 13),
-    PKEY_Device_FriendlyName       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 14),
-    PKEY_Device_LocationInfo       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 15),
-    PKEY_Device_PDOName            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 16),
-    PKEY_Device_Capabilities       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 17),
-    PKEY_Device_UINumber           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 18),
-    PKEY_Device_UpperFilters       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 19),
-    PKEY_Device_LowerFilters       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 20),
-    PKEY_Device_BusTypeGuid        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 21),
-    PKEY_Device_LegacyBusType      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 22),
-    PKEY_Device_BusNumber          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 23),
-    PKEY_Device_EnumeratorName     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 24),
-    PKEY_Device_Security           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 25),
-    PKEY_Device_SecuritySDS        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 26),
-    PKEY_Device_DevType            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 27),
-    PKEY_Device_Exclusive          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 28),
-    PKEY_Device_Characteristics    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 29),
-    PKEY_Device_Address            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 30),
-    PKEY_Device_UINumberDescFormat = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3072717104, 18415, 4122, 165, 241, 2, 96, 140, 158, 235, 172}, 10))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 31),
+    PKEY_NAME                      = PROPERTYKEY(GUID("B725F130-47EF-101A-A5F1-02608C9EEBAC"), 10),
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/CoreAudio/pkey-device-devicedesc
+    PKEY_Device_DeviceDesc         = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 2),
+    PKEY_Device_HardwareIds        = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 3),
+    PKEY_Device_CompatibleIds      = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 4),
+    PKEY_Device_Service            = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 6),
+    PKEY_Device_Class              = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 9),
+    PKEY_Device_ClassGuid          = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 10),
+    PKEY_Device_Driver             = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 11),
+    PKEY_Device_ConfigFlags        = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 12),
+    PKEY_Device_Manufacturer       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 13),
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/CoreAudio/pkey-device-friendlyname
+    PKEY_Device_FriendlyName       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 14),
+    PKEY_Device_LocationInfo       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 15),
+    PKEY_Device_PDOName            = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 16),
+    PKEY_Device_Capabilities       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 17),
+    PKEY_Device_UINumber           = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 18),
+    PKEY_Device_UpperFilters       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 19),
+    PKEY_Device_LowerFilters       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 20),
+    PKEY_Device_BusTypeGuid        = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 21),
+    PKEY_Device_LegacyBusType      = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 22),
+    PKEY_Device_BusNumber          = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 23),
+    PKEY_Device_EnumeratorName     = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 24),
+    PKEY_Device_Security           = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 25),
+    PKEY_Device_SecuritySDS        = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 26),
+    PKEY_Device_DevType            = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 27),
+    PKEY_Device_Exclusive          = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 28),
+    PKEY_Device_Characteristics    = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 29),
+    PKEY_Device_Address            = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 30),
+    PKEY_Device_UINumberDescFormat = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 31),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 32))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_PowerData             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 32))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 32),
-    PKEY_Device_RemovalPolicy         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 32))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 33),
-    PKEY_Device_RemovalPolicyDefault  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 32))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 34),
-    PKEY_Device_RemovalPolicyOverride = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 32))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 35),
+    PKEY_Device_PowerData             = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 32),
+    PKEY_Device_RemovalPolicy         = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 33),
+    PKEY_Device_RemovalPolicyDefault  = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 34),
+    PKEY_Device_RemovalPolicyOverride = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 35),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_InstallState       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 36),
-    PKEY_Device_LocationPaths      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 37),
-    PKEY_Device_BaseContainerId    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 38),
-    PKEY_Device_DevNodeStatus      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 2),
-    PKEY_Device_ProblemCode        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 3),
-    PKEY_Device_EjectionRelations  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 4),
-    PKEY_Device_RemovalRelations   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 5),
-    PKEY_Device_PowerRelations     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 6),
-    PKEY_Device_BusRelations       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 7),
-    PKEY_Device_Parent             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 8),
-    PKEY_Device_Children           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 9),
-    PKEY_Device_Siblings           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 10),
-    PKEY_Device_TransportRelations = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2757502286, 57116, 20221, 128, 32, 103, 209, 70, 168, 80, 224}, 36))], [])*/PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 11),
+    PKEY_Device_InstallState       = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 36),
+    PKEY_Device_LocationPaths      = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 37),
+    PKEY_Device_BaseContainerId    = PROPERTYKEY(GUID("A45C254E-DF1C-4EFD-8020-67D146A850E0"), 38),
+    PKEY_Device_DevNodeStatus      = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 2),
+    PKEY_Device_ProblemCode        = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 3),
+    PKEY_Device_EjectionRelations  = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 4),
+    PKEY_Device_RemovalRelations   = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 5),
+    PKEY_Device_PowerRelations     = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 6),
+    PKEY_Device_BusRelations       = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 7),
+    PKEY_Device_Parent             = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 8),
+    PKEY_Device_Children           = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 9),
+    PKEY_Device_Siblings           = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 10),
+    PKEY_Device_TransportRelations = PROPERTYKEY(GUID("4340A6C5-93FA-4706-972C-7B648008A5A7"), 11),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_Reported               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY(GUID("80497100-8C73-48B9-AAD9-CE387E19C56E"), 2),
-    PKEY_Device_Legacy                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY(GUID("80497100-8C73-48B9-AAD9-CE387E19C56E"), 3),
-    PKEY_Device_InstanceId             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 256),
-    PKEY_Device_ContainerId            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY(GUID("8C7ED206-3F8A-4827-B3AB-AE9E1FAEFC6C"), 2),
-    PKEY_Device_ModelId                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 2),
-    PKEY_Device_FriendlyNameAttributes = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2152296704, 35955, 18617, 170, 217, 206, 56, 126, 25, 197, 110}, 2))], [])*/PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 3),
+    PKEY_Device_Reported               = PROPERTYKEY(GUID("80497100-8C73-48B9-AAD9-CE387E19C56E"), 2),
+    PKEY_Device_Legacy                 = PROPERTYKEY(GUID("80497100-8C73-48B9-AAD9-CE387E19C56E"), 3),
+    PKEY_Device_InstanceId             = PROPERTYKEY(GUID("78C34FC8-104A-4ACA-9EA4-524D52996E57"), 256),
+    PKEY_Device_ContainerId            = PROPERTYKEY(GUID("8C7ED206-3F8A-4827-B3AB-AE9E1FAEFC6C"), 2),
+    PKEY_Device_ModelId                = PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 2),
+    PKEY_Device_FriendlyNameAttributes = PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 3),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 4))], [])*/PROPERTYKEY PKEY_Device_ManufacturerAttributes = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 4))], [])*/PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 4);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 5))], [])*/PROPERTYKEY PKEY_Device_PresenceNotForDevice = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 5))], [])*/PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 5);
+enum PROPERTYKEY PKEY_Device_ManufacturerAttributes = PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 4);
+enum PROPERTYKEY PKEY_Device_PresenceNotForDevice = PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 5);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 6))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_SignalStrength              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 6))], [])*/PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 6),
-    PKEY_Device_IsAssociateableByUserAction = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2161647270, 29811, 19212, 130, 22, 239, 193, 26, 44, 76, 139}, 6))], [])*/PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 7),
+    PKEY_Device_SignalStrength              = PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 6),
+    PKEY_Device_IsAssociateableByUserAction = PROPERTYKEY(GUID("80D81EA6-7473-4B0C-8216-EFC11A2C4C8B"), 7),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 1))], [])*/PROPERTYKEY PKEY_Numa_Proximity_Domain = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 1))], [])*/PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 1);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 2))], [])*/PROPERTYKEY PKEY_Device_DHP_Rebalance_Policy = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 2))], [])*/PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 2);
+enum PROPERTYKEY PKEY_Numa_Proximity_Domain = PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 1);
+enum PROPERTYKEY PKEY_Device_DHP_Rebalance_Policy = PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 2);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 3))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_Numa_Node             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 3))], [])*/PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 3),
-    PKEY_Device_BusReportedDeviceDesc = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1410045054, 35648, 17852, 168, 162, 106, 11, 137, 76, 189, 162}, 3))], [])*/PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 4),
+    PKEY_Device_Numa_Node             = PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 3),
+    PKEY_Device_BusReportedDeviceDesc = PROPERTYKEY(GUID("540B947E-8B40-45BC-A8A2-6A0B894CBDA2"), 4),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_InstallInProgress   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("83DA6326-97A6-4088-9453-A1923F573B29"), 9),
-    PKEY_Device_DriverDate          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 2),
-    PKEY_Device_DriverVersion       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 3),
-    PKEY_Device_DriverDesc          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 4),
-    PKEY_Device_DriverInfPath       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 5),
-    PKEY_Device_DriverInfSection    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 6),
-    PKEY_Device_DriverInfSectionExt = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2212127526, 38822, 16520, 148, 83, 161, 146, 63, 87, 59, 41}, 9))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 7),
+    PKEY_Device_InstallInProgress   = PROPERTYKEY(GUID("83DA6326-97A6-4088-9453-A1923F573B29"), 9),
+    PKEY_Device_DriverDate          = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 2),
+    PKEY_Device_DriverVersion       = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 3),
+    PKEY_Device_DriverDesc          = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 4),
+    PKEY_Device_DriverInfPath       = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 5),
+    PKEY_Device_DriverInfSection    = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 6),
+    PKEY_Device_DriverInfSectionExt = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 7),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 8))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_MatchingDeviceId       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 8))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 8),
-    PKEY_Device_DriverProvider         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 8))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 9),
-    PKEY_Device_DriverPropPageProvider = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 8))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 10),
-    PKEY_Device_DriverCoInstallers     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 8))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 11),
+    PKEY_Device_MatchingDeviceId       = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 8),
+    PKEY_Device_DriverProvider         = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 9),
+    PKEY_Device_DriverPropPageProvider = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 10),
+    PKEY_Device_DriverCoInstallers     = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 11),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 12))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_ResourcePickerTags       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 12))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 12),
-    PKEY_Device_ResourcePickerExceptions = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 12))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 13),
+    PKEY_Device_ResourcePickerTags       = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 12),
+    PKEY_Device_ResourcePickerExceptions = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 13),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 14))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_DriverRank             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 14))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 14),
-    PKEY_Device_DriverLogoLevel        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 14))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 15),
-    PKEY_Device_NoConnectSound         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 14))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 17),
-    PKEY_Device_GenericDriverInstalled = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 14))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 18),
+    PKEY_Device_DriverRank             = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 14),
+    PKEY_Device_DriverLogoLevel        = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 15),
+    PKEY_Device_NoConnectSound         = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 17),
+    PKEY_Device_GenericDriverInstalled = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 18),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 19))], [])*/PROPERTYKEY PKEY_Device_AdditionalSoftwareRequested = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2830656989, 11837, 16532, 173, 151, 229, 147, 167, 12, 117, 214}, 19))], [])*/PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 19);
+enum PROPERTYKEY PKEY_Device_AdditionalSoftwareRequested = PROPERTYKEY(GUID("A8B865DD-2E3D-4094-AD97-E593A70C75D6"), 19);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2950264384, 34467, 16912, 182, 124, 40, 156, 65, 170, 190, 85}, 2))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_Device_SafeRemovalRequired         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2950264384, 34467, 16912, 182, 124, 40, 156, 65, 170, 190, 85}, 2))], [])*/PROPERTYKEY(GUID("AFD97640-86A3-4210-B67C-289C41AABE55"), 2),
-    PKEY_Device_SafeRemovalRequiredOverride = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2950264384, 34467, 16912, 182, 124, 40, 156, 65, 170, 190, 85}, 2))], [])*/PROPERTYKEY(GUID("AFD97640-86A3-4210-B67C-289C41AABE55"), 3),
+    PKEY_Device_SafeRemovalRequired         = PROPERTYKEY(GUID("AFD97640-86A3-4210-B67C-289C41AABE55"), 2),
+    PKEY_Device_SafeRemovalRequiredOverride = PROPERTYKEY(GUID("AFD97640-86A3-4210-B67C-289C41AABE55"), 3),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_DrvPkg_Model               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 2),
-    PKEY_DrvPkg_VendorWebSite       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 3),
-    PKEY_DrvPkg_DetailedDescription = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 4),
-    PKEY_DrvPkg_DocumentationLink   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 5),
-    PKEY_DrvPkg_Icon                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 6),
-    PKEY_DrvPkg_BrandingIcon        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3480468305, 15039, 17570, 133, 224, 154, 61, 199, 161, 33, 50}, 2))], [])*/PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 7),
+    PKEY_DrvPkg_Model               = PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 2),
+    PKEY_DrvPkg_VendorWebSite       = PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 3),
+    PKEY_DrvPkg_DetailedDescription = PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 4),
+    PKEY_DrvPkg_DocumentationLink   = PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 5),
+    PKEY_DrvPkg_Icon                = PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 6),
+    PKEY_DrvPkg_BrandingIcon        = PROPERTYKEY(GUID("CF73BB51-3ABF-44A2-85E0-9A3DC7A12132"), 7),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_DeviceClass_UpperFilters      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 19),
-    PKEY_DeviceClass_LowerFilters      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 20),
-    PKEY_DeviceClass_Security          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 25),
-    PKEY_DeviceClass_SecuritySDS       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 26),
-    PKEY_DeviceClass_DevType           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 27),
-    PKEY_DeviceClass_Exclusive         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 28),
-    PKEY_DeviceClass_Characteristics   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 29),
-    PKEY_DeviceClass_Name              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 2),
-    PKEY_DeviceClass_ClassName         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 3),
-    PKEY_DeviceClass_Icon              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 4),
-    PKEY_DeviceClass_ClassInstaller    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 5),
-    PKEY_DeviceClass_PropPageProvider  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 6),
-    PKEY_DeviceClass_NoInstallClass    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 7),
-    PKEY_DeviceClass_NoDisplayClass    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 8),
-    PKEY_DeviceClass_SilentInstall     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 9),
-    PKEY_DeviceClass_NoUseClass        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 10),
-    PKEY_DeviceClass_DefaultService    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 11),
-    PKEY_DeviceClass_IconPath          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 12),
-    PKEY_DeviceClass_ClassCoInstallers = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1126273419, 63134, 18189, 165, 222, 77, 136, 199, 90, 210, 75}, 19))], [])*/PROPERTYKEY(GUID("713D1703-A2E2-49F5-9214-56472EF3DA5C"), 2),
+    PKEY_DeviceClass_UpperFilters      = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 19),
+    PKEY_DeviceClass_LowerFilters      = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 20),
+    PKEY_DeviceClass_Security          = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 25),
+    PKEY_DeviceClass_SecuritySDS       = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 26),
+    PKEY_DeviceClass_DevType           = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 27),
+    PKEY_DeviceClass_Exclusive         = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 28),
+    PKEY_DeviceClass_Characteristics   = PROPERTYKEY(GUID("4321918B-F69E-470D-A5DE-4D88C75AD24B"), 29),
+    PKEY_DeviceClass_Name              = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 2),
+    PKEY_DeviceClass_ClassName         = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 3),
+    PKEY_DeviceClass_Icon              = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 4),
+    PKEY_DeviceClass_ClassInstaller    = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 5),
+    PKEY_DeviceClass_PropPageProvider  = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 6),
+    PKEY_DeviceClass_NoInstallClass    = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 7),
+    PKEY_DeviceClass_NoDisplayClass    = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 8),
+    PKEY_DeviceClass_SilentInstall     = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 9),
+    PKEY_DeviceClass_NoUseClass        = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 10),
+    PKEY_DeviceClass_DefaultService    = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 11),
+    PKEY_DeviceClass_IconPath          = PROPERTYKEY(GUID("259ABFFC-50A7-47CE-AF08-68C9A7D73366"), 12),
+    PKEY_DeviceClass_ClassCoInstallers = PROPERTYKEY(GUID("713D1703-A2E2-49F5-9214-56472EF3DA5C"), 2),
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    PKEY_DeviceInterface_FriendlyName          = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname))], [])*/PROPERTYKEY(GUID("026E516E-B814-414B-83CD-856D6FEF4822"), 2),
-    PKEY_DeviceInterface_Enabled               = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname))], [])*/PROPERTYKEY(GUID("026E516E-B814-414B-83CD-856D6FEF4822"), 3),
-    PKEY_DeviceInterface_ClassGuid             = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname))], [])*/PROPERTYKEY(GUID("026E516E-B814-414B-83CD-856D6FEF4822"), 4),
-    PKEY_DeviceInterfaceClass_DefaultInterface = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname))], [])*/PROPERTYKEY(GUID("14C83A99-0B3F-44B7-BE4C-A178D3990564"), 2),
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname
+    PKEY_DeviceInterface_FriendlyName          = PROPERTYKEY(GUID("026E516E-B814-414B-83CD-856D6FEF4822"), 2),
+    PKEY_DeviceInterface_Enabled               = PROPERTYKEY(GUID("026E516E-B814-414B-83CD-856D6FEF4822"), 3),
+    PKEY_DeviceInterface_ClassGuid             = PROPERTYKEY(GUID("026E516E-B814-414B-83CD-856D6FEF4822"), 4),
+    PKEY_DeviceInterfaceClass_DefaultInterface = PROPERTYKEY(GUID("14C83A99-0B3F-44B7-BE4C-A178D3990564"), 2),
 }
 
 enum uint FD_LONGHORN = 0x00000001U;

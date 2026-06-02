@@ -4,14 +4,13 @@ module windows.win32.system.diagnostics.debug_.extensions;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMElement;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FARPROC,
-                                                    HANDLE, HRESULT, PSTR, PWSTR,
-                                                    VARIANT_BOOL;
-public import windows.win32.system.com.com : IStream, IUnknown;
-public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_RECORD64,
-                                                               IMAGE_NT_HEADERS64;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FARPROC, HANDLE,
+                                         HRESULT, PSTR, PWSTR, VARIANT_BOOL;
+public import windows.win32.system.com : IStream, IUnknown;
+public import windows.win32.system.diagnostics.debug_ : CONTEXT, EXCEPTION_RECORD64,
+                                                        IMAGE_NT_HEADERS64;
 public import windows.win32.system.kernel : LIST_ENTRY32, LIST_ENTRY64;
-public import windows.win32.system.memory.memory : MEMORY_BASIC_INFORMATION64;
+public import windows.win32.system.memory : MEMORY_BASIC_INFORMATION64;
 public import windows.win32.system.variant : VARENUM, VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -2244,11 +2243,15 @@ enum : uint
     DEBUG_OUTPUT_SYMBOLS_NO_TYPES   = 0x00000010U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DEBUG_OUTPUT_NAME_END        = "**NAME**",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DEBUG_OUTPUT_OFFSET_END      = "**OFF**",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DEBUG_OUTPUT_VALUE_END       = "**VALUE**",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DEBUG_OUTPUT_TYPE_END        = "**TYPE**",
     DEBUG_OUTPUT_NAME_END_WIDE   = "**NAME**",
     DEBUG_OUTPUT_OFFSET_END_WIDE = "**OFF**",
@@ -3499,26 +3502,26 @@ struct PROCESSORINFO
 
 struct READCONTROLSPACE
 {
-    ushort Processor;
-    uint   Address;
-    uint   BufLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buf;
+    ushort   Processor;
+    uint     Address;
+    uint     BufLen;
+    ubyte[1] Buf; // Flexible array
 }
 
 struct READCONTROLSPACE32
 {
-    ushort Processor;
-    uint   Address;
-    uint   BufLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buf;
+    ushort   Processor;
+    uint     Address;
+    uint     BufLen;
+    ubyte[1] Buf; // Flexible array
 }
 
 struct READCONTROLSPACE64
 {
-    ushort Processor;
-    ulong  Address;
-    uint   BufLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buf;
+    ushort   Processor;
+    ulong    Address;
+    uint     BufLen;
+    ubyte[1] Buf; // Flexible array
 }
 
 struct IOSPACE
@@ -3593,17 +3596,17 @@ struct SEARCHMEMORY
 
 struct PHYSICAL
 {
-    ulong Address;
-    uint  BufLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buf;
+    ulong    Address;
+    uint     BufLen;
+    ubyte[1] Buf; // Flexible array
 }
 
 struct PHYSICAL_WITH_FLAGS
 {
-    ulong Address;
-    uint  BufLen;
-    uint  Flags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buf;
+    ulong    Address;
+    uint     BufLen;
+    uint     Flags;
+    ubyte[1] Buf; // Flexible array
 }
 
 struct READ_WRITE_MSR
@@ -3839,7 +3842,7 @@ struct KDDEBUGGER_DATA32
     ushort ThCallbackStack;
     ushort NextCallback;
     ushort FramePointer;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PaeEnabled)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield391;
+    ushort _bitfield18;
     uint   KiCallUserMode;
     uint   KeUserCallbackDispatcher;
     uint   PsLoadedModuleList;
@@ -3934,7 +3937,7 @@ struct KDDEBUGGER_DATA64
     ushort ThCallbackStack;
     ushort NextCallback;
     ushort FramePointer;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PagingLevels)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield392;
+    ushort _bitfield19;
     ulong  KiCallUserMode;
     ulong  KeUserCallbackDispatcher;
     ulong  PsLoadedModuleList;
@@ -4112,7 +4115,7 @@ struct FIELD_INFO
         ushort Position;
         ushort Size;
     }
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield393;
+    uint   _bitfield20;
 }
 
 struct SYM_DUMP_PARAM
@@ -4134,7 +4137,7 @@ struct SYM_DUMP_PARAM
     uint        TypeId;
     uint        TypeSize;
     uint        BufferSize;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield394;
+    uint        _bitfield21;
 }
 
 union POOL_HEADER_SIZE_64
@@ -4282,7 +4285,7 @@ struct DEBUG_POOL_DATA
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield395;
+            uint _bitfield22;
         }
         uint AsUlong;
     }
@@ -4303,7 +4306,7 @@ struct KDEXT_PROCESS_FIND_PARAMS
     uint SizeofStruct;
     uint Pid;
     uint Session;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ImageName;
+    PSTR ImageName;
 }
 
 struct KDEXT_HANDLE_INFORMATION
@@ -4350,8 +4353,8 @@ struct KDEXTS_PTE_INFO
     ulong PteAddress;
     ulong Pfn;
     ulong Levels;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Modified)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield2;
+    uint  _bitfield1;
+    uint  _bitfield2;
 }
 
 struct DEBUG_POOLTAG_DESCRIPTION
@@ -4396,7 +4399,7 @@ struct OS_INFO
     uint      Revision;
     struct s
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield396;
+        uint _bitfield23;
     }
     uint      SrvPackNumber;
     uint      ServicePackBuild;
@@ -4469,7 +4472,7 @@ struct OS_INFO_v1
     uint     Suite;
     struct s
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield397;
+        uint _bitfield24;
     }
     uint     SrvPackNumber;
     CHAR[30] Language;
@@ -4516,16 +4519,16 @@ struct DEBUG_TRIAGE_FOLLOWUP_INFO
 {
     uint SizeOfStruct;
     uint OwnerNameSize;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR OwnerName;
+    PSTR OwnerName;
 }
 
 struct DEBUG_TRIAGE_FOLLOWUP_INFO_2
 {
     uint SizeOfStruct;
     uint OwnerNameSize;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR OwnerName;
+    PSTR OwnerName;
     uint FeaturePathSize;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR FeaturePath;
+    PSTR FeaturePath;
 }
 
 struct EXT_CAB_XML_DATA
@@ -4539,7 +4542,7 @@ struct EXT_CAB_XML_DATA
         const(PWSTR) MatchPattern;
         PWSTR        ReturnText;
         uint         ReturnTextSize;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield398;
+        uint         _bitfield25;
         uint         Reserved2;
     }
 }

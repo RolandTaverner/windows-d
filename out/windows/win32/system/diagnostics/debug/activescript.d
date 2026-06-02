@@ -3,11 +3,11 @@
 module windows.win32.system.diagnostics.debug_.activescript;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HANDLE_PTR, HRESULT,
-                                                    HWND, PSTR, PWSTR, VARIANT_BOOL;
-public import windows.win32.system.com.com : DISPPARAMS, EXCEPINFO, IDispatch, ITypeInfo,
-                                             IUnknown, TYPEDESC;
-public import windows.win32.system.diagnostics.debug_.debug_ : IDebugProperty;
+public import windows.win32.foundation : BOOL, BSTR, HANDLE, HANDLE_PTR, HRESULT,
+                                         HWND, PSTR, PWSTR, VARIANT_BOOL;
+public import windows.win32.system.com : DISPPARAMS, EXCEPINFO, IDispatch, ITypeInfo,
+                                         IUnknown, TYPEDESC;
+public import windows.win32.system.diagnostics.debug_ : IDebugProperty;
 public import windows.win32.system.variant : VARENUM, VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -585,8 +585,8 @@ struct DebugStackFrameDescriptor64
 
 struct PROFILER_HEAP_OBJECT_SCOPE_LIST
 {
-    uint count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/size_t[1] scopes;
+    uint      count;
+    size_t[1] scopes; // Flexible array
 }
 
 struct PROFILER_PROPERTY_TYPE_SUBSTRING_INFO
@@ -613,7 +613,7 @@ struct PROFILER_HEAP_OBJECT_RELATIONSHIP
 struct PROFILER_HEAP_OBJECT_RELATIONSHIP_LIST
 {
     uint count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PROFILER_HEAP_OBJECT_RELATIONSHIP[1] elements;
+    PROFILER_HEAP_OBJECT_RELATIONSHIP[1] elements; // Flexible array
 }
 
 struct PROFILER_HEAP_OBJECT_OPTIONAL_INFO

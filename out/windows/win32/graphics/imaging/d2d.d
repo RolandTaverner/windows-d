@@ -3,12 +3,12 @@
 module windows.win32.graphics.imaging.d2d;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT;
-public import windows.win32.graphics.direct2d.direct2d : ID2D1Device, ID2D1Image;
-public import windows.win32.graphics.imaging.imaging : IWICBitmapEncoder, IWICBitmapFrameEncode,
-                                                       IWICBitmapToneMapper, IWICImagingFactory,
-                                                       WICImageParameters;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : HRESULT;
+public import windows.win32.graphics.direct2d : ID2D1Device, ID2D1Image;
+public import windows.win32.graphics.imaging : IWICBitmapEncoder, IWICBitmapFrameEncode,
+                                               IWICBitmapToneMapper, IWICImagingFactory,
+                                               WICImageParameters;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

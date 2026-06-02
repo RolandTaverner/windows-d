@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.netbios;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE;
+public import windows.win32.foundation : HANDLE;
 
 extern(Windows) @nogc nothrow:
 
@@ -42,8 +42,10 @@ enum : uint
 }
 
 enum uint SESSION_ABORTED = 0x00000006U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ALL_TRANSPORTS = "M\0\0\0";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* MS_NBF = "MNBF";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ALL_TRANSPORTS = "M\0\0\0";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* MS_NBF = "MNBF";
 
 enum : uint
 {

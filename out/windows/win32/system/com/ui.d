@@ -3,9 +3,9 @@
 module windows.win32.system.com.ui;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT;
+public import windows.win32.foundation : HRESULT;
 public import windows.win32.graphics.gdi : HBITMAP, HDC;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage;
 public import windows.win32.ui.windowsandmessaging : HICON;
 

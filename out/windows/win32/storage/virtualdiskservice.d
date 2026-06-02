@@ -3,14 +3,14 @@
 module windows.win32.storage.virtualdiskservice;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
 public import windows.win32.storage.vhd : ATTACH_VIRTUAL_DISK_FLAG, COMPACT_VIRTUAL_DISK_FLAG,
                                           CREATE_VIRTUAL_DISK_FLAG, DEPENDENT_DISK_FLAG,
                                           DETACH_VIRTUAL_DISK_FLAG,
                                           EXPAND_VIRTUAL_DISK_FLAG, MERGE_VIRTUAL_DISK_FLAG,
                                           OPEN_VIRTUAL_DISK_FLAG, VIRTUAL_DISK_ACCESS_MASK,
                                           VIRTUAL_STORAGE_TYPE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

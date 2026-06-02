@@ -3,8 +3,8 @@
 module windows.win32.devices.bluetooth;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, HANDLE, HRESULT,
-                                                    HWND, PWSTR, SYSTEMTIME;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, HANDLE, HRESULT, HWND,
+                                         PWSTR, SYSTEMTIME;
 
 extern(Windows) @nogc nothrow:
 
@@ -1032,16 +1032,19 @@ enum : uint
     PSM_LE_IPSP = 0x00000023U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STR_ADDR_FMTA       = "(%02x:%02x:%02x:%02x:%02x:%02x)",
     STR_ADDR_FMTW       = "(%02x:%02x:%02x:%02x:%02x:%02x)",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STR_ADDR_SHORT_FMTA = "%04x%08x",
     STR_ADDR_SHORT_FMTW = "%04x%08x",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     STR_USBHCI_CLASS_HARDWAREIDA = "USB\\Class_E0&SubClass_01&Prot_01",
     STR_USBHCI_CLASS_HARDWAREIDW = "USB\\Class_E0&SubClass_01&Prot_01",
 }
@@ -1371,8 +1374,8 @@ enum : uint
     BT_PORT_DYN_FIRST = 0x00001001U,
 }
 
-enum ushort AF_BTH = cast(ushort) 0x0020;
-enum ushort PF_BTH = cast(ushort) 0x0020;
+enum ushort AF_BTH = 0x0020;
+enum ushort PF_BTH = 0x0020;
 enum uint NS_BTH = 0x00000010U;
 enum GUID SVCID_BTH_PROVIDER = GUID("06aa63e0-7d60-41ff-afb2-3ee6d2d9392d");
 enum uint BTH_ADDR_STRING_SIZE = 0x0000000cU;
@@ -1845,8 +1848,8 @@ struct BTH_LE_GATT_CHARACTERISTIC
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_characteristic_value
 struct BTH_LE_GATT_CHARACTERISTIC_VALUE
 {
-    uint DataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     DataSize;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_descriptor
@@ -1890,14 +1893,14 @@ struct BTH_LE_GATT_DESCRIPTOR_VALUE
         }
     }
     uint        DataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1]    Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bluetooth_gatt_value_changed_event_registration
 struct BLUETOOTH_GATT_VALUE_CHANGED_EVENT_REGISTRATION
 {
     ushort NumCharacteristics;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BTH_LE_GATT_CHARACTERISTIC[1] Characteristics;
+    BTH_LE_GATT_CHARACTERISTIC[1] Characteristics; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bluetooth_gatt_value_changed_event
@@ -1922,12 +1925,12 @@ align (1):
 struct BTH_SET_SERVICE
 {
 align (1):
-    uint*   pSdpVersion;
-    HANDLE* pRecordHandle;
-    uint    fCodService;
-    uint[5] Reserved;
-    uint    ulRecordLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pRecord;
+    uint*    pSdpVersion;
+    HANDLE*  pRecordHandle;
+    uint     fCodService;
+    uint[5]  Reserved;
+    uint     ulRecordLength;
+    ubyte[1] pRecord; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_query_device
@@ -1942,11 +1945,11 @@ align (1):
 struct BTH_QUERY_SERVICE
 {
 align (1):
-    uint             type;
-    uint             serviceHandle;
-    SdpQueryUuid[12] uuids;
-    uint             numRange;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SdpAttributeRange[1] pRange;
+    uint                 type;
+    uint                 serviceHandle;
+    SdpQueryUuid[12]     uuids;
+    uint                 numRange;
+    SdpAttributeRange[1] pRange; // Flexible array
 }
 
 struct RFCOMM_MSC_DATA

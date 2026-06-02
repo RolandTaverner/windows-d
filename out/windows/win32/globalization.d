@@ -3,11 +3,11 @@
 module windows.win32.globalization;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
-                                                    PSTR, PWSTR, RECT, SIZE, SYSTEMTIME;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
+                                         PSTR, PWSTR, RECT, SIZE, SYSTEMTIME;
 public import windows.win32.graphics.gdi : ABC, AXESLISTA, AXESLISTW, ETO_OPTIONS,
                                            HDC, HFONT, NEWTEXTMETRICA, NEWTEXTMETRICW;
-public import windows.win32.system.com.com : IEnumString, IStream, IUnknown;
+public import windows.win32.system.com : IEnumString, IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -3883,7 +3883,8 @@ enum uint UCONFIG_ENABLE_PLUGINS = 0x00000000U;
 enum uint U_ENABLE_DYLOAD = 0x00000001U;
 enum uint U_CHECK_DYLOAD = 0x00000001U;
 enum uint U_HAVE_LIB_SUFFIX = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_LIB_SUFFIX_C_NAME_STRING = "";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* U_LIB_SUFFIX_C_NAME_STRING = "";
 enum uint UCONFIG_ONLY_COLLATION = 0x00000000U;
 
 enum : uint
@@ -3993,9 +3994,11 @@ enum uint U_SIZEOF_UCHAR = 0x00000002U;
 enum uint U_CHAR16_IS_TYPEDEF = 0x00000001U;
 enum int U_SENTINEL = 0xffffffff;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     U8_LEAD3_T1_BITS = " 00000000000000",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     U8_LEAD4_T1_BITS = "\0\0\0\0\0\0\0\0\0\0\0\0",
 }
 
@@ -4135,41 +4138,62 @@ enum : uint
     U_SHAPE_TAIL_TYPE_MASK   = 0x08000000U,
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_CHINESE  = "zh",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_ENGLISH  = "en",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_FRENCH   = "fr",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_GERMAN   = "de",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_ITALIAN  = "it",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_JAPANESE = "ja",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_KOREAN             = "ko",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_SIMPLIFIED_CHINESE = "zh_CN",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ULOC_TRADITIONAL_CHINESE = "zh_TW";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ULOC_TRADITIONAL_CHINESE = "zh_TW";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_CANADA        = "en_CA",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_CANADA_FRENCH = "fr_CA",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_CHINA   = "zh_CN",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_PRC     = "zh_CN",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_FRANCE  = "fr_FR",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_GERMANY = "de_DE",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_ITALY   = "it_IT",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_JAPAN   = "ja_JP",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_KOREA   = "ko_KR",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_TAIWAN  = "zh_TW",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_UK      = "en_GB",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ULOC_US      = "en_US",
 }
 
@@ -4187,16 +4211,24 @@ enum : uint
     ULOC_KEYWORD_ITEM_SEPARATOR_UNICODE = 0x0000003bU,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_SUB_STOP_ON_ILLEGAL = "i";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_SKIP_STOP_ON_ILLEGAL = "i";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_SUB_STOP_ON_ILLEGAL = "i";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_SKIP_STOP_ON_ILLEGAL = "i";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UCNV_ESCAPE_JAVA    = "J",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UCNV_ESCAPE_C       = "C",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UCNV_ESCAPE_XML_DEC = "D",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UCNV_ESCAPE_XML_HEX = "X",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UCNV_ESCAPE_UNICODE = "U",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UCNV_ESCAPE_CSS2    = "S",
 }
 
@@ -4208,11 +4240,16 @@ enum : uint
     UCNV_SO = 0x0000000eU,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_OPTION_SEP_STRING = ",";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_VALUE_SEP_STRING = "=";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_LOCALE_OPTION_STRING = ",locale=";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_VERSION_OPTION_STRING = ",version=";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_SWAP_LFNL_OPTION_STRING = ",swaplfnl";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_OPTION_SEP_STRING = ",";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_VALUE_SEP_STRING = "=";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_LOCALE_OPTION_STRING = ",locale=";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_VERSION_OPTION_STRING = ",version=";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCNV_SWAP_LFNL_OPTION_STRING = ",swaplfnl";
 
 enum : uint
 {
@@ -4262,87 +4299,131 @@ enum : uint
     USPREP_ALLOW_UNASSIGNED = 0x00000001U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_ICU_VERSION_BUNDLE = "icuver";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_ICU_DATA_KEY = "DataVersion";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCAL_UNKNOWN_ZONE_ID = "Etc/Unknown";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* U_ICU_VERSION_BUNDLE = "icuver";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* U_ICU_DATA_KEY = "DataVersion";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UCAL_UNKNOWN_ZONE_ID = "Etc/Unknown";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR         = "y",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_QUARTER      = "QQQQ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_ABBR_QUARTER = "QQQ",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_QUARTER      = "yQQQQ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_ABBR_QUARTER = "yQQQ",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_MONTH      = "MMMM",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_ABBR_MONTH = "MMM",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_NUM_MONTH = "M";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_NUM_MONTH = "M";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_MONTH      = "yMMMM",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_ABBR_MONTH = "yMMM",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_NUM_MONTH  = "yM",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_DAY                 = "d",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_MONTH_DAY      = "yMMMMd",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_ABBR_MONTH_DAY = "yMMMd",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_YEAR_NUM_MONTH_DAY  = "yMd",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_WEEKDAY      = "EEEE",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_ABBR_WEEKDAY = "E",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_YEAR_MONTH_WEEKDAY_DAY = "yMMMMEEEEd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_YEAR_ABBR_MONTH_WEEKDAY_DAY = "yMMMEd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_YEAR_NUM_MONTH_WEEKDAY_DAY = "yMEd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_MONTH_DAY = "MMMMd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_ABBR_MONTH_DAY = "MMMd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_NUM_MONTH_DAY = "Md";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_MONTH_WEEKDAY_DAY = "MMMMEEEEd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_ABBR_MONTH_WEEKDAY_DAY = "MMMEd";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_NUM_MONTH_WEEKDAY_DAY = "MEd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_YEAR_MONTH_WEEKDAY_DAY = "yMMMMEEEEd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_YEAR_ABBR_MONTH_WEEKDAY_DAY = "yMMMEd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_YEAR_NUM_MONTH_WEEKDAY_DAY = "yMEd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_MONTH_DAY = "MMMMd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_ABBR_MONTH_DAY = "MMMd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_NUM_MONTH_DAY = "Md";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_MONTH_WEEKDAY_DAY = "MMMMEEEEd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_ABBR_MONTH_WEEKDAY_DAY = "MMMEd";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_NUM_MONTH_WEEKDAY_DAY = "MEd";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_HOUR          = "j",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_HOUR24        = "H",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_MINUTE        = "m",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_HOUR_MINUTE   = "jm",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_HOUR24_MINUTE = "Hm",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_SECOND             = "s",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_HOUR_MINUTE_SECOND = "jms",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_HOUR24_MINUTE_SECOND = "Hms";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_MINUTE_SECOND = "ms";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_LOCATION_TZ = "VVVV";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_GENERIC_TZ = "vvvv";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_ABBR_GENERIC_TZ = "v";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UDAT_SPECIFIC_TZ = "zzzz";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_HOUR24_MINUTE_SECOND = "Hms";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_MINUTE_SECOND = "ms";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_LOCATION_TZ = "VVVV";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_GENERIC_TZ = "vvvv";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_ABBR_GENERIC_TZ = "v";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* UDAT_SPECIFIC_TZ = "zzzz";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_ABBR_SPECIFIC_TZ = "z",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     UDAT_ABBR_UTC_TZ      = "ZZZZ",
 }
 
@@ -4353,8 +4434,10 @@ enum uint U_PLATFORM_HAS_WINUWP_API = 0x00000000U;
 enum uint U_IOSTREAM_SOURCE = 0x00030c1fU;
 enum uint U_HAVE_RVALUE_REFERENCES = 0x00000001U;
 enum uint U_USING_ICU_NAMESPACE = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_ICUDATA_TYPE_LETTER = "e";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_UNICODE_VERSION = "8.0";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* U_ICUDATA_TYPE_LETTER = "e";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* U_UNICODE_VERSION = "8.0";
 enum uint CANITER_SKIP_ZEROES = 0x00000001U;
 enum uint NUMSYS_NAME_CAPACITY = 0x00000008U;
 enum uint U_HAVE_RBNF = 0x00000000U;
@@ -4976,7 +5059,7 @@ struct MAPPING_SERVICE_INFO
     uint   dwPrivateDataSize;
     void*  pPrivateData;
     void*  pContext;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ServiceType)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield80;
+    uint   _bitfield80;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_enum_options
@@ -4991,7 +5074,7 @@ struct MAPPING_ENUM_OPTIONS
     PWSTR  pszInputContentType;
     PWSTR  pszOutputContentType;
     GUID*  pGuid;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ServiceType)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield81;
+    uint   _bitfield81;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_options
@@ -5012,7 +5095,7 @@ struct MAPPING_OPTIONS
     void*  pActionCallerData;
     uint   dwActionCallerDataSize;
     uint   dwServiceFlag;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(GetActionDisplayName)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield82;
+    uint   _bitfield82;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_data_range
@@ -5046,19 +5129,19 @@ struct MAPPING_PROPERTY_BAG
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_control
 struct SCRIPT_CONTROL
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield83;
+    uint _bitfield83;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_state
 struct SCRIPT_STATE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fEngineReserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield84;
+    ushort _bitfield84;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_analysis
 struct SCRIPT_ANALYSIS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fNoGlyphIndex)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield85;
+    ushort       _bitfield85;
     SCRIPT_STATE s;
 }
 
@@ -5072,7 +5155,7 @@ struct SCRIPT_ITEM
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_visattr
 struct SCRIPT_VISATTR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fShapeReserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield86;
+    ushort _bitfield86;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-goffset
@@ -5085,14 +5168,14 @@ struct GOFFSET
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_logattr
 struct SCRIPT_LOGATTR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield87;
+    ubyte _bitfield87;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_properties
 struct SCRIPT_PROPERTIES
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fInvalidGlyph)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fRejectInvalid)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield2;
+    uint _bitfield1;
+    uint _bitfield2;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_fontproperties
@@ -5118,8 +5201,8 @@ struct SCRIPT_TABDEF
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_digitsubstitute
 struct SCRIPT_DIGITSUBSTITUTE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TraditionalDigitLanguage)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DigitSubstitute)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
+    uint _bitfield1;
+    uint _bitfield2;
     uint dwReserved;
 }
 
@@ -5140,7 +5223,7 @@ struct TEXTRANGE_PROPERTIES
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_charprop
 struct SCRIPT_CHARPROP
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield88;
+    ushort _bitfield88;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_glyphprop

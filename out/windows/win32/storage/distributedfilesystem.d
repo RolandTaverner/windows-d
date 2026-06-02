@@ -3,8 +3,8 @@
 module windows.win32.storage.distributedfilesystem;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : PWSTR;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.foundation : PWSTR;
+public import windows.win32.security : PSECURITY_DESCRIPTOR;
 
 extern(Windows) @nogc nothrow:
 
@@ -86,7 +86,8 @@ enum : uint
 enum uint DFS_SITE_PRIMARY = 0x00000001U;
 enum uint DFS_MOVE_FLAG_REPLACE_IF_EXISTS = 0x00000001U;
 enum uint DFS_FORCE_REMOVE = 0x80000000U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dfs/fsctl-dfs-get-pkt-entry-state))], [])*/uint FSCTL_DFS_GET_PKT_ENTRY_STATE = 0x00061fbcU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dfs/fsctl-dfs-get-pkt-entry-state
+enum uint FSCTL_DFS_GET_PKT_ENTRY_STATE = 0x00061fbcU;
 
 // Structs
 
@@ -423,8 +424,8 @@ struct DFS_SITENAME_INFO
 
 struct DFS_SITELIST_INFO
 {
-    uint cSites;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DFS_SITENAME_INFO[1] Site;
+    uint                 cSites;
+    DFS_SITENAME_INFO[1] Site; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_supported_namespace_version_info
@@ -441,11 +442,11 @@ struct DFS_SUPPORTED_NAMESPACE_VERSION_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_get_pkt_entry_state_arg
 struct DFS_GET_PKT_ENTRY_STATE_ARG
 {
-    ushort DfsEntryPathLen;
-    ushort ServerNameLen;
-    ushort ShareNameLen;
-    uint   Level;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Buffer;
+    ushort   DfsEntryPathLen;
+    ushort   ServerNameLen;
+    ushort   ShareNameLen;
+    uint     Level;
+    wchar[1] Buffer; // Flexible array
 }
 
 // Functions

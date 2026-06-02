@@ -3,8 +3,7 @@
 module windows.win32.networkmanagement.dns;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, PSTR, PWSTR,
-                                                    WIN32_ERROR;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, PSTR, PWSTR, WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 
@@ -649,9 +648,9 @@ version(X86)
 
 struct DNS_HEADER_EXT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DnssecOk)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield116;
-    ubyte chRcode;
-    ubyte chVersion;
+    ushort _bitfield116;
+    ubyte  chRcode;
+    ubyte  chVersion;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_a_data
@@ -729,30 +728,30 @@ struct DNS_MX_DATAA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_txt_dataw
 struct DNS_TXT_DATAW
 {
-    uint dwStringCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] pStringArray;
+    uint     dwStringCount;
+    PWSTR[1] pStringArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_txt_dataa
 struct DNS_TXT_DATAA
 {
-    uint dwStringCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PSTR[1] pStringArray;
+    uint    dwStringCount;
+    PSTR[1] pStringArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_null_data
 struct DNS_NULL_DATA
 {
-    uint dwByteCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     dwByteCount;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_wks_data
 struct DNS_WKS_DATA
 {
-    uint  IpAddress;
-    ubyte chProtocol;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] BitMask;
+    uint     IpAddress;
+    ubyte    chProtocol;
+    ubyte[1] BitMask; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_aaaa_data
@@ -764,78 +763,78 @@ struct DNS_AAAA_DATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_sig_dataw
 struct DNS_SIG_DATAW
 {
-    ushort wTypeCovered;
-    ubyte  chAlgorithm;
-    ubyte  chLabelCount;
-    uint   dwOriginalTtl;
-    uint   dwExpiration;
-    uint   dwTimeSigned;
-    ushort wKeyTag;
-    ushort wSignatureLength;
-    PWSTR  pNameSigner;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Signature;
+    ushort   wTypeCovered;
+    ubyte    chAlgorithm;
+    ubyte    chLabelCount;
+    uint     dwOriginalTtl;
+    uint     dwExpiration;
+    uint     dwTimeSigned;
+    ushort   wKeyTag;
+    ushort   wSignatureLength;
+    PWSTR    pNameSigner;
+    ubyte[1] Signature; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_sig_dataa
 struct DNS_SIG_DATAA
 {
-    ushort wTypeCovered;
-    ubyte  chAlgorithm;
-    ubyte  chLabelCount;
-    uint   dwOriginalTtl;
-    uint   dwExpiration;
-    uint   dwTimeSigned;
-    ushort wKeyTag;
-    ushort wSignatureLength;
-    PSTR   pNameSigner;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Signature;
+    ushort   wTypeCovered;
+    ubyte    chAlgorithm;
+    ubyte    chLabelCount;
+    uint     dwOriginalTtl;
+    uint     dwExpiration;
+    uint     dwTimeSigned;
+    ushort   wKeyTag;
+    ushort   wSignatureLength;
+    PSTR     pNameSigner;
+    ubyte[1] Signature; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_key_data
 struct DNS_KEY_DATA
 {
-    ushort wFlags;
-    ubyte  chProtocol;
-    ubyte  chAlgorithm;
-    ushort wKeyLength;
-    ushort wPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Key;
+    ushort   wFlags;
+    ubyte    chProtocol;
+    ubyte    chAlgorithm;
+    ushort   wKeyLength;
+    ushort   wPad;
+    ubyte[1] Key; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_dhcid_data
 struct DNS_DHCID_DATA
 {
-    uint dwByteCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DHCID;
+    uint     dwByteCount;
+    ubyte[1] DHCID; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nsec_dataw
 struct DNS_NSEC_DATAW
 {
-    PWSTR  pNextDomainName;
-    ushort wTypeBitMapsLength;
-    ushort wPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] TypeBitMaps;
+    PWSTR    pNextDomainName;
+    ushort   wTypeBitMapsLength;
+    ushort   wPad;
+    ubyte[1] TypeBitMaps; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nsec_dataa
 struct DNS_NSEC_DATAA
 {
-    PSTR   pNextDomainName;
-    ushort wTypeBitMapsLength;
-    ushort wPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] TypeBitMaps;
+    PSTR     pNextDomainName;
+    ushort   wTypeBitMapsLength;
+    ushort   wPad;
+    ubyte[1] TypeBitMaps; // Flexible array
 }
 
 struct DNS_NSEC3_DATA
 {
-    ubyte  chAlgorithm;
-    ubyte  bFlags;
-    ushort wIterations;
-    ubyte  bSaltLength;
-    ubyte  bHashLength;
-    ushort wTypeBitMapsLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] chData;
+    ubyte    chAlgorithm;
+    ubyte    bFlags;
+    ushort   wIterations;
+    ubyte    bSaltLength;
+    ubyte    bHashLength;
+    ushort   wTypeBitMapsLength;
+    ubyte[1] chData; // Flexible array
 }
 
 struct DNS_NSEC3PARAM_DATA
@@ -845,7 +844,7 @@ struct DNS_NSEC3PARAM_DATA
     ushort   wIterations;
     ubyte    bSaltLength;
     ubyte[3] bPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbSalt;
+    ubyte[1] pbSalt; // Flexible array
 }
 
 struct DNS_TLSA_DATA
@@ -855,26 +854,26 @@ struct DNS_TLSA_DATA
     ubyte    bMatchingType;
     ushort   bCertificateAssociationDataLength;
     ubyte[3] bPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bCertificateAssociationData;
+    ubyte[1] bCertificateAssociationData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_ds_data
 struct DNS_DS_DATA
 {
-    ushort wKeyTag;
-    ubyte  chAlgorithm;
-    ubyte  chDigestType;
-    ushort wDigestLength;
-    ushort wPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Digest;
+    ushort   wKeyTag;
+    ubyte    chAlgorithm;
+    ubyte    chDigestType;
+    ushort   wDigestLength;
+    ushort   wPad;
+    ubyte[1] Digest; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_opt_data
 struct DNS_OPT_DATA
 {
-    ushort wDataLength;
-    ushort wPad;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ushort   wDataLength;
+    ushort   wPad;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_loc_data
@@ -892,17 +891,17 @@ struct DNS_LOC_DATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nxt_dataw
 struct DNS_NXT_DATAW
 {
-    PWSTR  pNameNext;
-    ushort wNumTypes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] wTypes;
+    PWSTR     pNameNext;
+    ushort    wNumTypes;
+    ushort[1] wTypes; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_nxt_dataa
 struct DNS_NXT_DATAA
 {
-    PSTR   pNameNext;
-    ushort wNumTypes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] wTypes;
+    PSTR      pNameNext;
+    ushort    wNumTypes;
+    ushort[1] wTypes; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_srv_dataw
@@ -1024,18 +1023,18 @@ struct DNS_TSIG_DATAA
 
 struct DNS_UNKNOWN_DATA
 {
-    uint dwByteCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
+    uint     dwByteCount;
+    ubyte[1] bData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_wins_data
 struct DNS_WINS_DATA
 {
-    uint dwMappingFlag;
-    uint dwLookupTimeout;
-    uint dwCacheTimeout;
-    uint cWinsServerCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] WinsServers;
+    uint    dwMappingFlag;
+    uint    dwLookupTimeout;
+    uint    dwCacheTimeout;
+    uint    cWinsServerCount;
+    uint[1] WinsServers; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_winsr_dataw
@@ -1058,8 +1057,8 @@ struct DNS_WINSR_DATAA
 
 struct DNS_SVCB_PARAM_MANDATORY
 {
-    ushort cMandatoryKeys;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] rgwMandatoryKeys;
+    ushort    cMandatoryKeys;
+    ushort[1] rgwMandatoryKeys; // Flexible array
 }
 
 struct DNS_SVCB_PARAM_ALPN_ID
@@ -1071,25 +1070,25 @@ struct DNS_SVCB_PARAM_ALPN_ID
 struct DNS_SVCB_PARAM_ALPN
 {
     ushort cIds;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DNS_SVCB_PARAM_ALPN_ID[1] rgIds;
+    DNS_SVCB_PARAM_ALPN_ID[1] rgIds; // Flexible array
 }
 
 struct DNS_SVCB_PARAM_IPV4
 {
-    ushort cIps;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] rgIps;
+    ushort  cIps;
+    uint[1] rgIps; // Flexible array
 }
 
 struct DNS_SVCB_PARAM_IPV6
 {
-    ushort cIps;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IP6_ADDRESS[1] rgIps;
+    ushort         cIps;
+    IP6_ADDRESS[1] rgIps; // Flexible array
 }
 
 struct DNS_SVCB_PARAM_UNKNOWN
 {
-    ushort cBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbSvcParamValue;
+    ushort   cBytes;
+    ubyte[1] pbSvcParamValue; // Flexible array
 }
 
 struct DNS_SVCB_PARAM
@@ -1119,7 +1118,7 @@ struct DNS_SVCB_DATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_record_flags
 struct DNS_RECORD_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield117;
+    uint _bitfield117;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_recordw
@@ -1389,16 +1388,16 @@ struct DNS_ADDR
 struct DNS_ADDR_ARRAY
 {
 align (1):
-    uint   MaxCount;
-    uint   AddrCount;
-    uint   Tag;
-    ushort Family;
-    ushort WordReserved;
-    uint   Flags;
-    uint   MatchFlag;
-    uint   Reserved1;
-    uint   Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DNS_ADDR[1] AddrArray;
+    uint        MaxCount;
+    uint        AddrCount;
+    uint        Tag;
+    ushort      Family;
+    ushort      WordReserved;
+    uint        Flags;
+    uint        MatchFlag;
+    uint        Reserved1;
+    uint        Reserved2;
+    DNS_ADDR[1] AddrArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_header
@@ -1406,8 +1405,8 @@ struct DNS_HEADER
 {
 align (1):
     ushort Xid;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsResponse)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(RecursionAvailable)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield2;
+    ubyte  _bitfield1;
+    ubyte  _bitfield2;
     ushort QuestionCount;
     ushort AnswerCount;
     ushort NameServerCount;
@@ -1418,7 +1417,7 @@ align (1):
 struct DNS_MESSAGE_BUFFER
 {
     DNS_HEADER MessageHead;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] MessageBody;
+    CHAR[1]    MessageBody; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_custom_server
@@ -1440,8 +1439,8 @@ struct DNS_CUSTOM_SERVER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-ip4_array
 struct IP4_ARRAY
 {
-    uint AddrCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] AddrArray;
+    uint    AddrCount;
+    uint[1] AddrArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windns/ns-windns-dns_wire_question

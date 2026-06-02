@@ -3,14 +3,12 @@
 module windows.win32.web.mshtml;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HGLOBAL, HRESULT, HWND,
-                                                    LRESULT, POINT, PWSTR, RECT, SIZE,
-                                                    VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, HGLOBAL, HRESULT, HWND, LRESULT,
+                                         POINT, PWSTR, RECT, SIZE, VARIANT_BOOL;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT;
 public import windows.win32.graphics.gdi : HDC, HRGN, LOGFONTW;
-public import windows.win32.system.com.com : IClassFactory, IDataObject, IDispatch,
-                                             IEnumUnknown, IMoniker, IUnknown,
-                                             SAFEARRAY;
+public import windows.win32.system.com : IClassFactory, IDataObject, IDispatch, IEnumUnknown,
+                                         IMoniker, IUnknown, SAFEARRAY;
 public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptError;
 public import windows.win32.system.ole : IDispatchEx, IDropTarget, IOleCommandTarget,
                                          IOleInPlaceActiveObject, IOleInPlaceFrame,
@@ -11934,8 +11932,8 @@ struct HTML_PAINT_DRAW_INFO
 struct DOCHOSTUIINFO
 {
     uint  cbSize;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DOCHOSTUIFLAG))], [])*/uint dwFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DOCHOSTUIDBLCLK))], [])*/uint dwDoubleClick;
+    uint  dwFlags;
+    uint  dwDoubleClick;
     PWSTR pchHostCss;
     PWSTR pchHostNS;
 }

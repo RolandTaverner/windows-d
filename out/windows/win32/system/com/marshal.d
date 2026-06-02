@@ -3,10 +3,10 @@
 module windows.win32.system.com.marshal;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HGLOBAL, HRESULT, HWND;
+public import windows.win32.foundation : BSTR, HGLOBAL, HRESULT, HWND;
 public import windows.win32.graphics.gdi : HBITMAP, HDC, HPALETTE;
-public import windows.win32.system.com.com : CO_MARSHALING_CONTEXT_ATTRIBUTES, IStream, IUnknown,
-                                             SAFEARRAY, STGMEDIUM;
+public import windows.win32.system.com : CO_MARSHALING_CONTEXT_ATTRIBUTES, IStream, IUnknown,
+                                         SAFEARRAY, STGMEDIUM;
 public import windows.win32.ui.windowsandmessaging : HACCEL, HICON, HMENU;
 
 extern(Windows) @nogc nothrow:

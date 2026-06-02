@@ -3,7 +3,7 @@
 module windows.win32.devices.usb;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, PWSTR;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -319,21 +319,35 @@ enum uint LowSpeed = 0x00000001U;
 enum uint FullSpeed = 0x00000002U;
 enum uint HighSpeed = 0x00000003U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_in))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_in
     IOCTL_GENERICUSBFN_TRANSFER_IN                  = 0x0022c00dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_in_append_zero_pkt
     IOCTL_GENERICUSBFN_TRANSFER_IN_APPEND_ZERO_PKT  = 0x0022c011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_transfer_out
     IOCTL_GENERICUSBFN_TRANSFER_OUT                 = 0x0022c016U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_control_status_handshake_in
     IOCTL_GENERICUSBFN_CONTROL_STATUS_HANDSHAKE_IN  = 0x0022c018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_control_status_handshake_out
     IOCTL_GENERICUSBFN_CONTROL_STATUS_HANDSHAKE_OUT = 0x0022c01cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_class_info
     IOCTL_GENERICUSBFN_GET_CLASS_INFO               = 0x0022c022U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_pipe_state
     IOCTL_GENERICUSBFN_GET_PIPE_STATE               = 0x0022c026U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_set_pipe_state
     IOCTL_GENERICUSBFN_SET_PIPE_STATE               = 0x0022c029U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_activate_usb_bus
     IOCTL_GENERICUSBFN_ACTIVATE_USB_BUS             = 0x0022c02cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_deactivate_usb_bus
     IOCTL_GENERICUSBFN_DEACTIVATE_USB_BUS           = 0x0022c030U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_bus_event_notification
     IOCTL_GENERICUSBFN_BUS_EVENT_NOTIFICATION       = 0x0022c036U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_class_info_ex
     IOCTL_GENERICUSBFN_GET_CLASS_INFO_EX            = 0x0022c03aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_get_interface_descriptor_set
     IOCTL_GENERICUSBFN_GET_INTERFACE_DESCRIPTOR_SET = 0x0022c03eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/genericusbfnioctl/ni-genericusbfnioctl-ioctl_genericusbfn_register_usb_string
     IOCTL_GENERICUSBFN_REGISTER_USB_STRING          = 0x0022c041U,
 }
 
@@ -1087,14 +1101,18 @@ enum : uint
     IOCTL_USB_HCD_ENABLE_PORT  = 0x00220434U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_diagnostic_mode_on))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_diagnostic_mode_on
     IOCTL_USB_DIAGNOSTIC_MODE_ON  = 0x00220400U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_diagnostic_mode_off
     IOCTL_USB_DIAGNOSTIC_MODE_OFF = 0x00220404U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_get_root_hub_name))], [])*/uint IOCTL_USB_GET_ROOT_HUB_NAME = 0x00220408U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_get_hcd_driverkey_name))], [])*/uint IOCTL_GET_HCD_DRIVERKEY_NAME = 0x00220424U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_usb_get_root_hub_name
+enum uint IOCTL_USB_GET_ROOT_HUB_NAME = 0x00220408U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ni-usbuser-ioctl_get_hcd_driverkey_name
+enum uint IOCTL_GET_HCD_DRIVERKEY_NAME = 0x00220424U;
 
 enum : uint
 {
@@ -1217,7 +1235,7 @@ union BM_REQUEST_TYPE
 {
     struct s
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Dir)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield50;
+        ubyte _bitfield50;
     }
     ubyte B;
 }
@@ -1257,7 +1275,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield51;
+        ushort _bitfield51;
     }
 }
 
@@ -1268,7 +1286,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield52;
+        ushort _bitfield52;
     }
 }
 
@@ -1279,7 +1297,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield53;
+        ushort _bitfield53;
     }
 }
 
@@ -1343,7 +1361,7 @@ struct USB_DEVICE_CAPABILITY_USB20_EXTENSION_DESCRIPTOR
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield54;
+            uint _bitfield54;
         }
     }
 }
@@ -1362,7 +1380,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved3)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(17))], [])*/uint _bitfield55;
+            uint _bitfield55;
         }
     }
     ushort bmProviderPorts;
@@ -1386,7 +1404,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield56;
+            ushort _bitfield56;
         }
     }
     ushort wMinVoltage;
@@ -1417,7 +1435,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LaneSpeedMantissa)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield57;
+        uint _bitfield57;
     }
 }
 
@@ -1435,7 +1453,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(9)), FixedArgSig(ElementSig(23))], [])*/uint _bitfield58;
+            uint _bitfield58;
         }
     }
     union wFunctionalitySupport
@@ -1445,11 +1463,11 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MinTxLaneCount)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield59;
+            ushort _bitfield59;
         }
     }
     ushort wReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED[1] bmSublinkSpeedAttr;
+    USB_DEVICE_CAPABILITY_SUPERSPEEDPLUS_SPEED[1] bmSublinkSpeedAttr; // Flexible array
 }
 
 struct USB_DEVICE_CAPABILITY_CONTAINER_ID_DESCRIPTOR
@@ -1464,12 +1482,12 @@ struct USB_DEVICE_CAPABILITY_CONTAINER_ID_DESCRIPTOR
 struct USB_DEVICE_CAPABILITY_PLATFORM_DESCRIPTOR
 {
 align (1):
-    ubyte bLength;
-    ubyte bDescriptorType;
-    ubyte bDevCapabilityType;
-    ubyte bReserved;
-    GUID  PlatformCapabilityUuid;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CapabililityData;
+    ubyte    bLength;
+    ubyte    bDescriptorType;
+    ubyte    bDevCapabilityType;
+    ubyte    bReserved;
+    GUID     PlatformCapabilityUuid;
+    ubyte[1] CapabililityData; // Flexible array
 }
 
 struct USB_DEVICE_CAPABILITY_BILLBOARD_DESCRIPTOR
@@ -1488,7 +1506,7 @@ align (1):
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NoVconnPowerRequired)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield60;
+            ushort _bitfield60;
         }
     }
     ubyte[32] bmConfigured;
@@ -1515,7 +1533,7 @@ struct USB_DEVICE_CAPABILITY_FIRMWARE_STATUS_DESCRIPTOR
         struct
         {
         align (1):
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield61;
+            uint _bitfield61;
         }
     }
 }
@@ -1585,9 +1603,9 @@ align (1):
 struct USB_STRING_DESCRIPTOR
 {
 align (1):
-    ubyte bLength;
-    ubyte bDescriptorType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] bString;
+    ubyte    bLength;
+    ubyte    bDescriptorType;
+    wchar[1] bString; // Flexible array
 }
 
 struct USB_SUPERSPEED_ENDPOINT_COMPANION_DESCRIPTOR
@@ -1601,11 +1619,11 @@ align (1):
         ubyte AsUchar;
         struct Bulk
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield62;
+            ubyte _bitfield62;
         }
         struct Isochronous
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SspCompanion)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield63;
+            ubyte _bitfield63;
         }
     }
     ushort wBytesPerInterval;
@@ -1662,7 +1680,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield64;
+        ushort _bitfield64;
     }
 }
 
@@ -1673,7 +1691,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield65;
+        ushort _bitfield65;
     }
 }
 
@@ -1695,7 +1713,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(3))], [])*/ushort _bitfield66;
+        ushort _bitfield66;
     }
 }
 
@@ -1706,7 +1724,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield67;
+        ushort _bitfield67;
     }
 }
 
@@ -1717,7 +1735,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(3))], [])*/ushort _bitfield68;
+        ushort _bitfield68;
     }
 }
 
@@ -1728,7 +1746,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved3)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield69;
+        ushort _bitfield69;
     }
 }
 
@@ -1755,7 +1773,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield70;
+        uint _bitfield70;
     }
 }
 
@@ -1786,7 +1804,7 @@ union USB_HUB_30_PORT_REMOTE_WAKE_MASK
     ubyte AsUchar8;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield71;
+        ubyte _bitfield71;
     }
 }
 
@@ -1795,7 +1813,7 @@ union USB_FUNCTION_SUSPEND_OPTIONS
     ubyte AsUchar;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield72;
+        ubyte _bitfield72;
     }
 }
 
@@ -1865,8 +1883,8 @@ align (1):
     ushort EndpointAddress;
     uint   ResourceId;
     USBD_ENDPOINT_OFFLOAD_MODE Mode;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Speed)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(18)), FixedArgSig(ElementSig(14))], [])*/uint _bitfield2;
+    uint   _bitfield1;
+    uint   _bitfield2;
     long   TransferSegmentLA;
     void*  TransferSegmentVA;
     size_t TransferRingSize;
@@ -1885,8 +1903,8 @@ align (1):
     ushort EndpointAddress;
     uint   ResourceId;
     USBD_ENDPOINT_OFFLOAD_MODE Mode;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Speed)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(18)), FixedArgSig(ElementSig(14))], [])*/uint _bitfield2;
+    uint   _bitfield1;
+    uint   _bitfield2;
     long   TransferSegmentLA;
     void*  TransferSegmentVA;
     size_t TransferRingSize;
@@ -1915,7 +1933,7 @@ struct USBD_INTERFACE_INFORMATION
     ubyte  Reserved;
     void*  InterfaceHandle;
     uint   NumberOfPipes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USBD_PIPE_INFORMATION[1] Pipes;
+    USBD_PIPE_INFORMATION[1] Pipes; // Flexible array
 }
 
 struct _URB_HCD_AREA
@@ -2094,7 +2112,7 @@ struct _URB_OS_FEATURE_DESCRIPTOR_REQUEST
     void*         TransferBufferMDL;
     URB*          UrbLink;
     _URB_HCD_AREA hca;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield73;
+    ubyte         _bitfield73;
     ubyte         Reserved2;
     ubyte         InterfaceNumber;
     ubyte         MS_PageIndex;
@@ -2160,7 +2178,7 @@ struct _URB_ISOCH_TRANSFER
     uint          StartFrame;
     uint          NumberOfPackets;
     uint          ErrorCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USBD_ISO_PACKET_DESCRIPTOR[1] IsoPacket;
+    USBD_ISO_PACKET_DESCRIPTOR[1] IsoPacket; // Flexible array
 }
 
 struct USBD_STREAM_INFORMATION
@@ -2323,8 +2341,8 @@ align (1):
 struct USB_UNICODE_NAME
 {
 align (1):
-    uint Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] String;
+    uint     Length;
+    wchar[1] String; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usbuser/ns-usbuser-usbuser_controller_unicode_name
@@ -2587,7 +2605,7 @@ struct USBFN_INTERFACE_INFO
     ubyte           InterfaceNumber;
     USBFN_BUS_SPEED Speed;
     ushort          Size;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] InterfaceDescriptorSet;
+    ubyte[1]        InterfaceDescriptorSet; // Flexible array
 }
 
 struct USBFN_USB_STRING
@@ -2647,58 +2665,58 @@ align (1):
 struct USB_NODE_CONNECTION_INFORMATION
 {
 align (1):
-    uint    ConnectionIndex;
+    uint             ConnectionIndex;
     USB_DEVICE_DESCRIPTOR DeviceDescriptor;
-    ubyte   CurrentConfigurationValue;
-    BOOLEAN LowSpeed;
-    BOOLEAN DeviceIsHub;
-    ushort  DeviceAddress;
-    uint    NumberOfOpenPipes;
+    ubyte            CurrentConfigurationValue;
+    BOOLEAN          LowSpeed;
+    BOOLEAN          DeviceIsHub;
+    ushort           DeviceAddress;
+    uint             NumberOfOpenPipes;
     USB_CONNECTION_STATUS ConnectionStatus;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USB_PIPE_INFO[1] PipeList;
+    USB_PIPE_INFO[1] PipeList; // Flexible array
 }
 
 struct USB_NODE_CONNECTION_DRIVERKEY_NAME
 {
 align (1):
-    uint ConnectionIndex;
-    uint ActualLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] DriverKeyName;
+    uint     ConnectionIndex;
+    uint     ActualLength;
+    wchar[1] DriverKeyName; // Flexible array
 }
 
 struct USB_NODE_CONNECTION_NAME
 {
 align (1):
-    uint ConnectionIndex;
-    uint ActualLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] NodeName;
+    uint     ConnectionIndex;
+    uint     ActualLength;
+    wchar[1] NodeName; // Flexible array
 }
 
 struct USB_HUB_NAME
 {
 align (1):
-    uint ActualLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] HubName;
+    uint     ActualLength;
+    wchar[1] HubName; // Flexible array
 }
 
 struct USB_ROOT_HUB_NAME
 {
 align (1):
-    uint ActualLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] RootHubName;
+    uint     ActualLength;
+    wchar[1] RootHubName; // Flexible array
 }
 
 struct USB_HCD_DRIVERKEY_NAME
 {
 align (1):
-    uint ActualLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] DriverKeyName;
+    uint     ActualLength;
+    wchar[1] DriverKeyName; // Flexible array
 }
 
 struct USB_DESCRIPTOR_REQUEST
 {
 align (1):
-    uint ConnectionIndex;
+    uint     ConnectionIndex;
     struct SetupPacket
     {
     align (1):
@@ -2708,13 +2726,13 @@ align (1):
         ushort wIndex;
         ushort wLength;
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 struct USB_HUB_CAPABILITIES
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HubIs2xCapable)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield74;
+    uint _bitfield74;
 }
 
 struct USB_NODE_CONNECTION_ATTRIBUTES
@@ -2728,15 +2746,15 @@ align (1):
 struct USB_NODE_CONNECTION_INFORMATION_EX
 {
 align (1):
-    uint    ConnectionIndex;
+    uint             ConnectionIndex;
     USB_DEVICE_DESCRIPTOR DeviceDescriptor;
-    ubyte   CurrentConfigurationValue;
-    ubyte   Speed;
-    BOOLEAN DeviceIsHub;
-    ushort  DeviceAddress;
-    uint    NumberOfOpenPipes;
+    ubyte            CurrentConfigurationValue;
+    ubyte            Speed;
+    BOOLEAN          DeviceIsHub;
+    ushort           DeviceAddress;
+    uint             NumberOfOpenPipes;
     USB_CONNECTION_STATUS ConnectionStatus;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USB_PIPE_INFO[1] PipeList;
+    USB_PIPE_INFO[1] PipeList; // Flexible array
 }
 
 union USB_HUB_CAP_FLAGS
@@ -2746,7 +2764,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedMBZ)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield75;
+        uint _bitfield75;
     }
 }
 
@@ -2768,7 +2786,7 @@ align (1):
     ushort LanguageId;
     ushort Pad;
     uint   LengthInBytes;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR Buffer;
+    PWSTR  Buffer;
 }
 
 struct USB_HUB_DEVICE_UXD_SETTINGS
@@ -2889,14 +2907,14 @@ struct USB_ACQUIRE_INFO
 {
 align (1):
     USB_NOTIFICATION_TYPE NotificationType;
-    uint TotalSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Buffer;
+    uint     TotalSize;
+    wchar[1] Buffer; // Flexible array
 }
 
 struct USB_DEVICE_STATE
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DeviceStarted)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield76;
+    uint _bitfield76;
 }
 
 struct USB_HUB_PORT_INFORMATION
@@ -2919,7 +2937,7 @@ align (1):
     BOOLEAN              HubIsRootHub;
     USB_HUB_CAPABILITIES HubCapabilities;
     uint                 NumberOfHubPorts;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USB_HUB_PORT_INFORMATION[1] PortInfo;
+    USB_HUB_PORT_INFORMATION[1] PortInfo; // Flexible array
 }
 
 struct USB_COMPOSITE_FUNCTION_INFO
@@ -2936,7 +2954,7 @@ struct USB_COMPOSITE_DEVICE_INFO
     USB_CONFIGURATION_DESCRIPTOR CurrentConfigDescriptor;
     ubyte CurrentConfigurationValue;
     ubyte NumberOfFunctions;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USB_COMPOSITE_FUNCTION_INFO[1] FunctionInfo;
+    USB_COMPOSITE_FUNCTION_INFO[1] FunctionInfo; // Flexible array
 }
 
 struct USB_CONTROLLER_DEVICE_INFO
@@ -2965,7 +2983,7 @@ align (1):
     wchar[128]       SerialNumberId;
     wchar[128]       PnpDeviceDescription;
     uint             NumberOfOpenPipes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USB_PIPE_INFO[1] PipeList;
+    USB_PIPE_INFO[1] PipeList; // Flexible array
 }
 
 struct USB_DEVICE_NODE_INFO
@@ -3033,7 +3051,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedMBZ)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield77;
+        uint _bitfield77;
     }
 }
 
@@ -3045,7 +3063,7 @@ align (1):
     USB_PORT_PROPERTIES UsbPortProperties;
     ushort              CompanionIndex;
     ushort              CompanionPortNumber;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] CompanionHubSymbolicLinkName;
+    wchar[1]            CompanionHubSymbolicLinkName; // Flexible array
 }
 
 union USB_PROTOCOLS
@@ -3055,7 +3073,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedMBZ)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield78;
+        uint _bitfield78;
     }
 }
 
@@ -3066,7 +3084,7 @@ align (1):
     struct
     {
     align (1):
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedMBZ)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield79;
+        uint _bitfield79;
     }
 }
 

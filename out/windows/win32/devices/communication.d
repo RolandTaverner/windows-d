@@ -3,7 +3,7 @@
 module windows.win32.devices.communication;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HWND, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, CHAR, HANDLE, HWND, PSTR, PWSTR;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -320,26 +320,26 @@ enum : uint
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mcx/ns-mcx-modemdevcaps
 struct MODEMDEVCAPS
 {
-    uint dwActualSize;
-    uint dwRequiredSize;
-    uint dwDevSpecificOffset;
-    uint dwDevSpecificSize;
-    uint dwModemProviderVersion;
-    uint dwModemManufacturerOffset;
-    uint dwModemManufacturerSize;
-    uint dwModemModelOffset;
-    uint dwModemModelSize;
-    uint dwModemVersionOffset;
-    uint dwModemVersionSize;
+    uint     dwActualSize;
+    uint     dwRequiredSize;
+    uint     dwDevSpecificOffset;
+    uint     dwDevSpecificSize;
+    uint     dwModemProviderVersion;
+    uint     dwModemManufacturerOffset;
+    uint     dwModemManufacturerSize;
+    uint     dwModemModelOffset;
+    uint     dwModemModelSize;
+    uint     dwModemVersionOffset;
+    uint     dwModemVersionSize;
     MODEMDEVCAPS_DIAL_OPTIONS dwDialOptions;
-    uint dwCallSetupFailTimer;
-    uint dwInactivityTimeout;
+    uint     dwCallSetupFailTimer;
+    uint     dwInactivityTimeout;
     MODEMDEVCAPS_SPEAKER_VOLUME dwSpeakerVolume;
     MODEMDEVCAPS_SPEAKER_MODE dwSpeakerMode;
-    uint dwModemOptions;
-    uint dwMaxDTERate;
-    uint dwMaxDCERate;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abVariablePortion;
+    uint     dwModemOptions;
+    uint     dwMaxDTERate;
+    uint     dwMaxDCERate;
+    ubyte[1] abVariablePortion; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mcx/ns-mcx-modemsettings
@@ -356,7 +356,7 @@ struct MODEMSETTINGS
     uint                 dwPreferredModemOptions;
     uint                 dwNegotiatedModemOptions;
     uint                 dwNegotiatedDCERate;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abVariablePortion;
+    ubyte[1]             abVariablePortion; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-commprop
@@ -379,13 +379,13 @@ struct COMMPROP
     uint                 dwCurrentRxQueue;
     uint                 dwProvSpec1;
     uint                 dwProvSpec2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wcProvChar;
+    wchar[1]             wcProvChar; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-comstat
 struct COMSTAT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield8;
+    uint _bitfield8;
     uint cbInQue;
     uint cbOutQue;
 }
@@ -395,7 +395,7 @@ struct DCB
 {
     uint          DCBlength;
     uint          BaudRate;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDummy2)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(17))], [])*/uint _bitfield9;
+    uint          _bitfield9;
     ushort        wReserved;
     ushort        XonLim;
     ushort        XoffLim;
@@ -423,14 +423,14 @@ struct COMMTIMEOUTS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-commconfig
 struct COMMCONFIG
 {
-    uint   dwSize;
-    ushort wVersion;
-    ushort wReserved;
-    DCB    dcb;
-    uint   dwProviderSubType;
-    uint   dwProviderOffset;
-    uint   dwProviderSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wcProviderData;
+    uint     dwSize;
+    ushort   wVersion;
+    ushort   wReserved;
+    DCB      dcb;
+    uint     dwProviderSubType;
+    uint     dwProviderOffset;
+    uint     dwProviderSize;
+    wchar[1] wcProviderData; // Flexible array
 }
 
 // Functions

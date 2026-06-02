@@ -3,11 +3,10 @@
 module windows.win32.networkmanagement.networkdiagnosticsframework;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, HRESULT, HWND,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOL, CHAR, FILETIME, HRESULT, HWND, PWSTR;
 public import windows.win32.networking.winsock : SOCKET, SOCKET_ADDRESS_LIST;
-public import windows.win32.security.security : SID;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.security : SID;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

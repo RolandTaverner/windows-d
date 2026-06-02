@@ -3,12 +3,12 @@
 module windows.win32.system.mmc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HRESULT, HWND,
-                                                    LPARAM, LRESULT, PWSTR, VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, COLORREF, HRESULT, HWND, LPARAM,
+                                         LRESULT, PWSTR, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HBITMAP, HPALETTE;
-public import windows.win32.system.com.com : IDataObject, IDispatch, IEnumString, IUnknown;
+public import windows.win32.system.com : IDataObject, IDispatch, IEnumString, IUnknown;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
+public import windows.win32.ui.controls : HPROPSHEETPAGE;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
 extern(Windows) @nogc nothrow:
@@ -583,45 +583,45 @@ struct MMC_EXPANDSYNC_STRUCT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_visible_columns
 struct MMC_VISIBLE_COLUMNS
 {
-    int nVisibleColumns;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/int[1] rgVisibleCols;
+    int    nVisibleColumns;
+    int[1] rgVisibleCols; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-smmcdataobjects
 struct SMMCDataObjects
 {
-    uint count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IDataObject[1] lpDataObject;
+    uint           count;
+    IDataObject[1] lpDataObject; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-smmcobjecttypes
 struct SMMCObjectTypes
 {
-    uint count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] guid;
+    uint    count;
+    GUID[1] guid; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-snodeid
 struct SNodeID
 {
-    uint cBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] id;
+    uint     cBytes;
+    ubyte[1] id; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-snodeid2
 struct SNodeID2
 {
-    uint dwFlags;
-    uint cBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] id;
+    uint     dwFlags;
+    uint     cBytes;
+    ubyte[1] id; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-scolumnsetid
 struct SColumnSetID
 {
-    uint dwFlags;
-    uint cBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] id;
+    uint     dwFlags;
+    uint     cBytes;
+    ubyte[1] id; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_symbol

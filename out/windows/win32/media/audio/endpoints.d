@@ -3,12 +3,12 @@
 module windows.win32.media.audio.endpoints;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
-public import windows.win32.media.audio.audio : AUDIO_VOLUME_NOTIFICATION_DATA;
+public import windows.win32.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
+public import windows.win32.media.audio : AUDIO_VOLUME_NOTIFICATION_DATA;
 public import windows.win32.media.audio.apo : APO_CONNECTION_PROPERTY;
-public import windows.win32.media.audio.audio : IMMDevice, WAVEFORMATEX;
+public import windows.win32.media.audio : IMMDevice, WAVEFORMATEX;
 public import windows.win32.media.kernelstreaming : AUDIO_CURVE_TYPE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -29,12 +29,12 @@ enum EndpointConnectorType : int
 // Constants
 
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({316160983, 53010, 18110, 133, 64, 129, 39, 16, 211, 2, 28}, 1))], [])*/PROPERTYKEY
+enum : PROPERTYKEY
 {
-    DEVPKEY_AudioEndpointPlugin_FactoryCLSID  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({316160983, 53010, 18110, 133, 64, 129, 39, 16, 211, 2, 28}, 1))], [])*/PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 1),
-    DEVPKEY_AudioEndpointPlugin_DataFlow      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({316160983, 53010, 18110, 133, 64, 129, 39, 16, 211, 2, 28}, 1))], [])*/PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 2),
-    DEVPKEY_AudioEndpointPlugin_PnPInterface  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({316160983, 53010, 18110, 133, 64, 129, 39, 16, 211, 2, 28}, 1))], [])*/PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 3),
-    DEVPKEY_AudioEndpointPlugin2_FactoryCLSID = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({316160983, 53010, 18110, 133, 64, 129, 39, 16, 211, 2, 28}, 1))], [])*/PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 4),
+    DEVPKEY_AudioEndpointPlugin_FactoryCLSID  = PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 1),
+    DEVPKEY_AudioEndpointPlugin_DataFlow      = PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 2),
+    DEVPKEY_AudioEndpointPlugin_PnPInterface  = PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 3),
+    DEVPKEY_AudioEndpointPlugin2_FactoryCLSID = PROPERTYKEY(GUID("12D83BD7-CF12-46BE-8540-812710D3021C"), 4),
 }
 
 // Structs

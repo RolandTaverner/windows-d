@@ -3,10 +3,9 @@
 module windows.win32.system.deploymentservices;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, LPARAM,
-                                                    PWSTR, SYSTEMTIME, VARIANT_BOOL,
-                                                    WPARAM;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, LPARAM, PWSTR,
+                                         SYSTEMTIME, VARIANT_BOOL, WPARAM;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -596,9 +595,9 @@ struct WDS_CLI_CRED
 struct PXE_DHCP_OPTION
 {
 align (1):
-    ubyte OptionType;
-    ubyte OptionLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] OptionValue;
+    ubyte    OptionType;
+    ubyte    OptionLength;
+    ubyte[1] OptionValue; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcp_message
@@ -632,39 +631,39 @@ align (1):
 struct PXE_DHCPV6_OPTION
 {
 align (1):
-    ushort OptionCode;
-    ushort DataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ushort   OptionCode;
+    ushort   DataLength;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_message_header
 struct PXE_DHCPV6_MESSAGE_HEADER
 {
 align (1):
-    ubyte MessageType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Message;
+    ubyte    MessageType;
+    ubyte[1] Message; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_message
 struct PXE_DHCPV6_MESSAGE
 {
 align (1):
-    ubyte MessageType;
-    ubyte TransactionIDByte1;
-    ubyte TransactionIDByte2;
-    ubyte TransactionIDByte3;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PXE_DHCPV6_OPTION[1] Options;
+    ubyte                MessageType;
+    ubyte                TransactionIDByte1;
+    ubyte                TransactionIDByte2;
+    ubyte                TransactionIDByte3;
+    PXE_DHCPV6_OPTION[1] Options; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_relay_message
 struct PXE_DHCPV6_RELAY_MESSAGE
 {
 align (1):
-    ubyte     MessageType;
-    ubyte     HopCount;
-    ubyte[16] LinkAddress;
-    ubyte[16] PeerAddress;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PXE_DHCPV6_OPTION[1] Options;
+    ubyte                MessageType;
+    ubyte                HopCount;
+    ubyte[16]            LinkAddress;
+    ubyte[16]            PeerAddress;
+    PXE_DHCPV6_OPTION[1] Options; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_provider

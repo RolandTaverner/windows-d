@@ -3,22 +3,21 @@
 module windows.win32.ui.controls.richedit;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, HANDLE,
-                                                    HGLOBAL, HRESULT, HWND, LPARAM,
-                                                    LRESULT, POINT, PSTR, PWSTR, RECT,
-                                                    RECTL, SIZE, WPARAM;
-public import windows.win32.graphics.direct2d.direct2d : ID2D1RenderTarget;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, HANDLE, HGLOBAL,
+                                         HRESULT, HWND, LPARAM, LRESULT, POINT,
+                                         PSTR, PWSTR, RECT, RECTL, SIZE, WPARAM;
+public import windows.win32.graphics.direct2d : ID2D1RenderTarget;
 public import windows.win32.graphics.gdi : FONT_CHARSET, HBITMAP, HDC, HPALETTE, HRGN,
                                            SYS_COLOR_INDEX;
-public import windows.win32.system.com.com : DVASPECT, DVTARGETDEVICE, IDataObject,
-                                             IDispatch, IStream, IUnknown;
+public import windows.win32.system.com : DVASPECT, DVTARGETDEVICE, IDataObject, IDispatch,
+                                         IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage;
 public import windows.win32.system.ole : DROPEFFECT, IDropTarget, IOleClientSite,
                                          IOleInPlaceFrame, IOleInPlaceUIWindow,
                                          IOleObject, OLEINPLACEFRAMEINFO;
 public import windows.win32.system.systemservices : MODIFIERKEYS_FLAGS, RECO_FLAGS;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls.controls : NMHDR;
+public import windows.win32.ui.controls : NMHDR;
 public import windows.win32.ui.input.ime : HIMC;
 public import windows.win32.ui.windowsandmessaging : HCURSOR, HMENU, SCROLLBAR_CONSTANTS,
                                                      SCROLL_WINDOW_FLAGS;
@@ -1039,80 +1038,124 @@ enum : int
 enum uint cchTextLimitDefault = 0x00007fffU;
 enum const(wchar)* MSFTEDIT_CLASS = "RICHEDIT50W";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     CERICHEDIT_CLASSA = "RichEditCEA",
     CERICHEDIT_CLASSW = "RichEditCEW",
 }
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RICHEDIT_CLASSA   = "RichEdit20A",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     RICHEDIT_CLASS10A = "RICHEDIT",
     RICHEDIT_CLASSW   = "RichEdit20W",
     RICHEDIT_CLASS    = "RichEdit20W",
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-canpaste))], [])*/uint EM_CANPASTE = 0x00000432U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-displayband))], [])*/uint EM_DISPLAYBAND = 0x00000433U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-canpaste
+enum uint EM_CANPASTE = 0x00000432U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-displayband
+enum uint EM_DISPLAYBAND = 0x00000433U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-exgetsel))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-exgetsel
     EM_EXGETSEL       = 0x00000434U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-exlimittext
     EM_EXLIMITTEXT    = 0x00000435U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-exlinefromchar
     EM_EXLINEFROMCHAR = 0x00000436U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-exsetsel))], [])*/uint EM_EXSETSEL = 0x00000437U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtext))], [])*/uint EM_FINDTEXT = 0x00000438U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-formatrange))], [])*/uint EM_FORMATRANGE = 0x00000439U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getcharformat))], [])*/uint EM_GETCHARFORMAT = 0x0000043aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteventmask))], [])*/uint EM_GETEVENTMASK = 0x0000043bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getoleinterface))], [])*/uint EM_GETOLEINTERFACE = 0x0000043cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getparaformat))], [])*/uint EM_GETPARAFORMAT = 0x0000043dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getseltext))], [])*/uint EM_GETSELTEXT = 0x0000043eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-hideselection))], [])*/uint EM_HIDESELECTION = 0x0000043fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-pastespecial))], [])*/uint EM_PASTESPECIAL = 0x00000440U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-requestresize))], [])*/uint EM_REQUESTRESIZE = 0x00000441U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-selectiontype))], [])*/uint EM_SELECTIONTYPE = 0x00000442U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setbkgndcolor))], [])*/uint EM_SETBKGNDCOLOR = 0x00000443U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setcharformat))], [])*/uint EM_SETCHARFORMAT = 0x00000444U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteventmask))], [])*/uint EM_SETEVENTMASK = 0x00000445U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setolecallback))], [])*/uint EM_SETOLECALLBACK = 0x00000446U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setparaformat))], [])*/uint EM_SETPARAFORMAT = 0x00000447U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settargetdevice))], [])*/uint EM_SETTARGETDEVICE = 0x00000448U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-exsetsel
+enum uint EM_EXSETSEL = 0x00000437U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-findtext
+enum uint EM_FINDTEXT = 0x00000438U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-formatrange
+enum uint EM_FORMATRANGE = 0x00000439U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getcharformat
+enum uint EM_GETCHARFORMAT = 0x0000043aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-geteventmask
+enum uint EM_GETEVENTMASK = 0x0000043bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getoleinterface
+enum uint EM_GETOLEINTERFACE = 0x0000043cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getparaformat
+enum uint EM_GETPARAFORMAT = 0x0000043dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getseltext
+enum uint EM_GETSELTEXT = 0x0000043eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-hideselection
+enum uint EM_HIDESELECTION = 0x0000043fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-pastespecial
+enum uint EM_PASTESPECIAL = 0x00000440U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-requestresize
+enum uint EM_REQUESTRESIZE = 0x00000441U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-selectiontype
+enum uint EM_SELECTIONTYPE = 0x00000442U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setbkgndcolor
+enum uint EM_SETBKGNDCOLOR = 0x00000443U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setcharformat
+enum uint EM_SETCHARFORMAT = 0x00000444U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-seteventmask
+enum uint EM_SETEVENTMASK = 0x00000445U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setolecallback
+enum uint EM_SETOLECALLBACK = 0x00000446U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setparaformat
+enum uint EM_SETPARAFORMAT = 0x00000447U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-settargetdevice
+enum uint EM_SETTARGETDEVICE = 0x00000448U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-streamin))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-streamin
     EM_STREAMIN  = 0x00000449U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-streamout
     EM_STREAMOUT = 0x0000044aU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextrange))], [])*/uint EM_GETTEXTRANGE = 0x0000044bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findwordbreak))], [])*/uint EM_FINDWORDBREAK = 0x0000044cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setoptions))], [])*/uint EM_SETOPTIONS = 0x0000044dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getoptions))], [])*/uint EM_GETOPTIONS = 0x0000044eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtextex))], [])*/uint EM_FINDTEXTEX = 0x0000044fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordbreakprocex))], [])*/uint EM_GETWORDBREAKPROCEX = 0x00000450U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setwordbreakprocex))], [])*/uint EM_SETWORDBREAKPROCEX = 0x00000451U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setundolimit))], [])*/uint EM_SETUNDOLIMIT = 0x00000452U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettextrange
+enum uint EM_GETTEXTRANGE = 0x0000044bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-findwordbreak
+enum uint EM_FINDWORDBREAK = 0x0000044cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setoptions
+enum uint EM_SETOPTIONS = 0x0000044dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getoptions
+enum uint EM_GETOPTIONS = 0x0000044eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-findtextex
+enum uint EM_FINDTEXTEX = 0x0000044fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getwordbreakprocex
+enum uint EM_GETWORDBREAKPROCEX = 0x00000450U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setwordbreakprocex
+enum uint EM_SETWORDBREAKPROCEX = 0x00000451U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setundolimit
+enum uint EM_SETUNDOLIMIT = 0x00000452U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-redo))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-redo
     EM_REDO    = 0x00000454U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-canredo
     EM_CANREDO = 0x00000455U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getundoname))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getundoname
     EM_GETUNDONAME = 0x00000456U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getredoname
     EM_GETREDONAME = 0x00000457U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-stopgrouptyping))], [])*/uint EM_STOPGROUPTYPING = 0x00000458U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settextmode))], [])*/uint EM_SETTEXTMODE = 0x00000459U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextmode))], [])*/uint EM_GETTEXTMODE = 0x0000045aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-autourldetect))], [])*/uint EM_AUTOURLDETECT = 0x0000045bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-stopgrouptyping
+enum uint EM_STOPGROUPTYPING = 0x00000458U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-settextmode
+enum uint EM_SETTEXTMODE = 0x00000459U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettextmode
+enum uint EM_GETTEXTMODE = 0x0000045aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-autourldetect
+enum uint EM_AUTOURLDETECT = 0x0000045bU;
 
 enum : uint
 {
@@ -1124,50 +1167,79 @@ enum : uint
 }
 
 enum uint AURL_DISABLEMIXEDLGC = 0x00000020U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getautourldetect))], [])*/uint EM_GETAUTOURLDETECT = 0x0000045cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setpalette))], [])*/uint EM_SETPALETTE = 0x0000045dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getautourldetect
+enum uint EM_GETAUTOURLDETECT = 0x0000045cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setpalette
+enum uint EM_SETPALETTE = 0x0000045dU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextex))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettextex
     EM_GETTEXTEX       = 0x0000045eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettextlengthex
     EM_GETTEXTLENGTHEX = 0x0000045fU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-showscrollbar))], [])*/uint EM_SHOWSCROLLBAR = 0x00000460U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-showscrollbar
+enum uint EM_SHOWSCROLLBAR = 0x00000460U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settextex))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-settextex
     EM_SETTEXTEX      = 0x00000461U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setpunctuation
     EM_SETPUNCTUATION = 0x00000464U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpunctuation))], [])*/uint EM_GETPUNCTUATION = 0x00000465U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setwordwrapmode))], [])*/uint EM_SETWORDWRAPMODE = 0x00000466U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordwrapmode))], [])*/uint EM_GETWORDWRAPMODE = 0x00000467U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimecolor))], [])*/uint EM_SETIMECOLOR = 0x00000468U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecolor))], [])*/uint EM_GETIMECOLOR = 0x00000469U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimeoptions))], [])*/uint EM_SETIMEOPTIONS = 0x0000046aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimeoptions))], [])*/uint EM_GETIMEOPTIONS = 0x0000046bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-convposition))], [])*/uint EM_CONVPOSITION = 0x0000046cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setlangoptions))], [])*/uint EM_SETLANGOPTIONS = 0x00000478U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getlangoptions))], [])*/uint EM_GETLANGOPTIONS = 0x00000479U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecompmode))], [])*/uint EM_GETIMECOMPMODE = 0x0000047aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getpunctuation
+enum uint EM_GETPUNCTUATION = 0x00000465U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setwordwrapmode
+enum uint EM_SETWORDWRAPMODE = 0x00000466U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getwordwrapmode
+enum uint EM_GETWORDWRAPMODE = 0x00000467U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setimecolor
+enum uint EM_SETIMECOLOR = 0x00000468U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getimecolor
+enum uint EM_GETIMECOLOR = 0x00000469U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setimeoptions
+enum uint EM_SETIMEOPTIONS = 0x0000046aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getimeoptions
+enum uint EM_GETIMEOPTIONS = 0x0000046bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-convposition
+enum uint EM_CONVPOSITION = 0x0000046cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setlangoptions
+enum uint EM_SETLANGOPTIONS = 0x00000478U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getlangoptions
+enum uint EM_GETLANGOPTIONS = 0x00000479U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getimecompmode
+enum uint EM_GETIMECOMPMODE = 0x0000047aU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtextw))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-findtextw
     EM_FINDTEXTW   = 0x0000047bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-findtextexw
     EM_FINDTEXTEXW = 0x0000047cU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-reconversion))], [])*/uint EM_RECONVERSION = 0x0000047dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimemodebias))], [])*/uint EM_SETIMEMODEBIAS = 0x0000047eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimemodebias))], [])*/uint EM_GETIMEMODEBIAS = 0x0000047fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setbidioptions))], [])*/uint EM_SETBIDIOPTIONS = 0x000004c8U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getbidioptions))], [])*/uint EM_GETBIDIOPTIONS = 0x000004c9U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settypographyoptions))], [])*/uint EM_SETTYPOGRAPHYOPTIONS = 0x000004caU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettypographyoptions))], [])*/uint EM_GETTYPOGRAPHYOPTIONS = 0x000004cbU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteditstyle))], [])*/uint EM_SETEDITSTYLE = 0x000004ccU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteditstyle))], [])*/uint EM_GETEDITSTYLE = 0x000004cdU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-reconversion
+enum uint EM_RECONVERSION = 0x0000047dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setimemodebias
+enum uint EM_SETIMEMODEBIAS = 0x0000047eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getimemodebias
+enum uint EM_GETIMEMODEBIAS = 0x0000047fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setbidioptions
+enum uint EM_SETBIDIOPTIONS = 0x000004c8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getbidioptions
+enum uint EM_GETBIDIOPTIONS = 0x000004c9U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-settypographyoptions
+enum uint EM_SETTYPOGRAPHYOPTIONS = 0x000004caU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettypographyoptions
+enum uint EM_GETTYPOGRAPHYOPTIONS = 0x000004cbU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-seteditstyle
+enum uint EM_SETEDITSTYLE = 0x000004ccU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-geteditstyle
+enum uint EM_GETEDITSTYLE = 0x000004cdU;
 enum uint SES_EMULATESYSEDIT = 0x00000001U;
 enum uint SES_BEEPONMAXTEXT = 0x00000002U;
 enum uint SES_EXTENDBACKCOLOR = 0x00000004U;
@@ -1251,26 +1323,42 @@ enum uint TO_SIMPLELINEBREAK = 0x00000002U;
 enum uint TO_DISABLECUSTOMTEXTOUT = 0x00000004U;
 enum uint TO_ADVANCEDLAYOUT = 0x00000008U;
 enum uint EM_OUTLINE = 0x000004dcU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getscrollpos))], [])*/uint EM_GETSCROLLPOS = 0x000004ddU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setscrollpos))], [])*/uint EM_SETSCROLLPOS = 0x000004deU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setfontsize))], [])*/uint EM_SETFONTSIZE = 0x000004dfU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getzoom))], [])*/uint EM_GETZOOM = 0x000004e0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setzoom))], [])*/uint EM_SETZOOM = 0x000004e1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getscrollpos
+enum uint EM_GETSCROLLPOS = 0x000004ddU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setscrollpos
+enum uint EM_SETSCROLLPOS = 0x000004deU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setfontsize
+enum uint EM_SETFONTSIZE = 0x000004dfU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getzoom
+enum uint EM_GETZOOM = 0x000004e0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setzoom
+enum uint EM_SETZOOM = 0x000004e1U;
 enum uint EM_GETVIEWKIND = 0x000004e2U;
 enum uint EM_SETVIEWKIND = 0x000004e3U;
 enum uint EM_GETPAGE = 0x000004e4U;
 enum uint EM_SETPAGE = 0x000004e5U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gethyphenateinfo))], [])*/uint EM_GETHYPHENATEINFO = 0x000004e6U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-sethyphenateinfo))], [])*/uint EM_SETHYPHENATEINFO = 0x000004e7U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpagerotate))], [])*/uint EM_GETPAGEROTATE = 0x000004ebU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setpagerotate))], [])*/uint EM_SETPAGEROTATE = 0x000004ecU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getctfmodebias))], [])*/uint EM_GETCTFMODEBIAS = 0x000004edU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setctfmodebias))], [])*/uint EM_SETCTFMODEBIAS = 0x000004eeU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getctfopenstatus))], [])*/uint EM_GETCTFOPENSTATUS = 0x000004f0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setctfopenstatus))], [])*/uint EM_SETCTFOPENSTATUS = 0x000004f1U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecomptext))], [])*/uint EM_GETIMECOMPTEXT = 0x000004f2U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-isime))], [])*/uint EM_ISIME = 0x000004f3U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimeproperty))], [])*/uint EM_GETIMEPROPERTY = 0x000004f4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gethyphenateinfo
+enum uint EM_GETHYPHENATEINFO = 0x000004e6U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-sethyphenateinfo
+enum uint EM_SETHYPHENATEINFO = 0x000004e7U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getpagerotate
+enum uint EM_GETPAGEROTATE = 0x000004ebU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setpagerotate
+enum uint EM_SETPAGEROTATE = 0x000004ecU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getctfmodebias
+enum uint EM_GETCTFMODEBIAS = 0x000004edU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setctfmodebias
+enum uint EM_SETCTFMODEBIAS = 0x000004eeU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getctfopenstatus
+enum uint EM_GETCTFOPENSTATUS = 0x000004f0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setctfopenstatus
+enum uint EM_SETCTFOPENSTATUS = 0x000004f1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getimecomptext
+enum uint EM_GETIMECOMPTEXT = 0x000004f2U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-isime
+enum uint EM_ISIME = 0x000004f3U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getimeproperty
+enum uint EM_GETIMEPROPERTY = 0x000004f4U;
 enum uint EM_GETQUERYRTFOBJ = 0x0000050dU;
 
 enum : uint
@@ -1334,17 +1422,24 @@ enum : uint
 enum uint VM_NORMAL = 0x00000004U;
 enum uint VM_OUTLINE = 0x00000002U;
 enum uint VM_PAGE = 0x00000009U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-inserttable))], [])*/uint EM_INSERTTABLE = 0x000004e8U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getautocorrectproc))], [])*/uint EM_GETAUTOCORRECTPROC = 0x000004e9U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setautocorrectproc))], [])*/uint EM_SETAUTOCORRECTPROC = 0x000004eaU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-callautocorrectproc))], [])*/uint EM_CALLAUTOCORRECTPROC = 0x000004ffU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-inserttable
+enum uint EM_INSERTTABLE = 0x000004e8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getautocorrectproc
+enum uint EM_GETAUTOCORRECTPROC = 0x000004e9U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setautocorrectproc
+enum uint EM_SETAUTOCORRECTPROC = 0x000004eaU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-callautocorrectproc
+enum uint EM_CALLAUTOCORRECTPROC = 0x000004ffU;
 enum uint ATP_NOCHANGE = 0x00000000U;
 enum uint ATP_CHANGE = 0x00000001U;
 enum uint ATP_NODELIMITER = 0x00000002U;
 enum uint ATP_REPLACEALLTEXT = 0x00000004U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettableparms))], [])*/uint EM_GETTABLEPARMS = 0x00000509U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteditstyleex))], [])*/uint EM_SETEDITSTYLEEX = 0x00000513U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteditstyleex))], [])*/uint EM_GETEDITSTYLEEX = 0x00000514U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettableparms
+enum uint EM_GETTABLEPARMS = 0x00000509U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-seteditstyleex
+enum uint EM_SETEDITSTYLEEX = 0x00000513U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-geteditstyleex
+enum uint EM_GETEDITSTYLEEX = 0x00000514U;
 
 enum : uint
 {
@@ -1368,10 +1463,14 @@ enum : uint
 }
 
 enum uint SES_EX_USEMOUSEWPARAM = 0x20000000U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getstorytype))], [])*/uint EM_GETSTORYTYPE = 0x00000522U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setstorytype))], [])*/uint EM_SETSTORYTYPE = 0x00000523U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getellipsismode))], [])*/uint EM_GETELLIPSISMODE = 0x00000531U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setellipsismode))], [])*/uint EM_SETELLIPSISMODE = 0x00000532U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getstorytype
+enum uint EM_GETSTORYTYPE = 0x00000522U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setstorytype
+enum uint EM_SETSTORYTYPE = 0x00000523U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getellipsismode
+enum uint EM_GETELLIPSISMODE = 0x00000531U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setellipsismode
+enum uint EM_SETELLIPSISMODE = 0x00000532U;
 
 enum : uint
 {
@@ -1381,46 +1480,72 @@ enum : uint
     ELLIPSIS_WORD = 0x00000003U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settableparms))], [])*/uint EM_SETTABLEPARMS = 0x00000533U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettouchoptions))], [])*/uint EM_GETTOUCHOPTIONS = 0x00000536U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settouchoptions))], [])*/uint EM_SETTOUCHOPTIONS = 0x00000537U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-insertimage))], [])*/uint EM_INSERTIMAGE = 0x0000053aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setuianame))], [])*/uint EM_SETUIANAME = 0x00000540U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getellipsisstate))], [])*/uint EM_GETELLIPSISSTATE = 0x00000542U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-settableparms
+enum uint EM_SETTABLEPARMS = 0x00000533U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-gettouchoptions
+enum uint EM_GETTOUCHOPTIONS = 0x00000536U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-settouchoptions
+enum uint EM_SETTOUCHOPTIONS = 0x00000537U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-insertimage
+enum uint EM_INSERTIMAGE = 0x0000053aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-setuianame
+enum uint EM_SETUIANAME = 0x00000540U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/em-getellipsisstate
+enum uint EM_GETELLIPSISSTATE = 0x00000542U;
 enum uint RTO_SHOWHANDLES = 0x00000001U;
 enum uint RTO_DISABLEHANDLES = 0x00000002U;
 enum uint RTO_READINGMODE = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-msgfilter))], [])*/uint EN_MSGFILTER = 0x00000700U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-requestresize))], [])*/uint EN_REQUESTRESIZE = 0x00000701U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-selchange))], [])*/uint EN_SELCHANGE = 0x00000702U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-dropfiles))], [])*/uint EN_DROPFILES = 0x00000703U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-protected))], [])*/uint EN_PROTECTED = 0x00000704U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-correcttext))], [])*/uint EN_CORRECTTEXT = 0x00000705U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-stopnoundo))], [])*/uint EN_STOPNOUNDO = 0x00000706U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-imechange))], [])*/uint EN_IMECHANGE = 0x00000707U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-saveclipboard))], [])*/uint EN_SAVECLIPBOARD = 0x00000708U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-oleopfailed))], [])*/uint EN_OLEOPFAILED = 0x00000709U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-objectpositions))], [])*/uint EN_OBJECTPOSITIONS = 0x0000070aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-msgfilter
+enum uint EN_MSGFILTER = 0x00000700U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-requestresize
+enum uint EN_REQUESTRESIZE = 0x00000701U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-selchange
+enum uint EN_SELCHANGE = 0x00000702U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-dropfiles
+enum uint EN_DROPFILES = 0x00000703U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-protected
+enum uint EN_PROTECTED = 0x00000704U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-correcttext
+enum uint EN_CORRECTTEXT = 0x00000705U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-stopnoundo
+enum uint EN_STOPNOUNDO = 0x00000706U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-imechange
+enum uint EN_IMECHANGE = 0x00000707U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-saveclipboard
+enum uint EN_SAVECLIPBOARD = 0x00000708U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-oleopfailed
+enum uint EN_OLEOPFAILED = 0x00000709U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-objectpositions
+enum uint EN_OBJECTPOSITIONS = 0x0000070aU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-link))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-link
     EN_LINK         = 0x0000070bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-dragdropdone
     EN_DRAGDROPDONE = 0x0000070cU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-paragraphexpanded))], [])*/uint EN_PARAGRAPHEXPANDED = 0x0000070dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-paragraphexpanded
+enum uint EN_PARAGRAPHEXPANDED = 0x0000070dU;
 enum uint EN_PAGECHANGE = 0x0000070eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-lowfirtf))], [])*/uint EN_LOWFIRTF = 0x0000070fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-lowfirtf
+enum uint EN_LOWFIRTF = 0x0000070fU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-alignltr))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-alignltr
     EN_ALIGNLTR = 0x00000710U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-alignrtl
     EN_ALIGNRTL = 0x00000711U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-clipformat))], [])*/uint EN_CLIPFORMAT = 0x00000712U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-startcomposition))], [])*/uint EN_STARTCOMPOSITION = 0x00000713U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-endcomposition))], [])*/uint EN_ENDCOMPOSITION = 0x00000714U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-clipformat
+enum uint EN_CLIPFORMAT = 0x00000712U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-startcomposition
+enum uint EN_STARTCOMPOSITION = 0x00000713U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-endcomposition
+enum uint EN_ENDCOMPOSITION = 0x00000714U;
 
 enum : uint
 {
@@ -2397,7 +2522,7 @@ struct TABLEROWPARMS
     int   dxCellMargin;
     int   dxIndent;
     int   dyHeight;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fIdentCells)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield540;
+    uint  _bitfield540;
     int   cpStartRow;
     ubyte bTableLevel;
     ubyte iCell;
@@ -2407,7 +2532,7 @@ struct TABLEROWPARMS
 struct TABLECELLPARMS
 {
     int      dxWidth;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fMergeCont)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield541;
+    ushort   _bitfield541;
     ushort   wShading;
     short    dxBrdrLeft;
     short    dyBrdrTop;
@@ -2892,7 +3017,7 @@ version(X86)
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/ns-textserv-changenotify
 struct CHANGENOTIFY
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CHANGETYPE))], [])*/uint dwChangeType;
+    uint  dwChangeType;
     void* pvCookieData;
 }
 

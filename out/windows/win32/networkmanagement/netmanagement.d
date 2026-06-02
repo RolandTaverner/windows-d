@@ -4,12 +4,11 @@ module windows.win32.networkmanagement.netmanagement;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMNodeList;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
-                                                    HANDLE, HRESULT, HWND, NTSTATUS,
-                                                    PSTR, PWSTR;
-public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
-public import windows.win32.security.security : PSID, SID_NAME_USE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME, HANDLE,
+                                         HRESULT, HWND, NTSTATUS, PSTR, PWSTR;
+public import windows.win32.security.cryptography : CERT_CONTEXT;
+public import windows.win32.security : PSID, SID_NAME_USE;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -1087,7 +1086,8 @@ enum : uint
 }
 
 enum uint USER_HOME_DIR_DRIVE_PARMNUM = 0x00000035U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NULL_USERSETINFO_PASSWD = "              ";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* NULL_USERSETINFO_PASSWD = "              ";
 enum uint UNITS_PER_DAY = 0x00000018U;
 enum uint USER_PRIV_MASK = 0x00000003U;
 enum uint MAX_PASSWD_LEN = 0x00000100U;
@@ -1174,7 +1174,8 @@ enum : uint
 enum uint ACCESS_ATTR_PARMNUM = 0x00000002U;
 enum uint ACCESS_COUNT_PARMNUM = 0x00000003U;
 enum uint ACCESS_ACCESS_LIST_PARMNUM = 0x00000004U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ACCESS_LETTERS = "RWCXDAP         ";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* ACCESS_LETTERS = "RWCXDAP         ";
 
 enum : uint
 {
@@ -4020,7 +4021,8 @@ enum : uint
 
 enum uint MFE_PROHIBITED = 0x0000000cU;
 enum uint MFE_NO_SPACE = 0x0000000dU;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGISTER_PROTOCOL_ENTRY_POINT_STRING = "RegisterProtocol";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* REGISTER_PROTOCOL_ENTRY_POINT_STRING = "RegisterProtocol";
 
 enum : uint
 {
@@ -6481,9 +6483,9 @@ struct AT_ENUM
 
 struct FLAT_STRING
 {
-    short MaximumLength;
-    short Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] Buffer;
+    short   MaximumLength;
+    short   Length;
+    CHAR[1] Buffer; // Flexible array
 }
 
 struct NETWORK_NAME
@@ -6535,10 +6537,10 @@ struct RTR_TOC_ENTRY
 
 struct RTR_INFO_BLOCK_HEADER
 {
-    uint Version;
-    uint Size;
-    uint TocEntriesCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RTR_TOC_ENTRY[1] TocEntry;
+    uint             Version;
+    uint             Size;
+    uint             TocEntriesCount;
+    RTR_TOC_ENTRY[1] TocEntry; // Flexible array
 }
 
 struct MPR_PROTOCOL_0

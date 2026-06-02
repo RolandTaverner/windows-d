@@ -3,12 +3,11 @@
 module windows.win32.networkmanagement.p2p;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND, PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR, SOCKADDR_IN6, SOCKADDR_STORAGE,
                                                  SOCKET_ADDRESS, SOCKET_ADDRESS_LIST;
-public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT, CERT_PUBLIC_KEY_INFO;
-public import windows.win32.system.com.com : BLOB;
+public import windows.win32.security.cryptography : CERT_CONTEXT, CERT_PUBLIC_KEY_INFO;
+public import windows.win32.system.com : BLOB;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -1221,8 +1220,8 @@ struct DRT_ADDRESS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_address_list
 struct DRT_ADDRESS_LIST
 {
-    uint AddressCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DRT_ADDRESS[1] AddressList;
+    uint           AddressCount;
+    DRT_ADDRESS[1] AddressList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_search_result

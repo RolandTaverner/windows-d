@@ -3,8 +3,8 @@
 module windows.win32.system.libraryloader;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FARPROC, HANDLE, HGLOBAL, HMODULE,
-                                                    HRSRC, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, FARPROC, HANDLE, HGLOBAL, HMODULE,
+                                         HRSRC, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

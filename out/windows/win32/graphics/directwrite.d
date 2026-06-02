@@ -3,13 +3,13 @@
 module windows.win32.graphics.directwrite;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, COLORREF, FILETIME, HANDLE,
-                                                    HRESULT, POINT, PWSTR, RECT, SIZE;
+public import windows.win32.foundation : BOOL, COLORREF, FILETIME, HANDLE, HRESULT,
+                                         POINT, PWSTR, RECT, SIZE;
 public import windows.win32.globalization : FONTSIGNATURE;
 public import windows.win32.graphics.direct2d.common : D2D1_GRADIENT_STOP, D2D_POINT_2F, D2D_RECT_F,
                                                        D2D_SIZE_U, ID2D1SimplifiedGeometrySink;
 public import windows.win32.graphics.gdi : HDC, HMONITOR, LOGFONTA, LOGFONTW;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -1180,19 +1180,19 @@ struct DWRITE_SCRIPT_ANALYSIS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_line_breakpoint
 struct DWRITE_LINE_BREAKPOINT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(padding)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield93;
+    ubyte _bitfield93;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_shaping_text_properties
 struct DWRITE_SHAPING_TEXT_PROPERTIES
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield94;
+    ushort _bitfield94;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_shaping_glyph_properties
 struct DWRITE_SHAPING_GLYPH_PROPERTIES
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/ushort _bitfield95;
+    ushort _bitfield95;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_run
@@ -1259,7 +1259,7 @@ struct DWRITE_CLUSTER_METRICS
 {
     float  width;
     ushort length;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(padding)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield96;
+    ushort _bitfield96;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_text_metrics
@@ -1408,7 +1408,7 @@ struct DWRITE_SCRIPT_PROPERTIES
     uint isoScriptNumber;
     uint clusterLookahead;
     uint justificationCharacter;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield97;
+    uint _bitfield97;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_justification_opportunity
@@ -1417,7 +1417,7 @@ struct DWRITE_JUSTIFICATION_OPPORTUNITY
     float expansionMinimum;
     float expansionMaximum;
     float compressionMaximum;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(20)), FixedArgSig(ElementSig(12))], [])*/uint _bitfield98;
+    uint  _bitfield98;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/ns-dwrite_2-dwrite_text_metrics1

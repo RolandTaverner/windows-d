@@ -3,11 +3,11 @@
 module windows.win32.media.speech;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
-                                                    HRESULT, HWND, LPARAM, LRESULT,
-                                                    PWSTR, VARIANT_BOOL, WPARAM;
-public import windows.win32.media.audio.audio : WAVEFORMATEX;
-public import windows.win32.system.com.com : IDispatch, IServiceProvider, IStream, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
+                                         HRESULT, HWND, LPARAM, LRESULT, PWSTR,
+                                         VARIANT_BOOL, WPARAM;
+public import windows.win32.media.audio : WAVEFORMATEX;
+public import windows.win32.system.com : IDispatch, IServiceProvider, IStream, IUnknown;
 public import windows.win32.system.com.urlmon : IInternetSecurityManager;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
@@ -1837,7 +1837,7 @@ struct SPTRANSITIONID
 
 struct SPEVENT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield112;
+    int    _bitfield112;
     uint   ulStreamNum;
     ulong  ullAudioStreamOffset;
     WPARAM wParam;
@@ -1846,7 +1846,7 @@ struct SPEVENT
 
 struct SPSERIALIZEDEVENT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield113;
+    int   _bitfield113;
     uint  ulStreamNum;
     ulong ullAudioStreamOffset;
     uint  SerializedwParam;
@@ -1855,7 +1855,7 @@ struct SPSERIALIZEDEVENT
 
 struct SPSERIALIZEDEVENT64
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield114;
+    int   _bitfield114;
     uint  ulStreamNum;
     ulong ullAudioStreamOffset;
     ulong SerializedwParam;
@@ -1864,7 +1864,7 @@ struct SPSERIALIZEDEVENT64
 
 struct SPEVENTEX
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield115;
+    int    _bitfield115;
     uint   ulStreamNum;
     ulong  ullAudioStreamOffset;
     WPARAM wParam;
@@ -2020,7 +2020,7 @@ struct SPWORDPRONUNCIATION
     ushort               LangID;
     ushort               wPronunciationFlags;
     SPPARTOFSPEECH       ePartOfSpeech;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] szPronunciation;
+    ushort[1]            szPronunciation; // Flexible array
 }
 
 struct SPWORDPRONUNCIATIONLIST

@@ -5,15 +5,15 @@ module windows.win32.devices.deviceanddriverinstallation;
 public import windows.core;
 public import windows.win32.data.htmlhelp : PRIORITY;
 public import windows.win32.devices.properties : DEVPROPTYPE;
-public import windows.win32.foundation.foundation : BOOL, CHAR, DEVPROPKEY, FILETIME,
-                                                    HANDLE, HINSTANCE, HWND, LPARAM,
-                                                    PSTR, PWSTR, RECT;
+public import windows.win32.foundation : BOOL, CHAR, DEVPROPKEY, FILETIME, HANDLE,
+                                         HINSTANCE, HWND, LPARAM, PSTR, PWSTR,
+                                         RECT;
 public import windows.win32.graphics.gdi : HDC;
-public import windows.win32.system.diagnostics.debug_.debug_ : VER_PLATFORM;
+public import windows.win32.system.diagnostics.debug_ : VER_PLATFORM;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.systeminformation : PROCESSOR_ARCHITECTURE;
-public import windows.win32.ui.controls.controls : HIMAGELIST, HPROPSHEETPAGE, PROPSHEETHEADERA_V2,
-                                                   PROPSHEETHEADERW_V2;
+public import windows.win32.ui.controls : HIMAGELIST, HPROPSHEETPAGE, PROPSHEETHEADERA_V2,
+                                          PROPSHEETHEADERW_V2;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
 extern(Windows) @nogc nothrow:
@@ -1199,41 +1199,67 @@ enum : uint
 
 enum uint DIRID_USER = 0x00008000U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startqueue))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startqueue
     SPFILENOTIFY_STARTQUEUE           = 0x00000001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endqueue
     SPFILENOTIFY_ENDQUEUE             = 0x00000002U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startsubqueue
     SPFILENOTIFY_STARTSUBQUEUE        = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endsubqueue
     SPFILENOTIFY_ENDSUBQUEUE          = 0x00000004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startdelete
     SPFILENOTIFY_STARTDELETE          = 0x00000005U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-enddelete
     SPFILENOTIFY_ENDDELETE            = 0x00000006U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-deleteerror
     SPFILENOTIFY_DELETEERROR          = 0x00000007U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startrename
     SPFILENOTIFY_STARTRENAME          = 0x00000008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endrename
     SPFILENOTIFY_ENDRENAME            = 0x00000009U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-renameerror
     SPFILENOTIFY_RENAMEERROR          = 0x0000000aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startcopy
     SPFILENOTIFY_STARTCOPY            = 0x0000000bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endcopy
     SPFILENOTIFY_ENDCOPY              = 0x0000000cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-copyerror
     SPFILENOTIFY_COPYERROR            = 0x0000000dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-needmedia
     SPFILENOTIFY_NEEDMEDIA            = 0x0000000eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-queuescan
     SPFILENOTIFY_QUEUESCAN            = 0x0000000fU,
     SPFILENOTIFY_CABINETINFO          = 0x00000010U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-fileincabinet
     SPFILENOTIFY_FILEINCABINET        = 0x00000011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-neednewcabinet
     SPFILENOTIFY_NEEDNEWCABINET       = 0x00000012U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-fileextracted
     SPFILENOTIFY_FILEEXTRACTED        = 0x00000013U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-fileopdelayed
     SPFILENOTIFY_FILEOPDELAYED        = 0x00000014U,
     SPFILENOTIFY_STARTBACKUP          = 0x00000015U,
     SPFILENOTIFY_BACKUPERROR          = 0x00000016U,
     SPFILENOTIFY_ENDBACKUP            = 0x00000017U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-queuescan-ex
     SPFILENOTIFY_QUEUESCAN_EX         = 0x00000018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-startregistration
     SPFILENOTIFY_STARTREGISTRATION    = 0x00000019U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-endregistration
     SPFILENOTIFY_ENDREGISTRATION      = 0x00000020U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-queuescan-signerinfo
     SPFILENOTIFY_QUEUESCAN_SIGNERINFO = 0x00000040U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-langmismatch))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-langmismatch
     SPFILENOTIFY_LANGMISMATCH = 0x00010000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-targetexists
     SPFILENOTIFY_TARGETEXISTS = 0x00020000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SetupApi/spfilenotify-targetnewer
     SPFILENOTIFY_TARGETNEWER  = 0x00040000U,
 }
 
@@ -2697,7 +2723,7 @@ version(X86_64)
     {
         INF_STYLE InfStyle;
         uint      InfCount;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VersionData;
+        ubyte[1]  VersionData; // Flexible array
     }
 }
 
@@ -2708,7 +2734,7 @@ version(AArch64)
     {
         INF_STYLE InfStyle;
         uint      InfCount;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VersionData;
+        ubyte[1]  VersionData; // Flexible array
     }
 }
 
@@ -3348,8 +3374,8 @@ version(X86_64)
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
     {
-        uint cbSize;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] DevicePath;
+        uint    cbSize;
+        CHAR[1] DevicePath; // Flexible array
     }
 }
 
@@ -3359,8 +3385,8 @@ version(AArch64)
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_a
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
     {
-        uint cbSize;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] DevicePath;
+        uint    cbSize;
+        CHAR[1] DevicePath; // Flexible array
     }
 }
 
@@ -3370,8 +3396,8 @@ version(X86_64)
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
     {
-        uint cbSize;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] DevicePath;
+        uint     cbSize;
+        wchar[1] DevicePath; // Flexible array
     }
 }
 
@@ -3381,8 +3407,8 @@ version(AArch64)
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/setupapi/ns-setupapi-sp_device_interface_detail_data_w
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
     {
-        uint cbSize;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] DevicePath;
+        uint     cbSize;
+        wchar[1] DevicePath; // Flexible array
     }
 }
 
@@ -3912,7 +3938,7 @@ version(X86_64)
         CHAR[256] SectionName;
         CHAR[260] InfFileName;
         CHAR[256] DrvDescription;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] HardwareID;
+        CHAR[1]   HardwareID; // Flexible array
     }
 }
 
@@ -3930,7 +3956,7 @@ version(AArch64)
         CHAR[256] SectionName;
         CHAR[260] InfFileName;
         CHAR[256] DrvDescription;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] HardwareID;
+        CHAR[1]   HardwareID; // Flexible array
     }
 }
 
@@ -3948,7 +3974,7 @@ version(X86_64)
         wchar[256] SectionName;
         wchar[260] InfFileName;
         wchar[256] DrvDescription;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] HardwareID;
+        wchar[1]   HardwareID; // Flexible array
     }
 }
 
@@ -3966,7 +3992,7 @@ version(AArch64)
         wchar[256] SectionName;
         wchar[260] InfFileName;
         wchar[256] DrvDescription;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] HardwareID;
+        wchar[1]   HardwareID; // Flexible array
     }
 }
 
@@ -4289,7 +4315,7 @@ version(X86)
     align (1):
         INF_STYLE InfStyle;
         uint      InfCount;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VersionData;
+        ubyte[1]  VersionData; // Flexible array
     }
 }
 
@@ -4628,8 +4654,8 @@ version(X86)
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_A
     {
     align (1):
-        uint cbSize;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] DevicePath;
+        uint    cbSize;
+        CHAR[1] DevicePath; // Flexible array
     }
 }
 
@@ -4640,8 +4666,8 @@ version(X86)
     struct SP_DEVICE_INTERFACE_DETAIL_DATA_W
     {
     align (1):
-        uint cbSize;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] DevicePath;
+        uint     cbSize;
+        wchar[1] DevicePath; // Flexible array
     }
 }
 
@@ -4961,7 +4987,7 @@ version(X86)
         CHAR[256] SectionName;
         CHAR[260] InfFileName;
         CHAR[256] DrvDescription;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] HardwareID;
+        CHAR[1]   HardwareID; // Flexible array
     }
 }
 
@@ -4980,7 +5006,7 @@ version(X86)
         wchar[256] SectionName;
         wchar[260] InfFileName;
         wchar[256] DrvDescription;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] HardwareID;
+        wchar[1]   HardwareID; // Flexible array
     }
 }
 
@@ -5195,8 +5221,8 @@ align (1):
 struct MEM_RESOURCE
 {
 align (1):
-    MEM_DES MEM_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MEM_RANGE[1] MEM_Data;
+    MEM_DES      MEM_Header;
+    MEM_RANGE[1] MEM_Data; // Flexible array
 }
 
 struct MEM_LARGE_RANGE
@@ -5224,8 +5250,8 @@ align (1):
 struct MEM_LARGE_RESOURCE
 {
 align (1):
-    MEM_LARGE_DES MEM_LARGE_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MEM_LARGE_RANGE[1] MEM_LARGE_Data;
+    MEM_LARGE_DES      MEM_LARGE_Header;
+    MEM_LARGE_RANGE[1] MEM_LARGE_Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-io_range
@@ -5254,8 +5280,8 @@ align (1):
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-io_resource
 struct IO_RESOURCE
 {
-    IO_DES IO_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IO_RANGE[1] IO_Data;
+    IO_DES      IO_Header;
+    IO_RANGE[1] IO_Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-dma_range
@@ -5281,8 +5307,8 @@ align (1):
 struct DMA_RESOURCE
 {
 align (1):
-    DMA_DES DMA_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DMA_RANGE[1] DMA_Data;
+    DMA_DES      DMA_Header;
+    DMA_RANGE[1] DMA_Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_range
@@ -5320,16 +5346,16 @@ align (1):
 struct IRQ_RESOURCE_32
 {
 align (1):
-    IRQ_DES_32 IRQ_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IRQ_RANGE[1] IRQ_Data;
+    IRQ_DES_32   IRQ_Header;
+    IRQ_RANGE[1] IRQ_Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-irq_resource_64
 struct IRQ_RESOURCE_64
 {
 align (1):
-    IRQ_DES_64 IRQ_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IRQ_RANGE[1] IRQ_Data;
+    IRQ_DES_64   IRQ_Header;
+    IRQ_RANGE[1] IRQ_Data; // Flexible array
 }
 
 struct DEVPRIVATE_RANGE
@@ -5354,20 +5380,20 @@ align (1):
 struct DEVPRIVATE_RESOURCE
 {
 align (1):
-    DEVPRIVATE_DES PRV_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DEVPRIVATE_RANGE[1] PRV_Data;
+    DEVPRIVATE_DES      PRV_Header;
+    DEVPRIVATE_RANGE[1] PRV_Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-cs_des
 struct CS_DES
 {
 align (1):
-    uint CSD_SignatureLength;
-    uint CSD_LegacyDataOffset;
-    uint CSD_LegacyDataSize;
-    uint CSD_Flags;
-    GUID CSD_ClassGuid;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CSD_Signature;
+    uint     CSD_SignatureLength;
+    uint     CSD_LegacyDataOffset;
+    uint     CSD_LegacyDataSize;
+    uint     CSD_Flags;
+    GUID     CSD_ClassGuid;
+    ubyte[1] CSD_Signature; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cfgmgr32/ns-cfgmgr32-cs_resource
@@ -5445,8 +5471,8 @@ align (1):
 struct BUSNUMBER_RESOURCE
 {
 align (1):
-    BUSNUMBER_DES BusNumber_Header;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BUSNUMBER_RANGE[1] BusNumber_Data;
+    BUSNUMBER_DES      BusNumber_Header;
+    BUSNUMBER_RANGE[1] BusNumber_Data; // Flexible array
 }
 
 struct CONNECTION_DES
@@ -5517,19 +5543,19 @@ struct CM_NOTIFY_EVENT_DATA
     {
         struct DeviceInterface
         {
-            GUID ClassGuid;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] SymbolicLink;
+            GUID     ClassGuid;
+            wchar[1] SymbolicLink; // Flexible array
         }
         struct DeviceHandle
         {
-            GUID EventGuid;
-            int  NameOffset;
-            uint DataSize;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+            GUID     EventGuid;
+            int      NameOffset;
+            uint     DataSize;
+            ubyte[1] Data; // Flexible array
         }
         struct DeviceInstance
         {
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] InstanceId;
+            wchar[1] InstanceId; // Flexible array
         }
     }
 }

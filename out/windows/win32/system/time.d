@@ -3,7 +3,7 @@
 module windows.win32.system.time;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, SYSTEMTIME;
+public import windows.win32.foundation : BOOL, BOOLEAN, FILETIME, SYSTEMTIME;
 
 extern(Windows) @nogc nothrow:
 

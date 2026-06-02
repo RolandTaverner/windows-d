@@ -3,10 +3,10 @@
 module windows.win32.system.errorreporting;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
-                                                    PSTR, PWSTR;
-public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_POINTERS,
-                                                               EXCEPTION_RECORD;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND, PSTR,
+                                         PWSTR;
+public import windows.win32.system.diagnostics.debug_ : CONTEXT, EXCEPTION_POINTERS,
+                                                        EXCEPTION_RECORD;
 
 extern(Windows) @nogc nothrow:
 
@@ -251,10 +251,13 @@ enum uint WER_MAX_BUCKET_ID_STRING_LENGTH = 0x00000104U;
 enum uint WER_MAX_LOCAL_DUMP_SUBPATH_LENGTH = 0x00000040U;
 enum uint WER_MAX_REGISTERED_RUNTIME_EXCEPTION_MODULES = 0x00000010U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WER_RUNTIME_EXCEPTION_EVENT_FUNCTION           = "OutOfProcessExceptionEventCallback",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WER_RUNTIME_EXCEPTION_EVENT_SIGNATURE_FUNCTION = "OutOfProcessExceptionEventSignatureCallback",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WER_RUNTIME_EXCEPTION_DEBUGGER_LAUNCH          = "OutOfProcessExceptionEventDebuggerLaunchCallback",
 }
 

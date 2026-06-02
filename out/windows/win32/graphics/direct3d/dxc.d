@@ -3,8 +3,8 @@
 module windows.win32.graphics.direct3d.dxc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com.com : IMalloc, IStream, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com : IMalloc, IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 

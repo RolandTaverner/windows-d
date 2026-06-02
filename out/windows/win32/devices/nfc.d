@@ -3,7 +3,7 @@
 module windows.win32.devices.nfc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN;
+public import windows.win32.foundation : BOOLEAN;
 
 extern(Windows) @nogc nothrow:
 
@@ -276,7 +276,7 @@ struct SECURE_ELEMENT_ENDPOINT_INFO
 struct SECURE_ELEMENT_ENDPOINT_LIST
 {
     uint NumberOfEndpoints;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SECURE_ELEMENT_ENDPOINT_INFO[1] EndpointList;
+    SECURE_ELEMENT_ENDPOINT_INFO[1] EndpointList; // Flexible array
 }
 
 struct SECURE_ELEMENT_EVENT_SUBSCRIPTION_INFO
@@ -287,10 +287,10 @@ struct SECURE_ELEMENT_EVENT_SUBSCRIPTION_INFO
 
 struct SECURE_ELEMENT_EVENT_INFO
 {
-    GUID guidSecureElementId;
+    GUID     guidSecureElementId;
     SECURE_ELEMENT_EVENT_TYPE eEventType;
-    uint cbEventData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbEventData;
+    uint     cbEventData;
+    ubyte[1] pbEventData; // Flexible array
 }
 
 struct SECURE_ELEMENT_SET_CARD_EMULATION_MODE_INFO
@@ -340,7 +340,7 @@ struct SECURE_ELEMENT_ROUTING_TABLE_ENTRY
 struct SECURE_ELEMENT_ROUTING_TABLE
 {
     uint NumberOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SECURE_ELEMENT_ROUTING_TABLE_ENTRY[1] TableEntries;
+    SECURE_ELEMENT_ROUTING_TABLE_ENTRY[1] TableEntries; // Flexible array
 }
 
 struct SECURE_ELEMENT_HCE_ACTIVATION_PAYLOAD
@@ -352,9 +352,9 @@ struct SECURE_ELEMENT_HCE_ACTIVATION_PAYLOAD
 
 struct SECURE_ELEMENT_HCE_DATA_PACKET
 {
-    ushort bConnectionId;
-    ushort cbPayload;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbPayload;
+    ushort   bConnectionId;
+    ushort   cbPayload;
+    ubyte[1] pbPayload; // Flexible array
 }
 
 struct SECURE_ELEMENT_SET_POWER_MODE_INFO
@@ -404,8 +404,8 @@ struct NFC_REMOTE_DEVICE_DISCONNET
 
 struct NFC_DATA_BUFFER
 {
-    ushort cbBuffer;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbBuffer;
+    ushort   cbBuffer;
+    ubyte[1] pbBuffer; // Flexible array
 }
 
 struct NFC_REMOTE_DEV_SEND_INFO
@@ -446,21 +446,21 @@ struct NFC_LLCP_CONFIG
 
 struct NFC_LLCP_SERVICE_NAME_ENTRY
 {
-    uint cbServiceName;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbServiceName;
+    uint     cbServiceName;
+    ubyte[1] pbServiceName; // Flexible array
 }
 
 struct NFC_LLCP_SERVICE_DISCOVER_REQUEST
 {
     ptrdiff_t hRemoteDev;
     uint      NumberOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NFC_LLCP_SERVICE_NAME_ENTRY[1] ServiceNameEntries;
+    NFC_LLCP_SERVICE_NAME_ENTRY[1] ServiceNameEntries; // Flexible array
 }
 
 struct NFC_LLCP_SERVICE_DISCOVER_SAP
 {
-    uint NumberOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SAPEntries;
+    uint     NumberOfEntries;
+    ubyte[1] SAPEntries; // Flexible array
 }
 
 struct NFC_LLCP_SOCKET_INFO
@@ -574,8 +574,8 @@ struct NFC_SE_INFO
 
 struct NFC_SE_LIST
 {
-    uint NumberOfEndpoints;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NFC_SE_INFO[1] EndpointList;
+    uint           NumberOfEndpoints;
+    NFC_SE_INFO[1] EndpointList; // Flexible array
 }
 
 struct NFC_SE_EMULATION_MODE_INFO
@@ -620,7 +620,7 @@ struct NFC_SE_ROUTING_TABLE_ENTRY
 struct NFC_SE_ROUTING_TABLE
 {
     uint NumberOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NFC_SE_ROUTING_TABLE_ENTRY[1] TableEntries;
+    NFC_SE_ROUTING_TABLE_ENTRY[1] TableEntries; // Flexible array
 }
 
 struct NFC_SE_EVENT_INFO
@@ -628,7 +628,7 @@ struct NFC_SE_EVENT_INFO
     ptrdiff_t hSecureElement;
     SECURE_ELEMENT_EVENT_TYPE eEventType;
     uint      cbEventData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbEventData;
+    ubyte[1]  pbEventData; // Flexible array
 }
 
 struct NFCRM_SET_RADIO_STATE

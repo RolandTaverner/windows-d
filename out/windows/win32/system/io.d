@@ -3,7 +3,7 @@
 module windows.win32.system.io;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, NTSTATUS;
+public import windows.win32.foundation : BOOL, HANDLE, NTSTATUS;
 
 extern(Windows) @nogc nothrow:
 

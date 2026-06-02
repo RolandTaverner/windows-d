@@ -3,9 +3,8 @@
 module windows.win32.ui.input.gameinput;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : APP_LOCAL_DEVICE_ID, HANDLE, HRESULT, PSTR,
-                                                    PWSTR;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : APP_LOCAL_DEVICE_ID, HANDLE, HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

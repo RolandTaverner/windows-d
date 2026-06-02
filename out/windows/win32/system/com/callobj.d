@@ -3,8 +3,8 @@
 module windows.win32.system.com.callobj;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
-public import windows.win32.system.com.com : ITypeInfo, IUnknown, MSHLFLAGS;
+public import windows.win32.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
+public import windows.win32.system.com : ITypeInfo, IUnknown, MSHLFLAGS;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

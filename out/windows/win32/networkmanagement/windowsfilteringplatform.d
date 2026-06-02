@@ -3,9 +3,9 @@
 module windows.win32.networkmanagement.windowsfilteringplatform;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR;
-public import windows.win32.security.security : ACL, PSECURITY_DESCRIPTOR, PSID, SID,
-                                                SID_AND_ATTRIBUTES;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR;
+public import windows.win32.security : ACL, PSECURITY_DESCRIPTOR, PSID, SID,
+                                       SID_AND_ATTRIBUTES;
 public import windows.win32.system.rpc : SEC_WINNT_AUTH_IDENTITY_W;
 
 extern(Windows) @nogc nothrow:

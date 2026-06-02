@@ -3,10 +3,9 @@
 module windows.win32.security.applocker;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HWND,
-                                                    PWSTR;
-public import windows.win32.security.cryptography.cryptography : ALG_ID;
-public import windows.win32.security.security : SAFER_LEVEL_HANDLE;
+public import windows.win32.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HWND, PWSTR;
+public import windows.win32.security.cryptography : ALG_ID;
+public import windows.win32.security : SAFER_LEVEL_HANDLE;
 
 extern(Windows) @nogc nothrow:
 
@@ -192,7 +191,7 @@ struct SAFER_PATHNAME_IDENTIFICATION
 {
     SAFER_IDENTIFICATION_HEADER header;
     wchar[256] Description;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR ImageName;
+    PWSTR      ImageName;
     uint       dwSaferFlags;
 }
 

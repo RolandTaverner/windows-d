@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.qos;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
 public import windows.win32.networkmanagement.ndis : NETWORK_ADDRESS_LIST;
 public import windows.win32.networking.winsock : FLOWSPEC, SOCKADDR, SOCKET;
 public import windows.win32.system.io : OVERLAPPED;
@@ -950,7 +950,7 @@ struct QOS_DIFFSERV
 {
     QOS_OBJECT_HDR ObjectHdr;
     uint           DSFieldCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DiffservRule;
+    ubyte[1]       DiffservRule; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qosobjs/ns-qosobjs-qos_diffserv_rule
@@ -1014,10 +1014,10 @@ struct TC_GEN_FILTER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/traffic/ns-traffic-tc_gen_flow
 struct TC_GEN_FLOW
 {
-    FLOWSPEC SendingFlowspec;
-    FLOWSPEC ReceivingFlowspec;
-    uint     TcObjectsLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/QOS_OBJECT_HDR[1] TcObjects;
+    FLOWSPEC          SendingFlowspec;
+    FLOWSPEC          ReceivingFlowspec;
+    uint              TcObjectsLength;
+    QOS_OBJECT_HDR[1] TcObjects; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/traffic/ns-traffic-ip_pattern
@@ -1066,13 +1066,13 @@ struct IPX_PATTERN
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/traffic/ns-traffic-enumeration_buffer
 struct ENUMERATION_BUFFER
 {
-    uint         Length;
-    uint         OwnerProcessId;
-    ushort       FlowNameLength;
-    wchar[256]   FlowName;
-    TC_GEN_FLOW* pFlow;
-    uint         NumberOfFilters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TC_GEN_FILTER[1] GenericFilter;
+    uint             Length;
+    uint             OwnerProcessId;
+    ushort           FlowNameLength;
+    wchar[256]       FlowName;
+    TC_GEN_FLOW*     pFlow;
+    uint             NumberOfFilters;
+    TC_GEN_FILTER[1] GenericFilter; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qossp/ns-qossp-in_addr_ipv4
@@ -1161,7 +1161,7 @@ struct RSVP_POLICY_INFO
 {
     QOS_OBJECT_HDR ObjectHdr;
     uint           NumPolicyElement;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RSVP_POLICY[1] PolicyElement;
+    RSVP_POLICY[1] PolicyElement; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qossp/ns-qossp-rsvp_reserve_info
@@ -1213,9 +1213,9 @@ struct AD_GUARANTEED
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qossp/ns-qossp-param_buffer
 struct PARAM_BUFFER
 {
-    uint ParameterId;
-    uint Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buffer;
+    uint     ParameterId;
+    uint     Length;
+    ubyte[1] Buffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qossp/ns-qossp-control_service
@@ -1226,18 +1226,18 @@ struct CONTROL_SERVICE
     AD_GENERAL_PARAMS Overrides;
     union
     {
-        AD_GUARANTEED Guaranteed;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PARAM_BUFFER[1] ParamBuffer;
+        AD_GUARANTEED   Guaranteed;
+        PARAM_BUFFER[1] ParamBuffer; // Flexible array
     }
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qossp/ns-qossp-rsvp_adspec
 struct RSVP_ADSPEC
 {
-    QOS_OBJECT_HDR    ObjectHdr;
-    AD_GENERAL_PARAMS GeneralParams;
-    uint              NumberOfServices;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CONTROL_SERVICE[1] Services;
+    QOS_OBJECT_HDR     ObjectHdr;
+    AD_GENERAL_PARAMS  GeneralParams;
+    uint               NumberOfServices;
+    CONTROL_SERVICE[1] Services; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qospol/ns-qospol-idpe_attr
@@ -1251,8 +1251,8 @@ struct IDPE_ATTR
 
 struct SIPAEVENT_REFS_ROLLBACK_PROTECTION_USER_PAYLOAD_HASH_DATA
 {
-    ushort ChecksumType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ChecksumBuffer;
+    ushort   ChecksumType;
+    ubyte[1] ChecksumBuffer; // Flexible array
 }
 
 struct WBCL_Iterator
@@ -1286,15 +1286,15 @@ align (1):
     uint      eventType;
     ubyte[20] digest;
     uint      eventDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] event;
+    ubyte[1]  event; // Flexible array
 }
 
 struct TCG_PCClientTaggedEventStruct
 {
 align (1):
-    uint EventID;
-    uint EventDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] EventData;
+    uint     EventID;
+    uint     EventDataSize;
+    ubyte[1] EventData; // Flexible array
 }
 
 struct WBCL_LogHdr
@@ -1309,10 +1309,10 @@ align (1):
 struct SIPAEVENT_VSM_IDK_RSA_INFO
 {
 align (1):
-    uint KeyBitLength;
-    uint PublicExpLengthBytes;
-    uint ModulusSizeBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] PublicKeyData;
+    uint     KeyBitLength;
+    uint     PublicExpLengthBytes;
+    uint     ModulusSizeBytes;
+    ubyte[1] PublicKeyData; // Flexible array
 }
 
 struct SIPAEVENT_VSM_IDK_INFO_PAYLOAD
@@ -1328,62 +1328,62 @@ align (1):
 struct SIPAEVENT_SI_POLICY_PAYLOAD
 {
 align (1):
-    ulong  PolicyVersion;
-    ushort PolicyNameLength;
-    ushort HashAlgID;
-    uint   DigestLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VarLengthData;
+    ulong    PolicyVersion;
+    ushort   PolicyNameLength;
+    ushort   HashAlgID;
+    uint     DigestLength;
+    ubyte[1] VarLengthData; // Flexible array
 }
 
 struct SIPAEVENT_SI_POLICY_CERTIFICATE_PAYLOAD
 {
 align (1):
-    ushort PublisherCommonNameLength;
-    ushort IssuerCommonNameLength;
-    uint   HashAlgID;
-    ushort DigestLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VarLengthData;
+    ushort   PublisherCommonNameLength;
+    ushort   IssuerCommonNameLength;
+    uint     HashAlgID;
+    ushort   DigestLength;
+    ubyte[1] VarLengthData; // Flexible array
 }
 
 struct SIPAEVENT_SI_POLICY_SIGNER_PAYLOAD
 {
 align (1):
-    uint   RootID;
-    uint   CertificatesLength;
-    ushort CertificatesCount;
-    ushort PolicyNameLength;
-    ushort EKUsLength;
-    ushort EKUsCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VarLengthData;
+    uint     RootID;
+    uint     CertificatesLength;
+    ushort   CertificatesCount;
+    ushort   PolicyNameLength;
+    ushort   EKUsLength;
+    ushort   EKUsCount;
+    ubyte[1] VarLengthData; // Flexible array
 }
 
 struct SIPAEVENT_REVOCATION_LIST_PAYLOAD
 {
 align (1):
-    long   CreationTime;
-    uint   DigestLength;
-    ushort HashAlgID;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Digest;
+    long     CreationTime;
+    uint     DigestLength;
+    ushort   HashAlgID;
+    ubyte[1] Digest; // Flexible array
 }
 
 struct SIPAEVENT_KSR_SIGNATURE_PAYLOAD
 {
 align (1):
-    uint SignAlgID;
-    uint SignatureLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Signature;
+    uint     SignAlgID;
+    uint     SignatureLength;
+    ubyte[1] Signature; // Flexible array
 }
 
 struct SIPAEVENT_SBCP_INFO_PAYLOAD_V1
 {
 align (1):
-    uint   PayloadVersion;
-    uint   VarDataOffset;
-    ushort HashAlgID;
-    ushort DigestLength;
-    uint   Options;
-    uint   SignersCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VarData;
+    uint     PayloadVersion;
+    uint     VarDataOffset;
+    ushort   HashAlgID;
+    ushort   DigestLength;
+    uint     Options;
+    uint     SignersCount;
+    ubyte[1] VarData; // Flexible array
 }
 
 // Functions

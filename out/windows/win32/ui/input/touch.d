@@ -3,8 +3,8 @@
 module windows.win32.ui.input.touch;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, POINTS;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, POINTS;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

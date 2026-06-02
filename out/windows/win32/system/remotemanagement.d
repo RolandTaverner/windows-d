@@ -3,9 +3,8 @@
 module windows.win32.system.remotemanagement;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, PWSTR,
-                                                    VARIANT_BOOL;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, PWSTR, VARIANT_BOOL;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

@@ -3,10 +3,10 @@
 module windows.win32.system.registry;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
-                                                    WIN32_ERROR;
-public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
-                                                SECURITY_ATTRIBUTES;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
+                                         WIN32_ERROR;
+public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
+                                       SECURITY_ATTRIBUTES;
 
 extern(Windows) @nogc nothrow:
 
@@ -118,21 +118,21 @@ enum : uint
 // Constants
 
 
-enum HKEY HKEY_CLASSES_ROOT = HKEY(0x80000000);
-enum HKEY HKEY_CURRENT_USER = HKEY(0x80000001);
-enum HKEY HKEY_LOCAL_MACHINE = HKEY(0x80000002);
+enum HKEY HKEY_CLASSES_ROOT = HKEY(cast(void*) 0x80000000);
+enum HKEY HKEY_CURRENT_USER = HKEY(cast(void*) 0x80000001);
+enum HKEY HKEY_LOCAL_MACHINE = HKEY(cast(void*) 0x80000002);
 
 enum : HKEY
 {
-    HKEY_USERS               = HKEY(0x80000003),
-    HKEY_PERFORMANCE_DATA    = HKEY(0x80000004),
-    HKEY_PERFORMANCE_TEXT    = HKEY(0x80000050),
-    HKEY_PERFORMANCE_NLSTEXT = HKEY(0x80000060),
+    HKEY_USERS               = HKEY(cast(void*) 0x80000003),
+    HKEY_PERFORMANCE_DATA    = HKEY(cast(void*) 0x80000004),
+    HKEY_PERFORMANCE_TEXT    = HKEY(cast(void*) 0x80000050),
+    HKEY_PERFORMANCE_NLSTEXT = HKEY(cast(void*) 0x80000060),
 }
 
-enum HKEY HKEY_CURRENT_CONFIG = HKEY(0x80000005);
-enum HKEY HKEY_DYN_DATA = HKEY(0x80000006);
-enum HKEY HKEY_CURRENT_USER_LOCAL_SETTINGS = HKEY(0x80000007);
+enum HKEY HKEY_CURRENT_CONFIG = HKEY(cast(void*) 0x80000005);
+enum HKEY HKEY_DYN_DATA = HKEY(cast(void*) 0x80000006);
+enum HKEY HKEY_CURRENT_USER_LOCAL_SETTINGS = HKEY(cast(void*) 0x80000007);
 enum uint REG_PROCESS_APPKEY = 0x00000001U;
 enum uint REG_USE_CURRENT_SECURITY_CONTEXT = 0x00000002U;
 enum uint PROVIDER_KEEPS_VALUE_LENGTH = 0x00000001U;

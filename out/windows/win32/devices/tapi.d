@@ -3,15 +3,15 @@
 module windows.win32.devices.tapi;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HINSTANCE,
-                                                    HRESULT, HWND, PSTR, PWSTR,
-                                                    SYSTEMTIME, VARIANT_BOOL, WPARAM;
-public import windows.win32.media.directshow.directshow : ALLOCATOR_PROPERTIES;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HINSTANCE, HRESULT,
+                                         HWND, PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL,
+                                         WPARAM;
+public import windows.win32.media.directshow : ALLOCATOR_PROPERTIES;
 public import windows.win32.media.mediafoundation : AM_MEDIA_TYPE;
 public import windows.win32.system.addressbook : IAddrBook, IMAPITable, IMessage, SPropTagArray,
                                                  SPropValue;
-public import windows.win32.system.com.com : CY, IDispatch, IEnumUnknown, IStream,
-                                             IUnknown;
+public import windows.win32.system.com : CY, IDispatch, IEnumUnknown, IStream,
+                                         IUnknown;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
@@ -816,68 +816,103 @@ enum : int
 
 
 enum uint TAPI_CURRENT_VERSION = 0x00020002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-addressstate))], [])*/int LINE_ADDRESSSTATE = 0x00000000;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-addressstate
+enum int LINE_ADDRESSSTATE = 0x00000000;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-callinfo))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-callinfo
     LINE_CALLINFO           = 0x00000001,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-callstate
     LINE_CALLSTATE          = 0x00000002,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-close
     LINE_CLOSE              = 0x00000003,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-devspecific
     LINE_DEVSPECIFIC        = 0x00000004,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-devspecificfeature
     LINE_DEVSPECIFICFEATURE = 0x00000005,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-gatherdigits))], [])*/int LINE_GATHERDIGITS = 0x00000006;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-generate))], [])*/int LINE_GENERATE = 0x00000007;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-linedevstate))], [])*/int LINE_LINEDEVSTATE = 0x00000008;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-gatherdigits
+enum int LINE_GATHERDIGITS = 0x00000006;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-generate
+enum int LINE_GENERATE = 0x00000007;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-linedevstate
+enum int LINE_LINEDEVSTATE = 0x00000008;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-monitordigits))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-monitordigits
     LINE_MONITORDIGITS = 0x00000009,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-monitormedia
     LINE_MONITORMEDIA  = 0x0000000a,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-monitortone
     LINE_MONITORTONE   = 0x0000000b,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-reply))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-reply
     LINE_REPLY   = 0x0000000c,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-request
     LINE_REQUEST = 0x0000000d,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/phone-button))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-button
     PHONE_BUTTON      = 0x0000000e,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-close
     PHONE_CLOSE       = 0x0000000f,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-devspecific
     PHONE_DEVSPECIFIC = 0x00000010,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/phone-reply))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-reply
     PHONE_REPLY = 0x00000011,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-state
     PHONE_STATE = 0x00000012,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-create))], [])*/int LINE_CREATE = 0x00000013;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/phone-create))], [])*/int PHONE_CREATE = 0x00000014;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-create
+enum int LINE_CREATE = 0x00000013;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-create
+enum int PHONE_CREATE = 0x00000014;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-agentspecific))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-agentspecific
     LINE_AGENTSPECIFIC = 0x00000015,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-agentstatus
     LINE_AGENTSTATUS   = 0x00000016,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-appnewcall))], [])*/int LINE_APPNEWCALL = 0x00000017;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-proxyrequest))], [])*/int LINE_PROXYREQUEST = 0x00000018;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-remove))], [])*/int LINE_REMOVE = 0x00000019;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/phone-remove))], [])*/int PHONE_REMOVE = 0x0000001a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-agentsessionstatus))], [])*/int LINE_AGENTSESSIONSTATUS = 0x0000001b;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-queuestatus))], [])*/int LINE_QUEUESTATUS = 0x0000001c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-agentstatusex))], [])*/int LINE_AGENTSTATUSEX = 0x0000001d;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-groupstatus))], [])*/int LINE_GROUPSTATUS = 0x0000001e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-proxystatus))], [])*/int LINE_PROXYSTATUS = 0x0000001f;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-appnewcallhub))], [])*/int LINE_APPNEWCALLHUB = 0x00000020;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-callhubclose))], [])*/int LINE_CALLHUBCLOSE = 0x00000021;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Tapi/line-devspecificex))], [])*/int LINE_DEVSPECIFICEX = 0x00000022;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-appnewcall
+enum int LINE_APPNEWCALL = 0x00000017;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-proxyrequest
+enum int LINE_PROXYREQUEST = 0x00000018;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-remove
+enum int LINE_REMOVE = 0x00000019;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/phone-remove
+enum int PHONE_REMOVE = 0x0000001a;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-agentsessionstatus
+enum int LINE_AGENTSESSIONSTATUS = 0x0000001b;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-queuestatus
+enum int LINE_QUEUESTATUS = 0x0000001c;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-agentstatusex
+enum int LINE_AGENTSTATUSEX = 0x0000001d;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-groupstatus
+enum int LINE_GROUPSTATUS = 0x0000001e;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-proxystatus
+enum int LINE_PROXYSTATUS = 0x0000001f;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-appnewcallhub
+enum int LINE_APPNEWCALLHUB = 0x00000020;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-callhubclose
+enum int LINE_CALLHUBCLOSE = 0x00000021;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Tapi/line-devspecificex
+enum int LINE_DEVSPECIFICEX = 0x00000022;
 enum uint INITIALIZE_NEGOTIATION = 0xffffffffU;
 
 enum : uint
@@ -2488,13 +2523,16 @@ enum HRESULT TAPI_E_WRONG_STATE = HRESULT(0x80040058);
 enum HRESULT TAPI_E_NOT_INITIALIZED = HRESULT(0x80040059);
 enum HRESULT TAPI_E_SERVICE_NOT_RUNNING = HRESULT(0x8004005a);
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     OPENTNEFSTREAM   = "OpenTnefStream",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     OPENTNEFSTREAMEX = "OpenTnefStreamEx",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GETTNEFSTREAMCODEPAGE = "GetTnefStreamCodePage";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* GETTNEFSTREAMCODEPAGE = "GetTnefStreamCodePage";
 enum uint cbDisplayName = 0x00000029U;
 enum uint cbEmailName = 0x0000000bU;
 enum uint cbSeverName = 0x0000000cU;
@@ -3256,9 +3294,9 @@ align (1):
 struct LINEFORWARDLIST
 {
 align (1):
-    uint dwTotalSize;
-    uint dwNumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/LINEFORWARD[1] ForwardList;
+    uint           dwTotalSize;
+    uint           dwNumEntries;
+    LINEFORWARD[1] ForwardList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tapi/ns-tapi-linegeneratetone
@@ -3440,10 +3478,10 @@ align (1):
         struct AgentSpecific
         {
         align (1):
-            uint dwAddressID;
-            uint dwAgentExtensionIDIndex;
-            uint dwSize;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Params;
+            uint     dwAddressID;
+            uint     dwAgentExtensionIDIndex;
+            uint     dwSize;
+            ubyte[1] Params; // Flexible array
         }
         struct GetAgentActivityList
         {
@@ -3834,8 +3872,8 @@ struct MSP_EVENT_INFO
         }
         struct MSP_TSP_DATA
         {
-            uint dwBufferSize;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pBuffer;
+            uint     dwBufferSize;
+            ubyte[1] pBuffer; // Flexible array
         }
         struct MSP_PRIVATE_EVENT_INFO
         {
@@ -3880,8 +3918,8 @@ struct STnefProblem
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/stnefproblemarray
 struct STnefProblemArray
 {
-    uint cProblem;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STnefProblem[1] aProblem;
+    uint            cProblem;
+    STnefProblem[1] aProblem; // Flexible array
 }
 
 struct RENDDATA
@@ -3932,7 +3970,7 @@ struct NSID
     union address
     {
         ADDRALIAS alias_;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] rgchInterNet;
+        CHAR[1]   rgchInterNet; // Flexible array
     }
 }
 

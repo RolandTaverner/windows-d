@@ -3,10 +3,10 @@
 module windows.win32.media.devicemanager;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
-public import windows.win32.media.audio.audio : WAVEFORMATEX;
+public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import windows.win32.media.audio : WAVEFORMATEX;
 public import windows.win32.media.mediafoundation : VIDEOINFOHEADER;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.system.ole : ISpecifyPropertyPages;
 
@@ -702,7 +702,7 @@ enum const(wchar)* g_wszWPDPassthroughPropertyValues = "WPD/PassthroughPropertyV
 enum GUID EVENT_WMDM_CONTENT_TRANSFER = GUID("339c9bf4-bcfe-4ed8-94df-eaf8c26ab61b");
 enum uint MTP_COMMAND_MAX_PARAMS = 0x00000005U;
 enum uint MTP_RESPONSE_MAX_PARAMS = 0x00000005U;
-enum ushort MTP_RESPONSE_OK = cast(ushort) 0x2001;
+enum ushort MTP_RESPONSE_OK = 0x2001;
 
 // Structs
 
@@ -903,23 +903,23 @@ union WMDMDetermineMaxPropStringLen
 struct MTP_COMMAND_DATA_IN
 {
 align (1):
-    ushort  OpCode;
-    uint    NumParams;
-    uint[5] Params;
-    uint    NextPhase;
-    uint    CommandWriteDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CommandWriteData;
+    ushort   OpCode;
+    uint     NumParams;
+    uint[5]  Params;
+    uint     NextPhase;
+    uint     CommandWriteDataSize;
+    ubyte[1] CommandWriteData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mtpext/ns-mtpext-mtp_command_data_out
 struct MTP_COMMAND_DATA_OUT
 {
 align (1):
-    ushort  ResponseCode;
-    uint    NumParams;
-    uint[5] Params;
-    uint    CommandReadDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CommandReadData;
+    ushort   ResponseCode;
+    uint     NumParams;
+    uint[5]  Params;
+    uint     CommandReadDataSize;
+    ubyte[1] CommandReadData; // Flexible array
 }
 
 // Interfaces

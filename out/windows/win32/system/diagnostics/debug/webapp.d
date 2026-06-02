@@ -3,8 +3,8 @@
 module windows.win32.system.diagnostics.debug_.webapp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
-public import windows.win32.system.com.com : IServiceProvider, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
+public import windows.win32.system.com : IServiceProvider, IUnknown;
 public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptError;
 public import windows.win32.web.mshtml : IHTMLDocument2, IHTMLWindow2;
 

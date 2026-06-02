@@ -3,7 +3,7 @@
 module windows.win32.system.performance.hardwarecounterprofiling;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, HANDLE;
+public import windows.win32.foundation : BOOLEAN, HANDLE;
 
 extern(Windows) @nogc nothrow:
 

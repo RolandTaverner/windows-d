@@ -3,11 +3,10 @@
 module windows.win32.system.applicationinstallationandservicing;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
-                                                    HRESULT, HWND, PSTR, PWSTR,
-                                                    VARIANT_BOOL;
-public import windows.win32.security.cryptography.cryptography : ALG_ID, CERT_CONTEXT;
-public import windows.win32.system.com.com : IDispatch, IStream, IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
+                                         HRESULT, HWND, PSTR, PWSTR, VARIANT_BOOL;
+public import windows.win32.security.cryptography : ALG_ID, CERT_CONTEXT;
+public import windows.win32.system.com : IDispatch, IStream, IUnknown, SAFEARRAY;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.windowsprogramming : ACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA;
 
@@ -1151,11 +1150,16 @@ enum : int
 
 enum : PWSTR
 {
-    MSIDBOPEN_READONLY     = PWSTR(0x00000000),
-    MSIDBOPEN_TRANSACT     = PWSTR(0x00000001),
-    MSIDBOPEN_DIRECT       = PWSTR(0x00000002),
-    MSIDBOPEN_CREATE       = PWSTR(0x00000003),
-    MSIDBOPEN_CREATEDIRECT = PWSTR(0x00000004),
+    //CONST ATTR: ConstAttribute : CustomAttributeSig([], [])
+    MSIDBOPEN_READONLY     = PWSTR(cast(wchar*) 0x00000000),
+    //CONST ATTR: ConstAttribute : CustomAttributeSig([], [])
+    MSIDBOPEN_TRANSACT     = PWSTR(cast(wchar*) 0x00000001),
+    //CONST ATTR: ConstAttribute : CustomAttributeSig([], [])
+    MSIDBOPEN_DIRECT       = PWSTR(cast(wchar*) 0x00000002),
+    //CONST ATTR: ConstAttribute : CustomAttributeSig([], [])
+    MSIDBOPEN_CREATE       = PWSTR(cast(wchar*) 0x00000003),
+    //CONST ATTR: ConstAttribute : CustomAttributeSig([], [])
+    MSIDBOPEN_CREATEDIRECT = PWSTR(cast(wchar*) 0x00000004),
 }
 
 enum int MSIDBOPEN_PATCHFILE = 0x00000010;

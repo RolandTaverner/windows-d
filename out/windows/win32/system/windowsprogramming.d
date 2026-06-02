@@ -3,14 +3,13 @@
 module windows.win32.system.windowsprogramming;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
-                                                    HANDLE, HGLOBAL, HINSTANCE, HLOCAL,
-                                                    HMODULE, HRESULT, HWND, LPARAM,
-                                                    LRESULT, NTSTATUS, PSTR, PWSTR,
-                                                    RECT, UNICODE_STRING, VARIANT_BOOL,
-                                                    WPARAM;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME, HANDLE,
+                                         HGLOBAL, HINSTANCE, HLOCAL, HMODULE,
+                                         HRESULT, HWND, LPARAM, LRESULT, NTSTATUS,
+                                         PSTR, PWSTR, RECT, UNICODE_STRING,
+                                         VARIANT_BOOL, WPARAM;
 public import windows.win32.graphics.gdi : HDC, RGNDATA;
-public import windows.win32.system.com.com : IStream, IUnknown, SAFEARRAY;
+public import windows.win32.system.com : IStream, IUnknown, SAFEARRAY;
 public import windows.win32.system.kernel : LIST_ENTRY, STRING;
 public import windows.win32.system.ole : OLE_HANDLE;
 public import windows.win32.system.registry : HKEY;
@@ -223,39 +222,60 @@ enum : int
 enum : const(wchar)*
 {
     WLDP_DLL                  = "WLDP.DLL",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WLDP_GETLOCKDOWNPOLICY_FN = "WldpGetLockdownPolicy",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_ISCLASSINAPPROVEDLIST_FN = "WldpIsClassInApprovedList";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_SETDYNAMICCODETRUST_FN = "WldpSetDynamicCodeTrust";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_ISDYNAMICCODEPOLICYENABLED_FN = "WldpIsDynamicCodePolicyEnabled";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_QUERYDANAMICCODETRUST_FN = "WldpQueryDynamicCodeTrust";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_QUERYDYNAMICCODETRUST_FN = "WldpQueryDynamicCodeTrust";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_QUERYWINDOWSLOCKDOWNMODE_FN = "WldpQueryWindowsLockdownMode";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_SETWINDOWSLOCKDOWNRESTRICTION_FN = "WldpSetWindowsLockdownRestriction";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_QUERYDEVICESECURITYINFORMATION_FN = "WldpQueryDeviceSecurityInformation";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_QUERYWINDOWSLOCKDOWNRESTRICTION_FN = "WldpQueryWindowsLockdownRestriction";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_ISAPPAPPROVEDBYPOLICY_FN = "WldpIsAppApprovedByPolicy";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_ISCLASSINAPPROVEDLIST_FN = "WldpIsClassInApprovedList";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_SETDYNAMICCODETRUST_FN = "WldpSetDynamicCodeTrust";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_ISDYNAMICCODEPOLICYENABLED_FN = "WldpIsDynamicCodePolicyEnabled";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_QUERYDANAMICCODETRUST_FN = "WldpQueryDynamicCodeTrust";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_QUERYDYNAMICCODETRUST_FN = "WldpQueryDynamicCodeTrust";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_QUERYWINDOWSLOCKDOWNMODE_FN = "WldpQueryWindowsLockdownMode";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_SETWINDOWSLOCKDOWNRESTRICTION_FN = "WldpSetWindowsLockdownRestriction";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_QUERYDEVICESECURITYINFORMATION_FN = "WldpQueryDeviceSecurityInformation";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_QUERYWINDOWSLOCKDOWNRESTRICTION_FN = "WldpQueryWindowsLockdownRestriction";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_ISAPPAPPROVEDBYPOLICY_FN = "WldpIsAppApprovedByPolicy";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WLDP_QUERYPOLICYSETTINGENABLED_FN  = "WldpQueryPolicySettingEnabled",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WLDP_QUERYPOLICYSETTINGENABLED2_FN = "WldpQueryPolicySettingEnabled2",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_ISWCOSPRODUCTIONCONFIGURATION_FN = "WldpIsWcosProductionConfiguration";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_RESETWCOSPRODUCTIONCONFIGURATION_FN = "WldpResetWcosProductionConfiguration";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_ISPRODUCTIONCONFIGURATION_FN = "WldpIsProductionConfiguration";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_RESETPRODUCTIONCONFIGURATION_FN = "WldpResetProductionConfiguration";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_ISWCOSPRODUCTIONCONFIGURATION_FN = "WldpIsWcosProductionConfiguration";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_RESETWCOSPRODUCTIONCONFIGURATION_FN = "WldpResetWcosProductionConfiguration";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_ISPRODUCTIONCONFIGURATION_FN = "WldpIsProductionConfiguration";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_RESETPRODUCTIONCONFIGURATION_FN = "WldpResetProductionConfiguration";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WLDP_CANEXECUTEBUFFER_FN                    = "WldpCanExecuteBuffer",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WLDP_CANEXECUTEFILE_FN                      = "WldpCanExecuteFile",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     WLDP_CANEXECUTEFILEFROMDETACHEDSIGNATURE_FN = "WldpCanExecuteFileFromDetachedSignature",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* WLDP_QUERYSECURITYPOLICY_FN = "WldpQuerySecurityPolicy";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* WLDP_QUERYSECURITYPOLICY_FN = "WldpQuerySecurityPolicy";
 
 enum : uint
 {
@@ -728,11 +748,13 @@ enum uint SHUTDOWN_NORETRY = 0x00000001U;
 enum uint PROTECTION_LEVEL_SAME = 0xffffffffU;
 enum uint ATOM_FLAG_GLOBAL = 0x00000002U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     GET_SYSTEM_WOW64_DIRECTORY_NAME_A_A = "GetSystemWow64DirectoryA",
     GET_SYSTEM_WOW64_DIRECTORY_NAME_A_W = "GetSystemWow64DirectoryA",
     GET_SYSTEM_WOW64_DIRECTORY_NAME_A_T = "GetSystemWow64DirectoryA",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     GET_SYSTEM_WOW64_DIRECTORY_NAME_W_A = "GetSystemWow64DirectoryW",
     GET_SYSTEM_WOW64_DIRECTORY_NAME_W_W = "GetSystemWow64DirectoryW",
     GET_SYSTEM_WOW64_DIRECTORY_NAME_W_T = "GetSystemWow64DirectoryW",
@@ -1368,7 +1390,7 @@ struct IMAGE_DELAYLOAD_DESCRIPTOR
         uint AllAttributes;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedAttributes)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield531;
+            uint _bitfield531;
         }
     }
     uint DllNameRVA;
@@ -1402,7 +1424,7 @@ union PROCESS_CREATION_SVE_VECTOR_LENGTH
     uint Data;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FlagsReserved)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield532;
+        uint _bitfield532;
     }
 }
 
@@ -1896,7 +1918,7 @@ struct TCP_REQUEST_SET_INFORMATION_EX
 {
     TDIObjectID ID;
     uint        BufferSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buffer;
+    ubyte[1]    Buffer; // Flexible array
 }
 
 struct TDI_TL_IO_CONTROL_ENDPOINT

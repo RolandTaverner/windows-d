@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.ndis;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE;
+public import windows.win32.foundation : BOOLEAN, CHAR, HANDLE;
 
 extern(Windows) @nogc nothrow:
 
@@ -3829,7 +3829,7 @@ union NET_LUID_LH
     ulong Value;
     struct Info
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IfType)), FixedArgSig(ElementSig(48)), FixedArgSig(ElementSig(16))], [])*/ulong _bitfield125;
+        ulong _bitfield125;
     }
 }
 
@@ -3893,17 +3893,17 @@ struct NDIS_INTERFACE_INFORMATION
 
 struct NDIS_STATISTICS_VALUE
 {
-    uint Oid;
-    uint DataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     Oid;
+    uint     DataLength;
+    ubyte[1] Data; // Flexible array
 }
 
 struct NDIS_STATISTICS_VALUE_EX
 {
-    uint Oid;
-    uint DataLength;
-    uint Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     Oid;
+    uint     DataLength;
+    uint     Length;
+    ubyte[1] Data; // Flexible array
 }
 
 struct NDIS_VAR_DATA_DESC
@@ -3957,7 +3957,7 @@ struct NDIS_TIMEOUT_DPC_REQUEST_CAPABILITIES
     NDIS_OBJECT_HEADER Header;
     uint               Flags;
     uint               TimeoutArrayLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] TimeoutArray;
+    uint[1]            TimeoutArray; // Flexible array
 }
 
 struct NDIS_PCI_DEVICE_CUSTOM_PROPERTIES
@@ -3997,15 +3997,15 @@ struct PMKID_CANDIDATE
 
 struct NDIS_802_11_PMKID_CANDIDATE_LIST
 {
-    uint Version;
-    uint NumCandidates;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PMKID_CANDIDATE[1] CandidateList;
+    uint               Version;
+    uint               NumCandidates;
+    PMKID_CANDIDATE[1] CandidateList; // Flexible array
 }
 
 struct NDIS_802_11_NETWORK_TYPE_LIST
 {
     uint NumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_802_11_NETWORK_TYPE[1] NetworkType;
+    NDIS_802_11_NETWORK_TYPE[1] NetworkType; // Flexible array
 }
 
 struct NDIS_802_11_CONFIGURATION_FH
@@ -4061,7 +4061,7 @@ struct NDIS_802_11_KEY
     uint     KeyLength;
     ubyte[6] BSSID;
     ulong    KeyRSC;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyMaterial;
+    ubyte[1] KeyMaterial; // Flexible array
 }
 
 struct NDIS_802_11_REMOVE_KEY
@@ -4073,10 +4073,10 @@ struct NDIS_802_11_REMOVE_KEY
 
 struct NDIS_802_11_WEP
 {
-    uint Length;
-    uint KeyIndex;
-    uint KeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyMaterial;
+    uint     Length;
+    uint     KeyIndex;
+    uint     KeyLength;
+    ubyte[1] KeyMaterial; // Flexible array
 }
 
 struct NDIS_802_11_SSID
@@ -4101,8 +4101,8 @@ struct NDIS_WLAN_BSSID
 
 struct NDIS_802_11_BSSID_LIST
 {
-    uint NumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_WLAN_BSSID[1] Bssid;
+    uint               NumberOfItems;
+    NDIS_WLAN_BSSID[1] Bssid; // Flexible array
 }
 
 struct NDIS_WLAN_BSSID_EX
@@ -4118,13 +4118,13 @@ struct NDIS_WLAN_BSSID_EX
     NDIS_802_11_NETWORK_INFRASTRUCTURE InfrastructureMode;
     ubyte[16]        SupportedRates;
     uint             IELength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] IEs;
+    ubyte[1]         IEs; // Flexible array
 }
 
 struct NDIS_802_11_BSSID_LIST_EX
 {
     uint NumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_WLAN_BSSID_EX[1] Bssid;
+    NDIS_WLAN_BSSID_EX[1] Bssid; // Flexible array
 }
 
 struct NDIS_802_11_FIXED_IEs
@@ -4136,9 +4136,9 @@ struct NDIS_802_11_FIXED_IEs
 
 struct NDIS_802_11_VARIABLE_IEs
 {
-    ubyte ElementID;
-    ubyte Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    ubyte    ElementID;
+    ubyte    Length;
+    ubyte[1] data; // Flexible array
 }
 
 struct NDIS_802_11_AI_REQFI
@@ -4171,7 +4171,7 @@ struct NDIS_802_11_ASSOCIATION_INFORMATION
 struct NDIS_802_11_AUTHENTICATION_EVENT
 {
     NDIS_802_11_STATUS_INDICATION Status;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_802_11_AUTHENTICATION_REQUEST[1] Request;
+    NDIS_802_11_AUTHENTICATION_REQUEST[1] Request; // Flexible array
 }
 
 struct NDIS_802_11_TEST
@@ -4193,9 +4193,9 @@ struct BSSID_INFO
 
 struct NDIS_802_11_PMKID
 {
-    uint Length;
-    uint BSSIDInfoCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BSSID_INFO[1] BSSIDInfo;
+    uint          Length;
+    uint          BSSIDInfoCount;
+    BSSID_INFO[1] BSSIDInfo; // Flexible array
 }
 
 struct NDIS_802_11_AUTHENTICATION_ENCRYPTION
@@ -4210,13 +4210,13 @@ struct NDIS_802_11_CAPABILITY
     uint Version;
     uint NoOfPMKIDs;
     uint NoOfAuthEncryptPairsSupported;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_802_11_AUTHENTICATION_ENCRYPTION[1] AuthenticationEncryptionSupported;
+    NDIS_802_11_AUTHENTICATION_ENCRYPTION[1] AuthenticationEncryptionSupported; // Flexible array
 }
 
 struct NDIS_802_11_NON_BCAST_SSID_LIST
 {
-    uint NumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_802_11_SSID[1] Non_Bcast_Ssid;
+    uint                NumberOfItems;
+    NDIS_802_11_SSID[1] Non_Bcast_Ssid; // Flexible array
 }
 
 struct NDIS_CO_DEVICE_PROFILE
@@ -4269,21 +4269,21 @@ struct OFFLOAD_SECURITY_ASSOCIATION
 
 struct OFFLOAD_IPSEC_ADD_SA
 {
-    uint   SrcAddr;
-    uint   SrcMask;
-    uint   DestAddr;
-    uint   DestMask;
-    uint   Protocol;
-    ushort SrcPort;
-    ushort DestPort;
-    uint   SrcTunnelAddr;
-    uint   DestTunnelAddr;
-    ushort Flags;
-    short  NumSAs;
+    uint     SrcAddr;
+    uint     SrcMask;
+    uint     DestAddr;
+    uint     DestMask;
+    uint     Protocol;
+    ushort   SrcPort;
+    ushort   DestPort;
+    uint     SrcTunnelAddr;
+    uint     DestTunnelAddr;
+    ushort   Flags;
+    short    NumSAs;
     OFFLOAD_SECURITY_ASSOCIATION[3] SecAssoc;
-    HANDLE OffloadHandle;
-    uint   KeyLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyMat;
+    HANDLE   OffloadHandle;
+    uint     KeyLen;
+    ubyte[1] KeyMat; // Flexible array
 }
 
 struct OFFLOAD_IPSEC_DELETE_SA
@@ -4299,23 +4299,23 @@ struct OFFLOAD_IPSEC_UDPESP_ENCAPTYPE_ENTRY
 
 struct OFFLOAD_IPSEC_ADD_UDPESP_SA
 {
-    uint   SrcAddr;
-    uint   SrcMask;
-    uint   DstAddr;
-    uint   DstMask;
-    uint   Protocol;
-    ushort SrcPort;
-    ushort DstPort;
-    uint   SrcTunnelAddr;
-    uint   DstTunnelAddr;
-    ushort Flags;
-    short  NumSAs;
+    uint     SrcAddr;
+    uint     SrcMask;
+    uint     DstAddr;
+    uint     DstMask;
+    uint     Protocol;
+    ushort   SrcPort;
+    ushort   DstPort;
+    uint     SrcTunnelAddr;
+    uint     DstTunnelAddr;
+    ushort   Flags;
+    short    NumSAs;
     OFFLOAD_SECURITY_ASSOCIATION[3] SecAssoc;
-    HANDLE OffloadHandle;
+    HANDLE   OffloadHandle;
     OFFLOAD_IPSEC_UDPESP_ENCAPTYPE_ENTRY EncapTypeEntry;
-    HANDLE EncapTypeEntryOffldHandle;
-    uint   KeyLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyMat;
+    HANDLE   EncapTypeEntryOffldHandle;
+    uint     KeyLen;
+    ubyte[1] KeyMat; // Flexible array
 }
 
 struct OFFLOAD_IPSEC_DELETE_UDPESP_SA
@@ -4332,16 +4332,16 @@ struct TRANSPORT_HEADER_OFFSET
 
 struct NETWORK_ADDRESS
 {
-    ushort AddressLength;
-    ushort AddressType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Address;
+    ushort   AddressLength;
+    ushort   AddressType;
+    ubyte[1] Address; // Flexible array
 }
 
 struct NETWORK_ADDRESS_LIST
 {
-    int    AddressCount;
-    ushort AddressType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NETWORK_ADDRESS[1] Address;
+    int                AddressCount;
+    ushort             AddressType;
+    NETWORK_ADDRESS[1] Address; // Flexible array
 }
 
 struct NETWORK_ADDRESS_IP
@@ -4510,7 +4510,7 @@ struct NDIS_TCP_LARGE_SEND_OFFLOAD_V1
         uint Encapsulation;
         uint MaxOffLoadSize;
         uint MinSegmentCount;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IpOptions)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield126;
+        uint _bitfield126;
     }
 }
 
@@ -4519,22 +4519,22 @@ struct NDIS_TCP_IP_CHECKSUM_OFFLOAD
     struct IPv4Transmit
     {
         uint Encapsulation;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IpChecksum)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield127;
+        uint _bitfield127;
     }
     struct IPv4Receive
     {
         uint Encapsulation;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IpChecksum)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield128;
+        uint _bitfield128;
     }
     struct IPv6Transmit
     {
         uint Encapsulation;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(UdpChecksum)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield129;
+        uint _bitfield129;
     }
     struct IPv6Receive
     {
         uint Encapsulation;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(UdpChecksum)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield130;
+        uint _bitfield130;
     }
 }
 
@@ -4550,11 +4550,11 @@ struct NDIS_IPSEC_OFFLOAD_V1
     }
     struct IPv4AH
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Receive)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield131;
+        uint _bitfield131;
     }
     struct IPv4ESP
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Receive)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield132;
+        uint _bitfield132;
     }
 }
 
@@ -4571,7 +4571,7 @@ struct NDIS_TCP_LARGE_SEND_OFFLOAD_V2
         uint Encapsulation;
         uint MaxOffLoadSize;
         uint MinSegmentCount;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TcpOptionsSupported)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield133;
+        uint _bitfield133;
     }
 }
 
@@ -4699,7 +4699,7 @@ struct NDIS_TCP_CONNECTION_OFFLOAD
 {
     NDIS_OBJECT_HEADER Header;
     uint               Encapsulation;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SupportSack)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield134;
+    uint               _bitfield134;
     uint               TcpConnectionOffloadCapacity;
     uint               Flags;
 }
@@ -4763,7 +4763,7 @@ struct NDIS_WMI_ENUM_ADAPTER
     uint               IfIndex;
     NET_LUID_LH        NetLuid;
     ushort             DeviceNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] DeviceName;
+    CHAR[1]            DeviceName; // Flexible array
 }
 
 struct NDIS_WMI_OUTPUT_INFO
@@ -4848,7 +4848,7 @@ struct NDIS_PORT_ARRAY
     uint               NumberOfPorts;
     uint               OffsetFirstPort;
     uint               ElementSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NDIS_PORT_CHARACTERISTICS[1] Ports;
+    NDIS_PORT_CHARACTERISTICS[1] Ports; // Flexible array
 }
 
 struct NDIS_TIMESTAMP_CAPABILITY_FLAGS

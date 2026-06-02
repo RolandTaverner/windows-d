@@ -3,7 +3,7 @@
 module windows.win32.system.developerlicensing;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : FILETIME, HRESULT, HWND;
+public import windows.win32.foundation : FILETIME, HRESULT, HWND;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,7 +3,7 @@
 module windows.win32.system.subsystemforlinux;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

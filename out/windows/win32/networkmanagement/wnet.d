@@ -3,8 +3,8 @@
 module windows.win32.networkmanagement.wnet;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, LUID, PSTR, PWSTR,
-                                                    WIN32_ERROR;
+public import windows.win32.foundation : BOOL, HANDLE, HWND, LUID, PSTR, PWSTR,
+                                         WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 

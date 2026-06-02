@@ -3,15 +3,14 @@
 module windows.win32.system.systemservices;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE, LUID, PSTR, PWSTR;
+public import windows.win32.foundation : BOOLEAN, CHAR, HANDLE, LUID, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : LOGPALETTE;
-public import windows.win32.security.security : PSID, SECURITY_IMPERSONATION_LEVEL, SID,
-                                                SID_AND_ATTRIBUTES, TOKEN_ELEVATION,
-                                                TOKEN_ELEVATION_TYPE, TOKEN_TYPE,
-                                                TOKEN_USER;
-public import windows.win32.system.com.com : BYTE_BLOB, DWORD_BLOB, FLAGGED_BYTE_BLOB;
-public import windows.win32.system.diagnostics.debug_.debug_ : EXCEPTION_POINTERS, IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY,
-                                                               IMAGE_RUNTIME_FUNCTION_ENTRY;
+public import windows.win32.security : PSID, SECURITY_IMPERSONATION_LEVEL, SID,
+                                       SID_AND_ATTRIBUTES, TOKEN_ELEVATION,
+                                       TOKEN_ELEVATION_TYPE, TOKEN_TYPE, TOKEN_USER;
+public import windows.win32.system.com : BYTE_BLOB, DWORD_BLOB, FLAGGED_BYTE_BLOB;
+public import windows.win32.system.diagnostics.debug_ : EXCEPTION_POINTERS, IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY,
+                                                        IMAGE_RUNTIME_FUNCTION_ENTRY;
 public import windows.win32.system.power : SYSTEM_BATTERY_STATE;
 
 extern(Windows) @nogc nothrow:
@@ -1478,7 +1477,8 @@ enum : uint
 enum uint RUNTIME_FUNCTION_INDIRECT = 0x00000001U;
 enum uint UNW_FLAG_NO_EPILOGUE = 0x80000000U;
 enum uint UNWIND_CHAIN_LIMIT = 0x00000020U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME = "OutOfProcessFunctionTableCallback";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME = "OutOfProcessFunctionTableCallback";
 
 enum : uint
 {
@@ -2018,10 +2018,12 @@ enum : uint
 enum uint ACCESS_MAX_LEVEL = 0x00000004U;
 enum uint AUDIT_ALLOW_NO_PRIVILEGE = 0x00000001U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ACCESS_DS_SOURCE_A           = "DS",
     ACCESS_DS_SOURCE_W           = "DS",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     ACCESS_DS_OBJECT_TYPE_NAME_A = "Directory Service Object",
     ACCESS_DS_OBJECT_TYPE_NAME_W = "Directory Service Object",
 }
@@ -2512,7 +2514,8 @@ enum : uint
 
 enum uint SHUFFLE_FILE_FLAG_SKIP_INITIALIZING_NEW_CLUSTERS = 0x00000001U;
 enum uint IO_COMPLETION_MODIFY_STATE = 0x00000002U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SMB_CCF_APP_INSTANCE_EA_NAME = "ClusteredApplicationInstance";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* SMB_CCF_APP_INSTANCE_EA_NAME = "ClusteredApplicationInstance";
 enum uint NETWORK_APP_INSTANCE_CSV_FLAGS_VALID_ONLY_IF_CSV_COORDINATOR = 0x00000001U;
 enum GUID GUID_MAX_POWER_SAVINGS = GUID("a1841308-3541-4fab-bc81-f71556f20b4a");
 enum GUID GUID_MIN_POWER_SAVINGS = GUID("8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c");
@@ -3125,15 +3128,15 @@ enum : uint
     HIBERFILE_TYPE_MAX     = 0x00000003U,
 }
 
-enum ushort IMAGE_DOS_SIGNATURE = cast(ushort) 0x5a4d;
+enum ushort IMAGE_DOS_SIGNATURE = 0x5a4d;
 
 enum : ushort
 {
-    IMAGE_OS2_SIGNATURE    = cast(ushort) 0x454e,
-    IMAGE_OS2_SIGNATURE_LE = cast(ushort) 0x454c,
+    IMAGE_OS2_SIGNATURE    = 0x454e,
+    IMAGE_OS2_SIGNATURE_LE = 0x454c,
 }
 
-enum ushort IMAGE_VXD_SIGNATURE = cast(ushort) 0x454c;
+enum ushort IMAGE_VXD_SIGNATURE = 0x454c;
 enum uint IMAGE_NT_SIGNATURE = 0x00004550U;
 enum uint IMAGE_SIZEOF_FILE_HEADER = 0x00000014U;
 enum uint IMAGE_NUMBEROF_DIRECTORY_ENTRIES = 0x00000010U;
@@ -3627,16 +3630,22 @@ enum : uint
 
 enum uint IMAGE_ARCHIVE_START_SIZE = 0x00000008U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAGE_ARCHIVE_START            = "!<arch>
 ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAGE_ARCHIVE_END              = "`
 ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAGE_ARCHIVE_PAD              = "
 ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAGE_ARCHIVE_LINKER_MEMBER    = "/               ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAGE_ARCHIVE_LONGNAMES_MEMBER = "//              ",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IMAGE_ARCHIVE_HYBRIDMAP_MEMBER = "/<HYBRIDMAP>/   ",
 }
 
@@ -3992,7 +4001,8 @@ enum : uint
 }
 
 enum uint IMAGE_POLICY_METADATA_VERSION = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* IMAGE_POLICY_SECTION_NAME = ".tPolicy";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* IMAGE_POLICY_SECTION_NAME = ".tPolicy";
 enum uint RTL_VIRTUAL_UNWIND2_VALIDATE_PAC = 0x00000001U;
 enum uint HEAP_OPTIMIZE_RESOURCES_CURRENT_VERSION = 0x00000001U;
 
@@ -4297,42 +4307,42 @@ alias PIMAGE_TLS_CALLBACK = void function(void* DllHandle, uint Reason, void* Re
 
 struct RemHGLOBAL
 {
-    int  fNullHGlobal;
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    int      fNullHGlobal;
+    uint     cbData;
+    ubyte[1] data; // Flexible array
 }
 
 struct RemHMETAFILEPICT
 {
-    int  mm;
-    int  xExt;
-    int  yExt;
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    int      mm;
+    int      xExt;
+    int      yExt;
+    uint     cbData;
+    ubyte[1] data; // Flexible array
 }
 
 struct RemHENHMETAFILE
 {
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    uint     cbData;
+    ubyte[1] data; // Flexible array
 }
 
 struct RemHBITMAP
 {
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    uint     cbData;
+    ubyte[1] data; // Flexible array
 }
 
 struct RemHPALETTE
 {
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    uint     cbData;
+    ubyte[1] data; // Flexible array
 }
 
 struct RemHBRUSH
 {
-    uint cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] data;
+    uint     cbData;
+    ubyte[1] data; // Flexible array
 }
 
 struct userCLIPFORMAT
@@ -4410,14 +4420,14 @@ struct userHENHMETAFILE
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct userBITMAP
 {
-    int    bmType;
-    int    bmWidth;
-    int    bmHeight;
-    int    bmWidthBytes;
-    ushort bmPlanes;
-    ushort bmBitsPixel;
-    uint   cbSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pBuffer;
+    int      bmType;
+    int      bmWidth;
+    int      bmHeight;
+    int      bmWidthBytes;
+    ushort   bmPlanes;
+    ushort   bmBitsPixel;
+    uint     cbSize;
+    ubyte[1] pBuffer; // Flexible array
 }
 
 struct userHBITMAP
@@ -4508,7 +4518,7 @@ struct KERNEL_CET_CONTEXT
         ushort AllFlags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Unused)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield483;
+            ushort _bitfield483;
         }
     }
     ushort[2] Fill;
@@ -4662,7 +4672,7 @@ union RATE_QUOTA_LIMIT
     uint RateData;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield484;
+        uint _bitfield484;
     }
 }
 
@@ -4690,7 +4700,7 @@ struct PROCESS_MITIGATION_ASLR_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield485;
+            uint _bitfield485;
         }
     }
 }
@@ -4703,7 +4713,7 @@ struct PROCESS_MITIGATION_DEP_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield486;
+            uint _bitfield486;
         }
     }
     BOOLEAN Permanent;
@@ -4716,7 +4726,7 @@ struct PROCESS_MITIGATION_SEHOP_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield487;
+            uint _bitfield487;
         }
     }
 }
@@ -4729,7 +4739,7 @@ struct PROCESS_MITIGATION_STRICT_HANDLE_CHECK_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield488;
+            uint _bitfield488;
         }
     }
 }
@@ -4742,7 +4752,7 @@ struct PROCESS_MITIGATION_SYSTEM_CALL_DISABLE_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield489;
+            uint _bitfield489;
         }
     }
 }
@@ -4755,7 +4765,7 @@ struct PROCESS_MITIGATION_EXTENSION_POINT_DISABLE_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield490;
+            uint _bitfield490;
         }
     }
 }
@@ -4768,7 +4778,7 @@ struct PROCESS_MITIGATION_DYNAMIC_CODE_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield491;
+            uint _bitfield491;
         }
     }
 }
@@ -4781,7 +4791,7 @@ struct PROCESS_MITIGATION_CONTROL_FLOW_GUARD_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield492;
+            uint _bitfield492;
         }
     }
 }
@@ -4794,7 +4804,7 @@ struct PROCESS_MITIGATION_BINARY_SIGNATURE_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield493;
+            uint _bitfield493;
         }
     }
 }
@@ -4807,7 +4817,7 @@ struct PROCESS_MITIGATION_FONT_DISABLE_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield494;
+            uint _bitfield494;
         }
     }
 }
@@ -4820,7 +4830,7 @@ struct PROCESS_MITIGATION_IMAGE_LOAD_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield495;
+            uint _bitfield495;
         }
     }
 }
@@ -4832,7 +4842,7 @@ struct PROCESS_MITIGATION_SYSTEM_CALL_FILTER_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield496;
+            uint _bitfield496;
         }
     }
 }
@@ -4844,7 +4854,7 @@ struct PROCESS_MITIGATION_PAYLOAD_RESTRICTION_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield497;
+            uint _bitfield497;
         }
     }
 }
@@ -4856,7 +4866,7 @@ struct PROCESS_MITIGATION_CHILD_PROCESS_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield498;
+            uint _bitfield498;
         }
     }
 }
@@ -4869,7 +4879,7 @@ struct PROCESS_MITIGATION_SIDE_CHANNEL_ISOLATION_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield499;
+            uint _bitfield499;
         }
     }
 }
@@ -4882,7 +4892,7 @@ struct PROCESS_MITIGATION_USER_SHADOW_STACK_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield500;
+            uint _bitfield500;
         }
     }
 }
@@ -4894,7 +4904,7 @@ struct PROCESS_MITIGATION_USER_POINTER_AUTH_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield501;
+            uint _bitfield501;
         }
     }
 }
@@ -4907,7 +4917,7 @@ struct PROCESS_MITIGATION_REDIRECTION_TRUST_POLICY
         uint Flags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield502;
+            uint _bitfield502;
         }
     }
 }
@@ -4995,7 +5005,7 @@ struct DRIVER_INFO_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield503;
+            ushort _bitfield503;
         }
         ushort AsUInt16;
     }
@@ -5005,40 +5015,40 @@ struct DRIVER_INFO_ENTRY
 struct DRIVER_RUNTIME_REPORT
 {
     RUNTIME_REPORT_HEADER Header;
-    ushort NumberOfDrivers;
+    ushort               NumberOfDrivers;
     union Flags
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield504;
+            ushort _bitfield504;
         }
         ushort AsUInt16;
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DRIVER_INFO_ENTRY[1] DriverEntries;
+    DRIVER_INFO_ENTRY[1] DriverEntries; // Flexible array
 }
 
 struct FILE_NOTIFY_FULL_INFORMATION
 {
-    uint   NextEntryOffset;
-    uint   Action;
-    long   CreationTime;
-    long   LastModificationTime;
-    long   LastChangeTime;
-    long   LastAccessTime;
-    long   AllocatedLength;
-    long   FileSize;
-    uint   FileAttributes;
+    uint     NextEntryOffset;
+    uint     Action;
+    long     CreationTime;
+    long     LastModificationTime;
+    long     LastChangeTime;
+    long     LastAccessTime;
+    long     AllocatedLength;
+    long     FileSize;
+    uint     FileAttributes;
     union
     {
         uint ReparsePointTag;
         uint EaSize;
     }
-    long   FileId;
-    long   ParentFileId;
-    ushort FileNameLength;
-    ubyte  FileNameFlags;
-    ubyte  Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    long     FileId;
+    long     ParentFileId;
+    ushort   FileNameLength;
+    ubyte    FileNameFlags;
+    ubyte    Reserved;
+    wchar[1] FileName; // Flexible array
 }
 
 struct FILE_STAT_INFORMATION
@@ -5106,7 +5116,7 @@ struct SCRUB_PARITY_EXTENT_DATA
     ushort Flags;
     ushort NumberOfParityExtents;
     ushort MaximumNumberOfParityExtents;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCRUB_PARITY_EXTENT[1] ParityExtents;
+    SCRUB_PARITY_EXTENT[1] ParityExtents; // Flexible array
 }
 
 struct SCRUB_DATA_OUTPUT
@@ -5181,7 +5191,7 @@ struct POWER_LIMIT_ATTRIBUTES
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield505;
+            uint _bitfield505;
         }
         uint AsUlong;
     }
@@ -5223,7 +5233,7 @@ struct PROCESSOR_IDLESTATE_POLICY
         ushort AsWORD;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield506;
+            ushort _bitfield506;
         }
     }
     uint   PolicyCount;
@@ -5244,7 +5254,7 @@ struct PROCESSOR_PERFSTATE_POLICY
             ubyte AsBYTE;
             struct
             {
-                /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield507;
+                ubyte _bitfield507;
             }
         }
     }
@@ -5638,8 +5648,8 @@ struct IMAGE_EXPORT_DIRECTORY
 
 struct IMAGE_IMPORT_BY_NAME
 {
-    ushort Hint;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] Name;
+    ushort  Hint;
+    CHAR[1] Name; // Flexible array
 }
 
 struct IMAGE_TLS_DIRECTORY64
@@ -5655,7 +5665,7 @@ align (4):
         uint Characteristics;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield508;
+            uint _bitfield508;
         }
     }
 }
@@ -5672,7 +5682,7 @@ struct IMAGE_TLS_DIRECTORY32
         uint Characteristics;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield509;
+            uint _bitfield509;
         }
     }
 }
@@ -5720,7 +5730,7 @@ struct IMAGE_RESOURCE_DIRECTORY_ENTRY
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NameIsString)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield510;
+            uint _bitfield510;
         }
         uint   Name;
         ushort Id;
@@ -5730,21 +5740,21 @@ struct IMAGE_RESOURCE_DIRECTORY_ENTRY
         uint OffsetToData;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DataIsDirectory)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield511;
+            uint _bitfield511;
         }
     }
 }
 
 struct IMAGE_RESOURCE_DIRECTORY_STRING
 {
-    ushort Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] NameString;
+    ushort  Length;
+    CHAR[1] NameString; // Flexible array
 }
 
 struct IMAGE_RESOURCE_DIR_STRING_U
 {
-    ushort Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] NameString;
+    ushort   Length;
+    wchar[1] NameString; // Flexible array
 }
 
 struct IMAGE_RESOURCE_DATA_ENTRY
@@ -5812,25 +5822,25 @@ align (1):
 struct IMAGE_IMPORT_CONTROL_TRANSFER_DYNAMIC_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IATIndex)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(19))], [])*/uint _bitfield512;
+    uint _bitfield512;
 }
 
 struct IMAGE_IMPORT_CONTROL_TRANSFER_ARM64_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IATIndex)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield513;
+    uint _bitfield513;
 }
 
 struct IMAGE_INDIR_CONTROL_TRANSFER_DYNAMIC_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield514;
+    ushort _bitfield514;
 }
 
 struct IMAGE_SWITCHTABLE_BRANCH_DYNAMIC_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(RegisterNumber)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield515;
+    ushort _bitfield515;
 }
 
 struct IMAGE_FUNCTION_OVERRIDE_HEADER
@@ -5892,7 +5902,7 @@ struct IMAGE_HOT_PATCH_MACHINE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Amd64EC)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield516;
+        uint _bitfield516;
     }
 }
 
@@ -5905,7 +5915,7 @@ struct IMAGE_HOT_PATCH_HASHES
 struct IMAGE_CE_RUNTIME_FUNCTION_ENTRY
 {
     uint FuncStart;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExceptionFlag)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield517;
+    uint _bitfield517;
 }
 
 struct IMAGE_ARM_RUNTIME_FUNCTION_ENTRY
@@ -5916,7 +5926,7 @@ struct IMAGE_ARM_RUNTIME_FUNCTION_ENTRY
         uint UnwindData;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(StackAdjust)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield518;
+            uint _bitfield518;
         }
     }
 }
@@ -5926,7 +5936,7 @@ union IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY_XDATA
     uint HeaderData;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CodeWords)), FixedArgSig(ElementSig(27)), FixedArgSig(ElementSig(5))], [])*/uint _bitfield519;
+        uint _bitfield519;
     }
 }
 
@@ -5935,7 +5945,7 @@ union IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY_XDATA_EXTENDED
     uint ExtendedHeaderData;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExtendedCodeWords)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield520;
+        uint _bitfield520;
     }
 }
 
@@ -5944,7 +5954,7 @@ union IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY_XDATA_EPILOG_SCOPE
     uint EpilogScopeData;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(EpilogStartIndex)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield521;
+        uint _bitfield521;
     }
 }
 
@@ -5973,7 +5983,7 @@ struct IMAGE_DEBUG_MISC
     uint     Length;
     BOOLEAN  Unicode;
     ubyte[3] Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 struct IMAGE_SEPARATE_DEBUG_HEADER
@@ -6009,7 +6019,7 @@ align (4):
 
 struct IMAGE_ARCHITECTURE_HEADER
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous2)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield522;
+    uint _bitfield522;
     uint FirstEntryRVA;
 }
 
@@ -6032,7 +6042,7 @@ struct IMPORT_OBJECT_HEADER
         ushort Ordinal;
         ushort Hint;
     }
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield523;
+    ushort _bitfield523;
 }
 
 struct IMAGE_POLICY_ENTRY
@@ -6166,8 +6176,8 @@ struct TRANSACTIONMANAGER_LOG_INFORMATION
 
 struct TRANSACTIONMANAGER_LOGPATH_INFORMATION
 {
-    uint LogPathLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] LogPath;
+    uint     LogPathLength;
+    wchar[1] LogPath; // Flexible array
 }
 
 struct TRANSACTIONMANAGER_RECOVERY_INFORMATION
@@ -6182,12 +6192,12 @@ struct TRANSACTIONMANAGER_OLDEST_INFORMATION
 
 struct TRANSACTION_PROPERTIES_INFORMATION
 {
-    uint IsolationLevel;
-    uint IsolationFlags;
-    long Timeout;
-    uint Outcome;
-    uint DescriptionLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Description;
+    uint     IsolationLevel;
+    uint     IsolationFlags;
+    long     Timeout;
+    uint     Outcome;
+    uint     DescriptionLength;
+    wchar[1] Description; // Flexible array
 }
 
 struct TRANSACTION_BIND_INFORMATION
@@ -6204,7 +6214,7 @@ struct TRANSACTION_ENLISTMENT_PAIR
 struct TRANSACTION_ENLISTMENTS_INFORMATION
 {
     uint NumberOfEnlistments;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRANSACTION_ENLISTMENT_PAIR[1] EnlistmentPair;
+    TRANSACTION_ENLISTMENT_PAIR[1] EnlistmentPair; // Flexible array
 }
 
 struct TRANSACTION_SUPERIOR_ENLISTMENT_INFORMATION
@@ -6214,9 +6224,9 @@ struct TRANSACTION_SUPERIOR_ENLISTMENT_INFORMATION
 
 struct RESOURCEMANAGER_BASIC_INFORMATION
 {
-    GUID ResourceManagerId;
-    uint DescriptionLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Description;
+    GUID     ResourceManagerId;
+    uint     DescriptionLength;
+    wchar[1] Description; // Flexible array
 }
 
 struct RESOURCEMANAGER_COMPLETION_INFORMATION
@@ -6247,13 +6257,13 @@ struct TRANSACTION_LIST_ENTRY
 struct TRANSACTION_LIST_INFORMATION
 {
     uint NumberOfTransactions;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRANSACTION_LIST_ENTRY[1] TransactionInformation;
+    TRANSACTION_LIST_ENTRY[1] TransactionInformation; // Flexible array
 }
 
 struct KTMOBJECT_CURSOR
 {
-    GUID LastQuery;
-    uint ObjectIdCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] ObjectIds;
+    GUID    LastQuery;
+    uint    ObjectIdCount;
+    GUID[1] ObjectIds; // Flexible array
 }
 

@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.windowsconnectionmanager;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -103,8 +103,8 @@ struct WCM_PROFILE_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_profile_info_list
 struct WCM_PROFILE_INFO_LIST
 {
-    uint dwNumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WCM_PROFILE_INFO[1] ProfileInfo;
+    uint                dwNumberOfItems;
+    WCM_PROFILE_INFO[1] ProfileInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_connection_cost_data

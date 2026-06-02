@@ -3,10 +3,10 @@
 module windows.win32.ui.hidpi;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, POINT,
-                                                    PWSTR, RECT;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, POINT, PWSTR,
+                                         RECT;
 public import windows.win32.graphics.gdi : HMONITOR;
-public import windows.win32.ui.controls.controls : HTHEME;
+public import windows.win32.ui.controls : HTHEME;
 public import windows.win32.ui.windowsandmessaging : SYSTEM_METRICS_INDEX, WINDOW_EX_STYLE,
                                                      WINDOW_STYLE;
 
@@ -78,11 +78,11 @@ enum : int
 
 enum : DPI_AWARENESS_CONTEXT
 {
-    DPI_AWARENESS_CONTEXT_UNAWARE              = DPI_AWARENESS_CONTEXT(0xffffffff),
-    DPI_AWARENESS_CONTEXT_SYSTEM_AWARE         = DPI_AWARENESS_CONTEXT(0xfffffffe),
-    DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE    = DPI_AWARENESS_CONTEXT(0xfffffffd),
-    DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = DPI_AWARENESS_CONTEXT(0xfffffffc),
-    DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED    = DPI_AWARENESS_CONTEXT(0xfffffffb),
+    DPI_AWARENESS_CONTEXT_UNAWARE              = DPI_AWARENESS_CONTEXT(cast(void*) 0xffffffff),
+    DPI_AWARENESS_CONTEXT_SYSTEM_AWARE         = DPI_AWARENESS_CONTEXT(cast(void*) 0xfffffffe),
+    DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE    = DPI_AWARENESS_CONTEXT(cast(void*) 0xfffffffd),
+    DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = DPI_AWARENESS_CONTEXT(cast(void*) 0xfffffffc),
+    DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED    = DPI_AWARENESS_CONTEXT(cast(void*) 0xfffffffb),
 }
 
 // Structs

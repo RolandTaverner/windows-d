@@ -3,8 +3,8 @@
 module windows.win32.graphics.directmanipulation;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, RECT;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, RECT;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.ui.windowsandmessaging : MSG;
 
 extern(Windows) @nogc nothrow:

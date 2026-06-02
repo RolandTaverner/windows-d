@@ -3,10 +3,10 @@
 module windows.win32.security.directoryservices;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, HWND, LPARAM, PWSTR;
+public import windows.win32.foundation : HRESULT, HWND, LPARAM, PWSTR;
 public import windows.win32.security.authorization.ui : ISecurityInformation;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
-public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
+public import windows.win32.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.ui.controls : HPROPSHEETPAGE;
 
 extern(Windows) @nogc nothrow:
 

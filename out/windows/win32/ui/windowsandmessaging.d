@@ -3,13 +3,13 @@
 module windows.win32.ui.windowsandmessaging;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, COLORREF, HANDLE,
-                                                    HINSTANCE, HRESULT, HWND, LPARAM,
-                                                    LRESULT, POINT, PSTR, PWSTR, RECT,
-                                                    SIZE, WAIT_EVENT, WPARAM;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, COLORREF, HANDLE,
+                                         HINSTANCE, HRESULT, HWND, LPARAM, LRESULT,
+                                         POINT, PSTR, PWSTR, RECT, SIZE, WAIT_EVENT,
+                                         WPARAM;
 public import windows.win32.graphics.gdi : BLENDFUNCTION, HBITMAP, HBRUSH, HDC, HRGN,
                                            LOGFONTA, LOGFONTW;
-public import windows.win32.ui.shell.shell : HELPINFO;
+public import windows.win32.ui.shell : HELPINFO;
 
 extern(Windows) @nogc nothrow:
 
@@ -1295,10 +1295,14 @@ enum MrmIndexerFlags : int
 // Constants
 
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-contextmenu))], [])*/uint WM_CONTEXTMENU = 0x0000007bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-unichar))], [])*/uint WM_UNICHAR = 0x00000109U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-printclient))], [])*/uint WM_PRINTCLIENT = 0x00000318U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-notify))], [])*/uint WM_NOTIFY = 0x0000004eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-contextmenu
+enum uint WM_CONTEXTMENU = 0x0000007bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-unichar
+enum uint WM_UNICHAR = 0x00000109U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-printclient
+enum uint WM_PRINTCLIENT = 0x00000318U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-notify
+enum uint WM_NOTIFY = 0x0000004eU;
 
 enum : GUID
 {
@@ -1407,7 +1411,8 @@ enum uint __WARNING_INVALID_PARAM_VALUE_3 = 0x00006e17U;
 enum uint __WARNING_RETURNING_BAD_RESULT = 0x00006e24U;
 enum uint __WARNING_BANNED_API_USAGE = 0x0000702fU;
 enum uint __WARNING_POST_EXPECTED = 0x00006e32U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/wm-devicechange))], [])*/uint WM_DEVICECHANGE = 0x00000219U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/wm-devicechange
+enum uint WM_DEVICECHANGE = 0x00000219U;
 
 enum : uint
 {
@@ -1429,12 +1434,16 @@ enum : uint
     DBT_APPYEND   = 0x00000001U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-devnodes-changed))], [])*/uint DBT_DEVNODES_CHANGED = 0x00000007U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-querychangeconfig))], [])*/uint DBT_QUERYCHANGECONFIG = 0x00000017U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-devnodes-changed
+enum uint DBT_DEVNODES_CHANGED = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-querychangeconfig
+enum uint DBT_QUERYCHANGECONFIG = 0x00000017U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-configchanged))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-configchanged
     DBT_CONFIGCHANGED        = 0x00000018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-configchangecanceled
     DBT_CONFIGCHANGECANCELED = 0x00000019U,
 }
 
@@ -1470,21 +1479,28 @@ enum uint DBT_NO_DISK_SPACE = 0x00000047U;
 enum uint DBT_LOW_DISK_SPACE = 0x00000048U;
 enum uint DBT_CONFIGMGPRIVATE = 0x00007fffU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-devicearrival))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-devicearrival
     DBT_DEVICEARRIVAL           = 0x00008000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-devicequeryremove
     DBT_DEVICEQUERYREMOVE       = 0x00008001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-devicequeryremovefailed
     DBT_DEVICEQUERYREMOVEFAILED = 0x00008002U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-deviceremovepending))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-deviceremovepending
     DBT_DEVICEREMOVEPENDING  = 0x00008003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-deviceremovecomplete
     DBT_DEVICEREMOVECOMPLETE = 0x00008004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-devicetypespecific
     DBT_DEVICETYPESPECIFIC   = 0x00008005U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-customevent))], [])*/uint DBT_CUSTOMEVENT = 0x00008006U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-customevent
+enum uint DBT_CUSTOMEVENT = 0x00008006U;
 
 enum : uint
 {
@@ -1501,38 +1517,39 @@ enum : uint
 }
 
 enum uint DBT_VPOWERDAPI = 0x00008100U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevIO/dbt-userdefined))], [])*/uint DBT_USERDEFINED = 0x0000ffffU;
-enum PWSTR RT_CURSOR = PWSTR(cast(ushort) 0x0001);
-enum PWSTR RT_BITMAP = PWSTR(cast(ushort) 0x0002);
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/dbt-userdefined
+enum uint DBT_USERDEFINED = 0x0000ffffU;
+enum PWSTR RT_CURSOR = PWSTR(cast(wchar*) 0x0001);
+enum PWSTR RT_BITMAP = PWSTR(cast(wchar*) 0x0002);
 
 enum : PWSTR
 {
-    RT_ICON   = PWSTR(cast(ushort) 0x0003),
-    RT_MENU   = PWSTR(cast(ushort) 0x0004),
-    RT_DIALOG = PWSTR(cast(ushort) 0x0005),
+    RT_ICON   = PWSTR(cast(wchar*) 0x0003),
+    RT_MENU   = PWSTR(cast(wchar*) 0x0004),
+    RT_DIALOG = PWSTR(cast(wchar*) 0x0005),
 }
 
 enum : PWSTR
 {
-    RT_FONTDIR     = PWSTR(cast(ushort) 0x0007),
-    RT_FONT        = PWSTR(cast(ushort) 0x0008),
-    RT_ACCELERATOR = PWSTR(cast(ushort) 0x0009),
+    RT_FONTDIR     = PWSTR(cast(wchar*) 0x0007),
+    RT_FONT        = PWSTR(cast(wchar*) 0x0008),
+    RT_ACCELERATOR = PWSTR(cast(wchar*) 0x0009),
 }
 
-enum PWSTR RT_MESSAGETABLE = PWSTR(cast(ushort) 0x000b);
+enum PWSTR RT_MESSAGETABLE = PWSTR(cast(wchar*) 0x000b);
 enum uint DIFFERENCE = 0x0000000bU;
-enum PWSTR RT_VERSION = PWSTR(cast(ushort) 0x0010);
-enum PWSTR RT_DLGINCLUDE = PWSTR(cast(ushort) 0x0011);
-enum PWSTR RT_PLUGPLAY = PWSTR(cast(ushort) 0x0013);
+enum PWSTR RT_VERSION = PWSTR(cast(wchar*) 0x0010);
+enum PWSTR RT_DLGINCLUDE = PWSTR(cast(wchar*) 0x0011);
+enum PWSTR RT_PLUGPLAY = PWSTR(cast(wchar*) 0x0013);
 
 enum : PWSTR
 {
-    RT_VXD       = PWSTR(cast(ushort) 0x0014),
-    RT_ANICURSOR = PWSTR(cast(ushort) 0x0015),
-    RT_ANIICON   = PWSTR(cast(ushort) 0x0016),
+    RT_VXD       = PWSTR(cast(wchar*) 0x0014),
+    RT_ANICURSOR = PWSTR(cast(wchar*) 0x0015),
+    RT_ANIICON   = PWSTR(cast(wchar*) 0x0016),
 }
 
-enum PWSTR RT_HTML = PWSTR(cast(ushort) 0x0017);
+enum PWSTR RT_HTML = PWSTR(cast(wchar*) 0x0017);
 enum uint CREATEPROCESS_MANIFEST_RESOURCE_ID = 0x00000001U;
 
 enum : uint
@@ -1714,101 +1731,153 @@ enum uint CWF_CREATE_ONLY = 0x00000001U;
 enum int WSF_VISIBLE = 0x00000001;
 enum uint UOI_TIMERPROC_EXCEPTION_SUPPRESSION = 0x00000007U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-null))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-null
     WM_NULL   = 0x00000000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-create
     WM_CREATE = 0x00000001U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-destroy))], [])*/uint WM_DESTROY = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-destroy
+enum uint WM_DESTROY = 0x00000002U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-move))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-move
     WM_MOVE     = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-size
     WM_SIZE     = 0x00000005U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-activate
     WM_ACTIVATE = 0x00000006U,
 }
 
 enum uint WA_INACTIVE = 0x00000000U;
 enum uint WA_ACTIVE = 0x00000001U;
 enum uint WA_CLICKACTIVE = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-setfocus))], [])*/uint WM_SETFOCUS = 0x00000007U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-killfocus))], [])*/uint WM_KILLFOCUS = 0x00000008U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-enable))], [])*/uint WM_ENABLE = 0x0000000aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-setfocus
+enum uint WM_SETFOCUS = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-killfocus
+enum uint WM_KILLFOCUS = 0x00000008U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-enable
+enum uint WM_ENABLE = 0x0000000aU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-setredraw))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-setredraw
     WM_SETREDRAW = 0x0000000bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-settext
     WM_SETTEXT   = 0x0000000cU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-gettext))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-gettext
     WM_GETTEXT       = 0x0000000dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-gettextlength
     WM_GETTEXTLENGTH = 0x0000000eU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-paint))], [])*/uint WM_PAINT = 0x0000000fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-close))], [])*/uint WM_CLOSE = 0x00000010U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-paint
+enum uint WM_PAINT = 0x0000000fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-close
+enum uint WM_CLOSE = 0x00000010U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Shutdown/wm-queryendsession))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Shutdown/wm-queryendsession
     WM_QUERYENDSESSION = 0x00000011U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-queryopen
     WM_QUERYOPEN       = 0x00000013U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Shutdown/wm-endsession))], [])*/uint WM_ENDSESSION = 0x00000016U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Shutdown/wm-endsession
+enum uint WM_ENDSESSION = 0x00000016U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-quit))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-quit
     WM_QUIT       = 0x00000012U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-erasebkgnd
     WM_ERASEBKGND = 0x00000014U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-syscolorchange))], [])*/uint WM_SYSCOLORCHANGE = 0x00000015U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-showwindow))], [])*/uint WM_SHOWWINDOW = 0x00000018U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-wininichange))], [])*/uint WM_WININICHANGE = 0x0000001aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-settingchange))], [])*/uint WM_SETTINGCHANGE = 0x0000001aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-devmodechange))], [])*/uint WM_DEVMODECHANGE = 0x0000001bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-activateapp))], [])*/uint WM_ACTIVATEAPP = 0x0000001cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-fontchange))], [])*/uint WM_FONTCHANGE = 0x0000001dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SysInfo/wm-timechange))], [])*/uint WM_TIMECHANGE = 0x0000001eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-cancelmode))], [])*/uint WM_CANCELMODE = 0x0000001fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-setcursor))], [])*/uint WM_SETCURSOR = 0x00000020U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-mouseactivate))], [])*/uint WM_MOUSEACTIVATE = 0x00000021U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-childactivate))], [])*/uint WM_CHILDACTIVATE = 0x00000022U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-queuesync))], [])*/uint WM_QUEUESYNC = 0x00000023U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-getminmaxinfo))], [])*/uint WM_GETMINMAXINFO = 0x00000024U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-syscolorchange
+enum uint WM_SYSCOLORCHANGE = 0x00000015U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-showwindow
+enum uint WM_SHOWWINDOW = 0x00000018U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-wininichange
+enum uint WM_WININICHANGE = 0x0000001aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-settingchange
+enum uint WM_SETTINGCHANGE = 0x0000001aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-devmodechange
+enum uint WM_DEVMODECHANGE = 0x0000001bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-activateapp
+enum uint WM_ACTIVATEAPP = 0x0000001cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-fontchange
+enum uint WM_FONTCHANGE = 0x0000001dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysInfo/wm-timechange
+enum uint WM_TIMECHANGE = 0x0000001eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-cancelmode
+enum uint WM_CANCELMODE = 0x0000001fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-setcursor
+enum uint WM_SETCURSOR = 0x00000020U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mouseactivate
+enum uint WM_MOUSEACTIVATE = 0x00000021U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-childactivate
+enum uint WM_CHILDACTIVATE = 0x00000022U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-queuesync
+enum uint WM_QUEUESYNC = 0x00000023U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-getminmaxinfo
+enum uint WM_GETMINMAXINFO = 0x00000024U;
 enum uint WM_PAINTICON = 0x00000026U;
 enum uint WM_ICONERASEBKGND = 0x00000027U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-nextdlgctl))], [])*/uint WM_NEXTDLGCTL = 0x00000028U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/wm-spoolerstatus))], [])*/uint WM_SPOOLERSTATUS = 0x0000002aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-drawitem))], [])*/uint WM_DRAWITEM = 0x0000002bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-measureitem))], [])*/uint WM_MEASUREITEM = 0x0000002cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-deleteitem))], [])*/uint WM_DELETEITEM = 0x0000002dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-vkeytoitem))], [])*/uint WM_VKEYTOITEM = 0x0000002eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-chartoitem))], [])*/uint WM_CHARTOITEM = 0x0000002fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-setfont))], [])*/uint WM_SETFONT = 0x00000030U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-getfont))], [])*/uint WM_GETFONT = 0x00000031U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-sethotkey))], [])*/uint WM_SETHOTKEY = 0x00000032U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-gethotkey))], [])*/uint WM_GETHOTKEY = 0x00000033U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-querydragicon))], [])*/uint WM_QUERYDRAGICON = 0x00000037U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-compareitem))], [])*/uint WM_COMPAREITEM = 0x00000039U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinAuto/wm-getobject))], [])*/uint WM_GETOBJECT = 0x0000003dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-nextdlgctl
+enum uint WM_NEXTDLGCTL = 0x00000028U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/wm-spoolerstatus
+enum uint WM_SPOOLERSTATUS = 0x0000002aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-drawitem
+enum uint WM_DRAWITEM = 0x0000002bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-measureitem
+enum uint WM_MEASUREITEM = 0x0000002cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-deleteitem
+enum uint WM_DELETEITEM = 0x0000002dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-vkeytoitem
+enum uint WM_VKEYTOITEM = 0x0000002eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-chartoitem
+enum uint WM_CHARTOITEM = 0x0000002fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-setfont
+enum uint WM_SETFONT = 0x00000030U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-getfont
+enum uint WM_GETFONT = 0x00000031U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-sethotkey
+enum uint WM_SETHOTKEY = 0x00000032U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-gethotkey
+enum uint WM_GETHOTKEY = 0x00000033U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-querydragicon
+enum uint WM_QUERYDRAGICON = 0x00000037U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-compareitem
+enum uint WM_COMPAREITEM = 0x00000039U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinAuto/wm-getobject
+enum uint WM_GETOBJECT = 0x0000003dU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-compacting))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-compacting
     WM_COMPACTING = 0x00000041U,
     WM_COMMNOTIFY = 0x00000044U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-windowposchanging))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-windowposchanging
     WM_WINDOWPOSCHANGING = 0x00000046U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-windowposchanged
     WM_WINDOWPOSCHANGED  = 0x00000047U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/wm-power))], [])*/uint WM_POWER = 0x00000048U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/wm-power
+enum uint WM_POWER = 0x00000048U;
 enum uint PWR_OK = 0x00000001U;
 enum int PWR_FAIL = 0xffffffff;
 
@@ -1819,24 +1888,32 @@ enum : uint
 }
 
 enum uint PWR_CRITICALRESUME = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-copydata))], [])*/uint WM_COPYDATA = 0x0000004aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-canceljournal))], [])*/uint WM_CANCELJOURNAL = 0x0000004bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-copydata
+enum uint WM_COPYDATA = 0x0000004aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-canceljournal
+enum uint WM_CANCELJOURNAL = 0x0000004bU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-inputlangchangerequest))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-inputlangchangerequest
     WM_INPUTLANGCHANGEREQUEST = 0x00000050U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-inputlangchange
     WM_INPUTLANGCHANGE        = 0x00000051U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/shell/wm-tcard))], [])*/uint WM_TCARD = 0x00000052U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/shell/wm-tcard
+enum uint WM_TCARD = 0x00000052U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/shell/wm-help))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/shell/wm-help
     WM_HELP        = 0x00000053U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-userchanged
     WM_USERCHANGED = 0x00000054U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-notifyformat))], [])*/uint WM_NOTIFYFORMAT = 0x00000055U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-notifyformat
+enum uint WM_NOTIFYFORMAT = 0x00000055U;
 
 enum : uint
 {
@@ -1847,131 +1924,191 @@ enum : uint
 enum uint NF_QUERY = 0x00000003U;
 enum uint NF_REQUERY = 0x00000004U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-stylechanging))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-stylechanging
     WM_STYLECHANGING = 0x0000007cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-stylechanged
     WM_STYLECHANGED  = 0x0000007dU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-displaychange))], [])*/uint WM_DISPLAYCHANGE = 0x0000007eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-geticon))], [])*/uint WM_GETICON = 0x0000007fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-seticon))], [])*/uint WM_SETICON = 0x00000080U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-displaychange
+enum uint WM_DISPLAYCHANGE = 0x0000007eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-geticon
+enum uint WM_GETICON = 0x0000007fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-seticon
+enum uint WM_SETICON = 0x00000080U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-nccreate))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-nccreate
     WM_NCCREATE   = 0x00000081U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-ncdestroy
     WM_NCDESTROY  = 0x00000082U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-nccalcsize
     WM_NCCALCSIZE = 0x00000083U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-nchittest))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-nchittest
     WM_NCHITTEST  = 0x00000084U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-ncpaint
     WM_NCPAINT    = 0x00000085U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-ncactivate
     WM_NCACTIVATE = 0x00000086U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-getdlgcode))], [])*/uint WM_GETDLGCODE = 0x00000087U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-syncpaint))], [])*/uint WM_SYNCPAINT = 0x00000088U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-ncmousemove))], [])*/uint WM_NCMOUSEMOVE = 0x000000a0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-getdlgcode
+enum uint WM_GETDLGCODE = 0x00000087U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-syncpaint
+enum uint WM_SYNCPAINT = 0x00000088U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncmousemove
+enum uint WM_NCMOUSEMOVE = 0x000000a0U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-nclbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-nclbuttondown
     WM_NCLBUTTONDOWN   = 0x000000a1U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-nclbuttonup
     WM_NCLBUTTONUP     = 0x000000a2U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-nclbuttondblclk
     WM_NCLBUTTONDBLCLK = 0x000000a3U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-ncrbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncrbuttondown
     WM_NCRBUTTONDOWN   = 0x000000a4U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncrbuttonup
     WM_NCRBUTTONUP     = 0x000000a5U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncrbuttondblclk
     WM_NCRBUTTONDBLCLK = 0x000000a6U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-ncmbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncmbuttondown
     WM_NCMBUTTONDOWN   = 0x000000a7U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncmbuttonup
     WM_NCMBUTTONUP     = 0x000000a8U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncmbuttondblclk
     WM_NCMBUTTONDBLCLK = 0x000000a9U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-ncxbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncxbuttondown
     WM_NCXBUTTONDOWN   = 0x000000abU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncxbuttonup
     WM_NCXBUTTONUP     = 0x000000acU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncxbuttondblclk
     WM_NCXBUTTONDBLCLK = 0x000000adU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-input-device-change))], [])*/uint WM_INPUT_DEVICE_CHANGE = 0x000000feU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-input))], [])*/uint WM_INPUT = 0x000000ffU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-input-device-change
+enum uint WM_INPUT_DEVICE_CHANGE = 0x000000feU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-input
+enum uint WM_INPUT = 0x000000ffU;
 
 enum : uint
 {
     WM_KEYFIRST = 0x00000100U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-keydown
     WM_KEYDOWN  = 0x00000100U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-keyup
     WM_KEYUP    = 0x00000101U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-char))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-char
     WM_CHAR     = 0x00000102U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-deadchar
     WM_DEADCHAR = 0x00000103U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-syskeydown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-syskeydown
     WM_SYSKEYDOWN  = 0x00000104U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-syskeyup
     WM_SYSKEYUP    = 0x00000105U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-syschar
     WM_SYSCHAR     = 0x00000106U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-sysdeadchar
     WM_SYSDEADCHAR = 0x00000107U,
 }
 
 enum uint WM_KEYLAST = 0x00000109U;
 enum uint UNICODE_NOCHAR = 0x0000ffffU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/wm-ime-startcomposition))], [])*/uint WM_IME_STARTCOMPOSITION = 0x0000010dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/wm-ime-endcomposition))], [])*/uint WM_IME_ENDCOMPOSITION = 0x0000010eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/wm-ime-composition))], [])*/uint WM_IME_COMPOSITION = 0x0000010fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-startcomposition
+enum uint WM_IME_STARTCOMPOSITION = 0x0000010dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-endcomposition
+enum uint WM_IME_ENDCOMPOSITION = 0x0000010eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-composition
+enum uint WM_IME_COMPOSITION = 0x0000010fU;
 enum uint WM_IME_KEYLAST = 0x0000010fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-initdialog))], [])*/uint WM_INITDIALOG = 0x00000110U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-command))], [])*/uint WM_COMMAND = 0x00000111U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-syscommand))], [])*/uint WM_SYSCOMMAND = 0x00000112U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-timer))], [])*/uint WM_TIMER = 0x00000113U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-hscroll))], [])*/uint WM_HSCROLL = 0x00000114U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-vscroll))], [])*/uint WM_VSCROLL = 0x00000115U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-initdialog
+enum uint WM_INITDIALOG = 0x00000110U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-command
+enum uint WM_COMMAND = 0x00000111U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-syscommand
+enum uint WM_SYSCOMMAND = 0x00000112U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-timer
+enum uint WM_TIMER = 0x00000113U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-hscroll
+enum uint WM_HSCROLL = 0x00000114U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-vscroll
+enum uint WM_VSCROLL = 0x00000115U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-initmenu))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-initmenu
     WM_INITMENU      = 0x00000116U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-initmenupopup
     WM_INITMENUPOPUP = 0x00000117U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wintouch/wm-gesture))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wintouch/wm-gesture
     WM_GESTURE       = 0x00000119U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wintouch/wm-gesturenotify
     WM_GESTURENOTIFY = 0x0000011aU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-menuselect))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-menuselect
     WM_MENUSELECT = 0x0000011fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-menuchar
     WM_MENUCHAR   = 0x00000120U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-enteridle))], [])*/uint WM_ENTERIDLE = 0x00000121U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-enteridle
+enum uint WM_ENTERIDLE = 0x00000121U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-menurbuttonup))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-menurbuttonup
     WM_MENURBUTTONUP = 0x00000122U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-menudrag
     WM_MENUDRAG      = 0x00000123U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-menugetobject
     WM_MENUGETOBJECT = 0x00000124U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-uninitmenupopup))], [])*/uint WM_UNINITMENUPOPUP = 0x00000125U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-menucommand))], [])*/uint WM_MENUCOMMAND = 0x00000126U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-changeuistate))], [])*/uint WM_CHANGEUISTATE = 0x00000127U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-updateuistate))], [])*/uint WM_UPDATEUISTATE = 0x00000128U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-queryuistate))], [])*/uint WM_QUERYUISTATE = 0x00000129U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-uninitmenupopup
+enum uint WM_UNINITMENUPOPUP = 0x00000125U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-menucommand
+enum uint WM_MENUCOMMAND = 0x00000126U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-changeuistate
+enum uint WM_CHANGEUISTATE = 0x00000127U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-updateuistate
+enum uint WM_UPDATEUISTATE = 0x00000128U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-queryuistate
+enum uint WM_QUERYUISTATE = 0x00000129U;
 
 enum : uint
 {
@@ -1991,54 +2128,76 @@ enum uint UISF_ACTIVE = 0x00000004U;
 enum : uint
 {
     WM_CTLCOLORMSGBOX    = 0x00000132U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-ctlcoloredit
     WM_CTLCOLOREDIT      = 0x00000133U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-ctlcolorlistbox
     WM_CTLCOLORLISTBOX   = 0x00000134U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-ctlcolorbtn
     WM_CTLCOLORBTN       = 0x00000135U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-ctlcolordlg
     WM_CTLCOLORDLG       = 0x00000136U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-ctlcolorscrollbar
     WM_CTLCOLORSCROLLBAR = 0x00000137U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-ctlcolorstatic
     WM_CTLCOLORSTATIC    = 0x00000138U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/mn-gethmenu))], [])*/uint MN_GETHMENU = 0x000001e1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/mn-gethmenu
+enum uint MN_GETHMENU = 0x000001e1U;
 
 enum : uint
 {
     WM_MOUSEFIRST = 0x00000200U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mousemove
     WM_MOUSEMOVE  = 0x00000200U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-lbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-lbuttondown
     WM_LBUTTONDOWN   = 0x00000201U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-lbuttonup
     WM_LBUTTONUP     = 0x00000202U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-lbuttondblclk
     WM_LBUTTONDBLCLK = 0x00000203U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-rbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-rbuttondown
     WM_RBUTTONDOWN   = 0x00000204U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-rbuttonup
     WM_RBUTTONUP     = 0x00000205U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-rbuttondblclk
     WM_RBUTTONDBLCLK = 0x00000206U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-mbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mbuttondown
     WM_MBUTTONDOWN   = 0x00000207U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mbuttonup
     WM_MBUTTONUP     = 0x00000208U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mbuttondblclk
     WM_MBUTTONDBLCLK = 0x00000209U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-mousewheel))], [])*/uint WM_MOUSEWHEEL = 0x0000020aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mousewheel
+enum uint WM_MOUSEWHEEL = 0x0000020aU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-xbuttondown))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-xbuttondown
     WM_XBUTTONDOWN   = 0x0000020bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-xbuttonup
     WM_XBUTTONUP     = 0x0000020cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-xbuttondblclk
     WM_XBUTTONDBLCLK = 0x0000020dU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-mousehwheel))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-mousehwheel
     WM_MOUSEHWHEEL = 0x0000020eU,
     WM_MOUSELAST   = 0x0000020eU,
 }
@@ -2047,136 +2206,201 @@ enum uint WHEEL_DELTA = 0x00000078U;
 
 enum : ushort
 {
-    XBUTTON1 = cast(ushort) 0x0001,
-    XBUTTON2 = cast(ushort) 0x0002,
+    XBUTTON1 = 0x0001,
+    XBUTTON2 = 0x0002,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-parentnotify))], [])*/uint WM_PARENTNOTIFY = 0x00000210U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-entermenuloop))], [])*/uint WM_ENTERMENULOOP = 0x00000211U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-exitmenuloop))], [])*/uint WM_EXITMENULOOP = 0x00000212U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-nextmenu))], [])*/uint WM_NEXTMENU = 0x00000213U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-sizing))], [])*/uint WM_SIZING = 0x00000214U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-capturechanged))], [])*/uint WM_CAPTURECHANGED = 0x00000215U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-moving))], [])*/uint WM_MOVING = 0x00000216U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/wm-powerbroadcast))], [])*/uint WM_POWERBROADCAST = 0x00000218U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-parentnotify
+enum uint WM_PARENTNOTIFY = 0x00000210U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-entermenuloop
+enum uint WM_ENTERMENULOOP = 0x00000211U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-exitmenuloop
+enum uint WM_EXITMENULOOP = 0x00000212U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-nextmenu
+enum uint WM_NEXTMENU = 0x00000213U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-sizing
+enum uint WM_SIZING = 0x00000214U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-capturechanged
+enum uint WM_CAPTURECHANGED = 0x00000215U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-moving
+enum uint WM_MOVING = 0x00000216U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/wm-powerbroadcast
+enum uint WM_POWERBROADCAST = 0x00000218U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/pbt-apmquerysuspend))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmquerysuspend
     PBT_APMQUERYSUSPEND       = 0x00000000U,
     PBT_APMQUERYSTANDBY       = 0x00000001U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmquerysuspendfailed
     PBT_APMQUERYSUSPENDFAILED = 0x00000002U,
     PBT_APMQUERYSTANDBYFAILED = 0x00000003U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/pbt-apmsuspend))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmsuspend
     PBT_APMSUSPEND        = 0x00000004U,
     PBT_APMSTANDBY        = 0x00000005U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmresumecritical
     PBT_APMRESUMECRITICAL = 0x00000006U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmresumesuspend
     PBT_APMRESUMESUSPEND  = 0x00000007U,
     PBT_APMRESUMESTANDBY  = 0x00000008U,
 }
 
 enum uint PBTF_APMRESUMEFROMFAILURE = 0x00000001U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/pbt-apmbatterylow))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmbatterylow
     PBT_APMBATTERYLOW        = 0x00000009U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmpowerstatuschange
     PBT_APMPOWERSTATUSCHANGE = 0x0000000aU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/pbt-apmoemevent))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmoemevent
     PBT_APMOEMEVENT        = 0x0000000bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-apmresumeautomatic
     PBT_APMRESUMEAUTOMATIC = 0x00000012U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/pbt-powersettingchange))], [])*/uint PBT_POWERSETTINGCHANGE = 0x00008013U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/pbt-powersettingchange
+enum uint PBT_POWERSETTINGCHANGE = 0x00008013U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-mdicreate))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdicreate
     WM_MDICREATE      = 0x00000220U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdidestroy
     WM_MDIDESTROY     = 0x00000221U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdiactivate
     WM_MDIACTIVATE    = 0x00000222U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdirestore
     WM_MDIRESTORE     = 0x00000223U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdinext
     WM_MDINEXT        = 0x00000224U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdimaximize
     WM_MDIMAXIMIZE    = 0x00000225U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mditile
     WM_MDITILE        = 0x00000226U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdicascade
     WM_MDICASCADE     = 0x00000227U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdiiconarrange
     WM_MDIICONARRANGE = 0x00000228U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-mdigetactive))], [])*/uint WM_MDIGETACTIVE = 0x00000229U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-mdisetmenu))], [])*/uint WM_MDISETMENU = 0x00000230U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-entersizemove))], [])*/uint WM_ENTERSIZEMOVE = 0x00000231U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-exitsizemove))], [])*/uint WM_EXITSIZEMOVE = 0x00000232U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/shell/wm-dropfiles))], [])*/uint WM_DROPFILES = 0x00000233U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-mdirefreshmenu))], [])*/uint WM_MDIREFRESHMENU = 0x00000234U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdigetactive
+enum uint WM_MDIGETACTIVE = 0x00000229U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdisetmenu
+enum uint WM_MDISETMENU = 0x00000230U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-entersizemove
+enum uint WM_ENTERSIZEMOVE = 0x00000231U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-exitsizemove
+enum uint WM_EXITSIZEMOVE = 0x00000232U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/shell/wm-dropfiles
+enum uint WM_DROPFILES = 0x00000233U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-mdirefreshmenu
+enum uint WM_MDIREFRESHMENU = 0x00000234U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerdevicechange))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerdevicechange
     WM_POINTERDEVICECHANGE     = 0x00000238U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerdeviceinrange
     WM_POINTERDEVICEINRANGE    = 0x00000239U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerdeviceoutofrange
     WM_POINTERDEVICEOUTOFRANGE = 0x0000023aU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wintouch/wm-touchdown))], [])*/uint WM_TOUCH = 0x00000240U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wintouch/wm-touchdown
+enum uint WM_TOUCH = 0x00000240U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-ncpointerupdate))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-ncpointerupdate
     WM_NCPOINTERUPDATE = 0x00000241U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-ncpointerdown
     WM_NCPOINTERDOWN   = 0x00000242U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-ncpointerup
     WM_NCPOINTERUP     = 0x00000243U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerupdate))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerupdate
     WM_POINTERUPDATE         = 0x00000245U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerdown
     WM_POINTERDOWN           = 0x00000246U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerup
     WM_POINTERUP             = 0x00000247U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerenter
     WM_POINTERENTER          = 0x00000249U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerleave
     WM_POINTERLEAVE          = 0x0000024aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointeractivate
     WM_POINTERACTIVATE       = 0x0000024bU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointercapturechanged
     WM_POINTERCAPTURECHANGED = 0x0000024cU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-touchhittesting))], [])*/uint WM_TOUCHHITTESTING = 0x0000024dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-touchhittesting
+enum uint WM_TOUCHHITTESTING = 0x0000024dU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerwheel))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerwheel
     WM_POINTERWHEEL  = 0x0000024eU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerhwheel
     WM_POINTERHWHEEL = 0x0000024fU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/dm-pointerhittest))], [])*/uint DM_POINTERHITTEST = 0x00000250U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/dm-pointerhittest
+enum uint DM_POINTERHITTEST = 0x00000250U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerroutedto))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerroutedto
     WM_POINTERROUTEDTO       = 0x00000251U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerroutedaway
     WM_POINTERROUTEDAWAY     = 0x00000252U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputmsg/wm-pointerroutedreleased
     WM_POINTERROUTEDRELEASED = 0x00000253U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/wm-ime-setcontext))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-setcontext
     WM_IME_SETCONTEXT      = 0x00000281U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-notify
     WM_IME_NOTIFY          = 0x00000282U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-control
     WM_IME_CONTROL         = 0x00000283U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-compositionfull
     WM_IME_COMPOSITIONFULL = 0x00000284U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/wm-ime-select))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-select
     WM_IME_SELECT  = 0x00000285U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-char
     WM_IME_CHAR    = 0x00000286U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-request
     WM_IME_REQUEST = 0x00000288U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-keydown
     WM_IME_KEYDOWN = 0x00000290U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/wm-ime-keyup
     WM_IME_KEYUP   = 0x00000291U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-ncmousehover))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncmousehover
     WM_NCMOUSEHOVER = 0x000002a0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-ncmouseleave
     WM_NCMOUSELEAVE = 0x000002a2U,
 }
 
@@ -2188,64 +2412,98 @@ enum : uint
     WM_TABLET_LAST  = 0x000002dfU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/hidpi/wm-dpichanged))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/hidpi/wm-dpichanged
     WM_DPICHANGED              = 0x000002e0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/hidpi/wm-dpichanged-beforeparent
     WM_DPICHANGED_BEFOREPARENT = 0x000002e2U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/hidpi/wm-dpichanged-afterparent
     WM_DPICHANGED_AFTERPARENT  = 0x000002e3U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/hidpi/wm-getdpiscaledsize))], [])*/uint WM_GETDPISCALEDSIZE = 0x000002e4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/hidpi/wm-getdpiscaledsize
+enum uint WM_GETDPISCALEDSIZE = 0x000002e4U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-cut))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-cut
     WM_CUT   = 0x00000300U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-copy
     WM_COPY  = 0x00000301U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-paste
     WM_PASTE = 0x00000302U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-clear))], [])*/uint WM_CLEAR = 0x00000303U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-clear
+enum uint WM_CLEAR = 0x00000303U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/wm-undo))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/wm-undo
     WM_UNDO             = 0x00000304U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-renderformat
     WM_RENDERFORMAT     = 0x00000305U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-renderallformats
     WM_RENDERALLFORMATS = 0x00000306U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-destroyclipboard))], [])*/uint WM_DESTROYCLIPBOARD = 0x00000307U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-drawclipboard))], [])*/uint WM_DRAWCLIPBOARD = 0x00000308U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-paintclipboard))], [])*/uint WM_PAINTCLIPBOARD = 0x00000309U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-vscrollclipboard))], [])*/uint WM_VSCROLLCLIPBOARD = 0x0000030aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-sizeclipboard))], [])*/uint WM_SIZECLIPBOARD = 0x0000030bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-askcbformatname))], [])*/uint WM_ASKCBFORMATNAME = 0x0000030cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-changecbchain))], [])*/uint WM_CHANGECBCHAIN = 0x0000030dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-hscrollclipboard))], [])*/uint WM_HSCROLLCLIPBOARD = 0x0000030eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-querynewpalette))], [])*/uint WM_QUERYNEWPALETTE = 0x0000030fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-destroyclipboard
+enum uint WM_DESTROYCLIPBOARD = 0x00000307U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-drawclipboard
+enum uint WM_DRAWCLIPBOARD = 0x00000308U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-paintclipboard
+enum uint WM_PAINTCLIPBOARD = 0x00000309U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-vscrollclipboard
+enum uint WM_VSCROLLCLIPBOARD = 0x0000030aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-sizeclipboard
+enum uint WM_SIZECLIPBOARD = 0x0000030bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-askcbformatname
+enum uint WM_ASKCBFORMATNAME = 0x0000030cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-changecbchain
+enum uint WM_CHANGECBCHAIN = 0x0000030dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-hscrollclipboard
+enum uint WM_HSCROLLCLIPBOARD = 0x0000030eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-querynewpalette
+enum uint WM_QUERYNEWPALETTE = 0x0000030fU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-paletteischanging))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-paletteischanging
     WM_PALETTEISCHANGING = 0x00000310U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-palettechanged
     WM_PALETTECHANGED    = 0x00000311U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-hotkey))], [])*/uint WM_HOTKEY = 0x00000312U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/gdi/wm-print))], [])*/uint WM_PRINT = 0x00000317U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-appcommand))], [])*/uint WM_APPCOMMAND = 0x00000319U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-themechanged))], [])*/uint WM_THEMECHANGED = 0x0000031aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dataxchg/wm-clipboardupdate))], [])*/uint WM_CLIPBOARDUPDATE = 0x0000031dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dwm/wm-dwmcompositionchanged))], [])*/uint WM_DWMCOMPOSITIONCHANGED = 0x0000031eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dwm/wm-dwmncrenderingchanged))], [])*/uint WM_DWMNCRENDERINGCHANGED = 0x0000031fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dwm/wm-dwmcolorizationcolorchanged))], [])*/uint WM_DWMCOLORIZATIONCOLORCHANGED = 0x00000320U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dwm/wm-dwmwindowmaximizedchange))], [])*/uint WM_DWMWINDOWMAXIMIZEDCHANGE = 0x00000321U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-hotkey
+enum uint WM_HOTKEY = 0x00000312U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/gdi/wm-print
+enum uint WM_PRINT = 0x00000317U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/inputdev/wm-appcommand
+enum uint WM_APPCOMMAND = 0x00000319U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-themechanged
+enum uint WM_THEMECHANGED = 0x0000031aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dataxchg/wm-clipboardupdate
+enum uint WM_CLIPBOARDUPDATE = 0x0000031dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dwm/wm-dwmcompositionchanged
+enum uint WM_DWMCOMPOSITIONCHANGED = 0x0000031eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dwm/wm-dwmncrenderingchanged
+enum uint WM_DWMNCRENDERINGCHANGED = 0x0000031fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dwm/wm-dwmcolorizationcolorchanged
+enum uint WM_DWMCOLORIZATIONCOLORCHANGED = 0x00000320U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dwm/wm-dwmwindowmaximizedchange
+enum uint WM_DWMWINDOWMAXIMIZEDCHANGE = 0x00000321U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dwm/wm-dwmsendiconicthumbnail))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dwm/wm-dwmsendiconicthumbnail
     WM_DWMSENDICONICTHUMBNAIL         = 0x00000323U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dwm/wm-dwmsendiconiclivepreviewbitmap
     WM_DWMSENDICONICLIVEPREVIEWBITMAP = 0x00000326U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/menurc/wm-gettitlebarinfoex))], [])*/uint WM_GETTITLEBARINFOEX = 0x0000033fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/wm-gettitlebarinfoex
+enum uint WM_GETTITLEBARINFOEX = 0x0000033fU;
 
 enum : uint
 {
@@ -2265,9 +2523,11 @@ enum : uint
     WM_PENWINLAST  = 0x0000038fU,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/wm-app))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-app
     WM_APP  = 0x00008000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/winmsg/wm-user
     WM_USER = 0x00000400U,
 }
 
@@ -2413,8 +2673,8 @@ enum : uint
 }
 
 enum uint BROADCAST_QUERY_DENY = 0x424d5144U;
-enum HWND HWND_BROADCAST = HWND(0x0000ffff);
-enum HWND HWND_MESSAGE = HWND(0xfffffffd);
+enum HWND HWND_BROADCAST = HWND(cast(void*) 0x0000ffff);
+enum HWND HWND_MESSAGE = HWND(cast(void*) 0xfffffffd);
 
 enum : uint
 {
@@ -2425,16 +2685,16 @@ enum : uint
     ISMEX_REPLIED  = 0x00000008U,
 }
 
-enum HWND HWND_DESKTOP = HWND(0x00000000);
+enum HWND HWND_DESKTOP = HWND(cast(void*) 0x00000000);
 enum uint PW_RENDERFULLCONTENT = 0x00000002U;
 enum uint SWP_NONE = 0x00000000U;
 
 enum : HWND
 {
-    HWND_TOP       = HWND(0x00000000),
-    HWND_BOTTOM    = HWND(0x00000001),
-    HWND_TOPMOST   = HWND(0xffffffff),
-    HWND_NOTOPMOST = HWND(0xfffffffe),
+    HWND_TOP       = HWND(cast(void*) 0x00000000),
+    HWND_BOTTOM    = HWND(cast(void*) 0x00000001),
+    HWND_TOPMOST   = HWND(cast(void*) 0xffffffff),
+    HWND_NOTOPMOST = HWND(cast(void*) 0xfffffffe),
 }
 
 enum uint DLGWINDOWEXTRA = 0x0000001eU;
@@ -2637,36 +2897,36 @@ enum : uint
 
 enum : PWSTR
 {
-    IDC_ARROW   = PWSTR(cast(ushort) 0x7f00),
-    IDC_IBEAM   = PWSTR(cast(ushort) 0x7f01),
-    IDC_WAIT    = PWSTR(cast(ushort) 0x7f02),
-    IDC_CROSS   = PWSTR(cast(ushort) 0x7f03),
-    IDC_UPARROW = PWSTR(cast(ushort) 0x7f04),
+    IDC_ARROW   = PWSTR(cast(wchar*) 0x7f00),
+    IDC_IBEAM   = PWSTR(cast(wchar*) 0x7f01),
+    IDC_WAIT    = PWSTR(cast(wchar*) 0x7f02),
+    IDC_CROSS   = PWSTR(cast(wchar*) 0x7f03),
+    IDC_UPARROW = PWSTR(cast(wchar*) 0x7f04),
 }
 
 enum : PWSTR
 {
-    IDC_SIZE     = PWSTR(cast(ushort) 0x7f80),
-    IDC_ICON     = PWSTR(cast(ushort) 0x7f81),
-    IDC_SIZENWSE = PWSTR(cast(ushort) 0x7f82),
-    IDC_SIZENESW = PWSTR(cast(ushort) 0x7f83),
-    IDC_SIZEWE   = PWSTR(cast(ushort) 0x7f84),
-    IDC_SIZENS   = PWSTR(cast(ushort) 0x7f85),
-    IDC_SIZEALL  = PWSTR(cast(ushort) 0x7f86),
+    IDC_SIZE     = PWSTR(cast(wchar*) 0x7f80),
+    IDC_ICON     = PWSTR(cast(wchar*) 0x7f81),
+    IDC_SIZENWSE = PWSTR(cast(wchar*) 0x7f82),
+    IDC_SIZENESW = PWSTR(cast(wchar*) 0x7f83),
+    IDC_SIZEWE   = PWSTR(cast(wchar*) 0x7f84),
+    IDC_SIZENS   = PWSTR(cast(wchar*) 0x7f85),
+    IDC_SIZEALL  = PWSTR(cast(wchar*) 0x7f86),
 }
 
 enum : PWSTR
 {
-    IDC_NO          = PWSTR(cast(ushort) 0x7f88),
-    IDC_HAND        = PWSTR(cast(ushort) 0x7f89),
-    IDC_APPSTARTING = PWSTR(cast(ushort) 0x7f8a),
+    IDC_NO          = PWSTR(cast(wchar*) 0x7f88),
+    IDC_HAND        = PWSTR(cast(wchar*) 0x7f89),
+    IDC_APPSTARTING = PWSTR(cast(wchar*) 0x7f8a),
 }
 
 enum : PWSTR
 {
-    IDC_HELP   = PWSTR(cast(ushort) 0x7f8b),
-    IDC_PIN    = PWSTR(cast(ushort) 0x7f9f),
-    IDC_PERSON = PWSTR(cast(ushort) 0x7fa0),
+    IDC_HELP   = PWSTR(cast(wchar*) 0x7f8b),
+    IDC_PIN    = PWSTR(cast(wchar*) 0x7f9f),
+    IDC_PERSON = PWSTR(cast(wchar*) 0x7fa0),
 }
 
 enum : uint
@@ -2778,24 +3038,24 @@ enum : uint
 
 enum uint OIC_SHIELD = 0x00007f06U;
 enum uint ORD_LANGDRIVER = 0x00000001U;
-enum PWSTR IDI_APPLICATION = PWSTR(0x00007f00U);
+enum PWSTR IDI_APPLICATION = PWSTR(cast(wchar*) 0x00007f00U);
 
 enum : PWSTR
 {
-    IDI_HAND     = PWSTR(0x00007f01U),
-    IDI_QUESTION = PWSTR(0x00007f02U),
+    IDI_HAND     = PWSTR(cast(wchar*) 0x00007f01U),
+    IDI_QUESTION = PWSTR(cast(wchar*) 0x00007f02U),
 }
 
-enum PWSTR IDI_EXCLAMATION = PWSTR(0x00007f03U);
-enum PWSTR IDI_ASTERISK = PWSTR(0x00007f04U);
-enum PWSTR IDI_WINLOGO = PWSTR(0x00007f05U);
-enum PWSTR IDI_SHIELD = PWSTR(0x00007f06U);
-enum PWSTR IDI_WARNING = PWSTR(0x00007f03U);
+enum PWSTR IDI_EXCLAMATION = PWSTR(cast(wchar*) 0x00007f03U);
+enum PWSTR IDI_ASTERISK = PWSTR(cast(wchar*) 0x00007f04U);
+enum PWSTR IDI_WINLOGO = PWSTR(cast(wchar*) 0x00007f05U);
+enum PWSTR IDI_SHIELD = PWSTR(cast(wchar*) 0x00007f06U);
+enum PWSTR IDI_WARNING = PWSTR(cast(wchar*) 0x00007f03U);
 
 enum : PWSTR
 {
-    IDI_ERROR       = PWSTR(0x00007f01U),
-    IDI_INFORMATION = PWSTR(0x00007f04U),
+    IDI_ERROR       = PWSTR(cast(wchar*) 0x00007f01U),
+    IDI_INFORMATION = PWSTR(cast(wchar*) 0x00007f04U),
 }
 
 enum : int
@@ -2821,18 +3081,28 @@ enum int ES_OEMCONVERT = 0x00000400;
 enum int ES_READONLY = 0x00000800;
 enum int ES_WANTRETURN = 0x00001000;
 enum int ES_NUMBER = 0x00002000;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-setfocus))], [])*/uint EN_SETFOCUS = 0x00000100U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-killfocus))], [])*/uint EN_KILLFOCUS = 0x00000200U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-change--rich-edit-control-))], [])*/uint EN_CHANGE = 0x00000300U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-update))], [])*/uint EN_UPDATE = 0x00000400U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-errspace))], [])*/uint EN_ERRSPACE = 0x00000500U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-maxtext))], [])*/uint EN_MAXTEXT = 0x00000501U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-hscroll))], [])*/uint EN_HSCROLL = 0x00000601U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-vscroll))], [])*/uint EN_VSCROLL = 0x00000602U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-setfocus
+enum uint EN_SETFOCUS = 0x00000100U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-killfocus
+enum uint EN_KILLFOCUS = 0x00000200U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-change--rich-edit-control-
+enum uint EN_CHANGE = 0x00000300U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-update
+enum uint EN_UPDATE = 0x00000400U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-errspace
+enum uint EN_ERRSPACE = 0x00000500U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-maxtext
+enum uint EN_MAXTEXT = 0x00000501U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-hscroll
+enum uint EN_HSCROLL = 0x00000601U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-vscroll
+enum uint EN_VSCROLL = 0x00000602U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-align-ltr-ec))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-align-ltr-ec
     EN_ALIGN_LTR_EC = 0x00000700U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/en-align-rtl-ec
     EN_ALIGN_RTL_EC = 0x00000701U,
 }
 
@@ -2892,46 +3162,74 @@ enum : int
     BS_RIGHTBUTTON = 0x00000020,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-clicked))], [])*/uint BN_CLICKED = 0x00000000U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-paint))], [])*/uint BN_PAINT = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-hilite))], [])*/uint BN_HILITE = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-unhilite))], [])*/uint BN_UNHILITE = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-disable))], [])*/uint BN_DISABLE = 0x00000004U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-doubleclicked))], [])*/uint BN_DOUBLECLICKED = 0x00000005U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-pushed))], [])*/uint BN_PUSHED = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-unpushed))], [])*/uint BN_UNPUSHED = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-dblclk))], [])*/uint BN_DBLCLK = 0x00000005U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-setfocus))], [])*/uint BN_SETFOCUS = 0x00000006U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bn-killfocus))], [])*/uint BN_KILLFOCUS = 0x00000007U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-getcheck))], [])*/uint BM_GETCHECK = 0x000000f0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-setcheck))], [])*/uint BM_SETCHECK = 0x000000f1U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-getstate))], [])*/uint BM_GETSTATE = 0x000000f2U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-clicked
+enum uint BN_CLICKED = 0x00000000U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-paint
+enum uint BN_PAINT = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-hilite
+enum uint BN_HILITE = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-unhilite
+enum uint BN_UNHILITE = 0x00000003U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-disable
+enum uint BN_DISABLE = 0x00000004U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-doubleclicked
+enum uint BN_DOUBLECLICKED = 0x00000005U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-pushed
+enum uint BN_PUSHED = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-unpushed
+enum uint BN_UNPUSHED = 0x00000003U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-dblclk
+enum uint BN_DBLCLK = 0x00000005U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-setfocus
+enum uint BN_SETFOCUS = 0x00000006U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bn-killfocus
+enum uint BN_KILLFOCUS = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-getcheck
+enum uint BM_GETCHECK = 0x000000f0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-setcheck
+enum uint BM_SETCHECK = 0x000000f1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-getstate
+enum uint BM_GETSTATE = 0x000000f2U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-setstate))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-setstate
     BM_SETSTATE = 0x000000f3U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-setstyle
     BM_SETSTYLE = 0x000000f4U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-click))], [])*/uint BM_CLICK = 0x000000f5U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-getimage))], [])*/uint BM_GETIMAGE = 0x000000f6U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-click
+enum uint BM_CLICK = 0x000000f5U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-getimage
+enum uint BM_GETIMAGE = 0x000000f6U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bm-setimage))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-setimage
     BM_SETIMAGE     = 0x000000f7U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/bm-setdontclick
     BM_SETDONTCLICK = 0x000000f8U,
 }
 
 enum uint BST_PUSHED = 0x00000004U;
 enum uint BST_FOCUS = 0x00000008U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stm-seticon))], [])*/uint STM_SETICON = 0x00000170U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stm-geticon))], [])*/uint STM_GETICON = 0x00000171U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stm-setimage))], [])*/uint STM_SETIMAGE = 0x00000172U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stm-getimage))], [])*/uint STM_GETIMAGE = 0x00000173U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stn-clicked))], [])*/uint STN_CLICKED = 0x00000000U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stn-dblclk))], [])*/uint STN_DBLCLK = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stn-enable))], [])*/uint STN_ENABLE = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/stn-disable))], [])*/uint STN_DISABLE = 0x00000003U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stm-seticon
+enum uint STM_SETICON = 0x00000170U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stm-geticon
+enum uint STM_GETICON = 0x00000171U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stm-setimage
+enum uint STM_SETIMAGE = 0x00000172U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stm-getimage
+enum uint STM_GETIMAGE = 0x00000173U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stn-clicked
+enum uint STN_CLICKED = 0x00000000U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stn-dblclk
+enum uint STN_DBLCLK = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stn-enable
+enum uint STN_ENABLE = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/stn-disable
+enum uint STN_DISABLE = 0x00000003U;
 enum uint STM_MSGMAX = 0x00000174U;
 enum uint DWL_MSGRESULT = 0x00000000U;
 enum uint DWL_DLGPROC = 0x00000004U;
@@ -2957,9 +3255,12 @@ enum : int
 
 enum int DS_CONTEXTHELP = 0x00002000;
 enum int DS_USEPIXELS = 0x00008000;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/dm-getdefid))], [])*/uint DM_GETDEFID = 0x00000400U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/dm-setdefid))], [])*/uint DM_SETDEFID = 0x00000401U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/dm-reposition))], [])*/uint DM_REPOSITION = 0x00000402U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/dm-getdefid
+enum uint DM_GETDEFID = 0x00000400U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/dm-setdefid
+enum uint DM_SETDEFID = 0x00000401U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/dm-reposition
+enum uint DM_REPOSITION = 0x00000402U;
 enum uint DC_HASDEFID = 0x0000534bU;
 
 enum : uint
@@ -2991,83 +3292,130 @@ enum : int
     LB_ERRSPACE = 0xfffffffe,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lbn-errspace))], [])*/int LBN_ERRSPACE = 0xfffffffe;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lbn-selchange))], [])*/uint LBN_SELCHANGE = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lbn-dblclk))], [])*/uint LBN_DBLCLK = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lbn-errspace
+enum int LBN_ERRSPACE = 0xfffffffe;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lbn-selchange
+enum uint LBN_SELCHANGE = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lbn-dblclk
+enum uint LBN_DBLCLK = 0x00000002U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lbn-selcancel))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lbn-selcancel
     LBN_SELCANCEL = 0x00000003U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lbn-setfocus
     LBN_SETFOCUS  = 0x00000004U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lbn-killfocus))], [])*/uint LBN_KILLFOCUS = 0x00000005U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-addstring))], [])*/uint LB_ADDSTRING = 0x00000180U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-insertstring))], [])*/uint LB_INSERTSTRING = 0x00000181U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-deletestring))], [])*/uint LB_DELETESTRING = 0x00000182U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-selitemrangeex))], [])*/uint LB_SELITEMRANGEEX = 0x00000183U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-resetcontent))], [])*/uint LB_RESETCONTENT = 0x00000184U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lbn-killfocus
+enum uint LBN_KILLFOCUS = 0x00000005U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-addstring
+enum uint LB_ADDSTRING = 0x00000180U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-insertstring
+enum uint LB_INSERTSTRING = 0x00000181U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-deletestring
+enum uint LB_DELETESTRING = 0x00000182U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-selitemrangeex
+enum uint LB_SELITEMRANGEEX = 0x00000183U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-resetcontent
+enum uint LB_RESETCONTENT = 0x00000184U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setsel))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setsel
     LB_SETSEL    = 0x00000185U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setcursel
     LB_SETCURSEL = 0x00000186U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getsel))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getsel
     LB_GETSEL     = 0x00000187U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getcursel
     LB_GETCURSEL  = 0x00000188U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-gettext
     LB_GETTEXT    = 0x00000189U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-gettextlen
     LB_GETTEXTLEN = 0x0000018aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getcount
     LB_GETCOUNT   = 0x0000018bU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-selectstring))], [])*/uint LB_SELECTSTRING = 0x0000018cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-selectstring
+enum uint LB_SELECTSTRING = 0x0000018cU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-dir))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-dir
     LB_DIR         = 0x0000018dU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-gettopindex
     LB_GETTOPINDEX = 0x0000018eU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-findstring))], [])*/uint LB_FINDSTRING = 0x0000018fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-findstring
+enum uint LB_FINDSTRING = 0x0000018fU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getselcount))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getselcount
     LB_GETSELCOUNT = 0x00000190U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getselitems
     LB_GETSELITEMS = 0x00000191U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-settabstops))], [])*/uint LB_SETTABSTOPS = 0x00000192U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-gethorizontalextent))], [])*/uint LB_GETHORIZONTALEXTENT = 0x00000193U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-sethorizontalextent))], [])*/uint LB_SETHORIZONTALEXTENT = 0x00000194U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setcolumnwidth))], [])*/uint LB_SETCOLUMNWIDTH = 0x00000195U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-addfile))], [])*/uint LB_ADDFILE = 0x00000196U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-settopindex))], [])*/uint LB_SETTOPINDEX = 0x00000197U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-settabstops
+enum uint LB_SETTABSTOPS = 0x00000192U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-gethorizontalextent
+enum uint LB_GETHORIZONTALEXTENT = 0x00000193U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-sethorizontalextent
+enum uint LB_SETHORIZONTALEXTENT = 0x00000194U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setcolumnwidth
+enum uint LB_SETCOLUMNWIDTH = 0x00000195U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-addfile
+enum uint LB_ADDFILE = 0x00000196U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-settopindex
+enum uint LB_SETTOPINDEX = 0x00000197U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getitemrect))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getitemrect
     LB_GETITEMRECT = 0x00000198U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getitemdata
     LB_GETITEMDATA = 0x00000199U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setitemdata))], [])*/uint LB_SETITEMDATA = 0x0000019aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-selitemrange))], [])*/uint LB_SELITEMRANGE = 0x0000019bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setanchorindex))], [])*/uint LB_SETANCHORINDEX = 0x0000019cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getanchorindex))], [])*/uint LB_GETANCHORINDEX = 0x0000019dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setcaretindex))], [])*/uint LB_SETCARETINDEX = 0x0000019eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getcaretindex))], [])*/uint LB_GETCARETINDEX = 0x0000019fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setitemheight))], [])*/uint LB_SETITEMHEIGHT = 0x000001a0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getitemheight))], [])*/uint LB_GETITEMHEIGHT = 0x000001a1U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-findstringexact))], [])*/uint LB_FINDSTRINGEXACT = 0x000001a2U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setlocale))], [])*/uint LB_SETLOCALE = 0x000001a5U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getlocale))], [])*/uint LB_GETLOCALE = 0x000001a6U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-setcount))], [])*/uint LB_SETCOUNT = 0x000001a7U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-initstorage))], [])*/uint LB_INITSTORAGE = 0x000001a8U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-itemfrompoint))], [])*/uint LB_ITEMFROMPOINT = 0x000001a9U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setitemdata
+enum uint LB_SETITEMDATA = 0x0000019aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-selitemrange
+enum uint LB_SELITEMRANGE = 0x0000019bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setanchorindex
+enum uint LB_SETANCHORINDEX = 0x0000019cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getanchorindex
+enum uint LB_GETANCHORINDEX = 0x0000019dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setcaretindex
+enum uint LB_SETCARETINDEX = 0x0000019eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getcaretindex
+enum uint LB_GETCARETINDEX = 0x0000019fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setitemheight
+enum uint LB_SETITEMHEIGHT = 0x000001a0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getitemheight
+enum uint LB_GETITEMHEIGHT = 0x000001a1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-findstringexact
+enum uint LB_FINDSTRINGEXACT = 0x000001a2U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setlocale
+enum uint LB_SETLOCALE = 0x000001a5U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getlocale
+enum uint LB_GETLOCALE = 0x000001a6U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-setcount
+enum uint LB_SETCOUNT = 0x000001a7U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-initstorage
+enum uint LB_INITSTORAGE = 0x000001a8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-itemfrompoint
+enum uint LB_ITEMFROMPOINT = 0x000001a9U;
 enum uint LB_MULTIPLEADDSTRING = 0x000001b1U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lb-getlistboxinfo))], [])*/uint LB_GETLISTBOXINFO = 0x000001b2U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/lb-getlistboxinfo
+enum uint LB_GETLISTBOXINFO = 0x000001b2U;
 enum uint LB_MSGMAX = 0x000001b3U;
 enum int LBS_NOTIFY = 0x00000001;
 
@@ -3108,24 +3456,35 @@ enum : int
     CB_ERRSPACE = 0xfffffffe,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-errspace))], [])*/int CBN_ERRSPACE = 0xffffffff;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-selchange))], [])*/uint CBN_SELCHANGE = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-dblclk))], [])*/uint CBN_DBLCLK = 0x00000002U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-setfocus))], [])*/uint CBN_SETFOCUS = 0x00000003U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-killfocus))], [])*/uint CBN_KILLFOCUS = 0x00000004U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-errspace
+enum int CBN_ERRSPACE = 0xffffffff;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-selchange
+enum uint CBN_SELCHANGE = 0x00000001U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-dblclk
+enum uint CBN_DBLCLK = 0x00000002U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-setfocus
+enum uint CBN_SETFOCUS = 0x00000003U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-killfocus
+enum uint CBN_KILLFOCUS = 0x00000004U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-editchange))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-editchange
     CBN_EDITCHANGE = 0x00000005U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-editupdate
     CBN_EDITUPDATE = 0x00000006U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-dropdown))], [])*/uint CBN_DROPDOWN = 0x00000007U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-closeup))], [])*/uint CBN_CLOSEUP = 0x00000008U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-dropdown
+enum uint CBN_DROPDOWN = 0x00000007U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-closeup
+enum uint CBN_CLOSEUP = 0x00000008U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbn-selendok))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-selendok
     CBN_SELENDOK     = 0x00000009U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cbn-selendcancel
     CBN_SELENDCANCEL = 0x0000000aU,
 }
 
@@ -3156,52 +3515,87 @@ enum int CBS_NOINTEGRALHEIGHT = 0x00000400;
 enum int CBS_DISABLENOSCROLL = 0x00000800;
 enum int CBS_UPPERCASE = 0x00002000;
 enum int CBS_LOWERCASE = 0x00004000;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-geteditsel))], [])*/uint CB_GETEDITSEL = 0x00000140U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-limittext))], [])*/uint CB_LIMITTEXT = 0x00000141U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-seteditsel))], [])*/uint CB_SETEDITSEL = 0x00000142U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-addstring))], [])*/uint CB_ADDSTRING = 0x00000143U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-deletestring))], [])*/uint CB_DELETESTRING = 0x00000144U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-geteditsel
+enum uint CB_GETEDITSEL = 0x00000140U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-limittext
+enum uint CB_LIMITTEXT = 0x00000141U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-seteditsel
+enum uint CB_SETEDITSEL = 0x00000142U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-addstring
+enum uint CB_ADDSTRING = 0x00000143U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-deletestring
+enum uint CB_DELETESTRING = 0x00000144U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-dir))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-dir
     CB_DIR          = 0x00000145U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getcount
     CB_GETCOUNT     = 0x00000146U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getcursel
     CB_GETCURSEL    = 0x00000147U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getlbtext
     CB_GETLBTEXT    = 0x00000148U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getlbtextlen
     CB_GETLBTEXTLEN = 0x00000149U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-insertstring))], [])*/uint CB_INSERTSTRING = 0x0000014aU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-resetcontent))], [])*/uint CB_RESETCONTENT = 0x0000014bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-findstring))], [])*/uint CB_FINDSTRING = 0x0000014cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-selectstring))], [])*/uint CB_SELECTSTRING = 0x0000014dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setcursel))], [])*/uint CB_SETCURSEL = 0x0000014eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-showdropdown))], [])*/uint CB_SHOWDROPDOWN = 0x0000014fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getitemdata))], [])*/uint CB_GETITEMDATA = 0x00000150U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setitemdata))], [])*/uint CB_SETITEMDATA = 0x00000151U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getdroppedcontrolrect))], [])*/uint CB_GETDROPPEDCONTROLRECT = 0x00000152U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setitemheight))], [])*/uint CB_SETITEMHEIGHT = 0x00000153U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getitemheight))], [])*/uint CB_GETITEMHEIGHT = 0x00000154U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setextendedui))], [])*/uint CB_SETEXTENDEDUI = 0x00000155U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getextendedui))], [])*/uint CB_GETEXTENDEDUI = 0x00000156U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getdroppedstate))], [])*/uint CB_GETDROPPEDSTATE = 0x00000157U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-findstringexact))], [])*/uint CB_FINDSTRINGEXACT = 0x00000158U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setlocale))], [])*/uint CB_SETLOCALE = 0x00000159U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-insertstring
+enum uint CB_INSERTSTRING = 0x0000014aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-resetcontent
+enum uint CB_RESETCONTENT = 0x0000014bU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-findstring
+enum uint CB_FINDSTRING = 0x0000014cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-selectstring
+enum uint CB_SELECTSTRING = 0x0000014dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-setcursel
+enum uint CB_SETCURSEL = 0x0000014eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-showdropdown
+enum uint CB_SHOWDROPDOWN = 0x0000014fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getitemdata
+enum uint CB_GETITEMDATA = 0x00000150U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-setitemdata
+enum uint CB_SETITEMDATA = 0x00000151U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getdroppedcontrolrect
+enum uint CB_GETDROPPEDCONTROLRECT = 0x00000152U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-setitemheight
+enum uint CB_SETITEMHEIGHT = 0x00000153U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getitemheight
+enum uint CB_GETITEMHEIGHT = 0x00000154U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-setextendedui
+enum uint CB_SETEXTENDEDUI = 0x00000155U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getextendedui
+enum uint CB_GETEXTENDEDUI = 0x00000156U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getdroppedstate
+enum uint CB_GETDROPPEDSTATE = 0x00000157U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-findstringexact
+enum uint CB_FINDSTRINGEXACT = 0x00000158U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-setlocale
+enum uint CB_SETLOCALE = 0x00000159U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getlocale))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getlocale
     CB_GETLOCALE   = 0x0000015aU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-gettopindex
     CB_GETTOPINDEX = 0x0000015bU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-settopindex))], [])*/uint CB_SETTOPINDEX = 0x0000015cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-gethorizontalextent))], [])*/uint CB_GETHORIZONTALEXTENT = 0x0000015dU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-sethorizontalextent))], [])*/uint CB_SETHORIZONTALEXTENT = 0x0000015eU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getdroppedwidth))], [])*/uint CB_GETDROPPEDWIDTH = 0x0000015fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setdroppedwidth))], [])*/uint CB_SETDROPPEDWIDTH = 0x00000160U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-initstorage))], [])*/uint CB_INITSTORAGE = 0x00000161U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-settopindex
+enum uint CB_SETTOPINDEX = 0x0000015cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-gethorizontalextent
+enum uint CB_GETHORIZONTALEXTENT = 0x0000015dU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-sethorizontalextent
+enum uint CB_SETHORIZONTALEXTENT = 0x0000015eU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getdroppedwidth
+enum uint CB_GETDROPPEDWIDTH = 0x0000015fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-setdroppedwidth
+enum uint CB_SETDROPPEDWIDTH = 0x00000160U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-initstorage
+enum uint CB_INITSTORAGE = 0x00000161U;
 enum uint CB_MULTIPLEADDSTRING = 0x00000163U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getcomboboxinfo))], [])*/uint CB_GETCOMBOBOXINFO = 0x00000164U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/cb-getcomboboxinfo
+enum uint CB_GETCOMBOBOXINFO = 0x00000164U;
 enum uint CB_MSGMAX = 0x00000165U;
 
 enum : int
@@ -3223,22 +3617,31 @@ enum : int
     SBS_SIZEGRIP                = 0x00000010,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-setpos))], [])*/uint SBM_SETPOS = 0x000000e0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-getpos))], [])*/uint SBM_GETPOS = 0x000000e1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-setpos
+enum uint SBM_SETPOS = 0x000000e0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-getpos
+enum uint SBM_GETPOS = 0x000000e1U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-setrange))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-setrange
     SBM_SETRANGE       = 0x000000e2U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-setrangeredraw
     SBM_SETRANGEREDRAW = 0x000000e6U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-getrange))], [])*/uint SBM_GETRANGE = 0x000000e3U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-enable-arrows))], [])*/uint SBM_ENABLE_ARROWS = 0x000000e4U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-setscrollinfo))], [])*/uint SBM_SETSCROLLINFO = 0x000000e9U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-getrange
+enum uint SBM_GETRANGE = 0x000000e3U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-enable-arrows
+enum uint SBM_ENABLE_ARROWS = 0x000000e4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-setscrollinfo
+enum uint SBM_SETSCROLLINFO = 0x000000e9U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbm-getscrollinfo))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-getscrollinfo
     SBM_GETSCROLLINFO    = 0x000000eaU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Controls/sbm-getscrollbarinfo
     SBM_GETSCROLLBARINFO = 0x000000ebU,
 }
 
@@ -3738,21 +4141,21 @@ enum uint WM_CLOAKED_STATE_CHANGED = 0x00000347U;
 
 enum : HBITMAP
 {
-    HBMMENU_CALLBACK        = HBITMAP(0xffffffff),
-    HBMMENU_SYSTEM          = HBITMAP(0x00000001),
-    HBMMENU_MBAR_RESTORE    = HBITMAP(0x00000002),
-    HBMMENU_MBAR_MINIMIZE   = HBITMAP(0x00000003),
-    HBMMENU_MBAR_CLOSE      = HBITMAP(0x00000005),
-    HBMMENU_MBAR_CLOSE_D    = HBITMAP(0x00000006),
-    HBMMENU_MBAR_MINIMIZE_D = HBITMAP(0x00000007),
+    HBMMENU_CALLBACK        = HBITMAP(cast(void*) 0xffffffff),
+    HBMMENU_SYSTEM          = HBITMAP(cast(void*) 0x00000001),
+    HBMMENU_MBAR_RESTORE    = HBITMAP(cast(void*) 0x00000002),
+    HBMMENU_MBAR_MINIMIZE   = HBITMAP(cast(void*) 0x00000003),
+    HBMMENU_MBAR_CLOSE      = HBITMAP(cast(void*) 0x00000005),
+    HBMMENU_MBAR_CLOSE_D    = HBITMAP(cast(void*) 0x00000006),
+    HBMMENU_MBAR_MINIMIZE_D = HBITMAP(cast(void*) 0x00000007),
 }
 
 enum : HBITMAP
 {
-    HBMMENU_POPUP_CLOSE    = HBITMAP(0x00000008),
-    HBMMENU_POPUP_RESTORE  = HBITMAP(0x00000009),
-    HBMMENU_POPUP_MAXIMIZE = HBITMAP(0x0000000a),
-    HBMMENU_POPUP_MINIMIZE = HBITMAP(0x0000000b),
+    HBMMENU_POPUP_CLOSE    = HBITMAP(cast(void*) 0x00000008),
+    HBMMENU_POPUP_RESTORE  = HBITMAP(cast(void*) 0x00000009),
+    HBMMENU_POPUP_MAXIMIZE = HBITMAP(cast(void*) 0x0000000a),
+    HBMMENU_POPUP_MINIMIZE = HBITMAP(cast(void*) 0x0000000b),
 }
 
 enum int CW_USEDEFAULT = 0x80000000;
@@ -3762,11 +4165,11 @@ enum uint WVR_REDRAW = 0x00000300U;
 
 enum : PWSTR
 {
-    RT_GROUP_CURSOR = PWSTR(cast(ushort) 0x000c),
-    RT_GROUP_ICON   = PWSTR(cast(ushort) 0x000e),
+    RT_GROUP_CURSOR = PWSTR(cast(wchar*) 0x000c),
+    RT_GROUP_ICON   = PWSTR(cast(wchar*) 0x000e),
 }
 
-enum PWSTR RT_MANIFEST = PWSTR(cast(ushort) 0x0018);
+enum PWSTR RT_MANIFEST = PWSTR(cast(wchar*) 0x0018);
 enum int IDC_STATIC = 0xffffffff;
 
 // Callbacks
@@ -3847,9 +4250,9 @@ struct HDWP
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-message_resource_entry
 struct MESSAGE_RESOURCE_ENTRY
 {
-    ushort Length;
-    ushort Flags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Text;
+    ushort   Length;
+    ushort   Flags;
+    ubyte[1] Text; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-message_resource_block
@@ -3864,7 +4267,7 @@ struct MESSAGE_RESOURCE_BLOCK
 struct MESSAGE_RESOURCE_DATA
 {
     uint NumberOfBlocks;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MESSAGE_RESOURCE_BLOCK[1] Blocks;
+    MESSAGE_RESOURCE_BLOCK[1] Blocks; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-cbt_createwnda
@@ -4110,7 +4513,7 @@ struct CREATESTRUCTA
     int             cx;
     int             y;
     int             x;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WINDOW_STYLE))], [])*/int style;
+    int             style;
     const(PSTR)     lpszName;
     const(PSTR)     lpszClass;
     WINDOW_EX_STYLE dwExStyle;
@@ -4127,7 +4530,7 @@ struct CREATESTRUCTW
     int             cx;
     int             y;
     int             x;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WINDOW_STYLE))], [])*/int style;
+    int             style;
     const(PWSTR)    lpszName;
     const(PWSTR)    lpszClass;
     WINDOW_EX_STYLE dwExStyle;
@@ -4138,7 +4541,7 @@ struct WINDOWPLACEMENT
 {
     uint  length;
     WINDOWPLACEMENT_FLAGS flags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SHOW_WINDOW_CMD))], [])*/uint showCmd;
+    uint  showCmd;
     POINT ptMinPosition;
     POINT ptMaxPosition;
     RECT  rcNormalPosition;
@@ -4338,9 +4741,9 @@ struct MENUITEMTEMPLATEHEADER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-menuitemtemplate
 struct MENUITEMTEMPLATE
 {
-    ushort mtOption;
-    ushort mtID;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] mtString;
+    ushort   mtOption;
+    ushort   mtID;
+    wchar[1] mtString; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-iconinfo
@@ -4615,7 +5018,7 @@ struct MENUBARINFO
     RECT  rcBar;
     HMENU hMenu;
     HWND  hwndMenu;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fUnused)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/int _bitfield549;
+    int   _bitfield549;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -4651,8 +5054,8 @@ struct TOUCHPAD_PARAMETERS_V1
     uint versionNumber;
     uint maxSupportedContacts;
     LEGACY_TOUCHPAD_FEATURES legacyTouchpadFeatures;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/int _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/int _bitfield2;
+    int  _bitfield1;
+    int  _bitfield2;
     TOUCHPAD_SENSITIVITY_LEVEL sensitivityLevel;
     uint cursorSpeed;
     uint feedbackIntensity;
@@ -4664,7 +5067,7 @@ struct TOUCHPAD_PARAMETERS_V1
 struct TOUCHPAD_PARAMETERS_V2
 {
     TOUCHPAD_PARAMETERS_V1 Base;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved3)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/int _bitfield550;
+    int _bitfield550;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -4702,11 +5105,11 @@ struct MENUEX_TEMPLATE_HEADER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/menurc/menuex-template-item
 struct MENUEX_TEMPLATE_ITEM
 {
-    uint   dwType;
-    uint   dwState;
-    uint   uId;
-    ushort wFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] szText;
+    uint     dwType;
+    uint     dwState;
+    uint     uId;
+    ushort   wFlags;
+    wchar[1] szText; // Flexible array
 }
 
 struct MENUTEMPLATEEX
@@ -4716,12 +5119,12 @@ struct MENUTEMPLATEEX
         struct Menu
         {
             MENUITEMTEMPLATEHEADER mitHeader;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MENUITEMTEMPLATE[1] miTemplate;
+            MENUITEMTEMPLATE[1] miTemplate; // Flexible array
         }
         struct MenuEx
         {
             MENUEX_TEMPLATE_HEADER mexHeader;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MENUEX_TEMPLATE_ITEM[1] mexItem;
+            MENUEX_TEMPLATE_ITEM[1] mexItem; // Flexible array
         }
     }
 }
@@ -4803,19 +5206,19 @@ struct DEV_BROADCAST_VOLUME
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_port_a
 struct DEV_BROADCAST_PORT_A
 {
-    uint dbcp_size;
-    uint dbcp_devicetype;
-    uint dbcp_reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] dbcp_name;
+    uint    dbcp_size;
+    uint    dbcp_devicetype;
+    uint    dbcp_reserved;
+    CHAR[1] dbcp_name; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_port_w
 struct DEV_BROADCAST_PORT_W
 {
-    uint dbcp_size;
-    uint dbcp_devicetype;
-    uint dbcp_reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] dbcp_name;
+    uint     dbcp_size;
+    uint     dbcp_devicetype;
+    uint     dbcp_reserved;
+    wchar[1] dbcp_name; // Flexible array
 }
 
 struct DEV_BROADCAST_NET
@@ -4830,21 +5233,21 @@ struct DEV_BROADCAST_NET
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_deviceinterface_a
 struct DEV_BROADCAST_DEVICEINTERFACE_A
 {
-    uint dbcc_size;
-    uint dbcc_devicetype;
-    uint dbcc_reserved;
-    GUID dbcc_classguid;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] dbcc_name;
+    uint    dbcc_size;
+    uint    dbcc_devicetype;
+    uint    dbcc_reserved;
+    GUID    dbcc_classguid;
+    CHAR[1] dbcc_name; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_deviceinterface_w
 struct DEV_BROADCAST_DEVICEINTERFACE_W
 {
-    uint dbcc_size;
-    uint dbcc_devicetype;
-    uint dbcc_reserved;
-    GUID dbcc_classguid;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] dbcc_name;
+    uint     dbcc_size;
+    uint     dbcc_devicetype;
+    uint     dbcc_reserved;
+    GUID     dbcc_classguid;
+    wchar[1] dbcc_name; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-dev_broadcast_handle
@@ -4857,38 +5260,38 @@ struct DEV_BROADCAST_HANDLE
     HDEVNOTIFY dbch_hdevnotify;
     GUID       dbch_eventguid;
     int        dbch_nameoffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] dbch_data;
+    ubyte[1]   dbch_data; // Flexible array
 }
 
 struct DEV_BROADCAST_HANDLE32
 {
-    uint dbch_size;
-    uint dbch_devicetype;
-    uint dbch_reserved;
-    uint dbch_handle;
-    uint dbch_hdevnotify;
-    GUID dbch_eventguid;
-    int  dbch_nameoffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] dbch_data;
+    uint     dbch_size;
+    uint     dbch_devicetype;
+    uint     dbch_reserved;
+    uint     dbch_handle;
+    uint     dbch_hdevnotify;
+    GUID     dbch_eventguid;
+    int      dbch_nameoffset;
+    ubyte[1] dbch_data; // Flexible array
 }
 
 struct DEV_BROADCAST_HANDLE64
 {
-    uint  dbch_size;
-    uint  dbch_devicetype;
-    uint  dbch_reserved;
-    ulong dbch_handle;
-    ulong dbch_hdevnotify;
-    GUID  dbch_eventguid;
-    int   dbch_nameoffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] dbch_data;
+    uint     dbch_size;
+    uint     dbch_devicetype;
+    uint     dbch_reserved;
+    ulong    dbch_handle;
+    ulong    dbch_hdevnotify;
+    GUID     dbch_eventguid;
+    int      dbch_nameoffset;
+    ubyte[1] dbch_data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbt/ns-dbt-_dev_broadcast_userdefined
 struct _DEV_BROADCAST_USERDEFINED
 {
     DEV_BROADCAST_HDR dbud_dbh;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] dbud_szName;
+    CHAR[1]           dbud_szName; // Flexible array
 }
 
 struct DEVICE_EVENT_MOUNT

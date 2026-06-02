@@ -3,7 +3,7 @@
 module windows.win32.storage.projectedfilesystem;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOLEAN, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -236,7 +236,7 @@ struct PRJ_PLACEHOLDER_INFO
         uint OffsetToFirstStreamInfo;
     }
     PRJ_PLACEHOLDER_VERSION_INFO VersionInfo;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VariableData;
+    ubyte[1]            VariableData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_callback_data

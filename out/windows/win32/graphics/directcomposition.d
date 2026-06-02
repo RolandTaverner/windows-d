@@ -3,8 +3,8 @@
 module windows.win32.graphics.directcomposition;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, LUID,
-                                                    POINT, RECT;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, LUID, POINT,
+                                         RECT;
 public import windows.win32.graphics.direct2d.common : D2D1_2DAFFINETRANSFORM_INTERPOLATION_MODE, D2D1_BLEND_MODE,
                                                        D2D1_BORDER_MODE,
                                                        D2D1_COLORMATRIX_ALPHA_MODE,
@@ -13,12 +13,12 @@ public import windows.win32.graphics.direct2d.common : D2D1_2DAFFINETRANSFORM_IN
                                                        D2D_MATRIX_4X4_F, D2D_MATRIX_5X4_F,
                                                        D2D_RECT_F, D2D_RECT_U, D2D_VECTOR_2F,
                                                        D2D_VECTOR_4F;
-public import windows.win32.graphics.direct3d.direct3d : D3DMATRIX;
+public import windows.win32.graphics.direct3d : D3DMATRIX;
 public import windows.win32.graphics.dxgi.common : DXGI_ALPHA_MODE, DXGI_COLOR_SPACE_TYPE,
                                                    DXGI_FORMAT, DXGI_RATIONAL;
-public import windows.win32.graphics.dxgi.dxgi : IDXGIDevice;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.graphics.dxgi : IDXGIDevice;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

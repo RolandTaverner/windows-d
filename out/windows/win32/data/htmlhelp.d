@@ -3,12 +3,12 @@
 module windows.win32.data.htmlhelp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, COLORREF, HINSTANCE, HRESULT,
-                                                    HWND, POINT, PSTR, PWSTR, RECT;
-public import windows.win32.system.com.com : IPersistStreamInit, IStream, IUnknown;
-public import windows.win32.system.search.search : IStemmer;
+public import windows.win32.foundation : BOOL, COLORREF, HINSTANCE, HRESULT, HWND,
+                                         POINT, PSTR, PWSTR, RECT;
+public import windows.win32.system.com : IPersistStreamInit, IStream, IUnknown;
+public import windows.win32.system.search : IStemmer;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls.controls : NMHDR;
+public import windows.win32.ui.controls : NMHDR;
 
 extern(Windows) @nogc nothrow:
 

@@ -4,9 +4,9 @@ module windows.win32.security.extensibleauthenticationprotocol;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument2, IXMLDOMNode;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, PWSTR;
-public import windows.win32.security.cryptography.cryptography : NCRYPT_KEY_HANDLE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, PWSTR;
+public import windows.win32.security.cryptography : NCRYPT_KEY_HANDLE;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -871,7 +871,7 @@ struct PPP_EAP_PACKET
     ubyte    Code;
     ubyte    Id;
     ubyte[2] Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_input
@@ -1211,7 +1211,7 @@ struct EapPacket
     ubyte    Code;
     ubyte    Id;
     ubyte[2] Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ns-eapauthenticatoractiondefine-eap_method_authenticator_result

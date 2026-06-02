@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.webdav;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

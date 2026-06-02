@@ -3,8 +3,8 @@
 module windows.win32.system.securitycenter;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, PWSTR;
-public import windows.win32.system.com.com : IDispatch;
+public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, PWSTR;
+public import windows.win32.system.com : IDispatch;
 public import windows.win32.system.threading : LPTHREAD_START_ROUTINE;
 
 extern(Windows) @nogc nothrow:

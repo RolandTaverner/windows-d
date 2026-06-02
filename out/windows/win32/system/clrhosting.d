@@ -3,11 +3,11 @@
 module windows.win32.system.clrhosting;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, HANDLE, HINSTANCE,
-                                                    HMODULE, HRESULT, HWND, PSTR, PWSTR;
-public import windows.win32.security.security : ACL;
-public import windows.win32.system.com.com : IEnumUnknown, IStream, IUnknown;
-public import windows.win32.system.diagnostics.debug_.debug_ : EXCEPTION_POINTERS;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, HANDLE, HINSTANCE,
+                                         HMODULE, HRESULT, HWND, PSTR, PWSTR;
+public import windows.win32.security : ACL;
+public import windows.win32.system.com : IEnumUnknown, IStream, IUnknown;
+public import windows.win32.system.diagnostics.debug_ : EXCEPTION_POINTERS;
 public import windows.win32.system.io : LPOVERLAPPED_COMPLETION_ROUTINE;
 public import windows.win32.system.threading : LPTHREAD_START_ROUTINE, PROCESS_INFORMATION,
                                                WAITORTIMERCALLBACK;
@@ -318,7 +318,8 @@ enum : int
 // Constants
 
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DEPRECATED_CLR_API_MESG = "This API has been deprecated. Refer to https://go.microsoft.com/fwlink/?LinkId=143720 for more details.";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* DEPRECATED_CLR_API_MESG = "This API has been deprecated. Refer to https://go.microsoft.com/fwlink/?LinkId=143720 for more details.";
 enum uint CLR_MAJOR_VERSION = 0x00000004U;
 enum uint CLR_MINOR_VERSION = 0x00000000U;
 enum uint CLR_BUILD_VERSION = 0x000056ccU;

@@ -3,17 +3,16 @@
 module windows.win32.security.cryptography.certificates;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, NTSTATUS,
-                                                    PWSTR, UNICODE_STRING, VARIANT_BOOL;
-public import windows.win32.security.authentication.identity.identity : LSA_TOKEN_INFORMATION_TYPE,
-                                                                        SecPkgContext_IssuerListInfoEx;
-public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT,
-                                                                 CERT_EXTENSIONS,
-                                                                 CERT_RDN_ATTR_VALUE_TYPE,
-                                                                 CERT_SELECT_CRITERIA,
-                                                                 CERT_USAGE_MATCH, CRYPT_ATTRIBUTES,
-                                                                 CRYPT_INTEGER_BLOB, HCERTSTORE;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, NTSTATUS, PWSTR,
+                                         UNICODE_STRING, VARIANT_BOOL;
+public import windows.win32.security.authentication.identity : LSA_TOKEN_INFORMATION_TYPE,
+                                                               SecPkgContext_IssuerListInfoEx;
+public import windows.win32.security.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT, CERT_EXTENSIONS,
+                                                    CERT_RDN_ATTR_VALUE_TYPE,
+                                                    CERT_SELECT_CRITERIA, CERT_USAGE_MATCH,
+                                                    CRYPT_ATTRIBUTES, CRYPT_INTEGER_BLOB,
+                                                    HCERTSTORE;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -1599,8 +1598,10 @@ enum : const(wchar)*
     wszOCSPREVPROP_ALLOWCAONLYCRLS   = "AllowCAOnlyCrls",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szBACKUPANNOTATION = "Cert Server Backup Interface";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szRESTOREANNOTATION = "Cert Server Restore Interface";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szBACKUPANNOTATION = "Cert Server Backup Interface";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szRESTOREANNOTATION = "Cert Server Restore Interface";
 enum uint CSBACKUP_TYPE_MASK = 0x00000003U;
 
 enum : uint
@@ -2145,7 +2146,8 @@ enum const(wchar)* wszPFXFILENAMEEXT = ".p12";
 enum const(wchar)* wszDATFILENAMEEXT = ".dat";
 enum const(wchar)* wszLOGFILENAMEEXT = ".log";
 enum const(wchar)* wszDBFILENAMEEXT = ".edb";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szDBBASENAMEPARM = "edb";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szDBBASENAMEPARM = "edb";
 enum const(wchar)* wszLOGPATH = "CertLog";
 
 enum : const(wchar)*
@@ -2332,7 +2334,8 @@ enum const(wchar)* wszCNGPUBLICKEYALGORITHM = "CNGPublicKeyAlgorithm";
 enum const(wchar)* wszCNGHASHALGORITHM = "CNGHashAlgorithm";
 enum const(wchar)* wszCNGENCRYPTIONALGORITHM = "CNGEncryptionAlgorithm";
 enum const(wchar)* wszREGALTERNATESIGNATUREALGORITHM = "AlternateSignatureAlgorithm";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szNAMESEPARATORDEFAULT = "
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szNAMESEPARATORDEFAULT = "
 ";
 
 enum : const(wchar)*
@@ -2927,7 +2930,8 @@ enum : const(wchar)*
     wszPROPUPN       = "upn",
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szPROPASNTAG = "{asn}";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szPROPASNTAG = "{asn}";
 enum const(wchar)* wszPROPCRITICALTAG = "{critical}";
 
 enum : const(wchar)*

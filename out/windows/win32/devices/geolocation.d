@@ -4,10 +4,9 @@ module windows.win32.devices.geolocation;
 
 public import windows.core;
 public import windows.win32.devices.sensors : LOCATION_DESIRED_ACCURACY;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HRESULT,
-                                                    HWND, NTSTATUS, PROPERTYKEY,
-                                                    SYSTEMTIME;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, FILETIME, HRESULT, HWND,
+                                         NTSTATUS, PROPERTYKEY, SYSTEMTIME;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -324,7 +323,7 @@ struct GNSS_DRIVERCOMMAND_PARAM
     uint       Reserved;
     uint       CommandDataSize;
     ubyte[512] Unused;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CommandData;
+    ubyte[1]   CommandData; // Flexible array
 }
 
 struct GNSS_SINGLESHOT_PARAM
@@ -695,7 +694,7 @@ struct GNSS_EVENT
         GNSS_BREADCRUMBING_ALERT_DATA BreadcrumbAlertData;
         GNSS_GEOFENCES_TRACKINGSTATUS_DATA GeofencesTrackingStatus;
         GNSS_DRIVER_REQUEST_DATA DriverRequestData;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CustomData;
+        ubyte[1]       CustomData; // Flexible array
     }
 }
 
@@ -718,7 +717,7 @@ struct GNSS_EVENT_2
         GNSS_BREADCRUMBING_ALERT_DATA BreadcrumbAlertData;
         GNSS_GEOFENCES_TRACKINGSTATUS_DATA GeofencesTrackingStatus;
         GNSS_DRIVER_REQUEST_DATA DriverRequestData;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CustomData;
+        ubyte[1]       CustomData; // Flexible array
     }
 }
 
@@ -741,13 +740,13 @@ struct GNSS_AGNSS_INJECTPOSITION
 
 struct GNSS_AGNSS_INJECTBLOB
 {
-    uint Size;
-    uint Version;
-    uint BlobOui;
-    uint BlobVersion;
-    uint AgnssFormat;
-    uint BlobSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] BlobData;
+    uint     Size;
+    uint     Version;
+    uint     BlobOui;
+    uint     BlobVersion;
+    uint     AgnssFormat;
+    uint     BlobSize;
+    ubyte[1] BlobData; // Flexible array
 }
 
 struct GNSS_AGNSS_INJECT
@@ -784,7 +783,7 @@ struct GNSS_SUPL_CERT_CONFIG
     CHAR[260]  SuplCertName;
     uint       CertSize;
     ubyte[512] Unused;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CertData;
+    ubyte[1]   CertData; // Flexible array
 }
 
 struct GNSS_V2UPL_CONFIG
@@ -822,7 +821,7 @@ struct GNSS_SELFTESTCONFIG
     uint       TestType;
     ubyte[512] Unused;
     uint       InBufLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] InBuffer;
+    ubyte[1]   InBuffer; // Flexible array
 }
 
 struct GNSS_SELFTESTRESULT
@@ -834,7 +833,7 @@ struct GNSS_SELFTESTRESULT
     uint       PinFailedBitMask;
     ubyte[512] Unused;
     uint       OutBufLen;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] OutBuffer;
+    ubyte[1]   OutBuffer; // Flexible array
 }
 
 struct GNSS_CHIPSETINFO

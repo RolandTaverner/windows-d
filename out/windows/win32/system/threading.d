@@ -3,12 +3,11 @@
 module windows.win32.system.threading;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HMODULE,
-                                                    HRESULT, HWND, NTSTATUS, PAPCFUNC,
-                                                    PSTR, PWSTR, UNICODE_STRING,
-                                                    WAIT_EVENT;
-public import windows.win32.security.security : PSID, SECURITY_ATTRIBUTES, TOKEN_ACCESS_MASK;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HMODULE,
+                                         HRESULT, HWND, NTSTATUS, PAPCFUNC, PSTR,
+                                         PWSTR, UNICODE_STRING, WAIT_EVENT;
+public import windows.win32.security : PSID, SECURITY_ATTRIBUTES, TOKEN_ACCESS_MASK;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.kernel : LIST_ENTRY, PROCESSOR_NUMBER, SLIST_ENTRY,
                                             SLIST_HEADER;
 public import windows.win32.system.systeminformation : GROUP_AFFINITY, IMAGE_FILE_MACHINE;
@@ -516,10 +515,10 @@ enum : uint
     INIT_ONCE_CTX_RESERVED_BITS = 0x00000002U,
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])*/CONDITION_VARIABLE CONDITION_VARIABLE_INIT = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])*/CONDITION_VARIABLE("string 0");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])*/SRWLOCK SRWLOCK_INIT = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])*/SRWLOCK("string 0");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])*/INIT_ONCE INIT_ONCE_STATIC_INIT = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])*/INIT_ONCE("string 0");
-enum ushort ALL_PROCESSOR_GROUPS = cast(ushort) 0xffff;
+enum CONDITION_VARIABLE CONDITION_VARIABLE_INIT = CONDITION_VARIABLE(cast(void*) 0/* ConstantAttribute */);
+enum SRWLOCK SRWLOCK_INIT = SRWLOCK(cast(void*) 0/* ConstantAttribute */);
+enum INIT_ONCE INIT_ONCE_STATIC_INIT = INIT_ONCE(cast(void*) 0/* ConstantAttribute */);
+enum ushort ALL_PROCESSOR_GROUPS = 0xffff;
 
 enum : uint
 {
@@ -1159,7 +1158,7 @@ struct TP_CALLBACK_ENVIRON_V3
         uint Flags;
         struct s
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Private)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield524;
+            uint _bitfield524;
         }
     }
     TP_CALLBACK_PRIORITY CallbackPriority;
@@ -1183,7 +1182,7 @@ struct UMS_SYSTEM_THREAD_INFORMATION
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsUmsWorkerThread)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield525;
+            uint _bitfield525;
         }
         uint ThreadUmsFlags;
     }

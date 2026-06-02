@@ -3,7 +3,7 @@
 module windows.win32.devices.cdrom;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN;
+public import windows.win32.foundation : BOOLEAN;
 
 extern(Windows) @nogc nothrow:
 
@@ -247,7 +247,7 @@ enum uint CDROM_IN_EXCLUSIVE_MODE = 0x00000001U;
 
 struct CDROM_READ_TOC_EX
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Msf)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield0;
+    ubyte _bitfield0;
     ubyte SessionTrack;
     ubyte Reserved2;
     ubyte Reserved3;
@@ -256,7 +256,7 @@ struct CDROM_READ_TOC_EX
 struct TRACK_DATA
 {
     ubyte    Reserved;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Adr)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield1;
+    ubyte    _bitfield1;
     ubyte    TrackNumber;
     ubyte    Reserved1;
     ubyte[4] Address;
@@ -272,16 +272,16 @@ struct CDROM_TOC
 
 struct CDROM_TOC_SESSION_DATA
 {
-    ubyte[2] Length;
-    ubyte    FirstCompleteSession;
-    ubyte    LastCompleteSession;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRACK_DATA[1] TrackData;
+    ubyte[2]      Length;
+    ubyte         FirstCompleteSession;
+    ubyte         LastCompleteSession;
+    TRACK_DATA[1] TrackData; // Flexible array
 }
 
 struct CDROM_TOC_FULL_TOC_DATA_BLOCK
 {
     ubyte    SessionNumber;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Adr)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield2;
+    ubyte    _bitfield2;
     ubyte    Reserved1;
     ubyte    Point;
     ubyte[3] MsfExtra;
@@ -294,7 +294,7 @@ struct CDROM_TOC_FULL_TOC_DATA
     ubyte[2] Length;
     ubyte    FirstCompleteSession;
     ubyte    LastCompleteSession;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CDROM_TOC_FULL_TOC_DATA_BLOCK[1] Descriptors;
+    CDROM_TOC_FULL_TOC_DATA_BLOCK[1] Descriptors; // Flexible array
 }
 
 struct CDROM_TOC_PMA_DATA
@@ -302,14 +302,14 @@ struct CDROM_TOC_PMA_DATA
     ubyte[2] Length;
     ubyte    Reserved1;
     ubyte    Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CDROM_TOC_FULL_TOC_DATA_BLOCK[1] Descriptors;
+    CDROM_TOC_FULL_TOC_DATA_BLOCK[1] Descriptors; // Flexible array
 }
 
 struct CDROM_TOC_ATIP_DATA_BLOCK
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(True1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved5)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield2;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(True2)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield3;
+    ubyte    _bitfield1;
+    ubyte    _bitfield2;
+    ubyte    _bitfield3;
     ubyte    Reserved7;
     ubyte[3] LeadInMsf;
     ubyte    Reserved8;
@@ -328,15 +328,15 @@ struct CDROM_TOC_ATIP_DATA
     ubyte[2] Length;
     ubyte    Reserved1;
     ubyte    Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CDROM_TOC_ATIP_DATA_BLOCK[1] Descriptors;
+    CDROM_TOC_ATIP_DATA_BLOCK[1] Descriptors; // Flexible array
 }
 
 struct CDROM_TOC_CD_TEXT_DATA_BLOCK
 {
     ubyte    PackType;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExtensionFlag)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield1;
+    ubyte    _bitfield1;
     ubyte    SequenceNumber;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Unicode)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield2;
+    ubyte    _bitfield2;
     union
     {
         ubyte[12] Text;
@@ -350,7 +350,7 @@ struct CDROM_TOC_CD_TEXT_DATA
     ubyte[2] Length;
     ubyte    Reserved1;
     ubyte    Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CDROM_TOC_CD_TEXT_DATA_BLOCK[1] Descriptors;
+    CDROM_TOC_CD_TEXT_DATA_BLOCK[1] Descriptors; // Flexible array
 }
 
 struct CDROM_PLAY_AUDIO_MSF
@@ -392,7 +392,7 @@ struct SUB_Q_CURRENT_POSITION
 {
     SUB_Q_HEADER Header;
     ubyte        FormatCode;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ADR)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield3;
+    ubyte        _bitfield3;
     ubyte        TrackNumber;
     ubyte        IndexNumber;
     ubyte[4]     AbsoluteAddress;
@@ -404,7 +404,7 @@ struct SUB_Q_MEDIA_CATALOG_NUMBER
     SUB_Q_HEADER Header;
     ubyte        FormatCode;
     ubyte[3]     Reserved;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Mcval)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield4;
+    ubyte        _bitfield4;
     ubyte[15]    MediaCatalog;
 }
 
@@ -415,7 +415,7 @@ struct SUB_Q_TRACK_ISRC
     ubyte        Reserved0;
     ubyte        Track;
     ubyte        Reserved1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Tcval)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield5;
+    ubyte        _bitfield5;
     ubyte[15]    TrackIsrc;
 }
 
@@ -509,9 +509,9 @@ struct CDROM_WRITE_SPEED_REQUEST
 struct CDROM_PERFORMANCE_HEADER
 {
     ubyte[4] DataLength;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield6;
+    ubyte    _bitfield6;
     ubyte[3] Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 struct CDROM_NOMINAL_PERFORMANCE_DESCRIPTOR
@@ -530,7 +530,7 @@ struct CDROM_EXCEPTION_PERFORMANCE_DESCRIPTOR
 
 struct CDROM_WRITE_SPEED_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield7;
+    ubyte    _bitfield7;
     ubyte[3] Reserved3;
     ubyte[4] EndLba;
     ubyte[4] ReadSpeed;

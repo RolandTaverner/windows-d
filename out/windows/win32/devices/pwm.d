@@ -3,7 +3,7 @@
 module windows.win32.devices.pwm;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN;
+public import windows.win32.foundation : BOOLEAN;
 
 extern(Windows) @nogc nothrow:
 
@@ -25,22 +25,32 @@ enum : int
 enum GUID GUID_DEVINTERFACE_PWM_CONTROLLER = GUID("60824b4c-eed1-4c9c-b49c-1b961461a819");
 enum const(wchar)* GUID_DEVINTERFACE_PWM_CONTROLLER_WSZ = "{60824B4C-EED1-4C9C-B49C-1B961461A819}";
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_controller_get_info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_controller_get_info
     IOCTL_PWM_CONTROLLER_GET_INFO           = 0x00040000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_controller_get_actual_period
     IOCTL_PWM_CONTROLLER_GET_ACTUAL_PERIOD  = 0x00040004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_controller_set_desired_period
     IOCTL_PWM_CONTROLLER_SET_DESIRED_PERIOD = 0x00048008U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_get_active_duty_cycle_percentage))], [])*/uint IOCTL_PWM_PIN_GET_ACTIVE_DUTY_CYCLE_PERCENTAGE = 0x00040190U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_set_active_duty_cycle_percentage))], [])*/uint IOCTL_PWM_PIN_SET_ACTIVE_DUTY_CYCLE_PERCENTAGE = 0x00048194U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_get_active_duty_cycle_percentage
+enum uint IOCTL_PWM_PIN_GET_ACTIVE_DUTY_CYCLE_PERCENTAGE = 0x00040190U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_set_active_duty_cycle_percentage
+enum uint IOCTL_PWM_PIN_SET_ACTIVE_DUTY_CYCLE_PERCENTAGE = 0x00048194U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_get_polarity))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_get_polarity
     IOCTL_PWM_PIN_GET_POLARITY = 0x00040198U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_set_polarity
     IOCTL_PWM_PIN_SET_POLARITY = 0x0004819cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_start
     IOCTL_PWM_PIN_START        = 0x000481a3U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_stop
     IOCTL_PWM_PIN_STOP         = 0x000481a7U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pwm/ni-pwm-ioctl_pwm_pin_is_started
     IOCTL_PWM_PIN_IS_STARTED   = 0x000401a8U,
 }
 

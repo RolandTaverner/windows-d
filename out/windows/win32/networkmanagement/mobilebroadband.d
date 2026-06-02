@@ -3,8 +3,8 @@
 module windows.win32.networkmanagement.mobilebroadband;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
-public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
+public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
 
 extern(Windows) @nogc nothrow:
 

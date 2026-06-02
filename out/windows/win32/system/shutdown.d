@@ -3,7 +3,7 @@
 module windows.win32.system.shutdown;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HWND, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, HWND, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

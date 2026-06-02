@@ -3,10 +3,9 @@
 module windows.win32.devices.display;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, DEVPROPKEY, HANDLE,
-                                                    HRESULT, HWND, LUID, NTSTATUS,
-                                                    POINTL, PSTR, PWSTR, RECT, RECTL,
-                                                    SIZE, WIN32_ERROR;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, DEVPROPKEY, HANDLE,
+                                         HRESULT, HWND, LUID, NTSTATUS, POINTL,
+                                         PSTR, PWSTR, RECT, RECTL, SIZE, WIN32_ERROR;
 public import windows.win32.graphics.direct3d9 : IDirect3DDevice9;
 public import windows.win32.graphics.directdraw : DD_CALLBACKS, DD_DIRECTDRAW_GLOBAL, DD_HALINFO,
                                                   DD_PALETTECALLBACKS, DD_SURFACECALLBACKS,
@@ -18,7 +17,7 @@ public import windows.win32.graphics.gdi : BLENDFUNCTION, COLORADJUSTMENT, DESIG
                                            PALETTEENTRY, PANOSE, TRIVERTEX,
                                            TTPOLYGONHEADER;
 public import windows.win32.graphics.opengl : PIXELFORMATDESCRIPTOR;
-public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.system.com : IStream, IUnknown;
 public import windows.win32.system.console : CHAR_INFO, COORD;
 public import windows.win32.ui.colorsystem : LOGCOLORSPACEW;
 
@@ -433,13 +432,13 @@ enum : GUID
     GUID_DEVINTERFACE_DISPLAYMUX           = GUID("93c33929-3180-46d3-8aab-008c84ad1e6e"),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3305783056, 43612, 16967, 184, 48, 214, 166, 248, 234, 163, 16}, 1))], [])*/DEVPROPKEY DEVPKEY_IndirectDisplay = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3305783056, 43612, 16967, 184, 48, 214, 166, 248, 234, 163, 16}, 1))], [])*/DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 1);
+enum DEVPROPKEY DEVPKEY_IndirectDisplay = DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 1);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3305783056, 43612, 16967, 184, 48, 214, 166, 248, 234, 163, 16}, 2))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_Device_TerminalLuid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3305783056, 43612, 16967, 184, 48, 214, 166, 248, 234, 163, 16}, 2))], [])*/DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 2),
-    DEVPKEY_Device_AdapterLuid  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3305783056, 43612, 16967, 184, 48, 214, 166, 248, 234, 163, 16}, 2))], [])*/DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 3),
-    DEVPKEY_Device_ActivityId   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3305783056, 43612, 16967, 184, 48, 214, 166, 248, 234, 163, 16}, 2))], [])*/DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 4),
+    DEVPKEY_Device_TerminalLuid = DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 2),
+    DEVPKEY_Device_AdapterLuid  = DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 3),
+    DEVPKEY_Device_ActivityId   = DEVPROPKEY(GUID("C50A3F10-AA5C-4247-B830-D6A6F8EAA310"), 4),
 }
 
 enum : uint
@@ -448,16 +447,17 @@ enum : uint
     INDIRECT_DISPLAY_INFO_FLAGS_SUPPORT_FP16          = 0x00000002U,
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_DisplayMux_InitStatus    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 1),
-    DEVPKEY_DisplayMux_SupportLevel  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 2),
-    DEVPKEY_DisplayMux_MuxTarget1    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 3),
-    DEVPKEY_DisplayMux_MuxTarget2    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 4),
-    DEVPKEY_DisplayMux_CurrentTarget = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 5),
+    DEVPKEY_DisplayMux_InitStatus    = DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 1),
+    DEVPKEY_DisplayMux_SupportLevel  = DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 2),
+    DEVPKEY_DisplayMux_MuxTarget1    = DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 3),
+    DEVPKEY_DisplayMux_MuxTarget2    = DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 4),
+    DEVPKEY_DisplayMux_CurrentTarget = DEVPROPKEY(GUID("FEFA7434-E0FD-4B2A-905A-7D0127A9F01C"), 5),
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* VIDEO_DEVICE_NAME = "DISPLAY%d";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* VIDEO_DEVICE_NAME = "DISPLAY%d";
 enum const(wchar)* WVIDEO_DEVICE_NAME = "DISPLAY%d";
 
 enum : uint
@@ -565,11 +565,14 @@ enum : uint
 {
     IOCTL_VIDEO_SWITCH_DUALVIEW            = 0x0023048cU,
     IOCTL_VIDEO_SET_BANK_POSITION          = 0x00230490U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-video-query-supported-brightness
     IOCTL_VIDEO_QUERY_SUPPORTED_BRIGHTNESS = 0x00230494U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-video-query-display-brightness
     IOCTL_VIDEO_QUERY_DISPLAY_BRIGHTNESS   = 0x00230498U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/ioctl-video-set-display-brightness))], [])*/uint IOCTL_VIDEO_SET_DISPLAY_BRIGHTNESS = 0x0023049cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/ioctl-video-set-display-brightness
+enum uint IOCTL_VIDEO_SET_DISPLAY_BRIGHTNESS = 0x0023049cU;
 
 enum : uint
 {
@@ -1999,7 +2002,7 @@ struct DISPLAYCONFIG_VIDEO_SIGNAL_INFO
     {
         struct AdditionalSignalInfo
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield10;
+            uint _bitfield10;
         }
         uint videoStandard;
     }
@@ -2053,7 +2056,7 @@ struct DISPLAYCONFIG_PATH_SOURCE_INFO
         uint modeInfoIdx;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(sourceModeInfoIdx)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield11;
+            uint _bitfield11;
         }
     }
     uint statusFlags;
@@ -2069,7 +2072,7 @@ struct DISPLAYCONFIG_PATH_TARGET_INFO
         uint modeInfoIdx;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(targetModeInfoIdx)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield12;
+            uint _bitfield12;
         }
     }
     DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY outputTechnology;
@@ -2112,7 +2115,7 @@ struct DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield13;
+            uint _bitfield13;
         }
         uint value;
     }
@@ -2162,7 +2165,7 @@ struct DISPLAYCONFIG_SET_TARGET_PERSISTENCE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield14;
+            uint _bitfield14;
         }
         uint value;
     }
@@ -2176,7 +2179,7 @@ struct DISPLAYCONFIG_SUPPORT_VIRTUAL_RESOLUTION
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield15;
+            uint _bitfield15;
         }
         uint value;
     }
@@ -2189,7 +2192,7 @@ struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield16;
+            uint _bitfield16;
         }
         uint value;
     }
@@ -2204,7 +2207,7 @@ struct DISPLAYCONFIG_SET_ADVANCED_COLOR_STATE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield17;
+            uint _bitfield17;
         }
         uint value;
     }
@@ -2217,7 +2220,7 @@ struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield18;
+            uint _bitfield18;
         }
         uint value;
     }
@@ -2233,7 +2236,7 @@ struct DISPLAYCONFIG_SET_HDR_STATE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield19;
+            uint _bitfield19;
         }
         uint value;
     }
@@ -2246,7 +2249,7 @@ struct DISPLAYCONFIG_SET_WCG_STATE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield20;
+            uint _bitfield20;
         }
         uint value;
     }
@@ -2266,7 +2269,7 @@ struct DISPLAYCONFIG_GET_MONITOR_SPECIALIZATION
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield21;
+            uint _bitfield21;
         }
         uint value;
     }
@@ -2279,7 +2282,7 @@ struct DISPLAYCONFIG_SET_MONITOR_SPECIALIZATION
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield22;
+            uint _bitfield22;
         }
         uint value;
     }
@@ -2308,9 +2311,9 @@ align (1):
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-sources
 struct Sources
 {
-    uint sourceId;
-    int  numTargets;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aTargets;
+    uint    sourceId;
+    int     numTargets;
+    uint[1] aTargets; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-adapter
@@ -2318,14 +2321,14 @@ struct Adapter
 {
     wchar[128] AdapterName;
     int        numSources;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/Sources[1] sources;
+    Sources[1] sources; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-adapters
 struct Adapters
 {
-    int numAdapters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/Adapter[1] adapter;
+    int        numAdapters;
+    Adapter[1] adapter; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-displaymode
@@ -2338,8 +2341,8 @@ struct DisplayMode
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-displaymodes
 struct DisplayModes
 {
-    int numDisplayModes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DisplayMode[1] displayMode;
+    int            numDisplayModes;
+    DisplayMode[1] displayMode; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvout/ns-tvout-videoparameters
@@ -2722,23 +2725,23 @@ struct FD_DEVICEMETRICS
     int      lMinA;
     int      lMinC;
     int      lMinD;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/int[1] alReserved;
+    int[1]   alReserved; // Flexible array
 }
 
 struct LIGATURE
 {
-    uint  culSize;
-    PWSTR pwsz;
-    uint  chglyph;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] ahglyph;
+    uint    culSize;
+    PWSTR   pwsz;
+    uint    chglyph;
+    uint[1] ahglyph; // Flexible array
 }
 
 struct FD_LIGATURE
 {
-    uint culThis;
-    uint ulType;
-    uint cLigatures;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/LIGATURE[1] alig;
+    uint        culThis;
+    uint        ulType;
+    uint        cLigatures;
+    LIGATURE[1] alig; // Flexible array
 }
 
 struct POINTQF
@@ -2758,20 +2761,20 @@ struct WCRUN
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_glyphset
 struct FD_GLYPHSET
 {
-    uint cjThis;
-    uint flAccel;
-    uint cGlyphsSupported;
-    uint cRuns;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WCRUN[1] awcrun;
+    uint     cjThis;
+    uint     flAccel;
+    uint     cGlyphsSupported;
+    uint     cRuns;
+    WCRUN[1] awcrun; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_glyphattr
 struct FD_GLYPHATTR
 {
-    uint cjThis;
-    uint cGlyphs;
-    uint iMode;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] aGlyphAttr;
+    uint     cjThis;
+    uint     cGlyphs;
+    uint     iMode;
+    ubyte[1] aGlyphAttr; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_kerningpair
@@ -2874,12 +2877,12 @@ version(X86)
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifiextra
 struct IFIEXTRA
 {
-    uint ulIdentifier;
-    int  dpFontSig;
-    uint cig;
-    int  dpDesignVector;
-    int  dpAxesInfoW;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aulReserved;
+    uint    ulIdentifier;
+    int     dpFontSig;
+    uint    cig;
+    int     dpDesignVector;
+    int     dpAxesInfoW;
+    uint[1] aulReserved; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-drvfn
@@ -3139,16 +3142,16 @@ struct XLATEOBJ
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-enumrects
 struct ENUMRECTS
 {
-    uint c;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RECTL[1] arcl;
+    uint     c;
+    RECTL[1] arcl; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphbits
 struct GLYPHBITS
 {
-    POINTL ptlOrigin;
-    SIZE   sizlBitmap;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] aj;
+    POINTL   ptlOrigin;
+    SIZE     sizlBitmap;
+    ubyte[1] aj; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphdef
@@ -3225,7 +3228,7 @@ struct CLIPLINE
     POINTFIX ptfxB;
     int      lStyleState;
     uint     c;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RUN[1] arun;
+    RUN[1]   arun; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-perbandinfo
@@ -3352,8 +3355,8 @@ struct VIDEO_REGISTER_VDM
 
 struct VIDEO_MONITOR_DESCRIPTOR
 {
-    uint DescriptorSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Descriptor;
+    uint     DescriptorSize;
+    ubyte[1] Descriptor; // Flexible array
 }
 
 struct DXGK_WIN32K_PARAM_DATA
@@ -3469,17 +3472,17 @@ struct VIDEO_MODE_INFORMATION
 
 struct VIDEO_LOAD_FONT_INFORMATION
 {
-    ushort WidthInPixels;
-    ushort HeightInPixels;
-    uint   FontSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Font;
+    ushort   WidthInPixels;
+    ushort   HeightInPixels;
+    uint     FontSize;
+    ubyte[1] Font; // Flexible array
 }
 
 struct VIDEO_PALETTE_DATA
 {
-    ushort NumEntries;
-    ushort FirstEntry;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] Colors;
+    ushort    NumEntries;
+    ushort    FirstEntry;
+    ushort[1] Colors; // Flexible array
 }
 
 struct VIDEO_CLUTDATA
@@ -3525,14 +3528,14 @@ struct VIDEO_POINTER_POSITION
 
 struct VIDEO_POINTER_ATTRIBUTES
 {
-    uint  Flags;
-    uint  Width;
-    uint  Height;
-    uint  WidthInBytes;
-    uint  Enable;
-    short Column;
-    short Row;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Pixels;
+    uint     Flags;
+    uint     Width;
+    uint     Height;
+    uint     WidthInBytes;
+    uint     Enable;
+    short    Column;
+    short    Row;
+    ubyte[1] Pixels; // Flexible array
 }
 
 struct VIDEO_POINTER_CAPABILITIES
@@ -3627,9 +3630,9 @@ struct VIDEO_POWER_MANAGEMENT
 
 struct VIDEO_COLOR_LUT_DATA
 {
-    uint Length;
-    uint LutDataFormat;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] LutData;
+    uint     Length;
+    uint     LutDataFormat;
+    ubyte[1] LutData; // Flexible array
 }
 
 struct VIDEO_LUT_RGB256WORDS
@@ -3768,7 +3771,7 @@ struct PANEL_QUERY_BRIGHTNESS_CAPS
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield23;
+            uint _bitfield23;
         }
         uint Value;
     }
@@ -3831,7 +3834,7 @@ struct PANEL_BRIGHTNESS_SENSOR_DATA
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield24;
+            uint _bitfield24;
         }
         uint Value;
     }
@@ -3861,7 +3864,7 @@ struct PANEL_SET_BRIGHTNESS_STATE
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield25;
+            uint _bitfield25;
         }
         uint Value;
     }
@@ -3893,11 +3896,11 @@ struct COLORSPACE_TRANSFORM_DATA_CAP
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BitCountOfFraction)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield26;
+            uint _bitfield26;
         }
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BitCountOfMantissa)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield27;
+            uint _bitfield27;
         }
         uint Value;
     }
@@ -3917,7 +3920,7 @@ struct COLORSPACE_TRANSFORM_MATRIX_CAP
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MatrixSizeY)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield28;
+            uint _bitfield28;
         }
         uint Value;
     }
@@ -4004,7 +4007,7 @@ struct COLORSPACE_TRANSFORM_SET_INPUT
 
 struct SET_ACTIVE_COLOR_PROFILE_NAME
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ColorProfileName;
+    wchar[1] ColorProfileName; // Flexible array
 }
 
 struct MIPI_DSI_CAPS
@@ -4036,7 +4039,7 @@ struct MIPI_DSI_PACKET
         ubyte DataId;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VirtualChannel)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield29;
+            ubyte _bitfield29;
         }
     }
     union
@@ -4054,18 +4057,18 @@ struct MIPI_DSI_PACKET
 
 struct MIPI_DSI_TRANSMISSION
 {
-    uint   TotalBufferSize;
-    ubyte  PacketCount;
-    ubyte  FailedPacket;
+    uint               TotalBufferSize;
+    ubyte              PacketCount;
+    ubyte              FailedPacket;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(10))], [])*/ushort _bitfield30;
+        ushort _bitfield30;
     }
-    ushort ReadWordCount;
-    ushort FinalCommandExtraPayload;
-    ushort MipiErrors;
-    ushort HostErrors;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIPI_DSI_PACKET[1] Packets;
+    ushort             ReadWordCount;
+    ushort             FinalCommandExtraPayload;
+    ushort             MipiErrors;
+    ushort             HostErrors;
+    MIPI_DSI_PACKET[1] Packets; // Flexible array
 }
 
 struct MIPI_DSI_RESET
@@ -4075,7 +4078,7 @@ struct MIPI_DSI_RESET
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NeedModeSet)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield31;
+            uint _bitfield31;
         }
         uint Results;
     }

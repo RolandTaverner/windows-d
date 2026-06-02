@@ -3,8 +3,8 @@
 module windows.win32.graphics.direct3d.fxc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
-public import windows.win32.graphics.direct3d.direct3d : D3D_SHADER_MACRO, ID3DBlob, ID3DInclude;
+public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import windows.win32.graphics.direct3d : D3D_SHADER_MACRO, ID3DBlob, ID3DInclude;
 public import windows.win32.graphics.direct3d10 : ID3D10Effect;
 public import windows.win32.graphics.direct3d11 : ID3D11FunctionLinkingGraph, ID3D11Linker, ID3D11Module;
 
@@ -54,6 +54,7 @@ enum : int
 enum : const(wchar)*
 {
     D3DCOMPILER_DLL_W = "d3dcompiler_47.dll",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     D3DCOMPILER_DLL_A = "d3dcompiler_47.dll",
 }
 

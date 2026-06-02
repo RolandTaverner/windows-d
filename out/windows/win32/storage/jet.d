@@ -1799,7 +1799,7 @@ struct JET_OSSNAPID
 struct JET_LS
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ls.value-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ls.value-property))], [])*/size_t Value;
+    size_t Value;
 }
 
 version(X86_64)
@@ -1829,17 +1829,17 @@ version(X86_64)
     {
         uint   cbStruct;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
+        uint   objtyp;
         double dtCreate;
         double dtUpdate;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
+        uint   grbit;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
+        uint   flags;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
+        uint   cRecord;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+        uint   cPage;
     }
 }
 
@@ -1850,17 +1850,17 @@ version(AArch64)
     {
         uint   cbStruct;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
+        uint   objtyp;
         double dtCreate;
         double dtUpdate;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
+        uint   grbit;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
+        uint   flags;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
+        uint   cRecord;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+        uint   cPage;
     }
 }
 
@@ -1952,21 +1952,21 @@ version(X86_64)
     struct JET_RECSIZE
     {
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
+        ulong cbData;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
+        ulong cbLongValueData;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
+        ulong cbOverhead;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
+        ulong cbLongValueOverhead;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
+        ulong cNonTaggedColumns;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
+        ulong cTaggedColumns;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
+        ulong cLongValues;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+        ulong cMultiValues;
     }
 }
 
@@ -1976,21 +1976,21 @@ version(AArch64)
     struct JET_RECSIZE
     {
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
+        ulong cbData;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
+        ulong cbLongValueData;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
+        ulong cbOverhead;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
+        ulong cbLongValueOverhead;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
+        ulong cNonTaggedColumns;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
+        ulong cTaggedColumns;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
+        ulong cLongValues;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+        ulong cMultiValues;
     }
 }
 
@@ -2062,7 +2062,7 @@ struct JET_CONVERT_A
         uint fFlags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fSchemaChangesOnly)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield174;
+            uint _bitfield174;
         }
     }
 }
@@ -2075,7 +2075,7 @@ struct JET_CONVERT_W
         uint fFlags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fSchemaChangesOnly)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield175;
+            uint _bitfield175;
         }
     }
 }
@@ -2085,9 +2085,9 @@ struct JET_SNPROG
 {
     uint cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog.cunitdone-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog.cunitdone-property))], [])*/uint cunitDone;
+    uint cunitDone;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog.cunittotal-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog.cunittotal-property))], [])*/uint cunitTotal;
+    uint cunitTotal;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfoupgrade-structure
@@ -2104,7 +2104,7 @@ struct JET_DBINFOUPGRADE
         uint ulFlags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAlreadyUpgraded)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield176;
+            uint _bitfield176;
         }
     }
 }
@@ -2117,74 +2117,74 @@ version(X86)
     align (4):
         uint   cbStruct;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
+        uint   objtyp;
         double dtCreate;
         double dtUpdate;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
+        uint   grbit;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
+        uint   flags;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
+        uint   cRecord;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+        uint   cPage;
     }
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
 struct JET_OBJECTLIST
 {
-    uint cbStruct;
+    uint        cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.tableid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.tableid-property))], [])*/JET_TABLEID tableid;
+    JET_TABLEID tableid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.crecord-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.crecord-property))], [])*/uint cRecord;
-    uint columnidcontainername;
+    uint        cRecord;
+    uint        columnidcontainername;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidobjectname-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidobjectname-property))], [])*/uint columnidobjectname;
+    uint        columnidobjectname;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidobjtyp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidobjtyp-property))], [])*/uint columnidobjtyp;
-    uint columniddtCreate;
-    uint columniddtUpdate;
+    uint        columnidobjtyp;
+    uint        columniddtCreate;
+    uint        columniddtUpdate;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidgrbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidgrbit-property))], [])*/uint columnidgrbit;
+    uint        columnidgrbit;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidflags-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidflags-property))], [])*/uint columnidflags;
+    uint        columnidflags;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidcrecord-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidcrecord-property))], [])*/uint columnidcRecord;
+    uint        columnidcRecord;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidcpage-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidcpage-property))], [])*/uint columnidcPage;
+    uint        columnidcPage;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
 struct JET_COLUMNLIST
 {
-    uint cbStruct;
+    uint        cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.tableid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.tableid-property))], [])*/JET_TABLEID tableid;
+    JET_TABLEID tableid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.crecord-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.crecord-property))], [])*/uint cRecord;
-    uint columnidPresentationOrder;
+    uint        cRecord;
+    uint        columnidPresentationOrder;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcolumnname-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcolumnname-property))], [])*/uint columnidcolumnname;
+    uint        columnidcolumnname;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcolumnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcolumnid-property))], [])*/uint columnidcolumnid;
+    uint        columnidcolumnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcoltyp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcoltyp-property))], [])*/uint columnidcoltyp;
-    uint columnidCountry;
-    uint columnidLangid;
+    uint        columnidcoltyp;
+    uint        columnidCountry;
+    uint        columnidLangid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcp-property))], [])*/uint columnidCp;
-    uint columnidCollate;
+    uint        columnidCp;
+    uint        columnidCollate;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcbmax-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcbmax-property))], [])*/uint columnidcbMax;
+    uint        columnidcbMax;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidgrbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidgrbit-property))], [])*/uint columnidgrbit;
+    uint        columnidgrbit;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columniddefault-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columniddefault-property))], [])*/uint columnidDefault;
-    uint columnidBaseTableName;
-    uint columnidBaseColumnName;
-    uint columnidDefinitionName;
+    uint        columnidDefault;
+    uint        columnidBaseTableName;
+    uint        columnidBaseColumnName;
+    uint        columnidDefinitionName;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
@@ -2192,18 +2192,18 @@ struct JET_COLUMNDEF
 {
     uint   cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.columnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.columnid-property))], [])*/uint columnid;
+    uint   columnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.coltyp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.coltyp-property))], [])*/uint coltyp;
+    uint   coltyp;
     ushort wCountry;
     ushort langid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.cp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.cp-property))], [])*/ushort cp;
+    ushort cp;
     ushort wCollate;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.cbmax-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.cbmax-property))], [])*/uint cbMax;
+    uint   cbMax;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.grbit-property))], [])*/uint grbit;
+    uint   grbit;
 }
 
 struct JET_COLUMNBASE_A
@@ -2239,41 +2239,41 @@ struct JET_COLUMNBASE_W
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
 struct JET_INDEXLIST
 {
-    uint cbStruct;
+    uint        cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.tableid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.tableid-property))], [])*/JET_TABLEID tableid;
+    JET_TABLEID tableid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.crecord-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.crecord-property))], [])*/uint cRecord;
+    uint        cRecord;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidindexname-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidindexname-property))], [])*/uint columnidindexname;
+    uint        columnidindexname;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidgrbitindex-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidgrbitindex-property))], [])*/uint columnidgrbitIndex;
+    uint        columnidgrbitIndex;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidckey-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidckey-property))], [])*/uint columnidcKey;
+    uint        columnidcKey;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcentry-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcentry-property))], [])*/uint columnidcEntry;
+    uint        columnidcEntry;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcpage-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcpage-property))], [])*/uint columnidcPage;
+    uint        columnidcPage;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidccolumn-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidccolumn-property))], [])*/uint columnidcColumn;
+    uint        columnidcColumn;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidicolumn-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidicolumn-property))], [])*/uint columnidiColumn;
+    uint        columnidiColumn;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcolumnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcolumnid-property))], [])*/uint columnidcolumnid;
+    uint        columnidcolumnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcoltyp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcoltyp-property))], [])*/uint columnidcoltyp;
-    uint columnidCountry;
+    uint        columnidcoltyp;
+    uint        columnidCountry;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlangid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlangid-property))], [])*/uint columnidLangid;
+    uint        columnidLangid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcp-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcp-property))], [])*/uint columnidCp;
-    uint columnidCollate;
+    uint        columnidCp;
+    uint        columnidCollate;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidgrbitcolumn-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidgrbitcolumn-property))], [])*/uint columnidgrbitColumn;
+    uint        columnidgrbitColumn;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcolumnname-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcolumnname-property))], [])*/uint columnidcolumnname;
+    uint        columnidcolumnname;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlcmapflags-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlcmapflags-property))], [])*/uint columnidLCMapFlags;
+    uint        columnidLCMapFlags;
 }
 
 struct JET_COLUMNCREATE_A
@@ -2338,9 +2338,9 @@ struct JET_CONDITIONALCOLUMN_W
 struct JET_UNICODEINDEX
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex.lcid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex.lcid-property))], [])*/uint lcid;
+    uint lcid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex.dwmapflags-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex.dwmapflags-property))], [])*/uint dwMapFlags;
+    uint dwMapFlags;
 }
 
 struct JET_UNICODEINDEX2
@@ -2364,19 +2364,19 @@ struct JET_SPACEHINTS
 {
     uint cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulinitialdensity-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulinitialdensity-property))], [])*/uint ulInitialDensity;
+    uint ulInitialDensity;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbinitial-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbinitial-property))], [])*/uint cbInitial;
+    uint cbInitial;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.grbit-property))], [])*/uint grbit;
+    uint grbit;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulmaintdensity-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulmaintdensity-property))], [])*/uint ulMaintDensity;
+    uint ulMaintDensity;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulgrowth-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulgrowth-property))], [])*/uint ulGrowth;
+    uint ulGrowth;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbminextent-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbminextent-property))], [])*/uint cbMinExtent;
+    uint cbMinExtent;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbmaxextent-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbmaxextent-property))], [])*/uint cbMaxExtent;
+    uint cbMaxExtent;
 }
 
 struct JET_INDEXCREATE_A
@@ -2674,23 +2674,23 @@ struct JET_TABLECREATE4_W
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
 struct JET_OPENTEMPORARYTABLE
 {
-    uint cbStruct;
+    uint              cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.prgcolumndef-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.prgcolumndef-property))], [])*/const(JET_COLUMNDEF)* prgcolumndef;
+    const(JET_COLUMNDEF)* prgcolumndef;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.ccolumn-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.ccolumn-property))], [])*/uint ccolumn;
+    uint              ccolumn;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.pidxunicode-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.pidxunicode-property))], [])*/JET_UNICODEINDEX* pidxunicode;
+    JET_UNICODEINDEX* pidxunicode;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.grbit-property))], [])*/uint grbit;
+    uint              grbit;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.prgcolumnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.prgcolumnid-property))], [])*/uint* prgcolumnid;
+    uint*             prgcolumnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.cbkeymost-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.cbkeymost-property))], [])*/uint cbKeyMost;
+    uint              cbKeyMost;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.cbvarsegmac-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.cbvarsegmac-property))], [])*/uint cbVarSegMac;
+    uint              cbVarSegMac;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.tableid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.tableid-property))], [])*/JET_TABLEID tableid;
+    JET_TABLEID       tableid;
 }
 
 struct JET_OPENTEMPORARYTABLE2
@@ -2711,11 +2711,11 @@ struct JET_RETINFO
 {
     uint cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.iblongvalue-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.iblongvalue-property))], [])*/uint ibLongValue;
+    uint ibLongValue;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.itagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.itagsequence-property))], [])*/uint itagSequence;
+    uint itagSequence;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.columnidnexttagged-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.columnidnexttagged-property))], [])*/uint columnidNextTagged;
+    uint columnidNextTagged;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo-class
@@ -2723,9 +2723,9 @@ struct JET_SETINFO
 {
     uint cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo.iblongvalue-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo.iblongvalue-property))], [])*/uint ibLongValue;
+    uint ibLongValue;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo.itagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo.itagsequence-property))], [])*/uint itagSequence;
+    uint itagSequence;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos-constructor
@@ -2733,10 +2733,10 @@ struct JET_RECPOS
 {
     uint cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos.centrieslt-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos.centrieslt-property))], [])*/uint centriesLT;
+    uint centriesLT;
     uint centriesInRange;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos.centriestotal-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos.centriestotal-property))], [])*/uint centriesTotal;
+    uint centriesTotal;
 }
 
 version(X86)
@@ -2756,35 +2756,35 @@ version(X86)
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist-constructor
 struct JET_RECORDLIST
 {
-    uint cbStruct;
+    uint        cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist.tableid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist.tableid-property))], [])*/JET_TABLEID tableid;
-    uint cRecord;
+    JET_TABLEID tableid;
+    uint        cRecord;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist.columnidbookmark-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist.columnidbookmark-property))], [])*/uint columnidBookmark;
+    uint        columnidBookmark;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange-structure
 struct JET_INDEXRANGE
 {
-    uint cbStruct;
+    uint        cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange.tableid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange.tableid-property))], [])*/JET_TABLEID tableid;
+    JET_TABLEID tableid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange.grbit-property))], [])*/uint grbit;
+    uint        grbit;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column-constructor
 struct JET_INDEX_COLUMN
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.columnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.columnid-property))], [])*/uint columnid;
+    uint      columnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.relop-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.relop-property))], [])*/JET_RELOP relop;
-    void* pv;
-    uint  cb;
+    JET_RELOP relop;
+    void*     pv;
+    uint      cb;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.grbit-property))], [])*/uint grbit;
+    uint      grbit;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-range-constructor
@@ -2810,7 +2810,7 @@ struct JET_LOGTIME
         ubyte bFiller1;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bMillisecondsLow)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield177;
+            ubyte _bitfield177;
         }
     }
     union
@@ -2818,7 +2818,7 @@ struct JET_LOGTIME
         ubyte bFiller2;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fUnused)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield178;
+            ubyte _bitfield178;
         }
     }
 }
@@ -2837,7 +2837,7 @@ struct JET_BKLOGTIME
         ubyte bFiller1;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bMillisecondsLow)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield179;
+            ubyte _bitfield179;
         }
     }
     union
@@ -2845,7 +2845,7 @@ struct JET_BKLOGTIME
         ubyte bFiller2;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield180;
+            ubyte _bitfield180;
         }
     }
 }
@@ -2855,11 +2855,11 @@ struct JET_LGPOS
 {
 align (1):
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.ib-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.ib-property))], [])*/ushort ib;
+    ushort ib;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.isec-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.isec-property))], [])*/ushort isec;
+    ushort isec;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.lgeneration-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.lgeneration-property))], [])*/int lGeneration;
+    int    lGeneration;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-signature-structure
@@ -2876,63 +2876,63 @@ struct JET_BKINFO
 {
 align (1):
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.lgposmark-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.lgposmark-property))], [])*/JET_LGPOS lgposMark;
+    JET_LGPOS lgposMark;
     union
     {
         JET_LOGTIME   logtimeMark;
         JET_BKLOGTIME bklogtimeMark;
     }
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.genlow-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.genlow-property))], [])*/uint genLow;
+    uint      genLow;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.genhigh-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.genhigh-property))], [])*/uint genHigh;
+    uint      genHigh;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
 struct JET_DBINFOMISC
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.ulversion-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.ulversion-property))], [])*/uint ulVersion;
+    uint          ulVersion;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.ulupdate-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.ulupdate-property))], [])*/uint ulUpdate;
+    uint          ulUpdate;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.signdb-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.signdb-property))], [])*/JET_SIGNATURE signDb;
+    JET_SIGNATURE signDb;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dbstate-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dbstate-property))], [])*/uint dbstate;
+    uint          dbstate;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposconsistent-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposconsistent-property))], [])*/JET_LGPOS lgposConsistent;
+    JET_LGPOS     lgposConsistent;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimeconsistent-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimeconsistent-property))], [])*/JET_LOGTIME logtimeConsistent;
+    JET_LOGTIME   logtimeConsistent;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimeattach-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimeattach-property))], [])*/JET_LOGTIME logtimeAttach;
+    JET_LOGTIME   logtimeAttach;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposattach-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposattach-property))], [])*/JET_LGPOS lgposAttach;
+    JET_LGPOS     lgposAttach;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimedetach-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimedetach-property))], [])*/JET_LOGTIME logtimeDetach;
+    JET_LOGTIME   logtimeDetach;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposdetach-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposdetach-property))], [])*/JET_LGPOS lgposDetach;
+    JET_LGPOS     lgposDetach;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.signlog-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.signlog-property))], [])*/JET_SIGNATURE signLog;
+    JET_SIGNATURE signLog;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfofullprev-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfofullprev-property))], [])*/JET_BKINFO bkinfoFullPrev;
+    JET_BKINFO    bkinfoFullPrev;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfoincprev-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfoincprev-property))], [])*/JET_BKINFO bkinfoIncPrev;
+    JET_BKINFO    bkinfoIncPrev;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfofullcur-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfofullcur-property))], [])*/JET_BKINFO bkinfoFullCur;
+    JET_BKINFO    bkinfoFullCur;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.fshadowingdisabled-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.fshadowingdisabled-property))], [])*/uint fShadowingDisabled;
+    uint          fShadowingDisabled;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.fupgradedb-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.fupgradedb-property))], [])*/uint fUpgradeDb;
+    uint          fUpgradeDb;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwmajorversion-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwmajorversion-property))], [])*/uint dwMajorVersion;
+    uint          dwMajorVersion;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwminorversion-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwminorversion-property))], [])*/uint dwMinorVersion;
+    uint          dwMinorVersion;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwbuildnumber-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwbuildnumber-property))], [])*/uint dwBuildNumber;
+    uint          dwBuildNumber;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lspnumber-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lspnumber-property))], [])*/int lSPNumber;
+    int           lSPNumber;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.cbpagesize-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.cbpagesize-property))], [])*/uint cbPageSize;
+    uint          cbPageSize;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc2-structure
@@ -3067,19 +3067,19 @@ struct JET_THREADSTATS
 {
     uint cbStruct;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagereferenced-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagereferenced-property))], [])*/uint cPageReferenced;
+    uint cPageReferenced;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpageread-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpageread-property))], [])*/uint cPageRead;
+    uint cPageRead;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagepreread-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagepreread-property))], [])*/uint cPagePreread;
+    uint cPagePreread;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagedirtied-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagedirtied-property))], [])*/uint cPageDirtied;
+    uint cPageDirtied;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpageredirtied-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpageredirtied-property))], [])*/uint cPageRedirtied;
+    uint cPageRedirtied;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.clogrecord-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.clogrecord-property))], [])*/uint cLogRecord;
+    uint cLogRecord;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cblogrecord-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cblogrecord-property))], [])*/uint cbLogRecord;
+    uint cbLogRecord;
 }
 
 version(X86)
@@ -3155,19 +3155,19 @@ struct JET_OPERATIONCONTEXT
 struct JET_SETCOLUMN
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.columnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.columnid-property))], [])*/uint columnid;
+    uint  columnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.pvdata-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.pvdata-property))], [])*/void* pvData;
+    void* pvData;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.cbdata-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.cbdata-property))], [])*/uint cbData;
+    uint  cbData;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.grbit-property))], [])*/uint grbit;
+    uint  grbit;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.iblongvalue-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.iblongvalue-property))], [])*/uint ibLongValue;
+    uint  ibLongValue;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.itagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.itagsequence-property))], [])*/uint itagSequence;
+    uint  itagSequence;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.err-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.err-property))], [])*/int err;
+    int   err;
 }
 
 struct JET_SETSYSPARAM_A
@@ -3190,56 +3190,56 @@ struct JET_SETSYSPARAM_W
 struct JET_RETRIEVECOLUMN
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.columnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.columnid-property))], [])*/uint columnid;
+    uint  columnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.pvdata-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.pvdata-property))], [])*/void* pvData;
+    void* pvData;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.cbdata-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.cbdata-property))], [])*/uint cbData;
+    uint  cbData;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.cbactual-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.cbactual-property))], [])*/uint cbActual;
+    uint  cbActual;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.grbit-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.grbit-property))], [])*/uint grbit;
+    uint  grbit;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.iblongvalue-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.iblongvalue-property))], [])*/uint ibLongValue;
+    uint  ibLongValue;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.itagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.itagsequence-property))], [])*/uint itagSequence;
+    uint  itagSequence;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.columnidnexttagged-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.columnidnexttagged-property))], [])*/uint columnidNextTagged;
+    uint  columnidNextTagged;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.err-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.err-property))], [])*/int err;
+    int   err;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid-structure
 struct JET_ENUMCOLUMNID
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.columnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.columnid-property))], [])*/uint columnid;
+    uint  columnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.ctagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.ctagsequence-property))], [])*/uint ctagSequence;
+    uint  ctagSequence;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.rgtagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.rgtagsequence-property))], [])*/uint* rgtagSequence;
+    uint* rgtagSequence;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor
 struct JET_ENUMCOLUMNVALUE
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.itagsequence-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.itagsequence-property))], [])*/uint itagSequence;
+    uint  itagSequence;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.err-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.err-property))], [])*/int err;
+    int   err;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.cbdata-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.cbdata-property))], [])*/uint cbData;
+    uint  cbData;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.pvdata-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.pvdata-property))], [])*/void* pvData;
+    void* pvData;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn-class
 struct JET_ENUMCOLUMN
 {
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn.columnid-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn.columnid-property))], [])*/uint columnid;
+    uint columnid;
     // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn.err-property
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn.err-property))], [])*/int err;
+    int  err;
     union
     {
         struct
@@ -3262,21 +3262,21 @@ version(X86)
     {
     align (4):
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
+        ulong cbData;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
+        ulong cbLongValueData;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
+        ulong cbOverhead;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
+        ulong cbLongValueOverhead;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
+        ulong cNonTaggedColumns;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
+        ulong cTaggedColumns;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
+        ulong cLongValues;
         // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property
-        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+        ulong cMultiValues;
     }
 }
 

@@ -3,7 +3,7 @@
 module windows.win32.ui.input.xboxcontroller;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, PWSTR;
+public import windows.win32.foundation : BOOL, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -146,8 +146,9 @@ enum : uint
 // Constants
 
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     XINPUT_DLL_A = "xinput1_4.dll",
     XINPUT_DLL_W = "xinput1_4.dll",
     XINPUT_DLL   = "xinput1_4.dll",

@@ -3,7 +3,7 @@
 module windows.win32.system.recovery;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 public import windows.win32.system.windowsprogramming : APPLICATION_RECOVERY_CALLBACK;
 
 extern(Windows) @nogc nothrow:

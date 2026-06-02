@@ -3,13 +3,13 @@
 module windows.win32.graphics.gdiplus;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND,
-                                                    PSTR, PWSTR, RECT, RECTL, SIZE;
+public import windows.win32.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND, PSTR,
+                                         PWSTR, RECT, RECTL, SIZE;
 public import windows.win32.graphics.directdraw : IDirectDrawSurface7;
 public import windows.win32.graphics.gdi : BITMAPINFO, HBITMAP, HDC, HENHMETAFILE,
                                            HMETAFILE, HPALETTE, HRGN, LOGFONTA,
                                            LOGFONTW, METAHEADER;
-public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.system.com : IStream, IUnknown;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
 extern(Windows) @nogc nothrow:
@@ -1611,9 +1611,9 @@ struct GdiplusStartupOutput
 
 struct ColorPalette
 {
-    uint Flags;
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Entries;
+    uint    Flags;
+    uint    Count;
+    uint[1] Entries; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/WMP/color-element
@@ -1868,8 +1868,8 @@ struct EncoderParameter
 
 struct EncoderParameters
 {
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EncoderParameter[1] Parameter;
+    uint                Count;
+    EncoderParameter[1] Parameter; // Flexible array
 }
 
 struct ImageItemData

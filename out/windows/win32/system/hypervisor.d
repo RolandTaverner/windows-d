@@ -3,8 +3,7 @@
 module windows.win32.system.hypervisor;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, LUID, PSTR,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, LUID, PSTR, PWSTR;
 public import windows.win32.networking.winsock : ADDRESS_FAMILY;
 public import windows.win32.system.hostcomputesystem : HCS_SYSTEM;
 public import windows.win32.system.power : DEVICE_POWER_STATE;
@@ -916,7 +915,8 @@ enum uint WHV_VPCI_TYPE0_BAR_COUNT = 0x00000006U;
 enum uint WHV_ANY_VP = 0xffffffffU;
 enum uint WHV_SYNIC_MESSAGE_SIZE = 0x00000100U;
 enum const(wchar)* VM_GENCOUNTER_SYMBOLIC_LINK_NAME = "\\VmGenerationCounter";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vmgenerationcounter/ni-vmgenerationcounter-ioctl_vmgencounter_read))], [])*/uint IOCTL_VMGENCOUNTER_READ = 0x0032c004U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmgenerationcounter/ni-vmgenerationcounter-ioctl_vmgencounter_read
+enum uint IOCTL_VMGENCOUNTER_READ = 0x0032c004U;
 enum uint HDV_PCI_BAR_COUNT = 0x00000006U;
 
 enum : GUID
@@ -980,7 +980,7 @@ union WHV_CAPABILITY_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(54))], [])*/ulong _bitfield404;
+        ulong _bitfield404;
     }
     ulong AsUINT64;
 }
@@ -989,7 +989,7 @@ union WHV_EXTENDED_VM_EXITS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(49))], [])*/ulong _bitfield405;
+        ulong _bitfield405;
     }
     ulong AsUINT64;
 }
@@ -998,7 +998,7 @@ union WHV_PROCESSOR_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved6)), FixedArgSig(ElementSig(63)), FixedArgSig(ElementSig(1))], [])*/ulong _bitfield406;
+        ulong _bitfield406;
     }
     ulong AsUINT64;
 }
@@ -1007,7 +1007,7 @@ union WHV_PROCESSOR_FEATURES1
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved5)), FixedArgSig(ElementSig(23)), FixedArgSig(ElementSig(41))], [])*/ulong _bitfield407;
+        ulong _bitfield407;
     }
     ulong AsUINT64;
 }
@@ -1031,7 +1031,7 @@ union WHV_SYNTHETIC_PROCESSOR_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(33))], [])*/ulong _bitfield408;
+        ulong _bitfield408;
     }
     ulong AsUINT64;
 }
@@ -1046,7 +1046,7 @@ struct WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS
         {
             WHV_SYNTHETIC_PROCESSOR_FEATURES Bank0;
         }
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] AsUINT64;
+        ulong[1] AsUINT64; // Flexible array
     }
 }
 
@@ -1054,7 +1054,7 @@ union WHV_PROCESSOR_XSAVE_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(33))], [])*/ulong _bitfield409;
+        ulong _bitfield409;
     }
     ulong AsUINT64;
 }
@@ -1063,7 +1063,7 @@ union WHV_PROCESSOR_PERFMON_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(62))], [])*/ulong _bitfield410;
+        ulong _bitfield410;
     }
     ulong AsUINT64;
 }
@@ -1073,7 +1073,7 @@ union WHV_X64_MSR_EXIT_BITMAP
     ulong AsUINT64;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(58))], [])*/ulong _bitfield411;
+        ulong _bitfield411;
     }
 }
 
@@ -1088,7 +1088,7 @@ union WHV_ADVISE_GPA_RANGE_POPULATE_FLAGS
     uint AsUINT32;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield412;
+        uint _bitfield412;
     }
 }
 
@@ -1100,7 +1100,7 @@ struct WHV_ADVISE_GPA_RANGE_POPULATE
 
 struct WHV_CAPABILITY_PROCESSOR_FREQUENCY_CAP
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield413;
+    uint _bitfield413;
     uint HighestFrequencyMhz;
     uint NominalFrequencyMhz;
     uint LowestFrequencyMhz;
@@ -1111,7 +1111,7 @@ union WHV_SCHEDULER_FEATURES
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(59))], [])*/ulong _bitfield414;
+        ulong _bitfield414;
     }
     ulong AsUINT64;
 }
@@ -1243,7 +1243,7 @@ union WHV_X64_FP_REGISTER
     struct
     {
         ulong Mantissa;
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield415;
+        ulong _bitfield415;
     }
     WHV_UINT128 AsUINT128;
 }
@@ -1300,7 +1300,7 @@ struct WHV_X64_SEGMENT_REGISTER
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Granularity)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield416;
+            ushort _bitfield416;
         }
         ushort Attributes;
     }
@@ -1317,7 +1317,7 @@ union WHV_X64_INTERRUPT_STATE_REGISTER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(62))], [])*/ulong _bitfield417;
+        ulong _bitfield417;
     }
     ulong AsUINT64;
 }
@@ -1326,7 +1326,7 @@ union WHV_X64_PENDING_INTERRUPTION_REGISTER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(InterruptionVector)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield418;
+        uint _bitfield418;
         uint ErrorCode;
     }
     ulong AsUINT64;
@@ -1336,7 +1336,7 @@ union WHV_X64_DELIVERABILITY_NOTIFICATIONS_REGISTER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Sint)), FixedArgSig(ElementSig(48)), FixedArgSig(ElementSig(16))], [])*/ulong _bitfield419;
+        ulong _bitfield419;
     }
     ulong AsUINT64;
 }
@@ -1345,7 +1345,7 @@ union WHV_X64_PENDING_EXCEPTION_EVENT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Vector)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield420;
+        uint  _bitfield420;
         uint  ErrorCode;
         ulong ExceptionParameter;
     }
@@ -1356,7 +1356,7 @@ union WHV_X64_PENDING_EXT_INT_EVENT
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield421;
+        ulong _bitfield421;
         ulong Reserved2;
     }
     WHV_UINT128 AsUINT128;
@@ -1366,7 +1366,7 @@ union WHV_INTERNAL_ACTIVITY_REGISTER
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(61))], [])*/ulong _bitfield422;
+        ulong _bitfield422;
     }
     ulong AsUINT64;
 }
@@ -1376,7 +1376,7 @@ union WHV_X64_PENDING_DEBUG_EXCEPTION
     ulong AsUINT64;
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(59))], [])*/ulong _bitfield423;
+        ulong _bitfield423;
     }
 }
 
@@ -1412,7 +1412,7 @@ union WHV_X64_VP_EXECUTION_STATE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(3))], [])*/ushort _bitfield424;
+        ushort _bitfield424;
     }
     ushort AsUINT16;
 }
@@ -1420,7 +1420,7 @@ union WHV_X64_VP_EXECUTION_STATE
 struct WHV_VP_EXIT_CONTEXT
 {
     WHV_X64_VP_EXECUTION_STATE ExecutionState;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Cr8)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield425;
+    ubyte _bitfield425;
     ubyte Reserved;
     uint  Reserved2;
     WHV_X64_SEGMENT_REGISTER Cs;
@@ -1432,7 +1432,7 @@ union WHV_MEMORY_ACCESS_INFO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield426;
+        uint _bitfield426;
     }
     uint AsUINT32;
 }
@@ -1451,7 +1451,7 @@ union WHV_X64_IO_PORT_ACCESS_INFO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield427;
+        uint _bitfield427;
     }
     uint AsUINT32;
 }
@@ -1476,7 +1476,7 @@ union WHV_X64_MSR_ACCESS_INFO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield428;
+        uint _bitfield428;
     }
     uint AsUINT32;
 }
@@ -1505,7 +1505,7 @@ union WHV_VP_EXCEPTION_INFO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield429;
+        uint _bitfield429;
     }
     uint AsUINT32;
 }
@@ -1548,7 +1548,7 @@ union WHV_X64_RDTSC_INFO
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(63))], [])*/ulong _bitfield430;
+        ulong _bitfield430;
     }
     ulong AsUINT64;
 }
@@ -1620,9 +1620,9 @@ struct WHV_RUN_VP_EXIT_CONTEXT
 
 struct WHV_INTERRUPT_CONTROL
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield431;
-    uint Destination;
-    uint Vector;
+    ulong _bitfield431;
+    uint  Destination;
+    uint  Vector;
 }
 
 struct WHV_DOORBELL_MATCH_DATA
@@ -1630,7 +1630,7 @@ struct WHV_DOORBELL_MATCH_DATA
     ulong GuestAddress;
     ulong Value;
     uint  Length;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield432;
+    uint  _bitfield432;
 }
 
 struct WHV_PARTITION_MEMORY_COUNTERS
@@ -1757,10 +1757,10 @@ struct WHV_VPCI_DEVICE_REGISTER
 
 struct WHV_VPCI_INTERRUPT_TARGET
 {
-    uint Vector;
+    uint    Vector;
     WHV_VPCI_INTERRUPT_TARGET_FLAGS Flags;
-    uint ProcessorCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Processors;
+    uint    ProcessorCount;
+    uint[1] Processors; // Flexible array
 }
 
 struct WHV_TRIGGER_PARAMETERS
@@ -1810,7 +1810,7 @@ union WHV_EMULATOR_STATUS
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield433;
+        uint _bitfield433;
     }
     uint AsUINT32;
 }
@@ -1904,11 +1904,11 @@ union GUEST_OS_INFO
     ulong AsUINT64;
     struct ClosedSource
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VendorId)), FixedArgSig(ElementSig(48)), FixedArgSig(ElementSig(16))], [])*/ulong _bitfield434;
+        ulong _bitfield434;
     }
     struct OpenSource
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsOpenSource)), FixedArgSig(ElementSig(63)), FixedArgSig(ElementSig(1))], [])*/ulong _bitfield435;
+        ulong _bitfield435;
     }
 }
 
@@ -1935,7 +1935,7 @@ union VIRTUAL_PROCESSOR_REGISTER
                 ushort Attributes;
                 struct
                 {
-                    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Granularity)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield436;
+                    ushort _bitfield436;
                 }
             }
         }

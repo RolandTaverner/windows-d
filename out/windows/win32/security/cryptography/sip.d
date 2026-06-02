@@ -3,10 +3,10 @@
 module windows.win32.security.cryptography.sip;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
-public import windows.win32.security.cryptography.cryptography : CERT_QUERY_ENCODING_TYPE, CRYPT_ALGORITHM_IDENTIFIER,
-                                                                 CRYPT_ATTRIBUTE_TYPE_VALUE,
-                                                                 CRYPT_INTEGER_BLOB;
+public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
+public import windows.win32.security.cryptography : CERT_QUERY_ENCODING_TYPE, CRYPT_ALGORITHM_IDENTIFIER,
+                                                    CRYPT_ATTRIBUTE_TYPE_VALUE,
+                                                    CRYPT_INTEGER_BLOB;
 public import windows.win32.security.cryptography.catalog : MS_ADDINFO_CATALOGMEMBER;
 
 extern(Windows) @nogc nothrow:

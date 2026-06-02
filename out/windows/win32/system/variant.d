@@ -3,10 +3,10 @@
 module windows.win32.system.variant;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, DECIMAL, FILETIME,
-                                                    HINSTANCE, HRESULT, PSTR, PWSTR,
-                                                    SYSTEMTIME, VARIANT_BOOL;
-public import windows.win32.system.com.com : CY, IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, DECIMAL, FILETIME, HINSTANCE,
+                                         HRESULT, PSTR, PWSTR, SYSTEMTIME,
+                                         VARIANT_BOOL;
+public import windows.win32.system.com : CY, IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IRecordInfo;
 
 extern(Windows) @nogc nothrow:

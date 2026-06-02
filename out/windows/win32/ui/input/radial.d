@@ -3,8 +3,8 @@
 module windows.win32.ui.input.radial;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, HWND;
-public import windows.win32.system.winrt.winrt : IInspectable;
+public import windows.win32.foundation : HRESULT, HWND;
+public import windows.win32.system.winrt : IInspectable;
 
 extern(Windows) @nogc nothrow:
 

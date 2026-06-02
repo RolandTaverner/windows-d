@@ -3,7 +3,7 @@
 module windows.win32.security.diagnosticdataquery;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HRESULT, PWSTR;
+public import windows.win32.foundation : BOOL, FILETIME, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

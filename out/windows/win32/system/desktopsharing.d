@@ -3,8 +3,8 @@
 module windows.win32.system.desktopsharing;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, VARIANT_BOOL;
-public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BSTR, HRESULT, VARIANT_BOOL;
+public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

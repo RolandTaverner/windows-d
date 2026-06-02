@@ -3,21 +3,18 @@
 module windows.win32.graphics.direct3d10;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR,
-                                                    RECT;
-public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_NAME, D3D_PRIMITIVE,
-                                                         D3D_PRIMITIVE_TOPOLOGY,
-                                                         D3D_REGISTER_COMPONENT_TYPE,
-                                                         D3D_RESOURCE_RETURN_TYPE,
-                                                         D3D_SHADER_INPUT_TYPE,
-                                                         D3D_SHADER_MACRO,
-                                                         D3D_SHADER_VARIABLE_CLASS,
-                                                         D3D_SHADER_VARIABLE_TYPE,
-                                                         D3D_SRV_DIMENSION, ID3DBlob,
-                                                         ID3DInclude;
+public import windows.win32.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR, RECT;
+public import windows.win32.graphics.direct3d : D3D_CBUFFER_TYPE, D3D_NAME, D3D_PRIMITIVE,
+                                                D3D_PRIMITIVE_TOPOLOGY,
+                                                D3D_REGISTER_COMPONENT_TYPE,
+                                                D3D_RESOURCE_RETURN_TYPE,
+                                                D3D_SHADER_INPUT_TYPE, D3D_SHADER_MACRO,
+                                                D3D_SHADER_VARIABLE_CLASS,
+                                                D3D_SHADER_VARIABLE_TYPE, D3D_SRV_DIMENSION,
+                                                ID3DBlob, ID3DInclude;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT, DXGI_SAMPLE_DESC;
-public import windows.win32.graphics.dxgi.dxgi : DXGI_SWAP_CHAIN_DESC, IDXGIAdapter, IDXGISwapChain;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.graphics.dxgi : DXGI_SWAP_CHAIN_DESC, IDXGIAdapter, IDXGISwapChain;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

@@ -3,10 +3,9 @@
 module windows.win32.ui.ribbon;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HINSTANCE, HRESULT, HWND, PROPERTYKEY,
-                                                    PWSTR;
+public import windows.win32.foundation : HINSTANCE, HRESULT, HWND, PROPERTYKEY, PWSTR;
 public import windows.win32.graphics.gdi : HBITMAP;
-public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.system.com : IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -185,8 +184,10 @@ enum : int
 // Constants
 
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-ui-all-commands))], [])*/uint UI_ALL_COMMANDS = 0x00000000U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-ui-collection-invalidindex))], [])*/uint UI_COLLECTION_INVALIDINDEX = 0xffffffffU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-ui-all-commands
+enum uint UI_ALL_COMMANDS = 0x00000000U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-ui-collection-invalidindex
+enum uint UI_COLLECTION_INVALIDINDEX = 0xffffffffU;
 enum GUID LIBID_UIRibbon = GUID("942f35c2-e83b-45ef-b085-ac295dd63d5b");
 
 // Structs

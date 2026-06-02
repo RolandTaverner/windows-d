@@ -3,7 +3,7 @@
 module windows.win32.system.js;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, PWSTR;
+public import windows.win32.foundation : HRESULT, PWSTR;
 public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptProfilerCallback,
                                                                      IActiveScriptProfilerHeapEnum,
                                                                      IDebugApplication32,

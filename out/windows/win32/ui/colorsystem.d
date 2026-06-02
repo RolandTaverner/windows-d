@@ -3,11 +3,11 @@
 module windows.win32.ui.colorsystem;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, HRESULT,
-                                                    HWND, LPARAM, LUID, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, HRESULT, HWND,
+                                         LPARAM, LUID, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : CIEXYZ, CIEXYZTRIPLE, EMR, HDC, HPALETTE,
                                            RGBTRIPLE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.ui.windowsandmessaging : DLGPROC;
 
 extern(Windows) @nogc nothrow:
@@ -357,7 +357,7 @@ struct EMRCREATECOLORSPACEW
     LOGCOLORSPACEW lcs;
     uint           dwFlags;
     uint           cbData;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1]       Data; // Flexible array
 }
 
 struct XYZColorF

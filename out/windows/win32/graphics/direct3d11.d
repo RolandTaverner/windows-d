@@ -3,28 +3,26 @@
 module windows.win32.graphics.direct3d11;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR,
-                                                    PWSTR, RECT, SIZE;
-public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_DRIVER_TYPE,
-                                                         D3D_FEATURE_LEVEL, D3D_INTERPOLATION_MODE,
-                                                         D3D_MIN_PRECISION, D3D_NAME,
-                                                         D3D_PARAMETER_FLAGS, D3D_PRIMITIVE,
-                                                         D3D_PRIMITIVE_TOPOLOGY,
-                                                         D3D_REGISTER_COMPONENT_TYPE,
-                                                         D3D_RESOURCE_RETURN_TYPE,
-                                                         D3D_SHADER_INPUT_TYPE,
-                                                         D3D_SHADER_VARIABLE_CLASS,
-                                                         D3D_SHADER_VARIABLE_TYPE,
-                                                         D3D_SRV_DIMENSION, D3D_TESSELLATOR_DOMAIN,
-                                                         D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
-                                                         D3D_TESSELLATOR_PARTITIONING,
-                                                         ID3DBlob;
+public import windows.win32.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR, PWSTR,
+                                         RECT, SIZE;
+public import windows.win32.graphics.direct3d : D3D_CBUFFER_TYPE, D3D_DRIVER_TYPE, D3D_FEATURE_LEVEL,
+                                                D3D_INTERPOLATION_MODE, D3D_MIN_PRECISION,
+                                                D3D_NAME, D3D_PARAMETER_FLAGS,
+                                                D3D_PRIMITIVE, D3D_PRIMITIVE_TOPOLOGY,
+                                                D3D_REGISTER_COMPONENT_TYPE,
+                                                D3D_RESOURCE_RETURN_TYPE,
+                                                D3D_SHADER_INPUT_TYPE,
+                                                D3D_SHADER_VARIABLE_CLASS,
+                                                D3D_SHADER_VARIABLE_TYPE, D3D_SRV_DIMENSION,
+                                                D3D_TESSELLATOR_DOMAIN,
+                                                D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
+                                                D3D_TESSELLATOR_PARTITIONING, ID3DBlob;
 public import windows.win32.graphics.dxgi.common : DXGI_COLOR_SPACE_TYPE, DXGI_FORMAT, DXGI_RATIONAL,
                                                    DXGI_SAMPLE_DESC;
-public import windows.win32.graphics.dxgi.dxgi : DXGI_HDR_METADATA_TYPE, DXGI_SWAP_CHAIN_DESC,
-                                                 IDXGIAdapter, IDXGISwapChain;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.graphics.dxgi : DXGI_HDR_METADATA_TYPE, DXGI_SWAP_CHAIN_DESC,
+                                            IDXGIAdapter, IDXGISwapChain;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -3499,6 +3497,7 @@ enum : uint
 enum : const(wchar)*
 {
     D3DCSX_DLL_W = "d3dcsx_47.dll",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     D3DCSX_DLL_A = "d3dcsx_47.dll",
     D3DCSX_DLL   = "d3dcsx_47.dll",
 }
@@ -3670,9 +3669,9 @@ struct D3D11_BUFFER_DESC
 {
     uint        ByteWidth;
     D3D11_USAGE Usage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_BIND_FLAG))], [])*/uint BindFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_CPU_ACCESS_FLAG))], [])*/uint CPUAccessFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
+    uint        BindFlags;
+    uint        CPUAccessFlags;
+    uint        MiscFlags;
     uint        StructureByteStride;
 }
 
@@ -3684,9 +3683,9 @@ struct D3D11_TEXTURE1D_DESC
     uint        ArraySize;
     DXGI_FORMAT Format;
     D3D11_USAGE Usage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_BIND_FLAG))], [])*/uint BindFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_CPU_ACCESS_FLAG))], [])*/uint CPUAccessFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
+    uint        BindFlags;
+    uint        CPUAccessFlags;
+    uint        MiscFlags;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture2d_desc
@@ -3699,9 +3698,9 @@ struct D3D11_TEXTURE2D_DESC
     DXGI_FORMAT      Format;
     DXGI_SAMPLE_DESC SampleDesc;
     D3D11_USAGE      Usage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_BIND_FLAG))], [])*/uint BindFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_CPU_ACCESS_FLAG))], [])*/uint CPUAccessFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
+    uint             BindFlags;
+    uint             CPUAccessFlags;
+    uint             MiscFlags;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture3d_desc
@@ -3713,9 +3712,9 @@ struct D3D11_TEXTURE3D_DESC
     uint        MipLevels;
     DXGI_FORMAT Format;
     D3D11_USAGE Usage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_BIND_FLAG))], [])*/uint BindFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_CPU_ACCESS_FLAG))], [])*/uint CPUAccessFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
+    uint        BindFlags;
+    uint        CPUAccessFlags;
+    uint        MiscFlags;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_srv
@@ -4438,7 +4437,7 @@ struct D3D11_VIDEO_COLOR
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_color_space
 struct D3D11_VIDEO_PROCESSOR_COLOR_SPACE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield89;
+    uint _bitfield89;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_stream
@@ -4486,7 +4485,7 @@ union D3D11_AUTHENTICATED_PROTECTION_FLAGS
 {
     struct Flags
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield90;
+        uint _bitfield90;
     }
     uint Value;
 }
@@ -4949,9 +4948,9 @@ struct D3D11_TEXTURE2D_DESC1
     DXGI_FORMAT          Format;
     DXGI_SAMPLE_DESC     SampleDesc;
     D3D11_USAGE          Usage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_BIND_FLAG))], [])*/uint BindFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_CPU_ACCESS_FLAG))], [])*/uint CPUAccessFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
+    uint                 BindFlags;
+    uint                 CPUAccessFlags;
+    uint                 MiscFlags;
     D3D11_TEXTURE_LAYOUT TextureLayout;
 }
 
@@ -4964,9 +4963,9 @@ struct D3D11_TEXTURE3D_DESC1
     uint                 MipLevels;
     DXGI_FORMAT          Format;
     D3D11_USAGE          Usage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_BIND_FLAG))], [])*/uint BindFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_CPU_ACCESS_FLAG))], [])*/uint CPUAccessFlags;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
+    uint                 BindFlags;
+    uint                 CPUAccessFlags;
+    uint                 MiscFlags;
     D3D11_TEXTURE_LAYOUT TextureLayout;
 }
 

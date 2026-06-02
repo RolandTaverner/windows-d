@@ -3,8 +3,8 @@
 module windows.win32.system.updateagent;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, DECIMAL, HRESULT, HWND, VARIANT_BOOL;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BSTR, DECIMAL, HRESULT, HWND, VARIANT_BOOL;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

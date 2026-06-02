@@ -3,10 +3,10 @@
 module windows.win32.networking.winhttp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HRESULT,
-                                                    PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HRESULT, PSTR,
+                                         PWSTR, SYSTEMTIME, VARIANT_BOOL;
 public import windows.win32.networking.winsock : SOCKADDR_STORAGE;
-public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -275,9 +275,9 @@ enum : uint
 
 enum : ushort
 {
-    INTERNET_DEFAULT_PORT       = cast(ushort) 0x0000,
-    INTERNET_DEFAULT_HTTP_PORT  = cast(ushort) 0x0050,
-    INTERNET_DEFAULT_HTTPS_PORT = cast(ushort) 0x01bb,
+    INTERNET_DEFAULT_PORT       = 0x0000,
+    INTERNET_DEFAULT_HTTP_PORT  = 0x0050,
+    INTERNET_DEFAULT_HTTPS_PORT = 0x01bb,
 }
 
 enum : uint

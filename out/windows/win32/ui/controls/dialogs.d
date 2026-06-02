@@ -3,12 +3,12 @@
 module windows.win32.ui.controls.dialogs;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, COLORREF, HGLOBAL, HINSTANCE,
-                                                    HRESULT, HWND, LPARAM, LRESULT,
-                                                    POINT, PSTR, PWSTR, RECT, WPARAM;
+public import windows.win32.foundation : BOOL, COLORREF, HGLOBAL, HINSTANCE, HRESULT,
+                                         HWND, LPARAM, LRESULT, POINT, PSTR,
+                                         PWSTR, RECT, WPARAM;
 public import windows.win32.graphics.gdi : DEVMODEA, HDC, LOGFONTA, LOGFONTW;
-public import windows.win32.system.com.com : IUnknown;
-public import windows.win32.ui.controls.controls : HPROPSHEETPAGE, NMHDR;
+public import windows.win32.system.com : IUnknown;
+public import windows.win32.ui.controls : HPROPSHEETPAGE, NMHDR;
 
 extern(Windows) @nogc nothrow:
 
@@ -251,33 +251,48 @@ enum : uint
     OFN_SHAREWARN        = 0x00000000U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-initdone))], [])*/uint CDN_INITDONE = 0xfffffda7U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-selchange))], [])*/uint CDN_SELCHANGE = 0xfffffda6U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-folderchange))], [])*/uint CDN_FOLDERCHANGE = 0xfffffda5U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-shareviolation))], [])*/uint CDN_SHAREVIOLATION = 0xfffffda4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-initdone
+enum uint CDN_INITDONE = 0xfffffda7U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-selchange
+enum uint CDN_SELCHANGE = 0xfffffda6U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-folderchange
+enum uint CDN_FOLDERCHANGE = 0xfffffda5U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-shareviolation
+enum uint CDN_SHAREVIOLATION = 0xfffffda4U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-help))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-help
     CDN_HELP   = 0xfffffda3U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-fileok
     CDN_FILEOK = 0xfffffda2U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-typechange))], [])*/uint CDN_TYPECHANGE = 0xfffffda1U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdn-includeitem))], [])*/uint CDN_INCLUDEITEM = 0xfffffda0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-typechange
+enum uint CDN_TYPECHANGE = 0xfffffda1U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdn-includeitem
+enum uint CDN_INCLUDEITEM = 0xfffffda0U;
 
 enum : uint
 {
     CDM_FIRST           = 0x00000464U,
     CDM_LAST            = 0x000004c8U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-getspec
     CDM_GETSPEC         = 0x00000464U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-getfilepath
     CDM_GETFILEPATH     = 0x00000465U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-getfolderpath
     CDM_GETFOLDERPATH   = 0x00000466U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-getfolderidlist
     CDM_GETFOLDERIDLIST = 0x00000467U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdm-setcontroltext))], [])*/uint CDM_SETCONTROLTEXT = 0x00000468U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdm-hidecontrol))], [])*/uint CDM_HIDECONTROL = 0x00000469U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/cdm-setdefext))], [])*/uint CDM_SETDEFEXT = 0x0000046aU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-setcontroltext
+enum uint CDM_SETCONTROLTEXT = 0x00000468U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-hidecontrol
+enum uint CDM_HIDECONTROL = 0x00000469U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/cdm-setdefext
+enum uint CDM_SETDEFEXT = 0x0000046aU;
 
 enum : uint
 {
@@ -292,34 +307,65 @@ enum uint TT_OPENTYPE_FONTTYPE = 0x00020000U;
 enum uint TYPE1_FONTTYPE = 0x00040000U;
 enum uint SYMBOL_FONTTYPE = 0x00080000U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-choosefont-getlogfont))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-choosefont-getlogfont
     WM_CHOOSEFONT_GETLOGFONT = 0x00000401U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-choosefont-setlogfont
     WM_CHOOSEFONT_SETLOGFONT = 0x00000465U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-choosefont-setflags
     WM_CHOOSEFONT_SETFLAGS   = 0x00000466U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/lbselchstring))], [])*/const(wchar)* LBSELCHSTRINGA = "commdlg_LBSelChangedNotify";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/sharevistring))], [])*/const(wchar)* SHAREVISTRINGA = "commdlg_ShareViolation";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/fileokstring))], [])*/const(wchar)* FILEOKSTRINGA = "commdlg_FileNameOK";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/colorokstring))], [])*/const(wchar)* COLOROKSTRINGA = "commdlg_ColorOK";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/setrgbstring))], [])*/const(wchar)* SETRGBSTRINGA = "commdlg_SetRGBColor";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/helpmsgstring))], [])*/const(wchar)* HELPMSGSTRINGA = "commdlg_help";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/findmsgstring))], [])*/const(wchar)* FINDMSGSTRINGA = "commdlg_FindReplace";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/lbselchstring))], [])*/const(wchar)* LBSELCHSTRINGW = "commdlg_LBSelChangedNotify";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/sharevistring))], [])*/const(wchar)* SHAREVISTRINGW = "commdlg_ShareViolation";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/fileokstring))], [])*/const(wchar)* FILEOKSTRINGW = "commdlg_FileNameOK";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/colorokstring))], [])*/const(wchar)* COLOROKSTRINGW = "commdlg_ColorOK";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/setrgbstring))], [])*/const(wchar)* SETRGBSTRINGW = "commdlg_SetRGBColor";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/helpmsgstring))], [])*/const(wchar)* HELPMSGSTRINGW = "commdlg_help";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/findmsgstring))], [])*/const(wchar)* FINDMSGSTRINGW = "commdlg_FindReplace";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/lbselchstring))], [])*/const(wchar)* LBSELCHSTRING = "commdlg_LBSelChangedNotify";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/sharevistring))], [])*/const(wchar)* SHAREVISTRING = "commdlg_ShareViolation";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/fileokstring))], [])*/const(wchar)* FILEOKSTRING = "commdlg_FileNameOK";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/colorokstring))], [])*/const(wchar)* COLOROKSTRING = "commdlg_ColorOK";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/setrgbstring))], [])*/const(wchar)* SETRGBSTRING = "commdlg_SetRGBColor";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/helpmsgstring))], [])*/const(wchar)* HELPMSGSTRING = "commdlg_help";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/findmsgstring))], [])*/const(wchar)* FINDMSGSTRING = "commdlg_FindReplace";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/lbselchstring
+enum const(wchar)* LBSELCHSTRINGA = "commdlg_LBSelChangedNotify";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/sharevistring
+enum const(wchar)* SHAREVISTRINGA = "commdlg_ShareViolation";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/fileokstring
+enum const(wchar)* FILEOKSTRINGA = "commdlg_FileNameOK";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/colorokstring
+enum const(wchar)* COLOROKSTRINGA = "commdlg_ColorOK";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/setrgbstring
+enum const(wchar)* SETRGBSTRINGA = "commdlg_SetRGBColor";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/helpmsgstring
+enum const(wchar)* HELPMSGSTRINGA = "commdlg_help";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/findmsgstring
+enum const(wchar)* FINDMSGSTRINGA = "commdlg_FindReplace";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/lbselchstring
+enum const(wchar)* LBSELCHSTRINGW = "commdlg_LBSelChangedNotify";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/sharevistring
+enum const(wchar)* SHAREVISTRINGW = "commdlg_ShareViolation";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/fileokstring
+enum const(wchar)* FILEOKSTRINGW = "commdlg_FileNameOK";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/colorokstring
+enum const(wchar)* COLOROKSTRINGW = "commdlg_ColorOK";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/setrgbstring
+enum const(wchar)* SETRGBSTRINGW = "commdlg_SetRGBColor";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/helpmsgstring
+enum const(wchar)* HELPMSGSTRINGW = "commdlg_help";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/findmsgstring
+enum const(wchar)* FINDMSGSTRINGW = "commdlg_FindReplace";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/lbselchstring
+enum const(wchar)* LBSELCHSTRING = "commdlg_LBSelChangedNotify";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/sharevistring
+enum const(wchar)* SHAREVISTRING = "commdlg_ShareViolation";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/fileokstring
+enum const(wchar)* FILEOKSTRING = "commdlg_FileNameOK";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/colorokstring
+enum const(wchar)* COLOROKSTRING = "commdlg_ColorOK";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/setrgbstring
+enum const(wchar)* SETRGBSTRING = "commdlg_SetRGBColor";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/helpmsgstring
+enum const(wchar)* HELPMSGSTRING = "commdlg_help";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/findmsgstring
+enum const(wchar)* FINDMSGSTRING = "commdlg_FindReplace";
 enum int CD_LBSELNOITEMS = 0xffffffff;
 
 enum : uint
@@ -339,17 +385,23 @@ enum : uint
 }
 
 enum uint DN_DEFAULTPRN = 0x00000001U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-fullpagerect))], [])*/uint WM_PSD_FULLPAGERECT = 0x00000401U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-minmarginrect))], [])*/uint WM_PSD_MINMARGINRECT = 0x00000402U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-fullpagerect
+enum uint WM_PSD_FULLPAGERECT = 0x00000401U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-minmarginrect
+enum uint WM_PSD_MINMARGINRECT = 0x00000402U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-marginrect))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-marginrect
     WM_PSD_MARGINRECT    = 0x00000403U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-greektextrect
     WM_PSD_GREEKTEXTRECT = 0x00000404U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-envstamprect))], [])*/uint WM_PSD_ENVSTAMPRECT = 0x00000405U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-yafullpagerect))], [])*/uint WM_PSD_YAFULLPAGERECT = 0x00000406U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-envstamprect
+enum uint WM_PSD_ENVSTAMPRECT = 0x00000405U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dlgbox/wm-psd-yafullpagerect
+enum uint WM_PSD_YAFULLPAGERECT = 0x00000406U;
 enum uint DLG_COLOR = 0x0000000aU;
 enum uint COLOR_HUESCROLL = 0x000002bcU;
 enum uint COLOR_SATSCROLL = 0x000002bdU;

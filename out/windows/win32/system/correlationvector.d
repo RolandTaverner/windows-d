@@ -3,7 +3,7 @@
 module windows.win32.system.correlationvector;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : CHAR;
+public import windows.win32.foundation : CHAR;
 
 extern(Windows) @nogc nothrow:
 

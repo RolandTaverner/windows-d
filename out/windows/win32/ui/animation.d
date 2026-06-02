@@ -3,9 +3,9 @@
 module windows.win32.ui.animation;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT;
+public import windows.win32.foundation : BOOL, HRESULT;
 public import windows.win32.graphics.directcomposition : IDCompositionAnimation;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -126,15 +126,20 @@ enum : int
 // Constants
 
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-seconds-eventually))], [])*/int
+enum : int
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-seconds-eventually
     UI_ANIMATION_SECONDS_EVENTUALLY                    = 0xffffffff,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-repeat-indefinitely
     UI_ANIMATION_REPEAT_INDEFINITELY                   = 0xffffffff,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-repeat-indefinitely-conclude-at-end
     UI_ANIMATION_REPEAT_INDEFINITELY_CONCLUDE_AT_END   = 0xffffffff,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-repeat-indefinitely-conclude-at-start
     UI_ANIMATION_REPEAT_INDEFINITELY_CONCLUDE_AT_START = 0xfffffffe,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-seconds-infinite))], [])*/int UI_ANIMATION_SECONDS_INFINITE = 0xffffffff;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/UIAnimation/ui-animation-seconds-infinite
+enum int UI_ANIMATION_SECONDS_INFINITE = 0xffffffff;
 
 // Structs
 

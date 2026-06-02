@@ -3,7 +3,7 @@
 module windows.win32.system.eventcollector;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, PWSTR;
+public import windows.win32.foundation : BOOL, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

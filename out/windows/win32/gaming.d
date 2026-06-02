@@ -3,9 +3,9 @@
 module windows.win32.gaming;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR;
-public import windows.win32.system.com.com : IUnknown;
-public import windows.win32.system.winrt.winrt : HSTRING, IInspectable;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, PWSTR;
+public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.winrt : HSTRING, IInspectable;
 
 extern(Windows) @nogc nothrow:
 

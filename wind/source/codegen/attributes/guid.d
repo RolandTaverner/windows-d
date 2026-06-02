@@ -2,6 +2,7 @@ module codegen.attributes.guid;
 
 import std.exception : enforce;
 import std.format : format;
+import std.typecons : nullable, Nullable;
 import std.uuid : UUID;
 
 import climetadata.mdcollection.entitytypes : CustomAttributeEntity;
@@ -17,7 +18,7 @@ public struct GuidAttribute
         {
             if (ca.name() == "GuidAttribute")
             {
-                guid = readGuid(ca);
+                guid = nullable(readGuid(ca));
             }
             else
             {
@@ -26,7 +27,7 @@ public struct GuidAttribute
         }
     }
 
-    public UUID getGuid() const
+    public Nullable!UUID getGuid() const
     {
         return guid;
     }
@@ -36,7 +37,7 @@ public struct GuidAttribute
         return unhandledAttributes;
     }
 
-    private UUID guid;
+    private Nullable!UUID guid;
     private const(CustomAttributeEntity)[] unhandledAttributes;
 }
 

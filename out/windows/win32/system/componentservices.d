@@ -3,11 +3,11 @@
 module windows.win32.system.componentservices;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR,
-                                                    VARIANT_BOOL;
-public import windows.win32.security.security : PSID;
-public import windows.win32.system.com.com : APTTYPE, BLOB, IClassFactory, IDispatch,
-                                             IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR,
+                                         VARIANT_BOOL;
+public import windows.win32.security : PSID;
+public import windows.win32.system.com : APTTYPE, BLOB, IClassFactory, IDispatch,
+                                         IUnknown, SAFEARRAY;
 public import windows.win32.system.distributedtransactioncoordinator : ITransaction, ITransactionVoterBallotAsync2,
                                                                        ITransactionVoterNotifyAsync2;
 public import windows.win32.system.variant : VARIANT;

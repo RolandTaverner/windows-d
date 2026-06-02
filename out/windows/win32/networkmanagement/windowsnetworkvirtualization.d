@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.windowsnetworkvirtualization;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HANDLE;
+public import windows.win32.foundation : HANDLE;
 public import windows.win32.networking.winsock : ADDRESS_FAMILY, DL_EUI48, IN6_ADDR, IN_ADDR,
                                                  NL_DAD_STATE;
 public import windows.win32.system.io : OVERLAPPED;

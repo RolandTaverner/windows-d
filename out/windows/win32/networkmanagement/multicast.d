@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.multicast;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, UNICODE_STRING;
+public import windows.win32.foundation : BOOL, UNICODE_STRING;
 
 extern(Windows) @nogc nothrow:
 

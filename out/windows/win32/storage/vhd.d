@@ -3,8 +3,8 @@
 module windows.win32.storage.vhd;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR, WIN32_ERROR;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.foundation : BOOL, HANDLE, PWSTR, WIN32_ERROR;
+public import windows.win32.security : PSECURITY_DESCRIPTOR;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -580,8 +580,8 @@ struct GET_VIRTUAL_DISK_INFO
         GUID                 Identifier;
         struct ParentLocation
         {
-            BOOL ParentResolved;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ParentLocationBuffer;
+            BOOL     ParentResolved;
+            wchar[1] ParentLocationBuffer; // Flexible array
         }
         GUID                 ParentIdentifier;
         uint                 ParentTimestamp;
@@ -601,9 +601,9 @@ struct GET_VIRTUAL_DISK_INFO
         GUID                 VirtualDiskId;
         struct ChangeTrackingState
         {
-            BOOL Enabled;
-            BOOL NewerChanges;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] MostRecentId;
+            BOOL     Enabled;
+            BOOL     NewerChanges;
+            wchar[1] MostRecentId; // Flexible array
         }
     }
 }

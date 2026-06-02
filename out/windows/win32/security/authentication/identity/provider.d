@@ -3,8 +3,8 @@
 module windows.win32.security.authentication.identity.provider;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, PROPERTYKEY, PWSTR;
-public import windows.win32.system.com.com : IBindCtx, IEnumUnknown, IUnknown;
+public import windows.win32.foundation : BOOL, HRESULT, HWND, PROPERTYKEY, PWSTR;
+public import windows.win32.system.com : IBindCtx, IEnumUnknown, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;

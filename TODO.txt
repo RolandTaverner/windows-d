@@ -6,8 +6,10 @@
 6) + Support DocumentationAttribute
 7) + Constant (imcl unnamed enum members) and struct name conflict: HTTP_VERSION, AE_SRVSTATUS, VK_F etc. - rename consts to HTTP_VERSION_
 8) ? Handle MetadataTypedefAttribute
-9) Handle /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ WINBIO_REGISTERED_FORMAT[1] SupportedFormat;
-10) Handle /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DXGI_SWAP_CHAIN_FLAG))], [])*/uint Flags;
+9) + Handle FlexibleArrayAttribute - added comment
+10) ? Handle /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DXGI_SWAP_CHAIN_FLAG))], [])*/uint Flags;
+11) Handle FreeWithAttribute
+12) Deal with HANDLE and PSTR constant initializers hacks
 
 FIELD ATTR:
 + NativeBitfieldAttribute

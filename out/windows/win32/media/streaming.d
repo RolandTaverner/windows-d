@@ -3,7 +3,7 @@
 module windows.win32.media.streaming;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : DEVPROPKEY, RECT;
+public import windows.win32.foundation : DEVPROPKEY, RECT;
 
 extern(Windows) @nogc nothrow:
 
@@ -31,25 +31,25 @@ enum : int
 // Constants
 
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 0))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_Device_PacketWakeSupported     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 0))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 0),
-    DEVPKEY_Device_SendPacketWakeSupported = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 0))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 1),
+    DEVPKEY_Device_PacketWakeSupported     = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 0),
+    DEVPKEY_Device_SendPacketWakeSupported = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 1),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_Device_UDN                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 6),
-    DEVPKEY_Device_SupportsAudio      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 8),
-    DEVPKEY_Device_SupportsVideo      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 9),
-    DEVPKEY_Device_SupportsImages     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 10),
-    DEVPKEY_Device_SinkProtocolInfo   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 14),
-    DEVPKEY_Device_DLNADOC            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 15),
-    DEVPKEY_Device_DLNACAP            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 16),
-    DEVPKEY_Device_SupportsSearch     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 17),
-    DEVPKEY_Device_SupportsMute       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 18),
-    DEVPKEY_Device_MaxVolume          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 19),
-    DEVPKEY_Device_SupportsSetNextAVT = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2293053915, 3340, 19000, 132, 53, 64, 67, 130, 107, 92, 145}, 6))], [])*/DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 20),
+    DEVPKEY_Device_UDN                = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 6),
+    DEVPKEY_Device_SupportsAudio      = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 8),
+    DEVPKEY_Device_SupportsVideo      = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 9),
+    DEVPKEY_Device_SupportsImages     = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 10),
+    DEVPKEY_Device_SinkProtocolInfo   = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 14),
+    DEVPKEY_Device_DLNADOC            = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 15),
+    DEVPKEY_Device_DLNACAP            = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 16),
+    DEVPKEY_Device_SupportsSearch     = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 17),
+    DEVPKEY_Device_SupportsMute       = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 18),
+    DEVPKEY_Device_MaxVolume          = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 19),
+    DEVPKEY_Device_SupportsSetNextAVT = DEVPROPKEY(GUID("88AD39DB-0D0C-4A38-8435-4043826B5C91"), 20),
 }
 
 enum : GUID

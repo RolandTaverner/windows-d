@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.dhcp;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
@@ -815,6 +815,7 @@ enum : const(wchar)*
 {
     DHCP_CALLOUT_LIST_KEY    = "System\\CurrentControlSet\\Services\\DHCPServer\\Parameters",
     DHCP_CALLOUT_LIST_VALUE  = "CalloutDlls",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DHCP_CALLOUT_ENTRY_POINT = "DhcpServerCalloutEntry",
 }
 
@@ -1097,8 +1098,8 @@ struct DHCP_SUBNET_INFO_VQ
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_array
 struct DHCP_IP_ARRAY
 {
-    uint NumElements;
-    /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountParamIndex", FixedArgSig(ElementSig(0)))])*/uint* Elements;
+    uint  NumElements;
+    uint* Elements;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_cluster

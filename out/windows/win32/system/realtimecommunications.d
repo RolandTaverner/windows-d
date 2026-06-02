@@ -3,10 +3,10 @@
 module windows.win32.system.realtimecommunications;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, VARIANT_BOOL;
-public import windows.win32.media.directshow.directshow : IVideoWindow;
+public import windows.win32.foundation : BSTR, HRESULT, VARIANT_BOOL;
+public import windows.win32.media.directshow : IVideoWindow;
 public import windows.win32.networking.winsock : TRANSPORT_SETTING_ID;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:

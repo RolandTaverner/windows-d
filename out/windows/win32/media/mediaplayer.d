@@ -3,12 +3,12 @@
 module windows.win32.media.mediaplayer;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, LPARAM,
-                                                    LRESULT, PWSTR, RECT, SIZE,
-                                                    SYSTEMTIME, VARIANT_BOOL, WPARAM;
+public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, LPARAM, LRESULT,
+                                         PWSTR, RECT, SIZE, SYSTEMTIME, VARIANT_BOOL,
+                                         WPARAM;
 public import windows.win32.graphics.gdi : HDC;
 public import windows.win32.media.mediafoundation : IMFActivate;
-public import windows.win32.system.com.com : BLOB, IDispatch, IStream, IUnknown;
+public import windows.win32.system.com : BLOB, IDispatch, IStream, IUnknown;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.windowsandmessaging : MSG;
@@ -1407,12 +1407,12 @@ align (1):
 struct WMP_WMDM_METADATA_ROUND_TRIP_DEVICE2PC
 {
 align (1):
-    uint dwCurrentTransactionID;
-    uint dwReturnedObjectCount;
-    uint dwUnretrievedObjectCount;
-    uint dwDeletedObjectStartingOffset;
-    uint dwFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wsObjectPathnameList;
+    uint     dwCurrentTransactionID;
+    uint     dwReturnedObjectCount;
+    uint     dwUnretrievedObjectCount;
+    uint     dwDeletedObjectStartingOffset;
+    uint     dwFlags;
+    wchar[1] wsObjectPathnameList; // Flexible array
 }
 
 // Interfaces

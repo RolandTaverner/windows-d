@@ -3,8 +3,8 @@
 module windows.win32.system.kernel;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : PSTR;
-public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_RECORD;
+public import windows.win32.foundation : PSTR;
+public import windows.win32.system.diagnostics.debug_ : CONTEXT, EXCEPTION_RECORD;
 
 extern(Windows) @nogc nothrow:
 
@@ -124,8 +124,8 @@ version(AArch64)
         }
         struct HeaderArm64
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Sequence)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield1;
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NextEntry)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(60))], [])*/ulong _bitfield2;
+            ulong _bitfield1;
+            ulong _bitfield2;
         }
     }
 }
@@ -152,7 +152,7 @@ struct STRING
 {
     ushort Length;
     ushort MaximumLength;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer;
+    PSTR   Buffer;
 }
 
 struct CSTRING
@@ -188,7 +188,7 @@ struct RTL_BALANCED_NODE
     }
     union
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Balance)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield454;
+        ubyte  _bitfield454;
         size_t ParentValue;
     }
 }

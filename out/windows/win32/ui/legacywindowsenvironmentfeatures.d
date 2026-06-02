@@ -3,8 +3,8 @@
 module windows.win32.ui.legacywindowsenvironmentfeatures;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : HRESULT, HWND, PWSTR;
-public import windows.win32.system.com.com : IMoniker, IUnknown;
+public import windows.win32.foundation : HRESULT, HWND, PWSTR;
+public import windows.win32.system.com : IMoniker, IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage;
 public import windows.win32.system.ole : IOleObject;
 public import windows.win32.system.registry : HKEY;

@@ -3,12 +3,12 @@
 module windows.win32.storage.filesystem;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
-                                                    HRESULT, PSTR, PWSTR, SYSTEMTIME;
-public import windows.win32.security.cryptography.cryptography : ALG_ID;
-public import windows.win32.security.security : GENERIC_MAPPING, PRIVILEGE_SET, PSECURITY_DESCRIPTOR,
-                                                PSID, SECURITY_ATTRIBUTES, SID;
-public import windows.win32.system.com.com : IConnectionPointContainer, IUnknown;
+public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
+                                         HRESULT, PSTR, PWSTR, SYSTEMTIME;
+public import windows.win32.security.cryptography : ALG_ID;
+public import windows.win32.security : GENERIC_MAPPING, PRIVILEGE_SET, PSECURITY_DESCRIPTOR,
+                                       PSID, SECURITY_ATTRIBUTES, SID;
+public import windows.win32.system.com : IConnectionPointContainer, IUnknown;
 public import windows.win32.system.io : LPOVERLAPPED_COMPLETION_ROUTINE, OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -1347,9 +1347,11 @@ enum : int
 
 enum uint MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 0x00004000U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     EA_CONTAINER_NAME = "ContainerName",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     EA_CONTAINER_SIZE = "ContainerSize",
 }
 
@@ -1464,14 +1466,19 @@ enum uint MAX_RESOURCEMANAGER_DESCRIPTION_LENGTH = 0x00000040U;
 enum : uint
 {
     IOCTL_VOLUME_BASE                    = 0x00000056U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_volume_get_volume_disk_extents
     IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = 0x00560000U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_volume_online))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_volume_online
     IOCTL_VOLUME_ONLINE                  = 0x0056c008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_volume_offline
     IOCTL_VOLUME_OFFLINE                 = 0x0056c00cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_volume_is_clustered
     IOCTL_VOLUME_IS_CLUSTERED            = 0x00560030U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_volume_get_gpt_attributes
     IOCTL_VOLUME_GET_GPT_ATTRIBUTES      = 0x00560038U,
     IOCTL_VOLUME_SUPPORTS_ONLINE_OFFLINE = 0x00560004U,
 }
@@ -1506,6 +1513,7 @@ enum : uint
 enum : uint
 {
     IOCTL_VOLUME_PREPARE_FOR_SHRINK         = 0x0056c05cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/FileIO/ioctl-volume-is-csv
     IOCTL_VOLUME_IS_CSV                     = 0x00560060U,
     IOCTL_VOLUME_POST_ONLINE                = 0x0056c064U,
     IOCTL_VOLUME_GET_CSVBLOCKCACHE_CALLBACK = 0x0056c068U,
@@ -2111,8 +2119,8 @@ struct VS_FIXEDFILEINFO
     uint dwFileFlagsMask;
     VS_FIXEDFILEINFO_FILE_FLAGS dwFileFlags;
     VS_FIXEDFILEINFO_FILE_OS dwFileOS;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VS_FIXEDFILEINFO_FILE_TYPE))], [])*/uint dwFileType;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VS_FIXEDFILEINFO_FILE_SUBTYPE))], [])*/uint dwFileSubtype;
+    uint dwFileType;
+    uint dwFileSubtype;
     uint dwFileDateMS;
     uint dwFileDateLS;
 }
@@ -2146,7 +2154,7 @@ struct NTMS_ALLOCATION_INFORMATION
 struct NTMS_DRIVEINFORMATIONA
 {
     uint       Number;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsDriveState))], [])*/uint State;
+    uint       State;
     GUID       DriveType;
     CHAR[64]   szDeviceName;
     CHAR[32]   szSerialNumber;
@@ -2167,7 +2175,7 @@ struct NTMS_DRIVEINFORMATIONA
 struct NTMS_DRIVEINFORMATIONW
 {
     uint       Number;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsDriveState))], [])*/uint State;
+    uint       State;
     GUID       DriveType;
     wchar[64]  szDeviceName;
     wchar[32]  szSerialNumber;
@@ -2187,12 +2195,12 @@ struct NTMS_DRIVEINFORMATIONW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_libraryinformation
 struct NTMS_LIBRARYINFORMATION
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLibraryType))], [])*/uint LibraryType;
+    uint LibraryType;
     GUID CleanerSlot;
     GUID CleanerSlotDefault;
     BOOL LibrarySupportsDriveCleaning;
     BOOL BarCodeReaderInstalled;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsInventoryMethod))], [])*/uint InventoryMethod;
+    uint InventoryMethod;
     uint dwCleanerUsesRemaining;
     uint FirstDriveNumber;
     uint dwNumberOfDrives;
@@ -2209,7 +2217,7 @@ struct NTMS_LIBRARYINFORMATION
     uint dwNumberOfLibRequests;
     GUID Reserved;
     BOOL AutoRecovery;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLibraryFlags))], [])*/uint dwFlags;
+    uint dwFlags;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_changerinformationa
@@ -2254,7 +2262,7 @@ struct NTMS_STORAGESLOTINFORMATION
 struct NTMS_IEDOORINFORMATION
 {
     uint   Number;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsDoorState))], [])*/uint State;
+    uint   State;
     ushort MaxOpenSecs;
     GUID   Library;
 }
@@ -2263,8 +2271,8 @@ struct NTMS_IEDOORINFORMATION
 struct NTMS_IEPORTINFORMATION
 {
     uint   Number;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsPortContent))], [])*/uint Content;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsPortPosition))], [])*/uint Position;
+    uint   Content;
+    uint   Position;
     ushort MaxExtendSecs;
     GUID   Library;
 }
@@ -2279,9 +2287,9 @@ struct NTMS_PMIDINFORMATIONA
     GUID     MediaType;
     GUID     HomeSlot;
     CHAR[64] szBarCode;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsBarCodeState))], [])*/uint BarCodeState;
+    uint     BarCodeState;
     CHAR[32] szSequenceNumber;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsMediaState))], [])*/uint MediaState;
+    uint     MediaState;
     uint     dwNumberOfPartitions;
     uint     dwMediaTypeCode;
     uint     dwDensityCode;
@@ -2298,9 +2306,9 @@ struct NTMS_PMIDINFORMATIONW
     GUID      MediaType;
     GUID      HomeSlot;
     wchar[64] szBarCode;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsBarCodeState))], [])*/uint BarCodeState;
+    uint      BarCodeState;
     wchar[32] szSequenceNumber;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsMediaState))], [])*/uint MediaState;
+    uint      MediaState;
     uint      dwNumberOfPartitions;
     uint      dwMediaTypeCode;
     uint      dwDensityCode;
@@ -2319,7 +2327,7 @@ struct NTMS_PARTITIONINFORMATIONA
 {
     GUID       PhysicalMedia;
     GUID       LogicalMedia;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsPartitionState))], [])*/uint State;
+    uint       State;
     ushort     Side;
     uint       dwOmidLabelIdLength;
     ubyte[255] OmidLabelId;
@@ -2335,7 +2343,7 @@ struct NTMS_PARTITIONINFORMATIONW
 {
     GUID       PhysicalMedia;
     GUID       LogicalMedia;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsPartitionState))], [])*/uint State;
+    uint       State;
     ushort     Side;
     uint       dwOmidLabelIdLength;
     ubyte[255] OmidLabelId;
@@ -2365,7 +2373,7 @@ struct NTMS_MEDIATYPEINFORMATION
 {
     uint             MediaType;
     uint             NumberOfSides;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsReadWriteCharacteristics))], [])*/uint ReadWriteCharacteristics;
+    uint             ReadWriteCharacteristics;
     FILE_DEVICE_TYPE DeviceType;
 }
 
@@ -2406,9 +2414,9 @@ struct NTMS_CHANGERTYPEINFORMATIONW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_librequestinformationa
 struct NTMS_LIBREQUESTINFORMATIONA
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLmOperation))], [])*/uint OperationCode;
+    uint       OperationCode;
     uint       OperationOption;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLmState))], [])*/uint State;
+    uint       State;
     GUID       PartitionId;
     GUID       DriveId;
     GUID       PhysMediaId;
@@ -2427,9 +2435,9 @@ struct NTMS_LIBREQUESTINFORMATIONA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_librequestinformationw
 struct NTMS_LIBREQUESTINFORMATIONW
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLmOperation))], [])*/uint OperationCode;
+    uint       OperationCode;
     uint       OperationOption;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsLmState))], [])*/uint State;
+    uint       State;
     GUID       PartitionId;
     GUID       DriveId;
     GUID       PhysMediaId;
@@ -2448,13 +2456,13 @@ struct NTMS_LIBREQUESTINFORMATIONW
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_oprequestinformationa
 struct NTMS_OPREQUESTINFORMATIONA
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsOpreqCommand))], [])*/uint Request;
+    uint       Request;
     SYSTEMTIME Submitted;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsOpreqState))], [])*/uint State;
+    uint       State;
     CHAR[256]  szMessage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsObjectsTypes))], [])*/uint Arg1Type;
+    uint       Arg1Type;
     GUID       Arg1;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsObjectsTypes))], [])*/uint Arg2Type;
+    uint       Arg2Type;
     GUID       Arg2;
     CHAR[64]   szApplication;
     CHAR[64]   szUser;
@@ -2464,13 +2472,13 @@ struct NTMS_OPREQUESTINFORMATIONA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_oprequestinformationw
 struct NTMS_OPREQUESTINFORMATIONW
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsOpreqCommand))], [])*/uint Request;
+    uint       Request;
     SYSTEMTIME Submitted;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsOpreqState))], [])*/uint State;
+    uint       State;
     wchar[256] szMessage;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsObjectsTypes))], [])*/uint Arg1Type;
+    uint       Arg1Type;
     GUID       Arg1;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsObjectsTypes))], [])*/uint Arg2Type;
+    uint       Arg2Type;
     GUID       Arg2;
     wchar[64]  szApplication;
     wchar[64]  szUser;
@@ -2491,12 +2499,12 @@ struct NTMS_COMPUTERINFORMATION
 struct NTMS_OBJECTINFORMATIONA
 {
     uint       dwSize;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsObjectsTypes))], [])*/uint dwType;
+    uint       dwType;
     SYSTEMTIME Created;
     SYSTEMTIME Modified;
     GUID       ObjectGuid;
     BOOL       Enabled;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsOperationalState))], [])*/uint dwOperationalState;
+    uint       dwOperationalState;
     CHAR[64]   szName;
     CHAR[127]  szDescription;
     union Info
@@ -2524,12 +2532,12 @@ struct NTMS_OBJECTINFORMATIONA
 struct NTMS_OBJECTINFORMATIONW
 {
     uint       dwSize;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsObjectsTypes))], [])*/uint dwType;
+    uint       dwType;
     SYSTEMTIME Created;
     SYSTEMTIME Modified;
     GUID       ObjectGuid;
     BOOL       Enabled;
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsOperationalState))], [])*/uint dwOperationalState;
+    uint       dwOperationalState;
     wchar[64]  szName;
     wchar[127] szDescription;
     union Info
@@ -2772,7 +2780,7 @@ struct NTMS_FILESYSTEM_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntmsapi/ns-ntmsapi-ntms_notificationinformation
 struct NTMS_NOTIFICATIONINFORMATION
 {
-    /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NtmsNotificationOperations))], [])*/uint dwOperation;
+    uint dwOperation;
     GUID ObjectId;
 }
 
@@ -2829,8 +2837,8 @@ struct CLS_INFORMATION
 
 struct CLFS_LOG_NAME_INFORMATION
 {
-    ushort NameLengthInBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Name;
+    ushort   NameLengthInBytes;
+    wchar[1] Name; // Flexible array
 }
 
 struct CLFS_STREAM_ID_INFORMATION
@@ -2942,8 +2950,8 @@ struct CLFS_MGMT_POLICY
         }
         struct NewContainerPrefix
         {
-            ushort PrefixLengthInBytes;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] PrefixString;
+            ushort   PrefixLengthInBytes;
+            wchar[1] PrefixString; // Flexible array
         }
         struct NewContainerSuffix
         {
@@ -2951,8 +2959,8 @@ struct CLFS_MGMT_POLICY
         }
         struct NewContainerExtension
         {
-            ushort ExtensionLengthInBytes;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ExtensionString;
+            ushort   ExtensionLengthInBytes;
+            wchar[1] ExtensionString; // Flexible array
         }
     }
 }
@@ -3196,8 +3204,8 @@ align (4):
 
 struct VOLUME_FAILOVER_SET
 {
-    uint NumberOfDisks;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] DiskNumbers;
+    uint    NumberOfDisks;
+    uint[1] DiskNumbers; // Flexible array
 }
 
 struct VOLUME_NUMBER
@@ -3220,7 +3228,7 @@ struct VOLUME_PHYSICAL_OFFSET
 struct VOLUME_PHYSICAL_OFFSETS
 {
     uint NumberOfPhysicalOffsets;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/VOLUME_PHYSICAL_OFFSET[1] PhysicalOffset;
+    VOLUME_PHYSICAL_OFFSET[1] PhysicalOffset; // Flexible array
 }
 
 struct VOLUME_READ_PLEX_INPUT
@@ -3287,9 +3295,9 @@ struct FILE_EXTENT
 
 struct VOLUME_CRITICAL_IO
 {
-    uint AccessType;
-    uint ExtentsCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILE_EXTENT[1] Extents;
+    uint           AccessType;
+    uint           ExtentsCount;
+    FILE_EXTENT[1] Extents; // Flexible array
 }
 
 struct VOLUME_ALLOCATION_HINT_INPUT
@@ -3301,7 +3309,7 @@ struct VOLUME_ALLOCATION_HINT_INPUT
 
 struct VOLUME_ALLOCATION_HINT_OUTPUT
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Bitmap;
+    uint[1] Bitmap; // Flexible array
 }
 
 struct VOLUME_SHRINK_INFO
@@ -3676,7 +3684,7 @@ struct FILE_NOTIFY_INFORMATION
     uint        NextEntryOffset;
     FILE_ACTION Action;
     uint        FileNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    wchar[1]    FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-file_notify_extended_information
@@ -3699,7 +3707,7 @@ struct FILE_NOTIFY_EXTENDED_INFORMATION
     long        FileId;
     long        ParentFileId;
     uint        FileNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    wchar[1]    FileName; // Flexible array
 }
 
 struct FILE_STAT_BASIC_INFORMATION
@@ -3737,7 +3745,7 @@ struct REPARSE_GUID_DATA_BUFFER
     GUID   ReparseGuid;
     struct GenericReparseBuffer
     {
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DataBuffer;
+        ubyte[1] DataBuffer; // Flexible array
     }
 }
 
@@ -3798,7 +3806,7 @@ struct WIN32_STREAM_ID
     uint          dwStreamAttributes;
     long          Size;
     uint          dwStreamNameSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] cStreamName;
+    wchar[1]      cStreamName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-copyfile2_message
@@ -3925,8 +3933,8 @@ struct FILE_STANDARD_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_name_info
 struct FILE_NAME_INFO
 {
-    uint FileNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    uint     FileNameLength;
+    wchar[1] FileName; // Flexible array
 }
 
 struct FILE_CASE_SENSITIVE_INFO
@@ -3942,9 +3950,9 @@ struct FILE_RENAME_INFO
         BOOLEAN ReplaceIfExists;
         uint    Flags;
     }
-    HANDLE RootDirectory;
-    uint   FileNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    HANDLE   RootDirectory;
+    uint     FileNameLength;
+    wchar[1] FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_allocation_info
@@ -3962,11 +3970,11 @@ struct FILE_END_OF_FILE_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_stream_info
 struct FILE_STREAM_INFO
 {
-    uint NextEntryOffset;
-    uint StreamNameLength;
-    long StreamSize;
-    long StreamAllocationSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] StreamName;
+    uint     NextEntryOffset;
+    uint     StreamNameLength;
+    long     StreamSize;
+    long     StreamAllocationSize;
+    wchar[1] StreamName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_compression_info
@@ -4009,24 +4017,24 @@ struct FILE_ID_BOTH_DIR_INFO
     byte      ShortNameLength;
     wchar[12] ShortName;
     long      FileId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    wchar[1]  FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_full_dir_info
 struct FILE_FULL_DIR_INFO
 {
-    uint NextEntryOffset;
-    uint FileIndex;
-    long CreationTime;
-    long LastAccessTime;
-    long LastWriteTime;
-    long ChangeTime;
-    long EndOfFile;
-    long AllocationSize;
-    uint FileAttributes;
-    uint FileNameLength;
-    uint EaSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    uint     NextEntryOffset;
+    uint     FileIndex;
+    long     CreationTime;
+    long     LastAccessTime;
+    long     LastWriteTime;
+    long     ChangeTime;
+    long     EndOfFile;
+    long     AllocationSize;
+    uint     FileAttributes;
+    uint     FileNameLength;
+    uint     EaSize;
+    wchar[1] FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_io_priority_hint_info
@@ -4076,7 +4084,7 @@ struct FILE_ID_EXTD_DIR_INFO
     uint        EaSize;
     uint        ReparsePointTag;
     FILE_ID_128 FileId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    wchar[1]    FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-file_remote_protocol_info

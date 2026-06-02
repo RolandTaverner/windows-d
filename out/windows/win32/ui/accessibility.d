@@ -3,10 +3,9 @@
 module windows.win32.ui.accessibility;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HMODULE, HRESULT, HWND,
-                                                    LPARAM, LRESULT, POINT, PSTR, PWSTR,
-                                                    RECT, WPARAM;
-public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.foundation : BOOL, BSTR, HMODULE, HRESULT, HWND, LPARAM,
+                                         LRESULT, POINT, PSTR, PWSTR, RECT, WPARAM;
+public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.windowsandmessaging : HMENU, POINTER_INPUT_TYPE;
 

@@ -3,14 +3,14 @@
 module windows.win32.system.com.structuredstorage;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, DECIMAL,
-                                                    FILETIME, HGLOBAL, HINSTANCE,
-                                                    HRESULT, PSTR, PWSTR, VARIANT_BOOL;
-public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
-public import windows.win32.system.com.com : BLOB, CLSCTX, COSERVERINFO, CY, DVTARGETDEVICE,
-                                             IDispatch, IErrorLog, IPersist, IStream,
-                                             IUnknown, MULTI_QI, SAFEARRAY, STATSTG,
-                                             STGM, STGMEDIUM, StorageLayout;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, DECIMAL, FILETIME,
+                                         HGLOBAL, HINSTANCE, HRESULT, PSTR, PWSTR,
+                                         VARIANT_BOOL;
+public import windows.win32.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.system.com : BLOB, CLSCTX, COSERVERINFO, CY, DVTARGETDEVICE,
+                                         IDispatch, IErrorLog, IPersist, IStream,
+                                         IUnknown, MULTI_QI, SAFEARRAY, STATSTG,
+                                         STGM, STGMEDIUM, StorageLayout;
 public import windows.win32.system.variant : PSTIME_FLAGS, VARENUM, VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -232,9 +232,9 @@ struct CLIPDATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/ns-objidl-remsnb
 struct RemSNB
 {
-    uint ulCntStr;
-    uint ulCntChar;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] rgString;
+    uint     ulCntStr;
+    uint     ulCntChar;
+    wchar[1] rgString; // Flexible array
 }
 
 struct VERSIONEDSTREAM
@@ -510,8 +510,8 @@ struct STGOPTIONS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/ns-propidl-serializedpropertyvalue
 struct SERIALIZEDPROPERTYVALUE
 {
-    uint dwType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] rgb;
+    uint     dwType;
+    ubyte[1] rgb; // Flexible array
 }
 
 struct OLESTREAMVTBL

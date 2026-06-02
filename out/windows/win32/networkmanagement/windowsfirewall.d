@@ -3,10 +3,10 @@
 module windows.win32.networkmanagement.windowsfirewall;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND,
-                                                    PWSTR, VARIANT_BOOL;
-public import windows.win32.security.security : PSID, SID, SID_AND_ATTRIBUTES;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND, PWSTR,
+                                         VARIANT_BOOL;
+public import windows.win32.security : PSID, SID, SID_AND_ATTRIBUTES;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.variant : VARIANT;
 

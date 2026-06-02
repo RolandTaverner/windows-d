@@ -4,10 +4,10 @@ module windows.win32.storage.packaging.appx;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, PSTR,
-                                                    PWSTR, WIN32_ERROR;
-public import windows.win32.security.security : PSID;
-public import windows.win32.system.com.com : IStream, IUnknown, IUri;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, PSTR, PWSTR,
+                                         WIN32_ERROR;
+public import windows.win32.security : PSID;
+public import windows.win32.system.com : IStream, IUnknown, IUri;
 
 extern(Windows) @nogc nothrow:
 

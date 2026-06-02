@@ -3,8 +3,8 @@
 module windows.win32.security.tpm;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.system.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

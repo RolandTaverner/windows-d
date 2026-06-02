@@ -3,7 +3,7 @@
 module windows.win32.system.passwordmanagement;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, CHAR, PWSTR;
+public import windows.win32.foundation : BOOLEAN, CHAR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

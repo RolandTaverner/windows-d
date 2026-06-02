@@ -3,9 +3,9 @@
 module windows.win32.graphics.printing.printticket;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BSTR, HRESULT, PWSTR;
+public import windows.win32.foundation : BSTR, HRESULT, PWSTR;
 public import windows.win32.graphics.gdi : DEVMODEA;
-public import windows.win32.system.com.com : IStream;
+public import windows.win32.system.com : IStream;
 
 extern(Windows) @nogc nothrow:
 

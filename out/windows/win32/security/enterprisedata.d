@@ -3,11 +3,10 @@
 module windows.win32.security.enterprisedata;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, NTSTATUS,
-                                                    PWSTR;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, NTSTATUS, PWSTR;
 public import windows.win32.storage.packaging.appx : PACKAGE_ID;
-public import windows.win32.system.com.com : IUnknown;
-public import windows.win32.system.winrt.winrt : HSTRING, IInspectable;
+public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.winrt : HSTRING, IInspectable;
 
 extern(Windows) @nogc nothrow:
 

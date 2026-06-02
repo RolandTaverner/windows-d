@@ -3,13 +3,12 @@
 module windows.win32.networking.clustering;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
-                                                    HRESULT, NTSTATUS, PWSTR, SYSTEMTIME;
+public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
+                                         HRESULT, NTSTATUS, PWSTR, SYSTEMTIME;
 public import windows.win32.graphics.gdi : HFONT;
-public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
-                                                SECURITY_ATTRIBUTES,
-                                                SECURITY_DESCRIPTOR_RELATIVE;
-public import windows.win32.system.com.com : IDispatch, IUnknown;
+public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
+                                       SECURITY_ATTRIBUTES, SECURITY_DESCRIPTOR_RELATIVE;
+public import windows.win32.system.com : IDispatch, IUnknown;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.services : SC_HANDLE;
 public import windows.win32.system.variant : VARIANT;
@@ -2670,9 +2669,11 @@ enum : uint
     CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_INCLUDE_NON_SHARED_DISKS = 0x00000004U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STARTUP_ROUTINE = "Startup";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STARTUP_ROUTINE = "Startup";
 enum uint CLRES_VERSION_V1_00 = 0x00000100U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STARTUP_EX_ROUTINE = "StartupEx";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* STARTUP_EX_ROUTINE = "StartupEx";
 
 enum : uint
 {
@@ -4023,9 +4024,9 @@ struct NOTIFY_FILTER_AND_TYPE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_membership_info
 struct CLUSTER_MEMBERSHIP_INFO
 {
-    BOOL HasQuorum;
-    uint UpnodesSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Upnodes;
+    BOOL     HasQuorum;
+    uint     UpnodesSize;
+    ubyte[1] Upnodes; // Flexible array
 }
 
 struct CLUSTER_AVAILABILITY_SET_CONFIG
@@ -4235,10 +4236,10 @@ union CLUSPROP_REQUIRED_DEPENDENCY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_force_quorum_info
 struct CLUS_FORCE_QUORUM_INFO
 {
-    uint dwSize;
-    uint dwNodeBitMask;
-    uint dwMaxNumberofNodes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] multiszNodeList;
+    uint     dwSize;
+    uint     dwNodeBitMask;
+    uint     dwMaxNumberofNodes;
+    wchar[1] multiszNodeList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info
@@ -4341,10 +4342,10 @@ struct CLUSTER_SHARED_VOLUME_RENAME_INPUT_GUID_NAME
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_chkdsk_info
 struct CLUS_CHKDSK_INFO
 {
-    uint PartitionNumber;
-    uint ChkdskState;
-    uint FileIdCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] FileIdList;
+    uint     PartitionNumber;
+    uint     ChkdskState;
+    uint     FileIdCount;
+    ulong[1] FileIdList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_disk_number_info
@@ -4427,9 +4428,9 @@ struct CLUS_DNN_SODAFS_CLONE_STATUS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_ip_info_entry
 struct CLUS_NETNAME_IP_INFO_ENTRY
 {
-    uint NodeId;
-    uint AddressSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Address;
+    uint     NodeId;
+    uint     AddressSize;
+    ubyte[1] Address; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_ip_info_for_multichannel
@@ -4437,7 +4438,7 @@ struct CLUS_NETNAME_IP_INFO_FOR_MULTICHANNEL
 {
     wchar[64] szName;
     uint      NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CLUS_NETNAME_IP_INFO_ENTRY[1] IpInfo;
+    CLUS_NETNAME_IP_INFO_ENTRY[1] IpInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_maintenance_mode_info
@@ -4464,9 +4465,9 @@ struct CLUS_MAINTENANCE_MODE_INFOEX
 
 struct CLUS_SET_MAINTENANCE_MODE_INPUT
 {
-    BOOL InMaintenance;
-    uint ExtraParameterSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ExtraParameter;
+    BOOL     InMaintenance;
+    uint     ExtraParameterSize;
+    ubyte[1] ExtraParameter; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_set_driveletter
@@ -4492,9 +4493,9 @@ struct CLUS_STORAGE_REMAP_DRIVELETTER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_provider_state_change_info
 struct CLUS_PROVIDER_STATE_CHANGE_INFO
 {
-    uint dwSize;
+    uint     dwSize;
     CLUSTER_RESOURCE_STATE resourceState;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] szProviderId;
+    wchar[1] szProviderId; // Flexible array
 }
 
 struct CLUS_CREATE_INFRASTRUCTURE_FILESERVER_INPUT
@@ -4524,8 +4525,8 @@ struct FILESHARE_CHANGE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-fileshare_change_list
 struct FILESHARE_CHANGE_LIST
 {
-    uint NumEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILESHARE_CHANGE[1] ChangeEntry;
+    uint                NumEntries;
+    FILESHARE_CHANGE[1] ChangeEntry; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusctl_group_get_last_move_time_output
@@ -4580,7 +4581,7 @@ struct SR_RESOURCE_TYPE_REPLICATED_PARTITION_INFO
 struct SR_RESOURCE_TYPE_REPLICATED_PARTITION_ARRAY
 {
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SR_RESOURCE_TYPE_REPLICATED_PARTITION_INFO[1] PartitionArray;
+    SR_RESOURCE_TYPE_REPLICATED_PARTITION_INFO[1] PartitionArray; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_logdisks
@@ -4617,7 +4618,7 @@ struct SR_RESOURCE_TYPE_DISK_INFO
 struct SR_RESOURCE_TYPE_ELIGIBLE_DISKS_RESULT
 {
     ushort Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SR_RESOURCE_TYPE_DISK_INFO[1] DiskInfo;
+    SR_RESOURCE_TYPE_DISK_INFO[1] DiskInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_disk
@@ -4633,7 +4634,7 @@ struct SR_RESOURCE_TYPE_REPLICATED_DISK
 struct SR_RESOURCE_TYPE_REPLICATED_DISKS_RESULT
 {
     ushort Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SR_RESOURCE_TYPE_REPLICATED_DISK[1] ReplicatedDisks;
+    SR_RESOURCE_TYPE_REPLICATED_DISK[1] ReplicatedDisks; // Flexible array
 }
 
 struct SR_RESOURCE_TYPE_ADD_REPLICATION_GROUP

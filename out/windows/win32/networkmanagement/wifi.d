@@ -3,11 +3,11 @@
 module windows.win32.networkmanagement.wifi;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE,
-                                                    HRESULT, HWND, PWSTR;
+public import windows.win32.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE, HRESULT,
+                                         HWND, PWSTR;
 public import windows.win32.networkmanagement.ndis : NDIS_OBJECT_HEADER;
 public import windows.win32.security.extensibleauthenticationprotocol : EAP_ATTRIBUTES, EAP_METHOD_TYPE;
-public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.com : IUnknown;
 public import windows.win32.system.remotedesktop : WTSSESSION_NOTIFICATION;
 
 extern(Windows) @nogc nothrow:
@@ -1943,99 +1943,99 @@ enum : uint
     DOT11_OI_MIN_LENGTH = 0x00000003U,
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciRootBus_SecondaryInterface               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 1),
-    DEVPKEY_PciRootBus_CurrentSpeedAndMode              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 2),
-    DEVPKEY_PciRootBus_SupportedSpeedsAndModes          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 3),
-    DEVPKEY_PciRootBus_DeviceIDMessagingCapable         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 4),
-    DEVPKEY_PciRootBus_SecondaryBusWidth                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 5),
-    DEVPKEY_PciRootBus_ExtendedConfigAvailable          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 6),
-    DEVPKEY_PciRootBus_ExtendedPCIConfigOpRegionSupport = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 7),
+    DEVPKEY_PciRootBus_SecondaryInterface               = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 1),
+    DEVPKEY_PciRootBus_CurrentSpeedAndMode              = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 2),
+    DEVPKEY_PciRootBus_SupportedSpeedsAndModes          = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 3),
+    DEVPKEY_PciRootBus_DeviceIDMessagingCapable         = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 4),
+    DEVPKEY_PciRootBus_SecondaryBusWidth                = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 5),
+    DEVPKEY_PciRootBus_ExtendedConfigAvailable          = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 6),
+    DEVPKEY_PciRootBus_ExtendedPCIConfigOpRegionSupport = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 7),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 8))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciRootBus_ASPMSupport                    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 8))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 8),
-    DEVPKEY_PciRootBus_ClockPowerManagementSupport    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 8))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 9),
-    DEVPKEY_PciRootBus_PCISegmentGroupsSupport        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 8))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 10),
-    DEVPKEY_PciRootBus_MSISupport                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 8))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 11),
-    DEVPKEY_PciRootBus_PCIExpressNativeHotPlugControl = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 8))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 12),
+    DEVPKEY_PciRootBus_ASPMSupport                    = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 8),
+    DEVPKEY_PciRootBus_ClockPowerManagementSupport    = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 9),
+    DEVPKEY_PciRootBus_PCISegmentGroupsSupport        = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 10),
+    DEVPKEY_PciRootBus_MSISupport                     = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 11),
+    DEVPKEY_PciRootBus_PCIExpressNativeHotPlugControl = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 12),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciRootBus_SHPCNativeHotPlugControl    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 13),
-    DEVPKEY_PciRootBus_PCIExpressNativePMEControl  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 14),
-    DEVPKEY_PciRootBus_PCIExpressAERControl        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 15),
-    DEVPKEY_PciRootBus_PCIExpressCapabilityControl = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 16),
-    DEVPKEY_PciRootBus_NativePciExpressControl     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 17),
-    DEVPKEY_PciRootBus_SystemMsiSupport            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 13))], [])*/DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 18),
+    DEVPKEY_PciRootBus_SHPCNativeHotPlugControl    = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 13),
+    DEVPKEY_PciRootBus_PCIExpressNativePMEControl  = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 14),
+    DEVPKEY_PciRootBus_PCIExpressAERControl        = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 15),
+    DEVPKEY_PciRootBus_PCIExpressCapabilityControl = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 16),
+    DEVPKEY_PciRootBus_NativePciExpressControl     = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 17),
+    DEVPKEY_PciRootBus_SystemMsiSupport            = DEVPROPKEY(GUID("D817FC28-793E-4B9E-9970-469D8BE63073"), 18),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciDevice_DeviceType                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 1),
-    DEVPKEY_PciDevice_CurrentSpeedAndMode          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 2),
-    DEVPKEY_PciDevice_BaseClass                    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 3),
-    DEVPKEY_PciDevice_SubClass                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 4),
-    DEVPKEY_PciDevice_ProgIf                       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 5),
-    DEVPKEY_PciDevice_CurrentPayloadSize           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 6),
-    DEVPKEY_PciDevice_MaxPayloadSize               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 7),
-    DEVPKEY_PciDevice_MaxReadRequestSize           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 8),
-    DEVPKEY_PciDevice_CurrentLinkSpeed             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 9),
-    DEVPKEY_PciDevice_CurrentLinkWidth             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 10),
-    DEVPKEY_PciDevice_MaxLinkSpeed                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 11),
-    DEVPKEY_PciDevice_MaxLinkWidth                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 12),
-    DEVPKEY_PciDevice_ExpressSpecVersion           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 13),
-    DEVPKEY_PciDevice_InterruptSupport             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 14),
-    DEVPKEY_PciDevice_InterruptMessageMaximum      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 15),
-    DEVPKEY_PciDevice_BarTypes                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 16),
-    DEVPKEY_PciDevice_AERCapabilityPresent         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 17),
-    DEVPKEY_PciDevice_FirmwareErrorHandling        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 18),
-    DEVPKEY_PciDevice_Uncorrectable_Error_Mask     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 19),
-    DEVPKEY_PciDevice_Uncorrectable_Error_Severity = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 1))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 20),
+    DEVPKEY_PciDevice_DeviceType                   = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 1),
+    DEVPKEY_PciDevice_CurrentSpeedAndMode          = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 2),
+    DEVPKEY_PciDevice_BaseClass                    = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 3),
+    DEVPKEY_PciDevice_SubClass                     = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 4),
+    DEVPKEY_PciDevice_ProgIf                       = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 5),
+    DEVPKEY_PciDevice_CurrentPayloadSize           = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 6),
+    DEVPKEY_PciDevice_MaxPayloadSize               = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 7),
+    DEVPKEY_PciDevice_MaxReadRequestSize           = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 8),
+    DEVPKEY_PciDevice_CurrentLinkSpeed             = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 9),
+    DEVPKEY_PciDevice_CurrentLinkWidth             = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 10),
+    DEVPKEY_PciDevice_MaxLinkSpeed                 = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 11),
+    DEVPKEY_PciDevice_MaxLinkWidth                 = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 12),
+    DEVPKEY_PciDevice_ExpressSpecVersion           = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 13),
+    DEVPKEY_PciDevice_InterruptSupport             = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 14),
+    DEVPKEY_PciDevice_InterruptMessageMaximum      = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 15),
+    DEVPKEY_PciDevice_BarTypes                     = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 16),
+    DEVPKEY_PciDevice_AERCapabilityPresent         = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 17),
+    DEVPKEY_PciDevice_FirmwareErrorHandling        = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 18),
+    DEVPKEY_PciDevice_Uncorrectable_Error_Mask     = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 19),
+    DEVPKEY_PciDevice_Uncorrectable_Error_Severity = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 20),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciDevice_Correctable_Error_Mask       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 21),
-    DEVPKEY_PciDevice_ECRC_Errors                  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 22),
-    DEVPKEY_PciDevice_Error_Reporting              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 23),
-    DEVPKEY_PciDevice_RootError_Reporting          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 24),
-    DEVPKEY_PciDevice_S0WakeupSupported            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 25),
-    DEVPKEY_PciDevice_SriovSupport                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 26),
-    DEVPKEY_PciDevice_Label_Id                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 27),
-    DEVPKEY_PciDevice_Label_String                 = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 28),
-    DEVPKEY_PciDevice_AcsSupport                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 29),
-    DEVPKEY_PciDevice_AriSupport                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 30),
-    DEVPKEY_PciDevice_AcsCompatibleUpHierarchy     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 31),
-    DEVPKEY_PciDevice_AcsCapabilityRegister        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 32),
-    DEVPKEY_PciDevice_AtsSupport                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 33),
-    DEVPKEY_PciDevice_RequiresReservedMemoryRegion = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 21))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 34),
+    DEVPKEY_PciDevice_Correctable_Error_Mask       = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 21),
+    DEVPKEY_PciDevice_ECRC_Errors                  = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 22),
+    DEVPKEY_PciDevice_Error_Reporting              = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 23),
+    DEVPKEY_PciDevice_RootError_Reporting          = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 24),
+    DEVPKEY_PciDevice_S0WakeupSupported            = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 25),
+    DEVPKEY_PciDevice_SriovSupport                 = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 26),
+    DEVPKEY_PciDevice_Label_Id                     = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 27),
+    DEVPKEY_PciDevice_Label_String                 = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 28),
+    DEVPKEY_PciDevice_AcsSupport                   = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 29),
+    DEVPKEY_PciDevice_AriSupport                   = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 30),
+    DEVPKEY_PciDevice_AcsCompatibleUpHierarchy     = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 31),
+    DEVPKEY_PciDevice_AcsCapabilityRegister        = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 32),
+    DEVPKEY_PciDevice_AtsSupport                   = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 33),
+    DEVPKEY_PciDevice_RequiresReservedMemoryRegion = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 34),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 35))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciDevice_AtomicsSupported               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 35))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 35),
-    DEVPKEY_PciDevice_SupportedLinkSubState          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 35))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 36),
-    DEVPKEY_PciDevice_OnPostPath                     = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 35))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 37),
-    DEVPKEY_PciDevice_D3ColdSupport                  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 35))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 38),
-    DEVPKEY_PciDevice_VirtualChannelControlRegisters = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 35))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 39),
+    DEVPKEY_PciDevice_AtomicsSupported               = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 35),
+    DEVPKEY_PciDevice_SupportedLinkSubState          = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 36),
+    DEVPKEY_PciDevice_OnPostPath                     = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 37),
+    DEVPKEY_PciDevice_D3ColdSupport                  = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 38),
+    DEVPKEY_PciDevice_VirtualChannelControlRegisters = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 39),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_PciDevice_SerialNumber                   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 40),
-    DEVPKEY_PciDevice_UsbDvsecPortType               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 41),
-    DEVPKEY_PciDevice_UsbDvsecPortSpecificAttributes = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 42),
-    DEVPKEY_PciDevice_UsbComponentRelation           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 43),
-    DEVPKEY_PciDevice_UsbHostRouterName              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 44),
-    DEVPKEY_PciDevice_ParentSerialNumber             = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 45),
-    DEVPKEY_PciDevice_SupportsDmwrOnEntireDeviceTree = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 40))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 46),
+    DEVPKEY_PciDevice_SerialNumber                   = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 40),
+    DEVPKEY_PciDevice_UsbDvsecPortType               = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 41),
+    DEVPKEY_PciDevice_UsbDvsecPortSpecificAttributes = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 42),
+    DEVPKEY_PciDevice_UsbComponentRelation           = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 43),
+    DEVPKEY_PciDevice_UsbHostRouterName              = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 44),
+    DEVPKEY_PciDevice_ParentSerialNumber             = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 45),
+    DEVPKEY_PciDevice_SupportsDmwrOnEntireDeviceTree = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 46),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 47))], [])*/DEVPROPKEY DEVPKEY_PciDevice_IsTunneledDevice = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({984755761, 33380, 19278, 154, 245, 168, 210, 216, 227, 62, 98}, 47))], [])*/DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 47);
+enum DEVPROPKEY DEVPKEY_PciDevice_IsTunneledDevice = DEVPROPKEY(GUID("3AB22E31-8264-4B4E-9AF5-A8D2D8E33E62"), 47);
 
 enum : uint
 {
@@ -2281,78 +2281,81 @@ enum GUID GUID_DEVINTERFACE_WIFIDIRECT_DEVICE = GUID("439b20af-8955-405b-99f0-a6
 enum GUID GUID_AEPSERVICE_WIFIDIRECT_DEVICE = GUID("cc29827c-9caf-4928-99a9-18f7c2381389");
 enum GUID GUID_DEVINTERFACE_ASP_INFRA_DEVICE = GUID("ff823995-7a72-4c80-8757-c67ee13d1a49");
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_WiFiDirect_DeviceAddress          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 1),
-    DEVPKEY_WiFiDirect_InterfaceAddress       = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 2),
-    DEVPKEY_WiFiDirect_InterfaceGuid          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 3),
-    DEVPKEY_WiFiDirect_GroupId                = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 4),
-    DEVPKEY_WiFiDirect_IsConnected            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 5),
-    DEVPKEY_WiFiDirect_IsVisible              = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 6),
-    DEVPKEY_WiFiDirect_IsLegacyDevice         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 7),
-    DEVPKEY_WiFiDirect_MiracastVersion        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 8),
-    DEVPKEY_WiFiDirect_IsMiracastLCPSupported = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 9),
-    DEVPKEY_WiFiDirect_Services               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 10),
-    DEVPKEY_WiFiDirect_SupportedChannelList   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 11),
-    DEVPKEY_WiFiDirect_InformationElements    = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 12),
-    DEVPKEY_WiFiDirect_DeviceAddressCopy      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 13),
-    DEVPKEY_WiFiDirect_IsRecentlyAssociated   = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 14),
-    DEVPKEY_WiFiDirect_Service_Aeps           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 15),
-    DEVPKEY_WiFiDirect_NoMiracastAutoProject  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 1))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 16),
+    DEVPKEY_WiFiDirect_DeviceAddress          = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 1),
+    DEVPKEY_WiFiDirect_InterfaceAddress       = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 2),
+    DEVPKEY_WiFiDirect_InterfaceGuid          = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 3),
+    DEVPKEY_WiFiDirect_GroupId                = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 4),
+    DEVPKEY_WiFiDirect_IsConnected            = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 5),
+    DEVPKEY_WiFiDirect_IsVisible              = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 6),
+    DEVPKEY_WiFiDirect_IsLegacyDevice         = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 7),
+    DEVPKEY_WiFiDirect_MiracastVersion        = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 8),
+    DEVPKEY_WiFiDirect_IsMiracastLCPSupported = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 9),
+    DEVPKEY_WiFiDirect_Services               = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 10),
+    DEVPKEY_WiFiDirect_SupportedChannelList   = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 11),
+    DEVPKEY_WiFiDirect_InformationElements    = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 12),
+    DEVPKEY_WiFiDirect_DeviceAddressCopy      = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 13),
+    DEVPKEY_WiFiDirect_IsRecentlyAssociated   = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 14),
+    DEVPKEY_WiFiDirect_Service_Aeps           = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 15),
+    DEVPKEY_WiFiDirect_NoMiracastAutoProject  = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 16),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 17))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_InfraCast_Supported               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 17))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 17),
-    DEVPKEY_InfraCast_StreamSecuritySupported = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 17))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 18),
-    DEVPKEY_InfraCast_AccessPointBssid        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 17))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 19),
-    DEVPKEY_InfraCast_SinkHostName            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 17))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 20),
-    DEVPKEY_InfraCast_ChallengeAep            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 17))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 21),
+    DEVPKEY_InfraCast_Supported               = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 17),
+    DEVPKEY_InfraCast_StreamSecuritySupported = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 18),
+    DEVPKEY_InfraCast_AccessPointBssid        = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 19),
+    DEVPKEY_InfraCast_SinkHostName            = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 20),
+    DEVPKEY_InfraCast_ChallengeAep            = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 21),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 22))], [])*/DEVPROPKEY DEVPKEY_WiFiDirect_IsDMGCapable = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 22))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 22);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 23))], [])*/DEVPROPKEY DEVPKEY_InfraCast_DevnodeAep = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 23))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 23);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 24))], [])*/DEVPROPKEY DEVPKEY_WiFiDirect_FoundWsbService = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 24))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 24);
+enum DEVPROPKEY DEVPKEY_WiFiDirect_IsDMGCapable = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 22);
+enum DEVPROPKEY DEVPKEY_InfraCast_DevnodeAep = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 23);
+enum DEVPROPKEY DEVPKEY_WiFiDirect_FoundWsbService = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 24);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 25))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_InfraCast_HostName_ResolutionMode = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 25))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 25),
-    DEVPKEY_InfraCast_SinkIpAddress           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 25))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 26),
+    DEVPKEY_InfraCast_HostName_ResolutionMode = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 25),
+    DEVPKEY_InfraCast_SinkIpAddress           = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 26),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 27))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_WiFiDirect_TransientAssociation = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 27))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 27),
-    DEVPKEY_WiFiDirect_LinkQuality          = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 27))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 28),
+    DEVPKEY_WiFiDirect_TransientAssociation = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 27),
+    DEVPKEY_WiFiDirect_LinkQuality          = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 28),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 29))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_InfraCast_PinSupported                         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 29))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 29),
-    DEVPKEY_InfraCast_RtspTcpConnectionParametersSupported = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 29))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 30),
+    DEVPKEY_InfraCast_PinSupported                         = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 29),
+    DEVPKEY_InfraCast_RtspTcpConnectionParametersSupported = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 30),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 31))], [])*/DEVPROPKEY DEVPKEY_WiFiDirect_Miracast_SessionMgmtControlPort = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 31))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 31);
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 32))], [])*/DEVPROPKEY DEVPKEY_WiFiDirect_RtspTcpConnectionParametersSupported = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({352752477, 58343, 17679, 134, 55, 130, 35, 62, 190, 95, 110}, 32))], [])*/DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 32);
+enum DEVPROPKEY DEVPKEY_WiFiDirect_Miracast_SessionMgmtControlPort = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 31);
+enum DEVPROPKEY DEVPKEY_WiFiDirect_RtspTcpConnectionParametersSupported = DEVPROPKEY(GUID("1506935D-E3E7-450F-8637-82233EBE5F6E"), 32);
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_WiFiDirectServices_ServiceAddress            = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 2),
-    DEVPKEY_WiFiDirectServices_ServiceName               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 3),
-    DEVPKEY_WiFiDirectServices_ServiceInformation        = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 4),
-    DEVPKEY_WiFiDirectServices_AdvertisementId           = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 5),
-    DEVPKEY_WiFiDirectServices_ServiceConfigMethods      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 6),
-    DEVPKEY_WiFiDirectServices_RequestServiceInformation = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({833845059, 31838, 16389, 147, 230, 233, 83, 249, 43, 130, 233}, 2))], [])*/DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 7),
+    DEVPKEY_WiFiDirectServices_ServiceAddress            = DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 2),
+    DEVPKEY_WiFiDirectServices_ServiceName               = DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 3),
+    DEVPKEY_WiFiDirectServices_ServiceInformation        = DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 4),
+    DEVPKEY_WiFiDirectServices_AdvertisementId           = DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 5),
+    DEVPKEY_WiFiDirectServices_ServiceConfigMethods      = DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 6),
+    DEVPKEY_WiFiDirectServices_RequestServiceInformation = DEVPROPKEY(GUID("31B37743-7C5E-4005-93E6-E953F92B82E9"), 7),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4010895339, 52220, 17217, 165, 104, 167, 201, 26, 104, 152, 44}, 2))], [])*/DEVPROPKEY DEVPKEY_WiFi_InterfaceGuid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4010895339, 52220, 17217, 165, 104, 167, 201, 26, 104, 152, 44}, 2))], [])*/DEVPROPKEY(GUID("EF1167EB-CBFC-4341-A568-A7C91A68982C"), 2);
+enum DEVPROPKEY DEVPKEY_WiFi_InterfaceGuid = DEVPROPKEY(GUID("EF1167EB-CBFC-4341-A568-A7C91A68982C"), 2);
 enum uint DOT11EXT_PSK_MAX_LENGTH = 0x00000040U;
 enum uint WDIAG_IHV_WLAN_ID_FLAG_SECURITY_ENABLED = 0x00000001U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* IHV_VERSION_FUNCTION_NAME = "Dot11ExtIhvGetVersionInfo";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* IHV_VERSION_FUNCTION_NAME = "Dot11ExtIhvGetVersionInfo";
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IHV_INIT_FUNCTION_NAME    = "Dot11ExtIhvInitService",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     IHV_INIT_VS_FUNCTION_NAME = "Dot11ExtIhvInitVirtualStation",
 }
 
@@ -2520,7 +2523,7 @@ struct DOT11_BSSID_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[6] BSSIDs;
+    ubyte[6]           BSSIDs; // Flexible array
 }
 
 struct RSNA_AKM_CIPHER_PAIR
@@ -2586,7 +2589,7 @@ struct DOT11_WEP_OFFLOAD
     DOT11_IV48_COUNTER[16] dot11IV48Counters;
     ushort[16]         usDot11RWBitMaps;
     ushort             usKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucKey;
+    ubyte[1]           ucKey; // Flexible array
 }
 
 struct DOT11_WEP_UPLOAD
@@ -2614,7 +2617,7 @@ struct DOT11_DEFAULT_WEP_OFFLOAD
     DOT11_IV48_COUNTER[16] dot11IV48Counters;
     ushort[16]          usDot11RWBitMaps;
     ushort              usKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucKey;
+    ubyte[1]            ucKey; // Flexible array
 }
 
 struct DOT11_DEFAULT_WEP_UPLOAD
@@ -2657,7 +2660,7 @@ struct DOT11_SCAN_REQUEST
     uint            uNumOfPhyTypes;
     uint            uIEsOffset;
     uint            uIEsLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    ubyte[1]        ucBuffer; // Flexible array
 }
 
 struct DOT11_PHY_TYPE_INFO
@@ -2669,7 +2672,7 @@ struct DOT11_PHY_TYPE_INFO
     uint                uMaxChannelTime;
     CH_DESCRIPTION_TYPE ChDescriptionType;
     uint                uChannelListSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucChannelListBuffer;
+    ubyte[1]            ucChannelListBuffer; // Flexible array
 }
 
 struct DOT11_SCAN_REQUEST_V2
@@ -2687,7 +2690,7 @@ struct DOT11_SCAN_REQUEST_V2
     uint            uNumOfPhyTypeInfos;
     uint            uIEsOffset;
     uint            uIEsLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    ubyte[1]        ucBuffer; // Flexible array
 }
 
 struct DOT11_PHY_TYPE_LIST
@@ -2695,7 +2698,7 @@ struct DOT11_PHY_TYPE_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_PHY_TYPE[1] dot11PhyType;
+    DOT11_PHY_TYPE[1]  dot11PhyType; // Flexible array
 }
 
 struct DOT11_BSS_DESCRIPTION
@@ -2707,7 +2710,7 @@ struct DOT11_BSS_DESCRIPTION
     ulong          ullTimestamp;
     ushort         usCapabilityInformation;
     uint           uBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    ubyte[1]       ucBuffer; // Flexible array
 }
 
 struct DOT11_JOIN_REQUEST
@@ -2730,7 +2733,7 @@ struct DOT11_UPDATE_IE
 {
     DOT11_UPDATE_IE_OP dot11UpdateIEOp;
     uint               uBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    ubyte[1]           ucBuffer; // Flexible array
 }
 
 struct DOT11_RESET_REQUEST
@@ -2785,9 +2788,9 @@ struct DOT11_COUNTERS_ENTRY
 
 struct DOT11_SUPPORTED_PHY_TYPES
 {
-    uint uNumOfEntries;
-    uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_PHY_TYPE[1] dot11PHYType;
+    uint              uNumOfEntries;
+    uint              uTotalNumOfEntries;
+    DOT11_PHY_TYPE[1] dot11PHYType; // Flexible array
 }
 
 struct DOT11_SUPPORTED_POWER_LEVELS
@@ -2806,7 +2809,7 @@ struct DOT11_REG_DOMAINS_SUPPORT_VALUE
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_REG_DOMAIN_VALUE[1] dot11RegDomainValue;
+    DOT11_REG_DOMAIN_VALUE[1] dot11RegDomainValue; // Flexible array
 }
 
 struct DOT11_SUPPORTED_ANTENNA
@@ -2819,7 +2822,7 @@ struct DOT11_SUPPORTED_ANTENNA_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_SUPPORTED_ANTENNA[1] dot11SupportedAntenna;
+    DOT11_SUPPORTED_ANTENNA[1] dot11SupportedAntenna; // Flexible array
 }
 
 struct DOT11_DIVERSITY_SELECTION_RX
@@ -2832,7 +2835,7 @@ struct DOT11_DIVERSITY_SELECTION_RX_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_DIVERSITY_SELECTION_RX[1] dot11DiversitySelectionRx;
+    DOT11_DIVERSITY_SELECTION_RX[1] dot11DiversitySelectionRx; // Flexible array
 }
 
 struct DOT11_SUPPORTED_DATA_RATES_VALUE
@@ -2859,7 +2862,7 @@ struct DOT11_MD_CAPABILITY_ENTRY_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_MULTI_DOMAIN_CAPABILITY_ENTRY[1] dot11MDCapabilityEntry;
+    DOT11_MULTI_DOMAIN_CAPABILITY_ENTRY[1] dot11MDCapabilityEntry; // Flexible array
 }
 
 struct DOT11_HOPPING_PATTERN_ENTRY
@@ -2872,7 +2875,7 @@ struct DOT11_HOPPING_PATTERN_ENTRY_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_HOPPING_PATTERN_ENTRY[1] dot11HoppingPatternEntry;
+    DOT11_HOPPING_PATTERN_ENTRY[1] dot11HoppingPatternEntry; // Flexible array
 }
 
 struct DOT11_WPA_TSC
@@ -2892,9 +2895,9 @@ struct DOT11_RSSI_RANGE
 
 struct DOT11_NIC_SPECIFIC_EXTENSION
 {
-    uint uBufferLength;
-    uint uTotalBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    uint     uBufferLength;
+    uint     uTotalBufferLength;
+    ubyte[1] ucBuffer; // Flexible array
 }
 
 struct DOT11_AP_JOIN_REQUEST
@@ -2921,7 +2924,7 @@ struct DOT11_RECV_SENSITIVITY_LIST
     }
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_RECV_SENSITIVITY[1] dot11RecvSensitivity;
+    DOT11_RECV_SENSITIVITY[1] dot11RecvSensitivity; // Flexible array
 }
 
 struct DOT11_WME_AC_PARAMETERS
@@ -2937,17 +2940,17 @@ struct DOT11_WME_AC_PARAMETERS_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_WME_AC_PARAMETERS[1] dot11WMEACParameters;
+    DOT11_WME_AC_PARAMETERS[1] dot11WMEACParameters; // Flexible array
 }
 
 struct DOT11_WME_UPDATE_IE
 {
-    uint uParamElemMinBeaconIntervals;
-    uint uWMEInfoElemOffset;
-    uint uWMEInfoElemLength;
-    uint uWMEParamElemOffset;
-    uint uWMEParamElemLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    uint     uParamElemMinBeaconIntervals;
+    uint     uWMEInfoElemOffset;
+    uint     uWMEInfoElemLength;
+    uint     uWMEParamElemOffset;
+    uint     uWMEParamElemLength;
+    ubyte[1] ucBuffer; // Flexible array
 }
 
 struct DOT11_QOS_TX_DURATION
@@ -2973,7 +2976,7 @@ struct DOT11_SUPPORTED_OFDM_FREQUENCY_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_SUPPORTED_OFDM_FREQUENCY[1] dot11SupportedOFDMFrequency;
+    DOT11_SUPPORTED_OFDM_FREQUENCY[1] dot11SupportedOFDMFrequency; // Flexible array
 }
 
 struct DOT11_SUPPORTED_DSSS_CHANNEL
@@ -2985,7 +2988,7 @@ struct DOT11_SUPPORTED_DSSS_CHANNEL_LIST
 {
     uint uNumOfEntries;
     uint uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_SUPPORTED_DSSS_CHANNEL[1] dot11SupportedDSSSChannel;
+    DOT11_SUPPORTED_DSSS_CHANNEL[1] dot11SupportedDSSSChannel; // Flexible array
 }
 
 struct DOT11_BYTE_ARRAY
@@ -2993,7 +2996,7 @@ struct DOT11_BYTE_ARRAY
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfBytes;
     uint               uTotalNumOfBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    ubyte[1]           ucBuffer; // Flexible array
 }
 
 union DOT11_BSS_ENTRY_PHY_SPECIFIC_INFO
@@ -3021,7 +3024,7 @@ struct DOT11_BSS_ENTRY
     ulong          ullHostTimestamp;
     ushort         usCapabilityInformation;
     uint           uBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    ubyte[1]       ucBuffer; // Flexible array
 }
 
 struct DOT11_SSID_LIST
@@ -3029,7 +3032,7 @@ struct DOT11_SSID_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_SSID[1] SSIDs;
+    DOT11_SSID[1]      SSIDs; // Flexible array
 }
 
 struct DOT11_MAC_ADDRESS_LIST
@@ -3037,7 +3040,7 @@ struct DOT11_MAC_ADDRESS_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[6] MacAddrs;
+    ubyte[6]           MacAddrs; // Flexible array
 }
 
 struct DOT11_PMKID_ENTRY
@@ -3049,10 +3052,10 @@ struct DOT11_PMKID_ENTRY
 
 struct DOT11_PMKID_LIST
 {
-    NDIS_OBJECT_HEADER Header;
-    uint               uNumOfEntries;
-    uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_PMKID_ENTRY[1] PMKIDs;
+    NDIS_OBJECT_HEADER   Header;
+    uint                 uNumOfEntries;
+    uint                 uTotalNumOfEntries;
+    DOT11_PMKID_ENTRY[1] PMKIDs; // Flexible array
 }
 
 struct DOT11_PHY_FRAME_STATISTICS
@@ -3103,7 +3106,7 @@ struct DOT11_STATISTICS
     ulong              ullReserved;
     DOT11_MAC_FRAME_STATISTICS MacUcastCounters;
     DOT11_MAC_FRAME_STATISTICS MacMcastCounters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_PHY_FRAME_STATISTICS[1] PhyCounters;
+    DOT11_PHY_FRAME_STATISTICS[1] PhyCounters; // Flexible array
 }
 
 struct DOT11_PRIVACY_EXEMPTION
@@ -3118,7 +3121,7 @@ struct DOT11_PRIVACY_EXEMPTION_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_PRIVACY_EXEMPTION[1] PrivacyExemptionEntries;
+    DOT11_PRIVACY_EXEMPTION[1] PrivacyExemptionEntries; // Flexible array
 }
 
 struct DOT11_AUTH_ALGORITHM_LIST
@@ -3126,7 +3129,7 @@ struct DOT11_AUTH_ALGORITHM_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_AUTH_ALGORITHM[1] AlgorithmIds;
+    DOT11_AUTH_ALGORITHM[1] AlgorithmIds; // Flexible array
 }
 
 struct DOT11_AUTH_CIPHER_PAIR_LIST
@@ -3134,7 +3137,7 @@ struct DOT11_AUTH_CIPHER_PAIR_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_AUTH_CIPHER_PAIR[1] AuthCipherPairs;
+    DOT11_AUTH_CIPHER_PAIR[1] AuthCipherPairs; // Flexible array
 }
 
 struct DOT11_CIPHER_ALGORITHM_LIST
@@ -3142,7 +3145,7 @@ struct DOT11_CIPHER_ALGORITHM_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_CIPHER_ALGORITHM[1] AlgorithmIds;
+    DOT11_CIPHER_ALGORITHM[1] AlgorithmIds; // Flexible array
 }
 
 struct DOT11_CIPHER_DEFAULT_KEY_VALUE
@@ -3154,7 +3157,7 @@ struct DOT11_CIPHER_DEFAULT_KEY_VALUE
     BOOLEAN            bDelete;
     BOOLEAN            bStatic;
     ushort             usKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucKey;
+    ubyte[1]           ucKey; // Flexible array
 }
 
 struct DOT11_KEY_ALGO_TKIP_MIC
@@ -3162,42 +3165,42 @@ struct DOT11_KEY_ALGO_TKIP_MIC
     ubyte[6] ucIV48Counter;
     uint     ulTKIPKeyLength;
     uint     ulMICKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucTKIPMICKeys;
+    ubyte[1] ucTKIPMICKeys; // Flexible array
 }
 
 struct DOT11_KEY_ALGO_CCMP
 {
     ubyte[6] ucIV48Counter;
     uint     ulCCMPKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucCCMPKey;
+    ubyte[1] ucCCMPKey; // Flexible array
 }
 
 struct DOT11_KEY_ALGO_GCMP
 {
     ubyte[6] ucIV48Counter;
     uint     ulGCMPKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucGCMPKey;
+    ubyte[1] ucGCMPKey; // Flexible array
 }
 
 struct DOT11_KEY_ALGO_GCMP_256
 {
     ubyte[6] ucIV48Counter;
     uint     ulGCMP256KeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucGCMP256Key;
+    ubyte[1] ucGCMP256Key; // Flexible array
 }
 
 struct DOT11_KEY_ALGO_BIP
 {
     ubyte[6] ucIPN;
     uint     ulBIPKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBIPKey;
+    ubyte[1] ucBIPKey; // Flexible array
 }
 
 struct DOT11_KEY_ALGO_BIP_GMAC_256
 {
     ubyte[6] ucIPN;
     uint     ulBIPGmac256KeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBIPGmac256Key;
+    ubyte[1] ucBIPGmac256Key; // Flexible array
 }
 
 struct DOT11_CIPHER_KEY_MAPPING_KEY_VALUE
@@ -3208,7 +3211,7 @@ struct DOT11_CIPHER_KEY_MAPPING_KEY_VALUE
     BOOLEAN         bDelete;
     BOOLEAN         bStatic;
     ushort          usKeyLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucKey;
+    ubyte[1]        ucKey; // Flexible array
 }
 
 struct DOT11_ASSOCIATION_INFO_EX
@@ -3233,7 +3236,7 @@ struct DOT11_ASSOCIATION_INFO_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_ASSOCIATION_INFO_EX[1] dot11AssocInfo;
+    DOT11_ASSOCIATION_INFO_EX[1] dot11AssocInfo; // Flexible array
 }
 
 struct DOT11_PHY_ID_LIST
@@ -3241,7 +3244,7 @@ struct DOT11_PHY_ID_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dot11PhyId;
+    uint[1]            dot11PhyId; // Flexible array
 }
 
 struct DOT11_EXTSTA_CAPABILITY
@@ -3278,7 +3281,7 @@ struct DOT11_COUNTRY_OR_REGION_STRING_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[3] CountryOrRegionStrings;
+    ubyte[3]           CountryOrRegionStrings; // Flexible array
 }
 
 struct DOT11_PORT_STATE_NOTIFICATION
@@ -3431,7 +3434,7 @@ struct DOT11_RECV_EXTENSION_INFO
     ushort             usDot11RightRWBitMap;
     ushort             usNumberOfMPDUsReceived;
     ushort             usNumberOfFragments;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/void[1]* pNdisPackets;
+    void[1]*           pNdisPackets; // Flexible array
 }
 
 struct DOT11_RECV_EXTENSION_INFO_V2
@@ -3456,7 +3459,7 @@ struct DOT11_RECV_EXTENSION_INFO_V2
     ushort             usDot11RightRWBitMap;
     ushort             usNumberOfMPDUsReceived;
     ushort             usNumberOfFragments;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/void[1]* pNdisPackets;
+    void[1]*           pNdisPackets; // Flexible array
 }
 
 struct DOT11_STATUS_INDICATION
@@ -3702,7 +3705,7 @@ struct DOT11_AVAILABLE_CHANNEL_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] uChannelNumber;
+    uint[1]            uChannelNumber; // Flexible array
 }
 
 struct DOT11_AVAILABLE_FREQUENCY_LIST
@@ -3710,7 +3713,7 @@ struct DOT11_AVAILABLE_FREQUENCY_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] uFrequencyValue;
+    uint[1]            uFrequencyValue; // Flexible array
 }
 
 struct DOT11_DISASSOCIATE_PEER_REQUEST
@@ -3782,7 +3785,7 @@ struct DOT11_PEER_INFO_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_PEER_INFO[1] PeerInfo;
+    DOT11_PEER_INFO[1] PeerInfo; // Flexible array
 }
 
 struct DOT11_VWIFI_COMBINATION
@@ -3816,7 +3819,7 @@ struct DOT11_VWIFI_ATTRIBUTES
 {
     NDIS_OBJECT_HEADER Header;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_VWIFI_COMBINATION[1] Combinations;
+    DOT11_VWIFI_COMBINATION[1] Combinations; // Flexible array
 }
 
 struct DOT11_MAC_PARAMETERS
@@ -3878,7 +3881,7 @@ struct DOT11_WFD_GROUP_ID
 
 struct DOT11_WFD_GO_INTENT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Intent)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield136;
+    ubyte _bitfield136;
 }
 
 struct DOT11_WFD_CHANNEL
@@ -3897,8 +3900,8 @@ struct WFDSVC_CONNECTION_CAPABILITY
 
 struct DOT11_WFD_SERVICE_HASH_LIST
 {
-    ushort ServiceHashCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[6] ServiceHash;
+    ushort   ServiceHashCount;
+    ubyte[6] ServiceHash; // Flexible array
 }
 
 struct DOT11_WFD_ADVERTISEMENT_ID
@@ -3924,7 +3927,7 @@ struct DOT11_WFD_ADVERTISED_SERVICE_DESCRIPTOR
 struct DOT11_WFD_ADVERTISED_SERVICE_LIST
 {
     ushort ServiceCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_WFD_ADVERTISED_SERVICE_DESCRIPTOR[1] AdvertisedService;
+    DOT11_WFD_ADVERTISED_SERVICE_DESCRIPTOR[1] AdvertisedService; // Flexible array
 }
 
 struct DOT11_WFD_DISCOVER_COMPLETE_PARAMETERS
@@ -4137,7 +4140,7 @@ struct DOT11_WFD_SECONDARY_DEVICE_TYPE_LIST
     NDIS_OBJECT_HEADER Header;
     uint               uNumOfEntries;
     uint               uTotalNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_WFD_DEVICE_TYPE[1] SecondaryDeviceTypes;
+    DOT11_WFD_DEVICE_TYPE[1] SecondaryDeviceTypes; // Flexible array
 }
 
 struct DOT11_WFD_DISCOVER_DEVICE_FILTER
@@ -4240,7 +4243,7 @@ struct DOT11_SEND_GO_NEGOTIATION_CONFIRMATION_PARAMETERS
 
 struct DOT11_WFD_INVITATION_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield137;
+    ubyte _bitfield137;
 }
 
 struct DOT11_SEND_INVITATION_REQUEST_PARAMETERS
@@ -4359,7 +4362,7 @@ struct DOT11_OFFLOAD_NETWORK_LIST_INFO
     uint               FastScanIterations;
     uint               SlowScanPeriod;
     uint               uNumOfEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_OFFLOAD_NETWORK[1] offloadNetworkList;
+    DOT11_OFFLOAD_NETWORK[1] offloadNetworkList; // Flexible array
 }
 
 struct DOT11_OFFLOAD_NETWORK_STATUS_PARAMETERS
@@ -4371,29 +4374,29 @@ struct DOT11_OFFLOAD_NETWORK_STATUS_PARAMETERS
 struct DOT11_MANUFACTURING_TEST
 {
     DOT11_MANUFACTURING_TEST_TYPE dot11ManufacturingTestType;
-    uint uBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBuffer;
+    uint     uBufferLength;
+    ubyte[1] ucBuffer; // Flexible array
 }
 
 struct DOT11_MANUFACTURING_SELF_TEST_SET_PARAMS
 {
     DOT11_MANUFACTURING_SELF_TEST_TYPE SelfTestType;
-    uint  uTestID;
-    uint  uPinBitMask;
-    void* pvContext;
-    uint  uBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBufferIn;
+    uint     uTestID;
+    uint     uPinBitMask;
+    void*    pvContext;
+    uint     uBufferLength;
+    ubyte[1] ucBufferIn; // Flexible array
 }
 
 struct DOT11_MANUFACTURING_SELF_TEST_QUERY_RESULTS
 {
     DOT11_MANUFACTURING_SELF_TEST_TYPE SelfTestType;
-    uint    uTestID;
-    BOOLEAN bResult;
-    uint    uPinFailedBitMask;
-    void*   pvContext;
-    uint    uBytesWrittenOut;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBufferOut;
+    uint     uTestID;
+    BOOLEAN  bResult;
+    uint     uPinFailedBitMask;
+    void*    pvContext;
+    uint     uBytesWrittenOut;
+    ubyte[1] ucBufferOut; // Flexible array
 }
 
 struct DOT11_MANUFACTURING_FUNCTIONAL_TEST_RX
@@ -4423,19 +4426,19 @@ struct DOT11_MANUFACTURING_FUNCTIONAL_TEST_QUERY_ADC
 
 struct DOT11_MANUFACTURING_TEST_SET_DATA
 {
-    uint uKey;
-    uint uOffset;
-    uint uBufferLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBufferIn;
+    uint     uKey;
+    uint     uOffset;
+    uint     uBufferLength;
+    ubyte[1] ucBufferIn; // Flexible array
 }
 
 struct DOT11_MANUFACTURING_TEST_QUERY_DATA
 {
-    uint uKey;
-    uint uOffset;
-    uint uBufferLength;
-    uint uBytesRead;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ucBufferOut;
+    uint     uKey;
+    uint     uOffset;
+    uint     uBufferLength;
+    uint     uBytesRead;
+    ubyte[1] ucBufferOut; // Flexible array
 }
 
 struct DOT11_MANUFACTURING_TEST_SLEEP
@@ -4479,8 +4482,8 @@ struct DOT11_NETWORK
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_raw_data
 struct WLAN_RAW_DATA
 {
-    uint dwDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DataBlob;
+    uint     dwDataSize;
+    ubyte[1] DataBlob; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_raw_data_list
@@ -4568,9 +4571,9 @@ struct WLAN_BSS_ENTRY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_bss_list
 struct WLAN_BSS_LIST
 {
-    uint dwTotalSize;
-    uint dwNumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_BSS_ENTRY[1] wlanBssEntries;
+    uint              dwTotalSize;
+    uint              dwNumberOfItems;
+    WLAN_BSS_ENTRY[1] wlanBssEntries; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_info
@@ -4654,7 +4657,7 @@ struct WLAN_REALTIME_CONNECTION_QUALITY
     uint           ulTxRate;
     BOOL           bIsMLOConnection;
     uint           ulNumLinks;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_REALTIME_CONNECTION_QUALITY_LINK_INFO[1] linksInfo;
+    WLAN_REALTIME_CONNECTION_QUALITY_LINK_INFO[1] linksInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_phy_radio_state
@@ -4687,22 +4690,22 @@ struct WLAN_INTERFACE_CAPABILITY
 struct WLAN_AUTH_CIPHER_PAIR_LIST
 {
     uint dwNumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_AUTH_CIPHER_PAIR[1] pAuthCipherPairList;
+    DOT11_AUTH_CIPHER_PAIR[1] pAuthCipherPairList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_country_or_region_string_list
 struct WLAN_COUNTRY_OR_REGION_STRING_LIST
 {
-    uint dwNumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[3] pCountryOrRegionStringList;
+    uint     dwNumberOfItems;
+    ubyte[3] pCountryOrRegionStringList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_profile_info_list
 struct WLAN_PROFILE_INFO_LIST
 {
-    uint dwNumberOfItems;
-    uint dwIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_PROFILE_INFO[1] ProfileInfo;
+    uint                 dwNumberOfItems;
+    uint                 dwIndex;
+    WLAN_PROFILE_INFO[1] ProfileInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_available_network_list
@@ -4710,14 +4713,14 @@ struct WLAN_AVAILABLE_NETWORK_LIST
 {
     uint dwNumberOfItems;
     uint dwIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_AVAILABLE_NETWORK[1] Network;
+    WLAN_AVAILABLE_NETWORK[1] Network; // Flexible array
 }
 
 struct WLAN_AVAILABLE_NETWORK_LIST_V2
 {
     uint dwNumberOfItems;
     uint dwIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_AVAILABLE_NETWORK_V2[1] Network;
+    WLAN_AVAILABLE_NETWORK_V2[1] Network; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_info_list
@@ -4725,15 +4728,15 @@ struct WLAN_INTERFACE_INFO_LIST
 {
     uint dwNumberOfItems;
     uint dwIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_INTERFACE_INFO[1] InterfaceInfo;
+    WLAN_INTERFACE_INFO[1] InterfaceInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-dot11_network_list
 struct DOT11_NETWORK_LIST
 {
-    uint dwNumberOfItems;
-    uint dwIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_NETWORK[1] Network;
+    uint             dwNumberOfItems;
+    uint             dwIndex;
+    DOT11_NETWORK[1] Network; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_parameters
@@ -4783,16 +4786,16 @@ struct WLAN_CONNECTION_NOTIFICATION_DATA
     BOOL                 bSecurityEnabled;
     uint                 wlanReasonCode;
     WLAN_CONNECTION_NOTIFICATION_FLAGS dwFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] strProfileXml;
+    wchar[1]             strProfileXml; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_device_service_notification_data
 struct WLAN_DEVICE_SERVICE_NOTIFICATION_DATA
 {
-    GUID DeviceService;
-    uint dwOpCode;
-    uint dwDataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DataBlob;
+    GUID     DeviceService;
+    uint     dwOpCode;
+    uint     dwDataSize;
+    ubyte[1] DataBlob; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_phy_frame_statistics
@@ -4844,15 +4847,15 @@ struct WLAN_STATISTICS
     WLAN_MAC_FRAME_STATISTICS MacUcastCounters;
     WLAN_MAC_FRAME_STATISTICS MacMcastCounters;
     uint  dwNumberOfPhys;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_PHY_FRAME_STATISTICS[1] PhyCounters;
+    WLAN_PHY_FRAME_STATISTICS[1] PhyCounters; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_device_service_guid_list
 struct WLAN_DEVICE_SERVICE_GUID_LIST
 {
-    uint dwNumberOfItems;
-    uint dwIndex;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] DeviceService;
+    uint    dwNumberOfItems;
+    uint    dwIndex;
+    GUID[1] DeviceService; // Flexible array
 }
 
 struct WFD_GROUP_ID
@@ -4914,7 +4917,7 @@ struct WLAN_HOSTED_NETWORK_STATUS
     DOT11_PHY_TYPE dot11PhyType;
     uint           ulChannelFrequency;
     uint           dwNumberOfPeers;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_HOSTED_NETWORK_PEER_STATE[1] PeerList;
+    WLAN_HOSTED_NETWORK_PEER_STATE[1] PeerList; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_variable_blob
@@ -4931,7 +4934,7 @@ struct ONEX_AUTH_PARAMS
     ONEX_VARIABLE_BLOB oneXConnProfile;
     ONEX_AUTH_IDENTITY authIdentity;
     uint               dwQuarantineState;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDomain)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield138;
+    uint               _bitfield138;
     uint               dwSessionId;
     HANDLE             hUserToken;
     ONEX_VARIABLE_BLOB OneXUserProfile;
@@ -4949,7 +4952,7 @@ struct ONEX_EAP_ERROR
     GUID               rootCauseGuid;
     GUID               repairGuid;
     GUID               helpLinkGuid;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fRepairString)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield139;
+    uint               _bitfield139;
     ONEX_VARIABLE_BLOB RootCauseString;
     ONEX_VARIABLE_BLOB RepairString;
 }
@@ -4968,7 +4971,7 @@ struct ONEX_RESULT_UPDATE_DATA
     ONEX_STATUS        oneXStatus;
     ONEX_EAP_METHOD_BACKEND_SUPPORT BackendSupport;
     BOOL               fBackendEngaged;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fEapError)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield140;
+    uint               _bitfield140;
     ONEX_VARIABLE_BLOB authParams;
     ONEX_VARIABLE_BLOB eapError;
 }
@@ -4976,7 +4979,7 @@ struct ONEX_RESULT_UPDATE_DATA
 struct ONEX_USER_INFO
 {
     ONEX_AUTH_IDENTITY authIdentity;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDomainName)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield141;
+    uint               _bitfield141;
     ONEX_VARIABLE_BLOB UserName;
     ONEX_VARIABLE_BLOB DomainName;
 }
@@ -5007,7 +5010,7 @@ struct DOT11_SECURITY_PACKET_HEADER
 align (1):
     ubyte[6] PeerMac;
     ushort   usEtherType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1] Data; // Flexible array
 }
 
 struct DOT11_MSSECURITY_SETTINGS
@@ -5022,8 +5025,8 @@ struct DOT11_MSSECURITY_SETTINGS
 
 struct DOT11EXT_IHV_SSID_LIST
 {
-    uint ulCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_SSID[1] SSIDs;
+    uint          ulCount;
+    DOT11_SSID[1] SSIDs; // Flexible array
 }
 
 struct DOT11EXT_IHV_PROFILE_PARAMS

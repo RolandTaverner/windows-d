@@ -3,8 +3,8 @@
 module windows.win32.devices.alljoyn;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, PSTR, PWSTR;
-public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security : SECURITY_ATTRIBUTES;
 
 extern(Windows) @nogc nothrow:
 
@@ -556,14 +556,14 @@ enum uint ALLJOYN_MESSAGE_DEFAULT_TIMEOUT = 0x000061a8U;
 
 enum : ushort
 {
-    ALLJOYN_CRED_PASSWORD     = cast(ushort) 0x0001,
-    ALLJOYN_CRED_USER_NAME    = cast(ushort) 0x0002,
-    ALLJOYN_CRED_CERT_CHAIN   = cast(ushort) 0x0004,
-    ALLJOYN_CRED_PRIVATE_KEY  = cast(ushort) 0x0008,
-    ALLJOYN_CRED_LOGON_ENTRY  = cast(ushort) 0x0010,
-    ALLJOYN_CRED_EXPIRATION   = cast(ushort) 0x0020,
-    ALLJOYN_CRED_NEW_PASSWORD = cast(ushort) 0x1001,
-    ALLJOYN_CRED_ONE_TIME_PWD = cast(ushort) 0x2001,
+    ALLJOYN_CRED_PASSWORD     = 0x0001,
+    ALLJOYN_CRED_USER_NAME    = 0x0002,
+    ALLJOYN_CRED_CERT_CHAIN   = 0x0004,
+    ALLJOYN_CRED_PRIVATE_KEY  = 0x0008,
+    ALLJOYN_CRED_LOGON_ENTRY  = 0x0010,
+    ALLJOYN_CRED_EXPIRATION   = 0x0020,
+    ALLJOYN_CRED_NEW_PASSWORD = 0x1001,
+    ALLJOYN_CRED_ONE_TIME_PWD = 0x2001,
 }
 
 enum : ubyte

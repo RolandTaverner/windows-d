@@ -10,8 +10,9 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     DD_BEEP_DEVICE_NAME   = "\\Device\\Beep",
     DD_BEEP_DEVICE_NAME_U = "\\Device\\Beep",
 }

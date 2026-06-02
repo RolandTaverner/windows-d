@@ -3,14 +3,13 @@
 module windows.win32.ui.tabletpc;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HANDLE_PTR,
-                                                    HRESULT, HWND, POINT, PWSTR, RECT,
-                                                    VARIANT_BOOL;
+public import windows.win32.foundation : BOOL, BSTR, COLORREF, HANDLE_PTR, HRESULT,
+                                         HWND, POINT, PWSTR, RECT, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : XFORM;
-public import windows.win32.system.com.com : IDataObject, IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.system.com : IDataObject, IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IFontDisp, IPictureDisp, OLE_HANDLE;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls.controls : NMHDR;
+public import windows.win32.ui.controls : NMHDR;
 
 extern(Windows) @nogc nothrow:
 
@@ -1421,7 +1420,8 @@ enum : int
 enum const(wchar)* MICROSOFT_URL_EXPERIENCE_PROPERTY = "Microsoft TIP URL Experience";
 enum const(wchar)* MICROSOFT_TIP_NO_INSERT_BUTTON_PROPERTY = "Microsoft TIP No Insert Option";
 enum const(wchar)* MICROSOFT_TIP_COMBOBOXLIST_PROPERTY = "Microsoft TIP ComboBox List Window Identifier";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/microsoft-tip-opening-msg))], [])*/const(wchar)* MICROSOFT_TIP_OPENING_MSG = "TabletInputPanelOpening";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/microsoft-tip-opening-msg
+enum const(wchar)* MICROSOFT_TIP_OPENING_MSG = "TabletInputPanelOpening";
 enum uint SAFE_PARTIAL = 0x00000001U;
 enum uint BEST_COMPLETE = 0x00000002U;
 enum uint MAX_VENDORNAME = 0x00000020U;
@@ -1484,9 +1484,13 @@ enum : uint
 {
     WM_TABLET_DEFBASE                  = 0x000002c0U,
     WM_TABLET_MAXOFFSET                = 0x00000020U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/wm-tablet-added
     WM_TABLET_ADDED                    = 0x000002c8U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/wm-tablet-deleted
     WM_TABLET_DELETED                  = 0x000002c9U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/wm-tablet-flick-message
     WM_TABLET_FLICK                    = 0x000002cbU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/wm-tablet-querysystemgesturestatus-message
     WM_TABLET_QUERYSYSTEMGESTURESTATUS = 0x000002ccU,
 }
 
@@ -2040,13 +2044,13 @@ struct InkRecoGuide
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_point
 struct FLICK_POINT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(y)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield547;
+    int _bitfield547;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_data
 struct FLICK_DATA
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(iActionArgument)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield548;
+    int _bitfield548;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_strokeinfo

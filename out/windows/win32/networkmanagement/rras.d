@@ -3,11 +3,11 @@
 module windows.win32.networkmanagement.rras;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, HANDLE, HINSTANCE,
-                                                    HWND, LUID, PSTR, PWSTR;
+public import windows.win32.foundation : BOOL, CHAR, FILETIME, HANDLE, HINSTANCE,
+                                         HWND, LUID, PSTR, PWSTR;
 public import windows.win32.networkmanagement.iphelper : MIB_IPMCAST_MFE;
 public import windows.win32.networking.winsock : IN6_ADDR, IN_ADDR;
-public import windows.win32.security.cryptography.cryptography : CRYPT_INTEGER_BLOB;
+public import windows.win32.security.cryptography : CRYPT_INTEGER_BLOB;
 
 extern(Windows) @nogc nothrow:
 
@@ -427,8 +427,10 @@ enum : uint
     RASIKEv2_AUTH_PSK                 = 0x00000003U,
 }
 
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* RASDIALEVENT = "RasDialEvent";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/RRAS/wm-rasdialevent))], [])*/uint WM_RASDIALEVENT = 0x0000cccdU;
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* RASDIALEVENT = "RasDialEvent";
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/RRAS/wm-rasdialevent
+enum uint WM_RASDIALEVENT = 0x0000cccdU;
 
 enum : uint
 {
@@ -2592,14 +2594,14 @@ struct RASEAPUSERIDENTITYA
 {
     CHAR[257] szUserName;
     uint      dwSizeofEapInfo;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbEapInfo;
+    ubyte[1]  pbEapInfo; // Flexible array
 }
 
 struct RASEAPUSERIDENTITYW
 {
     wchar[257] szUserName;
     uint       dwSizeofEapInfo;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pbEapInfo;
+    ubyte[1]   pbEapInfo; // Flexible array
 }
 
 struct RASCOMMSETTINGS
@@ -2791,7 +2793,7 @@ struct MPR_INTERFACE_2
     uint       dwLastError;
     uint       dwfOptions;
     wchar[129] szLocalPhoneNumber;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR szAlternates;
+    PWSTR      szAlternates;
     uint       ipaddr;
     uint       ipaddrDns;
     uint       ipaddrDnsAlt;
@@ -2833,7 +2835,7 @@ struct MPR_INTERFACE_3
     uint       dwLastError;
     uint       dwfOptions;
     wchar[129] szLocalPhoneNumber;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR szAlternates;
+    PWSTR      szAlternates;
     uint       ipaddr;
     uint       ipaddrDns;
     uint       ipaddrDnsAlt;
@@ -2880,7 +2882,7 @@ struct MPR_DEVICE_1
     wchar[17]  szDeviceType;
     wchar[129] szDeviceName;
     wchar[129] szLocalPhoneNumber;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR szAlternates;
+    PWSTR      szAlternates;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mprapi/ns-mprapi-mpr_credentialsex_0
@@ -3692,7 +3694,7 @@ struct AUTH_VALIDATION_EX
     wchar[257]           wszUserName;
     wchar[16]            wszLogonDomain;
     uint                 AuthInfoSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AuthInfo;
+    ubyte[1]             AuthInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mprapi/ns-mprapi-ras_update_connection
@@ -3800,8 +3802,8 @@ struct RTM_PREF_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtmv2/ns-rtmv2-rtm_nexthop_list
 struct RTM_NEXTHOP_LIST
 {
-    ushort NumNextHops;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ptrdiff_t[1] NextHops;
+    ushort       NumNextHops;
+    ptrdiff_t[1] NextHops; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtmv2/ns-rtmv2-rtm_dest_info
@@ -3875,25 +3877,25 @@ struct RTM_ENTITY_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtmv2/ns-rtmv2-rtm_entity_method_input
 struct RTM_ENTITY_METHOD_INPUT
 {
-    uint MethodType;
-    uint InputSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] InputData;
+    uint     MethodType;
+    uint     InputSize;
+    ubyte[1] InputData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtmv2/ns-rtmv2-rtm_entity_method_output
 struct RTM_ENTITY_METHOD_OUTPUT
 {
-    uint MethodType;
-    uint MethodStatus;
-    uint OutputSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] OutputData;
+    uint     MethodType;
+    uint     MethodStatus;
+    uint     OutputSize;
+    ubyte[1] OutputData; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtmv2/ns-rtmv2-rtm_entity_export_methods
 struct RTM_ENTITY_EXPORT_METHODS
 {
     uint NumMethods;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RTM_ENTITY_EXPORT_METHOD[1] Methods;
+    RTM_ENTITY_EXPORT_METHOD[1] Methods; // Flexible array
 }
 
 // Functions

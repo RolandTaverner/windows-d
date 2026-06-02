@@ -3,10 +3,9 @@
 module windows.win32.storage.xps.printing;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
-public import windows.win32.storage.xps.xps : IXpsOMPackageTarget;
-public import windows.win32.system.com.com : IDispatch, ISequentialStream, IStream,
-                                             IUnknown;
+public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.storage.xps : IXpsOMPackageTarget;
+public import windows.win32.system.com : IDispatch, ISequentialStream, IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 

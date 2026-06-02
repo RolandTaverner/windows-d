@@ -5,7 +5,7 @@ module windows.win32.devices.devicequery;
 public import windows.core;
 public import windows.win32.devices.properties : DEVPROPCOMPKEY, DEVPROPERTY, DEVPROPSTORE,
                                                  DEVPROPTYPE;
-public import windows.win32.foundation.foundation : DEVPROPKEY, HRESULT, PWSTR;
+public import windows.win32.foundation : DEVPROPKEY, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 

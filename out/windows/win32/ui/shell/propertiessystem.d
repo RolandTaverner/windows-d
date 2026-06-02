@@ -3,10 +3,10 @@
 module windows.win32.ui.shell.propertiessystem;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
-                                                    HWND, POINTL, POINTS, PROPERTYKEY,
-                                                    PSTR, PWSTR, RECTL;
-public import windows.win32.system.com.com : IBindCtx, IStream, IUnknown;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT, HWND,
+                                         POINTL, POINTS, PROPERTYKEY, PSTR, PWSTR,
+                                         RECTL;
+public import windows.win32.system.com : IBindCtx, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IPropertyBag, IPropertySetStorage,
                                                            IPropertyStorage, PROPSPEC,
                                                            PROPVARIANT;

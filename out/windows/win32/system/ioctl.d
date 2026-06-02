@@ -3,8 +3,8 @@
 module windows.win32.system.ioctl;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOLEAN, CHAR, DEVPROPKEY, HANDLE;
-public import windows.win32.security.security : SID;
+public import windows.win32.foundation : BOOLEAN, CHAR, DEVPROPKEY, HANDLE;
+public import windows.win32.security : SID;
 public import windows.win32.storage.filesystem : FILE_ID_128, STORAGE_BUS_TYPE;
 public import windows.win32.storage.vhd : VIRTUAL_STORAGE_TYPE;
 
@@ -1185,36 +1185,47 @@ enum : GUID
     GUID_DEVICEDUMP_DRIVER_STORAGE_PORT = GUID("da82441d-7142-4bc1-b844-0807c5a4b67f"),
 }
 
-enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY
+enum : DEVPROPKEY
 {
-    DEVPKEY_Storage_Portable         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 2),
-    DEVPKEY_Storage_Removable_Media  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 3),
-    DEVPKEY_Storage_System_Critical  = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 4),
-    DEVPKEY_Storage_Disk_Number      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 5),
-    DEVPKEY_Storage_Partition_Number = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 6),
-    DEVPKEY_Storage_Mbr_Type         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 7),
-    DEVPKEY_Storage_Gpt_Type         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 8),
-    DEVPKEY_Storage_Gpt_Name         = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1293860584, 2051, 18292, 152, 66, 183, 125, 181, 2, 101, 233}, 2))], [])*/DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 9),
+    DEVPKEY_Storage_Portable         = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 2),
+    DEVPKEY_Storage_Removable_Media  = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 3),
+    DEVPKEY_Storage_System_Critical  = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 4),
+    DEVPKEY_Storage_Disk_Number      = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 5),
+    DEVPKEY_Storage_Partition_Number = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 6),
+    DEVPKEY_Storage_Mbr_Type         = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 7),
+    DEVPKEY_Storage_Gpt_Type         = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 8),
+    DEVPKEY_Storage_Gpt_Name         = DEVPROPKEY(GUID("4D1EBEE8-0803-4774-9842-B77DB50265E9"), 9),
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_check_verify))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_check_verify
     IOCTL_STORAGE_CHECK_VERIFY               = 0x002d4800U,
     IOCTL_STORAGE_CHECK_VERIFY2              = 0x002d0800U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_media_removal
     IOCTL_STORAGE_MEDIA_REMOVAL              = 0x002d4804U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_eject_media
     IOCTL_STORAGE_EJECT_MEDIA                = 0x002d4808U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_load_media
     IOCTL_STORAGE_LOAD_MEDIA                 = 0x002d480cU,
     IOCTL_STORAGE_LOAD_MEDIA2                = 0x002d080cU,
     IOCTL_STORAGE_RESERVE                    = 0x002d4810U,
     IOCTL_STORAGE_RELEASE                    = 0x002d4814U,
     IOCTL_STORAGE_FIND_NEW_DEVICES           = 0x002d4818U,
     IOCTL_STORAGE_MANAGE_BYPASS_IO           = 0x002d08c0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_ejection_control
     IOCTL_STORAGE_EJECTION_CONTROL           = 0x002d0940U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_mcn_control
     IOCTL_STORAGE_MCN_CONTROL                = 0x002d0944U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_get_media_types
     IOCTL_STORAGE_GET_MEDIA_TYPES            = 0x002d0c00U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_get_media_types_ex
     IOCTL_STORAGE_GET_MEDIA_TYPES_EX         = 0x002d0c04U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_get_media_serial_number
     IOCTL_STORAGE_GET_MEDIA_SERIAL_NUMBER    = 0x002d0c10U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_get_hotplug_info
     IOCTL_STORAGE_GET_HOTPLUG_INFO           = 0x002d0c14U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_set_hotplug_info
     IOCTL_STORAGE_SET_HOTPLUG_INFO           = 0x002dcc18U,
     IOCTL_STORAGE_GET_SYSTEM_FEATURE_SUPPORT = 0x002d4c1cU,
 }
@@ -1230,8 +1241,9 @@ enum : uint
 
 enum uint IOCTL_STORAGE_MINIPORT_PASSTHROUGH_REQUEST = 0x002dd050U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_get_device_number))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_get_device_number
     IOCTL_STORAGE_GET_DEVICE_NUMBER         = 0x002d1080U,
     IOCTL_STORAGE_GET_DEVICE_NUMBER_EX      = 0x002d1084U,
     IOCTL_STORAGE_PREDICT_FAILURE           = 0x002d1100U,
@@ -1241,6 +1253,7 @@ enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(El
 enum : uint
 {
     IOCTL_STORAGE_GET_COUNTERS                = 0x002d1108U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_read_capacity
     IOCTL_STORAGE_READ_CAPACITY               = 0x002d5140U,
     IOCTL_STORAGE_GET_DEVICE_TELEMETRY        = 0x002dd1c0U,
     IOCTL_STORAGE_DEVICE_TELEMETRY_NOTIFY     = 0x002dd1c4U,
@@ -1248,20 +1261,25 @@ enum : uint
 }
 
 enum uint IOCTL_STORAGE_GET_DEVICE_TELEMETRY_RAW = 0x002dd1ccU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_set_temperature_threshold))], [])*/uint IOCTL_STORAGE_SET_TEMPERATURE_THRESHOLD = 0x002dd200U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_set_temperature_threshold
+enum uint IOCTL_STORAGE_SET_TEMPERATURE_THRESHOLD = 0x002dd200U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_protocol_command))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_protocol_command
     IOCTL_STORAGE_PROTOCOL_COMMAND           = 0x002dd3c0U,
     IOCTL_STORAGE_SET_PROPERTY               = 0x002d93fcU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_query_property
     IOCTL_STORAGE_QUERY_PROPERTY             = 0x002d1400U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_manage_data_set_attributes
     IOCTL_STORAGE_MANAGE_DATA_SET_ATTRIBUTES = 0x002d9404U,
 }
 
 enum uint IOCTL_STORAGE_GET_LB_PROVISIONING_MAP_RESOURCES = 0x002d5408U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_reinitialize_media))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_reinitialize_media
     IOCTL_STORAGE_REINITIALIZE_MEDIA          = 0x002d9640U,
     IOCTL_STORAGE_GET_BC_PROPERTIES           = 0x002d5800U,
     IOCTL_STORAGE_ALLOCATE_BC_STREAM          = 0x002dd804U,
@@ -1278,10 +1296,13 @@ enum : uint
     OBSOLETE_IOCTL_STORAGE_RESET_DEVICE = 0x002dd004U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_firmware_get_info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_firmware_get_info
     IOCTL_STORAGE_FIRMWARE_GET_INFO       = 0x002d1c00U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_firmware_download
     IOCTL_STORAGE_FIRMWARE_DOWNLOAD       = 0x002ddc04U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_firmware_activate
     IOCTL_STORAGE_FIRMWARE_ACTIVATE       = 0x002ddc08U,
     IOCTL_STORAGE_ENABLE_IDLE_POWER       = 0x002d1c80U,
     IOCTL_STORAGE_GET_IDLE_POWERUP_REASON = 0x002d1c84U,
@@ -1292,7 +1313,9 @@ enum : uint
     IOCTL_STORAGE_POWER_ACTIVE                = 0x002d1c88U,
     IOCTL_STORAGE_POWER_IDLE                  = 0x002d1c8cU,
     IOCTL_STORAGE_EVENT_NOTIFICATION          = 0x002d1c90U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_device_power_cap
     IOCTL_STORAGE_DEVICE_POWER_CAP            = 0x002d1c94U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_storage_rpmb_command
     IOCTL_STORAGE_RPMB_COMMAND                = 0x002d1c98U,
     IOCTL_STORAGE_ATTRIBUTE_MANAGEMENT        = 0x002ddc9cU,
     IOCTL_STORAGE_DIAGNOSTIC                  = 0x002d1ca0U,
@@ -1477,9 +1500,11 @@ enum : uint
 
 enum uint TC_DEVICEDUMP_SUBSECTION_DESC_LENGTH = 0x00000010U;
 
-enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+enum : const(wchar)*
 {
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     TC_PUBLIC_DATA_TYPE_ATAGP    = "ATAGPLogPages",
+    //CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
     TC_PUBLIC_DATA_TYPE_ATASMART = "ATASMARTPages",
 }
 
@@ -1728,30 +1753,42 @@ enum uint SCM_PD_PROPERTY_NAME_LENGTH_IN_CHARS = 0x00000080U;
 enum uint SCM_PD_MAX_OPERATIONAL_STATUS = 0x00000010U;
 enum uint SCM_PD_FIRMWARE_LAST_DOWNLOAD = 0x00000001U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_geometry))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_geometry
     IOCTL_DISK_GET_DRIVE_GEOMETRY = 0x00070000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_partition_info
     IOCTL_DISK_GET_PARTITION_INFO = 0x00074004U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_partition_info))], [])*/uint IOCTL_DISK_SET_PARTITION_INFO = 0x0007c008U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_partition_info
+enum uint IOCTL_DISK_SET_PARTITION_INFO = 0x0007c008U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_layout))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_layout
     IOCTL_DISK_GET_DRIVE_LAYOUT    = 0x0007400cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_drive_layout
     IOCTL_DISK_SET_DRIVE_LAYOUT    = 0x0007c010U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_verify
     IOCTL_DISK_VERIFY              = 0x00070014U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_format_tracks
     IOCTL_DISK_FORMAT_TRACKS       = 0x0007c018U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_reassign_blocks
     IOCTL_DISK_REASSIGN_BLOCKS     = 0x0007c01cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_performance
     IOCTL_DISK_PERFORMANCE         = 0x00070020U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_is_writable
     IOCTL_DISK_IS_WRITABLE         = 0x00070024U,
     IOCTL_DISK_LOGGING             = 0x00070028U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_format_tracks_ex
     IOCTL_DISK_FORMAT_TRACKS_EX    = 0x0007c02cU,
     IOCTL_DISK_HISTOGRAM_STRUCTURE = 0x00070030U,
     IOCTL_DISK_HISTOGRAM_DATA      = 0x00070034U,
     IOCTL_DISK_HISTOGRAM_RESET     = 0x00070038U,
     IOCTL_DISK_REQUEST_STRUCTURE   = 0x0007003cU,
     IOCTL_DISK_REQUEST_DATA        = 0x00070040U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_performance_off
     IOCTL_DISK_PERFORMANCE_OFF     = 0x00070060U,
     IOCTL_DISK_CONTROLLER_NUMBER   = 0x00070044U,
 }
@@ -1765,32 +1802,45 @@ enum : uint
     SMART_RCV_DRIVE_DATA_EX = 0x0007008cU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_partition_info_ex))], [])*/uint IOCTL_DISK_GET_PARTITION_INFO_EX = 0x00070048U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_partition_info_ex))], [])*/uint IOCTL_DISK_SET_PARTITION_INFO_EX = 0x0007c04cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_layout_ex))], [])*/uint IOCTL_DISK_GET_DRIVE_LAYOUT_EX = 0x00070050U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_drive_layout_ex))], [])*/uint IOCTL_DISK_SET_DRIVE_LAYOUT_EX = 0x0007c054U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_partition_info_ex
+enum uint IOCTL_DISK_GET_PARTITION_INFO_EX = 0x00070048U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_partition_info_ex
+enum uint IOCTL_DISK_SET_PARTITION_INFO_EX = 0x0007c04cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_layout_ex
+enum uint IOCTL_DISK_GET_DRIVE_LAYOUT_EX = 0x00070050U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_drive_layout_ex
+enum uint IOCTL_DISK_SET_DRIVE_LAYOUT_EX = 0x0007c054U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_create_disk))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_create_disk
     IOCTL_DISK_CREATE_DISK           = 0x0007c058U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_length_info
     IOCTL_DISK_GET_LENGTH_INFO       = 0x0007405cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_drive_geometry_ex
     IOCTL_DISK_GET_DRIVE_GEOMETRY_EX = 0x000700a0U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_reassign_blocks_ex))], [])*/uint IOCTL_DISK_REASSIGN_BLOCKS_EX = 0x0007c0a4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_reassign_blocks_ex
+enum uint IOCTL_DISK_REASSIGN_BLOCKS_EX = 0x0007c0a4U;
 enum uint IOCTL_DISK_UPDATE_DRIVE_SIZE = 0x0007c0c8U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_grow_partition))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_grow_partition
     IOCTL_DISK_GROW_PARTITION        = 0x0007c0d0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_cache_information
     IOCTL_DISK_GET_CACHE_INFORMATION = 0x000740d4U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_cache_information))], [])*/uint IOCTL_DISK_SET_CACHE_INFORMATION = 0x0007c0d8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_cache_information
+enum uint IOCTL_DISK_SET_CACHE_INFORMATION = 0x0007c0d8U;
 enum uint IOCTL_DISK_GET_WRITE_CACHE_STATE = 0x000740dcU;
 enum uint OBSOLETE_DISK_GET_WRITE_CACHE_STATE = 0x000740dcU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_delete_drive_layout))], [])*/uint IOCTL_DISK_DELETE_DRIVE_LAYOUT = 0x0007c100U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_update_properties))], [])*/uint IOCTL_DISK_UPDATE_PROPERTIES = 0x00070140U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_delete_drive_layout
+enum uint IOCTL_DISK_DELETE_DRIVE_LAYOUT = 0x0007c100U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_update_properties
+enum uint IOCTL_DISK_UPDATE_PROPERTIES = 0x00070140U;
 
 enum : uint
 {
@@ -1936,8 +1986,10 @@ enum uint ENABLE_SMART = 0x000000d8U;
 enum uint DISABLE_SMART = 0x000000d9U;
 enum uint RETURN_SMART_STATUS = 0x000000daU;
 enum uint ENABLE_DISABLE_AUTO_OFFLINE = 0x000000dbU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_disk_attributes))], [])*/uint IOCTL_DISK_GET_DISK_ATTRIBUTES = 0x000700f0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_disk_attributes))], [])*/uint IOCTL_DISK_SET_DISK_ATTRIBUTES = 0x0007c0f4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_get_disk_attributes
+enum uint IOCTL_DISK_GET_DISK_ATTRIBUTES = 0x000700f0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_set_disk_attributes
+enum uint IOCTL_DISK_SET_DISK_ATTRIBUTES = 0x0007c0f4U;
 
 enum : ulong
 {
@@ -1945,27 +1997,39 @@ enum : ulong
     DISK_ATTRIBUTE_READ_ONLY = 0x0000000000000002UL,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_reset_snapshot_info))], [])*/uint IOCTL_DISK_RESET_SNAPSHOT_INFO = 0x0007c210U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_disk_reset_snapshot_info
+enum uint IOCTL_DISK_RESET_SNAPSHOT_INFO = 0x0007c210U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_get_parameters))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_get_parameters
     IOCTL_CHANGER_GET_PARAMETERS            = 0x00304000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_get_status
     IOCTL_CHANGER_GET_STATUS                = 0x00304004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_get_product_data
     IOCTL_CHANGER_GET_PRODUCT_DATA          = 0x00304008U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_set_access
     IOCTL_CHANGER_SET_ACCESS                = 0x0030c010U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_get_element_status
     IOCTL_CHANGER_GET_ELEMENT_STATUS        = 0x0030c014U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_initialize_element_status
     IOCTL_CHANGER_INITIALIZE_ELEMENT_STATUS = 0x00304018U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_set_position))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_set_position
     IOCTL_CHANGER_SET_POSITION           = 0x0030401cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_exchange_medium
     IOCTL_CHANGER_EXCHANGE_MEDIUM        = 0x00304020U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_move_medium
     IOCTL_CHANGER_MOVE_MEDIUM            = 0x00304024U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_reinitialize_transport
     IOCTL_CHANGER_REINITIALIZE_TRANSPORT = 0x00304028U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_query_volume_tags))], [])*/uint IOCTL_CHANGER_QUERY_VOLUME_TAGS = 0x0030c02cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_changer_query_volume_tags
+enum uint IOCTL_CHANGER_QUERY_VOLUME_TAGS = 0x0030c02cU;
 
 enum : uint
 {
@@ -2039,7 +2103,8 @@ enum : uint
     UNDEFINE_ALTERNATE = 0x0000000dU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_serial_lsrmst_insert))], [])*/uint IOCTL_SERIAL_LSRMST_INSERT = 0x001b007cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-ioctl_serial_lsrmst_insert
+enum uint IOCTL_SERIAL_LSRMST_INSERT = 0x001b007cU;
 
 enum : uint
 {
@@ -2070,85 +2135,127 @@ enum : uint
     SERIAL_IOC_MCR_LOOP = 0x00000010U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_oplock_level_1))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_oplock_level_1
     FSCTL_REQUEST_OPLOCK_LEVEL_1 = 0x00090000U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_oplock_level_2
     FSCTL_REQUEST_OPLOCK_LEVEL_2 = 0x00090004U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_batch_oplock
     FSCTL_REQUEST_BATCH_OPLOCK   = 0x00090008U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_oplock_break_acknowledge))], [])*/uint FSCTL_OPLOCK_BREAK_ACKNOWLEDGE = 0x0009000cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_opbatch_ack_close_pending))], [])*/uint FSCTL_OPBATCH_ACK_CLOSE_PENDING = 0x00090010U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_oplock_break_notify))], [])*/uint FSCTL_OPLOCK_BREAK_NOTIFY = 0x00090014U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_lock_volume))], [])*/uint FSCTL_LOCK_VOLUME = 0x00090018U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_unlock_volume))], [])*/uint FSCTL_UNLOCK_VOLUME = 0x0009001cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_dismount_volume))], [])*/uint FSCTL_DISMOUNT_VOLUME = 0x00090020U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_volume_mounted))], [])*/uint FSCTL_IS_VOLUME_MOUNTED = 0x00090028U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_oplock_break_acknowledge
+enum uint FSCTL_OPLOCK_BREAK_ACKNOWLEDGE = 0x0009000cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_opbatch_ack_close_pending
+enum uint FSCTL_OPBATCH_ACK_CLOSE_PENDING = 0x00090010U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_oplock_break_notify
+enum uint FSCTL_OPLOCK_BREAK_NOTIFY = 0x00090014U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_lock_volume
+enum uint FSCTL_LOCK_VOLUME = 0x00090018U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_unlock_volume
+enum uint FSCTL_UNLOCK_VOLUME = 0x0009001cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_dismount_volume
+enum uint FSCTL_DISMOUNT_VOLUME = 0x00090020U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_volume_mounted
+enum uint FSCTL_IS_VOLUME_MOUNTED = 0x00090028U;
 enum uint FSCTL_IS_PATHNAME_VALID = 0x0009002cU;
 enum uint FSCTL_MARK_VOLUME_DIRTY = 0x00090030U;
 enum uint FSCTL_QUERY_RETRIEVAL_POINTERS = 0x0009003bU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_compression))], [])*/uint FSCTL_GET_COMPRESSION = 0x0009003cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_compression
+enum uint FSCTL_GET_COMPRESSION = 0x0009003cU;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_compression))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_compression
     FSCTL_SET_COMPRESSION         = 0x0009c040U,
     FSCTL_SET_BOOTLOADER_ACCESSED = 0x0009004fU,
 }
 
 enum uint FSCTL_MARK_AS_SYSTEM_HIVE = 0x0009004fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_oplock_break_ack_no_2))], [])*/uint FSCTL_OPLOCK_BREAK_ACK_NO_2 = 0x00090050U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_oplock_break_ack_no_2
+enum uint FSCTL_OPLOCK_BREAK_ACK_NO_2 = 0x00090050U;
 enum uint FSCTL_INVALIDATE_VOLUMES = 0x00090054U;
 enum uint FSCTL_QUERY_FAT_BPB = 0x00090058U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_filter_oplock))], [])*/uint FSCTL_REQUEST_FILTER_OPLOCK = 0x0009005cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_filesystem_get_statistics))], [])*/uint FSCTL_FILESYSTEM_GET_STATISTICS = 0x00090060U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_filter_oplock
+enum uint FSCTL_REQUEST_FILTER_OPLOCK = 0x0009005cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_filesystem_get_statistics
+enum uint FSCTL_FILESYSTEM_GET_STATISTICS = 0x00090060U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_ntfs_volume_data))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_ntfs_volume_data
     FSCTL_GET_NTFS_VOLUME_DATA = 0x00090064U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_ntfs_file_record
     FSCTL_GET_NTFS_FILE_RECORD = 0x00090068U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_volume_bitmap))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_volume_bitmap
     FSCTL_GET_VOLUME_BITMAP      = 0x0009006fU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_retrieval_pointers
     FSCTL_GET_RETRIEVAL_POINTERS = 0x00090073U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_move_file))], [])*/uint FSCTL_MOVE_FILE = 0x00090074U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_move_file
+enum uint FSCTL_MOVE_FILE = 0x00090074U;
 enum uint FSCTL_IS_VOLUME_DIRTY = 0x00090078U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_allow_extended_dasd_io))], [])*/uint FSCTL_ALLOW_EXTENDED_DASD_IO = 0x00090083U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_find_files_by_sid))], [])*/uint FSCTL_FIND_FILES_BY_SID = 0x0009008fU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_object_id))], [])*/uint FSCTL_SET_OBJECT_ID = 0x00090098U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_object_id))], [])*/uint FSCTL_GET_OBJECT_ID = 0x0009009cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_delete_object_id))], [])*/uint FSCTL_DELETE_OBJECT_ID = 0x000900a0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_reparse_point))], [])*/uint FSCTL_SET_REPARSE_POINT = 0x000900a4U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_reparse_point))], [])*/uint FSCTL_GET_REPARSE_POINT = 0x000900a8U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_delete_reparse_point))], [])*/uint FSCTL_DELETE_REPARSE_POINT = 0x000900acU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_enum_usn_data))], [])*/uint FSCTL_ENUM_USN_DATA = 0x000900b3U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_allow_extended_dasd_io
+enum uint FSCTL_ALLOW_EXTENDED_DASD_IO = 0x00090083U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_find_files_by_sid
+enum uint FSCTL_FIND_FILES_BY_SID = 0x0009008fU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_object_id
+enum uint FSCTL_SET_OBJECT_ID = 0x00090098U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_object_id
+enum uint FSCTL_GET_OBJECT_ID = 0x0009009cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_delete_object_id
+enum uint FSCTL_DELETE_OBJECT_ID = 0x000900a0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_reparse_point
+enum uint FSCTL_SET_REPARSE_POINT = 0x000900a4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_reparse_point
+enum uint FSCTL_GET_REPARSE_POINT = 0x000900a8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_delete_reparse_point
+enum uint FSCTL_DELETE_REPARSE_POINT = 0x000900acU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_enum_usn_data
+enum uint FSCTL_ENUM_USN_DATA = 0x000900b3U;
 enum uint FSCTL_SECURITY_ID_CHECK = 0x000940b7U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_read_usn_journal))], [])*/uint FSCTL_READ_USN_JOURNAL = 0x000900bbU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_object_id_extended))], [])*/uint FSCTL_SET_OBJECT_ID_EXTENDED = 0x000900bcU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_create_or_get_object_id))], [])*/uint FSCTL_CREATE_OR_GET_OBJECT_ID = 0x000900c0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_read_usn_journal
+enum uint FSCTL_READ_USN_JOURNAL = 0x000900bbU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_object_id_extended
+enum uint FSCTL_SET_OBJECT_ID_EXTENDED = 0x000900bcU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_create_or_get_object_id
+enum uint FSCTL_CREATE_OR_GET_OBJECT_ID = 0x000900c0U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_sparse))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_sparse
     FSCTL_SET_SPARSE    = 0x000900c4U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_zero_data
     FSCTL_SET_ZERO_DATA = 0x000980c8U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_allocated_ranges))], [])*/uint FSCTL_QUERY_ALLOCATED_RANGES = 0x000940cfU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_allocated_ranges
+enum uint FSCTL_QUERY_ALLOCATED_RANGES = 0x000940cfU;
 enum uint FSCTL_ENABLE_UPGRADE = 0x000980d0U;
 enum uint FSCTL_SET_ENCRYPTION = 0x000900d7U;
 enum uint FSCTL_ENCRYPTION_FSCTL_IO = 0x000900dbU;
 enum uint FSCTL_WRITE_RAW_ENCRYPTED = 0x000900dfU;
 enum uint FSCTL_READ_RAW_ENCRYPTED = 0x000900e3U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_create_usn_journal))], [])*/uint FSCTL_CREATE_USN_JOURNAL = 0x000900e7U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_read_file_usn_data))], [])*/uint FSCTL_READ_FILE_USN_DATA = 0x000900ebU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_write_usn_close_record))], [])*/uint FSCTL_WRITE_USN_CLOSE_RECORD = 0x000900efU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_extend_volume))], [])*/uint FSCTL_EXTEND_VOLUME = 0x000900f0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_usn_journal))], [])*/uint FSCTL_QUERY_USN_JOURNAL = 0x000900f4U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_delete_usn_journal))], [])*/uint FSCTL_DELETE_USN_JOURNAL = 0x000900f8U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_mark_handle))], [])*/uint FSCTL_MARK_HANDLE = 0x000900fcU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_create_usn_journal
+enum uint FSCTL_CREATE_USN_JOURNAL = 0x000900e7U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_read_file_usn_data
+enum uint FSCTL_READ_FILE_USN_DATA = 0x000900ebU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_write_usn_close_record
+enum uint FSCTL_WRITE_USN_CLOSE_RECORD = 0x000900efU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_extend_volume
+enum uint FSCTL_EXTEND_VOLUME = 0x000900f0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_usn_journal
+enum uint FSCTL_QUERY_USN_JOURNAL = 0x000900f4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_delete_usn_journal
+enum uint FSCTL_DELETE_USN_JOURNAL = 0x000900f8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_mark_handle
+enum uint FSCTL_MARK_HANDLE = 0x000900fcU;
 
 enum : uint
 {
@@ -2156,27 +2263,35 @@ enum : uint
     FSCTL_SIS_LINK_FILES = 0x0009c104U,
 }
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_recall_file))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_recall_file
     FSCTL_RECALL_FILE    = 0x00090117U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_read_from_plex
     FSCTL_READ_FROM_PLEX = 0x0009411eU,
 }
 
 enum uint FSCTL_FILE_PREFETCH = 0x00090120U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_make_media_compatible))], [])*/uint FSCTL_MAKE_MEDIA_COMPATIBLE = 0x00098130U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_defect_management))], [])*/uint FSCTL_SET_DEFECT_MANAGEMENT = 0x00098134U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_make_media_compatible
+enum uint FSCTL_MAKE_MEDIA_COMPATIBLE = 0x00098130U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_defect_management
+enum uint FSCTL_SET_DEFECT_MANAGEMENT = 0x00098134U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_sparing_info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_sparing_info
     FSCTL_QUERY_SPARING_INFO        = 0x00090138U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_on_disk_volume_info
     FSCTL_QUERY_ON_DISK_VOLUME_INFO = 0x0009013cU,
 }
 
 enum uint FSCTL_SET_VOLUME_COMPRESSION_STATE = 0x00090140U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_modify_rm))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_modify_rm
     FSCTL_TXFS_MODIFY_RM            = 0x00098144U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_query_rm_information
     FSCTL_TXFS_QUERY_RM_INFORMATION = 0x00094148U,
 }
 
@@ -2186,34 +2301,49 @@ enum : uint
     FSCTL_TXFS_ROLLFORWARD_UNDO        = 0x00098154U,
     FSCTL_TXFS_START_RM                = 0x00098158U,
     FSCTL_TXFS_SHUTDOWN_RM             = 0x0009815cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_read_backup_information
     FSCTL_TXFS_READ_BACKUP_INFORMATION = 0x00094160U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_write_backup_information))], [])*/uint FSCTL_TXFS_WRITE_BACKUP_INFORMATION = 0x00098164U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_write_backup_information
+enum uint FSCTL_TXFS_WRITE_BACKUP_INFORMATION = 0x00098164U;
 enum uint FSCTL_TXFS_CREATE_SECONDARY_RM = 0x00098168U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_get_metadata_info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_get_metadata_info
     FSCTL_TXFS_GET_METADATA_INFO      = 0x0009416cU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_get_transacted_version
     FSCTL_TXFS_GET_TRANSACTED_VERSION = 0x00094170U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_savepoint_information))], [])*/uint FSCTL_TXFS_SAVEPOINT_INFORMATION = 0x00098178U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_create_miniversion))], [])*/uint FSCTL_TXFS_CREATE_MINIVERSION = 0x0009817cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_transaction_active))], [])*/uint FSCTL_TXFS_TRANSACTION_ACTIVE = 0x0009418cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_zero_on_deallocation))], [])*/uint FSCTL_SET_ZERO_ON_DEALLOCATION = 0x00090194U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_repair))], [])*/uint FSCTL_SET_REPAIR = 0x00090198U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_repair))], [])*/uint FSCTL_GET_REPAIR = 0x0009019cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_wait_for_repair))], [])*/uint FSCTL_WAIT_FOR_REPAIR = 0x000901a0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_initiate_repair))], [])*/uint FSCTL_INITIATE_REPAIR = 0x000901a8U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_savepoint_information
+enum uint FSCTL_TXFS_SAVEPOINT_INFORMATION = 0x00098178U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_create_miniversion
+enum uint FSCTL_TXFS_CREATE_MINIVERSION = 0x0009817cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_transaction_active
+enum uint FSCTL_TXFS_TRANSACTION_ACTIVE = 0x0009418cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_zero_on_deallocation
+enum uint FSCTL_SET_ZERO_ON_DEALLOCATION = 0x00090194U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_repair
+enum uint FSCTL_SET_REPAIR = 0x00090198U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_repair
+enum uint FSCTL_GET_REPAIR = 0x0009019cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_wait_for_repair
+enum uint FSCTL_WAIT_FOR_REPAIR = 0x000901a0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_initiate_repair
+enum uint FSCTL_INITIATE_REPAIR = 0x000901a8U;
 enum uint FSCTL_CSC_INTERNAL = 0x000901afU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_shrink_volume))], [])*/uint FSCTL_SHRINK_VOLUME = 0x000901b0U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_shrink_volume
+enum uint FSCTL_SHRINK_VOLUME = 0x000901b0U;
 enum uint FSCTL_SET_SHORT_NAME_BEHAVIOR = 0x000901b4U;
 enum uint FSCTL_DFSR_SET_GHOST_HANDLE_STATE = 0x000901b8U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_list_transaction_locked_files))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_list_transaction_locked_files
     FSCTL_TXFS_LIST_TRANSACTION_LOCKED_FILES = 0x000941e0U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_txfs_list_transactions
     FSCTL_TXFS_LIST_TRANSACTIONS             = 0x000941e4U,
 }
 
@@ -2222,23 +2352,30 @@ enum uint FSCTL_RESET_VOLUME_ALLOCATION_HINTS = 0x000901ecU;
 enum uint FSCTL_QUERY_DEPENDENT_VOLUME = 0x000901f0U;
 enum uint FSCTL_SD_GLOBAL_CHANGE = 0x000901f4U;
 enum uint FSCTL_TXFS_READ_BACKUP_INFORMATION2 = 0x000901f8U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_lookup_stream_from_cluster))], [])*/uint FSCTL_LOOKUP_STREAM_FROM_CLUSTER = 0x000901fcU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_lookup_stream_from_cluster
+enum uint FSCTL_LOOKUP_STREAM_FROM_CLUSTER = 0x000901fcU;
 enum uint FSCTL_TXFS_WRITE_BACKUP_INFORMATION2 = 0x00090200U;
 enum uint FSCTL_FILE_TYPE_NOTIFICATION = 0x00090204U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_file_level_trim))], [])*/uint FSCTL_FILE_LEVEL_TRIM = 0x00098208U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_file_level_trim
+enum uint FSCTL_FILE_LEVEL_TRIM = 0x00098208U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_boot_area_info))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_boot_area_info
     FSCTL_GET_BOOT_AREA_INFO         = 0x00090230U,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_retrieval_pointer_base
     FSCTL_GET_RETRIEVAL_POINTER_BASE = 0x00090234U,
 }
 
 enum uint FSCTL_SET_PERSISTENT_VOLUME_STATE = 0x00090238U;
 enum uint FSCTL_QUERY_PERSISTENT_VOLUME_STATE = 0x0009023cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_oplock))], [])*/uint FSCTL_REQUEST_OPLOCK = 0x00090240U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_request_oplock
+enum uint FSCTL_REQUEST_OPLOCK = 0x00090240U;
 enum uint FSCTL_CSV_TUNNEL_REQUEST = 0x00090244U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_csv_file))], [])*/uint FSCTL_IS_CSV_FILE = 0x00090248U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_file_system_recognition))], [])*/uint FSCTL_QUERY_FILE_SYSTEM_RECOGNITION = 0x0009024cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_csv_file
+enum uint FSCTL_IS_CSV_FILE = 0x00090248U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_file_system_recognition
+enum uint FSCTL_QUERY_FILE_SYSTEM_RECOGNITION = 0x0009024cU;
 
 enum : uint
 {
@@ -2247,7 +2384,8 @@ enum : uint
     FSCTL_CSV_GET_VOLUME_PATH_NAMES_FOR_VOLUME_NAME  = 0x00090258U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_file_on_csv_volume))], [])*/uint FSCTL_IS_FILE_ON_CSV_VOLUME = 0x0009025cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_file_on_csv_volume
+enum uint FSCTL_IS_FILE_ON_CSV_VOLUME = 0x0009025cU;
 enum uint FSCTL_CORRUPTION_HANDLING = 0x00090260U;
 
 enum : uint
@@ -2259,18 +2397,23 @@ enum : uint
 enum uint FSCTL_CSV_INTERNAL = 0x0009026cU;
 enum uint FSCTL_SET_PURGE_FAILURE_MODE = 0x00090270U;
 enum uint FSCTL_QUERY_FILE_LAYOUT = 0x00090277U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_volume_owned_bycsvfs))], [])*/uint FSCTL_IS_VOLUME_OWNED_BYCSVFS = 0x00090278U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_integrity_information))], [])*/uint FSCTL_GET_INTEGRITY_INFORMATION = 0x0009027cU;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_integrity_information))], [])*/uint FSCTL_SET_INTEGRITY_INFORMATION = 0x0009c280U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_is_volume_owned_bycsvfs
+enum uint FSCTL_IS_VOLUME_OWNED_BYCSVFS = 0x00090278U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_get_integrity_information
+enum uint FSCTL_GET_INTEGRITY_INFORMATION = 0x0009027cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_set_integrity_information
+enum uint FSCTL_SET_INTEGRITY_INFORMATION = 0x0009c280U;
 enum uint FSCTL_QUERY_FILE_REGIONS = 0x00090284U;
 enum uint FSCTL_RKF_INTERNAL = 0x000902afU;
 enum uint FSCTL_SCRUB_DATA = 0x000902b0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_repair_copies))], [])*/uint FSCTL_REPAIR_COPIES = 0x0009c2b4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_repair_copies
+enum uint FSCTL_REPAIR_COPIES = 0x0009c2b4U;
 enum uint FSCTL_DISABLE_LOCAL_BUFFERING = 0x000902b8U;
 
 enum : uint
 {
     FSCTL_CSV_MGMT_LOCK                                    = 0x000902bcU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_csv_query_down_level_file_system_characteristics
     FSCTL_CSV_QUERY_DOWN_LEVEL_FILE_SYSTEM_CHARACTERISTICS = 0x000902c0U,
 }
 
@@ -2278,17 +2421,21 @@ enum uint FSCTL_ADVANCE_FILE_ID = 0x000902c4U;
 enum uint FSCTL_CSV_SYNC_TUNNEL_REQUEST = 0x000902c8U;
 enum uint FSCTL_CSV_QUERY_VETO_FILE_DIRECT_IO = 0x000902ccU;
 enum uint FSCTL_WRITE_USN_REASON = 0x000902d0U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_csv_control))], [])*/uint FSCTL_CSV_CONTROL = 0x000902d4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_csv_control
+enum uint FSCTL_CSV_CONTROL = 0x000902d4U;
 enum uint FSCTL_GET_REFS_VOLUME_DATA = 0x000902d8U;
 enum uint FSCTL_CSV_H_BREAKING_SYNC_TUNNEL_REQUEST = 0x000902e4U;
 
-enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_storage_classes))], [])*/uint
+enum : uint
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_storage_classes
     FSCTL_QUERY_STORAGE_CLASSES = 0x000902ecU,
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_query_region_info
     FSCTL_QUERY_REGION_INFO     = 0x000902f0U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_usn_track_modified_ranges))], [])*/uint FSCTL_USN_TRACK_MODIFIED_RANGES = 0x000902f4U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_usn_track_modified_ranges
+enum uint FSCTL_USN_TRACK_MODIFIED_RANGES = 0x000902f4U;
 enum uint FSCTL_QUERY_SHARED_VIRTUAL_DISK_SUPPORT = 0x00090300U;
 
 enum : uint
@@ -2311,7 +2458,8 @@ enum uint FSCTL_ADD_OVERLAY = 0x00098330U;
 enum uint FSCTL_REMOVE_OVERLAY = 0x00098334U;
 enum uint FSCTL_UPDATE_OVERLAY = 0x00098338U;
 enum uint FSCTL_SHUFFLE_FILE = 0x0009c340U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_duplicate_extents_to_file))], [])*/uint FSCTL_DUPLICATE_EXTENTS_TO_FILE = 0x00098344U;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_duplicate_extents_to_file
+enum uint FSCTL_DUPLICATE_EXTENTS_TO_FILE = 0x00098344U;
 enum uint FSCTL_SPARSE_OVERALLOCATE = 0x0009034cU;
 enum uint FSCTL_STORAGE_QOS_CONTROL = 0x00090350U;
 enum uint FSCTL_INITIATE_FILE_METADATA_OPTIMIZATION = 0x0009035cU;
@@ -2326,7 +2474,8 @@ enum uint FSCTL_CLEAN_VOLUME_METADATA = 0x0009037cU;
 enum uint FSCTL_SET_INTEGRITY_INFORMATION_EX = 0x00090380U;
 enum uint FSCTL_SUSPEND_OVERLAY = 0x00090384U;
 enum uint FSCTL_VIRTUAL_STORAGE_QUERY_PROPERTY = 0x00090388U;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_filesystem_get_statistics_ex))], [])*/uint FSCTL_FILESYSTEM_GET_STATISTICS_EX = 0x0009038cU;
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ni-winioctl-fsctl_filesystem_get_statistics_ex
+enum uint FSCTL_FILESYSTEM_GET_STATISTICS_EX = 0x0009038cU;
 enum uint FSCTL_QUERY_VOLUME_CONTAINER_STATE = 0x00090390U;
 enum uint FSCTL_SET_LAYER_ROOT = 0x00090394U;
 enum uint FSCTL_QUERY_DIRECT_ACCESS_EXTENTS = 0x0009039bU;
@@ -3012,7 +3161,7 @@ struct STORAGE_FEATURE_SUPPORT
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(63))], [])*/ulong _bitfield437;
+            ulong _bitfield437;
         }
         ulong AsUlonglong;
     }
@@ -3032,7 +3181,7 @@ struct STORAGE_DEVICE_NUMBERS
     uint Version;
     uint Size;
     uint NumberOfDevices;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_DEVICE_NUMBER[1] Devices;
+    STORAGE_DEVICE_NUMBER[1] Devices; // Flexible array
 }
 
 struct STORAGE_DEVICE_NUMBER_EX
@@ -3136,9 +3285,9 @@ struct DEVICE_MEDIA_INFO
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-get_media_types
 struct GET_MEDIA_TYPES
 {
-    uint DeviceType;
-    uint MediaInfoCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DEVICE_MEDIA_INFO[1] MediaInfo;
+    uint                 DeviceType;
+    uint                 MediaInfoCount;
+    DEVICE_MEDIA_INFO[1] MediaInfo; // Flexible array
 }
 
 struct STORAGE_PREDICT_FAILURE
@@ -3161,14 +3310,14 @@ struct STORAGE_PROPERTY_QUERY
 {
     STORAGE_PROPERTY_ID PropertyId;
     STORAGE_QUERY_TYPE  QueryType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AdditionalParameters;
+    ubyte[1]            AdditionalParameters; // Flexible array
 }
 
 struct STORAGE_PROPERTY_SET
 {
     STORAGE_PROPERTY_ID PropertyId;
     STORAGE_SET_TYPE    SetType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AdditionalParameters;
+    ubyte[1]            AdditionalParameters; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_descriptor_header
@@ -3193,7 +3342,7 @@ struct STORAGE_DEVICE_DESCRIPTOR
     uint             SerialNumberOffset;
     STORAGE_BUS_TYPE BusType;
     uint             RawPropertiesLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RawDeviceProperties;
+    ubyte[1]         RawDeviceProperties; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_adapter_descriptor
@@ -3249,7 +3398,7 @@ struct STORAGE_MINIPORT_DESCRIPTOR
     {
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield438;
+            ubyte _bitfield438;
         }
         ubyte AsBYTE;
     }
@@ -3261,19 +3410,19 @@ struct STORAGE_IDENTIFIER
 {
     STORAGE_IDENTIFIER_CODE_SET CodeSet;
     STORAGE_IDENTIFIER_TYPE Type;
-    ushort IdentifierSize;
-    ushort NextOffset;
+    ushort   IdentifierSize;
+    ushort   NextOffset;
     STORAGE_ASSOCIATION_TYPE Association;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Identifier;
+    ubyte[1] Identifier; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_device_id_descriptor
 struct STORAGE_DEVICE_ID_DESCRIPTOR
 {
-    uint Version;
-    uint Size;
-    uint NumberOfIdentifiers;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Identifiers;
+    uint     Version;
+    uint     Size;
+    uint     NumberOfIdentifiers;
+    ubyte[1] Identifiers; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-device_seek_penalty_descriptor
@@ -3305,7 +3454,7 @@ struct DEVICE_LB_PROVISIONING_DESCRIPTOR
 {
     uint     Version;
     uint     Size;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MapSupported)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield439;
+    ubyte    _bitfield439;
     ubyte[7] Reserved1;
     ulong    OptimalUnmapGranularity;
     ulong    UnmapGranularityAlignment;
@@ -3317,9 +3466,9 @@ struct STORAGE_LB_PROVISIONING_MAP_RESOURCES
 {
     uint     Size;
     uint     Version;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield1;
+    ubyte    _bitfield1;
     ubyte[3] Reserved1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield2;
+    ubyte    _bitfield2;
     ubyte[3] Reserved3;
     ulong    AvailableMappingResources;
     ulong    UsedMappingResources;
@@ -3393,7 +3542,7 @@ union STORAGE_SECURITY_COMPLIANCE_BITMASK
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield440;
+        ubyte _bitfield440;
     }
     ubyte AsUchar;
 }
@@ -3402,7 +3551,7 @@ union STORAGE_CRYPTO_KEY_TYPE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield441;
+        ubyte _bitfield441;
     }
     ubyte AsUchar;
 }
@@ -3426,7 +3575,7 @@ struct STORAGE_CRYPTO_DESCRIPTOR
     uint Size;
     uint NumKeysSupported;
     uint NumCryptoCapabilities;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_CRYPTO_CAPABILITY[1] CryptoCapabilities;
+    STORAGE_CRYPTO_CAPABILITY[1] CryptoCapabilities; // Flexible array
 }
 
 struct STORAGE_CRYPTO_DESCRIPTOR_V2
@@ -3438,7 +3587,7 @@ struct STORAGE_CRYPTO_DESCRIPTOR_V2
     STORAGE_ICE_TYPE IceType;
     STORAGE_SECURITY_COMPLIANCE_BITMASK SecurityComplianceBitmask;
     STORAGE_CRYPTO_KEY_TYPE KeyTypeBitmask;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_CRYPTO_CAPABILITY_V2[1] CryptoCapabilities;
+    STORAGE_CRYPTO_CAPABILITY_V2[1] CryptoCapabilities; // Flexible array
 }
 
 struct STORAGE_HW_CRYPTO_CAPABILITY
@@ -3479,27 +3628,27 @@ struct STORAGE_TIER
 
 struct STORAGE_DEVICE_TIERING_DESCRIPTOR
 {
-    uint Version;
-    uint Size;
-    uint Flags;
-    uint TotalNumberOfTiers;
-    uint NumberOfTiersReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_TIER[1] Tiers;
+    uint            Version;
+    uint            Size;
+    uint            Flags;
+    uint            TotalNumberOfTiers;
+    uint            NumberOfTiersReturned;
+    STORAGE_TIER[1] Tiers; // Flexible array
 }
 
 struct STORAGE_DEVICE_FAULT_DOMAIN_DESCRIPTOR
 {
-    uint Version;
-    uint Size;
-    uint NumberOfFaultDomains;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] FaultDomainIds;
+    uint    Version;
+    uint    Size;
+    uint    NumberOfFaultDomains;
+    GUID[1] FaultDomainIds; // Flexible array
 }
 
 union STORAGE_PROTOCOL_DATA_SUBVALUE_GET_LOG_PAGE
 {
     struct
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(17))], [])*/uint _bitfield442;
+        uint _bitfield442;
     }
     uint AsUlong;
 }
@@ -3575,7 +3724,7 @@ struct STORAGE_TEMPERATURE_DATA_DESCRIPTOR
     ushort   InfoCount;
     ubyte[2] Reserved0;
     uint[2]  Reserved1;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_TEMPERATURE_INFO[1] TemperatureInfo;
+    STORAGE_TEMPERATURE_INFO[1] TemperatureInfo; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_temperature_threshold
@@ -3662,7 +3811,7 @@ struct STORAGE_PHYSICAL_TOPOLOGY_DESCRIPTOR
     uint Size;
     uint NodeCount;
     uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_PHYSICAL_NODE_DATA[1] Node;
+    STORAGE_PHYSICAL_NODE_DATA[1] Node; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_device_io_capability_descriptor
@@ -3714,7 +3863,7 @@ struct STORAGE_DEVICE_MANAGEMENT_STATUS
     uint NumberOfOperationalStatus;
     uint NumberOfAdditionalReasons;
     STORAGE_DISK_OPERATIONAL_STATUS[16] OperationalStatus;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_OPERATIONAL_REASON[1] AdditionalReasons;
+    STORAGE_OPERATIONAL_REASON[1] AdditionalReasons; // Flexible array
 }
 
 struct STORAGE_ADAPTER_SERIAL_NUMBER
@@ -3752,7 +3901,7 @@ struct STORAGE_ZONED_DEVICE_DESCRIPTOR
         }
     }
     uint ZoneGroupCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_ZONE_GROUP[1] ZoneGroup;
+    STORAGE_ZONE_GROUP[1] ZoneGroup; // Flexible array
 }
 
 struct DEVICE_LOCATION
@@ -3804,7 +3953,7 @@ struct STORAGE_HW_ENDURANCE_INFO
     uint      GroupId;
     struct Flags
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield443;
+        uint _bitfield443;
     }
     uint      LifePercentage;
     ubyte[16] BytesReadCount;
@@ -3849,10 +3998,10 @@ struct STORAGE_DEVICE_SELF_ENCRYPTION_PROPERTY_V2
 
 struct STORAGE_FRU_ID_DESCRIPTOR
 {
-    uint Version;
-    uint Size;
-    uint IdentifierSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Identifier;
+    uint     Version;
+    uint     Size;
+    uint     IdentifierSize;
+    ubyte[1] Identifier; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-device_data_set_range
@@ -3902,10 +4051,10 @@ struct DEVICE_DSM_DEFINITION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-device_dsm_notification_parameters
 struct DEVICE_DSM_NOTIFICATION_PARAMETERS
 {
-    uint Size;
-    uint Flags;
-    uint NumFileTypeIDs;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] FileTypeID;
+    uint    Size;
+    uint    Flags;
+    uint    NumFileTypeIDs;
+    GUID[1] FileTypeID; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_offload_token
@@ -3970,32 +4119,32 @@ struct DEVICE_DATA_SET_LBP_STATE_PARAMETERS
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-device_data_set_lb_provisioning_state
 struct DEVICE_DATA_SET_LB_PROVISIONING_STATE
 {
-    uint  Size;
-    uint  Version;
-    ulong SlabSizeInBytes;
-    uint  SlabOffsetDeltaInBytes;
-    uint  SlabAllocationBitMapBitCount;
-    uint  SlabAllocationBitMapLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] SlabAllocationBitMap;
+    uint    Size;
+    uint    Version;
+    ulong   SlabSizeInBytes;
+    uint    SlabOffsetDeltaInBytes;
+    uint    SlabAllocationBitMapBitCount;
+    uint    SlabAllocationBitMapLength;
+    uint[1] SlabAllocationBitMap; // Flexible array
 }
 
 struct DEVICE_DATA_SET_LB_PROVISIONING_STATE_V2
 {
-    uint  Size;
-    uint  Version;
-    ulong SlabSizeInBytes;
-    ulong SlabOffsetDeltaInBytes;
-    uint  SlabAllocationBitMapBitCount;
-    uint  SlabAllocationBitMapLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] SlabAllocationBitMap;
+    uint    Size;
+    uint    Version;
+    ulong   SlabSizeInBytes;
+    ulong   SlabOffsetDeltaInBytes;
+    uint    SlabAllocationBitMapBitCount;
+    uint    SlabAllocationBitMapLength;
+    uint[1] SlabAllocationBitMap; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-device_data_set_repair_parameters
 struct DEVICE_DATA_SET_REPAIR_PARAMETERS
 {
-    uint NumberOfRepairCopies;
-    uint SourceCopy;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] RepairCopies;
+    uint    NumberOfRepairCopies;
+    uint    SourceCopy;
+    uint[1] RepairCopies; // Flexible array
 }
 
 struct DEVICE_DATA_SET_REPAIR_OUTPUT
@@ -4027,11 +4176,11 @@ struct DEVICE_DATA_SET_SCRUB_EX_OUTPUT
 
 struct DEVICE_DSM_TIERING_QUERY_INPUT
 {
-    uint Version;
-    uint Size;
-    uint Flags;
-    uint NumberOfTierIds;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] TierIds;
+    uint    Version;
+    uint    Size;
+    uint    Flags;
+    uint    NumberOfTierIds;
+    GUID[1] TierIds; // Flexible array
 }
 
 struct STORAGE_TIER_REGION
@@ -4050,7 +4199,7 @@ struct DEVICE_DSM_TIERING_QUERY_OUTPUT
     ulong Alignment;
     uint  TotalNumberOfRegions;
     uint  NumberOfRegionsReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_TIER_REGION[1] Regions;
+    STORAGE_TIER_REGION[1] Regions; // Flexible array
 }
 
 struct DEVICE_DSM_NVCACHE_CHANGE_PRIORITY_PARAMETERS
@@ -4078,7 +4227,7 @@ struct DEVICE_DSM_PHYSICAL_ADDRESSES_OUTPUT
     uint Flags;
     uint TotalNumberOfRanges;
     uint NumberOfRangesReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DEVICE_STORAGE_ADDRESS_RANGE[1] Ranges;
+    DEVICE_STORAGE_ADDRESS_RANGE[1] Ranges; // Flexible array
 }
 
 struct DEVICE_DSM_REPORT_ZONES_PARAMETERS
@@ -4106,7 +4255,7 @@ struct DEVICE_DSM_REPORT_ZONES_DATA
     uint ZoneCount;
     STORAGE_ZONES_ATTRIBUTES Attributes;
     uint Reserved0;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_ZONE_DESCRIPTOR[1] ZoneDescriptors;
+    STORAGE_ZONE_DESCRIPTOR[1] ZoneDescriptors; // Flexible array
 }
 
 struct DEVICE_STORAGE_RANGE_ATTRIBUTES
@@ -4117,7 +4266,7 @@ struct DEVICE_STORAGE_RANGE_ATTRIBUTES
         uint AllFlags;
         struct
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsRangeBad)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield444;
+            uint _bitfield444;
         }
     }
     uint  Reserved;
@@ -4129,7 +4278,7 @@ struct DEVICE_DSM_RANGE_ERROR_INFO
     uint Flags;
     uint TotalNumberOfRanges;
     uint NumberOfRangesReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DEVICE_STORAGE_RANGE_ATTRIBUTES[1] Ranges;
+    DEVICE_STORAGE_RANGE_ATTRIBUTES[1] Ranges; // Flexible array
 }
 
 struct DEVICE_DSM_LOST_QUERY_PARAMETERS
@@ -4140,11 +4289,11 @@ struct DEVICE_DSM_LOST_QUERY_PARAMETERS
 
 struct DEVICE_DSM_LOST_QUERY_OUTPUT
 {
-    uint  Version;
-    uint  Size;
-    ulong Alignment;
-    uint  NumberOfBits;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] BitMap;
+    uint    Version;
+    uint    Size;
+    ulong   Alignment;
+    uint    NumberOfBits;
+    uint[1] BitMap; // Flexible array
 }
 
 struct DEVICE_DSM_FREE_SPACE_OUTPUT
@@ -4203,12 +4352,12 @@ struct STORAGE_DIAGNOSTIC_REQUEST
 
 struct STORAGE_DIAGNOSTIC_DATA
 {
-    uint Version;
-    uint Size;
-    GUID ProviderId;
-    uint BufferSize;
-    uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DiagnosticDataBuffer;
+    uint     Version;
+    uint     Size;
+    GUID     ProviderId;
+    uint     BufferSize;
+    uint     Reserved;
+    ubyte[1] DiagnosticDataBuffer; // Flexible array
 }
 
 struct PHYSICAL_ELEMENT_STATUS_REQUEST
@@ -4241,7 +4390,7 @@ struct PHYSICAL_ELEMENT_STATUS
     uint ReturnedDescriptorCount;
     uint ElementIdentifierBeingDepoped;
     uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PHYSICAL_ELEMENT_STATUS_DESCRIPTOR[1] Descriptors;
+    PHYSICAL_ELEMENT_STATUS_DESCRIPTOR[1] Descriptors; // Flexible array
 }
 
 struct REMOVE_ELEMENT_AND_TRUNCATE_REQUEST
@@ -4274,7 +4423,7 @@ struct DEVICE_INTERNAL_STATUS_DATA
     ubyte[3]   Reserved;
     ubyte[128] ReasonIdentifier;
     uint       StatusDataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] StatusData;
+    ubyte[1]   StatusData; // Flexible array
 }
 
 struct STORAGE_REINITIALIZE_MEDIA
@@ -4284,15 +4433,15 @@ struct STORAGE_REINITIALIZE_MEDIA
     uint TimeoutInSeconds;
     struct SanitizeOption
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield445;
+        uint _bitfield445;
     }
 }
 
 struct STORAGE_MEDIA_SERIAL_NUMBER_DATA
 {
-    ushort Reserved;
-    ushort SerialNumberLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SerialNumber;
+    ushort   Reserved;
+    ushort   SerialNumberLength;
+    ubyte[1] SerialNumber; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/DevIO/storage-read-capacity
@@ -4327,14 +4476,14 @@ struct PERSISTENT_RESERVE_COMMAND
     {
         struct PR_IN
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield446;
+            ubyte  _bitfield446;
             ushort AllocationLength;
         }
         struct PR_OUT
         {
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield1;
-            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Scope)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield2;
-            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ParameterList;
+            ubyte    _bitfield1;
+            ubyte    _bitfield2;
+            ubyte[1] ParameterList; // Flexible array
         }
     }
 }
@@ -4382,20 +4531,20 @@ align (1):
     uint     dwFlags;
     GP_LOG_PAGE_DESCRIPTOR[16] GPLogTable;
     CHAR[16] szDescription;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
+    ubyte[1] bData; // Flexible array
 }
 
 struct DEVICEDUMP_RESTRICTED_SUBSECTION
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
+    ubyte[1] bData; // Flexible array
 }
 
 struct DEVICEDUMP_PRIVATE_SUBSECTION
 {
 align (1):
-    uint dwFlags;
+    uint     dwFlags;
     GP_LOG_PAGE_DESCRIPTOR GPLogId;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
+    ubyte[1] bData; // Flexible array
 }
 
 struct DEVICEDUMP_STORAGEDEVICE_DATA
@@ -4446,14 +4595,14 @@ align (1):
     uint      dwReasonForCollection;
     ubyte[16] cDriverName;
     uint      uiNumRecords;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DEVICEDUMP_STORAGESTACK_PUBLIC_STATE_RECORD[1] RecordArray;
+    DEVICEDUMP_STORAGESTACK_PUBLIC_STATE_RECORD[1] RecordArray; // Flexible array
 }
 
 struct STORAGE_IDLE_POWER
 {
     uint Version;
     uint Size;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield447;
+    uint _bitfield447;
     uint D3IdleTimeout;
 }
 
@@ -4510,10 +4659,10 @@ struct STORAGE_COUNTER
 
 struct STORAGE_COUNTERS
 {
-    uint Version;
-    uint Size;
-    uint NumberOfCounters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_COUNTER[1] Counters;
+    uint               Version;
+    uint               Size;
+    uint               NumberOfCounters;
+    STORAGE_COUNTER[1] Counters; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/FileIO/storage-hw-firmware-info-query
@@ -4531,7 +4680,7 @@ struct STORAGE_HW_FIRMWARE_SLOT_INFO
     uint      Version;
     uint      Size;
     ubyte     SlotNumber;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield448;
+    ubyte     _bitfield448;
     ubyte[6]  Reserved1;
     ubyte[16] Revision;
 }
@@ -4541,7 +4690,7 @@ struct STORAGE_HW_FIRMWARE_INFO
 {
     uint     Version;
     uint     Size;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield449;
+    ubyte    _bitfield449;
     ubyte    SlotCount;
     ubyte    ActiveSlot;
     ubyte    PendingActivateSlot;
@@ -4549,7 +4698,7 @@ struct STORAGE_HW_FIRMWARE_INFO
     ubyte[3] Reserved;
     uint     ImagePayloadAlignment;
     uint     ImagePayloadMaxSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_HW_FIRMWARE_SLOT_INFO[1] Slot;
+    STORAGE_HW_FIRMWARE_SLOT_INFO[1] Slot; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_hw_firmware_download
@@ -4562,7 +4711,7 @@ struct STORAGE_HW_FIRMWARE_DOWNLOAD
     ubyte[3] Reserved;
     ulong    Offset;
     ulong    BufferSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ImageBuffer;
+    ubyte[1] ImageBuffer; // Flexible array
 }
 
 struct STORAGE_HW_FIRMWARE_DOWNLOAD_V2
@@ -4576,7 +4725,7 @@ struct STORAGE_HW_FIRMWARE_DOWNLOAD_V2
     ulong    BufferSize;
     uint     ImageSize;
     uint     Reserved2;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ImageBuffer;
+    ubyte[1] ImageBuffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_hw_firmware_activate
@@ -4592,26 +4741,26 @@ struct STORAGE_HW_FIRMWARE_ACTIVATE
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-storage_protocol_command
 struct STORAGE_PROTOCOL_COMMAND
 {
-    uint    Version;
-    uint    Length;
+    uint     Version;
+    uint     Length;
     STORAGE_PROTOCOL_TYPE ProtocolType;
-    uint    Flags;
-    uint    ReturnStatus;
-    uint    ErrorCode;
-    uint    CommandLength;
-    uint    ErrorInfoLength;
-    uint    DataToDeviceTransferLength;
-    uint    DataFromDeviceTransferLength;
-    uint    TimeOutValue;
-    uint    ErrorInfoOffset;
-    uint    DataToDeviceBufferOffset;
-    uint    DataFromDeviceBufferOffset;
-    uint    CommandSpecific;
-    uint    Reserved0;
-    uint    FixedProtocolReturnData;
-    uint    FixedProtocolReturnData2;
-    uint[2] Reserved1;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Command;
+    uint     Flags;
+    uint     ReturnStatus;
+    uint     ErrorCode;
+    uint     CommandLength;
+    uint     ErrorInfoLength;
+    uint     DataToDeviceTransferLength;
+    uint     DataFromDeviceTransferLength;
+    uint     TimeOutValue;
+    uint     ErrorInfoOffset;
+    uint     DataToDeviceBufferOffset;
+    uint     DataFromDeviceBufferOffset;
+    uint     CommandSpecific;
+    uint     Reserved0;
+    uint     FixedProtocolReturnData;
+    uint     FixedProtocolReturnData2;
+    uint[2]  Reserved1;
+    ubyte[1] Command; // Flexible array
 }
 
 struct STORAGE_ATTRIBUTE_MGMT
@@ -4640,7 +4789,7 @@ struct SCM_LOGICAL_DEVICES
     uint Version;
     uint Size;
     uint DeviceCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_LOGICAL_DEVICE_INSTANCE[1] Devices;
+    SCM_LOGICAL_DEVICE_INSTANCE[1] Devices; // Flexible array
 }
 
 struct SCM_PHYSICAL_DEVICE_INSTANCE
@@ -4656,7 +4805,7 @@ struct SCM_PHYSICAL_DEVICES
     uint Version;
     uint Size;
     uint DeviceCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_PHYSICAL_DEVICE_INSTANCE[1] Devices;
+    SCM_PHYSICAL_DEVICE_INSTANCE[1] Devices; // Flexible array
 }
 
 struct SCM_REGION
@@ -4677,10 +4826,10 @@ struct SCM_REGION
 
 struct SCM_REGIONS
 {
-    uint Version;
-    uint Size;
-    uint RegionCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_REGION[1] Regions;
+    uint          Version;
+    uint          Size;
+    uint          RegionCount;
+    SCM_REGION[1] Regions; // Flexible array
 }
 
 struct SCM_BUS_PROPERTY_QUERY
@@ -4689,7 +4838,7 @@ struct SCM_BUS_PROPERTY_QUERY
     uint                Size;
     SCM_BUS_PROPERTY_ID PropertyId;
     SCM_BUS_QUERY_TYPE  QueryType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AdditionalParameters;
+    ubyte[1]            AdditionalParameters; // Flexible array
 }
 
 struct SCM_BUS_RUNTIME_FW_ACTIVATION_INFO
@@ -4700,7 +4849,7 @@ struct SCM_BUS_RUNTIME_FW_ACTIVATION_INFO
     SCM_BUS_FIRMWARE_ACTIVATION_STATE FirmwareActivationState;
     struct FirmwareActivationCapability
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield450;
+        uint _bitfield450;
     }
     ulong   EstimatedFirmwareActivationTimeInUSecs;
     ulong   EstimatedProcessorAccessQuiesceTimeInUSecs;
@@ -4714,7 +4863,7 @@ struct SCM_BUS_DEDICATED_MEMORY_DEVICE_INFO
     uint  DeviceNumber;
     struct Flags
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield451;
+        uint _bitfield451;
     }
     ulong DeviceSize;
 }
@@ -4724,7 +4873,7 @@ struct SCM_BUS_DEDICATED_MEMORY_DEVICES_INFO
     uint Version;
     uint Size;
     uint DeviceCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_BUS_DEDICATED_MEMORY_DEVICE_INFO[1] Devices;
+    SCM_BUS_DEDICATED_MEMORY_DEVICE_INFO[1] Devices; // Flexible array
 }
 
 struct SCM_BUS_PROPERTY_SET
@@ -4733,7 +4882,7 @@ struct SCM_BUS_PROPERTY_SET
     uint                Size;
     SCM_BUS_PROPERTY_ID PropertyId;
     SCM_BUS_SET_TYPE    SetType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AdditionalParameters;
+    ubyte[1]            AdditionalParameters; // Flexible array
 }
 
 struct SCM_BUS_DEDICATED_MEMORY_STATE
@@ -4752,7 +4901,7 @@ struct SCM_LD_INTERLEAVE_SET_INFO
     uint Version;
     uint Size;
     uint InterleaveSetSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_INTERLEAVED_PD_INFO[1] InterleaveSet;
+    SCM_INTERLEAVED_PD_INFO[1] InterleaveSet; // Flexible array
 }
 
 struct SCM_PD_PROPERTY_QUERY
@@ -4761,7 +4910,7 @@ struct SCM_PD_PROPERTY_QUERY
     uint               Size;
     SCM_PD_PROPERTY_ID PropertyId;
     SCM_PD_QUERY_TYPE  QueryType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AdditionalParameters;
+    ubyte[1]           AdditionalParameters; // Flexible array
 }
 
 struct SCM_PD_PROPERTY_SET
@@ -4770,7 +4919,7 @@ struct SCM_PD_PROPERTY_SET
     uint               Size;
     SCM_PD_PROPERTY_ID PropertyId;
     SCM_PD_SET_TYPE    SetType;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] AdditionalParameters;
+    ubyte[1]           AdditionalParameters; // Flexible array
 }
 
 struct SCM_PD_RUNTIME_FW_ACTIVATION_ARM_STATE
@@ -4815,7 +4964,7 @@ struct SCM_PD_DEVICE_INFO
     ubyte     ManufacturingYear;
     uint      SerialNumber4Byte;
     uint      SerialNumberLengthInChars;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] SerialNumber;
+    CHAR[1]   SerialNumber; // Flexible array
 }
 
 struct SCM_PD_DEVICE_SPECIFIC_PROPERTY
@@ -4829,7 +4978,7 @@ struct SCM_PD_DEVICE_SPECIFIC_INFO
     uint Version;
     uint Size;
     uint NumberOfProperties;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_PD_DEVICE_SPECIFIC_PROPERTY[1] DeviceSpecificProperties;
+    SCM_PD_DEVICE_SPECIFIC_PROPERTY[1] DeviceSpecificProperties; // Flexible array
 }
 
 struct SCM_PD_FIRMWARE_SLOT_INFO
@@ -4837,7 +4986,7 @@ struct SCM_PD_FIRMWARE_SLOT_INFO
     uint      Version;
     uint      Size;
     ubyte     SlotNumber;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield452;
+    ubyte     _bitfield452;
     ubyte[6]  Reserved1;
     ubyte[32] Revision;
 }
@@ -4849,7 +4998,7 @@ struct SCM_PD_FIRMWARE_INFO
     ubyte ActiveSlot;
     ubyte NextActiveSlot;
     ubyte SlotCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_PD_FIRMWARE_SLOT_INFO[1] Slots;
+    SCM_PD_FIRMWARE_SLOT_INFO[1] Slots; // Flexible array
 }
 
 struct SCM_PD_MANAGEMENT_STATUS
@@ -4860,22 +5009,22 @@ struct SCM_PD_MANAGEMENT_STATUS
     uint                 NumberOfOperationalStatus;
     uint                 NumberOfAdditionalReasons;
     SCM_PD_OPERATIONAL_STATUS[16] OperationalStatus;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SCM_PD_OPERATIONAL_STATUS_REASON[1] AdditionalReasons;
+    SCM_PD_OPERATIONAL_STATUS_REASON[1] AdditionalReasons; // Flexible array
 }
 
 struct SCM_PD_LOCATION_STRING
 {
-    uint Version;
-    uint Size;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Location;
+    uint     Version;
+    uint     Size;
+    wchar[1] Location; // Flexible array
 }
 
 struct SCM_PD_FRU_ID_STRING
 {
-    uint Version;
-    uint Size;
-    uint IdentifierSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Identifier;
+    uint     Version;
+    uint     Size;
+    uint     IdentifierSize;
+    ubyte[1] Identifier; // Flexible array
 }
 
 struct SCM_PD_FIRMWARE_DOWNLOAD
@@ -4887,7 +5036,7 @@ struct SCM_PD_FIRMWARE_DOWNLOAD
     ubyte[3] Reserved;
     ulong    Offset;
     uint     FirmwareImageSizeInBytes;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] FirmwareImage;
+    ubyte[1] FirmwareImage; // Flexible array
 }
 
 struct SCM_PD_FIRMWARE_ACTIVATE
@@ -4908,35 +5057,35 @@ struct SCM_PD_RUNTIME_FW_ACTIVATION_INFO
 
 struct SCM_PD_PASSTHROUGH_INPUT
 {
-    uint Version;
-    uint Size;
-    GUID ProtocolGuid;
-    uint DataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     Version;
+    uint     Size;
+    GUID     ProtocolGuid;
+    uint     DataSize;
+    ubyte[1] Data; // Flexible array
 }
 
 struct SCM_PD_PASSTHROUGH_OUTPUT
 {
-    uint Version;
-    uint Size;
-    GUID ProtocolGuid;
-    uint DataSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    uint     Version;
+    uint     Size;
+    GUID     ProtocolGuid;
+    uint     DataSize;
+    ubyte[1] Data; // Flexible array
 }
 
 struct SCM_PD_PASSTHROUGH_INVDIMM_INPUT
 {
-    uint Opcode;
-    uint OpcodeParametersLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] OpcodeParameters;
+    uint     Opcode;
+    uint     OpcodeParametersLength;
+    ubyte[1] OpcodeParameters; // Flexible array
 }
 
 struct SCM_PD_PASSTHROUGH_INVDIMM_OUTPUT
 {
-    ushort GeneralStatus;
-    ushort ExtendedStatus;
-    uint   OutputDataLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] OutputData;
+    ushort   GeneralStatus;
+    ushort   ExtendedStatus;
+    uint     OutputDataLength;
+    ubyte[1] OutputData; // Flexible array
 }
 
 struct SCM_PD_REINITIALIZE_MEDIA_INPUT
@@ -4945,7 +5094,7 @@ struct SCM_PD_REINITIALIZE_MEDIA_INPUT
     uint Size;
     struct Options
     {
-        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Overwrite)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield453;
+        uint _bitfield453;
     }
 }
 
@@ -4976,7 +5125,7 @@ struct FORMAT_EX_PARAMETERS
     uint       EndHeadNumber;
     ushort     FormatGapLength;
     ushort     SectorsPerTrack;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] SectorNumber;
+    ushort[1]  SectorNumber; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-disk_geometry
@@ -5013,7 +5162,7 @@ struct DRIVE_LAYOUT_INFORMATION
 {
     uint PartitionCount;
     uint Signature;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PARTITION_INFORMATION[1] PartitionEntry;
+    PARTITION_INFORMATION[1] PartitionEntry; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-verify_information
@@ -5026,18 +5175,18 @@ struct VERIFY_INFORMATION
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-reassign_blocks
 struct REASSIGN_BLOCKS
 {
-    ushort Reserved;
-    ushort Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] BlockNumber;
+    ushort  Reserved;
+    ushort  Count;
+    uint[1] BlockNumber; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-reassign_blocks_ex
 struct REASSIGN_BLOCKS_EX
 {
 align (1):
-    ushort Reserved;
-    ushort Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/long[1] BlockNumber;
+    ushort  Reserved;
+    ushort  Count;
+    long[1] BlockNumber; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-partition_information_gpt
@@ -5141,7 +5290,7 @@ struct DRIVE_LAYOUT_INFORMATION_EX
         DRIVE_LAYOUT_INFORMATION_MBR Mbr;
         DRIVE_LAYOUT_INFORMATION_GPT Gpt;
     }
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PARTITION_INFORMATION_EX[1] PartitionEntry;
+    PARTITION_INFORMATION_EX[1] PartitionEntry; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-disk_int13_info
@@ -5206,7 +5355,7 @@ struct DISK_GEOMETRY_EX
 {
     DISK_GEOMETRY Geometry;
     long          DiskSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+    ubyte[1]      Data; // Flexible array
 }
 
 struct DISK_CONTROLLER_NUMBER
@@ -5312,9 +5461,9 @@ struct BIN_RANGE
 
 struct PERF_BIN
 {
-    uint NumberOfBins;
-    uint TypeOfBin;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BIN_RANGE[1] BinsRanges;
+    uint         NumberOfBins;
+    uint         TypeOfBin;
+    BIN_RANGE[1] BinsRanges; // Flexible array
 }
 
 struct BIN_COUNT
@@ -5325,8 +5474,8 @@ struct BIN_COUNT
 
 struct BIN_RESULTS
 {
-    uint NumberOfBins;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BIN_COUNT[1] BinCounts;
+    uint         NumberOfBins;
+    BIN_COUNT[1] BinCounts; // Flexible array
 }
 
 struct GETVERSIONINPARAMS
@@ -5360,7 +5509,7 @@ align (1):
     ubyte    bDriveNumber;
     ubyte[3] bReserved;
     uint[4]  dwReserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bBuffer;
+    ubyte[1] bBuffer; // Flexible array
 }
 
 struct DRIVERSTATUS
@@ -5377,7 +5526,7 @@ struct SENDCMDOUTPARAMS
 align (1):
     uint         cBufferSize;
     DRIVERSTATUS DriverStatus;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bBuffer;
+    ubyte[1]     bBuffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-get_disk_attributes
@@ -5548,13 +5697,13 @@ struct CHANGER_SEND_VOLUME_TAG_INFORMATION
 struct READ_ELEMENT_ADDRESS_INFO
 {
     uint NumberOfElements;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHANGER_ELEMENT_STATUS[1] ElementStatus;
+    CHANGER_ELEMENT_STATUS[1] ElementStatus; // Flexible array
 }
 
 struct PATHNAME_BUFFER
 {
-    uint PathNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Name;
+    uint     PathNameLength;
+    wchar[1] Name; // Flexible array
 }
 
 struct FSCTL_QUERY_FAT_BPB_BUFFER
@@ -5635,9 +5784,9 @@ struct STARTING_LCN_INPUT_BUFFER_EX
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-volume_bitmap_buffer
 struct VOLUME_BITMAP_BUFFER
 {
-    long StartingLcn;
-    long BitmapSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buffer;
+    long     StartingLcn;
+    long     BitmapSize;
+    ubyte[1] Buffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-starting_vcn_input_buffer
@@ -5684,9 +5833,9 @@ struct NTFS_FILE_RECORD_INPUT_BUFFER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-ntfs_file_record_output_buffer
 struct NTFS_FILE_RECORD_OUTPUT_BUFFER
 {
-    long FileReferenceNumber;
-    uint FileRecordLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] FileRecordBuffer;
+    long     FileReferenceNumber;
+    uint     FileRecordLength;
+    ubyte[1] FileRecordBuffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-move_file_data
@@ -5715,10 +5864,10 @@ struct FIND_BY_SID_DATA
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-find_by_sid_output
 struct FIND_BY_SID_OUTPUT
 {
-    uint NextEntryOffset;
-    uint FileIndex;
-    uint FileNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    uint     NextEntryOffset;
+    uint     FileIndex;
+    uint     FileNameLength;
+    wchar[1] FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-mft_enum_data_v0
@@ -5795,20 +5944,20 @@ struct USN_RANGE_TRACK_OUTPUT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-usn_record_v2
 struct USN_RECORD_V2
 {
-    uint   RecordLength;
-    ushort MajorVersion;
-    ushort MinorVersion;
-    ulong  FileReferenceNumber;
-    ulong  ParentFileReferenceNumber;
-    long   Usn;
-    long   TimeStamp;
-    uint   Reason;
-    uint   SourceInfo;
-    uint   SecurityId;
-    uint   FileAttributes;
-    ushort FileNameLength;
-    ushort FileNameOffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    uint     RecordLength;
+    ushort   MajorVersion;
+    ushort   MinorVersion;
+    ulong    FileReferenceNumber;
+    ulong    ParentFileReferenceNumber;
+    long     Usn;
+    long     TimeStamp;
+    uint     Reason;
+    uint     SourceInfo;
+    uint     SecurityId;
+    uint     FileAttributes;
+    ushort   FileNameLength;
+    ushort   FileNameOffset;
+    wchar[1] FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-usn_record_v3
@@ -5827,7 +5976,7 @@ struct USN_RECORD_V3
     uint        FileAttributes;
     ushort      FileNameLength;
     ushort      FileNameOffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    wchar[1]    FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-usn_record_common_header
@@ -5849,15 +5998,15 @@ struct USN_RECORD_EXTENT
 struct USN_RECORD_V4
 {
     USN_RECORD_COMMON_HEADER Header;
-    FILE_ID_128        FileReferenceNumber;
-    FILE_ID_128        ParentFileReferenceNumber;
-    long               Usn;
-    uint               Reason;
-    USN_SOURCE_INFO_ID SourceInfo;
-    uint               RemainingExtents;
-    ushort             NumberOfExtents;
-    ushort             ExtentSize;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/USN_RECORD_EXTENT[1] Extents;
+    FILE_ID_128          FileReferenceNumber;
+    FILE_ID_128          ParentFileReferenceNumber;
+    long                 Usn;
+    uint                 Reason;
+    USN_SOURCE_INFO_ID   SourceInfo;
+    uint                 RemainingExtents;
+    ushort               NumberOfExtents;
+    ushort               ExtentSize;
+    USN_RECORD_EXTENT[1] Extents; // Flexible array
 }
 
 union USN_RECORD_UNION
@@ -5932,23 +6081,23 @@ struct MARK_HANDLE_INFO
 
 struct BULK_SECURITY_TEST_DATA
 {
-    uint DesiredAccess;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] SecurityIds;
+    uint    DesiredAccess;
+    uint[1] SecurityIds; // Flexible array
 }
 
 struct FILE_PREFETCH
 {
-    uint Type;
-    uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] Prefetch;
+    uint     Type;
+    uint     Count;
+    ulong[1] Prefetch; // Flexible array
 }
 
 struct FILE_PREFETCH_EX
 {
-    uint  Type;
-    uint  Count;
-    void* Context;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] Prefetch;
+    uint     Type;
+    uint     Count;
+    void*    Context;
+    ulong[1] Prefetch; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-filesystem_statistics
@@ -6248,8 +6397,8 @@ struct FILE_ALLOCATED_RANGE_BUFFER
 
 struct ENCRYPTION_BUFFER
 {
-    uint EncryptionOperation;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Private;
+    uint     EncryptionOperation;
+    ubyte[1] Private; // Flexible array
 }
 
 struct DECRYPTION_STATUS_BUFFER
@@ -6265,17 +6414,17 @@ struct REQUEST_RAW_ENCRYPTED_DATA
 
 struct ENCRYPTED_DATA_INFO
 {
-    ulong  StartingFileOffset;
-    uint   OutputBufferOffset;
-    uint   BytesWithinFileSize;
-    uint   BytesWithinValidDataLength;
-    ushort CompressionFormat;
-    ubyte  DataUnitShift;
-    ubyte  ChunkShift;
-    ubyte  ClusterShift;
-    ubyte  EncryptionFormat;
-    ushort NumberOfDataBlocks;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] DataBlockSize;
+    ulong   StartingFileOffset;
+    uint    OutputBufferOffset;
+    uint    BytesWithinFileSize;
+    uint    BytesWithinValidDataLength;
+    ushort  CompressionFormat;
+    ubyte   DataUnitShift;
+    ubyte   ChunkShift;
+    ubyte   ClusterShift;
+    ubyte   EncryptionFormat;
+    ushort  NumberOfDataBlocks;
+    uint[1] DataBlockSize; // Flexible array
 }
 
 struct EXTENDED_ENCRYPTED_DATA_INFO
@@ -6296,10 +6445,10 @@ struct PLEX_READ_DATA_REQUEST
 
 struct SI_COPYFILE
 {
-    uint SourceFileNameLength;
-    uint DestinationFileNameLength;
-    uint Flags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileNameBuffer;
+    uint     SourceFileNameLength;
+    uint     DestinationFileNameLength;
+    uint     Flags;
+    wchar[1] FileNameBuffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-file_make_compatible_buffer
@@ -6409,18 +6558,18 @@ struct TXFS_ROLLFORWARD_REDO_INFORMATION
 
 struct TXFS_START_RM_INFORMATION
 {
-    uint   Flags;
-    ulong  LogContainerSize;
-    uint   LogContainerCountMin;
-    uint   LogContainerCountMax;
-    uint   LogGrowthIncrement;
-    uint   LogAutoShrinkPercentage;
-    uint   TmLogPathOffset;
-    ushort TmLogPathLength;
-    ushort LoggingMode;
-    ushort LogPathLength;
-    ushort Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] LogPath;
+    uint     Flags;
+    ulong    LogContainerSize;
+    uint     LogContainerCountMin;
+    uint     LogContainerCountMax;
+    uint     LogGrowthIncrement;
+    uint     LogAutoShrinkPercentage;
+    uint     TmLogPathOffset;
+    ushort   TmLogPathLength;
+    ushort   LoggingMode;
+    ushort   LogPathLength;
+    ushort   Reserved;
+    wchar[1] LogPath; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-txfs_get_metadata_info_out
@@ -6439,13 +6588,13 @@ struct TXFS_GET_METADATA_INFO_OUT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-txfs_list_transaction_locked_files_entry
 struct TXFS_LIST_TRANSACTION_LOCKED_FILES_ENTRY
 {
-    ulong Offset;
-    uint  NameFlags;
-    long  FileId;
-    uint  Reserved1;
-    uint  Reserved2;
-    long  Reserved3;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    ulong    Offset;
+    uint     NameFlags;
+    long     FileId;
+    uint     Reserved1;
+    uint     Reserved2;
+    long     Reserved3;
+    wchar[1] FileName; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-txfs_list_transaction_locked_files
@@ -6479,15 +6628,15 @@ struct TXFS_READ_BACKUP_INFORMATION_OUT
 {
     union
     {
-        uint BufferLength;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buffer;
+        uint     BufferLength;
+        ubyte[1] Buffer; // Flexible array
     }
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-txfs_write_backup_information
 struct TXFS_WRITE_BACKUP_INFORMATION
 {
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Buffer;
+    ubyte[1] Buffer; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-txfs_get_transacted_version
@@ -6660,19 +6809,19 @@ struct SD_ENUM_SDS_INPUT
 
 struct SD_ENUM_SDS_ENTRY
 {
-    uint  Hash;
-    uint  SecurityId;
-    ulong Offset;
-    uint  Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Descriptor;
+    uint     Hash;
+    uint     SecurityId;
+    ulong    Offset;
+    uint     Length;
+    ubyte[1] Descriptor; // Flexible array
 }
 
 struct SD_ENUM_SDS_OUTPUT
 {
-    ulong NextOffset;
-    ulong NumSDEntriesReturned;
-    ulong NumSDBytesReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SD_ENUM_SDS_ENTRY[1] SDEntry;
+    ulong                NextOffset;
+    ulong                NumSDEntriesReturned;
+    ulong                NumSDBytesReturned;
+    SD_ENUM_SDS_ENTRY[1] SDEntry; // Flexible array
 }
 
 struct SD_GLOBAL_CHANGE_INPUT
@@ -6702,9 +6851,9 @@ struct SD_GLOBAL_CHANGE_OUTPUT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-lookup_stream_from_cluster_input
 struct LOOKUP_STREAM_FROM_CLUSTER_INPUT
 {
-    uint Flags;
-    uint NumberOfClusters;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/long[1] Cluster;
+    uint    Flags;
+    uint    NumberOfClusters;
+    long[1] Cluster; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-lookup_stream_from_cluster_output
@@ -6718,18 +6867,18 @@ struct LOOKUP_STREAM_FROM_CLUSTER_OUTPUT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-lookup_stream_from_cluster_entry
 struct LOOKUP_STREAM_FROM_CLUSTER_ENTRY
 {
-    uint OffsetToNext;
-    uint Flags;
-    long Reserved;
-    long Cluster;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    uint     OffsetToNext;
+    uint     Flags;
+    long     Reserved;
+    long     Cluster;
+    wchar[1] FileName; // Flexible array
 }
 
 struct FILE_TYPE_NOTIFICATION_INPUT
 {
-    uint Flags;
-    uint NumFileTypeIDs;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] FileTypeID;
+    uint    Flags;
+    uint    NumFileTypeIDs;
+    GUID[1] FileTypeID; // Flexible array
 }
 
 struct CSV_MGMT_LOCK
@@ -6777,10 +6926,10 @@ struct CSV_QUERY_FILE_REVISION_FILE_ID_128
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-csv_query_mds_path
 struct CSV_QUERY_MDS_PATH
 {
-    uint MdsNodeId;
-    uint DsNodeId;
-    uint PathLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Path;
+    uint     MdsNodeId;
+    uint     DsNodeId;
+    uint     PathLength;
+    wchar[1] Path; // Flexible array
 }
 
 struct CSV_QUERY_VOLUME_REDIRECT_STATE
@@ -6853,7 +7002,7 @@ struct FILE_LEVEL_TRIM
 {
     uint Key;
     uint NumRanges;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILE_LEVEL_TRIM_RANGE[1] Ranges;
+    FILE_LEVEL_TRIM_RANGE[1] Ranges; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-file_level_trim_output
@@ -6888,7 +7037,7 @@ struct QUERY_FILE_LAYOUT_INPUT
     {
         CLUSTER_RANGE[1] ClusterRanges;
         FILE_REFERENCE_RANGE[1] FileReferenceRanges;
-        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/STORAGE_RESERVE_ID[1] StorageReserveIds;
+        STORAGE_RESERVE_ID[1] StorageReserveIds; // Flexible array
     }
 }
 
@@ -6915,12 +7064,12 @@ struct FILE_LAYOUT_ENTRY
 
 struct FILE_LAYOUT_NAME_ENTRY
 {
-    uint  NextNameOffset;
-    uint  Flags;
-    ulong ParentFileReferenceNumber;
-    uint  FileNameLength;
-    uint  Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
+    uint     NextNameOffset;
+    uint     Flags;
+    ulong    ParentFileReferenceNumber;
+    uint     FileNameLength;
+    uint     Reserved;
+    wchar[1] FileName; // Flexible array
 }
 
 struct FILE_LAYOUT_INFO_ENTRY
@@ -6941,17 +7090,17 @@ struct FILE_LAYOUT_INFO_ENTRY
 
 struct STREAM_LAYOUT_ENTRY
 {
-    uint Version;
-    uint NextStreamOffset;
-    uint Flags;
-    uint ExtentInformationOffset;
-    long AllocationSize;
-    long EndOfFile;
-    uint StreamInformationOffset;
-    uint AttributeTypeCode;
-    uint AttributeFlags;
-    uint StreamIdentifierLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] StreamIdentifier;
+    uint     Version;
+    uint     NextStreamOffset;
+    uint     Flags;
+    uint     ExtentInformationOffset;
+    long     AllocationSize;
+    long     EndOfFile;
+    uint     StreamInformationOffset;
+    uint     AttributeTypeCode;
+    uint     AttributeFlags;
+    uint     StreamIdentifierLength;
+    wchar[1] StreamIdentifier; // Flexible array
 }
 
 struct STREAM_EXTENT_ENTRY
@@ -7034,13 +7183,13 @@ struct SET_PURGE_FAILURE_MODE_INPUT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-repair_copies_input
 struct REPAIR_COPIES_INPUT
 {
-    uint Size;
-    uint Flags;
-    long FileOffset;
-    uint Length;
-    uint SourceCopy;
-    uint NumberOfRepairCopies;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] RepairCopies;
+    uint    Size;
+    uint    Flags;
+    long    FileOffset;
+    uint    Length;
+    uint    SourceCopy;
+    uint    NumberOfRepairCopies;
+    uint[1] RepairCopies; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-repair_copies_output
@@ -7061,11 +7210,11 @@ struct FILE_REGION_INFO
 
 struct FILE_REGION_OUTPUT
 {
-    uint Flags;
-    uint TotalRegionEntryCount;
-    uint RegionEntryCount;
-    uint Reserved;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILE_REGION_INFO[1] Region;
+    uint                Flags;
+    uint                TotalRegionEntryCount;
+    uint                RegionEntryCount;
+    uint                Reserved;
+    FILE_REGION_INFO[1] Region; // Flexible array
 }
 
 struct FILE_REGION_INPUT
@@ -7096,12 +7245,12 @@ struct FILE_STORAGE_TIER
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-fsctl_query_storage_classes_output
 struct FSCTL_QUERY_STORAGE_CLASSES_OUTPUT
 {
-    uint Version;
-    uint Size;
+    uint                 Version;
+    uint                 Size;
     FILE_STORAGE_TIER_FLAGS Flags;
-    uint TotalNumberOfTiers;
-    uint NumberOfTiersReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILE_STORAGE_TIER[1] Tiers;
+    uint                 TotalNumberOfTiers;
+    uint                 NumberOfTiersReturned;
+    FILE_STORAGE_TIER[1] Tiers; // Flexible array
 }
 
 struct STREAM_INFORMATION_ENTRY
@@ -7142,11 +7291,11 @@ struct STREAM_INFORMATION_ENTRY
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-fsctl_query_region_info_input
 struct FSCTL_QUERY_REGION_INFO_INPUT
 {
-    uint Version;
-    uint Size;
-    uint Flags;
-    uint NumberOfTierIds;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] TierIds;
+    uint    Version;
+    uint    Size;
+    uint    Flags;
+    uint    NumberOfTierIds;
+    GUID[1] TierIds; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-file_storage_tier_region
@@ -7167,7 +7316,7 @@ struct FSCTL_QUERY_REGION_INFO_OUTPUT
     ulong Alignment;
     uint  TotalNumberOfRegions;
     uint  NumberOfRegionsReturned;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILE_STORAGE_TIER_REGION[1] Regions;
+    FILE_STORAGE_TIER_REGION[1] Regions; // Flexible array
 }
 
 struct FILE_DESIRED_STORAGE_CLASS_INFORMATION
@@ -7260,7 +7409,7 @@ struct QUERY_BAD_RANGES_INPUT
 {
     uint Flags;
     uint NumRanges;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/QUERY_BAD_RANGES_INPUT_RANGE[1] Ranges;
+    QUERY_BAD_RANGES_INPUT_RANGE[1] Ranges; // Flexible array
 }
 
 struct QUERY_BAD_RANGES_OUTPUT_RANGE
@@ -7276,7 +7425,7 @@ struct QUERY_BAD_RANGES_OUTPUT
     uint  Flags;
     uint  NumBadRanges;
     ulong NextOffsetToLookUp;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/QUERY_BAD_RANGES_OUTPUT_RANGE[1] BadRanges;
+    QUERY_BAD_RANGES_OUTPUT_RANGE[1] BadRanges; // Flexible array
 }
 
 struct SET_DAX_ALLOC_ALIGNMENT_HINT_INPUT
@@ -7389,8 +7538,8 @@ struct CONTAINER_ROOT_INFO_INPUT
 
 struct CONTAINER_ROOT_INFO_OUTPUT
 {
-    ushort ContainerRootIdLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ContainerRootId;
+    ushort   ContainerRootIdLength;
+    ubyte[1] ContainerRootId; // Flexible array
 }
 
 struct VIRTUALIZATION_INSTANCE_INFO_INPUT
@@ -7415,14 +7564,14 @@ struct VIRTUALIZATION_INSTANCE_INFO_OUTPUT
 
 struct GET_FILTER_FILE_IDENTIFIER_INPUT
 {
-    ushort AltitudeLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Altitude;
+    ushort   AltitudeLength;
+    wchar[1] Altitude; // Flexible array
 }
 
 struct GET_FILTER_FILE_IDENTIFIER_OUTPUT
 {
-    ushort FilterFileIdentifierLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] FilterFileIdentifier;
+    ushort   FilterFileIdentifierLength;
+    ubyte[1] FilterFileIdentifier; // Flexible array
 }
 
 struct FS_BPIO_INPUT
@@ -7486,8 +7635,8 @@ struct DISK_EXTENT
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-volume_disk_extents
 struct VOLUME_DISK_EXTENTS
 {
-    uint NumberOfDiskExtents;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DISK_EXTENT[1] Extents;
+    uint           NumberOfDiskExtents;
+    DISK_EXTENT[1] Extents; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winioctl/ns-winioctl-volume_get_gpt_attributes_information

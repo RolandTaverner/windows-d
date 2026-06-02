@@ -3,9 +3,9 @@
 module windows.win32.system.addressbook;
 
 public import windows.core;
-public import windows.win32.foundation.foundation : BOOL, FILETIME, HINSTANCE, HRESULT,
-                                                    HWND, PSTR, PWSTR;
-public import windows.win32.system.com.com : CY, IMalloc, IStream, IUnknown;
+public import windows.win32.foundation : BOOL, FILETIME, HINSTANCE, HRESULT, HWND,
+                                         PSTR, PWSTR;
+public import windows.win32.system.com : CY, IMalloc, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage;
 
 extern(Windows) @nogc nothrow:
@@ -82,7 +82,8 @@ enum uint TABLE_SORT_DONE = 0x00000006U;
 enum uint TABLE_RESTRICT_DONE = 0x00000007U;
 enum uint TABLE_SETCOL_DONE = 0x00000008U;
 enum uint TABLE_RELOAD = 0x00000009U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szMAPINotificationMsg = "MAPI Notify window message";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szMAPINotificationMsg = "MAPI Notify window message";
 enum int MAPI_ERROR_VERSION = 0x00000000;
 enum uint MAPI_USE_DEFAULT = 0x00000040U;
 
@@ -400,9 +401,12 @@ enum uint TAD_ALL_ROWS = 0x00000001U;
 enum int PRILOWEST = 0xffff8000;
 enum uint PRIHIGHEST = 0x00007fffU;
 enum uint PRIUSER = 0x00000000U;
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* OPENSTREAMONFILE = "OpenStreamOnFile";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szHrDispatchNotifications = "HrDispatchNotifications";
-enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szScCreateConversationIndex = "ScCreateConversationIndex";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* OPENSTREAMONFILE = "OpenStreamOnFile";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szHrDispatchNotifications = "HrDispatchNotifications";
+//CONST ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])
+enum const(wchar)* szScCreateConversationIndex = "ScCreateConversationIndex";
 
 // Callbacks
 
@@ -442,7 +446,7 @@ struct LPWABACTIONITEM
 struct ENTRYID
 {
     ubyte[4] abFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ab;
+    ubyte[1] ab; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/mapiuid
@@ -454,8 +458,8 @@ struct MAPIUID
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/sproptagarray
 struct SPropTagArray
 {
-    uint cValues;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aulPropTag;
+    uint    cValues;
+    uint[1] aulPropTag; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/sbinary
@@ -600,38 +604,38 @@ struct SPropProblem
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/spropproblemarray
 struct SPropProblemArray
 {
-    uint cProblem;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SPropProblem[1] aProblem;
+    uint            cProblem;
+    SPropProblem[1] aProblem; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/flatentry
 struct FLATENTRY
 {
-    uint cb;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abEntry;
+    uint     cb;
+    ubyte[1] abEntry; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/flatentrylist
 struct FLATENTRYLIST
 {
-    uint cEntries;
-    uint cbEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abEntries;
+    uint     cEntries;
+    uint     cbEntries;
+    ubyte[1] abEntries; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/mtsid
 struct MTSID
 {
-    uint cb;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ab;
+    uint     cb;
+    ubyte[1] ab; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/flatmtsidlist
 struct FLATMTSIDLIST
 {
-    uint cMTSIDs;
-    uint cbMTSIDs;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abMTSIDs;
+    uint     cMTSIDs;
+    uint     cbMTSIDs;
+    ubyte[1] abMTSIDs; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/adrentry
@@ -645,8 +649,8 @@ struct ADRENTRY
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/adrlist
 struct ADRLIST
 {
-    uint cEntries;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ADRENTRY[1] aEntries;
+    uint        cEntries;
+    ADRENTRY[1] aEntries; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/srow
@@ -660,8 +664,8 @@ struct SRow
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/srowset
 struct SRowSet
 {
-    uint cRows;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SRow[1] aRow;
+    uint    cRows;
+    SRow[1] aRow; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/mapierror
@@ -777,10 +781,10 @@ struct SSortOrder
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/ssortorderset
 struct SSortOrderSet
 {
-    uint cSorts;
-    uint cCategories;
-    uint cExpanded;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SSortOrder[1] aSort;
+    uint          cSorts;
+    uint          cCategories;
+    uint          cExpanded;
+    SSortOrder[1] aSort; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/sandrestriction
@@ -889,8 +893,8 @@ struct SRestriction
 
 struct FlagList
 {
-    uint cFlags;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] ulFlag;
+    uint    cFlags;
+    uint[1] ulFlag; // Flexible array
 }
 
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/adrparm
@@ -1093,8 +1097,8 @@ struct WABEXTDISPLAY
 // Microsoft documentation: https://learn.microsoft.com/office/client-developer/outlook/mapi/notifkey
 struct NOTIFKEY
 {
-    uint cb;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ab;
+    uint     cb;
+    ubyte[1] ab; // Flexible array
 }
 
 // Functions
