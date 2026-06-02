@@ -3216,7 +3216,8 @@ enum : int
     D3D12_MESSAGE_ID_CREATEQUERYHEAP_INVALID_FLAGS                                                                 = 0x000005a3,
     D3D12_MESSAGE_ID_RESOLVEQUERYDATA_INVALID_QUERYHEAP                                                            = 0x000005a4,
     D3D12_MESSAGE_ID_GPU_BASED_VALIDATION_NON_UNIFORM_RESOURCE_INDEX                                               = 0x000005ab,
-    D3D12_MESSAGE_ID_D3D12_MESSAGES_END                                                                            = 0x000005b8,
+    D3D12_MESSAGE_ID_DEGENERATE_SPLIT_BARRIER                                                                      = 0x000005ba,
+    D3D12_MESSAGE_ID_D3D12_MESSAGES_END                                                                            = 0x000005bb,
 }
 
 alias D3D12_MESSAGE_CALLBACK_FLAGS = int;
