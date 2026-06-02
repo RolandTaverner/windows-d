@@ -110,7 +110,7 @@ public struct Generator
 
         foreach(namespace; namespaces)
         {
-            //if (!namespace.startsWith("Windows.Win32.System.WinRT")) continue;
+            //if (!namespace.startsWith("Windows.Win32.Graphics.OpenGL")) continue;
 
             string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
             string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
@@ -390,6 +390,8 @@ public struct Generator
                         if (!ct.isNull)
                         {
                             f.writef(" = ");
+                            if (typeText == "byte") f.write("cast(byte) ");
+                            if (typeText == "ubyte") f.write("cast(ubyte) ");
                             dumpConstant(f, ct.get.value, true);
                         }
                     }

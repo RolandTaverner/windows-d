@@ -15,16 +15,16 @@ extern(Windows) @nogc nothrow:
 alias PFD_PIXEL_TYPE = ubyte;
 enum : ubyte
 {
-    PFD_TYPE_RGBA       = 0x00,
-    PFD_TYPE_COLORINDEX = 0x01,
+    PFD_TYPE_RGBA       = cast(ubyte) 0x00,
+    PFD_TYPE_COLORINDEX = cast(ubyte) 0x01,
 }
 
 alias PFD_LAYER_TYPE = byte;
 enum : byte
 {
-    PFD_UNDERLAY_PLANE = 0xff,
-    PFD_MAIN_PLANE     = 0x00,
-    PFD_OVERLAY_PLANE  = 0x01,
+    PFD_UNDERLAY_PLANE = cast(byte) 0xff,
+    PFD_MAIN_PLANE     = cast(byte) 0x00,
+    PFD_OVERLAY_PLANE  = cast(byte) 0x01,
 }
 
 alias PFD_FLAGS = uint;
