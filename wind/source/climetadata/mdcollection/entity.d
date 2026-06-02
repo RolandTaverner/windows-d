@@ -273,26 +273,135 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.typeRef, "ResolutionScope", Resolut
 
 private mixin template typeRefFieldGettersExtra()
 {
-    Nullable!TypeDefEntity resolve() const
+    // Nullable!TypeDefEntity resolve() const
+    // {
+    //     auto resolutionScope = getResolutionScope(this);
+    //     if (auto m = resolutionScope.peek!ModuleEntity)
+    //     {
+    //         return db.typeDefCollection.findByName(getTypeNamespace(), getTypeName());
+    //     }
+    //     else if (auto tr = resolutionScope.peek!TypeRefEntity)
+    //     {
+    //         auto parent = tr.resolve();
+    //         if (parent.isNull)
+    //         {
+    //             return parent;
+    //         }
+            
+    //         foreach(n; parent.get.getAllNestedClassByEnclosing())
+    //         {
+    //             if (n.getNestedClass().getTypeName() == this.getTypeName())
+    //             {
+    //                 return Nullable!TypeDefEntity(n.getNestedClass());
+    //             }
+    //         }
+    //     }
+
+    //     return (Nullable!TypeDefEntity).init;
+    // }
+
+    Nullable!TypeDefEntity resolve(const Nullable!(const TypeDefEntity) enclosing) const
+    {
+        auto namespace = this.getTypeNamespace();
+        auto name = this.getTypeName();
+        
+        auto parents = this.findParentsForTypeRef();
+
+        // Try best match
+        if (!enclosing.isNull)
+        {
+            foreach(parent; parents)
+            {
+                foreach(n; parent.getAllNestedClassByEnclosing())
+                {
+                    auto nested = n.getNestedClass();
+                    if (nested.getTypeName() == name && nested.getTypeNamespace() == namespace && parent == enclosing)
+                    {
+                        return Nullable!TypeDefEntity(nested);
+                    }
+                    auto resolved = resolveRecursive(nested, namespace, name, enclosing);
+                    if (!resolved.isNull)
+                    {
+                        return resolved;
+                    }
+                }
+            }
+        }
+
+        auto emptyEnclosing = Nullable!(const TypeDefEntity).init;
+        foreach(parent; parents)
+        {
+            foreach(n; parent.getAllNestedClassByEnclosing())
+            {
+                auto nested = n.getNestedClass();
+                if (nested.getTypeName() == name && nested.getTypeNamespace() == namespace)
+                {
+                    return Nullable!TypeDefEntity(nested);
+                }
+                auto resolved = resolveRecursive(nested, namespace, name, emptyEnclosing);
+                if (!resolved.isNull)
+                {
+                    return resolved;
+                }
+            }
+        }
+
+        return (Nullable!TypeDefEntity).init;
+    }
+
+    private TypeDefEntity[] findParentsForTypeRef() const
     {
         auto resolutionScope = getResolutionScope(this);
-        if (auto m = resolutionScope.peek!ModuleEntity)
+
+        if (resolutionScope.peek!ModuleEntity)
         {
-            return db.typeDefCollection.findByName(getTypeNamespace(), getTypeName());
+            auto namespace = getTypeNamespace();
+            auto name = getTypeName();
+            return db.typeDefCollection.findAllByName(namespace, name);
         }
-        else if (auto tr = resolutionScope.peek!TypeRefEntity)
+        else if (resolutionScope.peek!TypeRefEntity)
         {
-            auto parent = tr.resolve();
-            if (parent.isNull)
+            auto parent = resolutionScope.get!TypeRefEntity;
+            return parent.findParentsForTypeRef();
+        }
+
+        return [];
+    }
+
+    private Nullable!TypeDefEntity resolveRecursive(scope ref const TypeDefEntity parent, 
+        string namespace, string name, scope ref const Nullable!(const TypeDefEntity) enclosing) const
+    {
+        if (!enclosing.isNull)
+        {
+            foreach(n; parent.getAllNestedClassByEnclosing())
             {
-                return parent;
-            }
-            
-            foreach(n; parent.get.getAllNestedClassByEnclosing())
-            {
-                if (n.getNestedClass().getTypeName() == this.getTypeName())
+                auto nested = n.getNestedClass();
+                if (nested.getTypeName() == name && nested.getTypeNamespace() == namespace && parent == enclosing)
                 {
                     return Nullable!TypeDefEntity(n.getNestedClass());
+                }
+                
+                auto resolved = resolveRecursive(nested, namespace, name, enclosing);
+                if (!resolved.isNull)
+                {
+                    return resolved;
+                }
+            }
+        }
+        else
+        {
+            foreach(n; parent.getAllNestedClassByEnclosing())
+            {
+                auto nested = n.getNestedClass();
+                if (nested.getTypeName() == name && nested.getTypeNamespace() == namespace)
+                {
+                    return Nullable!TypeDefEntity(n.getNestedClass());
+                }
+                
+                auto resolved = resolveRecursive(nested, namespace, name, enclosing);
+                if (!resolved.isNull)
+                {
+                    return resolved;
                 }
             }
         }
@@ -452,7 +561,7 @@ private mixin template typeDefFieldGettersExtra()
         return propMap.get.getPropertyList();
     }
 
-    // First propertyMap entity referencing typeDef in Parent column
+    // First eventMap entity referencing typeDef in Parent column
     mixin DeclFindFirstProp!(MDTableType.typeDef, "EventMap", MDTableType.eventMap, "Parent");
 
     public auto events() const

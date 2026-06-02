@@ -18,6 +18,7 @@ public struct Table(MDTableType md)
 
     public this(ref const(ubyte)[] tablesHeap, uint rowCount, ColumnKindSize[] colKS)
     {
+        tableType = md;
         assert(colKS.length >= 1, "table must have at least 1 column");
         assert(colKS.length <= 6, "table must have 6 columns at most");
         assert(colKS[0].size != 0, "size of 1st column can't be 0");
@@ -54,7 +55,7 @@ public struct Table(MDTableType md)
         auto colDesc = columns[column];
         assert(colDesc.size == 1 || colDesc.size == 2 || colDesc.size == 4 || colDesc.size == 8, "column size must be 1, 2, 4 or 8 bytes");
         assert(colDesc.size <= T.sizeof, "Value type size must be >= column size");
-        assert(colDesc.kind == K, "kind mismatch");
+        assert(colDesc.kind == K, format("kind mismatch %s, expected %s for column %d at table %s, cols %s", K, colDesc.kind, column, md.stringof, columns));
 
         auto ptr = data.ptr + rowIndex * rowSize + colDesc.offset;
 
@@ -187,6 +188,7 @@ public struct Table(MDTableType md)
         return NullableRow(findFirstRange.front());
     }
 
+    const MDTableType tableType;
     private const uint rowSize;
     public const uint rowCount;
     public const(ColumnDesc[]) columns;

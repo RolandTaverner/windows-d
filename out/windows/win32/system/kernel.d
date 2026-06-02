@@ -239,8 +239,16 @@ version(X86_64)
 {
     union SLIST_HEADER
     {
-        _Anonymous_e__Struct Anonymous;
-        _HeaderX64_e__Struct HeaderX64;
+        struct
+        {
+            ulong Alignment;
+            ulong Region;
+        }
+        struct HeaderX64
+        {
+            ulong _bitfield1;
+            ulong _bitfield2;
+        }
     }
 }
 
@@ -317,8 +325,13 @@ version(X86)
 {
     union SLIST_HEADER
     {
-        ulong                Alignment;
-        _Anonymous_e__Struct Anonymous;
+        ulong Alignment;
+        struct
+        {
+            SINGLE_LIST_ENTRY Next;
+            ushort            Depth;
+            ushort            CpuId;
+        }
     }
 }
 

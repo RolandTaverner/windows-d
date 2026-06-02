@@ -74,6 +74,21 @@ struct Collection(MDTableType md)
             }
             return Nullable!(Entity!(md)).init;
         }
+
+        public Entity!(md)[] findAllByName(string typeNamespace, string typeName) const
+        {
+            Entity!(md)[] result;
+            foreach(e; items())
+            {
+                auto name = e.getTypeName();
+                auto namespace = e.getTypeNamespace();
+                if (typeNamespace == namespace && typeName == name)
+                {
+                     result ~= e;
+                }
+            }
+            return result;
+        }
     }
 
     //public alias NullableEntity = Nullable!(Entity!md);

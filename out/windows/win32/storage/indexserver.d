@@ -481,9 +481,19 @@ version(X86)
     struct DBID
     {
     align (2):
-        _uGuid_e__Union uGuid;
-        uint            eKind;
-        _uName_e__Union uName;
+        union uGuid
+        {
+        align (2):
+            GUID  guid;
+            GUID* pguid;
+        }
+        uint eKind;
+        union uName
+        {
+        align (2):
+            PWSTR pwszName;
+            uint  ulPropid;
+        }
     }
 }
 

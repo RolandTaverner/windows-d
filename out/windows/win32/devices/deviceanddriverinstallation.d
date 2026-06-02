@@ -4325,17 +4325,22 @@ version(X86)
     struct SP_ALTPLATFORM_INFO_V3
     {
     align (1):
-        uint                cbSize;
-        uint                Platform;
-        uint                MajorVersion;
-        uint                MinorVersion;
-        ushort              ProcessorArchitecture;
-        _Anonymous_e__Union Anonymous;
-        uint                FirstValidatedMajorVersion;
-        uint                FirstValidatedMinorVersion;
-        ubyte               ProductType;
-        ushort              SuiteMask;
-        uint                BuildNumber;
+        uint   cbSize;
+        uint   Platform;
+        uint   MajorVersion;
+        uint   MinorVersion;
+        ushort ProcessorArchitecture;
+        union
+        {
+        align (1):
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint   FirstValidatedMajorVersion;
+        uint   FirstValidatedMinorVersion;
+        ubyte  ProductType;
+        ushort SuiteMask;
+        uint   BuildNumber;
     }
 }
 
@@ -4346,14 +4351,19 @@ version(X86)
     struct SP_ALTPLATFORM_INFO_V2
     {
     align (1):
-        uint                cbSize;
-        VER_PLATFORM        Platform;
-        uint                MajorVersion;
-        uint                MinorVersion;
+        uint         cbSize;
+        VER_PLATFORM Platform;
+        uint         MajorVersion;
+        uint         MinorVersion;
         PROCESSOR_ARCHITECTURE ProcessorArchitecture;
-        _Anonymous_e__Union Anonymous;
-        uint                FirstValidatedMajorVersion;
-        uint                FirstValidatedMinorVersion;
+        union
+        {
+        align (1):
+            ushort Reserved;
+            ushort Flags;
+        }
+        uint         FirstValidatedMajorVersion;
+        uint         FirstValidatedMinorVersion;
     }
 }
 

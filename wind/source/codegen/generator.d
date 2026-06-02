@@ -13,7 +13,7 @@ import std.path : buildPath, dirName, dirSeparator;
 import std.range : padLeft, chain;
 import std.stdio;
 import std.string : indexOf, lastIndexOf, strip;
-import std.typecons : Nullable;
+import std.typecons : nullable, Nullable;
 import std.uni : toLower;
 
 import climetadata.mdcollection.attributeprops;
@@ -26,6 +26,9 @@ import codegen.attributes.common;
 import codegen.attributes.constant;
 import codegen.attributes.flexiblearray;
 import codegen.attributes.guid;
+
+// deb
+import climetadata.mdcollection.compositeindex;
 
 enum maxLineWidth = 120;
 enum minSetTreshold = 0.4;
@@ -110,7 +113,9 @@ public struct Generator
 
         foreach(namespace; namespaces)
         {
-            //if (!namespace.startsWith("Windows.Win32.Graphics.OpenGL")) continue;
+            //if (!namespace.startsWith("Windows.Win32.System.Kernel")) continue;
+            //if (namespace != "Windows.Win32.System.Diagnostics.Debug") continue;
+            //if (namespace != "Windows.Win32.Foundation") continue;
 
             string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
             string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
@@ -725,24 +730,80 @@ public struct Generator
                     foreach(ver; versions)
                     {
                         f.write(format("\nversion(%s)\n{\n", ver));
-                        dumpStruct(f, s, structAttrs, 1, null, docs);
+                        dumpStruct(f, s, structAttrs, 1, null, ver, docs);
                         f.write("}\n");
                     }
                 }
                 else
                 {
-                    dumpStruct(f, s, structAttrs, 0, null, docs);
+                    dumpStruct(f, s, structAttrs, 0, null, "all", docs);
                 }
             }
         }
     }
+
+    // void rsType(scope ref const ResolutionScopeValue rs, int level)
+    // {
+    //     if (auto m = rs.peek!ModuleEntity)
+    //     {
+    //         writeln("".padLeft(' ', level * 4), "rs  type = ModuleEntity ", m.getName());
+    //         return;
+    //     }
+    //     else if (auto tr = rs.peek!TypeRefEntity)
+    //     {
+    //         writeln("".padLeft(' ', level * 4), "rs  type = TypeRefEntity ", tr.getTypeNamespace(), " ", tr.getTypeName(), " ", tr.getRowID());
+    //         return;
+    //     }
+    //     else if (auto mr = rs.peek!ModuleRefEntity)
+    //     {
+    //         writeln("".padLeft(' ', level * 4), "rs  type = ModuleRefEntity ", mr.getName());
+    //         return;
+    //     }
+    //     else if (auto ar = rs.peek!AssemblyRefEntity)
+    //     {
+    //         writeln("".padLeft(' ', level * 4), "rs  type = AssemblyRefEntity ", ar.getName());
+    //         return;
+    //     }
+
+    //     writeln("".padLeft(' ', level * 4), "rs  type = invalid");
+    // }
+
+    // private Nullable!TypeDefEntity resolveTypeDeb(scope ref const TypeSig.TypeValue v, Nullable!(const TypeDefEntity) enclosing, int level, bool deb)
+    // {
+    //     if (auto r = v.peek!TypeDefEntity)
+    //     {
+    //         if (deb) writeln("".padLeft(' ', level * 4), "resolveTypeDeb typeDef ", r.getTypeNamespace(), " ", r.getTypeName());
+    //         return Nullable!TypeDefEntity(*r);
+    //     }
+    //     else if (auto r = v.peek!TypeRefEntity)
+    //     {
+    //         if (deb)
+    //         {
+    //             writeln("".padLeft(' ', (level) * 4), "resolveTypeDeb typeRef ", r.getTypeNamespace(), " ", r.getTypeName(), " ", r.getTypeName());
+    //             auto rs1 = (*r).getResolutionScope();
+    //             rsType(rs1, level);
+
+    //             if (auto tr1 = rs1.peek!TypeRefEntity) 
+    //             {
+    //                 writeln("".padLeft(' ', (level+1)*4), "resolveTypeDeb typeRef ", tr1.getTypeNamespace(), " ", tr1.getTypeName());
+    //                 auto rs2 = (*tr1).getResolutionScope();
+    //                 rsType(rs2, level+1);
+    //             }
+    //         }
+    //         return r.resolve(enclosing);
+    //     }
+    //     else
+    //         return (Nullable!TypeDefEntity).init;
+    // }
 
     private void dumpStruct(scope ref std.stdio.File f,
         scope ref const TypeDefEntity struc,
         scope ref const CommonAttributes structAttrs,
         int level = 0,
         string nameOverride = "",
-        bool docs = false)
+        string ver,
+        bool docs = false,
+        bool deb = false)
     {
         if (!level)
             f.writeln;
@@ -757,7 +818,7 @@ public struct Generator
         {
             if (ca.name() == "NativeTypedefAttribute")
             {
-                //do nothing
+                // skip
             }
             else if (ca.name() == "RAIIFreeAttribute")
             {
@@ -783,25 +844,30 @@ public struct Generator
         int nativeType;
         auto nestedClasses = struc in nestedMap;
 
+        // =================== Process types
         foreach(fx; struc.getFieldList())
         {
-            auto name = safeWords.get(fx.getName(), fx.getName());
+            auto fieldName = safeWords.get(fx.getName(), fx.getName());
             auto fieldType = fx.getSignature().typeSig.type;
             
             if (nestedClasses)
             {
-                auto td = resolveType(fieldType);
+                auto td = resolveType(fieldType, nullable(struc));
                 if (!td.isNull)
+                {
                     if (td.get in *nestedClasses)
-                        continue;                
+                    {
+                        continue;
+                    }
+                }
             }
-                
-            if (name.length > maxNameLen && name.length <= maxFieldAlignment)
-                maxNameLen = name.length;
+
+            if (fieldName.length > maxNameLen && fieldName.length <= maxFieldAlignment)
+                maxNameLen = fieldName.length;
             auto type = getFieldTypeText(fx, safeWords, true);
             if (type.length > maxTypeLen && type.length <= maxFieldAlignment)
                 maxTypeLen = type.length;
-            types[name] = type;
+            types[fieldName] = type;
         }
 
         bool isExplicit = struc.getFlags().layout == TypeLayout.explicitLayout;
@@ -809,7 +875,7 @@ public struct Generator
 
         f.write("".padLeft(' ', level * 4));
         f.write(isExplicit ? "union" : "struct");
-        
+
         if (!isAnonymous)
         {
             f.write(" ");
@@ -830,30 +896,31 @@ public struct Generator
             f.writefln("align (%d):", lay.get.getPackingSize());
         }
 
-        // Dump fields
+        // =================== Dump fields
         foreach(fx; struc.getFieldList())
         {
+            string fieldName = safeWords.get(fx.getName(), fx.getName());
+
             auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
             auto flexibleArrayAttr = FlexibleArrayAttribute(fieldAttrs.getUnhandledAttributes());
             if (nestedClasses)
             {
-                auto td = resolveType(fx.getSignature().typeSig.type);
+                auto td = resolveType(fx.getSignature().typeSig.type, nullable(struc));
                 if (!td.isNull)
                 {
                     if (td.get in *nestedClasses)
                     {
                         auto typeAttrs = CommonAttributes(td.get.getAttributes());
-                        dumpStruct(f, td.get, typeAttrs, level + 1, safeWords.get(fx.getName(), fx.getName()), false);
+                        dumpStruct(f, td.get, typeAttrs, level + 1, fieldName, ver, false);
                         continue;
                     }
                 }
             }
 
-            string name = safeWords.get(fx.getName(), fx.getName());
-            auto type = types[name];
-            if (name == "_bitfield" || name == type)
+            auto type = types[fieldName];
+            if (fieldName == "_bitfield" || fieldName == type)
             {
-                name = getUnique(name);
+                fieldName = getUnique(fieldName);
             }
 
             // if (doc)
@@ -871,12 +938,12 @@ public struct Generator
             if (type.length < maxTypeLen)
                 f.write("".padLeft(' ' , maxTypeLen - type.length));
             f.write (' ');
-            f.write(name);
+            f.write(fieldName);
             auto ct = fx.getConstant();
             if (!ct.isNull)
             {
-                if (name.length < maxNameLen)
-                    f.write("".padLeft(' ' , maxNameLen - name.length));
+                if (fieldName.length < maxNameLen)
+                    f.write("".padLeft(' ' , maxNameLen - fieldName.length));
                 f.writef(" = ");
                 dumpConstant(f, ct.get.value, true);
             }
@@ -1621,12 +1688,12 @@ string getFieldTypeText(scope ref const FieldEntity field, scope ref const strin
     return s;
 }
 
-private Nullable!TypeDefEntity resolveType(scope ref const TypeSig.TypeValue v)
+private Nullable!TypeDefEntity resolveType(scope ref const TypeSig.TypeValue v, Nullable!(const TypeDefEntity) enclosing)
 {
     if (auto r = v.peek!TypeDefEntity)
         return Nullable!TypeDefEntity(*r);
     else if (auto r = v.peek!TypeRefEntity)
-        return r.resolve();
+        return r.resolve(enclosing);
     else
         return (Nullable!TypeDefEntity).init;
 }

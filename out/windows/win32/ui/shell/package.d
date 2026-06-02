@@ -8234,21 +8234,26 @@ version(X86)
     struct SHELLEXECUTEINFOA
     {
     align (1):
-        uint                cbSize;
-        uint                fMask;
-        HWND                hwnd;
-        const(PSTR)         lpVerb;
-        const(PSTR)         lpFile;
-        const(PSTR)         lpParameters;
-        const(PSTR)         lpDirectory;
-        int                 nShow;
-        HINSTANCE           hInstApp;
-        void*               lpIDList;
-        const(PSTR)         lpClass;
-        HKEY                hkeyClass;
-        uint                dwHotKey;
-        _Anonymous_e__Union Anonymous;
-        HANDLE              hProcess;
+        uint        cbSize;
+        uint        fMask;
+        HWND        hwnd;
+        const(PSTR) lpVerb;
+        const(PSTR) lpFile;
+        const(PSTR) lpParameters;
+        const(PSTR) lpDirectory;
+        int         nShow;
+        HINSTANCE   hInstApp;
+        void*       lpIDList;
+        const(PSTR) lpClass;
+        HKEY        hkeyClass;
+        uint        dwHotKey;
+        union
+        {
+        align (1):
+            HANDLE hIcon;
+            HANDLE hMonitor;
+        }
+        HANDLE      hProcess;
     }
 }
 
@@ -8259,21 +8264,26 @@ version(X86)
     struct SHELLEXECUTEINFOW
     {
     align (1):
-        uint                cbSize;
-        uint                fMask;
-        HWND                hwnd;
-        const(PWSTR)        lpVerb;
-        const(PWSTR)        lpFile;
-        const(PWSTR)        lpParameters;
-        const(PWSTR)        lpDirectory;
-        int                 nShow;
-        HINSTANCE           hInstApp;
-        void*               lpIDList;
-        const(PWSTR)        lpClass;
-        HKEY                hkeyClass;
-        uint                dwHotKey;
-        _Anonymous_e__Union Anonymous;
-        HANDLE              hProcess;
+        uint         cbSize;
+        uint         fMask;
+        HWND         hwnd;
+        const(PWSTR) lpVerb;
+        const(PWSTR) lpFile;
+        const(PWSTR) lpParameters;
+        const(PWSTR) lpDirectory;
+        int          nShow;
+        HINSTANCE    hInstApp;
+        void*        lpIDList;
+        const(PWSTR) lpClass;
+        HKEY         hkeyClass;
+        uint         dwHotKey;
+        union
+        {
+        align (1):
+            HANDLE hIcon;
+            HANDLE hMonitor;
+        }
+        HANDLE       hProcess;
     }
 }
 
@@ -8332,21 +8342,26 @@ version(X86)
     struct NOTIFYICONDATAA
     {
     align (1):
-        uint                cbSize;
-        HWND                hWnd;
-        uint                uID;
+        uint              cbSize;
+        HWND              hWnd;
+        uint              uID;
         NOTIFY_ICON_DATA_FLAGS uFlags;
-        uint                uCallbackMessage;
-        HICON               hIcon;
-        CHAR[128]           szTip;
-        NOTIFY_ICON_STATE   dwState;
-        NOTIFY_ICON_STATE   dwStateMask;
-        CHAR[256]           szInfo;
-        _Anonymous_e__Union Anonymous;
-        CHAR[64]            szInfoTitle;
+        uint              uCallbackMessage;
+        HICON             hIcon;
+        CHAR[128]         szTip;
+        NOTIFY_ICON_STATE dwState;
+        NOTIFY_ICON_STATE dwStateMask;
+        CHAR[256]         szInfo;
+        union
+        {
+        align (1):
+            uint uTimeout;
+            uint uVersion;
+        }
+        CHAR[64]          szInfoTitle;
         NOTIFY_ICON_INFOTIP_FLAGS dwInfoFlags;
-        GUID                guidItem;
-        HICON               hBalloonIcon;
+        GUID              guidItem;
+        HICON             hBalloonIcon;
     }
 }
 
@@ -8357,21 +8372,26 @@ version(X86)
     struct NOTIFYICONDATAW
     {
     align (1):
-        uint                cbSize;
-        HWND                hWnd;
-        uint                uID;
+        uint              cbSize;
+        HWND              hWnd;
+        uint              uID;
         NOTIFY_ICON_DATA_FLAGS uFlags;
-        uint                uCallbackMessage;
-        HICON               hIcon;
-        wchar[128]          szTip;
-        NOTIFY_ICON_STATE   dwState;
-        NOTIFY_ICON_STATE   dwStateMask;
-        wchar[256]          szInfo;
-        _Anonymous_e__Union Anonymous;
-        wchar[64]           szInfoTitle;
+        uint              uCallbackMessage;
+        HICON             hIcon;
+        wchar[128]        szTip;
+        NOTIFY_ICON_STATE dwState;
+        NOTIFY_ICON_STATE dwStateMask;
+        wchar[256]        szInfo;
+        union
+        {
+        align (1):
+            uint uTimeout;
+            uint uVersion;
+        }
+        wchar[64]         szInfoTitle;
         NOTIFY_ICON_INFOTIP_FLAGS dwInfoFlags;
-        GUID                guidItem;
-        HICON               hBalloonIcon;
+        GUID              guidItem;
+        HICON             hBalloonIcon;
     }
 }
 
