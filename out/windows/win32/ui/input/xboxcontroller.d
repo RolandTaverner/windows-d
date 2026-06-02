@@ -51,49 +51,49 @@ enum : ushort
 alias BATTERY_TYPE = ubyte;
 enum : ubyte
 {
-    BATTERY_TYPE_DISCONNECTED = 0x00,
-    BATTERY_TYPE_WIRED        = 0x01,
-    BATTERY_TYPE_ALKALINE     = 0x02,
-    BATTERY_TYPE_NIMH         = 0x03,
-    BATTERY_TYPE_UNKNOWN      = 0xff,
+    BATTERY_TYPE_DISCONNECTED = cast(ubyte) 0x00,
+    BATTERY_TYPE_WIRED        = cast(ubyte) 0x01,
+    BATTERY_TYPE_ALKALINE     = cast(ubyte) 0x02,
+    BATTERY_TYPE_NIMH         = cast(ubyte) 0x03,
+    BATTERY_TYPE_UNKNOWN      = cast(ubyte) 0xff,
 }
 
 alias BATTERY_LEVEL = ubyte;
 enum : ubyte
 {
-    BATTERY_LEVEL_EMPTY  = 0x00,
-    BATTERY_LEVEL_LOW    = 0x01,
-    BATTERY_LEVEL_MEDIUM = 0x02,
-    BATTERY_LEVEL_FULL   = 0x03,
+    BATTERY_LEVEL_EMPTY  = cast(ubyte) 0x00,
+    BATTERY_LEVEL_LOW    = cast(ubyte) 0x01,
+    BATTERY_LEVEL_MEDIUM = cast(ubyte) 0x02,
+    BATTERY_LEVEL_FULL   = cast(ubyte) 0x03,
 }
 
 alias BATTERY_DEVTYPE = ubyte;
 enum : ubyte
 {
-    BATTERY_DEVTYPE_GAMEPAD = 0x00,
-    BATTERY_DEVTYPE_HEADSET = 0x01,
+    BATTERY_DEVTYPE_GAMEPAD = cast(ubyte) 0x00,
+    BATTERY_DEVTYPE_HEADSET = cast(ubyte) 0x01,
 }
 
 alias XINPUT_DEVTYPE = ubyte;
 enum : ubyte
 {
-    XINPUT_DEVTYPE_GAMEPAD = 0x01,
+    XINPUT_DEVTYPE_GAMEPAD = cast(ubyte) 0x01,
 }
 
 alias XINPUT_DEVSUBTYPE = ubyte;
 enum : ubyte
 {
-    XINPUT_DEVSUBTYPE_GAMEPAD          = 0x01,
-    XINPUT_DEVSUBTYPE_UNKNOWN          = 0x00,
-    XINPUT_DEVSUBTYPE_WHEEL            = 0x02,
-    XINPUT_DEVSUBTYPE_ARCADE_STICK     = 0x03,
-    XINPUT_DEVSUBTYPE_FLIGHT_STICK     = 0x04,
-    XINPUT_DEVSUBTYPE_DANCE_PAD        = 0x05,
-    XINPUT_DEVSUBTYPE_GUITAR           = 0x06,
-    XINPUT_DEVSUBTYPE_GUITAR_ALTERNATE = 0x07,
-    XINPUT_DEVSUBTYPE_DRUM_KIT         = 0x08,
-    XINPUT_DEVSUBTYPE_GUITAR_BASS      = 0x0b,
-    XINPUT_DEVSUBTYPE_ARCADE_PAD       = 0x13,
+    XINPUT_DEVSUBTYPE_GAMEPAD          = cast(ubyte) 0x01,
+    XINPUT_DEVSUBTYPE_UNKNOWN          = cast(ubyte) 0x00,
+    XINPUT_DEVSUBTYPE_WHEEL            = cast(ubyte) 0x02,
+    XINPUT_DEVSUBTYPE_ARCADE_STICK     = cast(ubyte) 0x03,
+    XINPUT_DEVSUBTYPE_FLIGHT_STICK     = cast(ubyte) 0x04,
+    XINPUT_DEVSUBTYPE_DANCE_PAD        = cast(ubyte) 0x05,
+    XINPUT_DEVSUBTYPE_GUITAR           = cast(ubyte) 0x06,
+    XINPUT_DEVSUBTYPE_GUITAR_ALTERNATE = cast(ubyte) 0x07,
+    XINPUT_DEVSUBTYPE_DRUM_KIT         = cast(ubyte) 0x08,
+    XINPUT_DEVSUBTYPE_GUITAR_BASS      = cast(ubyte) 0x0b,
+    XINPUT_DEVSUBTYPE_ARCADE_PAD       = cast(ubyte) 0x13,
 }
 
 alias XINPUT_CAPABILITIES_FLAGS = ushort;

@@ -2044,13 +2044,13 @@ struct InkRecoGuide
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_point
 struct FLICK_POINT
 {
-    int _bitfield547;
+    int _bitfield545;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_data
 struct FLICK_DATA
 {
-    int _bitfield548;
+    int _bitfield546;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_strokeinfo

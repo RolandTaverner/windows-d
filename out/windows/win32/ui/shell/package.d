@@ -7885,7 +7885,7 @@ struct CABINETSTATE
 align (1):
     ushort cLength;
     ushort nVersion;
-    int    _bitfield543;
+    int    _bitfield541;
     uint   fMenuEnumFilter;
 }
 
@@ -8035,7 +8035,7 @@ align (1):
 struct SHELLFLAGSTATE
 {
 align (1):
-    int _bitfield544;
+    int _bitfield542;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj/ns-shlobj-bandinfosfb
@@ -8704,7 +8704,7 @@ struct BASEBROWSERDATAXP
     IExpDispSupportXP _pautoEDS;
     IShellService     _pautoSS;
     int               _eSecureLockIcon;
-    uint              _bitfield545;
+    uint              _bitfield543;
     uint              _uActivateState;
     ITEMIDLIST*       _pidlViewState;
     IOleCommandTarget _pctView;
@@ -8735,7 +8735,7 @@ struct BASEBROWSERDATALH
     IExpDispSupport   _pautoEDS;
     IShellService     _pautoSS;
     int               _eSecureLockIcon;
-    uint              _bitfield546;
+    uint              _bitfield544;
     uint              _uActivateState;
     ITEMIDLIST*       _pidlViewState;
     IOleCommandTarget _pctView;

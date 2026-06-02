@@ -1098,11 +1098,11 @@ enum : uint
 alias ACCEL_VIRT_FLAGS = ubyte;
 enum : ubyte
 {
-    FVIRTKEY  = 0x01,
-    FNOINVERT = 0x02,
-    FSHIFT    = 0x04,
-    FCONTROL  = 0x08,
-    FALT      = 0x10,
+    FVIRTKEY  = cast(ubyte) 0x01,
+    FNOINVERT = cast(ubyte) 0x02,
+    FSHIFT    = cast(ubyte) 0x04,
+    FCONTROL  = cast(ubyte) 0x08,
+    FALT      = cast(ubyte) 0x10,
 }
 
 alias SCROLLBAR_COMMAND = int;
@@ -5018,7 +5018,7 @@ struct MENUBARINFO
     RECT  rcBar;
     HMENU hMenu;
     HWND  hwndMenu;
-    int   _bitfield549;
+    int   _bitfield547;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -5067,7 +5067,7 @@ struct TOUCHPAD_PARAMETERS_V1
 struct TOUCHPAD_PARAMETERS_V2
 {
     TOUCHPAD_PARAMETERS_V1 Base;
-    int _bitfield550;
+    int _bitfield548;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])

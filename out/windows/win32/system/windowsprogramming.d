@@ -1390,7 +1390,7 @@ struct IMAGE_DELAYLOAD_DESCRIPTOR
         uint AllAttributes;
         struct
         {
-            uint _bitfield531;
+            uint _bitfield529;
         }
     }
     uint DllNameRVA;
@@ -1424,7 +1424,7 @@ union PROCESS_CREATION_SVE_VECTOR_LENGTH
     uint Data;
     struct
     {
-        uint _bitfield532;
+        uint _bitfield530;
     }
 }
 

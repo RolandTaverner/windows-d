@@ -390,8 +390,8 @@ public struct Generator
                         if (!ct.isNull)
                         {
                             f.writef(" = ");
-                            if (typeText == "byte") f.write("cast(byte) ");
-                            if (typeText == "ubyte") f.write("cast(ubyte) ");
+                            if (!trueEnum && typeText == "byte") f.write("cast(byte) ");
+                            if (!trueEnum && typeText == "ubyte") f.write("cast(ubyte) ");
                             dumpConstant(f, ct.get.value, true);
                         }
                     }

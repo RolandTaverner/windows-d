@@ -1472,7 +1472,7 @@ align (1):
     }
     uint   WDD_nReserve1;
     ushort nPos;
-    ushort _bitfield542;
+    ushort _bitfield540;
     void*  pReserved;
 }
 

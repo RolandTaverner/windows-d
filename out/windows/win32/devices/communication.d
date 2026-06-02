@@ -129,19 +129,19 @@ enum : uint
 alias DCB_STOP_BITS = ubyte;
 enum : ubyte
 {
-    ONESTOPBIT   = 0x00,
-    ONE5STOPBITS = 0x01,
-    TWOSTOPBITS  = 0x02,
+    ONESTOPBIT   = cast(ubyte) 0x00,
+    ONE5STOPBITS = cast(ubyte) 0x01,
+    TWOSTOPBITS  = cast(ubyte) 0x02,
 }
 
 alias DCB_PARITY = ubyte;
 enum : ubyte
 {
-    EVENPARITY  = 0x02,
-    MARKPARITY  = 0x03,
-    NOPARITY    = 0x00,
-    ODDPARITY   = 0x01,
-    SPACEPARITY = 0x04,
+    EVENPARITY  = cast(ubyte) 0x02,
+    MARKPARITY  = cast(ubyte) 0x03,
+    NOPARITY    = cast(ubyte) 0x00,
+    ODDPARITY   = cast(ubyte) 0x01,
+    SPACEPARITY = cast(ubyte) 0x04,
 }
 
 // Constants

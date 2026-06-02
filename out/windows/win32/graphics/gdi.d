@@ -387,15 +387,15 @@ enum : uint
 alias FONT_CLIP_PRECISION = ubyte;
 enum : ubyte
 {
-    CLIP_DEFAULT_PRECIS   = 0x00,
-    CLIP_CHARACTER_PRECIS = 0x01,
-    CLIP_STROKE_PRECIS    = 0x02,
-    CLIP_MASK             = 0x0f,
-    CLIP_LH_ANGLES        = 0x10,
-    CLIP_TT_ALWAYS        = 0x20,
-    CLIP_DFA_DISABLE      = 0x40,
-    CLIP_EMBEDDED         = 0x80,
-    CLIP_DFA_OVERRIDE     = 0x40,
+    CLIP_DEFAULT_PRECIS   = cast(ubyte) 0x00,
+    CLIP_CHARACTER_PRECIS = cast(ubyte) 0x01,
+    CLIP_STROKE_PRECIS    = cast(ubyte) 0x02,
+    CLIP_MASK             = cast(ubyte) 0x0f,
+    CLIP_LH_ANGLES        = cast(ubyte) 0x10,
+    CLIP_TT_ALWAYS        = cast(ubyte) 0x20,
+    CLIP_DFA_DISABLE      = cast(ubyte) 0x40,
+    CLIP_EMBEDDED         = cast(ubyte) 0x80,
+    CLIP_DFA_OVERRIDE     = cast(ubyte) 0x40,
 }
 
 alias CREATE_POLYGON_RGN_MODE = int;
@@ -484,17 +484,17 @@ enum : uint
 alias FONT_OUTPUT_PRECISION = ubyte;
 enum : ubyte
 {
-    OUT_DEFAULT_PRECIS        = 0x00,
-    OUT_STRING_PRECIS         = 0x01,
-    OUT_CHARACTER_PRECIS      = 0x02,
-    OUT_STROKE_PRECIS         = 0x03,
-    OUT_TT_PRECIS             = 0x04,
-    OUT_DEVICE_PRECIS         = 0x05,
-    OUT_RASTER_PRECIS         = 0x06,
-    OUT_TT_ONLY_PRECIS        = 0x07,
-    OUT_OUTLINE_PRECIS        = 0x08,
-    OUT_SCREEN_OUTLINE_PRECIS = 0x09,
-    OUT_PS_ONLY_PRECIS        = 0x0a,
+    OUT_DEFAULT_PRECIS        = cast(ubyte) 0x00,
+    OUT_STRING_PRECIS         = cast(ubyte) 0x01,
+    OUT_CHARACTER_PRECIS      = cast(ubyte) 0x02,
+    OUT_STROKE_PRECIS         = cast(ubyte) 0x03,
+    OUT_TT_PRECIS             = cast(ubyte) 0x04,
+    OUT_DEVICE_PRECIS         = cast(ubyte) 0x05,
+    OUT_RASTER_PRECIS         = cast(ubyte) 0x06,
+    OUT_TT_ONLY_PRECIS        = cast(ubyte) 0x07,
+    OUT_OUTLINE_PRECIS        = cast(ubyte) 0x08,
+    OUT_SCREEN_OUTLINE_PRECIS = cast(ubyte) 0x09,
+    OUT_PS_ONLY_PRECIS        = cast(ubyte) 0x0a,
 }
 
 alias FONT_WEIGHT = uint;
@@ -520,26 +520,26 @@ enum : uint
 alias FONT_CHARSET = ubyte;
 enum : ubyte
 {
-    ANSI_CHARSET        = 0x00,
-    DEFAULT_CHARSET     = 0x01,
-    SYMBOL_CHARSET      = 0x02,
-    SHIFTJIS_CHARSET    = 0x80,
-    HANGEUL_CHARSET     = 0x81,
-    HANGUL_CHARSET      = 0x81,
-    GB2312_CHARSET      = 0x86,
-    CHINESEBIG5_CHARSET = 0x88,
-    OEM_CHARSET         = 0xff,
-    JOHAB_CHARSET       = 0x82,
-    HEBREW_CHARSET      = 0xb1,
-    ARABIC_CHARSET      = 0xb2,
-    GREEK_CHARSET       = 0xa1,
-    TURKISH_CHARSET     = 0xa2,
-    VIETNAMESE_CHARSET  = 0xa3,
-    THAI_CHARSET        = 0xde,
-    EASTEUROPE_CHARSET  = 0xee,
-    RUSSIAN_CHARSET     = 0xcc,
-    MAC_CHARSET         = 0x4d,
-    BALTIC_CHARSET      = 0xba,
+    ANSI_CHARSET        = cast(ubyte) 0x00,
+    DEFAULT_CHARSET     = cast(ubyte) 0x01,
+    SYMBOL_CHARSET      = cast(ubyte) 0x02,
+    SHIFTJIS_CHARSET    = cast(ubyte) 0x80,
+    HANGEUL_CHARSET     = cast(ubyte) 0x81,
+    HANGUL_CHARSET      = cast(ubyte) 0x81,
+    GB2312_CHARSET      = cast(ubyte) 0x86,
+    CHINESEBIG5_CHARSET = cast(ubyte) 0x88,
+    OEM_CHARSET         = cast(ubyte) 0xff,
+    JOHAB_CHARSET       = cast(ubyte) 0x82,
+    HEBREW_CHARSET      = cast(ubyte) 0xb1,
+    ARABIC_CHARSET      = cast(ubyte) 0xb2,
+    GREEK_CHARSET       = cast(ubyte) 0xa1,
+    TURKISH_CHARSET     = cast(ubyte) 0xa2,
+    VIETNAMESE_CHARSET  = cast(ubyte) 0xa3,
+    THAI_CHARSET        = cast(ubyte) 0xde,
+    EASTEUROPE_CHARSET  = cast(ubyte) 0xee,
+    RUSSIAN_CHARSET     = cast(ubyte) 0xcc,
+    MAC_CHARSET         = cast(ubyte) 0x4d,
+    BALTIC_CHARSET      = cast(ubyte) 0xba,
 }
 
 alias ARC_DIRECTION = int;
@@ -572,12 +572,12 @@ enum : int
 alias FONT_QUALITY = ubyte;
 enum : ubyte
 {
-    DEFAULT_QUALITY        = 0x00,
-    DRAFT_QUALITY          = 0x01,
-    PROOF_QUALITY          = 0x02,
-    NONANTIALIASED_QUALITY = 0x03,
-    ANTIALIASED_QUALITY    = 0x04,
-    CLEARTYPE_QUALITY      = 0x05,
+    DEFAULT_QUALITY        = cast(ubyte) 0x00,
+    DRAFT_QUALITY          = cast(ubyte) 0x01,
+    PROOF_QUALITY          = cast(ubyte) 0x02,
+    NONANTIALIASED_QUALITY = cast(ubyte) 0x03,
+    ANTIALIASED_QUALITY    = cast(ubyte) 0x04,
+    CLEARTYPE_QUALITY      = cast(ubyte) 0x05,
 }
 
 alias BACKGROUND_MODE = uint;
@@ -746,20 +746,20 @@ enum : int
 alias FONT_PITCH = ubyte;
 enum : ubyte
 {
-    DEFAULT_PITCH  = 0x00,
-    FIXED_PITCH    = 0x01,
-    VARIABLE_PITCH = 0x02,
+    DEFAULT_PITCH  = cast(ubyte) 0x00,
+    FIXED_PITCH    = cast(ubyte) 0x01,
+    VARIABLE_PITCH = cast(ubyte) 0x02,
 }
 
 alias FONT_FAMILY = ubyte;
 enum : ubyte
 {
-    FF_DECORATIVE = 0x50,
-    FF_DONTCARE   = 0x00,
-    FF_MODERN     = 0x30,
-    FF_ROMAN      = 0x10,
-    FF_SCRIPT     = 0x40,
-    FF_SWISS      = 0x20,
+    FF_DECORATIVE = cast(ubyte) 0x50,
+    FF_DONTCARE   = cast(ubyte) 0x00,
+    FF_MODERN     = cast(ubyte) 0x30,
+    FF_ROMAN      = cast(ubyte) 0x10,
+    FF_SCRIPT     = cast(ubyte) 0x40,
+    FF_SWISS      = cast(ubyte) 0x20,
 }
 
 alias ROP_CODE = uint;
@@ -832,10 +832,10 @@ enum : uint
 alias TMPF_FLAGS = ubyte;
 enum : ubyte
 {
-    TMPF_FIXED_PITCH = 0x01,
-    TMPF_VECTOR      = 0x02,
-    TMPF_DEVICE      = 0x08,
-    TMPF_TRUETYPE    = 0x04,
+    TMPF_FIXED_PITCH = cast(ubyte) 0x01,
+    TMPF_VECTOR      = cast(ubyte) 0x02,
+    TMPF_DEVICE      = cast(ubyte) 0x08,
+    TMPF_TRUETYPE    = cast(ubyte) 0x04,
 }
 
 alias BI_COMPRESSION = uint;
@@ -1073,168 +1073,168 @@ enum : short
 alias PAN_FAMILY_TYPE = ubyte;
 enum : ubyte
 {
-    PAN_FAMILY_ANY          = 0x00,
-    PAN_FAMILY_NO_FIT       = 0x01,
-    PAN_FAMILY_TEXT_DISPLAY = 0x02,
-    PAN_FAMILY_SCRIPT       = 0x03,
-    PAN_FAMILY_DECORATIVE   = 0x04,
-    PAN_FAMILY_PICTORIAL    = 0x05,
+    PAN_FAMILY_ANY          = cast(ubyte) 0x00,
+    PAN_FAMILY_NO_FIT       = cast(ubyte) 0x01,
+    PAN_FAMILY_TEXT_DISPLAY = cast(ubyte) 0x02,
+    PAN_FAMILY_SCRIPT       = cast(ubyte) 0x03,
+    PAN_FAMILY_DECORATIVE   = cast(ubyte) 0x04,
+    PAN_FAMILY_PICTORIAL    = cast(ubyte) 0x05,
 }
 
 alias PAN_SERIF_STYLE = ubyte;
 enum : ubyte
 {
-    PAN_SERIF_ANY                = 0x00,
-    PAN_SERIF_NO_FIT             = 0x01,
-    PAN_SERIF_COVE               = 0x02,
-    PAN_SERIF_OBTUSE_COVE        = 0x03,
-    PAN_SERIF_SQUARE_COVE        = 0x04,
-    PAN_SERIF_OBTUSE_SQUARE_COVE = 0x05,
-    PAN_SERIF_SQUARE             = 0x06,
-    PAN_SERIF_THIN               = 0x07,
-    PAN_SERIF_BONE               = 0x08,
-    PAN_SERIF_EXAGGERATED        = 0x09,
-    PAN_SERIF_TRIANGLE           = 0x0a,
-    PAN_SERIF_NORMAL_SANS        = 0x0b,
-    PAN_SERIF_OBTUSE_SANS        = 0x0c,
-    PAN_SERIF_PERP_SANS          = 0x0d,
-    PAN_SERIF_FLARED             = 0x0e,
-    PAN_SERIF_ROUNDED            = 0x0f,
+    PAN_SERIF_ANY                = cast(ubyte) 0x00,
+    PAN_SERIF_NO_FIT             = cast(ubyte) 0x01,
+    PAN_SERIF_COVE               = cast(ubyte) 0x02,
+    PAN_SERIF_OBTUSE_COVE        = cast(ubyte) 0x03,
+    PAN_SERIF_SQUARE_COVE        = cast(ubyte) 0x04,
+    PAN_SERIF_OBTUSE_SQUARE_COVE = cast(ubyte) 0x05,
+    PAN_SERIF_SQUARE             = cast(ubyte) 0x06,
+    PAN_SERIF_THIN               = cast(ubyte) 0x07,
+    PAN_SERIF_BONE               = cast(ubyte) 0x08,
+    PAN_SERIF_EXAGGERATED        = cast(ubyte) 0x09,
+    PAN_SERIF_TRIANGLE           = cast(ubyte) 0x0a,
+    PAN_SERIF_NORMAL_SANS        = cast(ubyte) 0x0b,
+    PAN_SERIF_OBTUSE_SANS        = cast(ubyte) 0x0c,
+    PAN_SERIF_PERP_SANS          = cast(ubyte) 0x0d,
+    PAN_SERIF_FLARED             = cast(ubyte) 0x0e,
+    PAN_SERIF_ROUNDED            = cast(ubyte) 0x0f,
 }
 
 alias PAN_WEIGHT = ubyte;
 enum : ubyte
 {
-    PAN_WEIGHT_ANY        = 0x00,
-    PAN_WEIGHT_NO_FIT     = 0x01,
-    PAN_WEIGHT_INDEX      = 0x02,
-    PAN_WEIGHT_VERY_LIGHT = 0x02,
-    PAN_WEIGHT_LIGHT      = 0x03,
-    PAN_WEIGHT_THIN       = 0x04,
-    PAN_WEIGHT_BOOK       = 0x05,
-    PAN_WEIGHT_MEDIUM     = 0x06,
-    PAN_WEIGHT_DEMI       = 0x07,
-    PAN_WEIGHT_BOLD       = 0x08,
-    PAN_WEIGHT_HEAVY      = 0x09,
-    PAN_WEIGHT_BLACK      = 0x0a,
-    PAN_WEIGHT_NORD       = 0x0b,
+    PAN_WEIGHT_ANY        = cast(ubyte) 0x00,
+    PAN_WEIGHT_NO_FIT     = cast(ubyte) 0x01,
+    PAN_WEIGHT_INDEX      = cast(ubyte) 0x02,
+    PAN_WEIGHT_VERY_LIGHT = cast(ubyte) 0x02,
+    PAN_WEIGHT_LIGHT      = cast(ubyte) 0x03,
+    PAN_WEIGHT_THIN       = cast(ubyte) 0x04,
+    PAN_WEIGHT_BOOK       = cast(ubyte) 0x05,
+    PAN_WEIGHT_MEDIUM     = cast(ubyte) 0x06,
+    PAN_WEIGHT_DEMI       = cast(ubyte) 0x07,
+    PAN_WEIGHT_BOLD       = cast(ubyte) 0x08,
+    PAN_WEIGHT_HEAVY      = cast(ubyte) 0x09,
+    PAN_WEIGHT_BLACK      = cast(ubyte) 0x0a,
+    PAN_WEIGHT_NORD       = cast(ubyte) 0x0b,
 }
 
 alias PAN_STROKE_VARIATION = ubyte;
 enum : ubyte
 {
-    PAN_STROKE_ANY          = 0x00,
-    PAN_STROKE_NO_FIT       = 0x01,
-    PAN_STROKE_GRADUAL_DIAG = 0x02,
-    PAN_STROKE_GRADUAL_TRAN = 0x03,
-    PAN_STROKE_GRADUAL_VERT = 0x04,
-    PAN_STROKE_GRADUAL_HORZ = 0x05,
-    PAN_STROKE_RAPID_VERT   = 0x06,
-    PAN_STROKE_RAPID_HORZ   = 0x07,
-    PAN_STROKE_INSTANT_VERT = 0x08,
+    PAN_STROKE_ANY          = cast(ubyte) 0x00,
+    PAN_STROKE_NO_FIT       = cast(ubyte) 0x01,
+    PAN_STROKE_GRADUAL_DIAG = cast(ubyte) 0x02,
+    PAN_STROKE_GRADUAL_TRAN = cast(ubyte) 0x03,
+    PAN_STROKE_GRADUAL_VERT = cast(ubyte) 0x04,
+    PAN_STROKE_GRADUAL_HORZ = cast(ubyte) 0x05,
+    PAN_STROKE_RAPID_VERT   = cast(ubyte) 0x06,
+    PAN_STROKE_RAPID_HORZ   = cast(ubyte) 0x07,
+    PAN_STROKE_INSTANT_VERT = cast(ubyte) 0x08,
 }
 
 alias PAN_PROPORTION = ubyte;
 enum : ubyte
 {
-    PAN_PROP_ANY            = 0x00,
-    PAN_PROP_NO_FIT         = 0x01,
-    PAN_PROP_OLD_STYLE      = 0x02,
-    PAN_PROP_MODERN         = 0x03,
-    PAN_PROP_EVEN_WIDTH     = 0x04,
-    PAN_PROP_EXPANDED       = 0x05,
-    PAN_PROP_CONDENSED      = 0x06,
-    PAN_PROP_VERY_EXPANDED  = 0x07,
-    PAN_PROP_VERY_CONDENSED = 0x08,
-    PAN_PROP_MONOSPACED     = 0x09,
+    PAN_PROP_ANY            = cast(ubyte) 0x00,
+    PAN_PROP_NO_FIT         = cast(ubyte) 0x01,
+    PAN_PROP_OLD_STYLE      = cast(ubyte) 0x02,
+    PAN_PROP_MODERN         = cast(ubyte) 0x03,
+    PAN_PROP_EVEN_WIDTH     = cast(ubyte) 0x04,
+    PAN_PROP_EXPANDED       = cast(ubyte) 0x05,
+    PAN_PROP_CONDENSED      = cast(ubyte) 0x06,
+    PAN_PROP_VERY_EXPANDED  = cast(ubyte) 0x07,
+    PAN_PROP_VERY_CONDENSED = cast(ubyte) 0x08,
+    PAN_PROP_MONOSPACED     = cast(ubyte) 0x09,
 }
 
 alias PAN_CONTRAST = ubyte;
 enum : ubyte
 {
-    PAN_CONTRAST_ANY         = 0x00,
-    PAN_CONTRAST_NO_FIT      = 0x01,
-    PAN_CONTRAST_INDEX       = 0x04,
-    PAN_CONTRAST_NONE        = 0x02,
-    PAN_CONTRAST_VERY_LOW    = 0x03,
-    PAN_CONTRAST_LOW         = 0x04,
-    PAN_CONTRAST_MEDIUM_LOW  = 0x05,
-    PAN_CONTRAST_MEDIUM      = 0x06,
-    PAN_CONTRAST_MEDIUM_HIGH = 0x07,
-    PAN_CONTRAST_HIGH        = 0x08,
-    PAN_CONTRAST_VERY_HIGH   = 0x09,
+    PAN_CONTRAST_ANY         = cast(ubyte) 0x00,
+    PAN_CONTRAST_NO_FIT      = cast(ubyte) 0x01,
+    PAN_CONTRAST_INDEX       = cast(ubyte) 0x04,
+    PAN_CONTRAST_NONE        = cast(ubyte) 0x02,
+    PAN_CONTRAST_VERY_LOW    = cast(ubyte) 0x03,
+    PAN_CONTRAST_LOW         = cast(ubyte) 0x04,
+    PAN_CONTRAST_MEDIUM_LOW  = cast(ubyte) 0x05,
+    PAN_CONTRAST_MEDIUM      = cast(ubyte) 0x06,
+    PAN_CONTRAST_MEDIUM_HIGH = cast(ubyte) 0x07,
+    PAN_CONTRAST_HIGH        = cast(ubyte) 0x08,
+    PAN_CONTRAST_VERY_HIGH   = cast(ubyte) 0x09,
 }
 
 alias PAN_ARM_STYLE = ubyte;
 enum : ubyte
 {
-    PAN_ARM_ANY                    = 0x00,
-    PAN_ARM_NO_FIT                 = 0x01,
-    PAN_STRAIGHT_ARMS_HORZ         = 0x02,
-    PAN_STRAIGHT_ARMS_WEDGE        = 0x03,
-    PAN_STRAIGHT_ARMS_VERT         = 0x04,
-    PAN_STRAIGHT_ARMS_SINGLE_SERIF = 0x05,
-    PAN_STRAIGHT_ARMS_DOUBLE_SERIF = 0x06,
-    PAN_BENT_ARMS_HORZ             = 0x07,
-    PAN_BENT_ARMS_WEDGE            = 0x08,
-    PAN_BENT_ARMS_VERT             = 0x09,
-    PAN_BENT_ARMS_SINGLE_SERIF     = 0x0a,
-    PAN_BENT_ARMS_DOUBLE_SERIF     = 0x0b,
+    PAN_ARM_ANY                    = cast(ubyte) 0x00,
+    PAN_ARM_NO_FIT                 = cast(ubyte) 0x01,
+    PAN_STRAIGHT_ARMS_HORZ         = cast(ubyte) 0x02,
+    PAN_STRAIGHT_ARMS_WEDGE        = cast(ubyte) 0x03,
+    PAN_STRAIGHT_ARMS_VERT         = cast(ubyte) 0x04,
+    PAN_STRAIGHT_ARMS_SINGLE_SERIF = cast(ubyte) 0x05,
+    PAN_STRAIGHT_ARMS_DOUBLE_SERIF = cast(ubyte) 0x06,
+    PAN_BENT_ARMS_HORZ             = cast(ubyte) 0x07,
+    PAN_BENT_ARMS_WEDGE            = cast(ubyte) 0x08,
+    PAN_BENT_ARMS_VERT             = cast(ubyte) 0x09,
+    PAN_BENT_ARMS_SINGLE_SERIF     = cast(ubyte) 0x0a,
+    PAN_BENT_ARMS_DOUBLE_SERIF     = cast(ubyte) 0x0b,
 }
 
 alias PAN_LETT_FORM = ubyte;
 enum : ubyte
 {
-    PAN_LETT_FORM_ANY           = 0x00,
-    PAN_LETT_FORM_NO_FIT        = 0x01,
-    PAN_LETT_NORMAL_CONTACT     = 0x02,
-    PAN_LETT_NORMAL_WEIGHTED    = 0x03,
-    PAN_LETT_NORMAL_BOXED       = 0x04,
-    PAN_LETT_NORMAL_FLATTENED   = 0x05,
-    PAN_LETT_NORMAL_ROUNDED     = 0x06,
-    PAN_LETT_NORMAL_OFF_CENTER  = 0x07,
-    PAN_LETT_NORMAL_SQUARE      = 0x08,
-    PAN_LETT_OBLIQUE_CONTACT    = 0x09,
-    PAN_LETT_OBLIQUE_WEIGHTED   = 0x0a,
-    PAN_LETT_OBLIQUE_BOXED      = 0x0b,
-    PAN_LETT_OBLIQUE_FLATTENED  = 0x0c,
-    PAN_LETT_OBLIQUE_ROUNDED    = 0x0d,
-    PAN_LETT_OBLIQUE_OFF_CENTER = 0x0e,
-    PAN_LETT_OBLIQUE_SQUARE     = 0x0f,
+    PAN_LETT_FORM_ANY           = cast(ubyte) 0x00,
+    PAN_LETT_FORM_NO_FIT        = cast(ubyte) 0x01,
+    PAN_LETT_NORMAL_CONTACT     = cast(ubyte) 0x02,
+    PAN_LETT_NORMAL_WEIGHTED    = cast(ubyte) 0x03,
+    PAN_LETT_NORMAL_BOXED       = cast(ubyte) 0x04,
+    PAN_LETT_NORMAL_FLATTENED   = cast(ubyte) 0x05,
+    PAN_LETT_NORMAL_ROUNDED     = cast(ubyte) 0x06,
+    PAN_LETT_NORMAL_OFF_CENTER  = cast(ubyte) 0x07,
+    PAN_LETT_NORMAL_SQUARE      = cast(ubyte) 0x08,
+    PAN_LETT_OBLIQUE_CONTACT    = cast(ubyte) 0x09,
+    PAN_LETT_OBLIQUE_WEIGHTED   = cast(ubyte) 0x0a,
+    PAN_LETT_OBLIQUE_BOXED      = cast(ubyte) 0x0b,
+    PAN_LETT_OBLIQUE_FLATTENED  = cast(ubyte) 0x0c,
+    PAN_LETT_OBLIQUE_ROUNDED    = cast(ubyte) 0x0d,
+    PAN_LETT_OBLIQUE_OFF_CENTER = cast(ubyte) 0x0e,
+    PAN_LETT_OBLIQUE_SQUARE     = cast(ubyte) 0x0f,
 }
 
 alias PAN_MIDLINE = ubyte;
 enum : ubyte
 {
-    PAN_MIDLINE_ANY              = 0x00,
-    PAN_MIDLINE_NO_FIT           = 0x01,
-    PAN_MIDLINE_INDEX            = 0x08,
-    PAN_MIDLINE_STANDARD_TRIMMED = 0x02,
-    PAN_MIDLINE_STANDARD_POINTED = 0x03,
-    PAN_MIDLINE_STANDARD_SERIFED = 0x04,
-    PAN_MIDLINE_HIGH_TRIMMED     = 0x05,
-    PAN_MIDLINE_HIGH_POINTED     = 0x06,
-    PAN_MIDLINE_HIGH_SERIFED     = 0x07,
-    PAN_MIDLINE_CONSTANT_TRIMMED = 0x08,
-    PAN_MIDLINE_CONSTANT_POINTED = 0x09,
-    PAN_MIDLINE_CONSTANT_SERIFED = 0x0a,
-    PAN_MIDLINE_LOW_TRIMMED      = 0x0b,
-    PAN_MIDLINE_LOW_POINTED      = 0x0c,
-    PAN_MIDLINE_LOW_SERIFED      = 0x0d,
+    PAN_MIDLINE_ANY              = cast(ubyte) 0x00,
+    PAN_MIDLINE_NO_FIT           = cast(ubyte) 0x01,
+    PAN_MIDLINE_INDEX            = cast(ubyte) 0x08,
+    PAN_MIDLINE_STANDARD_TRIMMED = cast(ubyte) 0x02,
+    PAN_MIDLINE_STANDARD_POINTED = cast(ubyte) 0x03,
+    PAN_MIDLINE_STANDARD_SERIFED = cast(ubyte) 0x04,
+    PAN_MIDLINE_HIGH_TRIMMED     = cast(ubyte) 0x05,
+    PAN_MIDLINE_HIGH_POINTED     = cast(ubyte) 0x06,
+    PAN_MIDLINE_HIGH_SERIFED     = cast(ubyte) 0x07,
+    PAN_MIDLINE_CONSTANT_TRIMMED = cast(ubyte) 0x08,
+    PAN_MIDLINE_CONSTANT_POINTED = cast(ubyte) 0x09,
+    PAN_MIDLINE_CONSTANT_SERIFED = cast(ubyte) 0x0a,
+    PAN_MIDLINE_LOW_TRIMMED      = cast(ubyte) 0x0b,
+    PAN_MIDLINE_LOW_POINTED      = cast(ubyte) 0x0c,
+    PAN_MIDLINE_LOW_SERIFED      = cast(ubyte) 0x0d,
 }
 
 alias PAN_XHEIGHT = ubyte;
 enum : ubyte
 {
-    PAN_XHEIGHT_ANY            = 0x00,
-    PAN_XHEIGHT_NO_FIT         = 0x01,
-    PAN_XHEIGHT_INDEX          = 0x09,
-    PAN_XHEIGHT_CONSTANT_SMALL = 0x02,
-    PAN_XHEIGHT_CONSTANT_STD   = 0x03,
-    PAN_XHEIGHT_CONSTANT_LARGE = 0x04,
-    PAN_XHEIGHT_DUCKING_SMALL  = 0x05,
-    PAN_XHEIGHT_DUCKING_STD    = 0x06,
-    PAN_XHEIGHT_DUCKING_LARGE  = 0x07,
+    PAN_XHEIGHT_ANY            = cast(ubyte) 0x00,
+    PAN_XHEIGHT_NO_FIT         = cast(ubyte) 0x01,
+    PAN_XHEIGHT_INDEX          = cast(ubyte) 0x09,
+    PAN_XHEIGHT_CONSTANT_SMALL = cast(ubyte) 0x02,
+    PAN_XHEIGHT_CONSTANT_STD   = cast(ubyte) 0x03,
+    PAN_XHEIGHT_CONSTANT_LARGE = cast(ubyte) 0x04,
+    PAN_XHEIGHT_DUCKING_SMALL  = cast(ubyte) 0x05,
+    PAN_XHEIGHT_DUCKING_STD    = cast(ubyte) 0x06,
+    PAN_XHEIGHT_DUCKING_LARGE  = cast(ubyte) 0x07,
 }
 
 alias ENUM_DISPLAY_SETTINGS_FLAGS = uint;

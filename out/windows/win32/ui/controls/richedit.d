@@ -2522,7 +2522,7 @@ struct TABLEROWPARMS
     int   dxCellMargin;
     int   dxIndent;
     int   dyHeight;
-    uint  _bitfield540;
+    uint  _bitfield538;
     int   cpStartRow;
     ubyte bTableLevel;
     ubyte iCell;
@@ -2532,7 +2532,7 @@ struct TABLEROWPARMS
 struct TABLECELLPARMS
 {
     int      dxWidth;
-    ushort   _bitfield541;
+    ushort   _bitfield539;
     ushort   wShading;
     short    dxBrdrLeft;
     short    dyBrdrTop;

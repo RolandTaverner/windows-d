@@ -3842,7 +3842,7 @@ struct KDDEBUGGER_DATA32
     ushort ThCallbackStack;
     ushort NextCallback;
     ushort FramePointer;
-    ushort _bitfield18;
+    ushort _bitfield391;
     uint   KiCallUserMode;
     uint   KeUserCallbackDispatcher;
     uint   PsLoadedModuleList;
@@ -3937,7 +3937,7 @@ struct KDDEBUGGER_DATA64
     ushort ThCallbackStack;
     ushort NextCallback;
     ushort FramePointer;
-    ushort _bitfield19;
+    ushort _bitfield392;
     ulong  KiCallUserMode;
     ulong  KeUserCallbackDispatcher;
     ulong  PsLoadedModuleList;
@@ -4115,7 +4115,7 @@ struct FIELD_INFO
         ushort Position;
         ushort Size;
     }
-    uint   _bitfield20;
+    uint   _bitfield393;
 }
 
 struct SYM_DUMP_PARAM
@@ -4137,7 +4137,7 @@ struct SYM_DUMP_PARAM
     uint        TypeId;
     uint        TypeSize;
     uint        BufferSize;
-    uint        _bitfield21;
+    uint        _bitfield394;
 }
 
 union POOL_HEADER_SIZE_64
@@ -4285,7 +4285,7 @@ struct DEBUG_POOL_DATA
     {
         struct
         {
-            uint _bitfield22;
+            uint _bitfield395;
         }
         uint AsUlong;
     }
@@ -4399,7 +4399,7 @@ struct OS_INFO
     uint      Revision;
     struct s
     {
-        uint _bitfield23;
+        uint _bitfield396;
     }
     uint      SrvPackNumber;
     uint      ServicePackBuild;
@@ -4472,7 +4472,7 @@ struct OS_INFO_v1
     uint     Suite;
     struct s
     {
-        uint _bitfield24;
+        uint _bitfield397;
     }
     uint     SrvPackNumber;
     CHAR[30] Language;
@@ -4542,7 +4542,7 @@ struct EXT_CAB_XML_DATA
         const(PWSTR) MatchPattern;
         PWSTR        ReturnText;
         uint         ReturnTextSize;
-        uint         _bitfield25;
+        uint         _bitfield398;
         uint         Reserved2;
     }
 }

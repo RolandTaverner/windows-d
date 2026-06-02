@@ -3295,7 +3295,7 @@ struct LDT_ENTRY
         }
         struct Bits
         {
-            uint _bitfield0;
+            uint _bitfield373;
         }
     }
 }
@@ -3368,7 +3368,7 @@ struct WOW64_LDT_ENTRY
         }
         struct Bits
         {
-            uint _bitfield1;
+            uint _bitfield374;
         }
     }
 }
@@ -3435,7 +3435,7 @@ struct XSTATE_CONFIGURATION
         uint ControlFlags;
         struct
         {
-            uint _bitfield2;
+            uint _bitfield375;
         }
     }
     XSTATE_FEATURE[64] Features;
@@ -3726,7 +3726,7 @@ struct IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY
         uint UnwindData;
         struct
         {
-            uint _bitfield3;
+            uint _bitfield376;
         }
     }
 }
@@ -3775,7 +3775,7 @@ struct FPO_DATA
     uint   cbProcSize;
     uint   cdwLocals;
     ushort cdwParams;
-    ushort _bitfield4;
+    ushort _bitfield377;
 }
 
 // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_function_entry
@@ -5662,7 +5662,7 @@ union DUMP_FILE_ATTRIBUTES
 {
     struct
     {
-        uint _bitfield5;
+        uint _bitfield378;
     }
     uint Attributes;
 }
@@ -5808,7 +5808,7 @@ align (1):
     struct
     {
     align (1):
-        ushort _bitfield6;
+        ushort _bitfield379;
     }
     ushort AsUSHORT;
 }
@@ -5817,7 +5817,7 @@ union XPF_MC_BANK_FLAGS
 {
     struct
     {
-        ubyte _bitfield7;
+        ubyte _bitfield380;
     }
     ubyte AsUCHAR;
 }
@@ -5828,7 +5828,7 @@ align (1):
     struct
     {
     align (1):
-        uint _bitfield8;
+        uint _bitfield381;
     }
     uint AsULONG;
 }
@@ -5839,7 +5839,7 @@ align (1):
     struct
     {
     align (1):
-        ushort _bitfield9;
+        ushort _bitfield382;
     }
     ushort AsUSHORT;
 }
@@ -5850,7 +5850,7 @@ align (1):
     struct
     {
     align (1):
-        ushort _bitfield10;
+        ushort _bitfield383;
     }
     ushort AsUSHORT;
 }
@@ -5861,7 +5861,7 @@ align (1):
     struct
     {
     align (1):
-        ushort _bitfield11;
+        ushort _bitfield384;
     }
     ushort AsUSHORT;
 }
@@ -5996,7 +5996,7 @@ struct WHEA_PCI_SLOT_NUMBER
         struct bits
         {
         align (1):
-            uint _bitfield12;
+            uint _bitfield385;
         }
         uint AsULONG;
     }
@@ -6191,7 +6191,7 @@ union DIMM_ADDRESS
     struct Ddr4
     {
     align (1):
-        ulong _bitfield13;
+        ulong _bitfield386;
         uint  Row;
         uint  Column;
         ulong Info;
@@ -6199,7 +6199,7 @@ union DIMM_ADDRESS
     struct Ddr5
     {
     align (1):
-        ulong _bitfield14;
+        ulong _bitfield387;
         uint  Row;
         uint  Column;
         ulong Info;
@@ -6210,7 +6210,7 @@ union PAGE_OFFLINE_VALID_BITS
 {
     struct
     {
-        ubyte _bitfield15;
+        ubyte _bitfield388;
     }
     ubyte AsUINT8;
 }
@@ -6218,13 +6218,13 @@ union PAGE_OFFLINE_VALID_BITS
 struct DIMM_ADDR_VALID_BITS_DDR4
 {
 align (1):
-    uint _bitfield16;
+    uint _bitfield389;
 }
 
 struct DIMM_ADDR_VALID_BITS_DDR5
 {
 align (1):
-    uint _bitfield17;
+    uint _bitfield390;
 }
 
 union DIMM_ADDR_VALID_BITS
