@@ -1,4 +1,5 @@
 /bin
 /.dub
 /.vs
-/x64
+/.vscode
+*.bak

@@ -1,0 +1,6250 @@
+// Written in the D programming language.
+
+module windows.win32.graphics.gdi;
+
+public import windows.core;
+public import windows.win32.foundation : BOOL, CHAR, COLORREF, HANDLE, HGLOBAL,
+                                         HINSTANCE, HMODULE, HWND, LPARAM, POINT,
+                                         POINTL, POINTS, PSTR, PWSTR, RECT, RECTL,
+                                         SIZE, WPARAM;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+
+alias R2_MODE = int;
+enum : int
+{
+    R2_BLACK       = 0x00000001,
+    R2_NOTMERGEPEN = 0x00000002,
+    R2_MASKNOTPEN  = 0x00000003,
+    R2_NOTCOPYPEN  = 0x00000004,
+    R2_MASKPENNOT  = 0x00000005,
+    R2_NOT         = 0x00000006,
+    R2_XORPEN      = 0x00000007,
+    R2_NOTMASKPEN  = 0x00000008,
+    R2_MASKPEN     = 0x00000009,
+    R2_NOTXORPEN   = 0x0000000a,
+    R2_NOP         = 0x0000000b,
+    R2_MERGENOTPEN = 0x0000000c,
+    R2_COPYPEN     = 0x0000000d,
+    R2_MERGEPENNOT = 0x0000000e,
+    R2_MERGEPEN    = 0x0000000f,
+    R2_WHITE       = 0x00000010,
+    R2_LAST        = 0x00000010,
+}
+
+alias RGN_COMBINE_MODE = int;
+enum : int
+{
+    RGN_AND  = 0x00000001,
+    RGN_OR   = 0x00000002,
+    RGN_XOR  = 0x00000003,
+    RGN_DIFF = 0x00000004,
+    RGN_COPY = 0x00000005,
+    RGN_MIN  = 0x00000001,
+    RGN_MAX  = 0x00000005,
+}
+
+alias ETO_OPTIONS = uint;
+enum : uint
+{
+    ETO_OPAQUE            = 0x00000002U,
+    ETO_CLIPPED           = 0x00000004U,
+    ETO_GLYPH_INDEX       = 0x00000010U,
+    ETO_RTLREADING        = 0x00000080U,
+    ETO_NUMERICSLOCAL     = 0x00000400U,
+    ETO_NUMERICSLATIN     = 0x00000800U,
+    ETO_IGNORELANGUAGE    = 0x00001000U,
+    ETO_PDY               = 0x00002000U,
+    ETO_REVERSE_INDEX_MAP = 0x00010000U,
+}
+
+alias OBJ_TYPE = int;
+enum : int
+{
+    OBJ_PEN         = 0x00000001,
+    OBJ_BRUSH       = 0x00000002,
+    OBJ_DC          = 0x00000003,
+    OBJ_METADC      = 0x00000004,
+    OBJ_PAL         = 0x00000005,
+    OBJ_FONT        = 0x00000006,
+    OBJ_BITMAP      = 0x00000007,
+    OBJ_REGION      = 0x00000008,
+    OBJ_METAFILE    = 0x00000009,
+    OBJ_MEMDC       = 0x0000000a,
+    OBJ_EXTPEN      = 0x0000000b,
+    OBJ_ENHMETADC   = 0x0000000c,
+    OBJ_ENHMETAFILE = 0x0000000d,
+    OBJ_COLORSPACE  = 0x0000000e,
+}
+
+alias DIB_USAGE = uint;
+enum : uint
+{
+    DIB_RGB_COLORS = 0x00000000U,
+    DIB_PAL_COLORS = 0x00000001U,
+}
+
+alias DRAWEDGE_FLAGS = uint;
+enum : uint
+{
+    BDR_RAISEDOUTER = 0x00000001U,
+    BDR_SUNKENOUTER = 0x00000002U,
+    BDR_RAISEDINNER = 0x00000004U,
+    BDR_SUNKENINNER = 0x00000008U,
+    BDR_OUTER       = 0x00000003U,
+    BDR_INNER       = 0x0000000cU,
+    BDR_RAISED      = 0x00000005U,
+    BDR_SUNKEN      = 0x0000000aU,
+    EDGE_RAISED     = 0x00000005U,
+    EDGE_SUNKEN     = 0x0000000aU,
+    EDGE_ETCHED     = 0x00000006U,
+    EDGE_BUMP       = 0x00000009U,
+}
+
+alias DFC_TYPE = uint;
+enum : uint
+{
+    DFC_CAPTION   = 0x00000001U,
+    DFC_MENU      = 0x00000002U,
+    DFC_SCROLL    = 0x00000003U,
+    DFC_BUTTON    = 0x00000004U,
+    DFC_POPUPMENU = 0x00000005U,
+}
+
+alias DFCS_STATE = uint;
+enum : uint
+{
+    DFCS_CAPTIONCLOSE        = 0x00000000U,
+    DFCS_CAPTIONMIN          = 0x00000001U,
+    DFCS_CAPTIONMAX          = 0x00000002U,
+    DFCS_CAPTIONRESTORE      = 0x00000003U,
+    DFCS_CAPTIONHELP         = 0x00000004U,
+    DFCS_MENUARROW           = 0x00000000U,
+    DFCS_MENUCHECK           = 0x00000001U,
+    DFCS_MENUBULLET          = 0x00000002U,
+    DFCS_MENUARROWRIGHT      = 0x00000004U,
+    DFCS_SCROLLUP            = 0x00000000U,
+    DFCS_SCROLLDOWN          = 0x00000001U,
+    DFCS_SCROLLLEFT          = 0x00000002U,
+    DFCS_SCROLLRIGHT         = 0x00000003U,
+    DFCS_SCROLLCOMBOBOX      = 0x00000005U,
+    DFCS_SCROLLSIZEGRIP      = 0x00000008U,
+    DFCS_SCROLLSIZEGRIPRIGHT = 0x00000010U,
+    DFCS_BUTTONCHECK         = 0x00000000U,
+    DFCS_BUTTONRADIOIMAGE    = 0x00000001U,
+    DFCS_BUTTONRADIOMASK     = 0x00000002U,
+    DFCS_BUTTONRADIO         = 0x00000004U,
+    DFCS_BUTTON3STATE        = 0x00000008U,
+    DFCS_BUTTONPUSH          = 0x00000010U,
+    DFCS_INACTIVE            = 0x00000100U,
+    DFCS_PUSHED              = 0x00000200U,
+    DFCS_CHECKED             = 0x00000400U,
+    DFCS_TRANSPARENT         = 0x00000800U,
+    DFCS_HOT                 = 0x00001000U,
+    DFCS_ADJUSTRECT          = 0x00002000U,
+    DFCS_FLAT                = 0x00004000U,
+    DFCS_MONO                = 0x00008000U,
+}
+
+alias CDS_TYPE = uint;
+enum : uint
+{
+    CDS_FULLSCREEN           = 0x00000004U,
+    CDS_GLOBAL               = 0x00000008U,
+    CDS_NORESET              = 0x10000000U,
+    CDS_RESET                = 0x40000000U,
+    CDS_SET_PRIMARY          = 0x00000010U,
+    CDS_TEST                 = 0x00000002U,
+    CDS_UPDATEREGISTRY       = 0x00000001U,
+    CDS_VIDEOPARAMETERS      = 0x00000020U,
+    CDS_ENABLE_UNSAFE_MODES  = 0x00000100U,
+    CDS_DISABLE_UNSAFE_MODES = 0x00000200U,
+    CDS_RESET_EX             = 0x20000000U,
+}
+
+alias DISP_CHANGE = int;
+enum : int
+{
+    DISP_CHANGE_SUCCESSFUL  = 0x00000000,
+    DISP_CHANGE_RESTART     = 0x00000001,
+    DISP_CHANGE_FAILED      = 0xffffffff,
+    DISP_CHANGE_BADMODE     = 0xfffffffe,
+    DISP_CHANGE_NOTUPDATED  = 0xfffffffd,
+    DISP_CHANGE_BADFLAGS    = 0xfffffffc,
+    DISP_CHANGE_BADPARAM    = 0xfffffffb,
+    DISP_CHANGE_BADDUALVIEW = 0xfffffffa,
+}
+
+alias DRAWSTATE_FLAGS = uint;
+enum : uint
+{
+    DST_COMPLEX    = 0x00000000U,
+    DST_TEXT       = 0x00000001U,
+    DST_PREFIXTEXT = 0x00000002U,
+    DST_ICON       = 0x00000003U,
+    DST_BITMAP     = 0x00000004U,
+    DSS_NORMAL     = 0x00000000U,
+    DSS_UNION      = 0x00000010U,
+    DSS_DISABLED   = 0x00000020U,
+    DSS_MONO       = 0x00000080U,
+    DSS_HIDEPREFIX = 0x00000200U,
+    DSS_PREFIXONLY = 0x00000400U,
+    DSS_RIGHT      = 0x00008000U,
+}
+
+alias REDRAW_WINDOW_FLAGS = uint;
+enum : uint
+{
+    RDW_INVALIDATE      = 0x00000001U,
+    RDW_INTERNALPAINT   = 0x00000002U,
+    RDW_ERASE           = 0x00000004U,
+    RDW_VALIDATE        = 0x00000008U,
+    RDW_NOINTERNALPAINT = 0x00000010U,
+    RDW_NOERASE         = 0x00000020U,
+    RDW_NOCHILDREN      = 0x00000040U,
+    RDW_ALLCHILDREN     = 0x00000080U,
+    RDW_UPDATENOW       = 0x00000100U,
+    RDW_ERASENOW        = 0x00000200U,
+    RDW_FRAME           = 0x00000400U,
+    RDW_NOFRAME         = 0x00000800U,
+}
+
+alias ENUM_DISPLAY_SETTINGS_MODE = uint;
+enum : uint
+{
+    ENUM_CURRENT_SETTINGS  = 0xffffffffU,
+    ENUM_REGISTRY_SETTINGS = 0xfffffffeU,
+}
+
+alias TEXT_ALIGN_OPTIONS = uint;
+enum : uint
+{
+    TA_NOUPDATECP = 0x00000000U,
+    TA_UPDATECP   = 0x00000001U,
+    TA_LEFT       = 0x00000000U,
+    TA_RIGHT      = 0x00000002U,
+    TA_CENTER     = 0x00000006U,
+    TA_TOP        = 0x00000000U,
+    TA_BOTTOM     = 0x00000008U,
+    TA_BASELINE   = 0x00000018U,
+    TA_RTLREADING = 0x00000100U,
+    TA_MASK       = 0x0000011fU,
+    VTA_BASELINE  = 0x00000018U,
+    VTA_LEFT      = 0x00000008U,
+    VTA_RIGHT     = 0x00000000U,
+    VTA_CENTER    = 0x00000006U,
+    VTA_BOTTOM    = 0x00000002U,
+    VTA_TOP       = 0x00000000U,
+}
+
+alias PEN_STYLE = int;
+enum : int
+{
+    PS_GEOMETRIC     = 0x00010000,
+    PS_COSMETIC      = 0x00000000,
+    PS_SOLID         = 0x00000000,
+    PS_DASH          = 0x00000001,
+    PS_DOT           = 0x00000002,
+    PS_DASHDOT       = 0x00000003,
+    PS_DASHDOTDOT    = 0x00000004,
+    PS_NULL          = 0x00000005,
+    PS_INSIDEFRAME   = 0x00000006,
+    PS_USERSTYLE     = 0x00000007,
+    PS_ALTERNATE     = 0x00000008,
+    PS_STYLE_MASK    = 0x0000000f,
+    PS_ENDCAP_ROUND  = 0x00000000,
+    PS_ENDCAP_SQUARE = 0x00000100,
+    PS_ENDCAP_FLAT   = 0x00000200,
+    PS_ENDCAP_MASK   = 0x00000f00,
+    PS_JOIN_ROUND    = 0x00000000,
+    PS_JOIN_BEVEL    = 0x00001000,
+    PS_JOIN_MITER    = 0x00002000,
+    PS_JOIN_MASK     = 0x0000f000,
+    PS_TYPE_MASK     = 0x000f0000,
+}
+
+alias TTEMBED_FLAGS = uint;
+enum : uint
+{
+    TTEMBED_EMBEDEUDC    = 0x00000020U,
+    TTEMBED_RAW          = 0x00000000U,
+    TTEMBED_SUBSET       = 0x00000001U,
+    TTEMBED_TTCOMPRESSED = 0x00000004U,
+}
+
+alias DRAW_TEXT_FORMAT = uint;
+enum : uint
+{
+    DT_BOTTOM               = 0x00000008U,
+    DT_CALCRECT             = 0x00000400U,
+    DT_CENTER               = 0x00000001U,
+    DT_EDITCONTROL          = 0x00002000U,
+    DT_END_ELLIPSIS         = 0x00008000U,
+    DT_EXPANDTABS           = 0x00000040U,
+    DT_EXTERNALLEADING      = 0x00000200U,
+    DT_HIDEPREFIX           = 0x00100000U,
+    DT_INTERNAL             = 0x00001000U,
+    DT_LEFT                 = 0x00000000U,
+    DT_MODIFYSTRING         = 0x00010000U,
+    DT_NOCLIP               = 0x00000100U,
+    DT_NOFULLWIDTHCHARBREAK = 0x00080000U,
+    DT_NOPREFIX             = 0x00000800U,
+    DT_PATH_ELLIPSIS        = 0x00004000U,
+    DT_PREFIXONLY           = 0x00200000U,
+    DT_RIGHT                = 0x00000002U,
+    DT_RTLREADING           = 0x00020000U,
+    DT_SINGLELINE           = 0x00000020U,
+    DT_TABSTOP              = 0x00000080U,
+    DT_TOP                  = 0x00000000U,
+    DT_VCENTER              = 0x00000004U,
+    DT_WORDBREAK            = 0x00000010U,
+    DT_WORD_ELLIPSIS        = 0x00040000U,
+}
+
+alias EMBED_FONT_CHARSET = uint;
+enum : uint
+{
+    CHARSET_UNICODE = 0x00000001U,
+    CHARSET_SYMBOL  = 0x00000002U,
+}
+
+alias GET_DCX_FLAGS = uint;
+enum : uint
+{
+    DCX_WINDOW           = 0x00000001U,
+    DCX_CACHE            = 0x00000002U,
+    DCX_PARENTCLIP       = 0x00000020U,
+    DCX_CLIPSIBLINGS     = 0x00000010U,
+    DCX_CLIPCHILDREN     = 0x00000008U,
+    DCX_NORESETATTRS     = 0x00000004U,
+    DCX_LOCKWINDOWUPDATE = 0x00000400U,
+    DCX_EXCLUDERGN       = 0x00000040U,
+    DCX_INTERSECTRGN     = 0x00000080U,
+    DCX_INTERSECTUPDATE  = 0x00000200U,
+    DCX_VALIDATE         = 0x00200000U,
+}
+
+alias GET_GLYPH_OUTLINE_FORMAT = uint;
+enum : uint
+{
+    GGO_BEZIER       = 0x00000003U,
+    GGO_BITMAP       = 0x00000001U,
+    GGO_GLYPH_INDEX  = 0x00000080U,
+    GGO_GRAY2_BITMAP = 0x00000004U,
+    GGO_GRAY4_BITMAP = 0x00000005U,
+    GGO_GRAY8_BITMAP = 0x00000006U,
+    GGO_METRICS      = 0x00000000U,
+    GGO_NATIVE       = 0x00000002U,
+    GGO_UNHINTED     = 0x00000100U,
+}
+
+alias SET_BOUNDS_RECT_FLAGS = uint;
+enum : uint
+{
+    DCB_ACCUMULATE = 0x00000002U,
+    DCB_DISABLE    = 0x00000008U,
+    DCB_ENABLE     = 0x00000004U,
+    DCB_RESET      = 0x00000001U,
+}
+
+alias GET_STOCK_OBJECT_FLAGS = int;
+enum : int
+{
+    BLACK_BRUSH         = 0x00000004,
+    DKGRAY_BRUSH        = 0x00000003,
+    DC_BRUSH            = 0x00000012,
+    GRAY_BRUSH          = 0x00000002,
+    HOLLOW_BRUSH        = 0x00000005,
+    LTGRAY_BRUSH        = 0x00000001,
+    NULL_BRUSH          = 0x00000005,
+    WHITE_BRUSH         = 0x00000000,
+    BLACK_PEN           = 0x00000007,
+    DC_PEN              = 0x00000013,
+    NULL_PEN            = 0x00000008,
+    WHITE_PEN           = 0x00000006,
+    ANSI_FIXED_FONT     = 0x0000000b,
+    ANSI_VAR_FONT       = 0x0000000c,
+    DEVICE_DEFAULT_FONT = 0x0000000e,
+    DEFAULT_GUI_FONT    = 0x00000011,
+    OEM_FIXED_FONT      = 0x0000000a,
+    SYSTEM_FONT         = 0x0000000d,
+    SYSTEM_FIXED_FONT   = 0x00000010,
+    DEFAULT_PALETTE     = 0x0000000f,
+}
+
+alias MODIFY_WORLD_TRANSFORM_MODE = uint;
+enum : uint
+{
+    MWT_IDENTITY      = 0x00000001U,
+    MWT_LEFTMULTIPLY  = 0x00000002U,
+    MWT_RIGHTMULTIPLY = 0x00000003U,
+}
+
+alias FONT_CLIP_PRECISION = ubyte;
+enum : ubyte
+{
+    CLIP_DEFAULT_PRECIS   = cast(ubyte) 0x00,
+    CLIP_CHARACTER_PRECIS = cast(ubyte) 0x01,
+    CLIP_STROKE_PRECIS    = cast(ubyte) 0x02,
+    CLIP_MASK             = cast(ubyte) 0x0f,
+    CLIP_LH_ANGLES        = cast(ubyte) 0x10,
+    CLIP_TT_ALWAYS        = cast(ubyte) 0x20,
+    CLIP_DFA_DISABLE      = cast(ubyte) 0x40,
+    CLIP_EMBEDDED         = cast(ubyte) 0x80,
+    CLIP_DFA_OVERRIDE     = cast(ubyte) 0x40,
+}
+
+alias CREATE_POLYGON_RGN_MODE = int;
+enum : int
+{
+    ALTERNATE = 0x00000001,
+    WINDING   = 0x00000002,
+}
+
+alias EMBEDDED_FONT_PRIV_STATUS = uint;
+enum : uint
+{
+    EMBED_PREVIEWPRINT = 0x00000001U,
+    EMBED_EDITABLE     = 0x00000002U,
+    EMBED_INSTALLABLE  = 0x00000003U,
+    EMBED_NOEMBEDDING  = 0x00000004U,
+}
+
+alias MONITOR_FROM_FLAGS = uint;
+enum : uint
+{
+    MONITOR_DEFAULTTONEAREST = 0x00000002U,
+    MONITOR_DEFAULTTONULL    = 0x00000000U,
+    MONITOR_DEFAULTTOPRIMARY = 0x00000001U,
+}
+
+alias FONT_RESOURCE_CHARACTERISTICS = uint;
+enum : uint
+{
+    FR_PRIVATE  = 0x00000010U,
+    FR_NOT_ENUM = 0x00000020U,
+}
+
+alias DC_LAYOUT = uint;
+enum : uint
+{
+    LAYOUT_BITMAPORIENTATIONPRESERVED = 0x00000008U,
+    LAYOUT_RTL                        = 0x00000001U,
+}
+
+alias GET_DEVICE_CAPS_INDEX = uint;
+enum : uint
+{
+    DRIVERVERSION   = 0x00000000U,
+    TECHNOLOGY      = 0x00000002U,
+    HORZSIZE        = 0x00000004U,
+    VERTSIZE        = 0x00000006U,
+    HORZRES         = 0x00000008U,
+    VERTRES         = 0x0000000aU,
+    BITSPIXEL       = 0x0000000cU,
+    PLANES          = 0x0000000eU,
+    NUMBRUSHES      = 0x00000010U,
+    NUMPENS         = 0x00000012U,
+    NUMMARKERS      = 0x00000014U,
+    NUMFONTS        = 0x00000016U,
+    NUMCOLORS       = 0x00000018U,
+    PDEVICESIZE     = 0x0000001aU,
+    CURVECAPS       = 0x0000001cU,
+    LINECAPS        = 0x0000001eU,
+    POLYGONALCAPS   = 0x00000020U,
+    TEXTCAPS        = 0x00000022U,
+    CLIPCAPS        = 0x00000024U,
+    RASTERCAPS      = 0x00000026U,
+    ASPECTX         = 0x00000028U,
+    ASPECTY         = 0x0000002aU,
+    ASPECTXY        = 0x0000002cU,
+    LOGPIXELSX      = 0x00000058U,
+    LOGPIXELSY      = 0x0000005aU,
+    SIZEPALETTE     = 0x00000068U,
+    NUMRESERVED     = 0x0000006aU,
+    COLORRES        = 0x0000006cU,
+    PHYSICALWIDTH   = 0x0000006eU,
+    PHYSICALHEIGHT  = 0x0000006fU,
+    PHYSICALOFFSETX = 0x00000070U,
+    PHYSICALOFFSETY = 0x00000071U,
+    SCALINGFACTORX  = 0x00000072U,
+    SCALINGFACTORY  = 0x00000073U,
+    VREFRESH        = 0x00000074U,
+    DESKTOPVERTRES  = 0x00000075U,
+    DESKTOPHORZRES  = 0x00000076U,
+    BLTALIGNMENT    = 0x00000077U,
+    SHADEBLENDCAPS  = 0x00000078U,
+    COLORMGMTCAPS   = 0x00000079U,
+}
+
+alias FONT_OUTPUT_PRECISION = ubyte;
+enum : ubyte
+{
+    OUT_DEFAULT_PRECIS        = cast(ubyte) 0x00,
+    OUT_STRING_PRECIS         = cast(ubyte) 0x01,
+    OUT_CHARACTER_PRECIS      = cast(ubyte) 0x02,
+    OUT_STROKE_PRECIS         = cast(ubyte) 0x03,
+    OUT_TT_PRECIS             = cast(ubyte) 0x04,
+    OUT_DEVICE_PRECIS         = cast(ubyte) 0x05,
+    OUT_RASTER_PRECIS         = cast(ubyte) 0x06,
+    OUT_TT_ONLY_PRECIS        = cast(ubyte) 0x07,
+    OUT_OUTLINE_PRECIS        = cast(ubyte) 0x08,
+    OUT_SCREEN_OUTLINE_PRECIS = cast(ubyte) 0x09,
+    OUT_PS_ONLY_PRECIS        = cast(ubyte) 0x0a,
+}
+
+alias FONT_WEIGHT = uint;
+enum : uint
+{
+    FW_DONTCARE   = 0x00000000U,
+    FW_THIN       = 0x00000064U,
+    FW_EXTRALIGHT = 0x000000c8U,
+    FW_LIGHT      = 0x0000012cU,
+    FW_NORMAL     = 0x00000190U,
+    FW_MEDIUM     = 0x000001f4U,
+    FW_SEMIBOLD   = 0x00000258U,
+    FW_BOLD       = 0x000002bcU,
+    FW_EXTRABOLD  = 0x00000320U,
+    FW_HEAVY      = 0x00000384U,
+    FW_ULTRALIGHT = 0x000000c8U,
+    FW_REGULAR    = 0x00000190U,
+    FW_DEMIBOLD   = 0x00000258U,
+    FW_ULTRABOLD  = 0x00000320U,
+    FW_BLACK      = 0x00000384U,
+}
+
+alias FONT_CHARSET = ubyte;
+enum : ubyte
+{
+    ANSI_CHARSET        = cast(ubyte) 0x00,
+    DEFAULT_CHARSET     = cast(ubyte) 0x01,
+    SYMBOL_CHARSET      = cast(ubyte) 0x02,
+    SHIFTJIS_CHARSET    = cast(ubyte) 0x80,
+    HANGEUL_CHARSET     = cast(ubyte) 0x81,
+    HANGUL_CHARSET      = cast(ubyte) 0x81,
+    GB2312_CHARSET      = cast(ubyte) 0x86,
+    CHINESEBIG5_CHARSET = cast(ubyte) 0x88,
+    OEM_CHARSET         = cast(ubyte) 0xff,
+    JOHAB_CHARSET       = cast(ubyte) 0x82,
+    HEBREW_CHARSET      = cast(ubyte) 0xb1,
+    ARABIC_CHARSET      = cast(ubyte) 0xb2,
+    GREEK_CHARSET       = cast(ubyte) 0xa1,
+    TURKISH_CHARSET     = cast(ubyte) 0xa2,
+    VIETNAMESE_CHARSET  = cast(ubyte) 0xa3,
+    THAI_CHARSET        = cast(ubyte) 0xde,
+    EASTEUROPE_CHARSET  = cast(ubyte) 0xee,
+    RUSSIAN_CHARSET     = cast(ubyte) 0xcc,
+    MAC_CHARSET         = cast(ubyte) 0x4d,
+    BALTIC_CHARSET      = cast(ubyte) 0xba,
+}
+
+alias ARC_DIRECTION = int;
+enum : int
+{
+    AD_COUNTERCLOCKWISE = 0x00000001,
+    AD_CLOCKWISE        = 0x00000002,
+}
+
+alias TTLOAD_EMBEDDED_FONT_STATUS = uint;
+enum : uint
+{
+    TTLOAD_FONT_SUBSETTED     = 0x00000001U,
+    TTLOAD_FONT_IN_SYSSTARTUP = 0x00000002U,
+}
+
+alias STRETCH_BLT_MODE = int;
+enum : int
+{
+    BLACKONWHITE        = 0x00000001,
+    COLORONCOLOR        = 0x00000003,
+    HALFTONE            = 0x00000004,
+    STRETCH_ANDSCANS    = 0x00000001,
+    STRETCH_DELETESCANS = 0x00000003,
+    STRETCH_HALFTONE    = 0x00000004,
+    STRETCH_ORSCANS     = 0x00000002,
+    WHITEONBLACK        = 0x00000002,
+}
+
+alias FONT_QUALITY = ubyte;
+enum : ubyte
+{
+    DEFAULT_QUALITY        = cast(ubyte) 0x00,
+    DRAFT_QUALITY          = cast(ubyte) 0x01,
+    PROOF_QUALITY          = cast(ubyte) 0x02,
+    NONANTIALIASED_QUALITY = cast(ubyte) 0x03,
+    ANTIALIASED_QUALITY    = cast(ubyte) 0x04,
+    CLEARTYPE_QUALITY      = cast(ubyte) 0x05,
+}
+
+alias BACKGROUND_MODE = uint;
+enum : uint
+{
+    OPAQUE      = 0x00000002U,
+    TRANSPARENT = 0x00000001U,
+}
+
+alias GET_CHARACTER_PLACEMENT_FLAGS = uint;
+enum : uint
+{
+    GCP_CLASSIN         = 0x00080000U,
+    GCP_DIACRITIC       = 0x00000100U,
+    GCP_DISPLAYZWG      = 0x00400000U,
+    GCP_GLYPHSHAPE      = 0x00000010U,
+    GCP_JUSTIFY         = 0x00010000U,
+    GCP_KASHIDA         = 0x00000400U,
+    GCP_LIGATE          = 0x00000020U,
+    GCP_MAXEXTENT       = 0x00100000U,
+    GCP_NEUTRALOVERRIDE = 0x02000000U,
+    GCP_NUMERICOVERRIDE = 0x01000000U,
+    GCP_NUMERICSLATIN   = 0x04000000U,
+    GCP_NUMERICSLOCAL   = 0x08000000U,
+    GCP_REORDER         = 0x00000002U,
+    GCP_SYMSWAPOFF      = 0x00800000U,
+    GCP_USEKERNING      = 0x00000008U,
+}
+
+alias DRAW_EDGE_FLAGS = uint;
+enum : uint
+{
+    BF_ADJUST                  = 0x00002000U,
+    BF_BOTTOM                  = 0x00000008U,
+    BF_BOTTOMLEFT              = 0x00000009U,
+    BF_BOTTOMRIGHT             = 0x0000000cU,
+    BF_DIAGONAL                = 0x00000010U,
+    BF_DIAGONAL_ENDBOTTOMLEFT  = 0x00000019U,
+    BF_DIAGONAL_ENDBOTTOMRIGHT = 0x0000001cU,
+    BF_DIAGONAL_ENDTOPLEFT     = 0x00000013U,
+    BF_DIAGONAL_ENDTOPRIGHT    = 0x00000016U,
+    BF_FLAT                    = 0x00004000U,
+    BF_LEFT                    = 0x00000001U,
+    BF_MIDDLE                  = 0x00000800U,
+    BF_MONO                    = 0x00008000U,
+    BF_RECT                    = 0x0000000fU,
+    BF_RIGHT                   = 0x00000004U,
+    BF_SOFT                    = 0x00001000U,
+    BF_TOP                     = 0x00000002U,
+    BF_TOPLEFT                 = 0x00000003U,
+    BF_TOPRIGHT                = 0x00000006U,
+}
+
+alias SYS_COLOR_INDEX = int;
+enum : int
+{
+    COLOR_SCROLLBAR               = 0x00000000,
+    COLOR_BACKGROUND              = 0x00000001,
+    COLOR_ACTIVECAPTION           = 0x00000002,
+    COLOR_INACTIVECAPTION         = 0x00000003,
+    COLOR_MENU                    = 0x00000004,
+    COLOR_WINDOW                  = 0x00000005,
+    COLOR_WINDOWFRAME             = 0x00000006,
+    COLOR_MENUTEXT                = 0x00000007,
+    COLOR_WINDOWTEXT              = 0x00000008,
+    COLOR_CAPTIONTEXT             = 0x00000009,
+    COLOR_ACTIVEBORDER            = 0x0000000a,
+    COLOR_INACTIVEBORDER          = 0x0000000b,
+    COLOR_APPWORKSPACE            = 0x0000000c,
+    COLOR_HIGHLIGHT               = 0x0000000d,
+    COLOR_HIGHLIGHTTEXT           = 0x0000000e,
+    COLOR_BTNFACE                 = 0x0000000f,
+    COLOR_BTNSHADOW               = 0x00000010,
+    COLOR_GRAYTEXT                = 0x00000011,
+    COLOR_BTNTEXT                 = 0x00000012,
+    COLOR_INACTIVECAPTIONTEXT     = 0x00000013,
+    COLOR_BTNHIGHLIGHT            = 0x00000014,
+    COLOR_3DDKSHADOW              = 0x00000015,
+    COLOR_3DLIGHT                 = 0x00000016,
+    COLOR_INFOTEXT                = 0x00000017,
+    COLOR_INFOBK                  = 0x00000018,
+    COLOR_HOTLIGHT                = 0x0000001a,
+    COLOR_GRADIENTACTIVECAPTION   = 0x0000001b,
+    COLOR_GRADIENTINACTIVECAPTION = 0x0000001c,
+    COLOR_MENUHILIGHT             = 0x0000001d,
+    COLOR_MENUBAR                 = 0x0000001e,
+    COLOR_DESKTOP                 = 0x00000001,
+    COLOR_3DFACE                  = 0x0000000f,
+    COLOR_3DSHADOW                = 0x00000010,
+    COLOR_3DHIGHLIGHT             = 0x00000014,
+    COLOR_3DHILIGHT               = 0x00000014,
+    COLOR_BTNHILIGHT              = 0x00000014,
+}
+
+alias FONT_LICENSE_PRIVS = uint;
+enum : uint
+{
+    LICENSE_PREVIEWPRINT = 0x00000004U,
+    LICENSE_EDITABLE     = 0x00000008U,
+    LICENSE_INSTALLABLE  = 0x00000000U,
+    LICENSE_NOEMBEDDING  = 0x00000002U,
+    LICENSE_DEFAULT      = 0x00000000U,
+}
+
+alias GRADIENT_FILL = uint;
+enum : uint
+{
+    GRADIENT_FILL_RECT_H   = 0x00000000U,
+    GRADIENT_FILL_RECT_V   = 0x00000001U,
+    GRADIENT_FILL_TRIANGLE = 0x00000002U,
+}
+
+alias CREATE_FONT_PACKAGE_SUBSET_ENCODING = short;
+enum : short
+{
+    TTFCFP_STD_MAC_CHAR_SET = cast(short) 0x0000,
+    TTFCFP_SYMBOL_CHAR_SET  = cast(short) 0x0000,
+    TTFCFP_UNICODE_CHAR_SET = cast(short) 0x0001,
+}
+
+alias EXT_FLOOD_FILL_TYPE = uint;
+enum : uint
+{
+    FLOODFILLBORDER  = 0x00000000U,
+    FLOODFILLSURFACE = 0x00000001U,
+}
+
+alias HATCH_BRUSH_STYLE = int;
+enum : int
+{
+    HS_BDIAGONAL  = 0x00000003,
+    HS_CROSS      = 0x00000004,
+    HS_DIAGCROSS  = 0x00000005,
+    HS_FDIAGONAL  = 0x00000002,
+    HS_HORIZONTAL = 0x00000000,
+    HS_VERTICAL   = 0x00000001,
+}
+
+alias DRAW_CAPTION_FLAGS = uint;
+enum : uint
+{
+    DC_ACTIVE   = 0x00000001U,
+    DC_BUTTONS  = 0x00001000U,
+    DC_GRADIENT = 0x00000020U,
+    DC_ICON     = 0x00000004U,
+    DC_INBUTTON = 0x00000010U,
+    DC_SMALLCAP = 0x00000002U,
+    DC_TEXT     = 0x00000008U,
+}
+
+alias SYSTEM_PALETTE_USE = uint;
+enum : uint
+{
+    SYSPAL_NOSTATIC    = 0x00000002U,
+    SYSPAL_NOSTATIC256 = 0x00000003U,
+    SYSPAL_STATIC      = 0x00000001U,
+}
+
+alias GRAPHICS_MODE = int;
+enum : int
+{
+    GM_COMPATIBLE = 0x00000001,
+    GM_ADVANCED   = 0x00000002,
+}
+
+alias FONT_PITCH = ubyte;
+enum : ubyte
+{
+    DEFAULT_PITCH  = cast(ubyte) 0x00,
+    FIXED_PITCH    = cast(ubyte) 0x01,
+    VARIABLE_PITCH = cast(ubyte) 0x02,
+}
+
+alias FONT_FAMILY = ubyte;
+enum : ubyte
+{
+    FF_DECORATIVE = cast(ubyte) 0x50,
+    FF_DONTCARE   = cast(ubyte) 0x00,
+    FF_MODERN     = cast(ubyte) 0x30,
+    FF_ROMAN      = cast(ubyte) 0x10,
+    FF_SCRIPT     = cast(ubyte) 0x40,
+    FF_SWISS      = cast(ubyte) 0x20,
+}
+
+alias ROP_CODE = uint;
+enum : uint
+{
+    BLACKNESS      = 0x00000042U,
+    NOTSRCERASE    = 0x001100a6U,
+    NOTSRCCOPY     = 0x00330008U,
+    SRCERASE       = 0x00440328U,
+    DSTINVERT      = 0x00550009U,
+    PATINVERT      = 0x005a0049U,
+    SRCINVERT      = 0x00660046U,
+    SRCAND         = 0x008800c6U,
+    MERGEPAINT     = 0x00bb0226U,
+    MERGECOPY      = 0x00c000caU,
+    SRCCOPY        = 0x00cc0020U,
+    SRCPAINT       = 0x00ee0086U,
+    PATCOPY        = 0x00f00021U,
+    PATPAINT       = 0x00fb0a09U,
+    WHITENESS      = 0x00ff0062U,
+    CAPTUREBLT     = 0x40000000U,
+    NOMIRRORBITMAP = 0x80000000U,
+}
+
+alias CREATE_FONT_PACKAGE_SUBSET_PLATFORM = short;
+enum : short
+{
+    TTFCFP_UNICODE_PLATFORMID = cast(short) 0x0000,
+    TTFCFP_ISO_PLATFORMID     = cast(short) 0x0002,
+}
+
+alias HDC_MAP_MODE = int;
+enum : int
+{
+    MM_ANISOTROPIC = 0x00000008,
+    MM_HIENGLISH   = 0x00000005,
+    MM_HIMETRIC    = 0x00000003,
+    MM_ISOTROPIC   = 0x00000007,
+    MM_LOENGLISH   = 0x00000004,
+    MM_LOMETRIC    = 0x00000002,
+    MM_TEXT        = 0x00000001,
+    MM_TWIPS       = 0x00000006,
+}
+
+alias GDI_REGION_TYPE = int;
+enum : int
+{
+    RGN_ERROR     = 0x00000000,
+    NULLREGION    = 0x00000001,
+    SIMPLEREGION  = 0x00000002,
+    COMPLEXREGION = 0x00000003,
+}
+
+alias BRUSH_STYLE = uint;
+enum : uint
+{
+    BS_SOLID         = 0x00000000U,
+    BS_NULL          = 0x00000001U,
+    BS_HOLLOW        = 0x00000001U,
+    BS_HATCHED       = 0x00000002U,
+    BS_PATTERN       = 0x00000003U,
+    BS_INDEXED       = 0x00000004U,
+    BS_DIBPATTERN    = 0x00000005U,
+    BS_DIBPATTERNPT  = 0x00000006U,
+    BS_PATTERN8X8    = 0x00000007U,
+    BS_DIBPATTERN8X8 = 0x00000008U,
+    BS_MONOPATTERN   = 0x00000009U,
+}
+
+alias TMPF_FLAGS = ubyte;
+enum : ubyte
+{
+    TMPF_FIXED_PITCH = cast(ubyte) 0x01,
+    TMPF_VECTOR      = cast(ubyte) 0x02,
+    TMPF_DEVICE      = cast(ubyte) 0x08,
+    TMPF_TRUETYPE    = cast(ubyte) 0x04,
+}
+
+alias BI_COMPRESSION = uint;
+enum : uint
+{
+    BI_RGB       = 0x00000000U,
+    BI_RLE8      = 0x00000001U,
+    BI_RLE4      = 0x00000002U,
+    BI_BITFIELDS = 0x00000003U,
+    BI_JPEG      = 0x00000004U,
+    BI_PNG       = 0x00000005U,
+}
+
+alias ENHANCED_METAFILE_RECORD_TYPE = uint;
+enum : uint
+{
+    EMR_HEADER                  = 0x00000001U,
+    EMR_POLYBEZIER              = 0x00000002U,
+    EMR_POLYGON                 = 0x00000003U,
+    EMR_POLYLINE                = 0x00000004U,
+    EMR_POLYBEZIERTO            = 0x00000005U,
+    EMR_POLYLINETO              = 0x00000006U,
+    EMR_POLYPOLYLINE            = 0x00000007U,
+    EMR_POLYPOLYGON             = 0x00000008U,
+    EMR_SETWINDOWEXTEX          = 0x00000009U,
+    EMR_SETWINDOWORGEX          = 0x0000000aU,
+    EMR_SETVIEWPORTEXTEX        = 0x0000000bU,
+    EMR_SETVIEWPORTORGEX        = 0x0000000cU,
+    EMR_SETBRUSHORGEX           = 0x0000000dU,
+    EMR_EOF                     = 0x0000000eU,
+    EMR_SETPIXELV               = 0x0000000fU,
+    EMR_SETMAPPERFLAGS          = 0x00000010U,
+    EMR_SETMAPMODE              = 0x00000011U,
+    EMR_SETBKMODE               = 0x00000012U,
+    EMR_SETPOLYFILLMODE         = 0x00000013U,
+    EMR_SETROP2                 = 0x00000014U,
+    EMR_SETSTRETCHBLTMODE       = 0x00000015U,
+    EMR_SETTEXTALIGN            = 0x00000016U,
+    EMR_SETCOLORADJUSTMENT      = 0x00000017U,
+    EMR_SETTEXTCOLOR            = 0x00000018U,
+    EMR_SETBKCOLOR              = 0x00000019U,
+    EMR_OFFSETCLIPRGN           = 0x0000001aU,
+    EMR_MOVETOEX                = 0x0000001bU,
+    EMR_SETMETARGN              = 0x0000001cU,
+    EMR_EXCLUDECLIPRECT         = 0x0000001dU,
+    EMR_INTERSECTCLIPRECT       = 0x0000001eU,
+    EMR_SCALEVIEWPORTEXTEX      = 0x0000001fU,
+    EMR_SCALEWINDOWEXTEX        = 0x00000020U,
+    EMR_SAVEDC                  = 0x00000021U,
+    EMR_RESTOREDC               = 0x00000022U,
+    EMR_SETWORLDTRANSFORM       = 0x00000023U,
+    EMR_MODIFYWORLDTRANSFORM    = 0x00000024U,
+    EMR_SELECTOBJECT            = 0x00000025U,
+    EMR_CREATEPEN               = 0x00000026U,
+    EMR_CREATEBRUSHINDIRECT     = 0x00000027U,
+    EMR_DELETEOBJECT            = 0x00000028U,
+    EMR_ANGLEARC                = 0x00000029U,
+    EMR_ELLIPSE                 = 0x0000002aU,
+    EMR_RECTANGLE               = 0x0000002bU,
+    EMR_ROUNDRECT               = 0x0000002cU,
+    EMR_ARC                     = 0x0000002dU,
+    EMR_CHORD                   = 0x0000002eU,
+    EMR_PIE                     = 0x0000002fU,
+    EMR_SELECTPALETTE           = 0x00000030U,
+    EMR_CREATEPALETTE           = 0x00000031U,
+    EMR_SETPALETTEENTRIES       = 0x00000032U,
+    EMR_RESIZEPALETTE           = 0x00000033U,
+    EMR_REALIZEPALETTE          = 0x00000034U,
+    EMR_EXTFLOODFILL            = 0x00000035U,
+    EMR_LINETO                  = 0x00000036U,
+    EMR_ARCTO                   = 0x00000037U,
+    EMR_POLYDRAW                = 0x00000038U,
+    EMR_SETARCDIRECTION         = 0x00000039U,
+    EMR_SETMITERLIMIT           = 0x0000003aU,
+    EMR_BEGINPATH               = 0x0000003bU,
+    EMR_ENDPATH                 = 0x0000003cU,
+    EMR_CLOSEFIGURE             = 0x0000003dU,
+    EMR_FILLPATH                = 0x0000003eU,
+    EMR_STROKEANDFILLPATH       = 0x0000003fU,
+    EMR_STROKEPATH              = 0x00000040U,
+    EMR_FLATTENPATH             = 0x00000041U,
+    EMR_WIDENPATH               = 0x00000042U,
+    EMR_SELECTCLIPPATH          = 0x00000043U,
+    EMR_ABORTPATH               = 0x00000044U,
+    EMR_GDICOMMENT              = 0x00000046U,
+    EMR_FILLRGN                 = 0x00000047U,
+    EMR_FRAMERGN                = 0x00000048U,
+    EMR_INVERTRGN               = 0x00000049U,
+    EMR_PAINTRGN                = 0x0000004aU,
+    EMR_EXTSELECTCLIPRGN        = 0x0000004bU,
+    EMR_BITBLT                  = 0x0000004cU,
+    EMR_STRETCHBLT              = 0x0000004dU,
+    EMR_MASKBLT                 = 0x0000004eU,
+    EMR_PLGBLT                  = 0x0000004fU,
+    EMR_SETDIBITSTODEVICE       = 0x00000050U,
+    EMR_STRETCHDIBITS           = 0x00000051U,
+    EMR_EXTCREATEFONTINDIRECTW  = 0x00000052U,
+    EMR_EXTTEXTOUTA             = 0x00000053U,
+    EMR_EXTTEXTOUTW             = 0x00000054U,
+    EMR_POLYBEZIER16            = 0x00000055U,
+    EMR_POLYGON16               = 0x00000056U,
+    EMR_POLYLINE16              = 0x00000057U,
+    EMR_POLYBEZIERTO16          = 0x00000058U,
+    EMR_POLYLINETO16            = 0x00000059U,
+    EMR_POLYPOLYLINE16          = 0x0000005aU,
+    EMR_POLYPOLYGON16           = 0x0000005bU,
+    EMR_POLYDRAW16              = 0x0000005cU,
+    EMR_CREATEMONOBRUSH         = 0x0000005dU,
+    EMR_CREATEDIBPATTERNBRUSHPT = 0x0000005eU,
+    EMR_EXTCREATEPEN            = 0x0000005fU,
+    EMR_POLYTEXTOUTA            = 0x00000060U,
+    EMR_POLYTEXTOUTW            = 0x00000061U,
+    EMR_SETICMMODE              = 0x00000062U,
+    EMR_CREATECOLORSPACE        = 0x00000063U,
+    EMR_SETCOLORSPACE           = 0x00000064U,
+    EMR_DELETECOLORSPACE        = 0x00000065U,
+    EMR_GLSRECORD               = 0x00000066U,
+    EMR_GLSBOUNDEDRECORD        = 0x00000067U,
+    EMR_PIXELFORMAT             = 0x00000068U,
+    EMR_RESERVED_105            = 0x00000069U,
+    EMR_RESERVED_106            = 0x0000006aU,
+    EMR_RESERVED_107            = 0x0000006bU,
+    EMR_RESERVED_108            = 0x0000006cU,
+    EMR_RESERVED_109            = 0x0000006dU,
+    EMR_RESERVED_110            = 0x0000006eU,
+    EMR_COLORCORRECTPALETTE     = 0x0000006fU,
+    EMR_SETICMPROFILEA          = 0x00000070U,
+    EMR_SETICMPROFILEW          = 0x00000071U,
+    EMR_ALPHABLEND              = 0x00000072U,
+    EMR_SETLAYOUT               = 0x00000073U,
+    EMR_TRANSPARENTBLT          = 0x00000074U,
+    EMR_RESERVED_117            = 0x00000075U,
+    EMR_GRADIENTFILL            = 0x00000076U,
+    EMR_RESERVED_119            = 0x00000077U,
+    EMR_RESERVED_120            = 0x00000078U,
+    EMR_COLORMATCHTOTARGETW     = 0x00000079U,
+    EMR_CREATECOLORSPACEW       = 0x0000007aU,
+    EMR_MIN                     = 0x00000001U,
+    EMR_MAX                     = 0x0000007aU,
+}
+
+alias DEVMODE_FIELD_FLAGS = uint;
+enum : uint
+{
+    DM_SPECVERSION        = 0x00000401U,
+    DM_ORIENTATION        = 0x00000001U,
+    DM_PAPERSIZE          = 0x00000002U,
+    DM_PAPERLENGTH        = 0x00000004U,
+    DM_PAPERWIDTH         = 0x00000008U,
+    DM_SCALE              = 0x00000010U,
+    DM_POSITION           = 0x00000020U,
+    DM_NUP                = 0x00000040U,
+    DM_DISPLAYORIENTATION = 0x00000080U,
+    DM_COPIES             = 0x00000100U,
+    DM_DEFAULTSOURCE      = 0x00000200U,
+    DM_PRINTQUALITY       = 0x00000400U,
+    DM_COLOR              = 0x00000800U,
+    DM_DUPLEX             = 0x00001000U,
+    DM_YRESOLUTION        = 0x00002000U,
+    DM_TTOPTION           = 0x00004000U,
+    DM_COLLATE            = 0x00008000U,
+    DM_FORMNAME           = 0x00010000U,
+    DM_LOGPIXELS          = 0x00020000U,
+    DM_BITSPERPEL         = 0x00040000U,
+    DM_PELSWIDTH          = 0x00080000U,
+    DM_PELSHEIGHT         = 0x00100000U,
+    DM_DISPLAYFLAGS       = 0x00200000U,
+    DM_DISPLAYFREQUENCY   = 0x00400000U,
+    DM_ICMMETHOD          = 0x00800000U,
+    DM_ICMINTENT          = 0x01000000U,
+    DM_MEDIATYPE          = 0x02000000U,
+    DM_DITHERTYPE         = 0x04000000U,
+    DM_PANNINGWIDTH       = 0x08000000U,
+    DM_PANNINGHEIGHT      = 0x10000000U,
+    DM_DISPLAYFIXEDOUTPUT = 0x20000000U,
+    DM_INTERLACED         = 0x00000002U,
+    DM_UPDATE             = 0x00000001U,
+    DM_COPY               = 0x00000002U,
+    DM_PROMPT             = 0x00000004U,
+    DM_MODIFY             = 0x00000008U,
+    DM_IN_BUFFER          = 0x00000008U,
+    DM_IN_PROMPT          = 0x00000004U,
+    DM_OUT_BUFFER         = 0x00000002U,
+    DM_OUT_DEFAULT        = 0x00000001U,
+}
+
+alias DEVMODE_COLOR = short;
+enum : short
+{
+    DMCOLOR_MONOCHROME = cast(short) 0x0001,
+    DMCOLOR_COLOR      = cast(short) 0x0002,
+}
+
+alias DEVMODE_DUPLEX = short;
+enum : short
+{
+    DMDUP_SIMPLEX    = cast(short) 0x0001,
+    DMDUP_VERTICAL   = cast(short) 0x0002,
+    DMDUP_HORIZONTAL = cast(short) 0x0003,
+}
+
+alias DEVMODE_COLLATE = short;
+enum : short
+{
+    DMCOLLATE_FALSE = cast(short) 0x0000,
+    DMCOLLATE_TRUE  = cast(short) 0x0001,
+}
+
+alias DEVMODE_DISPLAY_ORIENTATION = uint;
+enum : uint
+{
+    DMDO_DEFAULT = 0x00000000U,
+    DMDO_90      = 0x00000001U,
+    DMDO_180     = 0x00000002U,
+    DMDO_270     = 0x00000003U,
+}
+
+alias DEVMODE_DISPLAY_FIXED_OUTPUT = uint;
+enum : uint
+{
+    DMDFO_DEFAULT = 0x00000000U,
+    DMDFO_STRETCH = 0x00000001U,
+    DMDFO_CENTER  = 0x00000002U,
+}
+
+alias DEVMODE_TRUETYPE_OPTION = short;
+enum : short
+{
+    DMTT_BITMAP           = cast(short) 0x0001,
+    DMTT_DOWNLOAD         = cast(short) 0x0002,
+    DMTT_SUBDEV           = cast(short) 0x0003,
+    DMTT_DOWNLOAD_OUTLINE = cast(short) 0x0004,
+}
+
+alias PAN_FAMILY_TYPE = ubyte;
+enum : ubyte
+{
+    PAN_FAMILY_ANY          = cast(ubyte) 0x00,
+    PAN_FAMILY_NO_FIT       = cast(ubyte) 0x01,
+    PAN_FAMILY_TEXT_DISPLAY = cast(ubyte) 0x02,
+    PAN_FAMILY_SCRIPT       = cast(ubyte) 0x03,
+    PAN_FAMILY_DECORATIVE   = cast(ubyte) 0x04,
+    PAN_FAMILY_PICTORIAL    = cast(ubyte) 0x05,
+}
+
+alias PAN_SERIF_STYLE = ubyte;
+enum : ubyte
+{
+    PAN_SERIF_ANY                = cast(ubyte) 0x00,
+    PAN_SERIF_NO_FIT             = cast(ubyte) 0x01,
+    PAN_SERIF_COVE               = cast(ubyte) 0x02,
+    PAN_SERIF_OBTUSE_COVE        = cast(ubyte) 0x03,
+    PAN_SERIF_SQUARE_COVE        = cast(ubyte) 0x04,
+    PAN_SERIF_OBTUSE_SQUARE_COVE = cast(ubyte) 0x05,
+    PAN_SERIF_SQUARE             = cast(ubyte) 0x06,
+    PAN_SERIF_THIN               = cast(ubyte) 0x07,
+    PAN_SERIF_BONE               = cast(ubyte) 0x08,
+    PAN_SERIF_EXAGGERATED        = cast(ubyte) 0x09,
+    PAN_SERIF_TRIANGLE           = cast(ubyte) 0x0a,
+    PAN_SERIF_NORMAL_SANS        = cast(ubyte) 0x0b,
+    PAN_SERIF_OBTUSE_SANS        = cast(ubyte) 0x0c,
+    PAN_SERIF_PERP_SANS          = cast(ubyte) 0x0d,
+    PAN_SERIF_FLARED             = cast(ubyte) 0x0e,
+    PAN_SERIF_ROUNDED            = cast(ubyte) 0x0f,
+}
+
+alias PAN_WEIGHT = ubyte;
+enum : ubyte
+{
+    PAN_WEIGHT_ANY        = cast(ubyte) 0x00,
+    PAN_WEIGHT_NO_FIT     = cast(ubyte) 0x01,
+    PAN_WEIGHT_INDEX      = cast(ubyte) 0x02,
+    PAN_WEIGHT_VERY_LIGHT = cast(ubyte) 0x02,
+    PAN_WEIGHT_LIGHT      = cast(ubyte) 0x03,
+    PAN_WEIGHT_THIN       = cast(ubyte) 0x04,
+    PAN_WEIGHT_BOOK       = cast(ubyte) 0x05,
+    PAN_WEIGHT_MEDIUM     = cast(ubyte) 0x06,
+    PAN_WEIGHT_DEMI       = cast(ubyte) 0x07,
+    PAN_WEIGHT_BOLD       = cast(ubyte) 0x08,
+    PAN_WEIGHT_HEAVY      = cast(ubyte) 0x09,
+    PAN_WEIGHT_BLACK      = cast(ubyte) 0x0a,
+    PAN_WEIGHT_NORD       = cast(ubyte) 0x0b,
+}
+
+alias PAN_STROKE_VARIATION = ubyte;
+enum : ubyte
+{
+    PAN_STROKE_ANY          = cast(ubyte) 0x00,
+    PAN_STROKE_NO_FIT       = cast(ubyte) 0x01,
+    PAN_STROKE_GRADUAL_DIAG = cast(ubyte) 0x02,
+    PAN_STROKE_GRADUAL_TRAN = cast(ubyte) 0x03,
+    PAN_STROKE_GRADUAL_VERT = cast(ubyte) 0x04,
+    PAN_STROKE_GRADUAL_HORZ = cast(ubyte) 0x05,
+    PAN_STROKE_RAPID_VERT   = cast(ubyte) 0x06,
+    PAN_STROKE_RAPID_HORZ   = cast(ubyte) 0x07,
+    PAN_STROKE_INSTANT_VERT = cast(ubyte) 0x08,
+}
+
+alias PAN_PROPORTION = ubyte;
+enum : ubyte
+{
+    PAN_PROP_ANY            = cast(ubyte) 0x00,
+    PAN_PROP_NO_FIT         = cast(ubyte) 0x01,
+    PAN_PROP_OLD_STYLE      = cast(ubyte) 0x02,
+    PAN_PROP_MODERN         = cast(ubyte) 0x03,
+    PAN_PROP_EVEN_WIDTH     = cast(ubyte) 0x04,
+    PAN_PROP_EXPANDED       = cast(ubyte) 0x05,
+    PAN_PROP_CONDENSED      = cast(ubyte) 0x06,
+    PAN_PROP_VERY_EXPANDED  = cast(ubyte) 0x07,
+    PAN_PROP_VERY_CONDENSED = cast(ubyte) 0x08,
+    PAN_PROP_MONOSPACED     = cast(ubyte) 0x09,
+}
+
+alias PAN_CONTRAST = ubyte;
+enum : ubyte
+{
+    PAN_CONTRAST_ANY         = cast(ubyte) 0x00,
+    PAN_CONTRAST_NO_FIT      = cast(ubyte) 0x01,
+    PAN_CONTRAST_INDEX       = cast(ubyte) 0x04,
+    PAN_CONTRAST_NONE        = cast(ubyte) 0x02,
+    PAN_CONTRAST_VERY_LOW    = cast(ubyte) 0x03,
+    PAN_CONTRAST_LOW         = cast(ubyte) 0x04,
+    PAN_CONTRAST_MEDIUM_LOW  = cast(ubyte) 0x05,
+    PAN_CONTRAST_MEDIUM      = cast(ubyte) 0x06,
+    PAN_CONTRAST_MEDIUM_HIGH = cast(ubyte) 0x07,
+    PAN_CONTRAST_HIGH        = cast(ubyte) 0x08,
+    PAN_CONTRAST_VERY_HIGH   = cast(ubyte) 0x09,
+}
+
+alias PAN_ARM_STYLE = ubyte;
+enum : ubyte
+{
+    PAN_ARM_ANY                    = cast(ubyte) 0x00,
+    PAN_ARM_NO_FIT                 = cast(ubyte) 0x01,
+    PAN_STRAIGHT_ARMS_HORZ         = cast(ubyte) 0x02,
+    PAN_STRAIGHT_ARMS_WEDGE        = cast(ubyte) 0x03,
+    PAN_STRAIGHT_ARMS_VERT         = cast(ubyte) 0x04,
+    PAN_STRAIGHT_ARMS_SINGLE_SERIF = cast(ubyte) 0x05,
+    PAN_STRAIGHT_ARMS_DOUBLE_SERIF = cast(ubyte) 0x06,
+    PAN_BENT_ARMS_HORZ             = cast(ubyte) 0x07,
+    PAN_BENT_ARMS_WEDGE            = cast(ubyte) 0x08,
+    PAN_BENT_ARMS_VERT             = cast(ubyte) 0x09,
+    PAN_BENT_ARMS_SINGLE_SERIF     = cast(ubyte) 0x0a,
+    PAN_BENT_ARMS_DOUBLE_SERIF     = cast(ubyte) 0x0b,
+}
+
+alias PAN_LETT_FORM = ubyte;
+enum : ubyte
+{
+    PAN_LETT_FORM_ANY           = cast(ubyte) 0x00,
+    PAN_LETT_FORM_NO_FIT        = cast(ubyte) 0x01,
+    PAN_LETT_NORMAL_CONTACT     = cast(ubyte) 0x02,
+    PAN_LETT_NORMAL_WEIGHTED    = cast(ubyte) 0x03,
+    PAN_LETT_NORMAL_BOXED       = cast(ubyte) 0x04,
+    PAN_LETT_NORMAL_FLATTENED   = cast(ubyte) 0x05,
+    PAN_LETT_NORMAL_ROUNDED     = cast(ubyte) 0x06,
+    PAN_LETT_NORMAL_OFF_CENTER  = cast(ubyte) 0x07,
+    PAN_LETT_NORMAL_SQUARE      = cast(ubyte) 0x08,
+    PAN_LETT_OBLIQUE_CONTACT    = cast(ubyte) 0x09,
+    PAN_LETT_OBLIQUE_WEIGHTED   = cast(ubyte) 0x0a,
+    PAN_LETT_OBLIQUE_BOXED      = cast(ubyte) 0x0b,
+    PAN_LETT_OBLIQUE_FLATTENED  = cast(ubyte) 0x0c,
+    PAN_LETT_OBLIQUE_ROUNDED    = cast(ubyte) 0x0d,
+    PAN_LETT_OBLIQUE_OFF_CENTER = cast(ubyte) 0x0e,
+    PAN_LETT_OBLIQUE_SQUARE     = cast(ubyte) 0x0f,
+}
+
+alias PAN_MIDLINE = ubyte;
+enum : ubyte
+{
+    PAN_MIDLINE_ANY              = cast(ubyte) 0x00,
+    PAN_MIDLINE_NO_FIT           = cast(ubyte) 0x01,
+    PAN_MIDLINE_INDEX            = cast(ubyte) 0x08,
+    PAN_MIDLINE_STANDARD_TRIMMED = cast(ubyte) 0x02,
+    PAN_MIDLINE_STANDARD_POINTED = cast(ubyte) 0x03,
+    PAN_MIDLINE_STANDARD_SERIFED = cast(ubyte) 0x04,
+    PAN_MIDLINE_HIGH_TRIMMED     = cast(ubyte) 0x05,
+    PAN_MIDLINE_HIGH_POINTED     = cast(ubyte) 0x06,
+    PAN_MIDLINE_HIGH_SERIFED     = cast(ubyte) 0x07,
+    PAN_MIDLINE_CONSTANT_TRIMMED = cast(ubyte) 0x08,
+    PAN_MIDLINE_CONSTANT_POINTED = cast(ubyte) 0x09,
+    PAN_MIDLINE_CONSTANT_SERIFED = cast(ubyte) 0x0a,
+    PAN_MIDLINE_LOW_TRIMMED      = cast(ubyte) 0x0b,
+    PAN_MIDLINE_LOW_POINTED      = cast(ubyte) 0x0c,
+    PAN_MIDLINE_LOW_SERIFED      = cast(ubyte) 0x0d,
+}
+
+alias PAN_XHEIGHT = ubyte;
+enum : ubyte
+{
+    PAN_XHEIGHT_ANY            = cast(ubyte) 0x00,
+    PAN_XHEIGHT_NO_FIT         = cast(ubyte) 0x01,
+    PAN_XHEIGHT_INDEX          = cast(ubyte) 0x09,
+    PAN_XHEIGHT_CONSTANT_SMALL = cast(ubyte) 0x02,
+    PAN_XHEIGHT_CONSTANT_STD   = cast(ubyte) 0x03,
+    PAN_XHEIGHT_CONSTANT_LARGE = cast(ubyte) 0x04,
+    PAN_XHEIGHT_DUCKING_SMALL  = cast(ubyte) 0x05,
+    PAN_XHEIGHT_DUCKING_STD    = cast(ubyte) 0x06,
+    PAN_XHEIGHT_DUCKING_LARGE  = cast(ubyte) 0x07,
+}
+
+alias ENUM_DISPLAY_SETTINGS_FLAGS = uint;
+enum : uint
+{
+    EDS_RAWMODE     = 0x00000002U,
+    EDS_ROTATEDMODE = 0x00000004U,
+}
+
+alias DISPLAY_DEVICE_STATE_FLAGS = uint;
+enum : uint
+{
+    DISPLAY_DEVICE_ATTACHED_TO_DESKTOP = 0x00000001U,
+    DISPLAY_DEVICE_MULTI_DRIVER        = 0x00000002U,
+    DISPLAY_DEVICE_PRIMARY_DEVICE      = 0x00000004U,
+    DISPLAY_DEVICE_MIRRORING_DRIVER    = 0x00000008U,
+    DISPLAY_DEVICE_VGA_COMPATIBLE      = 0x00000010U,
+    DISPLAY_DEVICE_REMOVABLE           = 0x00000020U,
+    DISPLAY_DEVICE_ACC_DRIVER          = 0x00000040U,
+    DISPLAY_DEVICE_MODESPRUNED         = 0x08000000U,
+    DISPLAY_DEVICE_RDPUDD              = 0x01000000U,
+    DISPLAY_DEVICE_REMOTE              = 0x04000000U,
+    DISPLAY_DEVICE_DISCONNECT          = 0x02000000U,
+    DISPLAY_DEVICE_TS_COMPATIBLE       = 0x00200000U,
+    DISPLAY_DEVICE_UNSAFE_MODES_ON     = 0x00080000U,
+    DISPLAY_DEVICE_ACTIVE              = 0x00000001U,
+    DISPLAY_DEVICE_ATTACHED            = 0x00000002U,
+}
+
+alias DISPLAYCONFIG_COLOR_ENCODING = int;
+enum : int
+{
+    DISPLAYCONFIG_COLOR_ENCODING_RGB       = 0x00000000,
+    DISPLAYCONFIG_COLOR_ENCODING_YCBCR444  = 0x00000001,
+    DISPLAYCONFIG_COLOR_ENCODING_YCBCR422  = 0x00000002,
+    DISPLAYCONFIG_COLOR_ENCODING_YCBCR420  = 0x00000003,
+    DISPLAYCONFIG_COLOR_ENCODING_INTENSITY = 0x00000004,
+}
+
+alias DISPLAYCONFIG_ADVANCED_COLOR_MODE = int;
+enum : int
+{
+    DISPLAYCONFIG_ADVANCED_COLOR_MODE_SDR = 0x00000000,
+    DISPLAYCONFIG_ADVANCED_COLOR_MODE_WCG = 0x00000001,
+    DISPLAYCONFIG_ADVANCED_COLOR_MODE_HDR = 0x00000002,
+}
+
+// Constants
+
+
+enum int GDI_ERROR = 0xffffffff;
+enum int ERROR = 0x00000000;
+enum uint MAXSTRETCHBLTMODE = 0x00000004U;
+enum uint POLYFILL_LAST = 0x00000002U;
+
+enum : uint
+{
+    LAYOUT_BTT = 0x00000002U,
+    LAYOUT_VBH = 0x00000004U,
+}
+
+enum uint ASPECT_FILTERING = 0x00000001U;
+
+enum : uint
+{
+    META_SETBKCOLOR      = 0x00000201U,
+    META_SETBKMODE       = 0x00000102U,
+    META_SETMAPMODE      = 0x00000103U,
+    META_SETROP2         = 0x00000104U,
+    META_SETRELABS       = 0x00000105U,
+    META_SETPOLYFILLMODE = 0x00000106U,
+}
+
+enum uint META_SETSTRETCHBLTMODE = 0x00000107U;
+
+enum : uint
+{
+    META_SETTEXTCHAREXTRA     = 0x00000108U,
+    META_SETTEXTCOLOR         = 0x00000209U,
+    META_SETTEXTJUSTIFICATION = 0x0000020aU,
+}
+
+enum : uint
+{
+    META_SETWINDOWORG   = 0x0000020bU,
+    META_SETWINDOWEXT   = 0x0000020cU,
+    META_SETVIEWPORTORG = 0x0000020dU,
+    META_SETVIEWPORTEXT = 0x0000020eU,
+}
+
+enum uint META_OFFSETWINDOWORG = 0x0000020fU;
+enum uint META_SCALEWINDOWEXT = 0x00000410U;
+enum uint META_OFFSETVIEWPORTORG = 0x00000211U;
+enum uint META_SCALEVIEWPORTEXT = 0x00000412U;
+
+enum : uint
+{
+    META_LINETO          = 0x00000213U,
+    META_MOVETO          = 0x00000214U,
+    META_EXCLUDECLIPRECT = 0x00000415U,
+}
+
+enum uint META_INTERSECTCLIPRECT = 0x00000416U;
+
+enum : uint
+{
+    META_ARC       = 0x00000817U,
+    META_ELLIPSE   = 0x00000418U,
+    META_FLOODFILL = 0x00000419U,
+}
+
+enum : uint
+{
+    META_PIE       = 0x0000081aU,
+    META_RECTANGLE = 0x0000041bU,
+    META_ROUNDRECT = 0x0000061cU,
+}
+
+enum : uint
+{
+    META_PATBLT   = 0x0000061dU,
+    META_SAVEDC   = 0x0000001eU,
+    META_SETPIXEL = 0x0000041fU,
+}
+
+enum uint META_OFFSETCLIPRGN = 0x00000220U;
+
+enum : uint
+{
+    META_TEXTOUT    = 0x00000521U,
+    META_BITBLT     = 0x00000922U,
+    META_STRETCHBLT = 0x00000b23U,
+}
+
+enum : uint
+{
+    META_POLYGON  = 0x00000324U,
+    META_POLYLINE = 0x00000325U,
+}
+
+enum : uint
+{
+    META_ESCAPE    = 0x00000626U,
+    META_RESTOREDC = 0x00000127U,
+}
+
+enum uint META_FILLREGION = 0x00000228U;
+enum uint META_FRAMEREGION = 0x00000429U;
+enum uint META_INVERTREGION = 0x0000012aU;
+enum uint META_PAINTREGION = 0x0000012bU;
+
+enum : uint
+{
+    META_SELECTCLIPREGION = 0x0000012cU,
+    META_SELECTOBJECT     = 0x0000012dU,
+    META_SETTEXTALIGN     = 0x0000012eU,
+}
+
+enum : uint
+{
+    META_CHORD          = 0x00000830U,
+    META_SETMAPPERFLAGS = 0x00000231U,
+}
+
+enum uint META_EXTTEXTOUT = 0x00000a32U;
+
+enum : uint
+{
+    META_SETDIBTODEV   = 0x00000d33U,
+    META_SELECTPALETTE = 0x00000234U,
+}
+
+enum uint META_REALIZEPALETTE = 0x00000035U;
+enum uint META_ANIMATEPALETTE = 0x00000436U;
+enum uint META_SETPALENTRIES = 0x00000037U;
+enum uint META_POLYPOLYGON = 0x00000538U;
+enum uint META_RESIZEPALETTE = 0x00000139U;
+
+enum : uint
+{
+    META_DIBBITBLT             = 0x00000940U,
+    META_DIBSTRETCHBLT         = 0x00000b41U,
+    META_DIBCREATEPATTERNBRUSH = 0x00000142U,
+}
+
+enum uint META_STRETCHDIB = 0x00000f43U;
+enum uint META_EXTFLOODFILL = 0x00000548U;
+enum uint META_SETLAYOUT = 0x00000149U;
+enum uint META_DELETEOBJECT = 0x000001f0U;
+
+enum : uint
+{
+    META_CREATEPALETTE       = 0x000000f7U,
+    META_CREATEPATTERNBRUSH  = 0x000001f9U,
+    META_CREATEPENINDIRECT   = 0x000002faU,
+    META_CREATEFONTINDIRECT  = 0x000002fbU,
+    META_CREATEBRUSHINDIRECT = 0x000002fcU,
+    META_CREATEREGION        = 0x000006ffU,
+}
+
+enum uint NEWFRAME = 0x00000001U;
+enum uint ABORTDOC = 0x00000002U;
+enum uint NEXTBAND = 0x00000003U;
+enum uint SETCOLORTABLE = 0x00000004U;
+enum uint GETCOLORTABLE = 0x00000005U;
+enum uint FLUSHOUTPUT = 0x00000006U;
+enum uint DRAFTMODE = 0x00000007U;
+enum uint QUERYESCSUPPORT = 0x00000008U;
+enum uint SETABORTPROC = 0x00000009U;
+enum uint STARTDOC = 0x0000000aU;
+enum uint ENDDOC = 0x0000000bU;
+enum uint GETPHYSPAGESIZE = 0x0000000cU;
+enum uint GETPRINTINGOFFSET = 0x0000000dU;
+enum uint GETSCALINGFACTOR = 0x0000000eU;
+enum uint MFCOMMENT = 0x0000000fU;
+enum uint GETPENWIDTH = 0x00000010U;
+enum uint SETCOPYCOUNT = 0x00000011U;
+enum uint SELECTPAPERSOURCE = 0x00000012U;
+enum uint DEVICEDATA = 0x00000013U;
+enum uint PASSTHROUGH = 0x00000013U;
+
+enum : uint
+{
+    GETTECHNOLGY  = 0x00000014U,
+    GETTECHNOLOGY = 0x00000014U,
+}
+
+enum : uint
+{
+    SETLINECAP  = 0x00000015U,
+    SETLINEJOIN = 0x00000016U,
+}
+
+enum uint SETMITERLIMIT = 0x00000017U;
+enum uint BANDINFO = 0x00000018U;
+enum uint DRAWPATTERNRECT = 0x00000019U;
+
+enum : uint
+{
+    GETVECTORPENSIZE   = 0x0000001aU,
+    GETVECTORBRUSHSIZE = 0x0000001bU,
+}
+
+enum uint ENABLEDUPLEX = 0x0000001cU;
+
+enum : uint
+{
+    GETSETPAPERBINS   = 0x0000001dU,
+    GETSETPRINTORIENT = 0x0000001eU,
+}
+
+enum uint ENUMPAPERBINS = 0x0000001fU;
+enum uint SETDIBSCALING = 0x00000020U;
+enum uint EPSPRINTING = 0x00000021U;
+enum uint ENUMPAPERMETRICS = 0x00000022U;
+enum uint GETSETPAPERMETRICS = 0x00000023U;
+
+enum : uint
+{
+    POSTSCRIPT_DATA   = 0x00000025U,
+    POSTSCRIPT_IGNORE = 0x00000026U,
+}
+
+enum uint MOUSETRAILS = 0x00000027U;
+enum uint GETDEVICEUNITS = 0x0000002aU;
+enum uint GETEXTENDEDTEXTMETRICS = 0x00000100U;
+enum uint GETEXTENTTABLE = 0x00000101U;
+enum uint GETPAIRKERNTABLE = 0x00000102U;
+enum uint GETTRACKKERNTABLE = 0x00000103U;
+enum uint EXTTEXTOUT = 0x00000200U;
+enum uint GETFACENAME = 0x00000201U;
+enum uint DOWNLOADFACE = 0x00000202U;
+enum uint ENABLERELATIVEWIDTHS = 0x00000300U;
+enum uint ENABLEPAIRKERNING = 0x00000301U;
+enum uint SETKERNTRACK = 0x00000302U;
+enum uint SETALLJUSTVALUES = 0x00000303U;
+enum uint SETCHARSET = 0x00000304U;
+enum uint STRETCHBLT = 0x00000800U;
+enum uint METAFILE_DRIVER = 0x00000801U;
+enum uint GETSETSCREENPARAMS = 0x00000c00U;
+enum uint QUERYDIBSUPPORT = 0x00000c01U;
+enum uint BEGIN_PATH = 0x00001000U;
+enum uint CLIP_TO_PATH = 0x00001001U;
+enum uint END_PATH = 0x00001002U;
+enum uint EXT_DEVICE_CAPS = 0x00001003U;
+enum uint RESTORE_CTM = 0x00001004U;
+enum uint SAVE_CTM = 0x00001005U;
+enum uint SET_ARC_DIRECTION = 0x00001006U;
+enum uint SET_BACKGROUND_COLOR = 0x00001007U;
+enum uint SET_POLY_MODE = 0x00001008U;
+enum uint SET_SCREEN_ANGLE = 0x00001009U;
+enum uint SET_SPREAD = 0x0000100aU;
+enum uint TRANSFORM_CTM = 0x0000100bU;
+enum uint SET_CLIP_BOX = 0x0000100cU;
+enum uint SET_BOUNDS = 0x0000100dU;
+enum uint SET_MIRROR_MODE = 0x0000100eU;
+enum uint OPENCHANNEL = 0x0000100eU;
+enum uint DOWNLOADHEADER = 0x0000100fU;
+enum uint CLOSECHANNEL = 0x00001010U;
+enum uint POSTSCRIPT_PASSTHROUGH = 0x00001013U;
+enum uint ENCAPSULATED_POSTSCRIPT = 0x00001014U;
+
+enum : uint
+{
+    POSTSCRIPT_IDENTIFY  = 0x00001015U,
+    POSTSCRIPT_INJECTION = 0x00001016U,
+}
+
+enum uint CHECKJPEGFORMAT = 0x00001017U;
+enum uint CHECKPNGFORMAT = 0x00001018U;
+enum uint GET_PS_FEATURESETTING = 0x00001019U;
+
+enum : uint
+{
+    GDIPLUS_TS_QUERYVER = 0x0000101aU,
+    GDIPLUS_TS_RECORD   = 0x0000101bU,
+}
+
+enum : uint
+{
+    MILCORE_TS_QUERYVER_RESULT_FALSE = 0x00000000U,
+    MILCORE_TS_QUERYVER_RESULT_TRUE  = 0x7fffffffU,
+}
+
+enum uint SPCLPASSTHROUGH2 = 0x000011d8U;
+
+enum : uint
+{
+    PSIDENT_GDICENTRIC = 0x00000000U,
+    PSIDENT_PSCENTRIC  = 0x00000001U,
+}
+
+enum uint PSINJECT_DLFONT = 0xddddddddU;
+
+enum : uint
+{
+    FEATURESETTING_NUP           = 0x00000000U,
+    FEATURESETTING_OUTPUT        = 0x00000001U,
+    FEATURESETTING_PSLEVEL       = 0x00000002U,
+    FEATURESETTING_CUSTPAPER     = 0x00000003U,
+    FEATURESETTING_MIRROR        = 0x00000004U,
+    FEATURESETTING_NEGATIVE      = 0x00000005U,
+    FEATURESETTING_PROTOCOL      = 0x00000006U,
+    FEATURESETTING_PRIVATE_BEGIN = 0x00001000U,
+    FEATURESETTING_PRIVATE_END   = 0x00001fffU,
+}
+
+enum : uint
+{
+    PSPROTOCOL_ASCII  = 0x00000000U,
+    PSPROTOCOL_BCP    = 0x00000001U,
+    PSPROTOCOL_TBCP   = 0x00000002U,
+    PSPROTOCOL_BINARY = 0x00000003U,
+}
+
+enum uint QDI_SETDIBITS = 0x00000001U;
+enum uint QDI_GETDIBITS = 0x00000002U;
+enum uint QDI_DIBTOSCREEN = 0x00000004U;
+enum uint QDI_STRETCHDIB = 0x00000008U;
+enum uint SP_NOTREPORTED = 0x00004000U;
+enum int SP_ERROR = 0xffffffff;
+enum int SP_APPABORT = 0xfffffffe;
+enum int SP_USERABORT = 0xfffffffd;
+
+enum : int
+{
+    SP_OUTOFDISK   = 0xfffffffc,
+    SP_OUTOFMEMORY = 0xfffffffb,
+}
+
+enum uint PR_JOBSTATUS = 0x00000000U;
+
+enum : int
+{
+    LCS_GM_BUSINESS         = 0x00000001,
+    LCS_GM_GRAPHICS         = 0x00000002,
+    LCS_GM_IMAGES           = 0x00000004,
+    LCS_GM_ABS_COLORIMETRIC = 0x00000008,
+}
+
+enum uint CM_OUT_OF_GAMUT = 0x000000ffU;
+enum uint CM_IN_GAMUT = 0x00000000U;
+enum int NTM_REGULAR = 0x00000040;
+
+enum : int
+{
+    NTM_BOLD   = 0x00000020,
+    NTM_ITALIC = 0x00000001,
+}
+
+enum uint NTM_NONNEGATIVE_AC = 0x00010000U;
+enum uint NTM_PS_OPENTYPE = 0x00020000U;
+enum uint NTM_TT_OPENTYPE = 0x00040000U;
+enum uint NTM_MULTIPLEMASTER = 0x00080000U;
+
+enum : uint
+{
+    NTM_TYPE1 = 0x00100000U,
+    NTM_DSIG  = 0x00200000U,
+}
+
+enum uint LF_FACESIZE = 0x00000020U;
+enum uint LF_FULLFACESIZE = 0x00000040U;
+enum uint CLEARTYPE_NATURAL_QUALITY = 0x00000006U;
+enum uint MONO_FONT = 0x00000008U;
+
+enum : int
+{
+    FS_LATIN1 = 0x00000001,
+    FS_LATIN2 = 0x00000002,
+}
+
+enum int FS_CYRILLIC = 0x00000004;
+enum int FS_GREEK = 0x00000008;
+enum int FS_TURKISH = 0x00000010;
+enum int FS_HEBREW = 0x00000020;
+enum int FS_ARABIC = 0x00000040;
+enum int FS_BALTIC = 0x00000080;
+enum int FS_VIETNAMESE = 0x00000100;
+
+enum : int
+{
+    FS_THAI     = 0x00010000,
+    FS_JISJAPAN = 0x00020000,
+}
+
+enum int FS_CHINESESIMP = 0x00040000;
+enum int FS_WANSUNG = 0x00080000;
+enum int FS_CHINESETRAD = 0x00100000;
+enum int FS_JOHAB = 0x00200000;
+enum int FS_SYMBOL = 0x80000000;
+enum uint PANOSE_COUNT = 0x0000000aU;
+enum uint PAN_FAMILYTYPE_INDEX = 0x00000000U;
+enum uint PAN_SERIFSTYLE_INDEX = 0x00000001U;
+enum uint PAN_PROPORTION_INDEX = 0x00000003U;
+enum uint PAN_STROKEVARIATION_INDEX = 0x00000005U;
+enum uint PAN_ARMSTYLE_INDEX = 0x00000006U;
+enum uint PAN_LETTERFORM_INDEX = 0x00000007U;
+enum uint PAN_CULTURE_LATIN = 0x00000000U;
+
+enum : uint
+{
+    PAN_ANY    = 0x00000000U,
+    PAN_NO_FIT = 0x00000001U,
+}
+
+enum uint ELF_VENDOR_SIZE = 0x00000004U;
+enum uint ELF_VERSION = 0x00000000U;
+enum uint ELF_CULTURE_LATIN = 0x00000000U;
+enum uint RASTER_FONTTYPE = 0x00000001U;
+enum uint DEVICE_FONTTYPE = 0x00000002U;
+enum uint TRUETYPE_FONTTYPE = 0x00000004U;
+enum uint PC_RESERVED = 0x00000001U;
+enum uint PC_EXPLICIT = 0x00000002U;
+enum uint PC_NOCOLLAPSE = 0x00000004U;
+enum uint BKMODE_LAST = 0x00000002U;
+enum uint GM_LAST = 0x00000002U;
+enum uint PT_CLOSEFIGURE = 0x00000001U;
+enum uint PT_LINETO = 0x00000002U;
+enum uint PT_BEZIERTO = 0x00000004U;
+enum uint PT_MOVETO = 0x00000006U;
+enum uint ABSOLUTE = 0x00000001U;
+enum uint RELATIVE = 0x00000002U;
+enum uint STOCK_LAST = 0x00000013U;
+enum uint CLR_INVALID = 0xffffffffU;
+enum uint HS_API_MAX = 0x0000000cU;
+enum uint DT_PLOTTER = 0x00000000U;
+
+enum : uint
+{
+    DT_RASDISPLAY = 0x00000001U,
+    DT_RASPRINTER = 0x00000002U,
+    DT_RASCAMERA  = 0x00000003U,
+}
+
+enum uint DT_CHARSTREAM = 0x00000004U;
+enum uint DT_METAFILE = 0x00000005U;
+enum uint DT_DISPFILE = 0x00000006U;
+
+enum : uint
+{
+    CC_NONE    = 0x00000000U,
+    CC_CIRCLES = 0x00000001U,
+}
+
+enum : uint
+{
+    CC_PIE   = 0x00000002U,
+    CC_CHORD = 0x00000004U,
+}
+
+enum uint CC_ELLIPSES = 0x00000008U;
+
+enum : uint
+{
+    CC_WIDE   = 0x00000010U,
+    CC_STYLED = 0x00000020U,
+}
+
+enum uint CC_WIDESTYLED = 0x00000040U;
+enum uint CC_INTERIORS = 0x00000080U;
+enum uint CC_ROUNDRECT = 0x00000100U;
+
+enum : uint
+{
+    LC_NONE     = 0x00000000U,
+    LC_POLYLINE = 0x00000002U,
+}
+
+enum uint LC_MARKER = 0x00000004U;
+enum uint LC_POLYMARKER = 0x00000008U;
+
+enum : uint
+{
+    LC_WIDE   = 0x00000010U,
+    LC_STYLED = 0x00000020U,
+}
+
+enum uint LC_WIDESTYLED = 0x00000040U;
+enum uint LC_INTERIORS = 0x00000080U;
+
+enum : uint
+{
+    PC_NONE    = 0x00000000U,
+    PC_POLYGON = 0x00000001U,
+}
+
+enum uint PC_RECTANGLE = 0x00000002U;
+enum uint PC_WINDPOLYGON = 0x00000004U;
+enum uint PC_TRAPEZOID = 0x00000004U;
+enum uint PC_SCANLINE = 0x00000008U;
+
+enum : uint
+{
+    PC_WIDE   = 0x00000010U,
+    PC_STYLED = 0x00000020U,
+}
+
+enum uint PC_WIDESTYLED = 0x00000040U;
+enum uint PC_INTERIORS = 0x00000080U;
+enum uint PC_POLYPOLYGON = 0x00000100U;
+enum uint PC_PATHS = 0x00000200U;
+
+enum : uint
+{
+    CP_NONE      = 0x00000000U,
+    CP_RECTANGLE = 0x00000001U,
+    CP_REGION    = 0x00000002U,
+}
+
+enum uint TC_OP_CHARACTER = 0x00000001U;
+enum uint TC_OP_STROKE = 0x00000002U;
+enum uint TC_CP_STROKE = 0x00000004U;
+
+enum : uint
+{
+    TC_CR_90  = 0x00000008U,
+    TC_CR_ANY = 0x00000010U,
+}
+
+enum uint TC_SF_X_YINDEP = 0x00000020U;
+
+enum : uint
+{
+    TC_SA_DOUBLE  = 0x00000040U,
+    TC_SA_INTEGER = 0x00000080U,
+    TC_SA_CONTIN  = 0x00000100U,
+}
+
+enum uint TC_EA_DOUBLE = 0x00000200U;
+enum uint TC_IA_ABLE = 0x00000400U;
+enum uint TC_UA_ABLE = 0x00000800U;
+enum uint TC_SO_ABLE = 0x00001000U;
+enum uint TC_RA_ABLE = 0x00002000U;
+enum uint TC_VA_ABLE = 0x00004000U;
+enum uint TC_RESERVED = 0x00008000U;
+enum uint TC_SCROLLBLT = 0x00010000U;
+
+enum : uint
+{
+    RC_BITBLT  = 0x00000001U,
+    RC_BANDING = 0x00000002U,
+}
+
+enum uint RC_SCALING = 0x00000004U;
+enum uint RC_BITMAP64 = 0x00000008U;
+
+enum : uint
+{
+    RC_GDI20_OUTPUT = 0x00000010U,
+    RC_GDI20_STATE  = 0x00000020U,
+}
+
+enum uint RC_SAVEBITMAP = 0x00000040U;
+enum uint RC_DI_BITMAP = 0x00000080U;
+enum uint RC_PALETTE = 0x00000100U;
+enum uint RC_DIBTODEV = 0x00000200U;
+enum uint RC_BIGFONT = 0x00000400U;
+enum uint RC_STRETCHBLT = 0x00000800U;
+enum uint RC_FLOODFILL = 0x00001000U;
+enum uint RC_STRETCHDIB = 0x00002000U;
+enum uint RC_OP_DX_OUTPUT = 0x00004000U;
+enum uint RC_DEVBITS = 0x00008000U;
+
+enum : uint
+{
+    SB_NONE        = 0x00000000U,
+    SB_CONST_ALPHA = 0x00000001U,
+}
+
+enum uint SB_PIXEL_ALPHA = 0x00000002U;
+enum uint SB_PREMULT_ALPHA = 0x00000004U;
+
+enum : uint
+{
+    SB_GRAD_RECT = 0x00000010U,
+    SB_GRAD_TRI  = 0x00000020U,
+}
+
+enum : uint
+{
+    CM_NONE       = 0x00000000U,
+    CM_DEVICE_ICM = 0x00000001U,
+}
+
+enum uint CM_GAMMA_RAMP = 0x00000002U;
+enum uint CM_CMYK_COLOR = 0x00000004U;
+enum uint SYSPAL_ERROR = 0x00000000U;
+enum int CBM_INIT = 0x00000004;
+enum uint CCHFORMNAME = 0x00000020U;
+
+enum : uint
+{
+    DMORIENT_PORTRAIT  = 0x00000001U,
+    DMORIENT_LANDSCAPE = 0x00000002U,
+}
+
+enum : uint
+{
+    DMPAPER_LETTER       = 0x00000001U,
+    DMPAPER_LETTERSMALL  = 0x00000002U,
+    DMPAPER_TABLOID      = 0x00000003U,
+    DMPAPER_LEDGER       = 0x00000004U,
+    DMPAPER_LEGAL        = 0x00000005U,
+    DMPAPER_STATEMENT    = 0x00000006U,
+    DMPAPER_EXECUTIVE    = 0x00000007U,
+    DMPAPER_A3           = 0x00000008U,
+    DMPAPER_A4           = 0x00000009U,
+    DMPAPER_A4SMALL      = 0x0000000aU,
+    DMPAPER_A5           = 0x0000000bU,
+    DMPAPER_B4           = 0x0000000cU,
+    DMPAPER_B5           = 0x0000000dU,
+    DMPAPER_FOLIO        = 0x0000000eU,
+    DMPAPER_QUARTO       = 0x0000000fU,
+    DMPAPER_10X14        = 0x00000010U,
+    DMPAPER_11X17        = 0x00000011U,
+    DMPAPER_NOTE         = 0x00000012U,
+    DMPAPER_ENV_9        = 0x00000013U,
+    DMPAPER_ENV_10       = 0x00000014U,
+    DMPAPER_ENV_11       = 0x00000015U,
+    DMPAPER_ENV_12       = 0x00000016U,
+    DMPAPER_ENV_14       = 0x00000017U,
+    DMPAPER_CSHEET       = 0x00000018U,
+    DMPAPER_DSHEET       = 0x00000019U,
+    DMPAPER_ESHEET       = 0x0000001aU,
+    DMPAPER_ENV_DL       = 0x0000001bU,
+    DMPAPER_ENV_C5       = 0x0000001cU,
+    DMPAPER_ENV_C3       = 0x0000001dU,
+    DMPAPER_ENV_C4       = 0x0000001eU,
+    DMPAPER_ENV_C6       = 0x0000001fU,
+    DMPAPER_ENV_C65      = 0x00000020U,
+    DMPAPER_ENV_B4       = 0x00000021U,
+    DMPAPER_ENV_B5       = 0x00000022U,
+    DMPAPER_ENV_B6       = 0x00000023U,
+    DMPAPER_ENV_ITALY    = 0x00000024U,
+    DMPAPER_ENV_MONARCH  = 0x00000025U,
+    DMPAPER_ENV_PERSONAL = 0x00000026U,
+}
+
+enum : uint
+{
+    DMPAPER_FANFOLD_US         = 0x00000027U,
+    DMPAPER_FANFOLD_STD_GERMAN = 0x00000028U,
+    DMPAPER_FANFOLD_LGL_GERMAN = 0x00000029U,
+}
+
+enum : uint
+{
+    DMPAPER_ISO_B4            = 0x0000002aU,
+    DMPAPER_JAPANESE_POSTCARD = 0x0000002bU,
+}
+
+enum : uint
+{
+    DMPAPER_9X11          = 0x0000002cU,
+    DMPAPER_10X11         = 0x0000002dU,
+    DMPAPER_15X11         = 0x0000002eU,
+    DMPAPER_ENV_INVITE    = 0x0000002fU,
+    DMPAPER_RESERVED_48   = 0x00000030U,
+    DMPAPER_RESERVED_49   = 0x00000031U,
+    DMPAPER_LETTER_EXTRA  = 0x00000032U,
+    DMPAPER_LEGAL_EXTRA   = 0x00000033U,
+    DMPAPER_TABLOID_EXTRA = 0x00000034U,
+}
+
+enum : uint
+{
+    DMPAPER_A4_EXTRA          = 0x00000035U,
+    DMPAPER_LETTER_TRANSVERSE = 0x00000036U,
+}
+
+enum uint DMPAPER_A4_TRANSVERSE = 0x00000037U;
+enum uint DMPAPER_LETTER_EXTRA_TRANSVERSE = 0x00000038U;
+
+enum : uint
+{
+    DMPAPER_A_PLUS        = 0x00000039U,
+    DMPAPER_B_PLUS        = 0x0000003aU,
+    DMPAPER_LETTER_PLUS   = 0x0000003bU,
+    DMPAPER_A4_PLUS       = 0x0000003cU,
+    DMPAPER_A5_TRANSVERSE = 0x0000003dU,
+}
+
+enum uint DMPAPER_B5_TRANSVERSE = 0x0000003eU;
+
+enum : uint
+{
+    DMPAPER_A3_EXTRA            = 0x0000003fU,
+    DMPAPER_A5_EXTRA            = 0x00000040U,
+    DMPAPER_B5_EXTRA            = 0x00000041U,
+    DMPAPER_A2                  = 0x00000042U,
+    DMPAPER_A3_TRANSVERSE       = 0x00000043U,
+    DMPAPER_A3_EXTRA_TRANSVERSE = 0x00000044U,
+}
+
+enum uint DMPAPER_DBL_JAPANESE_POSTCARD = 0x00000045U;
+
+enum : uint
+{
+    DMPAPER_A6             = 0x00000046U,
+    DMPAPER_JENV_KAKU2     = 0x00000047U,
+    DMPAPER_JENV_KAKU3     = 0x00000048U,
+    DMPAPER_JENV_CHOU3     = 0x00000049U,
+    DMPAPER_JENV_CHOU4     = 0x0000004aU,
+    DMPAPER_LETTER_ROTATED = 0x0000004bU,
+}
+
+enum : uint
+{
+    DMPAPER_A3_ROTATED     = 0x0000004cU,
+    DMPAPER_A4_ROTATED     = 0x0000004dU,
+    DMPAPER_A5_ROTATED     = 0x0000004eU,
+    DMPAPER_B4_JIS_ROTATED = 0x0000004fU,
+    DMPAPER_B5_JIS_ROTATED = 0x00000050U,
+}
+
+enum uint DMPAPER_JAPANESE_POSTCARD_ROTATED = 0x00000051U;
+enum uint DMPAPER_DBL_JAPANESE_POSTCARD_ROTATED = 0x00000052U;
+
+enum : uint
+{
+    DMPAPER_A6_ROTATED         = 0x00000053U,
+    DMPAPER_JENV_KAKU2_ROTATED = 0x00000054U,
+    DMPAPER_JENV_KAKU3_ROTATED = 0x00000055U,
+    DMPAPER_JENV_CHOU3_ROTATED = 0x00000056U,
+    DMPAPER_JENV_CHOU4_ROTATED = 0x00000057U,
+}
+
+enum : uint
+{
+    DMPAPER_B6_JIS         = 0x00000058U,
+    DMPAPER_B6_JIS_ROTATED = 0x00000059U,
+}
+
+enum : uint
+{
+    DMPAPER_12X11             = 0x0000005aU,
+    DMPAPER_JENV_YOU4         = 0x0000005bU,
+    DMPAPER_JENV_YOU4_ROTATED = 0x0000005cU,
+}
+
+enum : uint
+{
+    DMPAPER_P16K            = 0x0000005dU,
+    DMPAPER_P32K            = 0x0000005eU,
+    DMPAPER_P32KBIG         = 0x0000005fU,
+    DMPAPER_PENV_1          = 0x00000060U,
+    DMPAPER_PENV_2          = 0x00000061U,
+    DMPAPER_PENV_3          = 0x00000062U,
+    DMPAPER_PENV_4          = 0x00000063U,
+    DMPAPER_PENV_5          = 0x00000064U,
+    DMPAPER_PENV_6          = 0x00000065U,
+    DMPAPER_PENV_7          = 0x00000066U,
+    DMPAPER_PENV_8          = 0x00000067U,
+    DMPAPER_PENV_9          = 0x00000068U,
+    DMPAPER_PENV_10         = 0x00000069U,
+    DMPAPER_P16K_ROTATED    = 0x0000006aU,
+    DMPAPER_P32K_ROTATED    = 0x0000006bU,
+    DMPAPER_P32KBIG_ROTATED = 0x0000006cU,
+}
+
+enum : uint
+{
+    DMPAPER_PENV_1_ROTATED  = 0x0000006dU,
+    DMPAPER_PENV_2_ROTATED  = 0x0000006eU,
+    DMPAPER_PENV_3_ROTATED  = 0x0000006fU,
+    DMPAPER_PENV_4_ROTATED  = 0x00000070U,
+    DMPAPER_PENV_5_ROTATED  = 0x00000071U,
+    DMPAPER_PENV_6_ROTATED  = 0x00000072U,
+    DMPAPER_PENV_7_ROTATED  = 0x00000073U,
+    DMPAPER_PENV_8_ROTATED  = 0x00000074U,
+    DMPAPER_PENV_9_ROTATED  = 0x00000075U,
+    DMPAPER_PENV_10_ROTATED = 0x00000076U,
+}
+
+enum : uint
+{
+    DMPAPER_LAST = 0x00000076U,
+    DMPAPER_USER = 0x00000100U,
+}
+
+enum : uint
+{
+    DMBIN_UPPER     = 0x00000001U,
+    DMBIN_ONLYONE   = 0x00000001U,
+    DMBIN_LOWER     = 0x00000002U,
+    DMBIN_MIDDLE    = 0x00000003U,
+    DMBIN_MANUAL    = 0x00000004U,
+    DMBIN_ENVELOPE  = 0x00000005U,
+    DMBIN_ENVMANUAL = 0x00000006U,
+}
+
+enum : uint
+{
+    DMBIN_AUTO          = 0x00000007U,
+    DMBIN_TRACTOR       = 0x00000008U,
+    DMBIN_SMALLFMT      = 0x00000009U,
+    DMBIN_LARGEFMT      = 0x0000000aU,
+    DMBIN_LARGECAPACITY = 0x0000000bU,
+}
+
+enum : uint
+{
+    DMBIN_CASSETTE   = 0x0000000eU,
+    DMBIN_FORMSOURCE = 0x0000000fU,
+}
+
+enum : uint
+{
+    DMBIN_LAST = 0x0000000fU,
+    DMBIN_USER = 0x00000100U,
+}
+
+enum : int
+{
+    DMRES_DRAFT  = 0xffffffff,
+    DMRES_LOW    = 0xfffffffe,
+    DMRES_MEDIUM = 0xfffffffd,
+    DMRES_HIGH   = 0xfffffffc,
+}
+
+enum uint DMDISPLAYFLAGS_TEXTMODE = 0x00000004U;
+
+enum : uint
+{
+    DMNUP_SYSTEM = 0x00000001U,
+    DMNUP_ONEUP  = 0x00000002U,
+}
+
+enum : uint
+{
+    DMICMMETHOD_NONE   = 0x00000001U,
+    DMICMMETHOD_SYSTEM = 0x00000002U,
+    DMICMMETHOD_DRIVER = 0x00000003U,
+    DMICMMETHOD_DEVICE = 0x00000004U,
+    DMICMMETHOD_USER   = 0x00000100U,
+}
+
+enum : uint
+{
+    DMICM_SATURATE     = 0x00000001U,
+    DMICM_CONTRAST     = 0x00000002U,
+    DMICM_COLORIMETRIC = 0x00000003U,
+}
+
+enum uint DMICM_ABS_COLORIMETRIC = 0x00000004U;
+enum uint DMICM_USER = 0x00000100U;
+
+enum : uint
+{
+    DMMEDIA_STANDARD     = 0x00000001U,
+    DMMEDIA_TRANSPARENCY = 0x00000002U,
+}
+
+enum : uint
+{
+    DMMEDIA_GLOSSY = 0x00000003U,
+    DMMEDIA_USER   = 0x00000100U,
+}
+
+enum : uint
+{
+    DMDITHER_NONE           = 0x00000001U,
+    DMDITHER_COARSE         = 0x00000002U,
+    DMDITHER_FINE           = 0x00000003U,
+    DMDITHER_LINEART        = 0x00000004U,
+    DMDITHER_ERRORDIFFUSION = 0x00000005U,
+}
+
+enum : uint
+{
+    DMDITHER_RESERVED6 = 0x00000006U,
+    DMDITHER_RESERVED7 = 0x00000007U,
+    DMDITHER_RESERVED8 = 0x00000008U,
+    DMDITHER_RESERVED9 = 0x00000009U,
+    DMDITHER_GRAYSCALE = 0x0000000aU,
+    DMDITHER_USER      = 0x00000100U,
+}
+
+enum : uint
+{
+    DISPLAYCONFIG_MAXPATH                        = 0x00000400U,
+    DISPLAYCONFIG_PATH_MODE_IDX_INVALID          = 0xffffffffU,
+    DISPLAYCONFIG_PATH_TARGET_MODE_IDX_INVALID   = 0x0000ffffU,
+    DISPLAYCONFIG_PATH_DESKTOP_IMAGE_IDX_INVALID = 0x0000ffffU,
+    DISPLAYCONFIG_PATH_SOURCE_MODE_IDX_INVALID   = 0x0000ffffU,
+    DISPLAYCONFIG_PATH_CLONE_GROUP_INVALID       = 0x0000ffffU,
+}
+
+enum : uint
+{
+    DISPLAYCONFIG_SOURCE_IN_USE                     = 0x00000001U,
+    DISPLAYCONFIG_TARGET_IN_USE                     = 0x00000001U,
+    DISPLAYCONFIG_TARGET_FORCIBLE                   = 0x00000002U,
+    DISPLAYCONFIG_TARGET_FORCED_AVAILABILITY_BOOT   = 0x00000004U,
+    DISPLAYCONFIG_TARGET_FORCED_AVAILABILITY_PATH   = 0x00000008U,
+    DISPLAYCONFIG_TARGET_FORCED_AVAILABILITY_SYSTEM = 0x00000010U,
+    DISPLAYCONFIG_TARGET_IS_HMD                     = 0x00000020U,
+    DISPLAYCONFIG_PATH_ACTIVE                       = 0x00000001U,
+    DISPLAYCONFIG_PATH_PREFERRED_UNSCALED           = 0x00000004U,
+    DISPLAYCONFIG_PATH_SUPPORT_VIRTUAL_MODE         = 0x00000008U,
+    DISPLAYCONFIG_PATH_BOOST_REFRESH_RATE           = 0x00000010U,
+    DISPLAYCONFIG_PATH_VALID_FLAGS                  = 0x0000001dU,
+}
+
+enum uint RDH_RECTANGLES = 0x00000001U;
+enum uint SYSRGN = 0x00000004U;
+enum uint TT_POLYGON_TYPE = 0x00000018U;
+
+enum : uint
+{
+    TT_PRIM_LINE    = 0x00000001U,
+    TT_PRIM_QSPLINE = 0x00000002U,
+    TT_PRIM_CSPLINE = 0x00000003U,
+}
+
+enum : uint
+{
+    GCP_DBCS  = 0x00000001U,
+    GCP_ERROR = 0x00008000U,
+}
+
+enum uint FLI_MASK = 0x0000103bU;
+enum int FLI_GLYPHS = 0x00040000;
+enum int GCP_JUSTIFYIN = 0x00200000;
+
+enum : uint
+{
+    GCPCLASS_LATIN                  = 0x00000001U,
+    GCPCLASS_HEBREW                 = 0x00000002U,
+    GCPCLASS_ARABIC                 = 0x00000002U,
+    GCPCLASS_NEUTRAL                = 0x00000003U,
+    GCPCLASS_LOCALNUMBER            = 0x00000004U,
+    GCPCLASS_LATINNUMBER            = 0x00000005U,
+    GCPCLASS_LATINNUMERICTERMINATOR = 0x00000006U,
+    GCPCLASS_LATINNUMERICSEPARATOR  = 0x00000007U,
+}
+
+enum uint GCPCLASS_NUMERICSEPARATOR = 0x00000008U;
+
+enum : uint
+{
+    GCPCLASS_PREBOUNDLTR  = 0x00000080U,
+    GCPCLASS_PREBOUNDRTL  = 0x00000040U,
+    GCPCLASS_POSTBOUNDLTR = 0x00000020U,
+    GCPCLASS_POSTBOUNDRTL = 0x00000010U,
+}
+
+enum : uint
+{
+    GCPGLYPH_LINKBEFORE = 0x00008000U,
+    GCPGLYPH_LINKAFTER  = 0x00004000U,
+}
+
+enum uint TT_AVAILABLE = 0x00000001U;
+enum uint TT_ENABLED = 0x00000002U;
+enum uint DC_BINADJUST = 0x00000013U;
+enum uint DC_EMF_COMPLIANT = 0x00000014U;
+enum uint DC_DATATYPE_PRODUCED = 0x00000015U;
+enum uint DC_MANUFACTURER = 0x00000017U;
+enum uint DC_MODEL = 0x00000018U;
+
+enum : uint
+{
+    PRINTRATEUNIT_PPM = 0x00000001U,
+    PRINTRATEUNIT_CPS = 0x00000002U,
+    PRINTRATEUNIT_LPM = 0x00000003U,
+    PRINTRATEUNIT_IPM = 0x00000004U,
+}
+
+enum : int
+{
+    DCTT_BITMAP   = 0x00000001,
+    DCTT_DOWNLOAD = 0x00000002,
+}
+
+enum : int
+{
+    DCTT_SUBDEV           = 0x00000004,
+    DCTT_DOWNLOAD_OUTLINE = 0x00000008,
+}
+
+enum : uint
+{
+    DCBA_FACEUPNONE     = 0x00000000U,
+    DCBA_FACEUPCENTER   = 0x00000001U,
+    DCBA_FACEUPLEFT     = 0x00000002U,
+    DCBA_FACEUPRIGHT    = 0x00000003U,
+    DCBA_FACEDOWNNONE   = 0x00000100U,
+    DCBA_FACEDOWNCENTER = 0x00000101U,
+    DCBA_FACEDOWNLEFT   = 0x00000102U,
+    DCBA_FACEDOWNRIGHT  = 0x00000103U,
+}
+
+enum uint GS_8BIT_INDICES = 0x00000001U;
+enum uint GGI_MARK_NONEXISTING_GLYPHS = 0x00000001U;
+
+enum : uint
+{
+    MM_MAX_NUMAXES      = 0x00000010U,
+    MM_MAX_AXES_NAMELEN = 0x00000010U,
+}
+
+enum uint GDIREGISTERDDRAWPACKETVERSION = 0x00000001U;
+
+enum : uint
+{
+    AC_SRC_OVER  = 0x00000000U,
+    AC_SRC_ALPHA = 0x00000001U,
+}
+
+enum uint GRADIENT_FILL_OP_FLAG = 0x000000ffU;
+enum uint CA_NEGATIVE = 0x00000001U;
+enum uint CA_LOG_FILTER = 0x00000002U;
+
+enum : uint
+{
+    ILLUMINANT_DEVICE_DEFAULT = 0x00000000U,
+    ILLUMINANT_A              = 0x00000001U,
+    ILLUMINANT_B              = 0x00000002U,
+    ILLUMINANT_C              = 0x00000003U,
+    ILLUMINANT_D50            = 0x00000004U,
+    ILLUMINANT_D55            = 0x00000005U,
+    ILLUMINANT_D65            = 0x00000006U,
+    ILLUMINANT_D75            = 0x00000007U,
+    ILLUMINANT_F2             = 0x00000008U,
+    ILLUMINANT_MAX_INDEX      = 0x00000008U,
+    ILLUMINANT_TUNGSTEN       = 0x00000001U,
+    ILLUMINANT_DAYLIGHT       = 0x00000003U,
+    ILLUMINANT_FLUORESCENT    = 0x00000008U,
+    ILLUMINANT_NTSC           = 0x00000003U,
+}
+
+enum uint DI_APPBANDING = 0x00000001U;
+enum uint DI_ROPS_READ_DESTINATION = 0x00000002U;
+enum uint FONTMAPPER_MAX = 0x0000000aU;
+
+enum : uint
+{
+    ENHMETA_SIGNATURE    = 0x464d4520U,
+    ENHMETA_STOCK_OBJECT = 0x80000000U,
+}
+
+enum uint SETICMPROFILE_EMBEDED = 0x00000001U;
+enum uint CREATECOLORSPACE_EMBEDED = 0x00000001U;
+enum uint COLORMATCHTOTARGET_EMBEDED = 0x00000001U;
+
+enum : uint
+{
+    GDICOMMENT_IDENTIFIER       = 0x43494447U,
+    GDICOMMENT_WINDOWS_METAFILE = 0x80000001U,
+    GDICOMMENT_BEGINGROUP       = 0x00000002U,
+    GDICOMMENT_ENDGROUP         = 0x00000003U,
+    GDICOMMENT_MULTIFORMATS     = 0x40000004U,
+}
+
+enum uint EPS_SIGNATURE = 0x46535045U;
+
+enum : uint
+{
+    GDICOMMENT_UNICODE_STRING = 0x00000040U,
+    GDICOMMENT_UNICODE_END    = 0x00000080U,
+}
+
+enum : uint
+{
+    WGL_FONT_LINES    = 0x00000000U,
+    WGL_FONT_POLYGONS = 0x00000001U,
+}
+
+enum uint LPD_DOUBLEBUFFER = 0x00000001U;
+
+enum : uint
+{
+    LPD_STEREO         = 0x00000002U,
+    LPD_SUPPORT_GDI    = 0x00000010U,
+    LPD_SUPPORT_OPENGL = 0x00000020U,
+}
+
+enum : uint
+{
+    LPD_SHARE_DEPTH   = 0x00000040U,
+    LPD_SHARE_STENCIL = 0x00000080U,
+    LPD_SHARE_ACCUM   = 0x00000100U,
+}
+
+enum : uint
+{
+    LPD_SWAP_EXCHANGE = 0x00000200U,
+    LPD_SWAP_COPY     = 0x00000400U,
+}
+
+enum uint LPD_TRANSPARENT = 0x00001000U;
+
+enum : uint
+{
+    LPD_TYPE_RGBA       = 0x00000000U,
+    LPD_TYPE_COLORINDEX = 0x00000001U,
+}
+
+enum : uint
+{
+    WGL_SWAP_MAIN_PLANE  = 0x00000001U,
+    WGL_SWAP_OVERLAY1    = 0x00000002U,
+    WGL_SWAP_OVERLAY2    = 0x00000004U,
+    WGL_SWAP_OVERLAY3    = 0x00000008U,
+    WGL_SWAP_OVERLAY4    = 0x00000010U,
+    WGL_SWAP_OVERLAY5    = 0x00000020U,
+    WGL_SWAP_OVERLAY6    = 0x00000040U,
+    WGL_SWAP_OVERLAY7    = 0x00000080U,
+    WGL_SWAP_OVERLAY8    = 0x00000100U,
+    WGL_SWAP_OVERLAY9    = 0x00000200U,
+    WGL_SWAP_OVERLAY10   = 0x00000400U,
+    WGL_SWAP_OVERLAY11   = 0x00000800U,
+    WGL_SWAP_OVERLAY12   = 0x00001000U,
+    WGL_SWAP_OVERLAY13   = 0x00002000U,
+    WGL_SWAP_OVERLAY14   = 0x00004000U,
+    WGL_SWAP_OVERLAY15   = 0x00008000U,
+    WGL_SWAP_UNDERLAY1   = 0x00010000U,
+    WGL_SWAP_UNDERLAY2   = 0x00020000U,
+    WGL_SWAP_UNDERLAY3   = 0x00040000U,
+    WGL_SWAP_UNDERLAY4   = 0x00080000U,
+    WGL_SWAP_UNDERLAY5   = 0x00100000U,
+    WGL_SWAP_UNDERLAY6   = 0x00200000U,
+    WGL_SWAP_UNDERLAY7   = 0x00400000U,
+    WGL_SWAP_UNDERLAY8   = 0x00800000U,
+    WGL_SWAP_UNDERLAY9   = 0x01000000U,
+    WGL_SWAP_UNDERLAY10  = 0x02000000U,
+    WGL_SWAP_UNDERLAY11  = 0x04000000U,
+    WGL_SWAP_UNDERLAY12  = 0x08000000U,
+    WGL_SWAP_UNDERLAY13  = 0x10000000U,
+    WGL_SWAP_UNDERLAY14  = 0x20000000U,
+    WGL_SWAP_UNDERLAY15  = 0x40000000U,
+    WGL_SWAPMULTIPLE_MAX = 0x00000010U,
+}
+
+enum uint NEWTRANSPARENT = 0x00000003U;
+enum uint QUERYROPSUPPORT = 0x00000028U;
+enum uint SELECTDIB = 0x00000029U;
+enum uint SC_SCREENSAVE = 0x0000f140U;
+
+enum : uint
+{
+    TTFCFP_SUBSET           = 0x00000000U,
+    TTFCFP_SUBSET1          = 0x00000001U,
+    TTFCFP_DELTA            = 0x00000002U,
+    TTFCFP_APPLE_PLATFORMID = 0x00000001U,
+}
+
+enum uint TTFCFP_MS_PLATFORMID = 0x00000003U;
+
+enum : uint
+{
+    TTFCFP_DONT_CARE     = 0x0000ffffU,
+    TTFCFP_LANG_KEEP_ALL = 0x00000000U,
+}
+
+enum : uint
+{
+    TTFCFP_FLAGS_SUBSET    = 0x00000001U,
+    TTFCFP_FLAGS_COMPRESS  = 0x00000002U,
+    TTFCFP_FLAGS_TTC       = 0x00000004U,
+    TTFCFP_FLAGS_GLYPHLIST = 0x00000008U,
+}
+
+enum : uint
+{
+    TTFMFP_SUBSET  = 0x00000000U,
+    TTFMFP_SUBSET1 = 0x00000001U,
+    TTFMFP_DELTA   = 0x00000002U,
+}
+
+enum uint ERR_GENERIC = 0x000003e8U;
+enum uint ERR_READOUTOFBOUNDS = 0x000003e9U;
+enum uint ERR_WRITEOUTOFBOUNDS = 0x000003eaU;
+enum uint ERR_READCONTROL = 0x000003ebU;
+enum uint ERR_WRITECONTROL = 0x000003ecU;
+
+enum : uint
+{
+    ERR_MEM    = 0x000003edU,
+    ERR_FORMAT = 0x000003eeU,
+}
+
+enum uint ERR_WOULD_GROW = 0x000003efU;
+enum uint ERR_VERSION = 0x000003f0U;
+enum uint ERR_NO_GLYPHS = 0x000003f1U;
+
+enum : uint
+{
+    ERR_INVALID_MERGE_FORMATS   = 0x000003f2U,
+    ERR_INVALID_MERGE_CHECKSUMS = 0x000003f3U,
+    ERR_INVALID_MERGE_NUMGLYPHS = 0x000003f4U,
+    ERR_INVALID_DELTA_FORMAT    = 0x000003f5U,
+}
+
+enum uint ERR_NOT_TTC = 0x000003f6U;
+enum uint ERR_INVALID_TTC_INDEX = 0x000003f7U;
+
+enum : uint
+{
+    ERR_MISSING_CMAP         = 0x00000406U,
+    ERR_MISSING_GLYF         = 0x00000407U,
+    ERR_MISSING_HEAD         = 0x00000408U,
+    ERR_MISSING_HHEA         = 0x00000409U,
+    ERR_MISSING_HMTX         = 0x0000040aU,
+    ERR_MISSING_LOCA         = 0x0000040bU,
+    ERR_MISSING_MAXP         = 0x0000040cU,
+    ERR_MISSING_NAME         = 0x0000040dU,
+    ERR_MISSING_POST         = 0x0000040eU,
+    ERR_MISSING_OS2          = 0x0000040fU,
+    ERR_MISSING_VHEA         = 0x00000410U,
+    ERR_MISSING_VMTX         = 0x00000411U,
+    ERR_MISSING_HHEA_OR_VHEA = 0x00000412U,
+    ERR_MISSING_HMTX_OR_VMTX = 0x00000413U,
+    ERR_MISSING_EBDT         = 0x00000414U,
+}
+
+enum : uint
+{
+    ERR_INVALID_CMAP         = 0x00000424U,
+    ERR_INVALID_GLYF         = 0x00000425U,
+    ERR_INVALID_HEAD         = 0x00000426U,
+    ERR_INVALID_HHEA         = 0x00000427U,
+    ERR_INVALID_HMTX         = 0x00000428U,
+    ERR_INVALID_LOCA         = 0x00000429U,
+    ERR_INVALID_MAXP         = 0x0000042aU,
+    ERR_INVALID_NAME         = 0x0000042bU,
+    ERR_INVALID_POST         = 0x0000042cU,
+    ERR_INVALID_OS2          = 0x0000042dU,
+    ERR_INVALID_VHEA         = 0x0000042eU,
+    ERR_INVALID_VMTX         = 0x0000042fU,
+    ERR_INVALID_HHEA_OR_VHEA = 0x00000430U,
+    ERR_INVALID_HMTX_OR_VMTX = 0x00000431U,
+    ERR_INVALID_TTO          = 0x00000438U,
+    ERR_INVALID_GSUB         = 0x00000439U,
+    ERR_INVALID_GPOS         = 0x0000043aU,
+    ERR_INVALID_GDEF         = 0x0000043bU,
+    ERR_INVALID_JSTF         = 0x0000043cU,
+    ERR_INVALID_BASE         = 0x0000043dU,
+    ERR_INVALID_EBLC         = 0x0000043eU,
+    ERR_INVALID_LTSH         = 0x0000043fU,
+    ERR_INVALID_VDMX         = 0x00000440U,
+    ERR_INVALID_HDMX         = 0x00000441U,
+}
+
+enum : uint
+{
+    ERR_PARAMETER0  = 0x0000044cU,
+    ERR_PARAMETER1  = 0x0000044dU,
+    ERR_PARAMETER2  = 0x0000044eU,
+    ERR_PARAMETER3  = 0x0000044fU,
+    ERR_PARAMETER4  = 0x00000450U,
+    ERR_PARAMETER5  = 0x00000451U,
+    ERR_PARAMETER6  = 0x00000452U,
+    ERR_PARAMETER7  = 0x00000453U,
+    ERR_PARAMETER8  = 0x00000454U,
+    ERR_PARAMETER9  = 0x00000455U,
+    ERR_PARAMETER10 = 0x00000456U,
+    ERR_PARAMETER11 = 0x00000457U,
+    ERR_PARAMETER12 = 0x00000458U,
+    ERR_PARAMETER13 = 0x00000459U,
+    ERR_PARAMETER14 = 0x0000045aU,
+    ERR_PARAMETER15 = 0x0000045bU,
+    ERR_PARAMETER16 = 0x0000045cU,
+}
+
+enum : uint
+{
+    CHARSET_DEFAULT  = 0x00000001U,
+    CHARSET_GLYPHIDX = 0x00000003U,
+}
+
+enum uint TTEMBED_FAILIFVARIATIONSIMULATED = 0x00000010U;
+
+enum : uint
+{
+    TTEMBED_WEBOBJECT      = 0x00000080U,
+    TTEMBED_XORENCRYPTDATA = 0x10000000U,
+}
+
+enum uint TTEMBED_VARIATIONSIMULATED = 0x00000001U;
+enum uint TTEMBED_EUDCEMBEDDED = 0x00000002U;
+enum uint TTEMBED_SUBSETCANCEL = 0x00000004U;
+
+enum : uint
+{
+    TTLOAD_PRIVATE        = 0x00000001U,
+    TTLOAD_EUDC_OVERWRITE = 0x00000002U,
+    TTLOAD_EUDC_SET       = 0x00000004U,
+}
+
+enum uint TTDELETE_DONTREMOVEFONT = 0x00000001U;
+enum int E_NONE = 0x00000000;
+enum int E_API_NOTIMPL = 0x00000001;
+
+enum : int
+{
+    E_CHARCODECOUNTINVALID = 0x00000002,
+    E_CHARCODESETINVALID   = 0x00000003,
+}
+
+enum int E_DEVICETRUETYPEFONT = 0x00000004;
+enum int E_HDCINVALID = 0x00000006;
+enum int E_NOFREEMEMORY = 0x00000007;
+enum int E_FONTREFERENCEINVALID = 0x00000008;
+enum int E_NOTATRUETYPEFONT = 0x0000000a;
+
+enum : int
+{
+    E_ERRORACCESSINGFONTDATA = 0x0000000c,
+    E_ERRORACCESSINGFACENAME = 0x0000000d,
+}
+
+enum int E_ERRORUNICODECONVERSION = 0x00000011;
+enum int E_ERRORCONVERTINGCHARS = 0x00000012;
+enum int E_EXCEPTION = 0x00000013;
+enum int E_RESERVEDPARAMNOTNULL = 0x00000014;
+enum int E_CHARSETINVALID = 0x00000015;
+enum int E_FILE_NOT_FOUND = 0x00000017;
+enum int E_TTC_INDEX_OUT_OF_RANGE = 0x00000018;
+enum int E_INPUTPARAMINVALID = 0x00000019;
+enum int E_ERRORCOMPRESSINGFONTDATA = 0x00000100;
+enum int E_FONTDATAINVALID = 0x00000102;
+enum int E_NAMECHANGEFAILED = 0x00000103;
+enum int E_FONTNOTEMBEDDABLE = 0x00000104;
+enum int E_PRIVSINVALID = 0x00000105;
+enum int E_SUBSETTINGFAILED = 0x00000106;
+enum int E_READFROMSTREAMFAILED = 0x00000107;
+enum int E_SAVETOSTREAMFAILED = 0x00000108;
+enum int E_NOOS2 = 0x00000109;
+enum int E_T2NOFREEMEMORY = 0x0000010a;
+enum int E_ERRORREADINGFONTDATA = 0x0000010b;
+enum int E_FLAGSINVALID = 0x0000010c;
+enum int E_ERRORCREATINGFONTFILE = 0x0000010d;
+enum int E_FONTALREADYEXISTS = 0x0000010e;
+enum int E_FONTNAMEALREADYEXISTS = 0x0000010f;
+enum int E_FONTINSTALLFAILED = 0x00000110;
+enum int E_ERRORDECOMPRESSINGFONTDATA = 0x00000111;
+enum int E_ERRORACCESSINGEXCLUDELIST = 0x00000112;
+enum int E_FACENAMEINVALID = 0x00000113;
+enum int E_STREAMINVALID = 0x00000114;
+enum int E_STATUSINVALID = 0x00000115;
+enum int E_PRIVSTATUSINVALID = 0x00000116;
+enum int E_PERMISSIONSINVALID = 0x00000117;
+enum int E_PBENABLEDINVALID = 0x00000118;
+enum int E_SUBSETTINGEXCEPTION = 0x00000119;
+enum int E_SUBSTRING_TEST_FAIL = 0x0000011a;
+enum int E_FONTVARIATIONSIMULATED = 0x0000011b;
+enum int E_FONTFAMILYNAMENOTINFULL = 0x0000011d;
+enum int E_ADDFONTFAILED = 0x00000200;
+enum int E_COULDNTCREATETEMPFILE = 0x00000201;
+enum int E_FONTFILECREATEFAILED = 0x00000203;
+enum int E_WINDOWSAPI = 0x00000204;
+enum int E_FONTFILENOTFOUND = 0x00000205;
+enum int E_RESOURCEFILECREATEFAILED = 0x00000206;
+enum int E_ERROREXPANDINGFONTDATA = 0x00000207;
+enum int E_ERRORGETTINGDC = 0x00000208;
+
+enum : int
+{
+    E_EXCEPTIONINDECOMPRESSION = 0x00000209,
+    E_EXCEPTIONINCOMPRESSION   = 0x0000020a,
+}
+
+// Callbacks
+
+alias FONTENUMPROCA = int function(const(LOGFONTA)* param0, const(TEXTMETRICA)* param1, uint param2, LPARAM param3);
+alias FONTENUMPROCW = int function(const(LOGFONTW)* param0, const(TEXTMETRICW)* param1, uint param2, LPARAM param3);
+alias GOBJENUMPROC = int function(void* param0, LPARAM param1);
+alias LINEDDAPROC = void function(int param0, int param1, LPARAM param2);
+alias LPFNDEVMODE = uint function(HWND param0, HMODULE param1, DEVMODEA* param2, PSTR param3, PSTR param4, 
+                                  DEVMODEA* param5, PSTR param6, uint param7);
+alias LPFNDEVCAPS = uint function(PSTR param0, PSTR param1, uint param2, PSTR param3, DEVMODEA* param4);
+alias MFENUMPROC = int function(HDC hdc, HANDLETABLE* lpht, METARECORD* lpMR, int nObj, LPARAM param4);
+alias ENHMFENUMPROC = int function(HDC hdc, HANDLETABLE* lpht, const(ENHMETARECORD)* lpmr, int nHandles, 
+                                   LPARAM data);
+alias CFP_ALLOCPROC = void* function(size_t param0);
+alias CFP_REALLOCPROC = void* function(void* param0, size_t param1);
+alias CFP_FREEPROC = void function(void* param0);
+alias READEMBEDPROC = uint function(void* param0, void* param1, const(uint) param2);
+alias WRITEEMBEDPROC = uint function(void* param0, const(void)* param1, const(uint) param2);
+alias GRAYSTRINGPROC = BOOL function(HDC param0, LPARAM param1, int param2);
+alias DRAWSTATEPROC = BOOL function(HDC hdc, LPARAM lData, WPARAM wData, int cx, int cy);
+alias MONITORENUMPROC = BOOL function(HMONITOR param0, HDC param1, RECT* param2, LPARAM param3);
+
+// Structs
+
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-monitorinfoexa
+struct MONITORINFOEXA
+{
+    MONITORINFO monitorInfo;
+    CHAR[32]    szDevice;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-monitorinfoexw
+struct MONITORINFOEXW
+{
+    MONITORINFO monitorInfo;
+    wchar[32]   szDevice;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: AlsoUsableForAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HGDIOBJ))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HBITMAP
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: AlsoUsableForAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HGDIOBJ))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HRGN
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: AlsoUsableForAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HGDIOBJ))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HPEN
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: AlsoUsableForAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HGDIOBJ))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HBRUSH
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: AlsoUsableForAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HGDIOBJ))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HFONT
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteMetaFile
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HMETAFILE
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteEnhMetaFile
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HENHMETAFILE
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: AlsoUsableForAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HGDIOBJ))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HPALETTE
+{
+    void* Value;
+}
+
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HDC
+{
+    void* Value;
+}
+
+@RAIIFree!DeleteObject
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HGDIOBJ
+{
+    void* Value;
+}
+
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HMONITOR
+{
+    void* Value;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-xform
+struct XFORM
+{
+    float eM11;
+    float eM12;
+    float eM21;
+    float eM22;
+    float eDx;
+    float eDy;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmap
+struct BITMAP
+{
+    int    bmType;
+    int    bmWidth;
+    int    bmHeight;
+    int    bmWidthBytes;
+    ushort bmPlanes;
+    ushort bmBitsPixel;
+    void*  bmBits;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-rgbtriple
+struct RGBTRIPLE
+{
+    ubyte rgbtBlue;
+    ubyte rgbtGreen;
+    ubyte rgbtRed;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-rgbquad
+struct RGBQUAD
+{
+    ubyte rgbBlue;
+    ubyte rgbGreen;
+    ubyte rgbRed;
+    ubyte rgbReserved;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-ciexyz
+struct CIEXYZ
+{
+    int ciexyzX;
+    int ciexyzY;
+    int ciexyzZ;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-ciexyztriple
+struct CIEXYZTRIPLE
+{
+    CIEXYZ ciexyzRed;
+    CIEXYZ ciexyzGreen;
+    CIEXYZ ciexyzBlue;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapcoreheader
+struct BITMAPCOREHEADER
+{
+    uint   bcSize;
+    ushort bcWidth;
+    ushort bcHeight;
+    ushort bcPlanes;
+    ushort bcBitCount;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
+struct BITMAPINFOHEADER
+{
+    uint   biSize;
+    int    biWidth;
+    int    biHeight;
+    ushort biPlanes;
+    ushort biBitCount;
+    uint   biCompression;
+    uint   biSizeImage;
+    int    biXPelsPerMeter;
+    int    biYPelsPerMeter;
+    uint   biClrUsed;
+    uint   biClrImportant;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapv4header
+struct BITMAPV4HEADER
+{
+    uint           bV4Size;
+    int            bV4Width;
+    int            bV4Height;
+    ushort         bV4Planes;
+    ushort         bV4BitCount;
+    BI_COMPRESSION bV4V4Compression;
+    uint           bV4SizeImage;
+    int            bV4XPelsPerMeter;
+    int            bV4YPelsPerMeter;
+    uint           bV4ClrUsed;
+    uint           bV4ClrImportant;
+    uint           bV4RedMask;
+    uint           bV4GreenMask;
+    uint           bV4BlueMask;
+    uint           bV4AlphaMask;
+    uint           bV4CSType;
+    CIEXYZTRIPLE   bV4Endpoints;
+    uint           bV4GammaRed;
+    uint           bV4GammaGreen;
+    uint           bV4GammaBlue;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapv5header
+struct BITMAPV5HEADER
+{
+    uint           bV5Size;
+    int            bV5Width;
+    int            bV5Height;
+    ushort         bV5Planes;
+    ushort         bV5BitCount;
+    BI_COMPRESSION bV5Compression;
+    uint           bV5SizeImage;
+    int            bV5XPelsPerMeter;
+    int            bV5YPelsPerMeter;
+    uint           bV5ClrUsed;
+    uint           bV5ClrImportant;
+    uint           bV5RedMask;
+    uint           bV5GreenMask;
+    uint           bV5BlueMask;
+    uint           bV5AlphaMask;
+    uint           bV5CSType;
+    CIEXYZTRIPLE   bV5Endpoints;
+    uint           bV5GammaRed;
+    uint           bV5GammaGreen;
+    uint           bV5GammaBlue;
+    uint           bV5Intent;
+    uint           bV5ProfileData;
+    uint           bV5ProfileSize;
+    uint           bV5Reserved;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapinfo
+struct BITMAPINFO
+{
+    BITMAPINFOHEADER bmiHeader;
+    RGBQUAD[1]       bmiColors; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapcoreinfo
+struct BITMAPCOREINFO
+{
+    BITMAPCOREHEADER bmciHeader;
+    RGBTRIPLE[1]     bmciColors; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
+struct BITMAPFILEHEADER
+{
+align (2):
+    ushort bfType;
+    uint   bfSize;
+    ushort bfReserved1;
+    ushort bfReserved2;
+    uint   bfOffBits;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-handletable
+struct HANDLETABLE
+{
+    HGDIOBJ[1] objectHandle; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-metarecord
+struct METARECORD
+{
+    uint      rdSize;
+    ushort    rdFunction;
+    ushort[1] rdParm; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-metaheader
+struct METAHEADER
+{
+align (2):
+    ushort mtType;
+    ushort mtHeaderSize;
+    ushort mtVersion;
+    uint   mtSize;
+    ushort mtNoObjects;
+    uint   mtMaxRecord;
+    ushort mtNoParameters;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enhmetarecord
+struct ENHMETARECORD
+{
+    ENHANCED_METAFILE_RECORD_TYPE iType;
+    uint    nSize;
+    uint[1] dParm; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enhmetaheader
+struct ENHMETAHEADER
+{
+    uint   iType;
+    uint   nSize;
+    RECTL  rclBounds;
+    RECTL  rclFrame;
+    uint   dSignature;
+    uint   nVersion;
+    uint   nBytes;
+    uint   nRecords;
+    ushort nHandles;
+    ushort sReserved;
+    uint   nDescription;
+    uint   offDescription;
+    uint   nPalEntries;
+    SIZE   szlDevice;
+    SIZE   szlMillimeters;
+    uint   cbPixelFormat;
+    uint   offPixelFormat;
+    uint   bOpenGL;
+    SIZE   szlMicrometers;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-textmetrica
+struct TEXTMETRICA
+{
+    int        tmHeight;
+    int        tmAscent;
+    int        tmDescent;
+    int        tmInternalLeading;
+    int        tmExternalLeading;
+    int        tmAveCharWidth;
+    int        tmMaxCharWidth;
+    int        tmWeight;
+    int        tmOverhang;
+    int        tmDigitizedAspectX;
+    int        tmDigitizedAspectY;
+    ubyte      tmFirstChar;
+    ubyte      tmLastChar;
+    ubyte      tmDefaultChar;
+    ubyte      tmBreakChar;
+    ubyte      tmItalic;
+    ubyte      tmUnderlined;
+    ubyte      tmStruckOut;
+    TMPF_FLAGS tmPitchAndFamily;
+    ubyte      tmCharSet;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-textmetricw
+struct TEXTMETRICW
+{
+    int        tmHeight;
+    int        tmAscent;
+    int        tmDescent;
+    int        tmInternalLeading;
+    int        tmExternalLeading;
+    int        tmAveCharWidth;
+    int        tmMaxCharWidth;
+    int        tmWeight;
+    int        tmOverhang;
+    int        tmDigitizedAspectX;
+    int        tmDigitizedAspectY;
+    wchar      tmFirstChar;
+    wchar      tmLastChar;
+    wchar      tmDefaultChar;
+    wchar      tmBreakChar;
+    ubyte      tmItalic;
+    ubyte      tmUnderlined;
+    ubyte      tmStruckOut;
+    TMPF_FLAGS tmPitchAndFamily;
+    ubyte      tmCharSet;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetrica
+struct NEWTEXTMETRICA
+{
+    int        tmHeight;
+    int        tmAscent;
+    int        tmDescent;
+    int        tmInternalLeading;
+    int        tmExternalLeading;
+    int        tmAveCharWidth;
+    int        tmMaxCharWidth;
+    int        tmWeight;
+    int        tmOverhang;
+    int        tmDigitizedAspectX;
+    int        tmDigitizedAspectY;
+    ubyte      tmFirstChar;
+    ubyte      tmLastChar;
+    ubyte      tmDefaultChar;
+    ubyte      tmBreakChar;
+    ubyte      tmItalic;
+    ubyte      tmUnderlined;
+    ubyte      tmStruckOut;
+    TMPF_FLAGS tmPitchAndFamily;
+    ubyte      tmCharSet;
+    uint       ntmFlags;
+    uint       ntmSizeEM;
+    uint       ntmCellHeight;
+    uint       ntmAvgWidth;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricw
+struct NEWTEXTMETRICW
+{
+    int        tmHeight;
+    int        tmAscent;
+    int        tmDescent;
+    int        tmInternalLeading;
+    int        tmExternalLeading;
+    int        tmAveCharWidth;
+    int        tmMaxCharWidth;
+    int        tmWeight;
+    int        tmOverhang;
+    int        tmDigitizedAspectX;
+    int        tmDigitizedAspectY;
+    wchar      tmFirstChar;
+    wchar      tmLastChar;
+    wchar      tmDefaultChar;
+    wchar      tmBreakChar;
+    ubyte      tmItalic;
+    ubyte      tmUnderlined;
+    ubyte      tmStruckOut;
+    TMPF_FLAGS tmPitchAndFamily;
+    ubyte      tmCharSet;
+    uint       ntmFlags;
+    uint       ntmSizeEM;
+    uint       ntmCellHeight;
+    uint       ntmAvgWidth;
+}
+
+struct PELARRAY
+{
+    int   paXCount;
+    int   paYCount;
+    int   paXExt;
+    int   paYExt;
+    ubyte paRGBs;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logbrush
+struct LOGBRUSH
+{
+    BRUSH_STYLE lbStyle;
+    COLORREF    lbColor;
+    size_t      lbHatch;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logbrush32
+struct LOGBRUSH32
+{
+    BRUSH_STYLE lbStyle;
+    COLORREF    lbColor;
+    uint        lbHatch;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logpen
+struct LOGPEN
+{
+    uint     lopnStyle;
+    POINT    lopnWidth;
+    COLORREF lopnColor;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-extlogpen
+struct EXTLOGPEN
+{
+    uint     elpPenStyle;
+    uint     elpWidth;
+    uint     elpBrushStyle;
+    COLORREF elpColor;
+    size_t   elpHatch;
+    uint     elpNumEntries;
+    uint[1]  elpStyleEntry; // Flexible array
+}
+
+struct EXTLOGPEN32
+{
+    uint     elpPenStyle;
+    uint     elpWidth;
+    uint     elpBrushStyle;
+    COLORREF elpColor;
+    uint     elpHatch;
+    uint     elpNumEntries;
+    uint[1]  elpStyleEntry; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-paletteentry
+struct PALETTEENTRY
+{
+    ubyte peRed;
+    ubyte peGreen;
+    ubyte peBlue;
+    ubyte peFlags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logpalette
+struct LOGPALETTE
+{
+    ushort          palVersion;
+    ushort          palNumEntries;
+    PALETTEENTRY[1] palPalEntry; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-logfonta
+struct LOGFONTA
+{
+    int                 lfHeight;
+    int                 lfWidth;
+    int                 lfEscapement;
+    int                 lfOrientation;
+    int                 lfWeight;
+    ubyte               lfItalic;
+    ubyte               lfUnderline;
+    ubyte               lfStrikeOut;
+    FONT_CHARSET        lfCharSet;
+    FONT_OUTPUT_PRECISION lfOutPrecision;
+    FONT_CLIP_PRECISION lfClipPrecision;
+    FONT_QUALITY        lfQuality;
+    ubyte               lfPitchAndFamily;
+    CHAR[32]            lfFaceName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-logfontw
+struct LOGFONTW
+{
+    int                 lfHeight;
+    int                 lfWidth;
+    int                 lfEscapement;
+    int                 lfOrientation;
+    int                 lfWeight;
+    ubyte               lfItalic;
+    ubyte               lfUnderline;
+    ubyte               lfStrikeOut;
+    FONT_CHARSET        lfCharSet;
+    FONT_OUTPUT_PRECISION lfOutPrecision;
+    FONT_CLIP_PRECISION lfClipPrecision;
+    FONT_QUALITY        lfQuality;
+    ubyte               lfPitchAndFamily;
+    wchar[32]           lfFaceName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfonta
+struct ENUMLOGFONTA
+{
+    LOGFONTA  elfLogFont;
+    ubyte[64] elfFullName;
+    ubyte[32] elfStyle;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontw
+struct ENUMLOGFONTW
+{
+    LOGFONTW  elfLogFont;
+    wchar[64] elfFullName;
+    wchar[32] elfStyle;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexa
+struct ENUMLOGFONTEXA
+{
+    LOGFONTA  elfLogFont;
+    ubyte[64] elfFullName;
+    ubyte[32] elfStyle;
+    ubyte[32] elfScript;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexw
+struct ENUMLOGFONTEXW
+{
+    LOGFONTW  elfLogFont;
+    wchar[64] elfFullName;
+    wchar[32] elfStyle;
+    wchar[32] elfScript;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-panose
+struct PANOSE
+{
+    PAN_FAMILY_TYPE      bFamilyType;
+    PAN_SERIF_STYLE      bSerifStyle;
+    PAN_WEIGHT           bWeight;
+    PAN_PROPORTION       bProportion;
+    PAN_CONTRAST         bContrast;
+    PAN_STROKE_VARIATION bStrokeVariation;
+    PAN_ARM_STYLE        bArmStyle;
+    PAN_LETT_FORM        bLetterform;
+    PAN_MIDLINE          bMidline;
+    PAN_XHEIGHT          bXHeight;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-extlogfonta
+struct EXTLOGFONTA
+{
+    LOGFONTA  elfLogFont;
+    ubyte[64] elfFullName;
+    ubyte[32] elfStyle;
+    uint      elfVersion;
+    uint      elfStyleSize;
+    uint      elfMatch;
+    uint      elfReserved;
+    ubyte[4]  elfVendorId;
+    uint      elfCulture;
+    PANOSE    elfPanose;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-extlogfontw
+struct EXTLOGFONTW
+{
+    LOGFONTW  elfLogFont;
+    wchar[64] elfFullName;
+    wchar[32] elfStyle;
+    uint      elfVersion;
+    uint      elfStyleSize;
+    uint      elfMatch;
+    uint      elfReserved;
+    ubyte[4]  elfVendorId;
+    uint      elfCulture;
+    PANOSE    elfPanose;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-devmodea
+struct DEVMODEA
+{
+    ubyte[32]           dmDeviceName;
+    ushort              dmSpecVersion;
+    ushort              dmDriverVersion;
+    ushort              dmSize;
+    ushort              dmDriverExtra;
+    DEVMODE_FIELD_FLAGS dmFields;
+    union
+    {
+        struct
+        {
+            short dmOrientation;
+            short dmPaperSize;
+            short dmPaperLength;
+            short dmPaperWidth;
+            short dmScale;
+            short dmCopies;
+            short dmDefaultSource;
+            short dmPrintQuality;
+        }
+        struct
+        {
+            POINTL dmPosition;
+            DEVMODE_DISPLAY_ORIENTATION dmDisplayOrientation;
+            DEVMODE_DISPLAY_FIXED_OUTPUT dmDisplayFixedOutput;
+        }
+    }
+    DEVMODE_COLOR       dmColor;
+    DEVMODE_DUPLEX      dmDuplex;
+    short               dmYResolution;
+    DEVMODE_TRUETYPE_OPTION dmTTOption;
+    DEVMODE_COLLATE     dmCollate;
+    ubyte[32]           dmFormName;
+    ushort              dmLogPixels;
+    uint                dmBitsPerPel;
+    uint                dmPelsWidth;
+    uint                dmPelsHeight;
+    union
+    {
+        uint dmDisplayFlags;
+        uint dmNup;
+    }
+    uint                dmDisplayFrequency;
+    uint                dmICMMethod;
+    uint                dmICMIntent;
+    uint                dmMediaType;
+    uint                dmDitherType;
+    uint                dmReserved1;
+    uint                dmReserved2;
+    uint                dmPanningWidth;
+    uint                dmPanningHeight;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-devmodew
+struct DEVMODEW
+{
+    wchar[32]           dmDeviceName;
+    ushort              dmSpecVersion;
+    ushort              dmDriverVersion;
+    ushort              dmSize;
+    ushort              dmDriverExtra;
+    DEVMODE_FIELD_FLAGS dmFields;
+    union
+    {
+        struct
+        {
+            short dmOrientation;
+            short dmPaperSize;
+            short dmPaperLength;
+            short dmPaperWidth;
+            short dmScale;
+            short dmCopies;
+            short dmDefaultSource;
+            short dmPrintQuality;
+        }
+        struct
+        {
+            POINTL dmPosition;
+            DEVMODE_DISPLAY_ORIENTATION dmDisplayOrientation;
+            DEVMODE_DISPLAY_FIXED_OUTPUT dmDisplayFixedOutput;
+        }
+    }
+    DEVMODE_COLOR       dmColor;
+    DEVMODE_DUPLEX      dmDuplex;
+    short               dmYResolution;
+    DEVMODE_TRUETYPE_OPTION dmTTOption;
+    DEVMODE_COLLATE     dmCollate;
+    wchar[32]           dmFormName;
+    ushort              dmLogPixels;
+    uint                dmBitsPerPel;
+    uint                dmPelsWidth;
+    uint                dmPelsHeight;
+    union
+    {
+        uint dmDisplayFlags;
+        uint dmNup;
+    }
+    uint                dmDisplayFrequency;
+    uint                dmICMMethod;
+    uint                dmICMIntent;
+    uint                dmMediaType;
+    uint                dmDitherType;
+    uint                dmReserved1;
+    uint                dmReserved2;
+    uint                dmPanningWidth;
+    uint                dmPanningHeight;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-display_devicea
+struct DISPLAY_DEVICEA
+{
+    uint      cb;
+    CHAR[32]  DeviceName;
+    CHAR[128] DeviceString;
+    DISPLAY_DEVICE_STATE_FLAGS StateFlags;
+    CHAR[128] DeviceID;
+    CHAR[128] DeviceKey;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-display_devicew
+struct DISPLAY_DEVICEW
+{
+    uint       cb;
+    wchar[32]  DeviceName;
+    wchar[128] DeviceString;
+    DISPLAY_DEVICE_STATE_FLAGS StateFlags;
+    wchar[128] DeviceID;
+    wchar[128] DeviceKey;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-rgndataheader
+struct RGNDATAHEADER
+{
+    uint dwSize;
+    uint iType;
+    uint nCount;
+    uint nRgnSize;
+    RECT rcBound;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-rgndata
+struct RGNDATA
+{
+    RGNDATAHEADER rdh;
+    CHAR[1]       Buffer; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-abc
+struct ABC
+{
+    int  abcA;
+    uint abcB;
+    int  abcC;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-abcfloat
+struct ABCFLOAT
+{
+    float abcfA;
+    float abcfB;
+    float abcfC;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-outlinetextmetrica
+struct OUTLINETEXTMETRICA
+{
+    uint        otmSize;
+    TEXTMETRICA otmTextMetrics;
+    ubyte       otmFiller;
+    PANOSE      otmPanoseNumber;
+    uint        otmfsSelection;
+    uint        otmfsType;
+    int         otmsCharSlopeRise;
+    int         otmsCharSlopeRun;
+    int         otmItalicAngle;
+    uint        otmEMSquare;
+    int         otmAscent;
+    int         otmDescent;
+    uint        otmLineGap;
+    uint        otmsCapEmHeight;
+    uint        otmsXHeight;
+    RECT        otmrcFontBox;
+    int         otmMacAscent;
+    int         otmMacDescent;
+    uint        otmMacLineGap;
+    uint        otmusMinimumPPEM;
+    POINT       otmptSubscriptSize;
+    POINT       otmptSubscriptOffset;
+    POINT       otmptSuperscriptSize;
+    POINT       otmptSuperscriptOffset;
+    uint        otmsStrikeoutSize;
+    int         otmsStrikeoutPosition;
+    int         otmsUnderscoreSize;
+    int         otmsUnderscorePosition;
+    PSTR        otmpFamilyName;
+    PSTR        otmpFaceName;
+    PSTR        otmpStyleName;
+    PSTR        otmpFullName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-outlinetextmetricw
+struct OUTLINETEXTMETRICW
+{
+    uint        otmSize;
+    TEXTMETRICW otmTextMetrics;
+    ubyte       otmFiller;
+    PANOSE      otmPanoseNumber;
+    uint        otmfsSelection;
+    uint        otmfsType;
+    int         otmsCharSlopeRise;
+    int         otmsCharSlopeRun;
+    int         otmItalicAngle;
+    uint        otmEMSquare;
+    int         otmAscent;
+    int         otmDescent;
+    uint        otmLineGap;
+    uint        otmsCapEmHeight;
+    uint        otmsXHeight;
+    RECT        otmrcFontBox;
+    int         otmMacAscent;
+    int         otmMacDescent;
+    uint        otmMacLineGap;
+    uint        otmusMinimumPPEM;
+    POINT       otmptSubscriptSize;
+    POINT       otmptSubscriptOffset;
+    POINT       otmptSuperscriptSize;
+    POINT       otmptSuperscriptOffset;
+    uint        otmsStrikeoutSize;
+    int         otmsStrikeoutPosition;
+    int         otmsUnderscoreSize;
+    int         otmsUnderscorePosition;
+    PSTR        otmpFamilyName;
+    PSTR        otmpFaceName;
+    PSTR        otmpStyleName;
+    PSTR        otmpFullName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-polytexta
+struct POLYTEXTA
+{
+    int         x;
+    int         y;
+    uint        n;
+    const(PSTR) lpstr;
+    uint        uiFlags;
+    RECT        rcl;
+    int*        pdx;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-polytextw
+struct POLYTEXTW
+{
+    int          x;
+    int          y;
+    uint         n;
+    const(PWSTR) lpstr;
+    uint         uiFlags;
+    RECT         rcl;
+    int*         pdx;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-fixed
+struct FIXED
+{
+    ushort fract;
+    short  value;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-mat2
+struct MAT2
+{
+    FIXED eM11;
+    FIXED eM12;
+    FIXED eM21;
+    FIXED eM22;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-glyphmetrics
+struct GLYPHMETRICS
+{
+    uint  gmBlackBoxX;
+    uint  gmBlackBoxY;
+    POINT gmptGlyphOrigin;
+    short gmCellIncX;
+    short gmCellIncY;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-pointfx
+struct POINTFX
+{
+    FIXED x;
+    FIXED y;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-ttpolycurve
+struct TTPOLYCURVE
+{
+    ushort     wType;
+    ushort     cpfx;
+    POINTFX[1] apfx; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-ttpolygonheader
+struct TTPOLYGONHEADER
+{
+    uint    cb;
+    uint    dwType;
+    POINTFX pfxStart;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-gcp_resultsa
+struct GCP_RESULTSA
+{
+    uint  lStructSize;
+    PSTR  lpOutString;
+    uint* lpOrder;
+    int*  lpDx;
+    int*  lpCaretPos;
+    PSTR  lpClass;
+    PWSTR lpGlyphs;
+    uint  nGlyphs;
+    int   nMaxFit;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-gcp_resultsw
+struct GCP_RESULTSW
+{
+    uint  lStructSize;
+    PWSTR lpOutString;
+    uint* lpOrder;
+    int*  lpDx;
+    int*  lpCaretPos;
+    PSTR  lpClass;
+    PWSTR lpGlyphs;
+    uint  nGlyphs;
+    int   nMaxFit;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-rasterizer_status
+struct RASTERIZER_STATUS
+{
+    short nSize;
+    short wFlags;
+    short nLanguageID;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-wcrange
+struct WCRANGE
+{
+    wchar  wcLow;
+    ushort cGlyphs;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-glyphset
+struct GLYPHSET
+{
+    uint       cbThis;
+    uint       flAccel;
+    uint       cGlyphsSupported;
+    uint       cRanges;
+    WCRANGE[1] ranges; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-designvector
+struct DESIGNVECTOR
+{
+    uint    dvReserved;
+    uint    dvNumAxes;
+    int[16] dvValues;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axisinfoa
+struct AXISINFOA
+{
+    int       axMinValue;
+    int       axMaxValue;
+    ubyte[16] axAxisName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axisinfow
+struct AXISINFOW
+{
+    int       axMinValue;
+    int       axMaxValue;
+    wchar[16] axAxisName;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axeslista
+struct AXESLISTA
+{
+    uint          axlReserved;
+    uint          axlNumAxes;
+    AXISINFOA[16] axlAxisInfo;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-axeslistw
+struct AXESLISTW
+{
+    uint          axlReserved;
+    uint          axlNumAxes;
+    AXISINFOW[16] axlAxisInfo;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexdva
+struct ENUMLOGFONTEXDVA
+{
+    ENUMLOGFONTEXA elfEnumLogfontEx;
+    DESIGNVECTOR   elfDesignVector;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumlogfontexdvw
+struct ENUMLOGFONTEXDVW
+{
+    ENUMLOGFONTEXW elfEnumLogfontEx;
+    DESIGNVECTOR   elfDesignVector;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-trivertex
+struct TRIVERTEX
+{
+    int    x;
+    int    y;
+    ushort Red;
+    ushort Green;
+    ushort Blue;
+    ushort Alpha;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-gradient_triangle
+struct GRADIENT_TRIANGLE
+{
+    uint Vertex1;
+    uint Vertex2;
+    uint Vertex3;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-gradient_rect
+struct GRADIENT_RECT
+{
+    uint UpperLeft;
+    uint LowerRight;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-blendfunction
+struct BLENDFUNCTION
+{
+    ubyte BlendOp;
+    ubyte BlendFlags;
+    ubyte SourceConstantAlpha;
+    ubyte AlphaFormat;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-dibsection
+struct DIBSECTION
+{
+    BITMAP           dsBm;
+    BITMAPINFOHEADER dsBmih;
+    uint[3]          dsBitfields;
+    HANDLE           dshSection;
+    uint             dsOffset;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-coloradjustment
+struct COLORADJUSTMENT
+{
+    ushort caSize;
+    ushort caFlags;
+    ushort caIlluminantIndex;
+    ushort caRedGamma;
+    ushort caGreenGamma;
+    ushort caBlueGamma;
+    ushort caReferenceBlack;
+    ushort caReferenceWhite;
+    short  caContrast;
+    short  caBrightness;
+    short  caColorfulness;
+    short  caRedGreenTint;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-kerningpair
+struct KERNINGPAIR
+{
+    ushort wFirst;
+    ushort wSecond;
+    int    iKernAmount;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emr
+struct EMR
+{
+    ENHANCED_METAFILE_RECORD_TYPE iType;
+    uint nSize;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrtext
+struct EMRTEXT
+{
+    POINTL ptlReference;
+    uint   nChars;
+    uint   offString;
+    uint   fOptions;
+    RECTL  rcl;
+    uint   offDx;
+}
+
+struct ABORTPATH
+{
+    EMR emr;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrselectclippath
+struct EMRSELECTCLIPPATH
+{
+    EMR  emr;
+    uint iMode;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetmiterlimit
+struct EMRSETMITERLIMIT
+{
+    EMR   emr;
+    float eMiterLimit;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrrestoredc
+struct EMRRESTOREDC
+{
+    EMR emr;
+    int iRelative;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetarcdirection
+struct EMRSETARCDIRECTION
+{
+    EMR  emr;
+    uint iArcDirection;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetmapperflags
+struct EMRSETMAPPERFLAGS
+{
+    EMR  emr;
+    uint dwFlags;
+}
+
+struct EMRSETTEXTCOLOR
+{
+    EMR      emr;
+    COLORREF crColor;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrselectobject
+struct EMRSELECTOBJECT
+{
+    EMR  emr;
+    uint ihObject;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrselectpalette
+struct EMRSELECTPALETTE
+{
+    EMR  emr;
+    uint ihPal;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrresizepalette
+struct EMRRESIZEPALETTE
+{
+    EMR  emr;
+    uint ihPal;
+    uint cEntries;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetpaletteentries
+struct EMRSETPALETTEENTRIES
+{
+    EMR             emr;
+    uint            ihPal;
+    uint            iStart;
+    uint            cEntries;
+    PALETTEENTRY[1] aPalEntries; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetcoloradjustment
+struct EMRSETCOLORADJUSTMENT
+{
+    EMR             emr;
+    COLORADJUSTMENT ColorAdjustment;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrgdicomment
+struct EMRGDICOMMENT
+{
+    EMR      emr;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emreof
+struct EMREOF
+{
+    EMR  emr;
+    uint nPalEntries;
+    uint offPalEntries;
+    uint nSizeLast;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrlineto
+struct EMRLINETO
+{
+    EMR    emr;
+    POINTL ptl;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emroffsetcliprgn
+struct EMROFFSETCLIPRGN
+{
+    EMR    emr;
+    POINTL ptlOffset;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrfillpath
+struct EMRFILLPATH
+{
+    EMR   emr;
+    RECTL rclBounds;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrexcludecliprect
+struct EMREXCLUDECLIPRECT
+{
+    EMR   emr;
+    RECTL rclClip;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetviewportorgex
+struct EMRSETVIEWPORTORGEX
+{
+    EMR    emr;
+    POINTL ptlOrigin;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetviewportextex
+struct EMRSETVIEWPORTEXTEX
+{
+    EMR  emr;
+    SIZE szlExtent;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrscaleviewportextex
+struct EMRSCALEVIEWPORTEXTEX
+{
+    EMR emr;
+    int xNum;
+    int xDenom;
+    int yNum;
+    int yDenom;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetworldtransform
+struct EMRSETWORLDTRANSFORM
+{
+    EMR   emr;
+    XFORM xform;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrmodifyworldtransform
+struct EMRMODIFYWORLDTRANSFORM
+{
+    EMR   emr;
+    XFORM xform;
+    MODIFY_WORLD_TRANSFORM_MODE iMode;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetpixelv
+struct EMRSETPIXELV
+{
+    EMR      emr;
+    POINTL   ptlPixel;
+    COLORREF crColor;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrextfloodfill
+struct EMREXTFLOODFILL
+{
+    EMR      emr;
+    POINTL   ptlStart;
+    COLORREF crColor;
+    uint     iMode;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrellipse
+struct EMRELLIPSE
+{
+    EMR   emr;
+    RECTL rclBox;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrroundrect
+struct EMRROUNDRECT
+{
+    EMR   emr;
+    RECTL rclBox;
+    SIZE  szlCorner;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrarc
+struct EMRARC
+{
+    EMR    emr;
+    RECTL  rclBox;
+    POINTL ptlStart;
+    POINTL ptlEnd;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emranglearc
+struct EMRANGLEARC
+{
+    EMR    emr;
+    POINTL ptlCenter;
+    uint   nRadius;
+    float  eStartAngle;
+    float  eSweepAngle;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolyline
+struct EMRPOLYLINE
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      cptl;
+    POINTL[1] aptl; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolyline16
+struct EMRPOLYLINE16
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      cpts;
+    POINTS[1] apts; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolydraw
+struct EMRPOLYDRAW
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      cptl;
+    POINTL[1] aptl;
+    ubyte[1]  abTypes; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolydraw16
+struct EMRPOLYDRAW16
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      cpts;
+    POINTS[1] apts;
+    ubyte[1]  abTypes; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolypolyline
+struct EMRPOLYPOLYLINE
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      nPolys;
+    uint      cptl;
+    uint[1]   aPolyCounts;
+    POINTL[1] aptl; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolypolyline16
+struct EMRPOLYPOLYLINE16
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    uint      nPolys;
+    uint      cpts;
+    uint[1]   aPolyCounts;
+    POINTS[1] apts; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrinvertrgn
+struct EMRINVERTRGN
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbRgnData;
+    ubyte[1] RgnData; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrfillrgn
+struct EMRFILLRGN
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbRgnData;
+    uint     ihBrush;
+    ubyte[1] RgnData; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrframergn
+struct EMRFRAMERGN
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbRgnData;
+    uint     ihBrush;
+    SIZE     szlStroke;
+    ubyte[1] RgnData; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrextselectcliprgn
+struct EMREXTSELECTCLIPRGN
+{
+    EMR      emr;
+    uint     cbRgnData;
+    uint     iMode;
+    ubyte[1] RgnData; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrexttextouta
+struct EMREXTTEXTOUTA
+{
+    EMR     emr;
+    RECTL   rclBounds;
+    uint    iGraphicsMode;
+    float   exScale;
+    float   eyScale;
+    EMRTEXT emrtext;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrpolytextouta
+struct EMRPOLYTEXTOUTA
+{
+    EMR        emr;
+    RECTL      rclBounds;
+    uint       iGraphicsMode;
+    float      exScale;
+    float      eyScale;
+    int        cStrings;
+    EMRTEXT[1] aemrtext; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrbitblt
+struct EMRBITBLT
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    int      xDest;
+    int      yDest;
+    int      cxDest;
+    int      cyDest;
+    uint     dwRop;
+    int      xSrc;
+    int      ySrc;
+    XFORM    xformSrc;
+    COLORREF crBkColorSrc;
+    uint     iUsageSrc;
+    uint     offBmiSrc;
+    uint     cbBmiSrc;
+    uint     offBitsSrc;
+    uint     cbBitsSrc;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrstretchblt
+struct EMRSTRETCHBLT
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    int      xDest;
+    int      yDest;
+    int      cxDest;
+    int      cyDest;
+    uint     dwRop;
+    int      xSrc;
+    int      ySrc;
+    XFORM    xformSrc;
+    COLORREF crBkColorSrc;
+    uint     iUsageSrc;
+    uint     offBmiSrc;
+    uint     cbBmiSrc;
+    uint     offBitsSrc;
+    uint     cbBitsSrc;
+    int      cxSrc;
+    int      cySrc;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrmaskblt
+struct EMRMASKBLT
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    int      xDest;
+    int      yDest;
+    int      cxDest;
+    int      cyDest;
+    uint     dwRop;
+    int      xSrc;
+    int      ySrc;
+    XFORM    xformSrc;
+    COLORREF crBkColorSrc;
+    uint     iUsageSrc;
+    uint     offBmiSrc;
+    uint     cbBmiSrc;
+    uint     offBitsSrc;
+    uint     cbBitsSrc;
+    int      xMask;
+    int      yMask;
+    uint     iUsageMask;
+    uint     offBmiMask;
+    uint     cbBmiMask;
+    uint     offBitsMask;
+    uint     cbBitsMask;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrplgblt
+struct EMRPLGBLT
+{
+    EMR       emr;
+    RECTL     rclBounds;
+    POINTL[3] aptlDest;
+    int       xSrc;
+    int       ySrc;
+    int       cxSrc;
+    int       cySrc;
+    XFORM     xformSrc;
+    COLORREF  crBkColorSrc;
+    uint      iUsageSrc;
+    uint      offBmiSrc;
+    uint      cbBmiSrc;
+    uint      offBitsSrc;
+    uint      cbBitsSrc;
+    int       xMask;
+    int       yMask;
+    uint      iUsageMask;
+    uint      offBmiMask;
+    uint      cbBmiMask;
+    uint      offBitsMask;
+    uint      cbBitsMask;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetdibitstodevice
+struct EMRSETDIBITSTODEVICE
+{
+    EMR   emr;
+    RECTL rclBounds;
+    int   xDest;
+    int   yDest;
+    int   xSrc;
+    int   ySrc;
+    int   cxSrc;
+    int   cySrc;
+    uint  offBmiSrc;
+    uint  cbBmiSrc;
+    uint  offBitsSrc;
+    uint  cbBitsSrc;
+    uint  iUsageSrc;
+    uint  iStartScan;
+    uint  cScans;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrstretchdibits
+struct EMRSTRETCHDIBITS
+{
+    EMR   emr;
+    RECTL rclBounds;
+    int   xDest;
+    int   yDest;
+    int   xSrc;
+    int   ySrc;
+    int   cxSrc;
+    int   cySrc;
+    uint  offBmiSrc;
+    uint  cbBmiSrc;
+    uint  offBitsSrc;
+    uint  cbBitsSrc;
+    uint  iUsageSrc;
+    uint  dwRop;
+    int   cxDest;
+    int   cyDest;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrextcreatefontindirectw
+struct EMREXTCREATEFONTINDIRECTW
+{
+    EMR         emr;
+    uint        ihFont;
+    EXTLOGFONTW elfw;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatepalette
+struct EMRCREATEPALETTE
+{
+    EMR        emr;
+    uint       ihPal;
+    LOGPALETTE lgpl;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatepen
+struct EMRCREATEPEN
+{
+    EMR    emr;
+    uint   ihPen;
+    LOGPEN lopn;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrextcreatepen
+struct EMREXTCREATEPEN
+{
+    EMR         emr;
+    uint        ihPen;
+    uint        offBmi;
+    uint        cbBmi;
+    uint        offBits;
+    uint        cbBits;
+    EXTLOGPEN32 elp;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatebrushindirect
+struct EMRCREATEBRUSHINDIRECT
+{
+    EMR        emr;
+    uint       ihBrush;
+    LOGBRUSH32 lb;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatemonobrush
+struct EMRCREATEMONOBRUSH
+{
+    EMR  emr;
+    uint ihBrush;
+    uint iUsage;
+    uint offBmi;
+    uint cbBmi;
+    uint offBits;
+    uint cbBits;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatedibpatternbrushpt
+struct EMRCREATEDIBPATTERNBRUSHPT
+{
+    EMR  emr;
+    uint ihBrush;
+    uint iUsage;
+    uint offBmi;
+    uint cbBmi;
+    uint offBits;
+    uint cbBits;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrformat
+struct EMRFORMAT
+{
+    uint dSignature;
+    uint nVersion;
+    uint cbData;
+    uint offData;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrglsrecord
+struct EMRGLSRECORD
+{
+    EMR      emr;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrglsboundedrecord
+struct EMRGLSBOUNDEDRECORD
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrsetcolorspace
+struct EMRSETCOLORSPACE
+{
+    EMR  emr;
+    uint ihCS;
+}
+
+struct EMREXTESCAPE
+{
+    EMR      emr;
+    int      iEscape;
+    int      cbEscData;
+    ubyte[1] EscData; // Flexible array
+}
+
+struct EMRNAMEDESCAPE
+{
+    EMR      emr;
+    int      iEscape;
+    int      cbDriver;
+    int      cbEscData;
+    ubyte[1] EscData; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrseticmprofile
+struct EMRSETICMPROFILE
+{
+    EMR      emr;
+    uint     dwFlags;
+    uint     cbName;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcolormatchtotarget
+struct EMRCOLORMATCHTOTARGET
+{
+    EMR      emr;
+    uint     dwAction;
+    uint     dwFlags;
+    uint     cbName;
+    uint     cbData;
+    ubyte[1] Data; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcolorcorrectpalette
+struct EMRCOLORCORRECTPALETTE
+{
+    EMR  emr;
+    uint ihPalette;
+    uint nFirstEntry;
+    uint nPalEntries;
+    uint nReserved;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emralphablend
+struct EMRALPHABLEND
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    int      xDest;
+    int      yDest;
+    int      cxDest;
+    int      cyDest;
+    uint     dwRop;
+    int      xSrc;
+    int      ySrc;
+    XFORM    xformSrc;
+    COLORREF crBkColorSrc;
+    uint     iUsageSrc;
+    uint     offBmiSrc;
+    uint     cbBmiSrc;
+    uint     offBitsSrc;
+    uint     cbBitsSrc;
+    int      cxSrc;
+    int      cySrc;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrgradientfill
+struct EMRGRADIENTFILL
+{
+    EMR           emr;
+    RECTL         rclBounds;
+    uint          nVer;
+    uint          nTri;
+    GRADIENT_FILL ulMode;
+    TRIVERTEX[1]  Ver; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrtransparentblt
+struct EMRTRANSPARENTBLT
+{
+    EMR      emr;
+    RECTL    rclBounds;
+    int      xDest;
+    int      yDest;
+    int      cxDest;
+    int      cyDest;
+    uint     dwRop;
+    int      xSrc;
+    int      ySrc;
+    XFORM    xformSrc;
+    COLORREF crBkColorSrc;
+    uint     iUsageSrc;
+    uint     offBmiSrc;
+    uint     cbBmiSrc;
+    uint     offBitsSrc;
+    uint     cbBitsSrc;
+    int      cxSrc;
+    int      cySrc;
+}
+
+struct WGLSWAP
+{
+    HDC  hdc;
+    uint uiFlags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/t2embapi/ns-t2embapi-ttloadinfo
+struct TTLOADINFO
+{
+    ushort  usStructSize;
+    ushort  usRefStrSize;
+    ushort* pusRefStr;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/t2embapi/ns-t2embapi-ttembedinfo
+struct TTEMBEDINFO
+{
+    ushort  usStructSize;
+    ushort  usRootStrSize;
+    ushort* pusRootStr;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/t2embapi/ns-t2embapi-ttvalidationtestsparams
+struct TTVALIDATIONTESTSPARAMS
+{
+    uint    ulStructSize;
+    int     lTestFromSize;
+    int     lTestToSize;
+    uint    ulCharSet;
+    ushort  usReserved1;
+    ushort  usCharCodeCount;
+    ushort* pusCharCodeSet;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/t2embapi/ns-t2embapi-ttvalidationtestsparamsex
+struct TTVALIDATIONTESTSPARAMSEX
+{
+    uint   ulStructSize;
+    int    lTestFromSize;
+    int    lTestToSize;
+    uint   ulCharSet;
+    ushort usReserved1;
+    ushort usCharCodeCount;
+    uint*  pulCharCodeSet;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-paintstruct
+struct PAINTSTRUCT
+{
+    HDC       hdc;
+    BOOL      fErase;
+    RECT      rcPaint;
+    BOOL      fRestore;
+    BOOL      fIncUpdate;
+    ubyte[32] rgbReserved;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-drawtextparams
+struct DRAWTEXTPARAMS
+{
+    uint cbSize;
+    int  iTabLength;
+    int  iLeftMargin;
+    int  iRightMargin;
+    uint uiLengthDrawn;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-monitorinfo
+struct MONITORINFO
+{
+    uint cbSize;
+    RECT rcMonitor;
+    RECT rcWork;
+    uint dwFlags;
+}
+
+// Functions
+
+@DllImport("GDI32.dll")
+int GetObjectA(HGDIOBJ h, int c, 
+               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int AddFontResourceA(const(PSTR) param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int AddFontResourceW(const(PWSTR) param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL AnimatePalette(HPALETTE hPal, uint iStartIndex, uint cEntries, const(PALETTEENTRY)* ppe);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL Arc(HDC hdc, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL BitBlt(HDC hdc, int x, int y, int cx, int cy, HDC hdcSrc, int x1, int y1, ROP_CODE rop);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL CancelDC(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL Chord(HDC hdc, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HMETAFILE CloseMetaFile(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE CombineRgn(HRGN hrgnDst, HRGN hrgnSrc1, HRGN hrgnSrc2, RGN_COMBINE_MODE iMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HMETAFILE CopyMetaFileA(HMETAFILE param0, const(PSTR) param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HMETAFILE CopyMetaFileW(HMETAFILE param0, const(PWSTR) param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBITMAP CreateBitmap(int nWidth, int nHeight, uint nPlanes, uint nBitCount, const(void)* lpBits);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBITMAP CreateBitmapIndirect(const(BITMAP)* pbm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBRUSH CreateBrushIndirect(const(LOGBRUSH)* plbrush);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBITMAP CreateCompatibleBitmap(HDC hdc, int cx, int cy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBITMAP CreateDiscardableBitmap(HDC hdc, int cx, int cy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateCompatibleDC(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateDCA(const(PSTR) pwszDriver, const(PSTR) pwszDevice, const(PSTR) pszPort, const(DEVMODEA)* pdm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateDCW(const(PWSTR) pwszDriver, const(PWSTR) pwszDevice, const(PWSTR) pszPort, const(DEVMODEW)* pdm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBITMAP CreateDIBitmap(HDC hdc, const(BITMAPINFOHEADER)* pbmih, uint flInit, const(void)* pjBits, 
+                       const(BITMAPINFO)* pbmi, DIB_USAGE iUsage);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBRUSH CreateDIBPatternBrush(HGLOBAL h, DIB_USAGE iUsage);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBRUSH CreateDIBPatternBrushPt(const(void)* lpPackedDIB, DIB_USAGE iUsage);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreateEllipticRgn(int x1, int y1, int x2, int y2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreateEllipticRgnIndirect(const(RECT)* lprect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HFONT CreateFontIndirectA(const(LOGFONTA)* lplf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HFONT CreateFontIndirectW(const(LOGFONTW)* lplf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HFONT CreateFontA(int cHeight, int cWidth, int cEscapement, int cOrientation, int cWeight, uint bItalic, 
+                  uint bUnderline, uint bStrikeOut, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_CHARSET))], [])*/uint iCharSet, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_OUTPUT_PRECISION))], [])*/uint iOutPrecision, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_CLIP_PRECISION))], [])*/uint iClipPrecision, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_QUALITY))], [])*/uint iQuality, 
+                  uint iPitchAndFamily, const(PSTR) pszFaceName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HFONT CreateFontW(int cHeight, int cWidth, int cEscapement, int cOrientation, int cWeight, uint bItalic, 
+                  uint bUnderline, uint bStrikeOut, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_CHARSET))], [])*/uint iCharSet, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_OUTPUT_PRECISION))], [])*/uint iOutPrecision, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_CLIP_PRECISION))], [])*/uint iClipPrecision, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FONT_QUALITY))], [])*/uint iQuality, 
+                  uint iPitchAndFamily, const(PWSTR) pszFaceName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBRUSH CreateHatchBrush(HATCH_BRUSH_STYLE iHatch, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateICA(const(PSTR) pszDriver, const(PSTR) pszDevice, const(PSTR) pszPort, const(DEVMODEA)* pdm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateICW(const(PWSTR) pszDriver, const(PWSTR) pszDevice, const(PWSTR) pszPort, const(DEVMODEW)* pdm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateMetaFileA(const(PSTR) pszFile);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateMetaFileW(const(PWSTR) pszFile);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HPALETTE CreatePalette(const(LOGPALETTE)* plpal);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HPEN CreatePen(PEN_STYLE iStyle, int cWidth, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HPEN CreatePenIndirect(const(LOGPEN)* plpen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreatePolyPolygonRgn(const(POINT)* pptl, const(int)* pc, int cPoly, CREATE_POLYGON_RGN_MODE iMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBRUSH CreatePatternBrush(HBITMAP hbm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreateRectRgn(int x1, int y1, int x2, int y2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreateRectRgnIndirect(const(RECT)* lprect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreateRoundRectRgn(int x1, int y1, int x2, int y2, int w, int h);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL CreateScalableFontResourceA(uint fdwHidden, const(PSTR) lpszFont, const(PSTR) lpszFile, const(PSTR) lpszPath);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL CreateScalableFontResourceW(uint fdwHidden, const(PWSTR) lpszFont, const(PWSTR) lpszFile, 
+                                 const(PWSTR) lpszPath);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBRUSH CreateSolidBrush(COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL DeleteDC(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL DeleteMetaFile(HMETAFILE hmf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL DeleteObject(HGDIOBJ ho);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int DrawEscape(HDC hdc, int iEscape, int cjIn, 
+               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(PSTR) lpIn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("GDI32.dll")
+BOOL Ellipse(HDC hdc, int left, int top, int right, int bottom);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumFontFamiliesExA(HDC hdc, LOGFONTA* lpLogfont, FONTENUMPROCA lpProc, LPARAM lParam, uint dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumFontFamiliesExW(HDC hdc, LOGFONTW* lpLogfont, FONTENUMPROCW lpProc, LPARAM lParam, uint dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumFontFamiliesA(HDC hdc, const(PSTR) lpLogfont, FONTENUMPROCA lpProc, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumFontFamiliesW(HDC hdc, const(PWSTR) lpLogfont, FONTENUMPROCW lpProc, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumFontsA(HDC hdc, const(PSTR) lpLogfont, FONTENUMPROCA lpProc, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumFontsW(HDC hdc, const(PWSTR) lpLogfont, FONTENUMPROCW lpProc, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int EnumObjects(HDC hdc, OBJ_TYPE nType, GOBJENUMPROC lpFunc, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL EqualRgn(HRGN hrgn1, HRGN hrgn2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE ExcludeClipRect(HDC hdc, int left, int top, int right, int bottom);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN ExtCreateRegion(const(XFORM)* lpx, uint nCount, 
+                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(RGNDATA)* lpData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ExtFloodFill(HDC hdc, int x, int y, COLORREF color, EXT_FLOOD_FILL_TYPE type);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL FillRgn(HDC hdc, HRGN hrgn, HBRUSH hbr);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL FloodFill(HDC hdc, int x, int y, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL FrameRgn(HDC hdc, HRGN hrgn, HBRUSH hbr, int w, int h);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+R2_MODE GetROP2(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetAspectRatioFilterEx(HDC hdc, SIZE* lpsize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF GetBkColor(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF GetDCBrushColor(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF GetDCPenColor(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetBkMode(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetBitmapBits(HBITMAP hbit, int cb, 
+                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* lpvBits);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetBitmapDimensionEx(HBITMAP hbit, SIZE* lpsize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetBoundsRect(HDC hdc, RECT* lprect, uint flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetBrushOrgEx(HDC hdc, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidthA(HDC hdc, uint iFirst, uint iLast, int* lpBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidthW(HDC hdc, uint iFirst, uint iLast, int* lpBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidth32A(HDC hdc, uint iFirst, uint iLast, int* lpBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidth32W(HDC hdc, uint iFirst, uint iLast, int* lpBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidthFloatA(HDC hdc, uint iFirst, uint iLast, float* lpBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidthFloatW(HDC hdc, uint iFirst, uint iLast, float* lpBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharABCWidthsA(HDC hdc, uint wFirst, uint wLast, ABC* lpABC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharABCWidthsW(HDC hdc, uint wFirst, uint wLast, ABC* lpABC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharABCWidthsFloatA(HDC hdc, uint iFirst, uint iLast, ABCFLOAT* lpABC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharABCWidthsFloatW(HDC hdc, uint iFirst, uint iLast, ABCFLOAT* lpABC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE GetClipBox(HDC hdc, RECT* lprect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetClipRgn(HDC hdc, HRGN hrgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetMetaRgn(HDC hdc, HRGN hrgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HGDIOBJ GetCurrentObject(HDC hdc, 
+                         /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OBJ_TYPE))], [])*/uint type);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCurrentPositionEx(HDC hdc, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetDeviceCaps(HDC hdc, 
+                  /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(GET_DEVICE_CAPS_INDEX))], [])*/int index);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetDIBits(HDC hdc, HBITMAP hbm, uint start, uint cLines, void* lpvBits, BITMAPINFO* lpbmi, DIB_USAGE usage);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetFontData(HDC hdc, uint dwTable, uint dwOffset, 
+                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvBuffer, 
+                 uint cjBuffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetGlyphOutlineA(HDC hdc, uint uChar, GET_GLYPH_OUTLINE_FORMAT fuFormat, GLYPHMETRICS* lpgm, uint cjBuffer, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvBuffer, 
+                      const(MAT2)* lpmat2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetGlyphOutlineW(HDC hdc, uint uChar, GET_GLYPH_OUTLINE_FORMAT fuFormat, GLYPHMETRICS* lpgm, uint cjBuffer, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvBuffer, 
+                      const(MAT2)* lpmat2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetGraphicsMode(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC_MAP_MODE GetMapMode(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetMetaFileBitsEx(HMETAFILE hMF, uint cbBuffer, 
+                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* lpData);
+
+@DllImport("GDI32.dll")
+HMETAFILE GetMetaFileA(const(PSTR) lpName);
+
+@DllImport("GDI32.dll")
+HMETAFILE GetMetaFileW(const(PWSTR) lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF GetNearestColor(HDC hdc, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetNearestPaletteIndex(HPALETTE h, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetObjectType(HGDIOBJ h);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetOutlineTextMetricsA(HDC hdc, uint cjCopy, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/OUTLINETEXTMETRICA* potm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetOutlineTextMetricsW(HDC hdc, uint cjCopy, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/OUTLINETEXTMETRICW* potm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetPaletteEntries(HPALETTE hpal, uint iStart, uint cEntries, PALETTEENTRY* pPalEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF GetPixel(HDC hdc, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetPolyFillMode(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetRasterizerCaps(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/RASTERIZER_STATUS* lpraststat, 
+                       uint cjBytes);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetRandomRgn(HDC hdc, HRGN hrgn, int i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetRegionData(HRGN hrgn, uint nCount, 
+                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/RGNDATA* lpRgnData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE GetRgnBox(HRGN hrgn, RECT* lprc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HGDIOBJ GetStockObject(GET_STOCK_OBJECT_FLAGS i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetStretchBltMode(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetSystemPaletteEntries(HDC hdc, uint iStart, uint cEntries, PALETTEENTRY* pPalEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetSystemPaletteUse(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetTextCharacterExtra(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+TEXT_ALIGN_OPTIONS GetTextAlign(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF GetTextColor(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentPointA(HDC hdc, const(PSTR) lpString, int c, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentPointW(HDC hdc, const(PWSTR) lpString, int c, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentPoint32A(HDC hdc, const(PSTR) lpString, int c, SIZE* psizl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentPoint32W(HDC hdc, const(PWSTR) lpString, int c, SIZE* psizl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentExPointA(HDC hdc, const(PSTR) lpszString, int cchString, int nMaxExtent, int* lpnFit, int* lpnDx, 
+                           SIZE* lpSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentExPointW(HDC hdc, const(PWSTR) lpszString, int cchString, int nMaxExtent, int* lpnFit, 
+                           int* lpnDx, SIZE* lpSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetFontLanguageInfo(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetCharacterPlacementA(HDC hdc, const(PSTR) lpString, int nCount, int nMexExtent, GCP_RESULTSA* lpResults, 
+                            GET_CHARACTER_PLACEMENT_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetCharacterPlacementW(HDC hdc, const(PWSTR) lpString, int nCount, int nMexExtent, GCP_RESULTSW* lpResults, 
+                            GET_CHARACTER_PLACEMENT_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetFontUnicodeRanges(HDC hdc, GLYPHSET* lpgs);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetGlyphIndicesA(HDC hdc, const(PSTR) lpstr, int c, ushort* pgi, uint fl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetGlyphIndicesW(HDC hdc, const(PWSTR) lpstr, int c, ushort* pgi, uint fl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentPointI(HDC hdc, ushort* pgiIn, int cgi, SIZE* psize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextExtentExPointI(HDC hdc, ushort* lpwszString, int cwchString, int nMaxExtent, int* lpnFit, int* lpnDx, 
+                           SIZE* lpSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharWidthI(HDC hdc, uint giFirst, uint cgi, ushort* pgi, int* piWidths);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetCharABCWidthsI(HDC hdc, uint giFirst, uint cgi, ushort* pgi, ABC* pabc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int AddFontResourceExA(const(PSTR) name, FONT_RESOURCE_CHARACTERISTICS fl, 
+                       /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* res);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int AddFontResourceExW(const(PWSTR) name, FONT_RESOURCE_CHARACTERISTICS fl, 
+                       /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* res);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RemoveFontResourceExA(const(PSTR) name, uint fl, 
+                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pdv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RemoveFontResourceExW(const(PWSTR) name, uint fl, 
+                           /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pdv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HANDLE AddFontMemResourceEx(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pFileView, 
+                            uint cjSize, 
+                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pvResrved, 
+                            uint* pNumFonts);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RemoveFontMemResourceEx(HANDLE h);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HFONT CreateFontIndirectExA(const(ENUMLOGFONTEXDVA)* param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HFONT CreateFontIndirectExW(const(ENUMLOGFONTEXDVW)* param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetViewportExtEx(HDC hdc, SIZE* lpsize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetViewportOrgEx(HDC hdc, POINT* lppoint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetWindowExtEx(HDC hdc, SIZE* lpsize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetWindowOrgEx(HDC hdc, POINT* lppoint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE IntersectClipRect(HDC hdc, int left, int top, int right, int bottom);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL InvertRgn(HDC hdc, HRGN hrgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL LineDDA(int xStart, int yStart, int xEnd, int yEnd, LINEDDAPROC lpProc, LPARAM data);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL LineTo(HDC hdc, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL MaskBlt(HDC hdcDest, int xDest, int yDest, int width, int height, HDC hdcSrc, int xSrc, int ySrc, 
+             HBITMAP hbmMask, int xMask, int yMask, uint rop);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PlgBlt(HDC hdcDest, const(POINT)* lpPoint, HDC hdcSrc, int xSrc, int ySrc, int width, int height, 
+            HBITMAP hbmMask, int xMask, int yMask);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE OffsetClipRgn(HDC hdc, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE OffsetRgn(HRGN hrgn, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PatBlt(HDC hdc, int x, int y, int w, int h, ROP_CODE rop);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL Pie(HDC hdc, int left, int top, int right, int bottom, int xr1, int yr1, int xr2, int yr2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PlayMetaFile(HDC hdc, HMETAFILE hmf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PaintRgn(HDC hdc, HRGN hrgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyPolygon(HDC hdc, const(POINT)* apt, const(int)* asz, int csz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PtInRegion(HRGN hrgn, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PtVisible(HDC hdc, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RectInRegion(HRGN hrgn, const(RECT)* lprect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RectVisible(HDC hdc, const(RECT)* lprect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL Rectangle(HDC hdc, int left, int top, int right, int bottom);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RestoreDC(HDC hdc, int nSavedDC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC ResetDCA(HDC hdc, const(DEVMODEA)* lpdm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC ResetDCW(HDC hdc, const(DEVMODEW)* lpdm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint RealizePalette(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RemoveFontResourceA(const(PSTR) lpFileName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RemoveFontResourceW(const(PWSTR) lpFileName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL RoundRect(HDC hdc, int left, int top, int right, int bottom, int width, int height);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ResizePalette(HPALETTE hpal, uint n);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SaveDC(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE SelectClipRgn(HDC hdc, HRGN hrgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE ExtSelectClipRgn(HDC hdc, HRGN hrgn, RGN_COMBINE_MODE mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+GDI_REGION_TYPE SetMetaRgn(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HGDIOBJ SelectObject(HDC hdc, HGDIOBJ h);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HPALETTE SelectPalette(HDC hdc, HPALETTE hPal, BOOL bForceBkgd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF SetBkColor(HDC hdc, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF SetDCBrushColor(HDC hdc, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF SetDCPenColor(HDC hdc, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetBkMode(HDC hdc, 
+              /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BACKGROUND_MODE))], [])*/int mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetBitmapBits(HBITMAP hbm, uint cb, 
+                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pvBits);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetBoundsRect(HDC hdc, const(RECT)* lprect, SET_BOUNDS_RECT_FLAGS flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetDIBits(HDC hdc, HBITMAP hbm, uint start, uint cLines, const(void)* lpBits, const(BITMAPINFO)* lpbmi, 
+              DIB_USAGE ColorUse);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetDIBitsToDevice(HDC hdc, int xDest, int yDest, uint w, uint h, int xSrc, int ySrc, uint StartScan, 
+                      uint cLines, const(void)* lpvBits, const(BITMAPINFO)* lpbmi, DIB_USAGE ColorUse);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetMapperFlags(HDC hdc, uint flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetGraphicsMode(HDC hdc, GRAPHICS_MODE iMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetMapMode(HDC hdc, HDC_MAP_MODE iMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetLayout(HDC hdc, DC_LAYOUT l);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetLayout(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HMETAFILE SetMetaFileBitsEx(uint cbBuffer, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/const(ubyte)* lpData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetPaletteEntries(HPALETTE hpal, uint iStart, uint cEntries, const(PALETTEENTRY)* pPalEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF SetPixel(HDC hdc, int x, int y, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetPixelV(HDC hdc, int x, int y, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetPolyFillMode(HDC hdc, CREATE_POLYGON_RGN_MODE mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL StretchBlt(HDC hdcDest, int xDest, int yDest, int wDest, int hDest, HDC hdcSrc, int xSrc, int ySrc, int wSrc, 
+                int hSrc, ROP_CODE rop);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetRectRgn(HRGN hrgn, int left, int top, int right, int bottom);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int StretchDIBits(HDC hdc, int xDest, int yDest, int DestWidth, int DestHeight, int xSrc, int ySrc, int SrcWidth, 
+                  int SrcHeight, const(void)* lpBits, const(BITMAPINFO)* lpbmi, DIB_USAGE iUsage, ROP_CODE rop);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetROP2(HDC hdc, R2_MODE rop2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetStretchBltMode(HDC hdc, STRETCH_BLT_MODE mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetSystemPaletteUse(HDC hdc, SYSTEM_PALETTE_USE use);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetTextCharacterExtra(HDC hdc, int extra);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+COLORREF SetTextColor(HDC hdc, COLORREF color);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetTextAlign(HDC hdc, TEXT_ALIGN_OPTIONS align_);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetTextJustification(HDC hdc, int extra, int count);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL UpdateColors(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("MSIMG32.dll")
+BOOL AlphaBlend(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, int xoriginSrc, 
+                int yoriginSrc, int wSrc, int hSrc, BLENDFUNCTION ftn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("MSIMG32.dll")
+BOOL TransparentBlt(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, 
+                    int xoriginSrc, int yoriginSrc, int wSrc, int hSrc, uint crTransparent);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("MSIMG32.dll")
+BOOL GradientFill(HDC hdc, TRIVERTEX* pVertex, uint nVertex, void* pMesh, uint nMesh, GRADIENT_FILL ulMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GdiAlphaBlend(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, int xoriginSrc, 
+                   int yoriginSrc, int wSrc, int hSrc, BLENDFUNCTION ftn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GdiTransparentBlt(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, 
+                       int xoriginSrc, int yoriginSrc, int wSrc, int hSrc, uint crTransparent);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GdiGradientFill(HDC hdc, TRIVERTEX* pVertex, uint nVertex, void* pMesh, uint nCount, GRADIENT_FILL ulMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PlayMetaFileRecord(HDC hdc, HANDLETABLE* lpHandleTable, METARECORD* lpMR, uint noObjs);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL EnumMetaFile(HDC hdc, HMETAFILE hmf, MFENUMPROC proc, LPARAM param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HENHMETAFILE CloseEnhMetaFile(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HENHMETAFILE CopyEnhMetaFileA(HENHMETAFILE hEnh, const(PSTR) lpFileName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HENHMETAFILE CopyEnhMetaFileW(HENHMETAFILE hEnh, const(PWSTR) lpFileName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateEnhMetaFileA(HDC hdc, const(PSTR) lpFilename, const(RECT)* lprc, const(PSTR) lpDesc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HDC CreateEnhMetaFileW(HDC hdc, const(PWSTR) lpFilename, const(RECT)* lprc, const(PWSTR) lpDesc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL DeleteEnhMetaFile(HENHMETAFILE hmf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL EnumEnhMetaFile(HDC hdc, HENHMETAFILE hmf, ENHMFENUMPROC proc, void* param3, const(RECT)* lpRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HENHMETAFILE GetEnhMetaFileA(const(PSTR) lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HENHMETAFILE GetEnhMetaFileW(const(PWSTR) lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetEnhMetaFileBits(HENHMETAFILE hEMF, uint nSize, 
+                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/ubyte* lpData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetEnhMetaFileDescriptionA(HENHMETAFILE hemf, uint cchBuffer, PSTR lpDescription);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetEnhMetaFileDescriptionW(HENHMETAFILE hemf, uint cchBuffer, PWSTR lpDescription);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetEnhMetaFileHeader(HENHMETAFILE hemf, uint nSize, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/ENHMETAHEADER* lpEnhMetaHeader);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetEnhMetaFilePaletteEntries(HENHMETAFILE hemf, uint nNumEntries, PALETTEENTRY* lpPaletteEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetWinMetaFileBits(HENHMETAFILE hemf, uint cbData16, 
+                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/ubyte* pData16, 
+                        int iMapMode, HDC hdcRef);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PlayEnhMetaFile(HDC hdc, HENHMETAFILE hmf, const(RECT)* lprect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PlayEnhMetaFileRecord(HDC hdc, HANDLETABLE* pht, const(ENHMETARECORD)* pmr, uint cht);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HENHMETAFILE SetEnhMetaFileBits(uint nSize, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/const(ubyte)* pb);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GdiComment(HDC hdc, uint nSize, 
+                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(ubyte)* lpData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextMetricsA(HDC hdc, TEXTMETRICA* lptm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetTextMetricsW(HDC hdc, TEXTMETRICW* lptm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL AngleArc(HDC hdc, int x, int y, uint r, float StartAngle, float SweepAngle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyPolyline(HDC hdc, const(POINT)* apt, const(uint)* asz, uint csz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetWorldTransform(HDC hdc, XFORM* lpxf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetWorldTransform(HDC hdc, const(XFORM)* lpxf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ModifyWorldTransform(HDC hdc, const(XFORM)* lpxf, MODIFY_WORLD_TRANSFORM_MODE mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL CombineTransform(XFORM* lpxfOut, const(XFORM)* lpxf1, const(XFORM)* lpxf2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HBITMAP CreateDIBSection(HDC hdc, const(BITMAPINFO)* pbmi, DIB_USAGE usage, void** ppvBits, HANDLE hSection, 
+                         uint offset);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetDIBColorTable(HDC hdc, uint iStart, uint cEntries, RGBQUAD* prgbq);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint SetDIBColorTable(HDC hdc, uint iStart, uint cEntries, const(RGBQUAD)* prgbq);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetColorAdjustment(HDC hdc, const(COLORADJUSTMENT)* lpca);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetColorAdjustment(HDC hdc, COLORADJUSTMENT* lpca);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HPALETTE CreateHalftonePalette(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL AbortPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ArcTo(HDC hdc, int left, int top, int right, int bottom, int xr1, int yr1, int xr2, int yr2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL BeginPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL CloseFigure(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL EndPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL FillPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL FlattenPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetPath(HDC hdc, POINT* apt, ubyte* aj, int cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN PathToRegion(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyDraw(HDC hdc, const(POINT)* apt, const(ubyte)* aj, int cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SelectClipPath(HDC hdc, RGN_COMBINE_MODE mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int SetArcDirection(HDC hdc, ARC_DIRECTION dir);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetMiterLimit(HDC hdc, float limit, float* old);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL StrokeAndFillPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL StrokePath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL WidenPath(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HPEN ExtCreatePen(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PEN_STYLE))], [])*/uint iPenStyle, 
+                  uint cWidth, const(LOGBRUSH)* plbrush, uint cStyle, const(uint)* pstyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetMiterLimit(HDC hdc, float* plimit);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetArcDirection(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetObjectW(HGDIOBJ h, int c, 
+               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL MoveToEx(HDC hdc, int x, int y, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL TextOutA(HDC hdc, int x, int y, const(PSTR) lpString, int c);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL TextOutW(HDC hdc, int x, int y, const(PWSTR) lpString, int c);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ExtTextOutA(HDC hdc, int x, int y, ETO_OPTIONS options, const(RECT)* lprect, const(PSTR) lpString, uint c, 
+                 const(int)* lpDx);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ExtTextOutW(HDC hdc, int x, int y, ETO_OPTIONS options, const(RECT)* lprect, const(PWSTR) lpString, uint c, 
+                 const(int)* lpDx);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyTextOutA(HDC hdc, const(POLYTEXTA)* ppt, int nstrings);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyTextOutW(HDC hdc, const(POLYTEXTW)* ppt, int nstrings);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+HRGN CreatePolygonRgn(const(POINT)* pptl, int cPoint, CREATE_POLYGON_RGN_MODE iMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL DPtoLP(HDC hdc, POINT* lppt, int c);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL LPtoDP(HDC hdc, POINT* lppt, int c);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL Polygon(HDC hdc, const(POINT)* apt, int cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL Polyline(HDC hdc, const(POINT)* apt, int cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyBezier(HDC hdc, const(POINT)* apt, uint cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolyBezierTo(HDC hdc, const(POINT)* apt, uint cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL PolylineTo(HDC hdc, const(POINT)* apt, uint cpt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetViewportExtEx(HDC hdc, int x, int y, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetViewportOrgEx(HDC hdc, int x, int y, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetWindowExtEx(HDC hdc, int x, int y, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetWindowOrgEx(HDC hdc, int x, int y, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL OffsetViewportOrgEx(HDC hdc, int x, int y, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL OffsetWindowOrgEx(HDC hdc, int x, int y, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ScaleViewportExtEx(HDC hdc, int xn, int dx, int yn, int yd, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL ScaleWindowExtEx(HDC hdc, int xn, int xd, int yn, int yd, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetBitmapDimensionEx(HBITMAP hbm, int w, int h, SIZE* lpsz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL SetBrushOrgEx(HDC hdc, int x, int y, POINT* lppt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetTextFaceA(HDC hdc, int c, PSTR lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+int GetTextFaceW(HDC hdc, int c, PWSTR lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetKerningPairsA(HDC hdc, uint nPairs, KERNINGPAIR* lpKernPair);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GetKerningPairsW(HDC hdc, uint nPairs, KERNINGPAIR* lpKernPair);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GetDCOrgEx(HDC hdc, POINT* lppt);
+
+@DllImport("GDI32.dll")
+BOOL FixBrushOrgEx(HDC hdc, int x, int y, POINT* ptl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL UnrealizeObject(HGDIOBJ h);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+BOOL GdiFlush();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GdiSetBatchLimit(uint dw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("GDI32.dll")
+uint GdiGetBatchLimit();
+
+@DllImport("OPENGL32.dll")
+uint wglSwapMultipleBuffers(uint param0, const(WGLSWAP)* param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("FONTSUB.dll")
+uint CreateFontPackage(const(ubyte)* puchSrcBuffer, const(uint) ulSrcBufferSize, ubyte** ppuchFontPackageBuffer, 
+                       uint* pulFontPackageBufferSize, uint* pulBytesWritten, const(ushort) usFlag, 
+                       const(ushort) usTTCIndex, const(ushort) usSubsetFormat, const(ushort) usSubsetLanguage, 
+                       const(CREATE_FONT_PACKAGE_SUBSET_PLATFORM) usSubsetPlatform, 
+                       const(CREATE_FONT_PACKAGE_SUBSET_ENCODING) usSubsetEncoding, const(ushort)* pusSubsetKeepList, 
+                       const(ushort) usSubsetListCount, CFP_ALLOCPROC lpfnAllocate, CFP_REALLOCPROC lpfnReAllocate, 
+                       CFP_FREEPROC lpfnFree, void* lpvReserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("FONTSUB.dll")
+uint MergeFontPackage(const(ubyte)* puchMergeFontBuffer, const(uint) ulMergeFontBufferSize, 
+                      const(ubyte)* puchFontPackageBuffer, const(uint) ulFontPackageBufferSize, 
+                      ubyte** ppuchDestBuffer, uint* pulDestBufferSize, uint* pulBytesWritten, const(ushort) usMode, 
+                      CFP_ALLOCPROC lpfnAllocate, CFP_REALLOCPROC lpfnReAllocate, CFP_FREEPROC lpfnFree, 
+                      void* lpvReserved);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTEmbedFont(HDC hDC, TTEMBED_FLAGS ulFlags, EMBED_FONT_CHARSET ulCharSet, 
+                EMBEDDED_FONT_PRIV_STATUS* pulPrivStatus, uint* pulStatus, WRITEEMBEDPROC lpfnWriteToStream, 
+                void* lpvWriteStream, ushort* pusCharCodeSet, ushort usCharCodeCount, ushort usLanguage, 
+                TTEMBEDINFO* pTTEmbedInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTEmbedFontFromFileA(HDC hDC, const(PSTR) szFontFileName, ushort usTTCIndex, TTEMBED_FLAGS ulFlags, 
+                         EMBED_FONT_CHARSET ulCharSet, EMBEDDED_FONT_PRIV_STATUS* pulPrivStatus, uint* pulStatus, 
+                         WRITEEMBEDPROC lpfnWriteToStream, void* lpvWriteStream, ushort* pusCharCodeSet, 
+                         ushort usCharCodeCount, ushort usLanguage, TTEMBEDINFO* pTTEmbedInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTLoadEmbeddedFont(HANDLE* phFontReference, uint ulFlags, EMBEDDED_FONT_PRIV_STATUS* pulPrivStatus, 
+                       FONT_LICENSE_PRIVS ulPrivs, TTLOAD_EMBEDDED_FONT_STATUS* pulStatus, 
+                       READEMBEDPROC lpfnReadFromStream, void* lpvReadStream, PWSTR szWinFamilyName, 
+                       PSTR szMacFamilyName, TTLOADINFO* pTTLoadInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTGetEmbeddedFontInfo(TTEMBED_FLAGS ulFlags, uint* pulPrivStatus, FONT_LICENSE_PRIVS ulPrivs, uint* pulStatus, 
+                          READEMBEDPROC lpfnReadFromStream, void* lpvReadStream, TTLOADINFO* pTTLoadInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTDeleteEmbeddedFont(HANDLE hFontReference, uint ulFlags, uint* pulStatus);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTGetEmbeddingType(HDC hDC, EMBEDDED_FONT_PRIV_STATUS* pulEmbedType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTCharToUnicode(HDC hDC, ubyte* pucCharCodes, uint ulCharCodeSize, ushort* pusShortCodes, uint ulShortCodeSize, 
+                    uint ulFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTRunValidationTests(HDC hDC, TTVALIDATIONTESTSPARAMS* pTestParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTIsEmbeddingEnabled(HDC hDC, BOOL* pbEnabled);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTIsEmbeddingEnabledForFacename(const(PSTR) lpszFacename, BOOL* pbEnabled);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTEnableEmbeddingForFacename(const(PSTR) lpszFacename, BOOL bEnable);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTEmbedFontEx(HDC hDC, TTEMBED_FLAGS ulFlags, EMBED_FONT_CHARSET ulCharSet, 
+                  EMBEDDED_FONT_PRIV_STATUS* pulPrivStatus, uint* pulStatus, WRITEEMBEDPROC lpfnWriteToStream, 
+                  void* lpvWriteStream, uint* pulCharCodeSet, ushort usCharCodeCount, ushort usLanguage, 
+                  TTEMBEDINFO* pTTEmbedInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTRunValidationTestsEx(HDC hDC, TTVALIDATIONTESTSPARAMSEX* pTestParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("t2embed.dll")
+int TTGetNewFontName(HANDLE* phFontReference, PWSTR wzWinFamilyName, int cchMaxWinName, PSTR szMacFamilyName, 
+                     int cchMaxMacName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawEdge(HDC hdc, RECT* qrc, DRAWEDGE_FLAGS edge, DRAW_EDGE_FLAGS grfFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawFrameControl(HDC hdc, RECT* lprc, uint uType, uint uState);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawCaption(HWND hwnd, HDC hdc, const(RECT)* lprect, DRAW_CAPTION_FLAGS flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawAnimatedRects(HWND hwnd, int idAni, const(RECT)* lprcFrom, const(RECT)* lprcTo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int DrawTextA(HDC hdc, const(PSTR) lpchText, int cchText, RECT* lprc, DRAW_TEXT_FORMAT format);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int DrawTextW(HDC hdc, const(PWSTR) lpchText, int cchText, RECT* lprc, DRAW_TEXT_FORMAT format);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int DrawTextExA(HDC hdc, PSTR lpchText, int cchText, RECT* lprc, DRAW_TEXT_FORMAT format, DRAWTEXTPARAMS* lpdtp);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int DrawTextExW(HDC hdc, PWSTR lpchText, int cchText, RECT* lprc, DRAW_TEXT_FORMAT format, DRAWTEXTPARAMS* lpdtp);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL GrayStringA(HDC hDC, HBRUSH hBrush, GRAYSTRINGPROC lpOutputFunc, LPARAM lpData, int nCount, int X, int Y, 
+                 int nWidth, int nHeight);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL GrayStringW(HDC hDC, HBRUSH hBrush, GRAYSTRINGPROC lpOutputFunc, LPARAM lpData, int nCount, int X, int Y, 
+                 int nWidth, int nHeight);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawStateA(HDC hdc, HBRUSH hbrFore, DRAWSTATEPROC qfnCallBack, LPARAM lData, WPARAM wData, int x, int y, 
+                int cx, int cy, DRAWSTATE_FLAGS uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawStateW(HDC hdc, HBRUSH hbrFore, DRAWSTATEPROC qfnCallBack, LPARAM lData, WPARAM wData, int x, int y, 
+                int cx, int cy, DRAWSTATE_FLAGS uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int TabbedTextOutA(HDC hdc, int x, int y, const(PSTR) lpString, int chCount, int nTabPositions, 
+                   const(int)* lpnTabStopPositions, int nTabOrigin);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int TabbedTextOutW(HDC hdc, int x, int y, const(PWSTR) lpString, int chCount, int nTabPositions, 
+                   const(int)* lpnTabStopPositions, int nTabOrigin);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+uint GetTabbedTextExtentA(HDC hdc, const(PSTR) lpString, int chCount, int nTabPositions, 
+                          const(int)* lpnTabStopPositions);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+uint GetTabbedTextExtentW(HDC hdc, const(PWSTR) lpString, int chCount, int nTabPositions, 
+                          const(int)* lpnTabStopPositions);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL UpdateWindow(HWND hWnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL PaintDesktop(HDC hdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HWND WindowFromDC(HDC hDC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HDC GetDC(HWND hWnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HDC GetDCEx(HWND hWnd, HRGN hrgnClip, GET_DCX_FLAGS flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HDC GetWindowDC(HWND hWnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int ReleaseDC(HWND hWnd, HDC hDC);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HDC BeginPaint(HWND hWnd, PAINTSTRUCT* lpPaint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EndPaint(HWND hWnd, const(PAINTSTRUCT)* lpPaint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL GetUpdateRect(HWND hWnd, RECT* lpRect, BOOL bErase);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+GDI_REGION_TYPE GetUpdateRgn(HWND hWnd, HRGN hRgn, BOOL bErase);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int SetWindowRgn(HWND hWnd, HRGN hRgn, BOOL bRedraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+GDI_REGION_TYPE GetWindowRgn(HWND hWnd, HRGN hRgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+GDI_REGION_TYPE GetWindowRgnBox(HWND hWnd, RECT* lprc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int ExcludeUpdateRgn(HDC hDC, HWND hWnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL InvalidateRect(HWND hWnd, const(RECT)* lpRect, BOOL bErase);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL ValidateRect(HWND hWnd, const(RECT)* lpRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL InvalidateRgn(HWND hWnd, HRGN hRgn, BOOL bErase);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL ValidateRgn(HWND hWnd, HRGN hRgn);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL RedrawWindow(HWND hWnd, const(RECT)* lprcUpdate, HRGN hrgnUpdate, REDRAW_WINDOW_FLAGS flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL LockWindowUpdate(HWND hWndLock);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL ClientToScreen(HWND hWnd, POINT* lpPoint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL ScreenToClient(HWND hWnd, POINT* lpPoint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int MapWindowPoints(HWND hWndFrom, HWND hWndTo, POINT* lpPoints, uint cPoints);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+uint GetSysColor(SYS_COLOR_INDEX nIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HBRUSH GetSysColorBrush(SYS_COLOR_INDEX nIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL SetSysColors(int cElements, const(int)* lpaElements, const(COLORREF)* lpaRgbValues);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL DrawFocusRect(HDC hDC, const(RECT)* lprc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int FillRect(HDC hDC, const(RECT)* lprc, HBRUSH hbr);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+int FrameRect(HDC hDC, const(RECT)* lprc, HBRUSH hbr);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL InvertRect(HDC hDC, const(RECT)* lprc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL SetRect(RECT* lprc, int xLeft, int yTop, int xRight, int yBottom);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL SetRectEmpty(RECT* lprc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL CopyRect(RECT* lprcDst, const(RECT)* lprcSrc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL InflateRect(RECT* lprc, int dx, int dy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL IntersectRect(RECT* lprcDst, const(RECT)* lprcSrc1, const(RECT)* lprcSrc2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL UnionRect(RECT* lprcDst, const(RECT)* lprcSrc1, const(RECT)* lprcSrc2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL SubtractRect(RECT* lprcDst, const(RECT)* lprcSrc1, const(RECT)* lprcSrc2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL OffsetRect(RECT* lprc, int dx, int dy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL IsRectEmpty(const(RECT)* lprc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EqualRect(const(RECT)* lprc1, const(RECT)* lprc2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL PtInRect(const(RECT)* lprc, POINT pt);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HBITMAP LoadBitmapA(HINSTANCE hInstance, const(PSTR) lpBitmapName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HBITMAP LoadBitmapW(HINSTANCE hInstance, const(PWSTR) lpBitmapName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+DISP_CHANGE ChangeDisplaySettingsA(DEVMODEA* lpDevMode, CDS_TYPE dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+DISP_CHANGE ChangeDisplaySettingsW(DEVMODEW* lpDevMode, CDS_TYPE dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+DISP_CHANGE ChangeDisplaySettingsExA(const(PSTR) lpszDeviceName, DEVMODEA* lpDevMode, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/HWND hwnd, 
+                                     CDS_TYPE dwflags, void* lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+DISP_CHANGE ChangeDisplaySettingsExW(const(PWSTR) lpszDeviceName, DEVMODEW* lpDevMode, 
+                                     /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/HWND hwnd, 
+                                     CDS_TYPE dwflags, void* lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplaySettingsA(const(PSTR) lpszDeviceName, ENUM_DISPLAY_SETTINGS_MODE iModeNum, DEVMODEA* lpDevMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplaySettingsW(const(PWSTR) lpszDeviceName, ENUM_DISPLAY_SETTINGS_MODE iModeNum, DEVMODEW* lpDevMode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplaySettingsExA(const(PSTR) lpszDeviceName, ENUM_DISPLAY_SETTINGS_MODE iModeNum, DEVMODEA* lpDevMode, 
+                            ENUM_DISPLAY_SETTINGS_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplaySettingsExW(const(PWSTR) lpszDeviceName, ENUM_DISPLAY_SETTINGS_MODE iModeNum, DEVMODEW* lpDevMode, 
+                            ENUM_DISPLAY_SETTINGS_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplayDevicesA(const(PSTR) lpDevice, uint iDevNum, DISPLAY_DEVICEA* lpDisplayDevice, uint dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplayDevicesW(const(PWSTR) lpDevice, uint iDevNum, DISPLAY_DEVICEW* lpDisplayDevice, uint dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HMONITOR MonitorFromPoint(POINT pt, MONITOR_FROM_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HMONITOR MonitorFromRect(RECT* lprc, MONITOR_FROM_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+HMONITOR MonitorFromWindow(HWND hwnd, MONITOR_FROM_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL GetMonitorInfoA(HMONITOR hMonitor, MONITORINFO* lpmi);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL GetMonitorInfoW(HMONITOR hMonitor, MONITORINFO* lpmi);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
+@DllImport("USER32.dll")
+BOOL EnumDisplayMonitors(HDC hdc, RECT* lprcClip, MONITORENUMPROC lpfnEnum, LPARAM dwData);
+
+

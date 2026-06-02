@@ -1,0 +1,543 @@
+// Written in the D programming language.
+
+module windows.win32.system.jobobjects;
+
+public import windows.core;
+public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security : SECURITY_ATTRIBUTES, TOKEN_GROUPS, TOKEN_PRIVILEGES;
+public import windows.win32.system.threading : IO_COUNTERS;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+
+alias JOB_OBJECT_LIMIT = uint;
+enum : uint
+{
+    JOB_OBJECT_LIMIT_WORKINGSET                 = 0x00000001U,
+    JOB_OBJECT_LIMIT_PROCESS_TIME               = 0x00000002U,
+    JOB_OBJECT_LIMIT_JOB_TIME                   = 0x00000004U,
+    JOB_OBJECT_LIMIT_ACTIVE_PROCESS             = 0x00000008U,
+    JOB_OBJECT_LIMIT_AFFINITY                   = 0x00000010U,
+    JOB_OBJECT_LIMIT_PRIORITY_CLASS             = 0x00000020U,
+    JOB_OBJECT_LIMIT_PRESERVE_JOB_TIME          = 0x00000040U,
+    JOB_OBJECT_LIMIT_SCHEDULING_CLASS           = 0x00000080U,
+    JOB_OBJECT_LIMIT_PROCESS_MEMORY             = 0x00000100U,
+    JOB_OBJECT_LIMIT_JOB_MEMORY                 = 0x00000200U,
+    JOB_OBJECT_LIMIT_JOB_MEMORY_HIGH            = 0x00000200U,
+    JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION = 0x00000400U,
+    JOB_OBJECT_LIMIT_BREAKAWAY_OK               = 0x00000800U,
+    JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK        = 0x00001000U,
+    JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE          = 0x00002000U,
+    JOB_OBJECT_LIMIT_SUBSET_AFFINITY            = 0x00004000U,
+    JOB_OBJECT_LIMIT_JOB_MEMORY_LOW             = 0x00008000U,
+    JOB_OBJECT_LIMIT_JOB_READ_BYTES             = 0x00010000U,
+    JOB_OBJECT_LIMIT_JOB_WRITE_BYTES            = 0x00020000U,
+    JOB_OBJECT_LIMIT_RATE_CONTROL               = 0x00040000U,
+    JOB_OBJECT_LIMIT_CPU_RATE_CONTROL           = 0x00040000U,
+    JOB_OBJECT_LIMIT_IO_RATE_CONTROL            = 0x00080000U,
+    JOB_OBJECT_LIMIT_NET_RATE_CONTROL           = 0x00100000U,
+    JOB_OBJECT_LIMIT_VALID_FLAGS                = 0x0007ffffU,
+    JOB_OBJECT_BASIC_LIMIT_VALID_FLAGS          = 0x000000ffU,
+    JOB_OBJECT_EXTENDED_LIMIT_VALID_FLAGS       = 0x00007fffU,
+    JOB_OBJECT_NOTIFICATION_LIMIT_VALID_FLAGS   = 0x001f8204U,
+}
+
+alias JOB_OBJECT_UILIMIT = uint;
+enum : uint
+{
+    JOB_OBJECT_UILIMIT_NONE             = 0x00000000U,
+    JOB_OBJECT_UILIMIT_HANDLES          = 0x00000001U,
+    JOB_OBJECT_UILIMIT_READCLIPBOARD    = 0x00000002U,
+    JOB_OBJECT_UILIMIT_WRITECLIPBOARD   = 0x00000004U,
+    JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS = 0x00000008U,
+    JOB_OBJECT_UILIMIT_DISPLAYSETTINGS  = 0x00000010U,
+    JOB_OBJECT_UILIMIT_GLOBALATOMS      = 0x00000020U,
+    JOB_OBJECT_UILIMIT_DESKTOP          = 0x00000040U,
+    JOB_OBJECT_UILIMIT_EXITWINDOWS      = 0x00000080U,
+}
+
+alias JOB_OBJECT_SECURITY = uint;
+enum : uint
+{
+    JOB_OBJECT_SECURITY_NO_ADMIN         = 0x00000001U,
+    JOB_OBJECT_SECURITY_RESTRICTED_TOKEN = 0x00000002U,
+    JOB_OBJECT_SECURITY_ONLY_TOKEN       = 0x00000004U,
+    JOB_OBJECT_SECURITY_FILTER_TOKENS    = 0x00000008U,
+    JOB_OBJECT_SECURITY_VALID_FLAGS      = 0x0000000fU,
+}
+
+alias JOB_OBJECT_CPU_RATE_CONTROL = uint;
+enum : uint
+{
+    JOB_OBJECT_CPU_RATE_CONTROL_ENABLE       = 0x00000001U,
+    JOB_OBJECT_CPU_RATE_CONTROL_WEIGHT_BASED = 0x00000002U,
+    JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP     = 0x00000004U,
+    JOB_OBJECT_CPU_RATE_CONTROL_NOTIFY       = 0x00000008U,
+    JOB_OBJECT_CPU_RATE_CONTROL_MIN_MAX_RATE = 0x00000010U,
+    JOB_OBJECT_CPU_RATE_CONTROL_VALID_FLAGS  = 0x0000003fU,
+}
+
+alias JOB_OBJECT_TERMINATE_AT_END_ACTION = uint;
+enum : uint
+{
+    JOB_OBJECT_TERMINATE_AT_END_OF_JOB = 0x00000000U,
+    JOB_OBJECT_POST_AT_END_OF_JOB      = 0x00000001U,
+}
+
+alias JOBOBJECT_RATE_CONTROL_TOLERANCE = int;
+enum : int
+{
+    ToleranceLow    = 0x00000001,
+    ToleranceMedium = 0x00000002,
+    ToleranceHigh   = 0x00000003,
+}
+
+alias JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL = int;
+enum : int
+{
+    ToleranceIntervalShort  = 0x00000001,
+    ToleranceIntervalMedium = 0x00000002,
+    ToleranceIntervalLong   = 0x00000003,
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-job_object_net_rate_control_flags
+alias JOB_OBJECT_NET_RATE_CONTROL_FLAGS = int;
+enum : int
+{
+    JOB_OBJECT_NET_RATE_CONTROL_ENABLE        = 0x00000001,
+    JOB_OBJECT_NET_RATE_CONTROL_MAX_BANDWIDTH = 0x00000002,
+    JOB_OBJECT_NET_RATE_CONTROL_DSCP_TAG      = 0x00000004,
+    JOB_OBJECT_NET_RATE_CONTROL_VALID_FLAGS   = 0x00000007,
+}
+
+alias JOB_OBJECT_IO_RATE_CONTROL_FLAGS = int;
+enum : int
+{
+    JOB_OBJECT_IO_RATE_CONTROL_ENABLE                        = 0x00000001,
+    JOB_OBJECT_IO_RATE_CONTROL_STANDALONE_VOLUME             = 0x00000002,
+    JOB_OBJECT_IO_RATE_CONTROL_FORCE_UNIT_ACCESS_ALL         = 0x00000004,
+    JOB_OBJECT_IO_RATE_CONTROL_FORCE_UNIT_ACCESS_ON_SOFT_CAP = 0x00000008,
+    JOB_OBJECT_IO_RATE_CONTROL_VALID_FLAGS                   = 0x0000000f,
+}
+
+alias JOBOBJECT_IO_ATTRIBUTION_CONTROL_FLAGS = int;
+enum : int
+{
+    JOBOBJECT_IO_ATTRIBUTION_CONTROL_ENABLE      = 0x00000001,
+    JOBOBJECT_IO_ATTRIBUTION_CONTROL_DISABLE     = 0x00000002,
+    JOBOBJECT_IO_ATTRIBUTION_CONTROL_VALID_FLAGS = 0x00000003,
+}
+
+alias JOBOBJECTINFOCLASS = int;
+enum : int
+{
+    JobObjectBasicAccountingInformation         = 0x00000001,
+    JobObjectBasicLimitInformation              = 0x00000002,
+    JobObjectBasicProcessIdList                 = 0x00000003,
+    JobObjectBasicUIRestrictions                = 0x00000004,
+    JobObjectSecurityLimitInformation           = 0x00000005,
+    JobObjectEndOfJobTimeInformation            = 0x00000006,
+    JobObjectAssociateCompletionPortInformation = 0x00000007,
+    JobObjectBasicAndIoAccountingInformation    = 0x00000008,
+    JobObjectExtendedLimitInformation           = 0x00000009,
+    JobObjectJobSetInformation                  = 0x0000000a,
+    JobObjectGroupInformation                   = 0x0000000b,
+    JobObjectNotificationLimitInformation       = 0x0000000c,
+    JobObjectLimitViolationInformation          = 0x0000000d,
+    JobObjectGroupInformationEx                 = 0x0000000e,
+    JobObjectCpuRateControlInformation          = 0x0000000f,
+    JobObjectCompletionFilter                   = 0x00000010,
+    JobObjectCompletionCounter                  = 0x00000011,
+    JobObjectReserved1Information               = 0x00000012,
+    JobObjectReserved2Information               = 0x00000013,
+    JobObjectReserved3Information               = 0x00000014,
+    JobObjectReserved4Information               = 0x00000015,
+    JobObjectReserved5Information               = 0x00000016,
+    JobObjectReserved6Information               = 0x00000017,
+    JobObjectReserved7Information               = 0x00000018,
+    JobObjectReserved8Information               = 0x00000019,
+    JobObjectReserved9Information               = 0x0000001a,
+    JobObjectReserved10Information              = 0x0000001b,
+    JobObjectReserved11Information              = 0x0000001c,
+    JobObjectReserved12Information              = 0x0000001d,
+    JobObjectReserved13Information              = 0x0000001e,
+    JobObjectReserved14Information              = 0x0000001f,
+    JobObjectNetRateControlInformation          = 0x00000020,
+    JobObjectNotificationLimitInformation2      = 0x00000021,
+    JobObjectLimitViolationInformation2         = 0x00000022,
+    JobObjectCreateSilo                         = 0x00000023,
+    JobObjectSiloBasicInformation               = 0x00000024,
+    JobObjectReserved15Information              = 0x00000025,
+    JobObjectReserved16Information              = 0x00000026,
+    JobObjectReserved17Information              = 0x00000027,
+    JobObjectReserved18Information              = 0x00000028,
+    JobObjectReserved19Information              = 0x00000029,
+    JobObjectReserved20Information              = 0x0000002a,
+    JobObjectReserved21Information              = 0x0000002b,
+    JobObjectReserved22Information              = 0x0000002c,
+    JobObjectReserved23Information              = 0x0000002d,
+    JobObjectReserved24Information              = 0x0000002e,
+    JobObjectReserved25Information              = 0x0000002f,
+    JobObjectReserved26Information              = 0x00000030,
+    JobObjectReserved27Information              = 0x00000031,
+    JobObjectReserved28Information              = 0x00000032,
+    JobObjectNetworkAccountingInformation       = 0x00000033,
+    MaxJobObjectInfoClass                       = 0x00000034,
+}
+
+// Structs
+
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/jobapi2/ns-jobapi2-jobobject_io_rate_control_information
+struct JOBOBJECT_IO_RATE_CONTROL_INFORMATION
+{
+    long         MaxIops;
+    long         MaxBandwidth;
+    long         ReservationIops;
+    const(PWSTR) VolumeName;
+    uint         BaseIoSize;
+    uint         ControlFlags;
+}
+
+struct JOB_SET_ARRAY
+{
+    HANDLE JobHandle;
+    uint   MemberLevel;
+    uint   Flags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_accounting_information
+struct JOBOBJECT_BASIC_ACCOUNTING_INFORMATION
+{
+    long TotalUserTime;
+    long TotalKernelTime;
+    long ThisPeriodTotalUserTime;
+    long ThisPeriodTotalKernelTime;
+    uint TotalPageFaultCount;
+    uint TotalProcesses;
+    uint ActiveProcesses;
+    uint TotalTerminatedProcesses;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information
+struct JOBOBJECT_BASIC_LIMIT_INFORMATION
+{
+    long             PerProcessUserTimeLimit;
+    long             PerJobUserTimeLimit;
+    JOB_OBJECT_LIMIT LimitFlags;
+    size_t           MinimumWorkingSetSize;
+    size_t           MaximumWorkingSetSize;
+    uint             ActiveProcessLimit;
+    size_t           Affinity;
+    uint             PriorityClass;
+    uint             SchedulingClass;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information
+struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION
+{
+    JOBOBJECT_BASIC_LIMIT_INFORMATION BasicLimitInformation;
+    IO_COUNTERS IoInfo;
+    size_t      ProcessMemoryLimit;
+    size_t      JobMemoryLimit;
+    size_t      PeakProcessMemoryUsed;
+    size_t      PeakJobMemoryUsed;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list
+struct JOBOBJECT_BASIC_PROCESS_ID_LIST
+{
+    uint      NumberOfAssignedProcesses;
+    uint      NumberOfProcessIdsInList;
+    size_t[1] ProcessIdList; // Flexible array
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_ui_restrictions
+struct JOBOBJECT_BASIC_UI_RESTRICTIONS
+{
+    JOB_OBJECT_UILIMIT UIRestrictionsClass;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_security_limit_information
+struct JOBOBJECT_SECURITY_LIMIT_INFORMATION
+{
+    JOB_OBJECT_SECURITY SecurityLimitFlags;
+    HANDLE              JobToken;
+    TOKEN_GROUPS*       SidsToDisable;
+    TOKEN_PRIVILEGES*   PrivilegesToDelete;
+    TOKEN_GROUPS*       RestrictedSids;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_end_of_job_time_information
+struct JOBOBJECT_END_OF_JOB_TIME_INFORMATION
+{
+    JOB_OBJECT_TERMINATE_AT_END_ACTION EndOfJobTimeAction;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_associate_completion_port
+struct JOBOBJECT_ASSOCIATE_COMPLETION_PORT
+{
+    void*  CompletionKey;
+    HANDLE CompletionPort;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_and_io_accounting_information
+struct JOBOBJECT_BASIC_AND_IO_ACCOUNTING_INFORMATION
+{
+    JOBOBJECT_BASIC_ACCOUNTING_INFORMATION BasicInfo;
+    IO_COUNTERS IoInfo;
+}
+
+struct JOBOBJECT_JOBSET_INFORMATION
+{
+    uint MemberLevel;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_notification_limit_information
+struct JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION
+{
+    ulong            IoReadBytesLimit;
+    ulong            IoWriteBytesLimit;
+    long             PerJobUserTimeLimit;
+    ulong            JobMemoryLimit;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlTolerance;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL RateControlToleranceInterval;
+    JOB_OBJECT_LIMIT LimitFlags;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_notification_limit_information_2
+struct JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION_2
+{
+    ulong            IoReadBytesLimit;
+    ulong            IoWriteBytesLimit;
+    long             PerJobUserTimeLimit;
+    union
+    {
+        ulong JobHighMemoryLimit;
+        ulong JobMemoryLimit;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlTolerance;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE CpuRateControlTolerance;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL RateControlToleranceInterval;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL CpuRateControlToleranceInterval;
+    }
+    JOB_OBJECT_LIMIT LimitFlags;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE IoRateControlTolerance;
+    ulong            JobLowMemoryLimit;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL IoRateControlToleranceInterval;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE NetRateControlTolerance;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL NetRateControlToleranceInterval;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_limit_violation_information
+struct JOBOBJECT_LIMIT_VIOLATION_INFORMATION
+{
+    JOB_OBJECT_LIMIT LimitFlags;
+    JOB_OBJECT_LIMIT ViolationLimitFlags;
+    ulong            IoReadBytes;
+    ulong            IoReadBytesLimit;
+    ulong            IoWriteBytes;
+    ulong            IoWriteBytesLimit;
+    long             PerJobUserTime;
+    long             PerJobUserTimeLimit;
+    ulong            JobMemory;
+    ulong            JobMemoryLimit;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlTolerance;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlToleranceLimit;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_limit_violation_information_2
+struct JOBOBJECT_LIMIT_VIOLATION_INFORMATION_2
+{
+    JOB_OBJECT_LIMIT LimitFlags;
+    JOB_OBJECT_LIMIT ViolationLimitFlags;
+    ulong            IoReadBytes;
+    ulong            IoReadBytesLimit;
+    ulong            IoWriteBytes;
+    ulong            IoWriteBytesLimit;
+    long             PerJobUserTime;
+    long             PerJobUserTimeLimit;
+    ulong            JobMemory;
+    union
+    {
+        ulong JobHighMemoryLimit;
+        ulong JobMemoryLimit;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlTolerance;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE CpuRateControlTolerance;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlToleranceLimit;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE CpuRateControlToleranceLimit;
+    }
+    ulong            JobLowMemoryLimit;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE IoRateControlTolerance;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE IoRateControlToleranceLimit;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE NetRateControlTolerance;
+    JOBOBJECT_RATE_CONTROL_TOLERANCE NetRateControlToleranceLimit;
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_cpu_rate_control_information
+struct JOBOBJECT_CPU_RATE_CONTROL_INFORMATION
+{
+    JOB_OBJECT_CPU_RATE_CONTROL ControlFlags;
+    union
+    {
+        uint CpuRate;
+        uint Weight;
+        struct
+        {
+            ushort MinRate;
+            ushort MaxRate;
+        }
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_net_rate_control_information
+struct JOBOBJECT_NET_RATE_CONTROL_INFORMATION
+{
+    ulong MaxBandwidth;
+    JOB_OBJECT_NET_RATE_CONTROL_FLAGS ControlFlags;
+    ubyte DscpTag;
+}
+
+struct JOBOBJECT_IO_RATE_CONTROL_INFORMATION_NATIVE_V1
+{
+    long   MaxIops;
+    long   MaxBandwidth;
+    long   ReservationIops;
+    PWSTR  VolumeName;
+    uint   BaseIoSize;
+    JOB_OBJECT_IO_RATE_CONTROL_FLAGS ControlFlags;
+    ushort VolumeNameLength;
+}
+
+struct JOBOBJECT_IO_RATE_CONTROL_INFORMATION_NATIVE_V2
+{
+    long   MaxIops;
+    long   MaxBandwidth;
+    long   ReservationIops;
+    PWSTR  VolumeName;
+    uint   BaseIoSize;
+    JOB_OBJECT_IO_RATE_CONTROL_FLAGS ControlFlags;
+    ushort VolumeNameLength;
+    long   CriticalReservationIops;
+    long   ReservationBandwidth;
+    long   CriticalReservationBandwidth;
+    long   MaxTimePercent;
+    long   ReservationTimePercent;
+    long   CriticalReservationTimePercent;
+}
+
+struct JOBOBJECT_IO_RATE_CONTROL_INFORMATION_NATIVE_V3
+{
+    long   MaxIops;
+    long   MaxBandwidth;
+    long   ReservationIops;
+    PWSTR  VolumeName;
+    uint   BaseIoSize;
+    JOB_OBJECT_IO_RATE_CONTROL_FLAGS ControlFlags;
+    ushort VolumeNameLength;
+    long   CriticalReservationIops;
+    long   ReservationBandwidth;
+    long   CriticalReservationBandwidth;
+    long   MaxTimePercent;
+    long   ReservationTimePercent;
+    long   CriticalReservationTimePercent;
+    long   SoftMaxIops;
+    long   SoftMaxBandwidth;
+    long   SoftMaxTimePercent;
+    long   LimitExcessNotifyIops;
+    long   LimitExcessNotifyBandwidth;
+    long   LimitExcessNotifyTimePercent;
+}
+
+struct JOBOBJECT_IO_ATTRIBUTION_STATS
+{
+    size_t IoCount;
+    ulong  TotalNonOverlappedQueueTime;
+    ulong  TotalNonOverlappedServiceTime;
+    ulong  TotalSize;
+}
+
+struct JOBOBJECT_IO_ATTRIBUTION_INFORMATION
+{
+    uint ControlFlags;
+    JOBOBJECT_IO_ATTRIBUTION_STATS ReadStats;
+    JOBOBJECT_IO_ATTRIBUTION_STATS WriteStats;
+}
+
+// Functions
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+BOOL IsProcessInJob(HANDLE ProcessHandle, HANDLE JobHandle, BOOL* Result);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+HANDLE CreateJobObjectW(SECURITY_ATTRIBUTES* lpJobAttributes, const(PWSTR) lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("KERNEL32.dll")
+void FreeMemoryJobObject(void* Buffer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+HANDLE OpenJobObjectW(uint dwDesiredAccess, BOOL bInheritHandle, const(PWSTR) lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+BOOL AssignProcessToJobObject(HANDLE hJob, HANDLE hProcess);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+BOOL TerminateJobObject(HANDLE hJob, uint uExitCode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+BOOL SetInformationJobObject(HANDLE hJob, JOBOBJECTINFOCLASS JobObjectInformationClass, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpJobObjectInformation, 
+                             uint cbJobObjectInformationLength);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("KERNEL32.dll")
+uint SetIoRateControlInformationJobObject(HANDLE hJob, JOBOBJECT_IO_RATE_CONTROL_INFORMATION* IoRateControlInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+BOOL QueryInformationJobObject(HANDLE hJob, JOBOBJECTINFOCLASS JobObjectInformationClass, 
+                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpJobObjectInformation, 
+                               uint cbJobObjectInformationLength, uint* lpReturnLength);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
+@DllImport("KERNEL32.dll")
+uint QueryIoRateControlInformationJobObject(HANDLE hJob, const(PWSTR) VolumeName, 
+                                            JOBOBJECT_IO_RATE_CONTROL_INFORMATION** InfoBlocks, uint* InfoBlockCount);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("USER32.dll")
+BOOL UserHandleGrantAccess(HANDLE hUserHandle, HANDLE hJob, BOOL bGrant);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+HANDLE CreateJobObjectA(SECURITY_ATTRIBUTES* lpJobAttributes, const(PSTR) lpName);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("KERNEL32.dll")
+HANDLE OpenJobObjectA(uint dwDesiredAccess, BOOL bInheritHandle, const(PSTR) lpName);
+
+@DllImport("KERNEL32.dll")
+BOOL CreateJobSet(uint NumJob, JOB_SET_ARRAY* UserJobSet, uint Flags);
+
+

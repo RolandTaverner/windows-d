@@ -1,0 +1,6 @@
+/bin
+/.dub
+/.vscode
+*.code-workspace
+*.bak
+/*.local
