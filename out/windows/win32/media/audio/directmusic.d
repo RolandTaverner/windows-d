@@ -586,7 +586,7 @@ struct DMUS_REGION
     uint     ulFirstExtCkIdx;
     WAVELINK WaveLink;
     WSMPL    WSMP;
-    WLOOP[1] WLOOP; // Flexible array
+    WLOOP[1] WLOOP_; // Flexible array
 }
 
 struct DMUS_LFOPARAMS

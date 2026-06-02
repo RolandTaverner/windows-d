@@ -116,6 +116,7 @@ public struct Generator
             //if (!namespace.startsWith("Windows.Win32.System.Kernel")) continue;
             //if (namespace != "Windows.Win32.System.Diagnostics.Debug") continue;
             //if (namespace != "Windows.Win32.Foundation") continue;
+            if (namespace != "Windows.Win32.Media.Audio.DirectMusic") continue;
 
             string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
             string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
@@ -730,80 +731,24 @@ public struct Generator
                     foreach(ver; versions)
                     {
                         f.write(format("\nversion(%s)\n{\n", ver));
-                        dumpStruct(f, s, structAttrs, 1, null, ver, docs);
+                        dumpStruct(f, s, structAttrs, 1, null, docs);
                         f.write("}\n");
                     }
                 }
                 else
                 {
-                    dumpStruct(f, s, structAttrs, 0, null, "all", docs);
+                    dumpStruct(f, s, structAttrs, 0, null, docs);
                 }
             }
         }
     }
-
-    // void rsType(scope ref const ResolutionScopeValue rs, int level)
-    // {
-    //     if (auto m = rs.peek!ModuleEntity)
-    //     {
-    //         writeln("".padLeft(' ', level * 4), "rs  type = ModuleEntity ", m.getName());
-    //         return;
-    //     }
-    //     else if (auto tr = rs.peek!TypeRefEntity)
-    //     {
-    //         writeln("".padLeft(' ', level * 4), "rs  type = TypeRefEntity ", tr.getTypeNamespace(), " ", tr.getTypeName(), " ", tr.getRowID());
-    //         return;
-    //     }
-    //     else if (auto mr = rs.peek!ModuleRefEntity)
-    //     {
-    //         writeln("".padLeft(' ', level * 4), "rs  type = ModuleRefEntity ", mr.getName());
-    //         return;
-    //     }
-    //     else if (auto ar = rs.peek!AssemblyRefEntity)
-    //     {
-    //         writeln("".padLeft(' ', level * 4), "rs  type = AssemblyRefEntity ", ar.getName());
-    //         return;
-    //     }
-
-    //     writeln("".padLeft(' ', level * 4), "rs  type = invalid");
-    // }
-
-    // private Nullable!TypeDefEntity resolveTypeDeb(scope ref const TypeSig.TypeValue v, Nullable!(const TypeDefEntity) enclosing, int level, bool deb)
-    // {
-    //     if (auto r = v.peek!TypeDefEntity)
-    //     {
-    //         if (deb) writeln("".padLeft(' ', level * 4), "resolveTypeDeb typeDef ", r.getTypeNamespace(), " ", r.getTypeName());
-    //         return Nullable!TypeDefEntity(*r);
-    //     }
-    //     else if (auto r = v.peek!TypeRefEntity)
-    //     {
-    //         if (deb)
-    //         {
-    //             writeln("".padLeft(' ', (level) * 4), "resolveTypeDeb typeRef ", r.getTypeNamespace(), " ", r.getTypeName(), " ", r.getTypeName());
-    //             auto rs1 = (*r).getResolutionScope();
-    //             rsType(rs1, level);
-
-    //             if (auto tr1 = rs1.peek!TypeRefEntity) 
-    //             {
-    //                 writeln("".padLeft(' ', (level+1)*4), "resolveTypeDeb typeRef ", tr1.getTypeNamespace(), " ", tr1.getTypeName());
-    //                 auto rs2 = (*tr1).getResolutionScope();
-    //                 rsType(rs2, level+1);
-    //             }
-    //         }
-    //         return r.resolve(enclosing);
-    //     }
-    //     else
-    //         return (Nullable!TypeDefEntity).init;
-    // }
 
     private void dumpStruct(scope ref std.stdio.File f,
         scope ref const TypeDefEntity struc,
         scope ref const CommonAttributes structAttrs,
         int level = 0,
         string nameOverride = "",
-        string ver,
-        bool docs = false,
-        bool deb = false)
+        bool docs = false)
     {
         if (!level)
             f.writeln;
@@ -911,16 +856,20 @@ public struct Generator
                     if (td.get in *nestedClasses)
                     {
                         auto typeAttrs = CommonAttributes(td.get.getAttributes());
-                        dumpStruct(f, td.get, typeAttrs, level + 1, fieldName, ver, false);
+                        dumpStruct(f, td.get, typeAttrs, level + 1, fieldName, false);
                         continue;
                     }
                 }
             }
 
             auto type = types[fieldName];
-            if (fieldName == "_bitfield" || fieldName == type)
+            if (fieldName == "_bitfield")
             {
                 fieldName = getUnique(fieldName);
+            } 
+            else if (fieldName == type || (type.startsWith(fieldName) && type.length > fieldName.length && (type[fieldName.length] == '[' || type[fieldName.length] == '*'))) // Fix for WLOOP[1] WLOOP;
+            {
+                fieldName ~= "_";
             }
 
             // if (doc)
