@@ -503,7 +503,7 @@ public struct Generator
                 continue;
             }
 
-            dumpFieldCollection(f, flds, wasOne, structNames);
+            dumpConstFieldCollection(f, flds, wasOne, structNames);
             wasOne = flds.length == 1;
 
             lastField = fld.getName();
@@ -513,12 +513,13 @@ public struct Generator
 
         if (flds.length)
         {
-            dumpFieldCollection(f, flds, wasOne, structNames);
+            dumpConstFieldCollection(f, flds, wasOne, structNames);
         }
     }
 
-    private void dumpFieldCollection(scope ref std.stdio.File f, scope ref const FieldEntity[] flds, bool wasOne, scope ref const bool[string] structNames)
+    private void dumpConstFieldCollection(scope ref std.stdio.File f, scope ref const FieldEntity[] flds, bool wasOne, scope ref const bool[string] structNames)
     {
+        // flds have the same type (see dumpApisConstants())
         auto sig = flds[0].getSignature().typeSig;
         bool isStruct = sig.type.peek!TypeRefEntity || sig.type.peek!TypeDefEntity;
         bool isGuidConst = flds[0].getCustomAttributes().canFind!(a => a.name() == "GuidAttribute");
@@ -534,8 +535,8 @@ public struct Generator
         if (flds.length == 1)
         {
             auto fx = flds[0];
-            //auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
-            //auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
+            auto fieldAttrs = CommonAttributes(fx.getCustomAttributes());
+            auto guidAttribute = GuidAttribute(fieldAttrs.getUnhandledAttributes());
 
             if (!wasOne)
                 f.writeln;
@@ -543,6 +544,7 @@ public struct Generator
             f.write(typeText);   
             f.write(" ");
 
+            // Check conflict with struct names
             auto constName = fx.getName();
             if (constName in structNames)
             {
@@ -564,23 +566,25 @@ public struct Generator
             }
             else
             {
-                foreach(ca; fx.getCustomAttributes())
+                if (!guidAttribute.getGuid().empty)
                 {
-                    if (ca.name() == "GuidAttribute")
+                    f.writef("\"%s\"", guidAttribute.getGuid());
+                }
+                else
+                {
+                    foreach(ca; fx.getCustomAttributes())
                     {
-                        f.writef("\"%s\"", readGuid(ca).toString());
-                        break;
-                    }
-                    else if (ca.name() == "ConstantAttribute")
-                    {
-                        auto constValue = readConstantValue(ca, isPropKey, isSidIdAuth);
-                        f.write(constValue);
-                        break;
-                    }
-                    else
-                    {
-                        // TODO: throw
-                        writeln("ERROR ", fx.getName(), "no GuidAttribute or ConstantAttribute");
+                        if (ca.name() == "ConstantAttribute")
+                        {
+                            auto constValue = readConstantValue(ca, isPropKey, isSidIdAuth);
+                            f.write(constValue);
+                            break;
+                        }
+                        else
+                        {
+                            // TODO: throw
+                            writeln("ERROR ", fx.getName(), "no GuidAttribute or ConstantAttribute");
+                        }
                     }
                 }
             }
